@@ -1,0 +1,959 @@
+TDE / DSA 4.1 CHARACTER GENERATION SUMMARY FOR A RANDOM CHARACTER GENERATOR
+================================================================================
+
+Purpose
+-------
+This is a practical, implementation-oriented summary for vibe-coding an app that randomly generates DSA 4.1 / TDE 4-style starting heroes using the Basic Rules character-generation flow. It is intentionally not a verbatim copy of the rulebook tables. Treat it as a rules-process specification and data-model guide. Exact race, culture, profession, advantage, disadvantage, talent, spell, equipment, and special-ability entries should be kept in external data files because most restrictions and modifiers are data-driven.
+
+Primary source basis
+--------------------
+- German DSA 4.1 Basisregelwerk is the rules source for the process.
+- English TDE_basicrules.pdf is used for English terms and abbreviations.
+- The English Basic Rules are an older/condensed translation, so when German and English differ, use the German DSA 4.1 Basisregelwerk as the authority and use English terminology only for display.
+
+Important English terminology / abbreviations
+---------------------------------------------
+Use these English labels in the app UI and output:
+
+Attributes:
+- CO = Courage (German MU / Mut)
+- CL = Cleverness (German KL / Klugheit)
+- IN = Intuition (German IN)
+- CH = Charisma (German CH)
+- DE = Dexterity (German FF / Fingerfertigkeit)
+- AG = Agility (German GE / Gewandtheit)
+- CN = Constitution (German KO / Konstitution)
+- ST = Strength (German KK / Körperkraft)
+
+Other values:
+- GP = Generation Points (German GP / Generierungspunkte)
+- SO = Social Standing / Social Status (German SO / Sozialstatus)
+- TP = Talent Prowess (German TaW / Talentwert; for this user's preferred terminology, use TP)
+- TP* = Talent Points left over after a successful Talent Test (German TaP*)
+- SP = Spell Prowess (German ZfW / Zauberfertigkeitswert)
+- SP* = Spell Points left over after a successful Arcane Test (German ZfP*)
+- VP = Vitality Points (German LeP / Lebenspunkte)
+- ASP = Astral Points (German AsP / Astralpunkte)
+- EP = Endurance Points (German AuP / Ausdauerpunkte)
+- RM = Resistance to Magic (German MR / Magieresistenz)
+- AT = Attack
+- PA = Parry
+- INI = Initiative
+- AR = Armor Rating (German RS / Rüstungsschutz; using user's preferred term)
+- EC = Encumbrance (German BE / Behinderung)
+- EEC = Effective Encumbrance (German eBE / effektive Behinderung)
+- SA = Special Ability (German SF / Sonderfertigkeit)
+- CR = Combat Round (German Kampfrunde)
+- GT = Game Turn (German Spielrunde)
+- Pace = Schritt
+
+High-level generation flow
+--------------------------
+The Basic Rules character creation flow is:
+
+1. Concept: decide the broad archetype.
+2. Choose species/race.
+3. Choose culture.
+4. Choose profession.
+5. Buy attributes and SO.
+6. Choose advantages and disadvantages.
+6a. Buy starting special abilities.
+7. Spend starting talent points.
+7a. Spend starting spell points for magical heroes.
+8. Calculate derived base values.
+9. Split combat talent values into AT/PA.
+10. Buy/assign starting equipment.
+11. Validate the complete hero.
+
+The official flow starts every hero from 110 GP. GP are spent on race/species, culture, profession, attributes, SO, advantages, special abilities, and sometimes other choices. Disadvantages and restrictions refund GP. The final GP balance should be exactly 0. The generator should internally allow temporary negative or positive GP during generation, but final validation must enforce a legal balance.
+
+Recommended app architecture
+----------------------------
+Do not hard-code most content. Use data files.
+
+Core entities:
+
+1. Race
+   Fields:
+   - id
+   - display_name
+   - source_page
+   - gp_cost
+   - allowed_cultures
+   - attribute_modifiers or min/max modifiers
+   - derived_value_modifiers: VP, EP, ASP, RM, INI, etc.
+   - automatic_advantages
+   - automatic_disadvantages
+   - required_advantages
+   - forbidden_advantages
+   - forbidden_disadvantages
+   - talent_modifiers
+   - spell/magic flags
+   - physical-generation rules: height, weight, hair, eyes
+   - notes
+
+2. Culture
+   Fields:
+   - id
+   - display_name
+   - source_page
+   - gp_cost
+   - allowed_races
+   - allowed_professions
+   - SO range modifier or constraint
+   - attribute_modifiers
+   - derived_value_modifiers
+   - automatic advantages/disadvantages
+   - common or automatic special abilities
+   - talent_modifiers
+   - language/script entries
+   - equipment/clothing hints
+   - name-generation tables
+   - forbidden / unsuitable advantages and disadvantages
+
+3. Profession
+   Fields:
+   - id
+   - display_name
+   - source_page
+   - gp_cost
+   - allowed_races/cultures or compatibility tags
+   - requirements: minimum/maximum attributes, SO range, gender restrictions if present, magical prerequisites, cultural prerequisites
+   - automatic advantages/disadvantages
+   - optional choices inside the profession, for example "choose one of X talents" or "Gold Greed 5 or Curiosity 5"
+   - SO min/max
+   - talent_modifiers
+   - spell_modifiers
+   - special abilities: automatic, discounted, optional
+   - starting equipment
+   - magical status: mundane, quarter-caster, half-caster, full-caster, elf, guild magician, etc.
+
+4. Advantage / Disadvantage
+   Fields:
+   - id
+   - name
+   - gp_cost or gp_refund
+   - type: advantage/disadvantage
+   - levels/rating if any
+   - can_be_chosen_at_generation_only: true/false
+   - prerequisites
+   - incompatible_with
+   - race/culture/profession restrictions
+   - mechanical effects: attribute mods, derived-value mods, regeneration mods, talent category changes, spell effects, social effects
+   - max/min rating
+   - auto_only flag for traits that should not be freely chosen
+
+5. Talent
+   Fields:
+   - id
+   - name
+   - group: combat, physical, social, nature, lore, language/script, artisan
+   - test_attributes: three attributes
+   - basic_or_specialized
+   - activation_cost
+   - advancement_column
+   - effective_encumbrance_formula
+   - prerequisites
+   - related_talents
+   - is_combat_talent: true/false
+   - combat_type: melee, ranged, unarmed, jousting, etc.
+
+6. Spell
+   Fields:
+   - id
+   - name
+   - representation/origin: guild magic, elven heritage, etc.
+   - test_attributes
+   - complexity / advancement column
+   - activation_cost
+   - allowed_for_magician / elf / magical dabbler, etc.
+   - maximum_starting_SP
+   - source
+   - spell metadata: casting time, cost, range, duration, target, RM applies, etc.
+
+7. Special Ability
+   Fields:
+   - id
+   - name
+   - gp_cost_at_creation or AP cost equivalent
+   - prerequisites
+   - automatic_for
+   - discounted_for
+   - incompatible_with
+   - mechanical effects
+
+8. Equipment
+   Fields:
+   - id
+   - name
+   - category
+   - cost
+   - weight
+   - availability tags
+   - weapon stats if weapon
+   - armor stats if armor
+   - allowed_for / typical_for tags
+
+Generation algorithm in detail
+------------------------------
+
+Step 0: Choose generation mode
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Add modes such as:
+- Fully random legal hero.
+- Weighted random legal hero.
+- User-constrained random hero, e.g. "human rogue", "dwarf warrior", "magical only".
+- Archetype-biased hero, e.g. fighter, thief, scholar, wilderness, social, healer, caster.
+
+Every mode should still run the same legality checks.
+
+Step 1: Concept selection
+~~~~~~~~~~~~~~~~~~~~~~~~~
+This is not purely mechanical, but for an app it should become a weighted profile:
+
+Example concept tags:
+- combat_frontliner
+- combat_skirmisher
+- ranged
+- stealth
+- social
+- wilderness
+- scholar
+- healer
+- sailor
+- rogue/criminal
+- noble/knightly
+- magical_guild
+- magical_elven
+- magical_dabbler
+
+The concept should weight race/culture/profession choices, attributes, talents, and equipment.
+
+Step 2: Race / species
+~~~~~~~~~~~~~~~~~~~~~~
+The Basic Rules race list includes:
+- Middenrealmians / Mittelländer
+- Tulamides
+- Thorwalians
+- Dwarfs / Angroshim, especially Anvil Dwarfs in the Basic Rules culture list
+- Elves / Fey, especially Lea-Elves / Auelfen in the Basic Rules culture list
+- Half-Elves
+
+Race does not merely describe appearance. It can define:
+- GP cost.
+- Allowed cultures.
+- Physical appearance rules.
+- Derived-value modifiers, e.g. VP, EP, RM, ASP.
+- Automatic advantages/disadvantages.
+- Suitable and unsuitable advantages/disadvantages.
+- Talent modifiers.
+- Magical status, especially for elves and half-elves.
+
+Basic race to culture compatibility from the Basic Rules:
+- Middenrealmians: Middenrealm Cities, Andergast/Nostria, Bornland, Horasian Empire, Southern Aventuria.
+- Tulamides: Tulamidian City-States, Novadis, Southern Aventuria.
+- Thorwalians: Thorwal; rarely Middenrealm Cities, Andergast/Nostria, Southern Aventuria.
+- Dwarfs: Anvil Dwarfs.
+- Elves: Lea-Elves.
+- Half-Elves: Lea-Elves, Andergast/Nostria, Bornland, Middenrealm Cities, Horasian Empire.
+
+Implementation note:
+Represent compatibility as allowed_cultures on Race and allowed_races on Culture. Validate both directions.
+
+Step 3: Culture
+~~~~~~~~~~~~~~~
+The Basic Rules culture list includes:
+- Middenrealm Cities
+- Andergast/Nostria
+- Bornland
+- Horasian Empire
+- Tulamidian City-States
+- Novadis
+- Thorwal
+- Southern Aventuria
+- Anvil Dwarfs
+- Lea-Elves
+
+Culture can define:
+- GP cost.
+- Allowed professions.
+- Automatic language and script entries.
+- Talent modifiers.
+- Cultural equipment and clothing assumptions.
+- Social Standing ranges or expectations.
+- Automatic or discounted special abilities.
+- Advantage/disadvantage restrictions.
+
+Basic culture to profession compatibility from the Basic Rules summary table:
+- Middenrealm Cities: Messenger, Burglar, Explorer, Mountebank, Hunter, Warrior, Scout, Magician, Pirate, Knight, Mercenary, Rogue, Physician.
+- Andergast/Nostria: Messenger, Burglar, Explorer, Mountebank, Hunter, Warrior, Scout, Magician, Pirate, Knight, Mercenary, Rogue, Physician.
+- Bornland: Messenger, Burglar, Explorer, Mountebank, Hunter, Warrior, Scout, Magician, Pirate, Knight, Mercenary, Rogue, Physician.
+- Horasian Empire: Messenger, Burglar, Explorer, Mountebank, Hunter, Warrior, Magician, Pirate, Mercenary, Rogue, Physician.
+- Tulamidian City-States: Messenger, Burglar, Explorer, Mountebank, Warrior, Magician, Pirate, Mercenary, Rogue, Physician.
+- Novadi men: Messenger, Mountebank, Warrior, Scout, Magician, Mercenary, Rogue, Physician.
+- Novadi women: Explorer, Mountebank, Scout, Rogue, Physician.
+- Thorwal: Messenger, Explorer, Mountebank, Hunter, Warrior, Scout, Magician, Pirate, Mercenary, Rogue, Physician.
+- Southern Aventuria: Messenger, Burglar, Explorer, Mountebank, Hunter, Warrior, Scout, Magician, Pirate, Mercenary, Rogue, Physician. Check exact Basic Rules entry when encoding.
+- Anvil Dwarfs: primarily dwarf-compatible professions; check exact profession list in the race/culture table.
+- Lea-Elves: elven professions such as Legend Singer and Ranger; check exact list.
+
+Implementation note:
+Do not only filter by broad category. Some professions may be legal but rare; store weights separately from legality.
+
+Step 4: Profession
+~~~~~~~~~~~~~~~~~~
+The Basic Rules profession list includes:
+- Messenger
+- Burglar
+- Explorer
+- Mountebank
+- Hunter
+- Warrior
+- Scout
+- Magician
+- Pirate
+- Knight
+- Mercenary
+- Rogue
+- Physician
+- Elven professions: Legend Singer, Ranger
+
+A profession represents formal or informal training. It can define:
+- GP cost.
+- Attribute requirements.
+- SO range.
+- Automatic disadvantages or choices among disadvantages.
+- Talent modifiers.
+- Spell modifiers.
+- Automatic and discounted special abilities.
+- Starting equipment.
+- Magical status and spell access.
+
+Example from the German Basic Rules, summarized, not copied:
+A Burglar requires strong physical agility/dexterity prerequisites, has an SO range, gains criminal/stealth/climbing/lock-related talents, and must choose an appropriate automatic flaw such as greed/curiosity. This demonstrates why professions must be encoded as structured data with nested choices.
+
+Implementation pattern for professions:
+
+profession.requirements = [
+  {type: "attribute_min", attr: "CO", value: 12},
+  {type: "attribute_min", attr: "DE", value: 13},
+  {type: "attribute_min", attr: "AG", value: 12},
+  {type: "SO_range", min: 2, max: 10}
+]
+
+profession.choice_blocks = [
+  {
+    id: "automatic_disadvantage_choice",
+    choose: 1,
+    options: [
+      {disadvantage: "Gold Greed", rating: 5},
+      {disadvantage: "Curiosity", rating: 5}
+    ]
+  }
+]
+
+Step 5: Attributes and Social Standing
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+There are eight attributes:
+CO, CL, IN, CH, DE, AG, CN, ST.
+
+Starting attribute purchase principle:
+- Each attribute point normally costs 1 GP.
+- The sum spent on attributes is therefore the sum of the eight final starting attribute values before later experience increases.
+- Profession prerequisites must be met.
+- Race/culture/profession may affect allowed ranges or required values.
+- Some advantages/disadvantages may alter limits or values.
+
+Typical Basic Rules starting examples use attributes around 8-14, with higher values used to satisfy profession requirements. For robust generation, implement configurable global min/max and per-race/profession min/max instead of hard-coding a single range.
+
+SO / Social Standing:
+- SO is bought with GP during character creation.
+- Profession and culture can restrict SO.
+- Some concepts should bias SO: noble/knightly/magician higher, burglar/rogue variable, wilderness lower, etc.
+- SO affects starting money and social plausibility.
+
+Random-generation strategy:
+1. Pick profession first or race/culture/profession as a compatible chain.
+2. Set minimum attributes to satisfy race/culture/profession requirements.
+3. Assign concept-weighted remaining GP to attributes.
+4. Pick SO within the allowed range, weighted by concept.
+5. Check GP balance.
+
+Step 6: Advantages and disadvantages
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Advantages cost GP. Disadvantages give GP back. Some are automatic from race, culture, or profession and are already included in that package's cost; do not charge/refund them twice unless the rule entry explicitly says otherwise.
+
+Important implementation rules:
+- Keep chosen advantages/disadvantages separate from automatic ones.
+- Every advantage/disadvantage must have prerequisites and incompatibilities.
+- Some traits have ratings, for example a disadvantage at rating 5.
+- Some are unsuitable or forbidden for certain races/cultures/professions.
+- Some modify derived values, talents, spell access, regeneration, combat, social interaction, or advancement columns.
+- Some represent magical status, e.g. full caster, quarter caster, supernatural talent access.
+
+For random generation:
+- Generate disadvantages only if needed to balance GP or to match concept.
+- Avoid absurd combinations by using thematic tags and incompatibility rules.
+- Limit total disadvantages according to the rulebook's constraints if encoding from a fuller DSA 4.1 source.
+- Automatic race/culture/profession traits should not count as random choices unless the rules say they may be increased or selected.
+
+Step 6a: Special abilities
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+Special Abilities can be:
+- automatic from race/culture/profession,
+- discounted by culture/profession,
+- bought during generation,
+- restricted by attributes, talents, magical status, culture, profession, or weapon group.
+
+For the app:
+- Store automatic_sas and discounted_sas in race/culture/profession.
+- Store purchasable_sas with prerequisites.
+- When generating combat heroes, weight combat SAs.
+- When generating spellcasters, weight magical SAs.
+- Never add an SA before prerequisites are satisfied unless your generator also plans to raise the prerequisite value.
+
+Step 7: Talents
+~~~~~~~~~~~~~~~
+Talents represent trained capability. Each talent has:
+- a Talent Prowess value (TP),
+- three attributes used for Talent Tests,
+- a classification as Basic or Specialized,
+- an advancement/activation cost,
+- possible Effective Encumbrance (EEC) interaction,
+- possible prerequisites or related talents.
+
+Talent groups:
+- Combat talents.
+- Physical talents.
+- Social talents.
+- Nature talents.
+- Lore talents.
+- Languages and scripts.
+- Artisan talents.
+
+Race, culture, and profession add starting talent modifiers. Then the player may spend starting talent-generation points to raise talents. The exact point pool and cost columns must be encoded from the rulebook. A good data design should support:
+- Basic talents that always exist, even at 0 or negative values.
+- Specialized talents that may need activation before they can be raised.
+- Maximum starting TP limits.
+- Advancement columns A-H or equivalent.
+- Modifiers from advantages/disadvantages such as Aptitude/Incompetence.
+
+Important implementation warning:
+Do not treat all talents as equally available. Some require activation, some have prerequisites, and some are inappropriate or unavailable for certain starting heroes.
+
+Random-generation strategy:
+1. Apply all automatic talent modifiers from race + culture + profession.
+2. Create a target-priority map from concept and profession.
+3. Spend talent budget on high-priority talents first.
+4. Ensure profession-defining talents are not left absurdly low.
+5. Add language/script talents from culture automatically.
+6. Apply maximum starting value validation.
+
+Step 7a: Spell Prowess for magical heroes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Magical heroes use Spell Prowess (SP) for individual spells.
+
+Spell access depends on magical status and tradition:
+- Guild magicians have guild-magic spell access from their profession.
+- Elves have elven heritage/general spell access and usually cannot start with guild-magic spells unless a specific rule allows it.
+- Half-elves and magical dabblers require special handling.
+- Magical dabblers can have supernatural talents rather than normal full spell training.
+
+A spell entry should encode:
+- origin / representation,
+- test attributes,
+- activation cost,
+- advancement column,
+- maximum starting SP,
+- whether RM applies,
+- casting time, cost, range, target, duration,
+- whether the spell is available for this tradition.
+
+For generation:
+1. Determine caster type from race/profession/advantages.
+2. Apply automatic spells and starting SP from profession.
+3. Calculate spell budget if applicable.
+4. Activate and raise spells according to allowed tradition and cost column.
+5. Validate max starting SP and prerequisites.
+
+Step 8: Derived values
+~~~~~~~~~~~~~~~~~~~~~~
+Use German DSA 4.1 formulas as authority, displayed with English abbreviations.
+
+Rounding:
+- VP and EP: round up.
+- Combat base values: divide by 5 and round mathematically; .5 rounds up.
+- RM: use mathematical rounding unless the specific table/rule says otherwise.
+
+Vitality Points / VP:
+VP = ceil((CN + CN + ST) / 2)
+   + race/culture/profession modifiers
+   + advantage/disadvantage modifiers such as Vigor / Low Vitality
+
+Endurance Points / EP:
+EP = ceil((CO + CN + AG) / 2)
+   + race/culture/profession modifiers
+   + advantage/disadvantage modifiers such as Enduring / Short-Winded
+
+Wound Threshold:
+Wound Threshold = CN / 2
+   + advantage/disadvantage modifiers such as Iron / Glass Bones
+Apply the rulebook's rounding convention when encoding the exact implementation.
+
+Base Attack:
+Base AT = round((CO + AG + ST) / 5)
+
+Base Parry:
+Base PA = round((IN + AG + ST) / 5)
+
+Base Ranged:
+Base Ranged = round((IN + DE + ST) / 5)
+
+Base Initiative:
+Base INI = round((CO + CO + IN + AG) / 5)
+         + modifiers such as Combat Reflexes
+Actual combat INI is later modified by armor, weapon, and a die roll.
+
+Resistance to Magic / RM:
+RM = round((CO + CL + CN) / 5)
+   + race/culture/profession modifiers
+   + advantage/disadvantage modifiers
+The German rules use MR; the English Basic Rules call this Resistance to Magic. Use RM in the UI if following the English book.
+
+Astral Energy / ASP:
+Only magical characters have ASP.
+Typical Basic Rules formula:
+ASP = ceil((CO + IN + CH) / 2)
+    + magical-status/profession modifiers
+    + race/culture modifiers
+    + advantages/disadvantages such as Astral Power or Astral Block
+Examples in the English Basic Rules show additional ASP from magician/full-caster status and magical advantages.
+
+Starting money:
+German DSA 4.1 Basisregelwerk formula:
+Starting money = SO x SO silver thalers.
+English TDE Basic Rules uses farthings in its older translation, but for DSA 4.1 German Basic Rules use the German formula above as authority.
+
+Step 9: Attack and Parry values
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Each combat talent has a TP value. For melee combat talents:
+- Split the combat talent's TP between AT and PA.
+- Add the AT share to Base AT.
+- Add the PA share to Base PA.
+- The difference between the allocated AT share and PA share may not exceed 5.
+- Once chosen, the split is fixed for that combat talent.
+
+Examples:
+- If a melee talent has TP 9, legal splits include 7/2, 6/3, 5/4, 4/5, 3/6, 2/7.
+- Illegal: 9/0, 8/1, 1/8, 0/9 because the difference is greater than 5.
+
+For ranged combat talents:
+- There is no PA.
+- Ranged AT = Base Ranged + ranged combat talent TP.
+
+For jousting or attack-only combat forms:
+- Add all TP to the relevant attack base according to the specific rule.
+
+For random generation:
+- Offensive concept: bias AT share higher but respect max difference 5.
+- Defensive concept: bias PA share higher.
+- Balanced concept: split evenly.
+- Untrained/low TP: make sensible splits and avoid negative or nonsensical output.
+
+Step 10: Equipment
+~~~~~~~~~~~~~~~~~~
+Starting equipment comes from:
+- Profession automatic equipment.
+- Starting money from SO.
+- Advantages such as Equipment or Special Possession, if chosen.
+- Cultural/geographical plausibility.
+
+German DSA 4.1 starting money:
+Starting money = SO x SO silver thalers.
+
+The rulebook recommends converting at least half of starting money into equipment; wilderness characters should usually spend almost all of it because coin is less useful in the wild.
+
+For app generation:
+- Always include profession-granted equipment.
+- Buy weapons appropriate to the hero's combat talents.
+- Buy armor appropriate to profession, culture, SO, magic restrictions, and EC tolerance.
+- Buy tools that support top talents, for example lockpicks for burglars, healer kit for physicians, navigation gear for explorers, etc.
+- Avoid gear that contradicts culture, SO, or profession unless the character concept deliberately supports it.
+- Calculate AR, EC, weapon damage, weapon modifiers, reach/distance class, weight, and cost from data files.
+
+Validation rules
+----------------
+A generated character is legal only if all of the following pass:
+
+GP validation:
+- Starts from 110 GP.
+- Subtract race/culture/profession/attribute/SO/advantage/SA/etc. costs.
+- Add GP from chosen disadvantages.
+- Do not double-count automatic race/culture/profession traits.
+- Final balance is exactly 0.
+
+Compatibility validation:
+- Race allows culture.
+- Culture allows race.
+- Culture allows profession.
+- Profession allows race/culture/gender/magical status.
+
+Prerequisite validation:
+- All profession attribute minimums met.
+- All SO ranges met.
+- All advantage/disadvantage prerequisites met.
+- All SA prerequisites met.
+- All talent and spell activation prerequisites met.
+
+Incompatibility validation:
+- No mutually exclusive advantages/disadvantages.
+- No forbidden advantage/disadvantage for chosen race/culture/profession.
+- No magical-status contradictions, e.g. mundane-only plus full caster.
+
+Budget validation:
+- Talent-generation budget not exceeded.
+- Spell-generation budget not exceeded.
+- Equipment budget not exceeded unless a rule grants extra equipment.
+
+Maximum validation:
+- Attribute min/max respected.
+- Talent maximum starting values respected.
+- Spell maximum starting values respected.
+- Advantage/disadvantage rating limits respected.
+- Any total-disadvantage cap respected if encoded from the complete rules.
+
+Derived value validation:
+- VP, EP, ASP, RM, INI, base AT/PA/Ranged recalculated after all modifiers.
+- Combat AT/PA split legal.
+- Armor EC and weapon modifiers applied only to final combat stats where appropriate.
+
+Suggested random-generation algorithm
+-------------------------------------
+
+Pseudo-code:
+
+function generateHero(constraints):
+    load rules_data
+
+    concept = chooseConcept(constraints)
+
+    repeat until valid or max_attempts reached:
+        gp = 110
+        hero = new Hero()
+
+        race = weightedChoose(races satisfying constraints and concept)
+        applyRace(hero, race)
+        gp -= race.gp_cost
+
+        culture = weightedChoose(cultures compatible with race and concept)
+        applyCulture(hero, culture)
+        gp -= culture.gp_cost
+
+        profession = weightedChoose(professions compatible with race+culture+concept)
+        applyProfession(hero, profession)
+        gp -= profession.gp_cost
+
+        chooseAttributeTargets(hero, profession.requirements, concept, gp)
+        gp -= sum(hero.attributes.values())
+
+        chooseSO(hero, profession.SO_range, culture.SO_rules, concept)
+        gp -= hero.SO
+
+        applyAutomaticTraits(hero)  // no extra GP unless explicitly required
+
+        chooseAdvantages(hero, concept, remaining_gp=gp)
+        gp -= chosen_advantage_costs
+
+        chooseDisadvantages(hero, concept, needed_gp=-gp or thematic_budget)
+        gp += chosen_disadvantage_refunds
+
+        chooseSpecialAbilities(hero, concept, gp)
+        gp -= chosen_SA_costs
+
+        if gp != 0:
+            repairGP(hero, gp)  // adjust SO, advantages, disadvantages, optional SAs, or attributes
+
+        allocateTalents(hero, concept)
+        allocateSpellsIfMagical(hero, concept)
+        calculateDerivedValues(hero)
+        splitCombatTalents(hero, concept)
+        assignEquipment(hero, concept)
+
+        errors = validate(hero)
+        if no errors:
+            return hero
+
+    throw GenerationFailed(errors_summary)
+
+Repair strategy:
+- If gp is negative, add legal disadvantages, lower SO, remove optional advantages/SAs, or lower non-required attributes.
+- If gp is positive, add fitting advantages/SAs, raise SO within allowed range, raise attributes, or reduce disadvantages.
+- Recalculate after every repair.
+
+Data model suggestions
+----------------------
+Use JSON/YAML tables rather than code constants.
+
+Example race schema:
+
+{
+  "id": "middenrealmian",
+  "name": "Middenrealmian",
+  "gp_cost": 0,
+  "allowed_cultures": ["middenrealm_cities", "andergast_nostria", "bornland", "horasian_empire", "southern_aventuria"],
+  "derived_modifiers": {"VP": 10, "EP": 10, "RM": -4},
+  "talent_modifiers": {},
+  "automatic_advantages": [],
+  "automatic_disadvantages": [],
+  "source": "DSA 4.1 Basisregelwerk"
+}
+
+Example profession schema:
+
+{
+  "id": "burglar",
+  "name": "Burglar",
+  "gp_cost": 0,
+  "requirements": [
+    {"type": "attribute_min", "attr": "CO", "value": 12},
+    {"type": "attribute_min", "attr": "DE", "value": 13},
+    {"type": "attribute_min", "attr": "AG", "value": 12},
+    {"type": "SO_range", "min": 2, "max": 10}
+  ],
+  "choice_blocks": [
+    {"choose": 1, "options": [
+      {"disadvantage": "Gold Greed", "rating": 5},
+      {"disadvantage": "Curiosity", "rating": 5}
+    ]}
+  ],
+  "talent_modifiers": {
+    "daggers": 3,
+    "wrestling": 1,
+    "throwing_knives": 1,
+    "climb": 6,
+    "body_control": 5,
+    "sneak": 5,
+    "hide": 5,
+    "pick_pockets": 2
+  },
+  "starting_equipment": ["dark_clothes", "hooded_cloak", "gloves", "lockpicks", "rope_grappling_hook", "hidden_dagger"]
+}
+
+Use a generic requirement expression system:
+
+Requirement examples:
+- attr.CO >= 12
+- attr.DE >= 13
+- SO between 2 and 10
+- culture in [x, y, z]
+- race != elf
+- has_advantage("Spellcaster")
+- not has_disadvantage("Low Resistance to Magic")
+- talent.daggers >= 7
+- gender == male OR culture != novadi OR profession in female_allowed_list
+
+Use a generic effect system:
+
+Effect examples:
+- add_derived("VP", +10)
+- add_derived("RM", -4)
+- add_talent("climb", +6)
+- add_spell("balm_of_healing", +7)
+- set_SO_range(2, 10)
+- add_automatic_disadvantage("Gold Greed", 5)
+- add_discounted_SA("Combat Reflexes", 50%)
+
+Edge cases and restrictions to encode
+-------------------------------------
+
+1. Automatic traits are not optional unless the source says choose one.
+2. Some entries contain "choose one of these" or "choose X of Y" blocks. Encode these explicitly.
+3. Some cultures/professions split by gender or social structure, e.g. Novadi male/female profession compatibility.
+4. Half-elves need special handling depending on upbringing: human-raised, elf-raised, trained as magician, or magical dabbler.
+5. Magical dabbler professions are limited. In the Basic Rules, several mundane professions can additionally be magical dabblers; encode profession eligibility.
+6. Elves and guild magicians use different spell access and progression assumptions.
+7. Armor and magic restrictions matter: metal armor can interfere with magic in DSA, so do not randomly equip magicians like warriors unless rules and concept allow it.
+8. Weapon-specific stats and combat talent mapping are many-to-many: a short sword may be usable with different combat talents depending on the weapon entry.
+9. Language/script talents should be generated from race/culture/profession rather than from random profession skills only.
+10. Some special abilities are free/automatic for some professions and merely discounted for others.
+
+Minimum content dataset for a useful first version
+--------------------------------------------------
+To make the app useful without encoding all DSA 4.1 supplements, start with the Basic Rules only:
+
+Races:
+- Middenrealmian
+- Tulamide
+- Thorwalian
+- Dwarf
+- Elf
+- Half-Elf
+
+Cultures:
+- Middenrealm Cities
+- Andergast/Nostria
+- Bornland
+- Horasian Empire
+- Tulamidian City-States
+- Novadis
+- Thorwal
+- Southern Aventuria
+- Anvil Dwarfs
+- Lea-Elves
+
+Professions:
+- Messenger
+- Burglar
+- Explorer
+- Mountebank
+- Hunter
+- Warrior
+- Scout
+- Magician
+- Pirate
+- Knight
+- Mercenary
+- Rogue
+- Physician
+- Legend Singer
+- Ranger
+
+Talent groups:
+- all Basic Rules talents, grouped and tagged by advancement/activation rules.
+
+Spells:
+- only the Basic Rules spell list for first version, or optionally use Liber Cantiones later as an expanded spell database.
+
+Output format suggestion
+------------------------
+A generated hero should output:
+
+1. Identity
+   - Name
+   - Race
+   - Culture
+   - Profession
+   - Gender
+   - Age
+   - Height/weight/appearance
+   - Concept tags
+
+2. GP accounting
+   - Start 110 GP
+   - Race cost
+   - Culture cost
+   - Profession cost
+   - Attributes cost
+   - SO cost
+   - Advantages cost
+   - Disadvantages refund
+   - Special abilities cost
+   - Final balance 0
+
+3. Attributes
+   - CO, CL, IN, CH, DE, AG, CN, ST
+   - SO
+
+4. Advantages/disadvantages
+   - automatic traits
+   - chosen traits
+   - ratings
+
+5. Talents
+   - grouped by category
+   - final TP values
+   - important test attributes
+
+6. Spells, if any
+   - spell name
+   - SP
+   - tradition/origin
+   - test attributes
+   - ASP cost summary
+
+7. Derived values
+   - VP, EP, ASP, RM
+   - Wound threshold
+   - Base AT, Base PA, Base Ranged, Base INI
+   - Speed if encoded
+
+8. Combat
+   - combat talents with AT/PA split
+   - ranged attack values
+   - weapons with damage, modifiers, reach/range
+   - armor with AR and EC
+
+9. Equipment and money
+   - profession equipment
+   - purchased equipment
+   - remaining money
+
+10. Validation notes
+   - all requirements met
+   - any unusual but legal choices explained
+
+Testing checklist
+-----------------
+Create unit tests for:
+
+- Race/culture compatibility.
+- Culture/profession compatibility.
+- Profession prerequisite failure.
+- GP final balance.
+- Automatic trait no double-cost/no double-refund.
+- Advantage/disadvantage incompatibility.
+- SO range enforcement.
+- Derived formulas with known examples.
+- Combat TP split legality.
+- Ranged combat calculation.
+- Spell access for magician vs elf vs magical dabbler.
+- Equipment budget and starting-money formula.
+
+Known formula reference block
+-----------------------------
+
+Start:
+GP_START = 110
+
+Derived:
+VP = ceil((CN + CN + ST) / 2) + modifiers
+EP = ceil((CO + CN + AG) / 2) + modifiers
+WOUND_THRESHOLD = CN / 2 + modifiers
+BASE_AT = round((CO + AG + ST) / 5)
+BASE_PA = round((IN + AG + ST) / 5)
+BASE_RANGED = round((IN + DE + ST) / 5)
+BASE_INI = round((CO + CO + IN + AG) / 5) + modifiers
+RM = round((CO + CL + CN) / 5) + modifiers
+ASP = ceil((CO + IN + CH) / 2) + magical modifiers, only for magical heroes
+STARTING_MONEY = SO * SO silver thalers
+
+Melee combat talent split:
+AT = BASE_AT + allocated_AT_points
+PA = BASE_PA + allocated_PA_points
+allocated_AT_points + allocated_PA_points = combat_talent_TP
+abs(allocated_AT_points - allocated_PA_points) <= 5
+
+Ranged combat:
+RANGED_AT = BASE_RANGED + ranged_combat_talent_TP
+
+Implementation priority
+-----------------------
+Build in this order:
+
+1. Core data model and validator.
+2. Race/culture/profession compatibility.
+3. GP accounting.
+4. Attribute/SO generation.
+5. Derived values.
+6. Talent aggregation from race/culture/profession.
+7. Combat AT/PA split.
+8. Advantages/disadvantages.
+9. Special abilities.
+10. Equipment.
+11. Magic/spells.
+12. Name/appearance generator.
+13. Export to JSON, Markdown, and printable character sheet.
+
+Practical warning
+-----------------
+A fully legal DSA 4.1 generator is mostly a data-entry and validation project, not a formula project. The formulas are manageable. The hard part is encoding all race/culture/profession package choices, prerequisites, exceptions, automatic traits, discounts, and advancement costs. Design the app so that adding a new supplement means adding data, not changing generator code.
