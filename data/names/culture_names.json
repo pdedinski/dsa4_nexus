@@ -1,0 +1,64 @@
+{
+  "meta": {
+    "schema_version": "1.0",
+    "description": "Sample first/last names per culture for random character naming. Curate from BRW; supplement after running scripts/extract_names.py on your licensed PDF.",
+    "source": "DSA 4.1 Basisregelwerk name examples + generic Aventuria flavor (not verbatim tables)"
+  },
+  "by_culture": {
+    "middenrealm_cities": {
+      "first_names_male": ["Wulfgrimm", "Rondrian", "Gorm", "Travius", "Bero", "Korvin", "Alrik", "Haldan", "Perinor", "Stenn"],
+      "first_names_female": ["Irmela", "Alrissa", "Meredith", "Sibille", "Thea", "Larissa", "Hanna", "Brunhilde", "Kora", "Elise"],
+      "last_names": ["Manaferson", "vom Dreistern", "von Neisbeck", "Weidenbach", "Stoerrebrandt", "Rohal", "Fasar", "Tannen", "Weissanger", "Korber"]
+    },
+    "andergast_nostria": {
+      "first_names_male": ["Ragulf", "Aldwin", "Bero", "Guntram", "Hasso", "Jaron", "Kuno", "Lothar", "Norwin", "Otfried"],
+      "first_names_female": ["Gisela", "Hedwig", "Irmgard", "Kriemhild", "Mechthild", "Richenza", "Swanhild", "Trude", "Walpurga", "Yrsa"],
+      "last_names": ["von Andergast", "von Nostria", "Rabensmund", "Steinfaust", "Wolfen", "Graufels", "Dorn", "Eberkopf", "Sturmwind", "Rotfuchs"]
+    },
+    "bornland": {
+      "first_names_male": ["Rondra", "Bork", "Drask", "Gorm", "Harkan", "Kjell", "Njord", "Ragnar", "Sten", "Torvald"],
+      "first_names_female": ["Astrid", "Brynja", "Eira", "Freya", "Greta", "Hilda", "Ingrid", "Katla", "Runa", "Sigrid"],
+      "last_names": ["Bornländer", "Frostauge", "Eisenschlag", "Wolfsklaue", "Nordwind", "Schneefell", "Eberhauer", "Sturmkind", "Blutkahn", "Trollfaust"]
+    },
+    "horasian_empire": {
+      "first_names_male": ["Quintian", "Septimus", "Cassius", "Marcus", "Tiberius", "Gaius", "Lucius", "Octavius", "Primus", "Valerius"],
+      "first_names_female": ["Livia", "Octavia", "Prisca", "Quintilla", "Servilia", "Tullia", "Valeria", "Aurelia", "Cornelia", "Flavia"],
+      "last_names": ["von Gareth", "Rondraiani", "Praiosian", "Nandus", "Efferd", "Boron", "Peraine", "Rahja", "Travia", "Ingerimm"]
+    },
+    "southern_aventuria": {
+      "first_names_male": ["Samir", "Karim", "Rashid", "Tariq", "Yusuf", "Amir", "Hakim", "Jamal", "Omar", "Zahir"],
+      "first_names_female": ["Aisha", "Fatima", "Layla", "Nadia", "Samira", "Yasmin", "Zara", "Leila", "Miriam", "Soraya"],
+      "last_names": ["al'Rashid", "ben Tulamid", "Schattenmeer", "Sandstern", "Wüstenrose", "Goldhandel", "Karawan", "Sonnenwind", "Palmenhof", "Südstern"]
+    },
+    "tulamidian_city_states": {
+      "first_names_male": ["Rashid", "Tariq", "Karim", "Amir", "Hakim", "Jamal", "Omar", "Zahir", "Malik", "Said"],
+      "first_names_female": ["Aisha", "Fatima", "Layla", "Nadia", "Samira", "Yasmin", "Zara", "Leila", "Miriam", "Soraya"],
+      "last_names": ["ibn Jafar", "al'Keshmet", "ben Rachid", "Suleiman", "Tulamidya", "Mhanadi", "Khayyam", "Rashund", "Al'Anfa", "Shahib"]
+    },
+    "novadis_men": {
+      "first_names_male": ["Achmed", "Farid", "Hassan", "Jamil", "Khalid", "Mahmud", "Nasir", "Omar", "Rashid", "Yusuf"],
+      "first_names_female": [],
+      "last_names": ["Achmad'sunni", "ben Novadi", "Wüstenfalke", "Sandläufer", "Sonnenspeer", "Dünenwind", "Karawanherr", "Rakhadan", "Shahib", "Mhanadi"]
+    },
+    "novadis_women": {
+      "first_names_male": [],
+      "first_names_female": ["Aisha", "Fatima", "Layla", "Miriam", "Nadia", "Samira", "Yasmin", "Zara", "Halima", "Safiya"],
+      "last_names": ["bint Novadi", "Wüstenrose", "Mondsilber", "Sternwacht", "Sandperle", "Rakhadan", "Shahib", "Mhanadi", "Al'Anfa", "Khayyam"]
+    },
+    "thorwal": {
+      "first_names_male": ["Eilif", "Gunnar", "Harald", "Ivar", "Leif", "Olaf", "Ragnar", "Sigurd", "Torsten", "Ulf"],
+      "first_names_female": ["Astrid", "Brynja", "Eira", "Freya", "Gudrun", "Hilda", "Ingrid", "Runa", "Sigrid", "Ylva"],
+      "last_names": ["Thorwalsson", "Wellenbrecher", "Drachenboot", "Sturmsegel", "Nordfrost", "Walross", "Seewolf", "Skald", "Runenstein", "Fischadler"]
+    },
+    "anvil_dwarves": {
+      "first_names_male": ["Borin", "Durin", "Gimbar", "Korgan", "Thorgrim", "Balin", "Dwalin", "Fundin", "Nori", "Ori"],
+      "first_names_female": ["Disa", "Frida", "Greta", "Hilda", "Inga", "Kara", "Runa", "Sigrid", "Thora", "Yrsa"],
+      "last_names": ["Steinfaust", "Ambosskind", "Feuerbart", "Goldader", "Hammerhand", "Erzsucher", "Tiefenschlag", "Angroschim", "Zwergeisen", "Kohlenauge"]
+    },
+    "lea_elves": {
+      "first_names_male": ["Aelindar", "Caelion", "Eldrin", "Faelar", "Gwindor", "Larethian", "Melian", "Nimrodel", "Orophin", "Thranduil"],
+      "first_names_female": ["Aelwen", "Celebrian", "Elbereth", "Finduilas", "Galadwen", "Lúthien", "Nimwen", "Tauriel", "Vanya", "Yavanna"],
+      "last_names": ["Lea", "Silberblatt", "Mondgesang", "Waldweise", "Sternenwind", "Taufrisch", "Eichenherz", "Nachtigall", "Fernsicht", "Liedweber"]
+    }
+  }
+}

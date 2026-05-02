@@ -18,6 +18,7 @@ import {
   Zap,
   Star,
   BookMarked,
+  UserCircle,
 } from "lucide-react";
 import clsx from "clsx";
 import { signOut } from "next-auth/react";
@@ -139,6 +140,26 @@ export default function Sidebar({
 
       {/* Nav */}
       <nav className="flex-1 overflow-y-auto py-3 px-2 space-y-1">
+        {/* Characters */}
+        <div className="mb-2">
+          <p className="px-2 py-1 text-xs font-semibold uppercase tracking-wider text-ink-muted">
+            Characters
+          </p>
+          <Link
+            href="/characters"
+            onClick={() => onNavigate?.()}
+            className={clsx(
+              "flex items-center gap-2 px-3 py-2 rounded-md text-sm transition-colors",
+              pathname === "/characters" || pathname.startsWith("/characters/")
+                ? "bg-brand-muted text-ink font-medium"
+                : "text-ink-muted hover:text-ink hover:bg-surface-card"
+            )}
+          >
+            <UserCircle className="w-3.5 h-3.5 shrink-0" />
+            My Characters
+          </Link>
+        </div>
+
         {/* CODEX section */}
         <div>
           <button

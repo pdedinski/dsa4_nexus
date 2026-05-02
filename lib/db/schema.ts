@@ -84,3 +84,31 @@ export const codexEntryVersions = pgTable(
 export type CodexEntryVersion = typeof codexEntryVersions.$inferSelect;
 export type InsertCodexEntryVersion =
   typeof codexEntryVersions.$inferInsert;
+
+// ── characters (saved PC sheets, per user) ───────────────────────────────────
+
+export const characters = pgTable(
+  "characters",
+  {
+    id: uuid("id").primaryKey(),
+    characterId: text("character_id").notNull(),
+    userId: uuid("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    name: text("name").notNull(),
+    sheet: jsonb("sheet").notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (t) => [
+    unique("characters_user_cid").on(t.userId, t.characterId),
+    index("characters_user_idx").on(t.userId),
+  ]
+);
+
+export type CharacterRow = typeof characters.$inferSelect;
+export type InsertCharacterRow = typeof characters.$inferInsert;

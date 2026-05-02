@@ -3,6 +3,14 @@
 :root {
   --font-display: "MedievalSharp", Georgia, serif;
   --font-body: system-ui, -apple-system, sans-serif;
+  /* Native form controls (esp. Windows + Chrome): pick dark system styling */
+  color-scheme: dark;
+}
+
+/* Native <select> dropdown lists: OS often ignores parent text color — force readable rows */
+select option {
+  background-color: #2c251f;
+  color: #f2e8dc;
 }
 
 * {

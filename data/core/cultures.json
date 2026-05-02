@@ -591,8 +591,11 @@
       "automatic_disadvantages": [
         {"id": "elvish_world_view", "note": "Designates Leittalente (marked L)"},
         {"id": "curiosity", "rating": 5},
-        {"id": "unworldly", "area": "possessions", "rating": 6},
-        {"id": "unworldly", "area": "religious_devotion", "rating": 6}
+        {
+          "id": "unworldly",
+          "rating": 6,
+          "note": "Two areas per BRW: possessions (ownership); religious devotion (blindly follows teachings)"
+        }
       ],
       "recommended_advantages": ["enduring", "fairy_friend", "danger_instinct"],
       "recommended_disadvantages": ["arrogance", "prejudice"],

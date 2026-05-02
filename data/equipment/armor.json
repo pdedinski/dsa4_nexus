@@ -471,6 +471,7 @@
       "cost": 25,
       "special": "Small fist shield. Worn on the forearm or held in the fist. Counts as improvised parry weapon. Can be used with most one-handed weapons.",
       "magic_restriction": false,
+      "at_modifier": 0,
       "pa_modifier": 1,
       "source": "BRW p. 165"
     },
@@ -487,6 +488,7 @@
       "cost": 35,
       "special": "Standard small round or oval shield. Grants PA bonus. Does not count as encumbrance if used with a one-handed weapon.",
       "magic_restriction": false,
+      "at_modifier": -1,
       "pa_modifier": 2,
       "source": "BRW p. 165"
     },
@@ -503,6 +505,7 @@
       "cost": 80,
       "special": "Standard kite or heater shield. Provides cover to part of torso (AR 1 against ranged attacks if held raised). Reduces INI by 1.",
       "magic_restriction": false,
+      "at_modifier": -2,
       "pa_modifier": 3,
       "source": "BRW p. 165"
     },
@@ -519,6 +522,7 @@
       "cost": 150,
       "special": "Tower or wall shield. Provides substantial cover (AR 1 against ranged attacks to front). Reduces INI by 2 and movement. Requires STR 14+ to use effectively.",
       "magic_restriction": false,
+      "at_modifier": -2,
       "pa_modifier": 4,
       "source": "BRW p. 165"
     },
@@ -535,6 +539,7 @@
       "cost": 200,
       "special": "Reinforced combat shield with metal boss and rim. Can be used offensively (shield bash: 1d6 DP). Requires STR 15+ to use effectively.",
       "magic_restriction": false,
+      "at_modifier": -2,
       "pa_modifier": 4,
       "source": "BRW p. 165"
     },
@@ -551,6 +556,7 @@
       "cost": 120,
       "special": "Medium shield with metal spikes. Can make offensive spike attacks: 1d6+1 DP. Spikes can catch weapons on critical hit, disarming opponent on failed STR check.",
       "magic_restriction": false,
+      "at_modifier": -2,
       "pa_modifier": 3,
       "source": "AA p. 97"
     }

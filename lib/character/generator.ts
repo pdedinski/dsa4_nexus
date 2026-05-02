@@ -1,0 +1,1015 @@
+import racesData from "@/data/core/races.json";
+import culturesData from "@/data/core/cultures.json";
+import professionsData from "@/data/core/professions.json";
+import spellsData from "@/data/magic/spells.json";
+import disadvantagesData from "@/data/character/disadvantages.json";
+import advantagesData from "@/data/character/advantages.json";
+import advancementCosts from "@/data/meta/advancement_costs.json";
+import conceptWeights from "@/data/concepts/concept_weights.json";
+import cultureNames from "@/data/names/culture_names.json";
+import armorData from "@/data/equipment/armor.json";
+import weaponsData from "@/data/equipment/weapons.json";
+import { ALL_TALENT_IDS, TALENT_INDEX } from "@/lib/talents/catalog";
+
+import {
+  spellActivationCost,
+  spellAdvancementStepCost,
+  talentActivationCost,
+  talentStepsCost,
+} from "./advancement";
+import type {
+  AttrCode,
+  CharacterSheet,
+  ConceptId,
+  GenerateCharacterInput,
+  SheetLoadout,
+  SheetLoadoutArmor,
+  SheetLoadoutWeapon,
+  SpellPriority,
+} from "./types";
+import { ATTR_CODES } from "./types";
+import {
+  allocateMeleeCombatTp,
+  meleeBiasForTalentFromWeapons,
+  normalizeConceptAtPaBias,
+  type WeaponBiasRow,
+} from "./meleeTpAllocation";
+
+const GP_START = 110;
+
+function dedupeIds(ids: readonly string[]): string[] {
+  const seen = new Set<string>();
+  const out: string[] = [];
+  for (const raw of ids) {
+    const t = typeof raw === "string" ? raw.trim() : "";
+    if (!t || seen.has(t)) continue;
+    seen.add(t);
+    out.push(t);
+  }
+  return out;
+}
+
+function resolveLoadout(input: GenerateCharacterInput): SheetLoadout | undefined {
+  const weaponIdList = dedupeIds([
+    ...(input.weaponIds ?? []),
+    ...(input.primaryWeaponId ? [input.primaryWeaponId] : []),
+  ]);
+  const armorIdList = dedupeIds([
+    ...(input.armorIds ?? []),
+    ...(input.primaryArmorId ? [input.primaryArmorId] : []),
+  ]);
+
+  const weapons: SheetLoadoutWeapon[] = [];
+  for (const id of weaponIdList) {
+    const w = weaponsData.weapons.find((x) => x.id === id);
+    if (!w) continue;
+    weapons.push({
+      id: w.id,
+      name: w.name,
+      combatTalent: w.combat_talent ?? null,
+      damage: w.damage,
+      atModifier: typeof w.at_modifier === "number" ? w.at_modifier : 0,
+      paModifier: typeof w.pa_modifier === "number" ? w.pa_modifier : 0,
+      iniModifier: typeof w.ini_modifier === "number" ? w.ini_modifier : 0,
+    });
+  }
+
+  const armors: SheetLoadoutArmor[] = [];
+  for (const id of armorIdList) {
+    const a = armorData.armor.find((x) => x.id === id);
+    if (!a) continue;
+    armors.push({
+      id: a.id,
+      name: a.name,
+      ar: typeof a.ar === "number" ? a.ar : 0,
+      ec: typeof a.ec === "number" ? a.ec : 0,
+      iniModifier: typeof a.ini_modifier === "number" ? a.ini_modifier : 0,
+      category: typeof a.category === "string" ? a.category : undefined,
+      ...(typeof a.at_modifier === "number" ? { atModifier: a.at_modifier } : {}),
+      ...(typeof a.pa_modifier === "number" ? { paModifier: a.pa_modifier } : {}),
+    });
+  }
+
+  if (weapons.length === 0 && armors.length === 0) return undefined;
+  return {
+    ...(weapons.length ? { weapons } : {}),
+    ...(armors.length ? { armors } : {}),
+  };
+}
+
+/** Weapon WM rows for melee TP split (same id order as loadout weapons). */
+function collectWeaponBiasRows(input: GenerateCharacterInput): WeaponBiasRow[] {
+  const weaponIdList = dedupeIds([
+    ...(input.weaponIds ?? []),
+    ...(input.primaryWeaponId ? [input.primaryWeaponId] : []),
+  ]);
+  const rows: WeaponBiasRow[] = [];
+  for (const id of weaponIdList) {
+    const w = weaponsData.weapons.find((x) => x.id === id);
+    if (!w) continue;
+    rows.push({
+      combatTalent: w.combat_talent ?? null,
+      atModifier: typeof w.at_modifier === "number" ? w.at_modifier : 0,
+      paModifier: typeof w.pa_modifier === "number" ? w.pa_modifier : 0,
+    });
+  }
+  return rows;
+}
+
+function mulberry32(a: number) {
+  return function () {
+    let t = (a += 0x6d2b79f5);
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+function pick<T>(rng: () => number, arr: T[]): T {
+  return arr[Math.floor(rng() * arr.length)]!;
+}
+
+/** Concept file omits `languages_scripts`; give it a small default share. */
+function talentGroupPriorWeight(
+  group: string,
+  groupWeights: Record<string, number> | undefined
+): number {
+  const w = groupWeights?.[group];
+  if (typeof w === "number" && w > 0) return w;
+  if (group === "languages_scripts") return 0.08;
+  return 0.1;
+}
+
+const TALENT_BIAS_MIN = 1;
+const TALENT_BIAS_MAX = 3.5;
+
+/** Per-talent multipliers from concept_weights (stacked on group weight). */
+function normalizeTalentBias(
+  raw: unknown
+): Record<string, number> {
+  if (!raw || typeof raw !== "object") return {};
+  const out: Record<string, number> = {};
+  for (const [id, v] of Object.entries(raw as Record<string, unknown>)) {
+    if (typeof v !== "number" || !Number.isFinite(v) || v <= 0) continue;
+    out[id] = Math.min(TALENT_BIAS_MAX, Math.max(TALENT_BIAS_MIN, v));
+  }
+  return out;
+}
+
+/**
+ * Picks one talent to raise by +1 TP. Uneven but not degenerate: concept group
+ * weights bias the pool; optional per-talent multipliers from concept_weights;
+ * higher current TP gets extra weight (specialists).
+ */
+function pickWeightedTalentForStep(
+  rng: () => number,
+  candidateIds: string[],
+  talentTp: Map<string, number>,
+  groupWeights: Record<string, number> | undefined,
+  talentBias: Record<string, number> | undefined
+): string {
+  if (candidateIds.length === 1) return candidateIds[0]!;
+  const bias = talentBias ?? {};
+  const ws = candidateIds.map((id) => {
+    const def = TALENT_INDEX.get(id);
+    if (!def) return 0.05;
+    const tp = talentTp.get(id) ?? 0;
+    const g = talentGroupPriorWeight(def.group, groupWeights);
+    const b = bias[id] ?? 1;
+    const focus = (1 + tp * 0.45) ** 1.22;
+    return Math.max(0.05, g * b * focus * (0.55 + rng() * 0.9));
+  });
+  const total = ws.reduce((a, b) => a + b, 0);
+  let r = rng() * total;
+  for (let i = 0; i < candidateIds.length; i++) {
+    r -= ws[i]!;
+    if (r <= 0) return candidateIds[i]!;
+  }
+  return candidateIds[candidateIds.length - 1]!;
+}
+
+/** BRW / ENG: max starting TP = highest of the three test attributes + 3. */
+function maxStartingTpForTalent(
+  def: NonNullable<ReturnType<typeof TALENT_INDEX.get>>,
+  attrsFinal: CharacterSheet["attributesFinal"]
+): number {
+  const testA = (def.test_attributes ?? ["CL", "IN", "CH"]) as AttrCode[];
+  return Math.max(...testA.map((a) => attrsFinal[a] ?? 0), 0) + 3;
+}
+
+/**
+ * One legal TGP/AP spend on a talent: unknown basic = first step 0→1; unknown
+ * specialized = activation to TP 0 (counts toward 5 activations); otherwise
+ * one advancement step using the column table.
+ */
+function computeTalentSpend(
+  id: string,
+  talentTp: Map<string, number>,
+  cols: (typeof advancementCosts)["talent_columns"]["columns"],
+  attrsFinal: CharacterSheet["attributesFinal"],
+  activationsRemaining: number,
+  budget: number
+): { cost: number; nextTp: number; usesNewActivation: boolean } | null {
+  const def = TALENT_INDEX.get(id);
+  if (!def?.advancement_column) return null;
+  const col = def.advancement_column;
+  const maxTp = maxStartingTpForTalent(def, attrsFinal);
+  const tp = talentTp.get(id);
+
+  if (tp === undefined) {
+    if (def.is_basic) {
+      if (maxTp < 1) return null;
+      const cost = talentStepsCost(cols, col, 0, 1);
+      if (cost <= 0 || cost > budget) return null;
+      return { cost, nextTp: 1, usesNewActivation: false };
+    }
+    if (activationsRemaining <= 0) return null;
+    const act = talentActivationCost(cols, col);
+    if (act <= 0 || act > budget) return null;
+    return { cost: act, nextTp: 0, usesNewActivation: true };
+  }
+
+  if (tp >= maxTp) return null;
+  const cost = talentStepsCost(cols, col, tp, tp + 1);
+  if (cost <= 0 || cost > budget) return null;
+  return { cost, nextTp: tp + 1, usesNewActivation: false };
+}
+
+/** Languages/scripts need culture mother-tongue rules; omit from random pool. */
+function buildTalentSpendPool(mergedIds: string[]): string[] {
+  const out: string[] = [];
+  const seen = new Set<string>();
+  for (const id of mergedIds) {
+    if (seen.has(id)) continue;
+    seen.add(id);
+    out.push(id);
+  }
+  for (const id of ALL_TALENT_IDS) {
+    if (seen.has(id)) continue;
+    const d = TALENT_INDEX.get(id);
+    if (!d || d.group === "languages_scripts") continue;
+    seen.add(id);
+    out.push(id);
+  }
+  return out;
+}
+
+function raceAllowsCulture(race: (typeof racesData.races)[0], cultureId: string) {
+  const allowed = race.allowed_cultures.flatMap((c) =>
+    c === "novadis" ? (["novadis_men", "novadis_women"] as const) : [c]
+  );
+  return allowed.includes(cultureId);
+}
+
+function cultureAllowsProfession(
+  culture: (typeof culturesData.cultures)[0],
+  professionId: string
+) {
+  const list = culture.allowed_professions;
+  return list.includes(professionId);
+}
+
+function cultureAllowsRace(
+  culture: (typeof culturesData.cultures)[0],
+  raceId: string
+) {
+  return culture.allowed_races.includes(raceId);
+}
+
+function mergeTalentModifiers(
+  race: (typeof racesData.races)[0],
+  culture: (typeof culturesData.cultures)[0],
+  profession: (typeof professionsData.professions)[0]
+): Record<string, number> {
+  const m: Record<string, number> = {};
+  const add = (mod?: Record<string, number>) => {
+    if (!mod) return;
+    for (const [k, v] of Object.entries(mod)) m[k] = (m[k] ?? 0) + v;
+  };
+  add(race.talent_modifiers as unknown as Record<string, number> | undefined);
+  add(culture.talent_modifiers as unknown as Record<string, number> | undefined);
+  add(profession.talent_modifiers as unknown as Record<string, number> | undefined);
+  return m;
+}
+
+function professionSoRange(
+  profession: (typeof professionsData.professions)[0]
+): { min: number; max: number } {
+  const r = profession.requirements.find((x) => x.type === "SO_range") as
+    | { min: number; max: number }
+    | undefined;
+  return r ? { min: r.min, max: r.max } : { min: 1, max: 13 };
+}
+
+function professionAttrMins(
+  profession: (typeof professionsData.professions)[0]
+): Partial<Record<AttrCode, number>> {
+  const out: Partial<Record<AttrCode, number>> = {};
+  for (const req of profession.requirements) {
+    if (
+      req.type === "attr_min" &&
+      "attr" in req &&
+      "value" in req &&
+      typeof req.value === "number"
+    )
+      out[req.attr as AttrCode] = Math.max(
+        out[req.attr as AttrCode] ?? 0,
+        req.value
+      );
+  }
+  return out;
+}
+
+function applyAttrMods(
+  base: Record<AttrCode, number>,
+  race: (typeof racesData.races)[0],
+  culture: (typeof culturesData.cultures)[0]
+): Record<AttrCode, number> {
+  const out = { ...base };
+  const apply = (mod?: Record<string, number>) => {
+    if (!mod) return;
+    for (const [k, v] of Object.entries(mod)) {
+      if (ATTR_CODES.includes(k as AttrCode))
+        out[k as AttrCode] += v as number;
+    }
+  };
+  apply(
+    (race.attribute_modifiers ?? undefined) as Record<string, number> | undefined
+  );
+  apply(
+    (culture.attribute_modifiers ?? undefined) as
+      | Record<string, number>
+      | undefined
+  );
+  return out;
+}
+
+function solveAttributes(
+  rng: () => number,
+  minsNeeded: Partial<Record<AttrCode, number>>,
+  bias: Partial<Record<AttrCode, number>>
+): Record<AttrCode, number> {
+  const base: Record<AttrCode, number> = {
+    CO: 8,
+    CL: 8,
+    IN: 8,
+    CH: 8,
+    DE: 8,
+    AG: 8,
+    CN: 8,
+    ST: 8,
+  };
+  for (const a of ATTR_CODES) {
+    const need = minsNeeded[a] ?? 8;
+    base[a] = Math.max(8, Math.min(14, need));
+  }
+  let sum = ATTR_CODES.reduce((s, a) => s + base[a], 0);
+  const maxSum = 100;
+  while (sum < maxSum) {
+    const pool = ATTR_CODES.filter((a) => base[a] < 14);
+    if (pool.length === 0) break;
+    pool.sort(
+      (a, b) => (bias[b] ?? 0) + rng() * 0.1 - ((bias[a] ?? 0) + rng() * 0.1)
+    );
+    const a = pool[0]!;
+    base[a]++;
+    sum++;
+  }
+  return base;
+}
+
+function disadvantageRefundGP(d: (typeof disadvantagesData.disadvantages)[0]): number {
+  if (typeof d.gp_refund === "number") return Math.abs(d.gp_refund);
+  return 0;
+}
+
+function isFullCaster(
+  raceId: string,
+  professionId: string,
+  halfElfFullCaster: boolean
+): boolean {
+  if (professionId === "magician") return true;
+  if (raceId === "elf") return true;
+  if (raceId === "half_elf" && halfElfFullCaster) return true;
+  return false;
+}
+
+function spellApplicable(
+  spell: (typeof spellsData.spells)[0],
+  role: "guild_magician" | "elf"
+): boolean {
+  const tr = spell.traditions ?? [];
+  if (role === "guild_magician")
+    return tr.includes("guild_magic") || tr.includes("general");
+  return tr.includes("elven_heritage") || tr.includes("general");
+}
+
+function maxStartingSpForSpell(
+  spell: (typeof spellsData.spells)[0],
+  role: "guild_magician" | "elf"
+): number {
+  const tr = spell.traditions ?? [];
+  if (role === "guild_magician") {
+    if (tr.includes("elven_heritage") && !tr.includes("guild_magic"))
+      return Math.min(
+        spell.max_starting_sp ?? 7,
+        advancementCosts.spell_columns.max_starting_sp
+          .guild_magician_elven_spells
+      );
+    return Math.min(
+      spell.max_starting_sp ?? 10,
+      advancementCosts.spell_columns.max_starting_sp.guild_magician_guild_spells
+    );
+  }
+  if (tr.includes("elven_heritage"))
+    return Math.min(
+      spell.max_starting_sp ?? 10,
+      advancementCosts.spell_columns.max_starting_sp.elf_elven_heritage_spells
+    );
+  return Math.min(
+    spell.max_starting_sp ?? 10,
+    advancementCosts.spell_columns.max_starting_sp.elf_general_spells
+  );
+}
+
+/** Base weight for spell pick ordering; 0 = excluded unless fallback activates. */
+function spellPriorityBase(p?: SpellPriority): number {
+  if (p === "high") return 3;
+  if (p === "medium") return 2;
+  if (p === "low") return 1;
+  return 0;
+}
+
+export function needsSpellSelectionStep(
+  raceId: string,
+  professionId: string,
+  halfElfFullCaster: boolean
+): boolean {
+  return isFullCaster(raceId, professionId, halfElfFullCaster);
+}
+
+/** Lite spell rows for the creation wizard (client avoids loading full spells.json). */
+export function listSpellsForWizard(
+  raceId: string,
+  professionId: string,
+  halfElfFullCaster: boolean
+): { id: string; name: string; description: string; traditions: string[] }[] {
+  if (!isFullCaster(raceId, professionId, halfElfFullCaster)) return [];
+  const isGuildMagician = professionId === "magician";
+  const spellRole: "guild_magician" | "elf" = isGuildMagician
+    ? "guild_magician"
+    : "elf";
+  return spellsData.spells
+    .filter((s) => spellApplicable(s, spellRole))
+    .map((s) => ({
+      id: s.id,
+      name: s.name,
+      description: s.description ?? "",
+      traditions: s.traditions ?? [],
+    }));
+}
+
+export function generateCharacter(
+  input: GenerateCharacterInput,
+  seed?: number
+): CharacterSheet {
+  const rng = mulberry32(seed ?? Date.now() % 2147483647);
+  const notes: string[] = [];
+
+  const conceptPool = Object.keys(conceptWeights.concepts) as ConceptId[];
+  const concept: ConceptId =
+    input.conceptId === "random"
+      ? pick(rng, conceptPool.filter((c) => c !== "any")) || "any"
+      : (input.conceptId as ConceptId);
+  const weights =
+    conceptWeights.concepts[concept] ?? conceptWeights.concepts.any;
+
+  let race =
+    input.raceId === "random"
+      ? pick(rng, racesData.races)
+      : racesData.races.find((r) => r.id === input.raceId)!;
+  if (!race) throw new Error("Invalid race");
+
+  const culturesFiltered = culturesData.cultures.filter(
+    (c) => raceAllowsCulture(race, c.id) && cultureAllowsRace(c, race.id)
+  );
+  let culture =
+    input.cultureId === "random"
+      ? pick(rng, culturesFiltered)
+      : culturesData.cultures.find((c) => c.id === input.cultureId)!;
+  if (!culture || !raceAllowsCulture(race, culture.id)) {
+    culture = pick(rng, culturesFiltered);
+    notes.push("Culture invalid for race; picked compatible culture.");
+  }
+
+  const profs = professionsData.professions.filter((p) => {
+    if (!cultureAllowsProfession(culture, p.id)) return false;
+    const raceReq = p.requirements.find(
+      (r): r is { type: "race"; race: string } => r.type === "race"
+    );
+    if (raceReq && raceReq.race !== race.id) return false;
+    return true;
+  });
+  let profession =
+    input.professionId === "random"
+      ? pick(rng, profs.length ? profs : professionsData.professions)
+      : professionsData.professions.find((p) => p.id === input.professionId)!;
+  if (!profession || !cultureAllowsProfession(culture, profession.id)) {
+    profession = pick(rng, profs.length ? profs : professionsData.professions);
+    notes.push("Profession invalid for culture; picked compatible profession.");
+  }
+
+  const halfElfFullCaster = Boolean(input.halfElfFullCaster);
+  let raceGp = race.gp_cost ?? 0;
+  if (race.id === "half_elf" && halfElfFullCaster) raceGp += 8;
+
+  const cultureGp = culture.gp_cost ?? 0;
+  const professionGp = profession.gp_cost ?? 0;
+
+  const soRange = professionSoRange(profession);
+  const so = Math.min(
+    soRange.max,
+    Math.max(soRange.min, Math.floor(soRange.min + rng() * (soRange.max - soRange.min + 1)))
+  );
+  const soExtraGp = Math.max(0, so - soRange.min);
+
+  const minsAfterMods: Partial<Record<AttrCode, number>> = {};
+  const rawMins = professionAttrMins(profession);
+  const raceMod = (race.attribute_modifiers ?? {}) as Record<string, number>;
+  const cultMod = (culture.attribute_modifiers ?? {}) as Record<string, number>;
+  for (const a of ATTR_CODES) {
+    const req = rawMins[a];
+    if (req === undefined) continue;
+    const rm = raceMod[a] ?? 0;
+    const cm = cultMod[a] ?? 0;
+    minsAfterMods[a] = Math.max(8, Math.min(14, req - rm - cm));
+  }
+
+  const purchased = solveAttributes(
+    rng,
+    minsAfterMods,
+    (weights.attribute_bias ?? {}) as Partial<Record<AttrCode, number>>
+  );
+  const attrSum = ATTR_CODES.reduce((s, a) => s + purchased[a], 0);
+
+  let gp =
+    GP_START -
+    raceGp -
+    cultureGp -
+    professionGp -
+    attrSum -
+    soExtraGp;
+
+  const chosenAdvantages: CharacterSheet["chosenAdvantages"] = [];
+  const chosenDisadvantages: CharacterSheet["chosenDisadvantages"] = [];
+
+  const disPool = disadvantagesData.disadvantages.filter(
+    (d) =>
+      !d.auto_only &&
+      typeof d.gp_refund === "number" &&
+      !d.is_leveled &&
+      !d.is_magical
+  );
+
+  let disGpTotal = 0;
+  let badTraitGp = 0;
+  const tryDis = () => {
+    const candidates = disPool.filter((d) => {
+      const g = disadvantageRefundGP(d);
+      if (disGpTotal + g > 50) return false;
+      if (d.is_bad_trait && badTraitGp + g > 30) return false;
+      return true;
+    });
+    if (!candidates.length) return false;
+    const d = pick(rng, candidates);
+    const g = disadvantageRefundGP(d);
+    chosenDisadvantages.push({ id: d.id, name: d.name });
+    disGpTotal += g;
+    if (d.is_bad_trait) badTraitGp += g;
+    gp += g;
+    return true;
+  };
+
+  const advPool = advantagesData.advantages.filter(
+    (a): a is typeof a & { gp_cost: number } =>
+      !a.auto_only &&
+      typeof a.gp_cost === "number" &&
+      a.gp_cost > 0 &&
+      a.gp_cost <= 12
+  );
+
+  while (gp < 0) {
+    if (!tryDis()) {
+      notes.push("Could not balance GP deficit with disadvantages; clamping.");
+      gp = 0;
+      break;
+    }
+  }
+  while (gp > 0 && advPool.length) {
+    const affordable = advPool.filter((a) => a.gp_cost <= gp);
+    if (!affordable.length) break;
+    const a = pick(rng, affordable);
+    chosenAdvantages.push({ id: a.id, name: a.name });
+    gp -= a.gp_cost;
+  }
+  while (gp < 0) {
+    if (!tryDis()) {
+      notes.push("Could not finish GP balance after advantages.");
+      gp = 0;
+      break;
+    }
+  }
+  if (gp > 0)
+    notes.push(
+      `GP not fully spent (${gp} left); add advantages manually or lower attributes.`
+    );
+
+  const attrsFinalRecord = applyAttrMods(purchased, race, culture);
+  const attrsFinal = { ...attrsFinalRecord, SO: so } as CharacterSheet["attributesFinal"];
+
+  const CL = attrsFinal.CL;
+  const IN = attrsFinal.IN;
+  const CO = attrsFinal.CO;
+  const CN = attrsFinal.CN;
+  const ST = attrsFinal.ST;
+  const AG = attrsFinal.AG;
+  const CH = attrsFinal.CH;
+  const DE = attrsFinal.DE;
+
+  const VP =
+    Math.ceil((CN + CN + ST) / 2) +
+    (race.derived_modifiers?.VP ?? 0) +
+    (culture.derived_modifiers?.VP ?? 0) +
+    (profession.derived_modifiers?.VP ?? 0);
+  const EP =
+    Math.ceil((CO + CN + AG) / 2) +
+    (race.derived_modifiers?.EP ?? 0) +
+    (culture.derived_modifiers?.EP ?? 0) +
+    (profession.derived_modifiers?.EP ?? 0);
+  const WT = Math.ceil(CN / 2);
+  const baseAT = Math.round((CO + AG + ST) / 5);
+  const basePA = Math.round((IN + AG + ST) / 5);
+  const baseBRV = Math.round((IN + DE + ST) / 5);
+  const baseINI =
+    Math.round((CO + CO + IN + AG) / 5) +
+    (race.derived_modifiers &&
+    "INI" in race.derived_modifiers &&
+    typeof (race.derived_modifiers as { INI?: number }).INI === "number"
+      ? (race.derived_modifiers as { INI: number }).INI
+      : 0);
+  const cultRm = (culture.derived_modifiers as { RM?: number } | undefined)?.RM ?? 0;
+  const profRm = (profession.derived_modifiers as { RM?: number } | undefined)?.RM ?? 0;
+  const RM =
+    Math.round((CO + CL + CN) / 5) +
+    (race.derived_modifiers?.RM ?? 0) +
+    cultRm +
+    profRm;
+  const fullMagic = isFullCaster(race.id, profession.id, halfElfFullCaster);
+  const cultAsp =
+    (culture.derived_modifiers as { ASP?: number } | undefined)?.ASP ?? 0;
+  const profAsp =
+    (profession.derived_modifiers as { ASP?: number } | undefined)?.ASP ?? 0;
+  const ASP = fullMagic
+    ? Math.ceil((CO + IN + CH) / 2) +
+      (race.derived_modifiers?.ASP ?? 0) +
+      cultAsp +
+      profAsp
+    : 0;
+  const GS = 8;
+
+  const mergedTalents = mergeTalentModifiers(race, culture, profession);
+  const weaponBiasRows = collectWeaponBiasRows(input);
+  const tgpTotal = (CL + IN) * 20;
+  let tgpLeft = tgpTotal;
+  const talentRows: CharacterSheet["talents"] = [];
+  const talentTp = new Map<string, number>();
+  for (const [id, mod] of Object.entries(mergedTalents)) {
+    talentTp.set(id, mod);
+  }
+  const cols = advancementCosts.talent_columns.columns;
+  const groupWeights = weights.talent_group_weights as
+    | Record<string, number>
+    | undefined;
+  /** Concept file bias + extra weight on combat talents tied to wizard weapon picks. */
+  const WEAPON_COMBAT_TGP_NUDGE = 0.42;
+  const talentBias: Record<string, number> = {
+    ...normalizeTalentBias(weights.talent_bias),
+  };
+  for (const row of weaponBiasRows) {
+    const tid = row.combatTalent;
+    if (!tid) continue;
+    const def = TALENT_INDEX.get(tid);
+    if (!def || def.group !== "combat_talents") continue;
+    talentBias[tid] = (talentBias[tid] ?? 1) + WEAPON_COMBAT_TGP_NUDGE;
+  }
+
+  /** BRW p. 46: at most 5 new specialized-talent activations during creation. */
+  let activationsRemaining = 5;
+  const spendPool = buildTalentSpendPool(Object.keys(mergedTalents));
+  spendPool.sort(() => rng() - 0.5);
+
+  let tgpGuards = 0;
+  while (tgpLeft > 0 && tgpGuards++ < 150_000) {
+    const candidates = spendPool.filter((id) => {
+      const spend = computeTalentSpend(
+        id,
+        talentTp,
+        cols,
+        attrsFinal,
+        activationsRemaining,
+        tgpLeft
+      );
+      return spend !== null;
+    });
+    if (candidates.length === 0) break;
+    const id = pickWeightedTalentForStep(
+      rng,
+      candidates,
+      talentTp,
+      groupWeights,
+      talentBias
+    );
+    const spend = computeTalentSpend(
+      id,
+      talentTp,
+      cols,
+      attrsFinal,
+      activationsRemaining,
+      tgpLeft
+    )!;
+    tgpLeft -= spend.cost;
+    if (spend.usesNewActivation) activationsRemaining--;
+    talentTp.set(id, spend.nextTp);
+  }
+
+  const spells: CharacterSheet["spells"] = [];
+  let sgpTotal = (CL + IN) * 5;
+  let sgpLeft = sgpTotal;
+  let tgpConverted = 0;
+  const maxConvert = (CL + IN) * 10;
+  const isGuildMagician = profession.id === "magician";
+  const spellRole: "guild_magician" | "elf" = isGuildMagician
+    ? "guild_magician"
+    : "elf";
+
+  if (fullMagic) {
+    const pool = spellsData.spells.filter((s) => spellApplicable(s, spellRole));
+    type Scored = { s: (typeof pool)[0]; w: number; base: number };
+    const scored: Scored[] = pool.map((s) => {
+      const base = spellPriorityBase(input.spellPriorities?.[s.id]);
+      return { s, base, w: base + rng() * 0.01 };
+    });
+    let ranked = scored.filter((x) => x.base > 0);
+    if (ranked.length === 0) {
+      notes.push(
+        "All applicable spells were marked None for random allocation; used the full list with equal weight."
+      );
+      ranked = scored.map((x) => ({
+        s: x.s,
+        base: 1,
+        w: 1 + rng() * 0.01,
+      }));
+    }
+    ranked.sort((a, b) => b.w - a.w);
+    const maxActs = advancementCosts.spell_columns.max_activations_at_creation;
+    let acts = 0;
+    for (const { s } of ranked) {
+      if (acts >= maxActs) break;
+      const col = s.advancement_column ?? "A";
+      const act = spellActivationCost(
+        advancementCosts.spell_columns.columns,
+        col,
+        isGuildMagician
+      );
+      if (act > sgpLeft) {
+        const short = act - sgpLeft;
+        const take = Math.min(short, tgpLeft, maxConvert - tgpConverted);
+        if (take < short) continue;
+        tgpLeft -= take;
+        tgpConverted += take;
+        sgpLeft += take;
+      }
+      if (act > sgpLeft) continue;
+      sgpLeft -= act;
+      acts++;
+      const maxSp = maxStartingSpForSpell(s, spellRole);
+      let sp = 0;
+      while (sp < maxSp) {
+        const step = spellAdvancementStepCost(
+          advancementCosts.spell_columns.columns,
+          col,
+          sp,
+          sp + 1
+        );
+        if (step > sgpLeft) {
+          const need = step - sgpLeft;
+          const take = Math.min(need, tgpLeft, maxConvert - tgpConverted);
+          if (take < need) break;
+          tgpLeft -= take;
+          tgpConverted += take;
+          sgpLeft += take;
+        }
+        if (step > sgpLeft) break;
+        sgpLeft -= step;
+        sp++;
+      }
+      spells.push({
+        id: s.id,
+        name: s.name,
+        sp,
+        tradition: (s.traditions ?? []).join(","),
+        advancementColumn: col,
+      });
+    }
+  }
+
+  /** Total TGP removed from pool: talents, activations, and TGP→SGP conversion. */
+  const tgpSpent = tgpTotal - tgpLeft;
+
+  const sgpSpent = sgpTotal + tgpConverted - sgpLeft;
+
+  const extraApBudget = Math.max(0, Math.floor(input.extraAp ?? 0));
+  let extraLeft = extraApBudget;
+  /** Post-creation AP may only improve talents already on this hero (not the full catalog). */
+  const apSpendTalentIds = Array.from(talentTp.keys()).sort(() => rng() - 0.5);
+  let apGuards = 0;
+  while (extraLeft > 0 && apGuards++ < 80_000) {
+    const candidates = apSpendTalentIds.filter((id) => {
+      const spend = computeTalentSpend(
+        id,
+        talentTp,
+        cols,
+        attrsFinal,
+        activationsRemaining,
+        extraLeft
+      );
+      return spend !== null;
+    });
+    if (candidates.length === 0) break;
+    const id = pickWeightedTalentForStep(
+      rng,
+      candidates,
+      talentTp,
+      groupWeights,
+      talentBias
+    );
+    const spend = computeTalentSpend(
+      id,
+      talentTp,
+      cols,
+      attrsFinal,
+      activationsRemaining,
+      extraLeft
+    )!;
+    extraLeft -= spend.cost;
+    if (spend.usesNewActivation) activationsRemaining--;
+    talentTp.set(id, spend.nextTp);
+  }
+
+  for (const [id, tp] of talentTp.entries()) {
+    const def = TALENT_INDEX.get(id);
+    if (!def) continue;
+    talentRows.push({
+      id,
+      name: def.name,
+      group: def.group,
+      tp,
+      testAttributes: def.test_attributes ?? [],
+      advancementColumn: def.advancement_column ?? "D",
+      isBasic: def.is_basic,
+    });
+  }
+
+  const combatMelee: CharacterSheet["combatMelee"] = [];
+  const combatRanged: CharacterSheet["combatRanged"] = [];
+  const conceptBias = normalizeConceptAtPaBias(weights.at_pa_bias);
+  for (const [id, tp] of talentTp.entries()) {
+    const def = TALENT_INDEX.get(id);
+    if (!def || tp <= 0) continue;
+    if (def.combat_type === "melee") {
+      const meleeBias = meleeBiasForTalentFromWeapons(id, weaponBiasRows, conceptBias);
+      const { allocatedAT: at, allocatedPA: pa } = allocateMeleeCombatTp(tp, meleeBias);
+      combatMelee.push({
+        talentId: id,
+        talentName: def.name,
+        tp,
+        allocatedAT: at,
+        allocatedPA: pa,
+        finalAT: baseAT + at,
+        finalPA: basePA + pa,
+        combatType: "melee",
+      });
+    } else if (def.combat_type === "ranged") {
+      combatRanged.push({
+        talentId: id,
+        talentName: def.name,
+        tp,
+        finalAT: baseBRV + tp,
+      });
+    }
+  }
+
+  const gender =
+    input.gender === "random" || !input.gender
+      ? rng() < 0.5
+        ? "male"
+        : "female"
+      : input.gender;
+
+  const nameEntry =
+    cultureNames.by_culture[culture.id as keyof typeof cultureNames.by_culture];
+  let displayName = "Unnamed";
+  if (nameEntry) {
+    const first =
+      gender === "male"
+        ? pick(rng, nameEntry.first_names_male.length ? nameEntry.first_names_male : nameEntry.first_names_female)
+        : pick(rng, nameEntry.first_names_female.length ? nameEntry.first_names_female : nameEntry.first_names_male);
+    const last =
+      nameEntry.last_names.length > 0 ? pick(rng, nameEntry.last_names) : "";
+    displayName = last ? `${first} ${last}` : first;
+  }
+
+  const ageYears = 16 + Math.floor(rng() * 20) + (profession.time_consuming ? 3 : 0);
+  const heightCm =
+    race.id === "dwarf"
+      ? 128 + Math.floor(rng() * 13)
+      : 160 + Math.floor(rng() * 41);
+  const weightKg = Math.max(35, heightCm - (race.id === "dwarf" ? 80 : 100));
+
+  const header = {
+    displayName,
+    conceptId: concept,
+    raceId: race.id,
+    raceName: race.name,
+    cultureId: culture.id,
+    cultureName: culture.name,
+    professionId: profession.id,
+    professionName: profession.name,
+    gender,
+    ageYears,
+  };
+
+  const loadout = resolveLoadout(input);
+
+  const sheet: CharacterSheet = {
+    schemaVersion: 1,
+    header,
+    attributesPurchased: purchased,
+    attributesFinal: attrsFinal,
+    derived: {
+      VP,
+      EP,
+      WT,
+      baseAT,
+      basePA,
+      baseBRV,
+      baseINI,
+      RM,
+      ASP,
+      GS,
+    },
+    automaticAdvantages: (race.automatic_advantages ?? []) as CharacterSheet["automaticAdvantages"],
+    automaticDisadvantages: [
+      ...((race.automatic_disadvantages ?? []) as CharacterSheet["automaticDisadvantages"]),
+      ...((culture.automatic_disadvantages ?? []) as CharacterSheet["automaticDisadvantages"]),
+    ],
+    chosenAdvantages,
+    chosenDisadvantages,
+    specialAbilities: [
+      ...((culture.automatic_SAs ?? []) as CharacterSheet["specialAbilities"]),
+      ...((profession.automatic_SAs ?? []) as CharacterSheet["specialAbilities"]),
+    ],
+    talents: talentRows,
+    spells,
+    combatMelee,
+    combatRanged,
+    startingEquipment: profession.starting_equipment ?? [],
+    startingMoneySilbertaler: so * so,
+    physical: {
+      heightCm,
+      weightKg,
+      hair: "see race tables",
+      eyes: "see race tables",
+    },
+    budgets: {
+      gpStart: GP_START,
+      gpEnd: gp,
+      raceGp,
+      cultureGp,
+      professionGp,
+      attributeSumPurchased: attrSum,
+      soExtraGp,
+      extraApApplied: extraApBudget - extraLeft,
+      tgpTotal,
+      tgpSpent,
+      sgpTotal,
+      sgpSpent,
+      tgpConvertedToSgp: tgpConverted,
+    },
+    ...(loadout ? { loadout } : {}),
+    atPaBias: conceptBias,
+    notes,
+  };
+
+  return sheet;
+}

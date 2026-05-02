@@ -8,7 +8,7 @@ When changing schema, migrations, or SQL:
 - **`gen_random_uuid()`** is not available in core on 9.6 (only via `pgcrypto`, which is not used).
 - **JSONB** and **`INSERT … ON CONFLICT`** are valid on 9.6.
 
-Primary migration: [`migrations/0001_initial.sql`](./migrations/0001_initial.sql).
+Primary migrations: [`migrations/0001_initial.sql`](./migrations/0001_initial.sql), [`migrations/0002_characters.sql`](./migrations/0002_characters.sql) (saved PC sheets).
 
 **Check connectivity** (uses `DB_HOST`, `DB_NAME`, `DB_PASSWORD`, optional `DB_USER` / `DB_PORT` from `.env`):
 
