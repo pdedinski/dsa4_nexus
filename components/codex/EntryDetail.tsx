@@ -193,27 +193,93 @@ function SpellDetail({ p }: { p: Record<string, unknown> }) {
   const traditions = Array.isArray(p.traditions)
     ? (p.traditions as unknown[])
     : [];
+  const desc = str(p.description);
+  const descParas =
+    desc.length > 0
+      ? desc.split(/\n\n+/).filter((block) => block.trim().length > 0)
+      : [];
+
   return (
-    <div className="space-y-3">
-      {str(p.description) && (
-        <p className="text-ink text-sm leading-relaxed">{str(p.description)}</p>
+    <div className="space-y-4">
+      {descParas.length > 0 && (
+        <div className="space-y-2">
+          <div className="text-xs font-medium text-ink-muted uppercase tracking-wide">
+            Description
+          </div>
+          {descParas.map((block, i) => (
+            <p
+              key={i}
+              className="text-ink text-sm leading-relaxed whitespace-pre-wrap"
+            >
+              {block.trim()}
+            </p>
+          ))}
+        </div>
       )}
-      <div className="flex flex-wrap gap-2">
-        {attrs && <Stat label="Test" value={attrs} />}
-        {str(p.casting_time) && (
-          <Stat label="Casting Time" value={str(p.casting_time)} />
-        )}
-        {str(p.asp_cost) && <Stat label="ASP Cost" value={str(p.asp_cost)} />}
-        {str(p.range) && <Stat label="Range" value={str(p.range)} />}
-        {str(p.duration) && <Stat label="Duration" value={str(p.duration)} />}
-        {str(p.advancement_column) && (
-          <Stat label="Column" value={str(p.advancement_column)} />
-        )}
+
+      <div className="rounded-lg border border-surface-border bg-surface-sidebar/60 overflow-hidden">
+        <div className="px-3 py-2 text-xs font-medium text-ink-muted border-b border-surface-border bg-surface-border/50">
+          Casting and rules
+        </div>
+        <div className="px-3 py-2 space-y-0">
+          {str(p.german_name) && str(p.german_name) !== str(p.name) && (
+            <Row label="German name" value={str(p.german_name)} />
+          )}
+          {attrs && <Row label="Test" value={attrs} />}
+          {str(p.advancement_column) && (
+            <Row label="Advancement column" value={str(p.advancement_column)} />
+          )}
+          {(p.activation_cost_guild != null ||
+            p.activation_cost_elf != null) && (
+            <Row
+              label="Activation (guild / elf)"
+              value={`${p.activation_cost_guild ?? "—"} / ${p.activation_cost_elf ?? "—"}`}
+            />
+          )}
+          {p.max_starting_sp != null && (
+            <Row label="Max starting SP" value={str(p.max_starting_sp)} />
+          )}
+          {str(p.casting_time) && (
+            <Row label="Casting time" value={str(p.casting_time)} />
+          )}
+          {str(p.asp_cost) && <Row label="ASP cost" value={str(p.asp_cost)} />}
+          {str(p.range) && <Row label="Range" value={str(p.range)} />}
+          {str(p.duration) && <Row label="Duration" value={str(p.duration)} />}
+          {str(p.target) && <Row label="Target" value={str(p.target)} />}
+          <Row
+            label="Resist (RM)"
+            value={p.rm_applies === true ? "Yes" : p.rm_applies === false ? "No" : ""}
+          />
+          <Row
+            label="House spell"
+            value={
+              p.is_house_spell === true
+                ? "Yes"
+                : p.is_house_spell === false
+                  ? "No"
+                  : ""
+            }
+          />
+          {traditions.length > 0 && (
+            <Row label="Traditions" value={<Tags items={traditions} />} />
+          )}
+        </div>
       </div>
-      {traditions.length > 0 && (
-        <Row label="Traditions" value={<Tags items={traditions} />} />
+
+      {str(p.description_source) && (
+        <p className="text-xs text-ink-faint">
+          Text source:{" "}
+          <a
+            href={str(p.description_source)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-brand-light hover:underline break-all"
+          >
+            {str(p.description_source)}
+          </a>
+        </p>
       )}
-      {str(p.target) && <Row label="Target" value={str(p.target)} />}
+
       <Source src={p.source} />
     </div>
   );

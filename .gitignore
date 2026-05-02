@@ -1,5 +1,9 @@
 node_modules/
 .next/
 .env
+# Large generated LC extract + machine translations (regenerate via npm run data:*-lc-*)
+scripts/_lc_extracted.json
+scripts/_lc_translations.json
+
 TDE4_PDF_reference.txt
 TDE4_character_creation_from_scratch.txt

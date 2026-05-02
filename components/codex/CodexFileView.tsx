@@ -13,6 +13,23 @@ function combatTalentSectionLabel(talentKey: string): string {
   return talentKey.replace(/_/g, " ");
 }
 
+/** One-line preview for spell list rows (collapsed). */
+function spellListPreview(payload: Record<string, unknown>): string | null {
+  const test = Array.isArray(payload.test_attributes)
+    ? (payload.test_attributes as string[]).join(" / ")
+    : "";
+  const target = String(payload.target ?? "").trim();
+  const raw = String(payload.description ?? "").replace(/\s+/g, " ").trim();
+  const desc =
+    raw.length > 160 ? `${raw.slice(0, 157).trim()}…` : raw;
+  const bits = [
+    test ? `Test ${test}` : "",
+    target ? `Target ${target}` : "",
+    desc ? desc : "",
+  ].filter(Boolean);
+  return bits.length > 0 ? bits.join(" · ") : null;
+}
+
 interface CodexEntryCardProps {
   entry: ResolvedEntry;
   category: string;
@@ -39,6 +56,10 @@ function CodexEntryCard({
   const isOpen = expanded.has(entry.id);
   const name = (entry.payload.name as string | undefined) ?? entry.id;
   const germanName = entry.payload.german_name as string | undefined;
+  const spellPreview =
+    category === "magic" && fileKey === "spells"
+      ? spellListPreview(entry.payload as Record<string, unknown>)
+      : null;
 
   return (
     <div className="rounded-lg border border-surface-border bg-surface-card overflow-hidden">
@@ -93,6 +114,12 @@ function CodexEntryCard({
           </div>
         )}
       </div>
+
+      {!isOpen && spellPreview && (
+        <p className="px-4 pb-3 pl-11 text-xs text-ink-muted leading-snug line-clamp-3">
+          {spellPreview}
+        </p>
+      )}
 
       {isOpen && (
         <div className="border-t border-surface-border px-4 pb-4 pt-3">
