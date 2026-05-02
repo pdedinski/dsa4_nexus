@@ -245,7 +245,7 @@ export default function CodexFileView({
   // For advancement_costs (raw-only file)
   if (fileKey === "advancement_costs") {
     return (
-      <div className="p-6 max-w-4xl">
+      <div className="p-4 md:p-6 max-w-4xl">
         <PageHeader label={label} search={search} onSearch={setSearch} />
         <RawDataView raw={resolved.raw} />
       </div>
@@ -253,7 +253,7 @@ export default function CodexFileView({
   }
 
   return (
-    <div className="p-6 max-w-4xl">
+    <div className="p-4 md:p-6 max-w-4xl">
       <PageHeader label={label} search={search} onSearch={setSearch} />
 
       <p className="text-ink-muted text-xs mb-4">

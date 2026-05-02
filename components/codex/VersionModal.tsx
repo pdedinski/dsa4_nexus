@@ -176,7 +176,7 @@ function Modal({
   return (
     <CodexModalPortal>
       <div
-        className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-[#050403]/90 backdrop-blur-sm"
+        className="fixed inset-0 z-[200] flex items-center justify-center px-3 py-4 md:p-4 bg-[#050403]/90 backdrop-blur-sm"
         role="presentation"
       >
         <div

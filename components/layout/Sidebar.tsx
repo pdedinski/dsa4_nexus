@@ -22,7 +22,7 @@ import {
 import clsx from "clsx";
 import { signOut } from "next-auth/react";
 
-interface SidebarUser {
+export interface SidebarUser {
   id: string;
   name?: string | null;
   email?: string | null;
@@ -87,7 +87,14 @@ const FILE_LABELS: Record<string, string> = {
   social_talents: "Social",
 };
 
-export default function Sidebar({ user }: { user: SidebarUser }) {
+export default function Sidebar({
+  user,
+  onNavigate,
+}: {
+  user: SidebarUser;
+  /** Called after navigating via a sidebar link (e.g. to close the mobile drawer). */
+  onNavigate?: () => void;
+}) {
   const pathname = usePathname();
   const [codexOpen, setCodexOpen] = useState(true);
   const [expandedCategories, setExpandedCategories] = useState<Set<string>>(
@@ -177,6 +184,7 @@ export default function Sidebar({ user }: { user: SidebarUser }) {
                             <Link
                               key={fileKey}
                               href={href}
+                              onClick={() => onNavigate?.()}
                               className={clsx(
                                 "block px-2 py-1.5 rounded-md text-sm transition-colors",
                                 active
@@ -217,6 +225,7 @@ export default function Sidebar({ user }: { user: SidebarUser }) {
               <div className="mt-1 ml-4 border-l border-surface-border pl-3 space-y-0.5">
                 <Link
                   href="/manage/users"
+                  onClick={() => onNavigate?.()}
                   className={clsx(
                     "flex items-center gap-2 px-2 py-1.5 rounded-md text-sm transition-colors",
                     pathname === "/manage/users"

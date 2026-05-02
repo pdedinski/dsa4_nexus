@@ -7,7 +7,7 @@ export default async function ManageUsersPage() {
   if (!session) redirect("/codex");
 
   return (
-    <div className="p-6 max-w-5xl">
+    <div className="p-4 md:p-6 max-w-5xl">
       <h1 className="text-2xl font-bold text-ink mb-6">Manage Users</h1>
       <ManageUsersClient
         currentUserId={session.user.id}
