@@ -1,0 +1,122 @@
+{
+  "meta": {
+    "schema_version": "1.0",
+    "last_updated": "2026-05-02",
+    "description": "Social Talents (Gesellschaftliche Talente) from TDE 4.1. These talents cover social interactions and persuasion. Encumbrance is less important here than for physical talents, but can matter in specific situations. Advancement column B. Both open and contested tests are possible.",
+    "source_books": ["DSA 4.1 Basisregelwerk p. 113–155", "TDE Basic Rules p. 69–89"]
+  },
+  "talents": [
+    {
+      "id": "etiquette",
+      "name": "Etiquette",
+      "german_name": "Etikette",
+      "is_basic": false,
+      "test_attributes": ["CL", "IN", "CH"],
+      "advancement_column": "B",
+      "eec": "EC-2",
+      "combat_type": null,
+      "related_talents": [],
+      "description": "A hero may suddenly find themselves in refined company — perhaps invited to a court ball as reward for a special deed, or shadowing a villain at the duke's court. How does one correctly address the margrave's daughter? Who is greeted first? What coat-of-arms does House Sturmfels-Mersingen bear? Also: which wines are currently fashionable? What is the style at the Horasian court? Is it tasteless to serve sweet pastries after mutton soufflé? Since players cannot keep all these things in their heads, their hero should be knowledgeable in the field of Etiquette. Tests may be rolled secretly by the Highlord.",
+      "specializations": ["Imperial Court", "Merchant Class", "Thieves' Guild", "Church Protocol"],
+      "source": "BRW p. 118"
+    },
+    {
+      "id": "fast_talk",
+      "name": "Fast Talk",
+      "german_name": "Überreden",
+      "is_basic": true,
+      "test_attributes": ["CO", "IN", "CH"],
+      "advancement_column": "B",
+      "eec": "EC-4",
+      "combat_type": null,
+      "related_talents": [],
+      "description": "With this talent a hero can dazzle their counterpart with a barrage of words so that the person — at least temporarily — agrees with the hero's ideas and acts in their favor. Applications include: Haggling (fast talk TP determines how easily a merchant can be beaten down; +0 = 5%, +1 = 10%, up to +9 = 50%); Begging (right disguise and heartrending words to draw coins); Lying (successful lie can cause the victim to forego checking the truth; countered by Human Nature); and Talking Out of Trouble (belittling misdeeds before guards, judges, or spouses). Requires Human Nature 4 to advance beyond TP 10. EEC is EC-4 normally; when begging in visible armor, it becomes ECx2.",
+      "specializations": ["Haggling", "Begging", "Lying", "Talking Out of Trouble"],
+      "source": "BRW p. 118"
+    },
+    {
+      "id": "human_nature",
+      "name": "Human Nature",
+      "german_name": "Menschenkenntnis",
+      "is_basic": true,
+      "test_attributes": ["CL", "IN", "CH"],
+      "advancement_column": "B",
+      "eec": "0",
+      "combat_type": null,
+      "related_talents": [],
+      "description": "A talent test helps the hero see through the true intentions of an NPC. The reliability of a mountain guide can be assessed this way, as can the honesty of a horse trader. Human Nature tests are always rolled in secret by the Highlord, who then tells the player what feelings the person in question triggers in the hero — which may well be a misassessment. To assess the intentions of a creature from a different species, a generally harder test is required; similarly, members of other cultures may require difficulty increases.",
+      "specializations": ["Reading Motives", "Detecting Lies", "Assessing Loyalty"],
+      "source": "BRW p. 118"
+    },
+    {
+      "id": "masquerade",
+      "name": "Masquerade",
+      "german_name": "Sich Verkleiden",
+      "is_basic": false,
+      "test_attributes": ["CO", "CH", "AG"],
+      "advancement_column": "B",
+      "eec": "EC*2",
+      "combat_type": null,
+      "related_talents": [],
+      "description": "The Highlord sets difficulty increases based on the type of disguise desired and the hero's prominent physical features. (A towering Thorwalian will have certain difficulties presenting themselves as a delicate Moha girl.) A successful test means the hero's disguise is accepted by those around them initially — the clothing is as convincing as the movements and behavior. But even a well-disguised hero must still persuade their counterpart if they engage in conversation. High unspent TP from the test may ease the Persuade test. Also includes basic knowledge of fashion and make-up. EEC varies from none to ECx2.",
+      "specializations": ["Gender Disguise", "Class Disguise", "Race Disguise", "Age Disguise"],
+      "source": "BRW p. 118"
+    },
+    {
+      "id": "persuade",
+      "name": "Persuade",
+      "german_name": "Überzeugen",
+      "is_basic": false,
+      "test_attributes": ["CL", "IN", "CH"],
+      "advancement_column": "B",
+      "eec": "EC-4",
+      "combat_type": null,
+      "related_talents": [],
+      "description": "If used correctly, the Persuade talent creates a change of mind lasting at least a few days — in contrast to the more short-term Fast Talk. The Highlord decides upon difficulty increases or decreases based on the victim's Cleverness and outlook on life. Heroes interested in a career as a charlatan or demagogue will find this talent indispensable. Requires Human Nature 4 to attempt any tests. EEC varies by situation, possibly EC-4.",
+      "specializations": ["Speechmaking", "Debate", "Propaganda", "Religious Conversion"],
+      "source": "BRW p. 119"
+    },
+    {
+      "id": "seduce",
+      "name": "Seduce",
+      "german_name": "Betören",
+      "is_basic": false,
+      "test_attributes": ["IN", "CH", "CH"],
+      "advancement_column": "B",
+      "eec": "EC-2",
+      "combat_type": null,
+      "related_talents": [],
+      "description": "The attraction toward the opposite (or, if inclined, the same) sex of one's own species is rated by this talent. A successful test indicates that the 'victim' of the seduction attempt is favorably disposed toward the hero. What the seduced person is willing to do for the hero depends on the game situation. Seducing a member of a different species (especially between elves and dwarfs) requires marked difficulty increases; seducing the same sex requires lower increases. Requires Human Nature 4 to attempt tests.",
+      "specializations": ["Romantic Seduction", "Social Charm", "Intimidating Attraction"],
+      "source": "BRW p. 118"
+    },
+    {
+      "id": "streetwise",
+      "name": "Streetwise",
+      "german_name": "Gassenwissen",
+      "is_basic": false,
+      "test_attributes": ["CL", "IN", "CH"],
+      "advancement_column": "B",
+      "eec": "EC-4",
+      "combat_type": null,
+      "related_talents": [],
+      "description": "This talent enables quick orientation in a foreign city. Successful tests prompt the Highlord to answer questions like: Where will I most likely encounter guards? Where can I find affordable lodging? Where can I best pursue my hobby (purse-cutting)? In which temple would a poor soul most likely find charity? Also answers urban layout questions: How do I find an entrance to an appropriately-sized sewer access? Can I expect dead ends or sealed alleyways in this city? The special ability Ortskenntnis (Local Knowledge) and the advantages Inner Compass or Sense of Direction are also useful.",
+      "specializations": ["Crime & Underworld", "Trade & Commerce", "City Layout", "Contacts"],
+      "source": "BRW p. 118"
+    },
+    {
+      "id": "teach",
+      "name": "Teach",
+      "german_name": "Lehren",
+      "is_basic": false,
+      "test_attributes": ["CL", "IN", "CH"],
+      "advancement_column": "B",
+      "eec": "0",
+      "combat_type": null,
+      "related_talents": [],
+      "description": "Not everyone is able to pass on their own knowledge and skills to others in such a way that they actually learn from it. This talent will likely be used mainly by Highlord characters, as few heroes would seriously consider a career as a teacher. How heroes use this talent for mutual teaching and learning is described in the advancement rules. Requires Human Nature 4 to advance beyond TP 10.",
+      "specializations": ["Weapon Training", "Scholarly Teaching", "Craft Training", "Magic Theory"],
+      "source": "BRW p. 118"
+    }
+  ]
+}

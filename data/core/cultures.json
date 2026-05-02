@@ -1,0 +1,673 @@
+{
+  "meta": {
+    "schema_version": "1.0",
+    "last_updated": "2026-05-02",
+    "description": "All cultures for TDE4/DSA4.1 Basic Rules. Talent modifiers are cumulative with race modifiers. Language modifier 'CL-2' means the talent starts at (CL - 2). Automatic SAs are included in the GP cost. Discounted SAs cost half AP/GP (round up). Southern Aventuria data is partially from BRW — marked TBD fields need manual verification from BRW p. 68–70.",
+    "source_books": [
+      "DSA 4.1 Basisregelwerk p. 60–72",
+      "TDE Basic Rules p. 41–50"
+    ]
+  },
+  "cultures": [
+    {
+      "id": "middenrealm_cities",
+      "name": "Middenrealm Cities",
+      "german_name": "Mittelländische Städte",
+      "gp_cost": 0,
+      "allowed_races": ["middenrealmian", "tulamide", "thorwalian", "half_elf"],
+      "allowed_professions": [
+        "messenger", "burglar", "explorer", "mountebank", "hunter", "warrior",
+        "scout", "magician", "pirate", "knight", "mercenary", "rogue", "physician"
+      ],
+      "attribute_modifiers": {},
+      "derived_modifiers": {},
+      "automatic_advantages": [],
+      "automatic_disadvantages": [],
+      "recommended_advantages": ["equipment_advantage", "special_item", "social_chameleon", "connections"],
+      "recommended_disadvantages": ["obligations", "prejudice"],
+      "unsuitable_advantages": ["fairy_friend", "agoraphobia"],
+      "talent_modifiers": {
+        "crossbow_or_bow_or_throwing_knives": 1,
+        "daggers": 1,
+        "infantry_weapons": 1,
+        "brawling": 1,
+        "carouse": 1,
+        "etiquette": 1,
+        "streetwise": 1,
+        "human_nature": 1,
+        "persuade": 1,
+        "religion_cult": 2,
+        "heraldry": 1,
+        "calculate": 1,
+        "law": 1,
+        "legends_tales": 2,
+        "farming": 1
+      },
+      "talent_choice_modifiers": [
+        {"choose": 1, "from": ["crossbow", "bow", "throwing_knives"], "value": 1}
+      ],
+      "language_entries": [
+        {"type": "mother_tongue", "language": "garethi", "modifier": "CL-2"},
+        {"type": "trade_language_choice", "options": ["tulamidya", "rogolan", "thorwalian"], "modifier": 3}
+      ],
+      "automatic_SAs": [
+        {"id": "local_knowledge", "note": "one city district"},
+        {"id": "cultural_lore", "note": "Middenrealm or own region"}
+      ],
+      "discounted_SAs": [],
+      "so_constraints": null,
+      "gender_split": false,
+      "affinity_tags": ["social", "rogue_criminal", "any"],
+      "description": "The broad, diverse urban culture of the Middenrealm's cities and towns. Middenrealm Cities offers the widest profession access of any culture and a solid social and lore skill base. Typical heroes include merchants, city guards, scholars, rogues, and adventurers of all kinds.",
+      "source": "BRW p. 60–61"
+    },
+    {
+      "id": "andergast_nostria",
+      "name": "Andergast / Nostria",
+      "german_name": "Andergast/Nostria",
+      "gp_cost": 6,
+      "allowed_races": ["middenrealmian", "tulamide", "thorwalian", "half_elf"],
+      "allowed_professions": [
+        "messenger", "burglar", "explorer", "mountebank", "hunter", "warrior",
+        "scout", "magician", "pirate", "knight", "mercenary", "rogue", "physician"
+      ],
+      "attribute_modifiers": {},
+      "derived_modifiers": {
+        "VP": 1,
+        "EP": 2
+      },
+      "automatic_advantages": [],
+      "automatic_disadvantages": [],
+      "recommended_advantages": ["enduring", "iron", "vigor", "direction_sense", "fast_healing", "tough_dog"],
+      "recommended_disadvantages": ["superstition", "prejudice"],
+      "unsuitable_advantages": ["equipment_advantage"],
+      "unsuitable_disadvantages": ["prone_to_illness", "pathological_cleanliness", "claustrophobia"],
+      "talent_modifiers": {
+        "daggers": 1,
+        "brawling": 1,
+        "throwing_knives_or_throwing_axes": 1,
+        "dance": 1,
+        "carouse": 2,
+        "etiquette": 1,
+        "human_nature": 1,
+        "orientation": 1,
+        "wilderness_living": 1,
+        "religion_cult": 2,
+        "legends_tales": 2,
+        "farming": 1,
+        "woodworking": 1,
+        "cooking": 1,
+        "leatherwork": 1,
+        "tailoring": 1
+      },
+      "talent_choice_modifiers": [
+        {"choose": 1, "from": ["throwing_knives", "throwing_axes"], "value": 1}
+      ],
+      "language_entries": [
+        {"type": "mother_tongue", "language": "garethi", "modifier": "CL-2"}
+      ],
+      "automatic_SAs": [
+        {"id": "cultural_lore", "note": "Andergast/Nostria"}
+      ],
+      "discounted_SAs": [],
+      "so_constraints": null,
+      "gender_split": false,
+      "affinity_tags": ["wilderness", "combat_skirmisher", "ranged"],
+      "description": "The rugged, independent forest kingdoms of Andergast and Nostria. Heroes from this culture are resilient woodspeople, hunters, and warriors, possessing a small VP and EP bonus. The culture is known for superstition and strong folklore traditions.",
+      "source": "BRW p. 61–62"
+    },
+    {
+      "id": "bornland",
+      "name": "Bornland",
+      "german_name": "Bornland",
+      "gp_cost": 0,
+      "allowed_races": ["middenrealmian", "tulamide", "thorwalian", "half_elf"],
+      "allowed_professions": [
+        "messenger", "burglar", "explorer", "mountebank", "hunter", "warrior",
+        "scout", "magician", "pirate", "knight", "mercenary", "rogue", "physician"
+      ],
+      "attribute_modifiers": {},
+      "derived_modifiers": {},
+      "automatic_advantages": [],
+      "automatic_disadvantages": [],
+      "recommended_advantages": ["enduring", "iron", "vigor", "cold_resistance", "disease_resistance", "direction_sense", "fast_healing", "tough_dog"],
+      "recommended_disadvantages": ["superstition", "prejudice"],
+      "unsuitable_advantages": ["equipment_advantage"],
+      "unsuitable_disadvantages": ["prone_to_illness", "pathological_cleanliness", "claustrophobia"],
+      "talent_modifiers": {
+        "daggers": 1,
+        "brawling": 1,
+        "throwing_knives": 1,
+        "dance": 1,
+        "carouse": 2,
+        "etiquette": 1,
+        "human_nature": 1,
+        "orientation": 1,
+        "wilderness_living": 2,
+        "religion_cult": 1,
+        "legends_tales": 2,
+        "farming": 1,
+        "woodworking": 2,
+        "cooking": 1,
+        "leatherwork": 1,
+        "tailoring": 1
+      },
+      "language_entries": [
+        {"type": "mother_tongue", "language": "garethi", "modifier": "CL-2"},
+        {"type": "regional_language_choice", "primary": {"language": "alaani_or_nujuka", "modifier": 6}, "secondary": {"modifier": 2}}
+      ],
+      "automatic_SAs": [
+        {"id": "cultural_lore", "note": "Bornland"}
+      ],
+      "discounted_SAs": [
+        {"id": "swamp_lore"},
+        {"id": "ice_lore"}
+      ],
+      "so_constraints": null,
+      "gender_split": false,
+      "affinity_tags": ["wilderness", "combat_skirmisher", "ranged"],
+      "description": "The vast, cold, swampy region of the Bornland. Free culture (0 GP) with a strong wilderness and survival focus. Heroes are hardy settlers, hunters, and woodspeople skilled in cold-weather survival and regional languages.",
+      "source": "BRW p. 62–64"
+    },
+    {
+      "id": "horasian_empire",
+      "name": "Horasian Empire",
+      "german_name": "Horasreich",
+      "gp_cost": 3,
+      "allowed_races": ["middenrealmian", "tulamide", "half_elf"],
+      "allowed_professions": [
+        "messenger", "burglar", "explorer", "mountebank", "hunter", "warrior",
+        "magician", "pirate", "mercenary", "rogue", "physician"
+      ],
+      "excluded_professions": ["scout", "knight"],
+      "attribute_modifiers": {},
+      "derived_modifiers": {},
+      "automatic_advantages": [],
+      "automatic_disadvantages": [],
+      "recommended_advantages": ["equipment_advantage", "special_item", "social_chameleon", "connections"],
+      "recommended_disadvantages": ["arrogance", "vanity", "violent_temper", "obligations", "prejudice"],
+      "unsuitable_advantages": ["fairy_friend", "kobold_friend"],
+      "unsuitable_disadvantages": ["agoraphobia"],
+      "talent_modifiers": {
+        "crossbow": 1,
+        "daggers": 1,
+        "fencing_weapons": 1,
+        "infantry_weapons": 1,
+        "brawling": 1,
+        "swimming": 1,
+        "dance": 1,
+        "seduce": 1,
+        "etiquette": 2,
+        "streetwise": 2,
+        "human_nature": 2,
+        "persuade": 1,
+        "history": 1,
+        "religion_cult": 2,
+        "mechanics": 1,
+        "calculate": 2,
+        "law": 1,
+        "legends_tales": 2,
+        "farming": 1
+      },
+      "language_entries": [
+        {"type": "mother_tongue", "language": "garethi_as_horathi", "modifier": "CL-2"},
+        {"type": "choice", "options": ["tulamidya", "rogolan"], "modifier": 5},
+        {"type": "script", "script": "kuslik_script", "modifier": 2}
+      ],
+      "automatic_SAs": [
+        {"id": "cultural_lore", "note": "Horasian Empire"}
+      ],
+      "discounted_SAs": [
+        {"id": "nandus_pleasing_knowledge"}
+      ],
+      "so_constraints": null,
+      "gender_split": false,
+      "affinity_tags": ["social", "rogue_criminal", "noble_knightly", "scholar", "magical_guild"],
+      "description": "The refined, cosmopolitan culture of the Horasian Empire, the most sophisticated civilization in Aventuria. Heroes are typically educated, socially adept, and familiar with fine arts, law, and trade. Knights and Scouts are unavailable (the Empire uses different military traditions).",
+      "source": "BRW p. 64–65"
+    },
+    {
+      "id": "tulamidian_city_states",
+      "name": "Tulamidian City-States",
+      "german_name": "Tulamidische Stadtstaaten",
+      "gp_cost": 0,
+      "allowed_races": ["tulamide", "middenrealmian"],
+      "allowed_professions": [
+        "messenger", "burglar", "explorer", "mountebank", "warrior",
+        "magician", "pirate", "mercenary", "rogue", "physician"
+      ],
+      "attribute_modifiers": {},
+      "derived_modifiers": {
+        "RM_for_casters": 1
+      },
+      "automatic_advantages": [],
+      "automatic_disadvantages": [],
+      "recommended_advantages": [],
+      "recommended_disadvantages": [],
+      "talent_modifiers": {
+        "daggers": 1,
+        "sabers": 1,
+        "fencing_weapons": 1,
+        "body_control": 1,
+        "dance": 2,
+        "seduce": 2,
+        "streetwise": 1,
+        "human_nature": 1,
+        "persuade": 2,
+        "magic_lore": 2,
+        "history": 2,
+        "calculate": 2,
+        "law": 1,
+        "legends_tales": 1,
+        "appraise": 2,
+        "astronomy_astrology": 1
+      },
+      "language_entries": [
+        {"type": "mother_tongue_choice", "options": ["tulamidya", "garethi"], "modifier": "CL-2"},
+        {"type": "script", "script": "tulamidic_script", "modifier": 3}
+      ],
+      "automatic_SAs": [
+        {"id": "cultural_lore", "note": "Tulamidian City-States"}
+      ],
+      "discounted_SAs": [
+        {"id": "nandus_pleasing_knowledge"}
+      ],
+      "so_constraints": null,
+      "gender_split": false,
+      "notes": "Full talent table partially derived from spec; verify against BRW p. 65 for complete data. The +1 RM modifier applies specifically to heroes who are casters (Vollzauberer or Viertelzauberer).",
+      "affinity_tags": ["social", "scholar", "magical_guild", "rogue_criminal"],
+      "description": "The wealthy, trade-focused city-states of the Tulamide people in southern Aventuria. A sophisticated urban culture with a strong magical tradition. Magic users gain +1 RM. The culture is patriarchal in structure.",
+      "source": "BRW p. 65"
+    },
+    {
+      "id": "novadis_men",
+      "name": "Novadis (Men / Achmad'sunni)",
+      "german_name": "Novadis (Männer/Achmad'sunni)",
+      "gp_cost": 3,
+      "allowed_races": ["tulamide"],
+      "allowed_professions": [
+        "messenger", "mountebank", "warrior", "scout", "magician", "mercenary", "rogue", "physician"
+      ],
+      "attribute_modifiers": {
+        "CO": 1
+      },
+      "derived_modifiers": {
+        "EP": 2
+      },
+      "automatic_advantages": [
+        {"id": "heat_resistance"},
+        {"id": "direction_sense"}
+      ],
+      "automatic_disadvantages": [
+        {"id": "agoraphobia", "rating": 5},
+        {"id": "violent_temper", "rating": 5},
+        {"id": "arrogance_or_vengefulness", "rating": 5, "note": "Choose one: Arrogance 5 OR Vengefulness 5"},
+        {"id": "dietary_laws"}
+      ],
+      "talent_modifiers": {
+        "bow": 1,
+        "daggers": 1,
+        "jousting": 1,
+        "brawling": 1,
+        "wrestling": 1,
+        "sabers": 1,
+        "spears": 1,
+        "throwing_spears": 1,
+        "athletics": 1,
+        "body_control": 1,
+        "ride": 3,
+        "swimming": -1,
+        "perception": 1,
+        "dance": 1,
+        "orientation": 3,
+        "wilderness_living": 1,
+        "board_card_games": 2,
+        "religion_cult": 1,
+        "calculate": 1,
+        "law": 1,
+        "legends_tales": 1,
+        "appraise": 1,
+        "starcraft": 1,
+        "boating": -1
+      },
+      "language_entries": [
+        {"type": "mother_tongue", "language": "tulamidya", "modifier": "CL-2"}
+      ],
+      "automatic_SAs": [
+        {"id": "desert_lore"},
+        {"id": "cultural_lore", "note": "Novadis"}
+      ],
+      "discounted_SAs": [
+        {"id": "unarmed_style_unauer"}
+      ],
+      "so_constraints": null,
+      "gender_split": true,
+      "gender": "male",
+      "affinity_tags": ["ranged", "wilderness", "combat_skirmisher"],
+      "description": "The fierce nomadic desert warriors of the Novadi people. Men follow the Achmad'sunni code of honor and are exceptional riders and desert navigators. They have multiple automatic bad traits but strong combat and survival capabilities.",
+      "source": "BRW p. 66"
+    },
+    {
+      "id": "novadis_women",
+      "name": "Novadis (Women)",
+      "german_name": "Novadis (Frauen)",
+      "gp_cost": 1,
+      "allowed_races": ["tulamide"],
+      "allowed_professions": [
+        "explorer", "mountebank", "scout", "rogue", "physician"
+      ],
+      "attribute_modifiers": {},
+      "derived_modifiers": {
+        "EP": 1
+      },
+      "automatic_advantages": [
+        {"id": "heat_resistance"},
+        {"id": "direction_sense"}
+      ],
+      "automatic_disadvantages": [
+        {"id": "agoraphobia", "rating": 5},
+        {"id": "violent_temper", "rating": 5},
+        {"id": "arrogance_or_vengefulness", "rating": 5, "note": "Choose one: Arrogance 5 OR Vengefulness 5"},
+        {"id": "dietary_laws"}
+      ],
+      "talent_modifiers": {
+        "daggers": 1,
+        "brawling": 2,
+        "athletics": 1,
+        "body_control": 1,
+        "ride": 2,
+        "sneak": 1,
+        "swimming": -1,
+        "willpower": 1,
+        "hide": 1,
+        "perception": 1,
+        "dance": 3,
+        "seduce": 1,
+        "teach": 1,
+        "persuade": 1,
+        "orientation": 3,
+        "wilderness_living": 1,
+        "board_card_games": 3,
+        "religion_cult": 1,
+        "calculate": 1,
+        "law": 1,
+        "legends_tales": 3,
+        "appraise": 1,
+        "starcraft": 1,
+        "boating": -1,
+        "heal_poison": 1,
+        "heal_disease": 1,
+        "heal_wounds": 2,
+        "woodwork": 1,
+        "cooking": 1,
+        "leatherwork": 2,
+        "tailoring": 1
+      },
+      "language_entries": [
+        {"type": "mother_tongue", "language": "tulamidya", "modifier": "CL-2"}
+      ],
+      "automatic_SAs": [
+        {"id": "desert_lore"},
+        {"id": "cultural_lore", "note": "Novadis"}
+      ],
+      "discounted_SAs": [],
+      "so_constraints": null,
+      "gender_split": true,
+      "gender": "female",
+      "affinity_tags": ["wilderness", "stealth"],
+      "description": "Novadi women have a very different cultural role from men. They are skilled in healing arts, dance, and stealth rather than open warfare. Only 5 professions are available to them. Despite having fewer combat options, they are resourceful and independent within Novadi society.",
+      "source": "BRW p. 66"
+    },
+    {
+      "id": "thorwal",
+      "name": "Thorwal",
+      "german_name": "Thorwal",
+      "gp_cost": 4,
+      "allowed_races": ["thorwalian", "middenrealmian", "half_elf"],
+      "allowed_professions": [
+        "messenger", "explorer", "mountebank", "hunter", "warrior",
+        "scout", "magician", "pirate", "mercenary", "rogue", "physician"
+      ],
+      "excluded_professions": ["burglar", "knight"],
+      "attribute_modifiers": {},
+      "derived_modifiers": {
+        "EP": 2
+      },
+      "automatic_advantages": [],
+      "automatic_disadvantages": [
+        {"id": "superstition", "rating": 5}
+      ],
+      "recommended_advantages": ["enduring", "balance", "iron", "luck", "mental_compass", "battle_frenzy", "vigor", "direction_sense", "fast_healing", "tough_dog"],
+      "recommended_disadvantages": ["blood_frenzy", "curiosity", "vengefulness", "agoraphobia", "fear_of_dead", "prejudice"],
+      "unsuitable_advantages": ["noble_birth", "social_chameleon"],
+      "unsuitable_disadvantages": ["pathological_cleanliness", "fear_of_sea"],
+      "talent_modifiers": {
+        "maces": 1,
+        "brawling": 2,
+        "throwing_axes": 2,
+        "athletics": 1,
+        "body_control": 1,
+        "swimming": 3,
+        "carouse": 3,
+        "orientation": 3,
+        "binding_escape": 1,
+        "fishing": 3,
+        "religion_cult": 1,
+        "legends_tales": 4,
+        "starcraft": 1,
+        "boating": 2,
+        "woodworking": 1,
+        "seafaring": 2
+      },
+      "language_entries": [
+        {"type": "mother_tongue", "language": "thorwalian", "modifier": "CL-2"},
+        {"type": "second_language", "language": "garethi", "modifier": "CL-4"}
+      ],
+      "automatic_SAs": [
+        {"id": "cultural_lore", "note": "Thorwal"}
+      ],
+      "discounted_SAs": [
+        {"id": "sea_lore"},
+        {"id": "unarmed_style_hammerfist"}
+      ],
+      "so_constraints": null,
+      "gender_split": false,
+      "affinity_tags": ["sailor", "combat_frontliner", "combat_skirmisher", "ranged"],
+      "description": "The wild, seafaring culture of the Thorwalian Vikings. Strong emphasis on physical combat, swimming, seafaring, and oral tradition. Automatic Superstition 5 is a significant disadvantage. Knight and Burglar are unavailable (not suited to Thorwalian values).",
+      "source": "BRW p. 67–68"
+    },
+    {
+      "id": "southern_aventuria",
+      "name": "Southern Aventuria",
+      "german_name": "Südaventurien",
+      "gp_cost": 0,
+      "allowed_races": ["middenrealmian", "tulamide", "half_elf"],
+      "allowed_professions": [
+        "messenger", "burglar", "explorer", "mountebank", "hunter", "warrior",
+        "scout", "magician", "pirate", "mercenary", "rogue", "physician"
+      ],
+      "attribute_modifiers": {},
+      "derived_modifiers": {},
+      "automatic_advantages": [],
+      "automatic_disadvantages": [],
+      "talent_modifiers": {
+        "daggers": 1,
+        "sabers": 1,
+        "brawling": 1,
+        "swimming": 2,
+        "body_control": 1,
+        "perception": 1,
+        "seduce": 1,
+        "human_nature": 1,
+        "streetwise": 1,
+        "orientation": 1,
+        "wilderness_living": 2,
+        "religion_cult": 1,
+        "legends_tales": 1
+      },
+      "language_entries": [
+        {"type": "mother_tongue_choice", "options": ["garethi", "tulamidya"], "modifier": "CL-2"}
+      ],
+      "automatic_SAs": [
+        {"id": "cultural_lore", "note": "Southern Aventuria"}
+      ],
+      "discounted_SAs": [],
+      "so_constraints": null,
+      "gender_split": false,
+      "notes": "Data partially estimated from spec doc and BRW context. Verify full talent table from BRW p. 68–70 before use in production. Some talent modifiers may differ.",
+      "data_complete": false,
+      "affinity_tags": ["wilderness", "sailor", "social", "rogue_criminal"],
+      "description": "The diverse, tropical cultures of Southern Aventuria. A crossroads of Middenrealm, Tulamidian, and local influences. Heroes are typically nimble, adaptable, and comfortable in both urban and wilderness settings. Strong swimming and nature skills.",
+      "source": "BRW p. 68–70 (TBD — verify from PDF)"
+    },
+    {
+      "id": "anvil_dwarves",
+      "name": "Anvil Dwarves",
+      "german_name": "Ambosszwerge",
+      "gp_cost": 0,
+      "allowed_races": ["dwarf"],
+      "allowed_professions": [
+        "messenger", "explorer", "scout", "mercenary", "physician"
+      ],
+      "attribute_modifiers": {},
+      "derived_modifiers": {},
+      "automatic_advantages": [],
+      "automatic_disadvantages": [
+        {"id": "claustrophobia", "rating": 5},
+        {"id": "fear_of_sea", "rating": 5}
+      ],
+      "recommended_advantages": ["equipment_advantage", "special_item"],
+      "recommended_disadvantages": ["arrogance", "miserliness", "code_of_conduct", "obligations", "prejudice"],
+      "unsuitable_advantages": ["noble_birth", "social_chameleon"],
+      "unsuitable_disadvantages": ["pathological_cleanliness", "dietary_laws"],
+      "talent_modifiers": {
+        "crossbow": 3,
+        "maces": 1,
+        "brawling": 1,
+        "wrestling": 2,
+        "two_handed_maces": 1,
+        "athletics": 1,
+        "climbing": 1,
+        "carouse": 3,
+        "streetwise": -2,
+        "weather_forecasting": -2,
+        "geology": 4,
+        "religion_cult": 1,
+        "mechanics": 1,
+        "calculate": 1,
+        "legends_tales": 2,
+        "appraise": 3,
+        "mining": 2,
+        "blacksmithing": 3
+      },
+      "language_entries": [
+        {"type": "mother_tongue", "language": "rogolan", "modifier": "CL-2"},
+        {"type": "second_language_choice", "options": ["garethi", "tulamidya"], "modifier": "CL-4"}
+      ],
+      "automatic_SAs": [
+        {"id": "cave_lore"},
+        {"id": "cultural_lore", "note": "Anvil Dwarves"},
+        {"id": "armor_use_i", "note": "for chainmail armor specifically"}
+      ],
+      "discounted_SAs": [],
+      "so_constraints": null,
+      "gender_split": false,
+      "affinity_tags": ["combat_frontliner", "scholar"],
+      "description": "The culture of the Angroshim (Anvil Dwarves), a proud mountain and underground people. Only 5 professions are available. Automatic phobias (Claustrophobia and Sea Fear are paradoxical but present), exceptional crafting and geology skills. Free Armor Use I for chainmail.",
+      "source": "BRW p. 70–71"
+    },
+    {
+      "id": "lea_elves",
+      "name": "Lea Elves",
+      "german_name": "Auelfen",
+      "gp_cost": 4,
+      "allowed_races": ["elf", "half_elf"],
+      "allowed_professions": [
+        "legend_singer", "ranger"
+      ],
+      "attribute_modifiers": {},
+      "derived_modifiers": {},
+      "automatic_advantages": [],
+      "automatic_disadvantages": [
+        {"id": "elvish_world_view", "note": "Designates Leittalente (marked L)"},
+        {"id": "curiosity", "rating": 5},
+        {"id": "unworldly", "area": "possessions", "rating": 6},
+        {"id": "unworldly", "area": "religious_devotion", "rating": 6}
+      ],
+      "recommended_advantages": ["enduring", "fairy_friend", "danger_instinct"],
+      "recommended_disadvantages": ["arrogance", "prejudice"],
+      "unsuitable_advantages": ["social_chameleon"],
+      "unsuitable_disadvantages": ["greed", "vengefulness"],
+      "talent_modifiers": {
+        "bow": {"value": 4, "is_leittalent": true},
+        "daggers": 2,
+        "athletics": 1,
+        "climbing": 1,
+        "body_control": 2,
+        "sneak": {"value": 3, "is_leittalent": true},
+        "swimming": {"value": 4, "is_leittalent": true},
+        "hide": {"value": 5, "is_leittalent": true},
+        "sing": 2,
+        "perception": 1,
+        "dance": 2,
+        "seduce": 3,
+        "streetwise": -2,
+        "tracking": {"value": 3, "is_leittalent": true},
+        "fishing": {"value": 3, "is_leittalent": true},
+        "orientation": 2,
+        "wilderness_living": {"value": 5, "is_leittalent": true},
+        "magic_lore": 3,
+        "plant_lore": 3,
+        "law": -2,
+        "legends_tales": 2,
+        "animal_lore": 2,
+        "bowcraft_or_boating": {"value": 2, "is_leittalent": true, "note": "Choose one: Bowcraft OR Boating"},
+        "heal_poison": 1,
+        "heal_wounds": {"value": 1, "is_leittalent": true},
+        "woodworking": 2,
+        "leatherwork": 2,
+        "music": 3,
+        "tailoring": 2
+      },
+      "leittalente_note": "Talents marked is_leittalent are Lead Talents (Leittalente) under the Elvish World View disadvantage. They advance more cheaply and have additional narrative obligations.",
+      "automatic_starting_spells": [
+        {"spell": "attributo", "sp": 7},
+        {"spell": "balm_of_healing", "sp": 9},
+        {"spell": "bannbaladin", "sp": 9, "is_house_spell": true},
+        {"spell": "flim_flam", "sp": 7},
+        {"spell": "fulminictus", "sp": 8, "is_house_spell": true},
+        {"spell": "sensibar", "sp": 8, "is_house_spell": true}
+      ],
+      "language_entries": [
+        {"type": "mother_tongue", "language": "isdira", "modifier": "CL-2"},
+        {"type": "second_language", "language": "garethi", "modifier": 4}
+      ],
+      "automatic_SAs": [
+        {"id": "great_meditation"},
+        {"id": "cultural_lore", "note": "Lea Elves"},
+        {"id": "elven_representation"},
+        {"id": "salasandra"},
+        {"id": "swamp_lore"},
+        {"id": "friendship_song"}
+      ],
+      "discounted_SAs": [
+        {"id": "alertness"},
+        {"id": "combat_in_water"},
+        {"id": "regeneration_i"}
+      ],
+      "starting_equipment": [
+        "elven_bow",
+        "quiver_with_12_arrows",
+        "hunting_knife",
+        "traditional_elvish_clothing",
+        "personal_instrument_choice",
+        "bag_with_food_and_herbs"
+      ],
+      "so_constraints": null,
+      "gender_split": false,
+      "affinity_tags": ["magical_elven", "ranged", "stealth", "wilderness"],
+      "description": "The culture of the Lea Elves (Auelfen), the forest-dwelling elves of Aventuria. Only two professions are available. Heroes start with automatic spells, exceptional wilderness and stealth skills, and the Elvish World View with its Leittalente system. One of the most powerful starting cultures but heavily constrained.",
+      "source": "BRW p. 71–72"
+    }
+  ]
+}

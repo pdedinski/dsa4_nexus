@@ -1,0 +1,108 @@
+{
+  "meta": {
+    "schema_version": "1.0",
+    "last_updated": "2026-05-02",
+    "description": "Nature Talents (Natur-Talente) from TDE 4.1. These talents cover outdoor survival and wilderness skills. Encumbrance is less important here than for physical talents but matters in specific situations. Advancement column B. Both open and contested tests are possible, and some may be rolled secretly.",
+    "source_books": ["DSA 4.1 Basisregelwerk p. 113–155", "TDE Basic Rules p. 69–89"]
+  },
+  "talents": [
+    {
+      "id": "bind_escape",
+      "name": "Bind/Escape",
+      "german_name": "Fesseln/Entfesseln",
+      "is_basic": false,
+      "test_attributes": ["DE", "AG", "ST"],
+      "advancement_column": "B",
+      "eec": "EC",
+      "combat_type": null,
+      "related_talents": [],
+      "description": "This talent encompasses both knowledge of different knot types for different purposes and the ability to tie them stably and securely, as well as the ability to recognize weak points in bindings and free oneself from any bonds. A Bind test is required only when the hero wants to tie a reliable restraint meant to hold for at least several hours. Escaping from a binding reinforced with a talent test: the binder provides points equal to double their remaining TP from the Bind test; these are then reduced through open tests with the escapee's remaining TP; one test per half hour is allowed. Neighboring talents for escape (if one doesn't know Bind/Escape): Juggling, Pick Pockets, or Wrestling. EEC: irrelevant when binding; when escaping, worn armor significantly hampers: EEC = EC.",
+      "specializations": ["Knots", "Restraints", "Escape Artistry"],
+      "source": "BRW p. 119"
+    },
+    {
+      "id": "fish",
+      "name": "Fish",
+      "german_name": "Fischen/Angeln",
+      "is_basic": false,
+      "test_attributes": ["IN", "DE", "ST"],
+      "advancement_column": "B",
+      "eec": "EC",
+      "combat_type": null,
+      "related_talents": [],
+      "description": "One needs at least TP 1 to be able to judge whether it's even worth casting a line (net, weir) in a particular body of water. A successful test means not only that the fisherman caught something, but that the bait was chosen so skillfully that a sufficiently large edible fish took the hook. Per remaining TP after a successful test, one can assume the fisherman caught half a ration of edible fish (at least one full ration on a successful test). EEC: EC for certain types of fishing, otherwise only relevant if the fisherman falls into the water and must swim.",
+      "specializations": ["Rod Fishing", "Net Fishing", "Weir/Trap Fishing", "Spear Fishing"],
+      "source": "BRW p. 120"
+    },
+    {
+      "id": "orientation",
+      "name": "Orientation",
+      "german_name": "Orientierung",
+      "is_basic": true,
+      "test_attributes": ["CL", "IN", "IN"],
+      "advancement_column": "B",
+      "eec": "0",
+      "combat_type": null,
+      "related_talents": [],
+      "description": "This talent governs the ability to determine compass directions and find one's way across unfamiliar terrain. This talent is especially developed in seafarers and desert dwellers for whom finding one's way in extremely monotonous surroundings is life-or-death. A reliable sense of orientation also works in large buildings and underground complexes, as the hero develops a feel for the proportions of spaces and their relationships. Tests may be rolled secretly by the Highlord; in especially difficult situations (monotonous ice fields, underground labyrinths) this is recommended. Note: the Highlord may impose a difficulty increase of up to 3 for a hero whose field of vision is limited by a helmet.",
+      "specializations": ["Wilderness Navigation", "Underground Navigation", "Sea Navigation", "Urban Orientation"],
+      "source": "BRW p. 120"
+    },
+    {
+      "id": "survival",
+      "name": "Survival",
+      "german_name": "Wildnisleben",
+      "is_basic": true,
+      "test_attributes": ["IN", "AG", "CN"],
+      "advancement_column": "B",
+      "eec": "0",
+      "combat_type": null,
+      "related_talents": [],
+      "description": "This talent encompasses all the small things important for life under the open sky: choosing and setting up a suitable and sheltered campsite, lighting fires, finding optimal firewood that also works when wet for a campfire, and so on. A hero who fails this test shouldn't be surprised if their tent along with all their equipment floats away during a nightly downpour because they badly underestimated the small stream they camped beside. Survival tests can be rolled secretly by the Highlord; depending on the known environment, an appropriate Geländekunde (Terrain Knowledge) special ability can make Survival tests easier. EEC varies by situation; when assessing situations, BE is irrelevant.",
+      "specializations": ["Forest", "Desert", "Arctic/Mountain", "Coastal/Marsh"],
+      "source": "BRW p. 120"
+    },
+    {
+      "id": "track",
+      "name": "Track",
+      "german_name": "Fährtensuchen",
+      "is_basic": true,
+      "test_attributes": ["CL", "IN", "CN"],
+      "advancement_column": "B",
+      "eec": "0",
+      "combat_type": null,
+      "related_talents": [],
+      "description": "Finding and following a trail is governed by this talent. The difficulty of following a trail depends on ground conditions, lighting, and similar factors. The Highlord should call for a new test at each terrain change, ranging from -7 (fresh snow cover) to +12 (bare rock). In certain environments (e.g., dust-free marble floor) no test may be allowed. To follow a track over a longer distance, the test is rolled against CL, IN, and KO; to gain as much information as possible from tracks at a limited spot, CL and twice IN are the right attributes. Requires Perception 4 to advance beyond TP 10.",
+      "specializations": ["Human Tracks", "Animal Tracks", "Vehicle Tracks", "Underwater/Aquatic"],
+      "source": "BRW p. 119"
+    },
+    {
+      "id": "trap",
+      "name": "Traps",
+      "german_name": "Fallenstellen",
+      "is_basic": false,
+      "test_attributes": ["CL", "DE", "ST"],
+      "advancement_column": "B",
+      "eec": "0",
+      "combat_type": null,
+      "related_talents": [],
+      "description": "This talent covers constructing, cleverly placing, and disguising a wildlife trap (snare, small pit, snapping branch). A successful test means an animal that passes the trap is caught in it; whether prey actually comes near the trap depends on the surroundings. A trapper with TP of at least 6 can construct traps that are hardly detectable even by intelligent beings — detecting such traps is handled through appropriately difficult Perception tests (with a high Traps TP also helping). Trap constructions in buildings, tunnels, etc. fall under the Engineering talent. Requires Survival 4 to advance beyond TP 10.",
+      "specializations": ["Snares", "Pit Traps", "Spring Traps", "Magical Traps"],
+      "source": "BRW p. 119"
+    },
+    {
+      "id": "weather_sense",
+      "name": "Weather Sense",
+      "german_name": "Wettervorhersage",
+      "is_basic": false,
+      "test_attributes": ["CL", "IN", "IN"],
+      "advancement_column": "B",
+      "eec": "0",
+      "combat_type": null,
+      "related_talents": [],
+      "description": "The hero skilled in this talent senses approaching bad weather early enough with a successful test to take appropriate precautions. Among residents of areas with constantly stable weather and among typical city dwellers, this talent is poorly developed. Weather Sense tests should be rolled in secret by the Highlord. In appropriate terrain, a relevant Geländekunde (Terrain Knowledge) special ability can support a Weather Sense test.",
+      "specializations": ["Storm Prediction", "Rain/Drought", "Sea Weather", "Mountain Weather"],
+      "source": "BRW p. 120"
+    }
+  ]
+}

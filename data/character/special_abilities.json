@@ -1,0 +1,1160 @@
+{
+  "meta": {
+    "schema_version": "1.0",
+    "last_updated": "2026-05-02",
+    "description": "All Special Abilities (SA) for TDE4/DSA4.1. Grouped by category: melee_combat, ranged_combat, magic, general. AP cost is the Adventure Points cost after character creation. gp_cost_creation is the equivalent GP cost at creation (AP/50 rounded up, unless specifically listed). Where auto_for or discounted_for are listed, those races/cultures/professions grant or discount the SA.",
+    "source_books": [
+      "DSA 4.1 Basisregelwerk p. 99–103",
+      "wiki: https://tde4e.fandom.com/wiki/Special_Abilities",
+      "Wege des Schwertes",
+      "TDE Basic Rules p. 58"
+    ]
+  },
+  "special_abilities": [
+    {
+      "id": "ambidextrous_combat_i",
+      "name": "Ambidextrous Combat I",
+      "german_name": "Beidhändiger Kampf I",
+      "category": "melee_combat",
+      "ap_cost": 100,
+      "gp_cost_creation": 2,
+      "requirements": [
+        {"type": "attr_min", "attr": "AG", "value": 12},
+        {"type": "sa_required", "sa": "off_hand_fighting"}
+      ],
+      "effects": [
+        {"type": "off_hand_penalty_reduction", "description": "Reduces off-hand AT/PA penalties to -3/-3"},
+        {"type": "unlocks_maneuvers", "maneuvers": ["double_attack"]}
+      ],
+      "incompatible_with": [],
+      "auto_for": ["warrior"],
+      "discounted_for": [],
+      "description": "Reduces the penalties in combat with the left hand to -3/-3 and allows additional maneuvers. Required for Double Attack and Death from the Left.",
+      "source": "wiki: https://tde4e.fandom.com/wiki/Special_Abilities"
+    },
+    {
+      "id": "ambidextrous_combat_ii",
+      "name": "Ambidextrous Combat II",
+      "german_name": "Beidhändiger Kampf II",
+      "category": "melee_combat",
+      "ap_cost": 400,
+      "gp_cost_creation": 8,
+      "requirements": [
+        {"type": "attr_min", "attr": "AG", "value": 15},
+        {"type": "sa_required", "sa": "ambidextrous_combat_i"}
+      ],
+      "effects": [
+        {"type": "off_hand_penalty_removal", "description": "Removes all off-hand penalties"},
+        {"type": "supplemental_action", "description": "Provides an additional Attack or Parry with the secondary weapon once per round"}
+      ],
+      "incompatible_with": [],
+      "auto_for": [],
+      "discounted_for": [],
+      "description": "Removes the penalties for fighting with the left hand entirely and provides one additional Attack or Parry with the secondary weapon per round.",
+      "source": "wiki: https://tde4e.fandom.com/wiki/Special_Abilities"
+    },
+    {
+      "id": "armor_use_i",
+      "name": "Armor Use I",
+      "german_name": "Rüstungsgewöhnung I",
+      "category": "melee_combat",
+      "ap_cost": 150,
+      "gp_cost_creation": 3,
+      "requirements": [
+        {"type": "attr_min", "attr": "ST", "value": 10}
+      ],
+      "effects": [
+        {"type": "ec_reduction", "value": 1, "scope": "one_specific_armor_type", "description": "Reduce EC by 1 for one particular type of armor"}
+      ],
+      "incompatible_with": [],
+      "auto_for": ["warrior", "knight", "anvil_dwarf_culture"],
+      "discounted_for": ["mercenary"],
+      "description": "Reduces Encumbrance (EC) by 1 point for one particular type of armor chosen at acquisition. Warriors receive this automatically for long chainmail.",
+      "source": "wiki: https://tde4e.fandom.com/wiki/Special_Abilities"
+    },
+    {
+      "id": "armor_use_ii",
+      "name": "Armor Use II",
+      "german_name": "Rüstungsgewöhnung II",
+      "category": "melee_combat",
+      "ap_cost": 300,
+      "gp_cost_creation": 6,
+      "requirements": [
+        {"type": "attr_min", "attr": "ST", "value": 12},
+        {"type": "sa_required", "sa": "armor_use_i"}
+      ],
+      "effects": [
+        {"type": "ec_reduction", "value": 1, "scope": "all_armor_types", "description": "Reduce EC by 1 for all types of armor"}
+      ],
+      "incompatible_with": [],
+      "auto_for": [],
+      "discounted_for": [],
+      "description": "Reduces Encumbrance (EC) by 1 point for all types of armor.",
+      "source": "wiki: https://tde4e.fandom.com/wiki/Special_Abilities"
+    },
+    {
+      "id": "armor_use_iii",
+      "name": "Armor Use III",
+      "german_name": "Rüstungsgewöhnung III",
+      "category": "melee_combat",
+      "ap_cost": 450,
+      "gp_cost_creation": 9,
+      "requirements": [
+        {"type": "attr_min", "attr": "ST", "value": 15},
+        {"type": "sa_required", "sa": "armor_use_ii"}
+      ],
+      "effects": [
+        {"type": "ec_reduction", "value": 2, "scope": "all_armor_types", "description": "Reduce EC by 2 for all types of armor"}
+      ],
+      "incompatible_with": [],
+      "auto_for": [],
+      "discounted_for": [],
+      "description": "Reduces Encumbrance (EC) by 2 points for all types of armor.",
+      "source": "wiki: https://tde4e.fandom.com/wiki/Special_Abilities"
+    },
+    {
+      "id": "blade_storm_sa",
+      "name": "Blade Storm",
+      "german_name": "Klingensturm",
+      "category": "melee_combat",
+      "ap_cost": 100,
+      "gp_cost_creation": 2,
+      "requirements": [
+        {"type": "derived_min", "stat": "BAV", "value": 9},
+        {"type": "sa_required", "sa": "lunge"},
+        {"type": "sa_required", "sa": "combat_reflexes"}
+      ],
+      "effects": [
+        {"type": "unlocks_maneuver", "maneuver": "blade_storm", "description": "Enables the Blade Storm attack action against two (or three with Blade Dancer) opponents"}
+      ],
+      "incompatible_with": [],
+      "auto_for": [],
+      "discounted_for": [],
+      "description": "Enables the use of the Blade Storm combat action, attacking two opponents as a single attack action.",
+      "source": "wiki: https://tde4e.fandom.com/wiki/Special_Abilities"
+    },
+    {
+      "id": "called_attack_sa",
+      "name": "Called Attack",
+      "german_name": "Wuchtschlag",
+      "category": "melee_combat",
+      "ap_cost": 200,
+      "gp_cost_creation": 4,
+      "requirements": [
+        {"type": "attr_min", "attr": "ST", "value": 12}
+      ],
+      "effects": [
+        {"type": "called_attack_improvement", "description": "Called Attack adds the full Call to Damage Points instead of half"}
+      ],
+      "incompatible_with": [],
+      "auto_for": [],
+      "discounted_for": [],
+      "description": "Improves the Called Attack maneuver: the full Call (not just half) is added to Damage Points on a successful hit.",
+      "source": "wiki: https://tde4e.fandom.com/wiki/Special_Abilities"
+    },
+    {
+      "id": "charge_sa",
+      "name": "Charge",
+      "german_name": "Sturmangriff",
+      "category": "melee_combat",
+      "ap_cost": 100,
+      "gp_cost_creation": 2,
+      "requirements": [
+        {"type": "attr_min", "attr": "CO", "value": 12},
+        {"type": "sa_required", "sa": "called_attack_sa"}
+      ],
+      "effects": [
+        {"type": "unlocks_maneuver", "maneuver": "charge", "description": "Enables the Charge combat action"}
+      ],
+      "incompatible_with": [],
+      "auto_for": [],
+      "discounted_for": [],
+      "description": "Enables the use of the Charge combat action.",
+      "source": "wiki: https://tde4e.fandom.com/wiki/Special_Abilities"
+    },
+    {
+      "id": "cleave_attack_sa",
+      "name": "Cleave Attack",
+      "german_name": "Fegeangriff",
+      "category": "melee_combat",
+      "ap_cost": 100,
+      "gp_cost_creation": 2,
+      "requirements": [
+        {"type": "attr_min", "attr": "ST", "value": 15},
+        {"type": "attr_min", "attr": "CO", "value": 12},
+        {"type": "sa_required", "sa": "knockdown_sa"}
+      ],
+      "effects": [
+        {"type": "unlocks_maneuver", "maneuver": "cleave_attack", "description": "Enables the Cleave Attack combat action against up to three opponents"}
+      ],
+      "incompatible_with": [],
+      "auto_for": [],
+      "discounted_for": [],
+      "description": "Enables the use of the Cleave Attack combat action, attacking up to three opponents and knocking them back.",
+      "source": "wiki: https://tde4e.fandom.com/wiki/Special_Abilities"
+    },
+    {
+      "id": "combat_awareness",
+      "name": "Combat Awareness",
+      "german_name": "Kampfgespür",
+      "category": "melee_combat",
+      "ap_cost": 300,
+      "gp_cost_creation": 6,
+      "requirements": [
+        {"type": "attr_min", "attr": "IN", "value": 15},
+        {"type": "sa_required", "sa": "combat_reflexes"},
+        {"type": "sa_required", "sa": "alertness"}
+      ],
+      "effects": [
+        {"type": "initiative_bonus", "value": 2, "description": "Increases Base Initiative by 2"},
+        {"type": "defense_ease", "value": 2, "description": "Parrying or dodging free attacks is 2 points easier"},
+        {"type": "orientation_improved", "description": "Orientation requires only 1 action and no IN test"},
+        {"type": "blade_storm_improvement", "description": "With Blade Storm SA, can freely distribute improved AV between two opponents (min 6 per attack)"}
+      ],
+      "incompatible_with": [],
+      "auto_for": [],
+      "discounted_for": [],
+      "description": "Increases Base Initiative by 2 and makes parrying or dodging free attacks 2 points easier. Allows orientation with only 1 action and no Intuition test.",
+      "source": "wiki: https://tde4e.fandom.com/wiki/Special_Abilities"
+    },
+    {
+      "id": "combat_reflexes",
+      "name": "Combat Reflexes",
+      "german_name": "Kampfreflexe",
+      "category": "melee_combat",
+      "ap_cost": 300,
+      "gp_cost_creation": 6,
+      "requirements": [
+        {"type": "derived_min", "stat": "Base INI", "value": 10}
+      ],
+      "effects": [
+        {"type": "initiative_bonus", "value": 4, "description": "Increases the Initiative Value by 4 points"}
+      ],
+      "incompatible_with": [],
+      "auto_for": [],
+      "discounted_for": [],
+      "description": "Increases the Initiative Value by 4 points.",
+      "source": "wiki: https://tde4e.fandom.com/wiki/Special_Abilities"
+    },
+    {
+      "id": "death_blow_sa",
+      "name": "Death Blow",
+      "german_name": "Todesstoß",
+      "category": "melee_combat",
+      "ap_cost": 200,
+      "gp_cost_creation": 4,
+      "requirements": [
+        {"type": "attr_min", "attr": "CO", "value": 15},
+        {"type": "sa_required", "sa": "targeted_thrust_sa"}
+      ],
+      "effects": [
+        {"type": "unlocks_maneuver", "maneuver": "death_blow", "description": "Enables the Death Blow combat action"}
+      ],
+      "incompatible_with": [],
+      "auto_for": [],
+      "discounted_for": [],
+      "description": "Enables the use of the Death Blow combat action, a highly risky maneuver that ignores armor and inflicts two additional wounds.",
+      "source": "wiki: https://tde4e.fandom.com/wiki/Special_Abilities"
+    },
+    {
+      "id": "death_from_the_left",
+      "name": "Death from the Left",
+      "german_name": "Tod von links",
+      "category": "melee_combat",
+      "ap_cost": 100,
+      "gp_cost_creation": 2,
+      "requirements": [
+        {"type": "sa_required", "sa": "ambidextrous_combat_i"},
+        {"type": "sa_required", "sa": "parrying_weapons_ii"}
+      ],
+      "effects": [
+        {"type": "unlocks_maneuver", "maneuver": "death_from_the_left", "description": "Enables the Death from the Left combat action"}
+      ],
+      "incompatible_with": [],
+      "auto_for": [],
+      "discounted_for": [],
+      "description": "Enables the use of the Death from the Left combat action.",
+      "source": "wiki: https://tde4e.fandom.com/wiki/Special_Abilities"
+    },
+    {
+      "id": "double_attack_sa",
+      "name": "Double Attack",
+      "german_name": "Doppelangriff",
+      "category": "melee_combat",
+      "ap_cost": 100,
+      "gp_cost_creation": 2,
+      "requirements": [
+        {"type": "sa_required", "sa": "ambidextrous_combat_i"}
+      ],
+      "effects": [
+        {"type": "unlocks_maneuver", "maneuver": "double_attack", "description": "Enables the Double Attack combat action"}
+      ],
+      "incompatible_with": [],
+      "auto_for": [],
+      "discounted_for": [],
+      "description": "Enables the use of the Double Attack combat action.",
+      "source": "wiki: https://tde4e.fandom.com/wiki/Special_Abilities"
+    },
+    {
+      "id": "feint_sa",
+      "name": "Feint",
+      "german_name": "Finte",
+      "category": "melee_combat",
+      "ap_cost": 200,
+      "gp_cost_creation": 4,
+      "requirements": [
+        {"type": "attr_min", "attr": "AG", "value": 12},
+        {"type": "derived_min", "stat": "BAV", "value": 8}
+      ],
+      "effects": [
+        {"type": "feint_improvement", "description": "Feint penalizes the defender's Parry by the full Call instead of half"}
+      ],
+      "incompatible_with": [],
+      "auto_for": [],
+      "discounted_for": [],
+      "description": "Improves the Feint maneuver: the defender must accept the full Call as a Parry penalty (not just half). Required for several advanced maneuvers.",
+      "source": "wiki: https://tde4e.fandom.com/wiki/Special_Abilities"
+    },
+    {
+      "id": "hammer_strike_sa",
+      "name": "Hammer Strike",
+      "german_name": "Hammerschlag",
+      "category": "melee_combat",
+      "ap_cost": 200,
+      "gp_cost_creation": 4,
+      "requirements": [
+        {"type": "attr_min", "attr": "CO", "value": 15},
+        {"type": "sa_required", "sa": "knockdown_sa"}
+      ],
+      "effects": [
+        {"type": "unlocks_maneuver", "maneuver": "hammer_strike", "description": "Enables the Hammer Strike combat action (triple damage on success)"}
+      ],
+      "incompatible_with": [],
+      "auto_for": [],
+      "discounted_for": [],
+      "description": "Enables the use of the Hammer Strike combat action, giving up all actions for the round to inflict triple damage.",
+      "source": "wiki: https://tde4e.fandom.com/wiki/Special_Abilities"
+    },
+    {
+      "id": "knockdown_sa",
+      "name": "Knockdown",
+      "german_name": "Niederwerfen",
+      "category": "melee_combat",
+      "ap_cost": 100,
+      "gp_cost_creation": 2,
+      "requirements": [
+        {"type": "sa_required", "sa": "called_attack_sa"}
+      ],
+      "effects": [
+        {"type": "unlocks_maneuver", "maneuver": "knockdown", "description": "Enables the Knockdown combat action"}
+      ],
+      "incompatible_with": [],
+      "auto_for": [],
+      "discounted_for": [],
+      "description": "Enables the use of the Knockdown combat action.",
+      "source": "wiki: https://tde4e.fandom.com/wiki/Special_Abilities"
+    },
+    {
+      "id": "off_hand_fighting",
+      "name": "Off-hand Fighting",
+      "german_name": "Linkshändiger Kampf",
+      "category": "melee_combat",
+      "ap_cost": 300,
+      "gp_cost_creation": 6,
+      "requirements": [
+        {"type": "attr_min", "attr": "ST", "value": 10},
+        {"type": "attr_min", "attr": "AG", "value": 10}
+      ],
+      "effects": [
+        {"type": "shield_pa_bonus", "value": 1, "description": "Adds 1 additional point to the Parry Value when using a shield"}
+      ],
+      "incompatible_with": [],
+      "auto_for": [],
+      "discounted_for": [],
+      "description": "Adds 1 additional point to the Parry Value when using a shield. Required for all Ambidextrous Combat and Parrying Weapons SAs.",
+      "source": "wiki: https://tde4e.fandom.com/wiki/Special_Abilities"
+    },
+    {
+      "id": "parrying_weapons_i",
+      "name": "Parrying Weapons I",
+      "german_name": "Parierwaffen I",
+      "category": "melee_combat",
+      "ap_cost": 200,
+      "gp_cost_creation": 4,
+      "requirements": [
+        {"type": "attr_min", "attr": "AG", "value": 12},
+        {"type": "sa_required", "sa": "off_hand_fighting"}
+      ],
+      "effects": [
+        {"type": "parrying_weapon_bonus", "description": "The PV of the primary weapon is modified by -1 plus the PV of the parrying weapon"}
+      ],
+      "incompatible_with": [],
+      "auto_for": [],
+      "discounted_for": [],
+      "description": "When using a parrying weapon in the off-hand, the primary weapon's Parry Value is modified by -1 + the parrying weapon's PV.",
+      "source": "wiki: https://tde4e.fandom.com/wiki/Special_Abilities"
+    },
+    {
+      "id": "parrying_weapons_ii",
+      "name": "Parrying Weapons II",
+      "german_name": "Parierwaffen II",
+      "category": "melee_combat",
+      "ap_cost": 200,
+      "gp_cost_creation": 4,
+      "requirements": [
+        {"type": "attr_min", "attr": "AG", "value": 15},
+        {"type": "sa_required", "sa": "parrying_weapons_i"}
+      ],
+      "effects": [
+        {"type": "parrying_weapon_bonus", "description": "The PV of the primary weapon is modified by +2 plus the PV of the parrying weapon"},
+        {"type": "supplemental_action", "description": "Grants a Supplemental Attack or Parry"}
+      ],
+      "incompatible_with": [],
+      "auto_for": [],
+      "discounted_for": [],
+      "description": "When using a parrying weapon, the primary weapon's PV is modified by +2 + parrying weapon's PV.",
+      "source": "wiki: https://tde4e.fandom.com/wiki/Special_Abilities"
+    },
+    {
+      "id": "shield_fighting_i",
+      "name": "Shield Fighting I",
+      "german_name": "Schildkampf I",
+      "category": "melee_combat",
+      "ap_cost": 200,
+      "gp_cost_creation": 4,
+      "requirements": [
+        {"type": "attr_min", "attr": "ST", "value": 12},
+        {"type": "sa_required", "sa": "off_hand_fighting"}
+      ],
+      "effects": [
+        {"type": "shield_pa_bonus", "value": 2, "description": "Adds 2 points to the Parry Value when using a shield"}
+      ],
+      "incompatible_with": [],
+      "auto_for": ["warrior"],
+      "discounted_for": ["knight", "mercenary"],
+      "description": "Adds 2 points to the Parry Value when using a shield.",
+      "source": "wiki: https://tde4e.fandom.com/wiki/Special_Abilities"
+    },
+    {
+      "id": "shield_fighting_ii",
+      "name": "Shield Fighting II",
+      "german_name": "Schildkampf II",
+      "category": "melee_combat",
+      "ap_cost": 200,
+      "gp_cost_creation": 4,
+      "requirements": [
+        {"type": "attr_min", "attr": "ST", "value": 15},
+        {"type": "sa_required", "sa": "shield_fighting_i"}
+      ],
+      "effects": [
+        {"type": "shield_pa_bonus", "value": 2, "description": "Adds 2 additional points to the Parry Value when using a shield (total +4 with Shield Fighting I)"}
+      ],
+      "incompatible_with": [],
+      "auto_for": [],
+      "discounted_for": [],
+      "description": "Adds 2 additional points to the Parry Value when using a shield (stacks with Shield Fighting I for total +4).",
+      "source": "wiki: https://tde4e.fandom.com/wiki/Special_Abilities"
+    },
+    {
+      "id": "shield_splitter_sa",
+      "name": "Shield Splitter",
+      "german_name": "Schildspalter",
+      "category": "melee_combat",
+      "ap_cost": 100,
+      "gp_cost_creation": 2,
+      "requirements": [
+        {"type": "attr_min", "attr": "ST", "value": 15},
+        {"type": "sa_required", "sa": "knockdown_sa"}
+      ],
+      "effects": [
+        {"type": "unlocks_maneuver", "maneuver": "shield_splitter", "description": "Enables the Shield Splitter combat action"}
+      ],
+      "incompatible_with": [],
+      "auto_for": [],
+      "discounted_for": [],
+      "description": "Enables the use of the Shield Splitter combat action, attacking an opponent's shield to destroy it.",
+      "source": "wiki: https://tde4e.fandom.com/wiki/Special_Abilities"
+    },
+    {
+      "id": "stun_blow_sa",
+      "name": "Stun Blow",
+      "german_name": "Betäubungsschlag",
+      "category": "melee_combat",
+      "ap_cost": 200,
+      "gp_cost_creation": 4,
+      "requirements": [
+        {"type": "sa_required", "sa": "called_attack_sa"},
+        {"type": "sa_required", "sa": "feint_sa"}
+      ],
+      "effects": [
+        {"type": "unlocks_maneuver", "maneuver": "stun_blow", "description": "Enables the Stun Blow combat action"},
+        {"type": "blunt_blow_improvement", "description": "Halves the AT penalties for Blunt Blow"}
+      ],
+      "incompatible_with": [],
+      "auto_for": [],
+      "discounted_for": [],
+      "description": "Enables the Stun Blow combat action and halves the AT penalties for Blunt Blow.",
+      "source": "wiki: https://tde4e.fandom.com/wiki/Special_Abilities"
+    },
+    {
+      "id": "targeted_thrust_sa",
+      "name": "Targeted Thrust",
+      "german_name": "Gezielter Stich",
+      "category": "melee_combat",
+      "ap_cost": 100,
+      "gp_cost_creation": 2,
+      "requirements": [
+        {"type": "sa_required", "sa": "feint_sa"}
+      ],
+      "effects": [
+        {"type": "unlocks_maneuver", "maneuver": "targeted_thrust", "description": "Enables the Targeted Thrust combat action"}
+      ],
+      "incompatible_with": [],
+      "auto_for": [],
+      "discounted_for": [],
+      "description": "Enables the use of the Targeted Thrust combat action, attacking a vulnerable spot and ignoring armor.",
+      "source": "wiki: https://tde4e.fandom.com/wiki/Special_Abilities"
+    },
+    {
+      "id": "lunge",
+      "name": "Lunge",
+      "german_name": "Ausfall",
+      "category": "melee_combat",
+      "ap_cost": 100,
+      "gp_cost_creation": 2,
+      "requirements": [
+        {"type": "sa_required", "sa": "feint_sa"}
+      ],
+      "effects": [
+        {"type": "unlocks_maneuver", "maneuver": "lunge", "description": "Enables the Lunge combat action, stepping forward into a thrust"}
+      ],
+      "incompatible_with": [],
+      "auto_for": [],
+      "discounted_for": [],
+      "description": "Enables the Lunge (Ausfall) maneuver. Can be combined with Double Attack.",
+      "source": "BRW p. 103"
+    },
+    {
+      "id": "half_sword",
+      "name": "Half-Sword",
+      "german_name": "Halbschwert",
+      "category": "melee_combat",
+      "ap_cost": 100,
+      "gp_cost_creation": 2,
+      "requirements": [
+        {"type": "talent_min", "talent": "swords", "value": 10}
+      ],
+      "effects": [
+        {"type": "unlocks_maneuver_with_talent", "description": "Allows Death Blow and Targeted Thrust with Swords talent"}
+      ],
+      "incompatible_with": [],
+      "auto_for": [],
+      "discounted_for": [],
+      "description": "Allows the use of Death Blow and Targeted Thrust with swords (normally restricted to daggers, fencing weapons, and spears).",
+      "source": "BRW p. 103"
+    },
+    {
+      "id": "steady_stand",
+      "name": "Steady Stand",
+      "german_name": "Standfest",
+      "category": "melee_combat",
+      "ap_cost": 200,
+      "gp_cost_creation": 4,
+      "requirements": [],
+      "effects": [
+        {"type": "knockdown_resistance", "value": -1, "description": "Knockdown ST test is 1 point easier"}
+      ],
+      "incompatible_with": [],
+      "auto_for": ["mountebank"],
+      "discounted_for": [],
+      "description": "Makes Knockdown ST tests 1 point easier. Received automatically by Mountebanks.",
+      "source": "BRW p. 103"
+    },
+    {
+      "id": "blade_dancer",
+      "name": "Blade Dancer",
+      "german_name": "Klingentänzer",
+      "category": "melee_combat",
+      "ap_cost": 300,
+      "gp_cost_creation": 6,
+      "requirements": [
+        {"type": "sa_required", "sa": "feint_sa"},
+        {"type": "talent_min", "talent": "fencing_weapons_or_sabers", "value": 12}
+      ],
+      "effects": [
+        {"type": "failed_call_reduction", "description": "Suffers only half the declared points as a penalty on a failed Call"},
+        {"type": "blade_storm_improvement", "description": "With Blade Storm SA, can split attack among up to three opponents"}
+      ],
+      "incompatible_with": [],
+      "auto_for": [],
+      "discounted_for": [],
+      "description": "A fighter with this SA only suffers half of the declared Call points as a penalty on a failed maneuver. With Blade Storm, can attack up to three opponents.",
+      "source": "BRW p. 103"
+    },
+    {
+      "id": "mounted_combat",
+      "name": "Mounted Combat",
+      "german_name": "Reiterkampf",
+      "category": "melee_combat",
+      "ap_cost": 200,
+      "gp_cost_creation": 4,
+      "requirements": [
+        {"type": "talent_min", "talent": "ride", "value": 7}
+      ],
+      "effects": [
+        {"type": "mounted_combat_enabled", "description": "Allows full combat talent use while mounted"}
+      ],
+      "incompatible_with": [],
+      "auto_for": ["knight"],
+      "discounted_for": ["messenger"],
+      "description": "Enables full combat talent usage while mounted. Required for effective fighting from horseback.",
+      "source": "BRW p. 103"
+    },
+    {
+      "id": "alertness",
+      "name": "Alertness",
+      "german_name": "Aufmerksamkeit",
+      "category": "general",
+      "ap_cost": 200,
+      "gp_cost_creation": 4,
+      "requirements": [],
+      "effects": [
+        {"type": "initiative_bonus", "value": 2, "condition": "surprise_check"},
+        {"type": "orientation_improved", "description": "Orientation requires only 1 action and no IN test (when also having Combat Awareness)"}
+      ],
+      "incompatible_with": [],
+      "auto_for": [],
+      "discounted_for": ["lea_elves_culture"],
+      "description": "Increases alertness and situational awareness. Prerequisite for Combat Awareness. Allows single-action orientation when combined with Combat Awareness.",
+      "source": "BRW p. 45"
+    },
+    {
+      "id": "dodge_i",
+      "name": "Dodge I",
+      "german_name": "Ausweichen I",
+      "category": "general",
+      "ap_cost": 300,
+      "gp_cost_creation": 6,
+      "requirements": [],
+      "effects": [
+        {"type": "dodge_enabled", "description": "Allows using Dodge as a defensive action"},
+        {"type": "dodge_value", "formula": "AG / 2", "description": "Dodge value equals AG/2"}
+      ],
+      "incompatible_with": [],
+      "auto_for": ["mountebank"],
+      "discounted_for": [],
+      "description": "Allows using Dodge as a defensive action against melee attacks. Dodge value equals AG/2.",
+      "source": "BRW p. 45"
+    },
+    {
+      "id": "dodge_ii",
+      "name": "Dodge II",
+      "german_name": "Ausweichen II",
+      "category": "general",
+      "ap_cost": 300,
+      "gp_cost_creation": 6,
+      "requirements": [
+        {"type": "sa_required", "sa": "dodge_i"},
+        {"type": "attr_min", "attr": "AG", "value": 13}
+      ],
+      "effects": [
+        {"type": "dodge_value_improved", "formula": "AG * 2/3", "description": "Improved Dodge value"}
+      ],
+      "incompatible_with": [],
+      "auto_for": [],
+      "discounted_for": [],
+      "description": "Improves Dodge value and effectiveness against ranged attacks.",
+      "source": "BRW p. 45"
+    },
+    {
+      "id": "terrain_familiarity",
+      "name": "Terrain Familiarity",
+      "german_name": "Geländekunde",
+      "category": "general",
+      "ap_cost": 150,
+      "gp_cost_creation": 3,
+      "additional_terrain_cost_gp": 2,
+      "requirements": [],
+      "effects": [
+        {"type": "terrain_bonus", "description": "The hero is at home in a specific terrain type and receives bonuses to relevant tests"}
+      ],
+      "incompatible_with": [],
+      "auto_for": [],
+      "discounted_for": [],
+      "terrain_types": ["forest", "mountains", "swamp", "desert", "sea", "tundra", "steppes", "city", "underground"],
+      "notes": "First terrain costs 3 GP at creation. Each additional terrain costs 2 GP. Multiple Terrain Familiarity SAs = different terrain types.",
+      "description": "The hero has extensive experience in a specific terrain type, gaining situational bonuses for navigation, survival, and related tests in that environment.",
+      "source": "BRW p. 46"
+    },
+    {
+      "id": "cultural_lore",
+      "name": "Cultural Lore",
+      "german_name": "Kulturkunde",
+      "category": "general",
+      "ap_cost": 150,
+      "gp_cost_creation_own_culture": 0,
+      "gp_cost_creation_other_culture": 3,
+      "requirements": [],
+      "effects": [
+        {"type": "cultural_knowledge", "description": "Deep familiarity with a specific culture's customs, law, social norms, and practices"}
+      ],
+      "incompatible_with": [],
+      "auto_for": "own_culture",
+      "discounted_for": [],
+      "notes": "Own culture: 0 GP at creation. Each additional culture: 3 GP. Multiple Cultural Lore SAs = different cultures.",
+      "description": "Deep knowledge of a specific culture's customs, social norms, laws, history, and practices. Provides bonuses to Etiquette and social tests within that culture.",
+      "source": "BRW p. 46"
+    },
+    {
+      "id": "local_knowledge",
+      "name": "Local Knowledge",
+      "german_name": "Ortskenntnis",
+      "category": "general",
+      "ap_cost": 150,
+      "gp_cost_creation": 3,
+      "additional_location_cost_gp": 2,
+      "requirements": [],
+      "effects": [
+        {"type": "location_knowledge", "description": "Detailed knowledge of a specific town, city district, or location"}
+      ],
+      "incompatible_with": [],
+      "auto_for": [],
+      "discounted_for": ["burglar", "messenger"],
+      "notes": "Multiple Local Knowledge SAs = different locations.",
+      "description": "Detailed knowledge of a specific location (town, city district, road, etc.), enabling easier navigation and finding contacts.",
+      "source": "BRW p. 46"
+    },
+    {
+      "id": "talent_specialization",
+      "name": "Talent Specialization",
+      "german_name": "Talentspezialisierung",
+      "category": "general",
+      "ap_cost": 50,
+      "gp_cost_creation": 1,
+      "requirements": [
+        {"type": "talent_min", "talent": "relevant_talent", "value": 7}
+      ],
+      "effects": [
+        {"type": "specialization_bonus", "value": 2, "description": "Effective TP is 2 points higher in the specialized sub-area; can exceed normal max TP cap by 2"}
+      ],
+      "incompatible_with": [],
+      "auto_for": [],
+      "discounted_for": [],
+      "notes": "First specialization at TP 7; second at TP 14; third at TP 21; fourth at TP 28. Cannot double-specialize in same area for +4.",
+      "description": "A specialization in a specific sub-area of a talent. Provides +2 effective TP in that sub-area. For combat talents: +1 AT and +1 PA with the specific weapon (or +2 ranged attack for ranged weapons).",
+      "source": "BRW p. 46"
+    },
+    {
+      "id": "nandus_pleasing_knowledge",
+      "name": "Nandus-Pleasing Knowledge",
+      "german_name": "Nandusgefielliges Wissen",
+      "category": "general",
+      "ap_cost": 200,
+      "gp_cost_creation": 4,
+      "requirements": [],
+      "effects": [
+        {"type": "knowledge_bonus", "description": "Exceptional academic breadth; bonuses to lore and knowledge tests"}
+      ],
+      "incompatible_with": [],
+      "auto_for": [],
+      "discounted_for": ["explorer", "horasian_empire_culture"],
+      "description": "Represents exceptional academic knowledge and broad curiosity. Provides bonuses to lore-related talent tests and represents encyclopedic learning.",
+      "source": "BRW p. 46"
+    },
+    {
+      "id": "master_of_improvisation",
+      "name": "Master of Improvisation",
+      "german_name": "Meister der Improvisation",
+      "category": "general",
+      "ap_cost": 200,
+      "gp_cost_creation": 4,
+      "requirements": [],
+      "effects": [
+        {"type": "improvisation_bonus", "description": "Can use improvised tools more effectively; reduced penalties for working without proper equipment"}
+      ],
+      "incompatible_with": [],
+      "auto_for": [],
+      "discounted_for": [],
+      "description": "The hero excels at making do with whatever is at hand, reducing penalties for improvised tools and creative solutions.",
+      "source": "BRW p. 46"
+    },
+    {
+      "id": "hail_of_iron",
+      "name": "Hail of Iron",
+      "german_name": "Eisenhagel",
+      "category": "ranged_combat",
+      "ap_cost": 150,
+      "gp_cost_creation": 3,
+      "requirements": [
+        {"type": "attr_min", "attr": "DE", "value": 12},
+        {"type": "talent_min", "talent": "throwing_knives", "value": 10}
+      ],
+      "effects": [
+        {"type": "unlocks_maneuver", "description": "Can launch multiple throwing rings, discs, or stars simultaneously"}
+      ],
+      "incompatible_with": [],
+      "auto_for": [],
+      "discounted_for": [],
+      "description": "Specialists in throwing rings, discs, or stars can utilize Hail of Iron to launch multiple projectiles simultaneously.",
+      "source": "wiki: https://tde4e.fandom.com/wiki/Special_Abilities"
+    },
+    {
+      "id": "master_marksman",
+      "name": "Master Marksman",
+      "german_name": "Meisterschütze",
+      "category": "ranged_combat",
+      "ap_cost": 300,
+      "gp_cost_creation": 6,
+      "requirements": [
+        {"type": "talent_min", "talent": "relevant_weapon", "value": 15},
+        {"type": "sa_required", "sa": "sharpshooter"}
+      ],
+      "effects": [
+        {"type": "snap_shot_no_penalty", "description": "No penalty for a Snap Shot"},
+        {"type": "aimed_shot_reduction", "description": "An aimed shot only requires one additional action instead of two"}
+      ],
+      "incompatible_with": [],
+      "auto_for": [],
+      "discounted_for": [],
+      "description": "No penalty for a Snap Shot; aimed shots only require one additional action instead of two.",
+      "source": "wiki: https://tde4e.fandom.com/wiki/Special_Abilities"
+    },
+    {
+      "id": "mounted_marksman",
+      "name": "Mounted Marksman",
+      "german_name": "Berittener Bogenschütze",
+      "category": "ranged_combat",
+      "ap_cost": 200,
+      "gp_cost_creation": 4,
+      "requirements": [
+        {"type": "talent_min", "talent": "ride", "value": 7},
+        {"type": "talent_min", "talent": "relevant_weapon", "value": 7}
+      ],
+      "effects": [
+        {"type": "mounted_ranged_penalty_reduction", "description": "Only half the usual penalties when shooting or throwing from a moving mount"}
+      ],
+      "incompatible_with": [],
+      "auto_for": [],
+      "discounted_for": [],
+      "description": "A Mounted Marksman takes only half the usual penalties when taking a shot or throwing a weapon from a moving mount.",
+      "source": "wiki: https://tde4e.fandom.com/wiki/Special_Abilities"
+    },
+    {
+      "id": "quick_draw",
+      "name": "Quick Draw",
+      "german_name": "Schnellziehen",
+      "category": "ranged_combat",
+      "ap_cost": 200,
+      "gp_cost_creation": 4,
+      "requirements": [
+        {"type": "attr_min", "attr": "AG", "value": 12},
+        {"type": "attr_min", "attr": "DE", "value": 10},
+        {"type": "max_ec", "value": 4}
+      ],
+      "effects": [
+        {"type": "draw_speed_improvement", "description": "Drawing a throwing weapon from belt sheath is a Free Action; from back sheath is a single action"}
+      ],
+      "incompatible_with": [],
+      "auto_for": [],
+      "discounted_for": [],
+      "description": "Dramatically speeds up drawing throwing weapons: belt sheath becomes a Free Action, back sheath becomes a single action.",
+      "source": "wiki: https://tde4e.fandom.com/wiki/Special_Abilities"
+    },
+    {
+      "id": "quick_load",
+      "name": "Quick Load",
+      "german_name": "Schnellladen",
+      "category": "ranged_combat",
+      "ap_cost": 200,
+      "gp_cost_creation": 4,
+      "requirements": [
+        {"type": "attr_min", "attr": "AG", "value": 12},
+        {"type": "attr_min", "attr": "DE", "value": 12},
+        {"type": "talent_min", "talent": "bow_or_crossbow", "value": 7}
+      ],
+      "effects": [
+        {"type": "reload_reduction", "bow": "loading time reduced by 1 action", "crossbow": "loading time reduced to three-quarters"}
+      ],
+      "incompatible_with": [],
+      "auto_for": [],
+      "discounted_for": [],
+      "description": "For Bows, loading time is reduced by 1 action. For Crossbows, loading time is reduced to three-quarters.",
+      "source": "wiki: https://tde4e.fandom.com/wiki/Special_Abilities"
+    },
+    {
+      "id": "sharpshooter",
+      "name": "Sharpshooter",
+      "german_name": "Scharfschütze",
+      "category": "ranged_combat",
+      "ap_cost": 300,
+      "gp_cost_creation": 6,
+      "requirements": [
+        {"type": "talent_min", "talent": "relevant_weapon", "value": 7}
+      ],
+      "effects": [
+        {"type": "snap_shot_penalty_reduction", "from": 2, "to": 1},
+        {"type": "called_shot_improvement", "description": "Full Called Shot value applied instead of only half"}
+      ],
+      "incompatible_with": [],
+      "auto_for": ["hunter"],
+      "discounted_for": [],
+      "description": "The penalty for a Snap Shot is reduced to 1 point instead of 2. When making a Called Shot, the full value is added instead of only half.",
+      "source": "wiki: https://tde4e.fandom.com/wiki/Special_Abilities"
+    },
+    {
+      "id": "astral_meditation",
+      "name": "Astral Meditation",
+      "german_name": "Astrale Meditation",
+      "category": "magic",
+      "ap_cost": 100,
+      "gp_cost_creation": 2,
+      "requirements": [
+        {"type": "attr_min", "attr": "IN", "value": 13}
+      ],
+      "effects": [
+        {"type": "lp_to_asp_conversion", "description": "The magic user can convert their own Vitality Points into Astral Points during meditation"}
+      ],
+      "incompatible_with": [],
+      "auto_for": ["magician"],
+      "discounted_for": [],
+      "description": "The magic user can convert their own life energy (VP) into astral energy (ASP). Used during extended rest periods.",
+      "source": "wiki: https://tde4e.fandom.com/wiki/Special_Abilities"
+    },
+    {
+      "id": "great_meditation",
+      "name": "Great Meditation",
+      "german_name": "Große Meditation",
+      "category": "magic",
+      "ap_cost": 300,
+      "gp_cost_creation": 6,
+      "requirements": [
+        {"type": "sa_required", "sa": "astral_meditation"},
+        {"type": "attr_min", "attr": "IN", "value": 15}
+      ],
+      "effects": [
+        {"type": "enhanced_meditation", "description": "Improves meditation for ASP recovery and enables extended trance-like meditation for deeper regeneration"}
+      ],
+      "incompatible_with": [],
+      "auto_for": ["elf_lea_elves_culture"],
+      "discounted_for": [],
+      "description": "Enhanced meditation abilities for deeper Astral Point recovery and extended meditation.",
+      "source": "BRW p. 103"
+    },
+    {
+      "id": "elven_representation",
+      "name": "Elven Representation",
+      "german_name": "Elfen-Repräsentation",
+      "category": "magic",
+      "ap_cost": 100,
+      "gp_cost_creation": 2,
+      "requirements": [
+        {"type": "race", "race": "elf"}
+      ],
+      "effects": [
+        {"type": "elven_spell_access", "description": "Grants access to the Elven Heritage spell representation"}
+      ],
+      "incompatible_with": [],
+      "auto_for": ["elf_lea_elves_culture"],
+      "discounted_for": [],
+      "description": "Grants access to the Elven Heritage (Elfenlied) spell representation. Automatic for elves in the Lea Elves culture.",
+      "source": "BRW p. 46"
+    },
+    {
+      "id": "salasandra",
+      "name": "Salasandra",
+      "german_name": "Salasandra",
+      "category": "magic",
+      "ap_cost": 200,
+      "gp_cost_creation": 4,
+      "requirements": [
+        {"type": "race", "race": "elf"}
+      ],
+      "effects": [
+        {"type": "nature_communion", "description": "Deep connection with nature spirits; bonuses to nature-related tests and communication with plant/animal life"}
+      ],
+      "incompatible_with": [],
+      "auto_for": ["elf_lea_elves_culture"],
+      "discounted_for": [],
+      "description": "An elven ability representing communion with nature spirits (Salasandras). Provides bonuses to nature-related activities.",
+      "source": "BRW p. 46"
+    },
+    {
+      "id": "swamp_lore",
+      "name": "Swamp Lore",
+      "german_name": "Sumpfkundig",
+      "category": "general",
+      "ap_cost": 150,
+      "gp_cost_creation": 3,
+      "requirements": [],
+      "effects": [
+        {"type": "terrain_specialization", "terrain": "swamp", "description": "Expert knowledge of swamp environments and their dangers"}
+      ],
+      "incompatible_with": [],
+      "auto_for": [],
+      "discounted_for": ["bornland_culture", "lea_elves_culture"],
+      "description": "Expert knowledge of swamp terrain, plants, animals, and navigation. A subtype of Terrain Familiarity.",
+      "source": "BRW p. 46"
+    },
+    {
+      "id": "sea_lore",
+      "name": "Sea Lore",
+      "german_name": "Meereskundig",
+      "category": "general",
+      "ap_cost": 150,
+      "gp_cost_creation": 3,
+      "requirements": [],
+      "effects": [
+        {"type": "terrain_specialization", "terrain": "sea", "description": "Expert knowledge of maritime environments, navigation, and seafaring"}
+      ],
+      "incompatible_with": [],
+      "auto_for": [],
+      "discounted_for": ["thorwal_culture"],
+      "description": "Expert knowledge of maritime environments, sea navigation, weather at sea, and maritime survival.",
+      "source": "BRW p. 46"
+    },
+    {
+      "id": "cave_lore",
+      "name": "Cave Lore",
+      "german_name": "Höhlenkundig",
+      "category": "general",
+      "ap_cost": 150,
+      "gp_cost_creation": 3,
+      "requirements": [],
+      "effects": [
+        {"type": "terrain_specialization", "terrain": "underground", "description": "Expert knowledge of underground environments and cave systems"}
+      ],
+      "incompatible_with": [],
+      "auto_for": ["anvil_dwarf_culture"],
+      "discounted_for": [],
+      "description": "Expert knowledge of underground environments, cave systems, and subterranean survival.",
+      "source": "BRW p. 46"
+    },
+    {
+      "id": "desert_lore",
+      "name": "Desert Lore",
+      "german_name": "Wüstenkundig",
+      "category": "general",
+      "ap_cost": 150,
+      "gp_cost_creation": 3,
+      "requirements": [],
+      "effects": [
+        {"type": "terrain_specialization", "terrain": "desert", "description": "Expert knowledge of desert environments"}
+      ],
+      "incompatible_with": [],
+      "auto_for": ["novadis_culture"],
+      "discounted_for": [],
+      "description": "Expert knowledge of desert environments, survival techniques, and navigation in arid regions.",
+      "source": "BRW p. 46"
+    },
+    {
+      "id": "ice_lore",
+      "name": "Ice Lore",
+      "german_name": "Eiskundig",
+      "category": "general",
+      "ap_cost": 150,
+      "gp_cost_creation": 3,
+      "requirements": [],
+      "effects": [
+        {"type": "terrain_specialization", "terrain": "tundra_ice", "description": "Expert knowledge of frozen and arctic environments"}
+      ],
+      "incompatible_with": [],
+      "auto_for": [],
+      "discounted_for": ["bornland_culture"],
+      "description": "Expert knowledge of icy, frozen, and arctic environments, survival, and navigation.",
+      "source": "BRW p. 46"
+    },
+    {
+      "id": "combat_in_water",
+      "name": "Combat in Water",
+      "german_name": "Kampf im Wasser",
+      "category": "melee_combat",
+      "ap_cost": 150,
+      "gp_cost_creation": 3,
+      "requirements": [
+        {"type": "talent_min", "talent": "swimming", "value": 5}
+      ],
+      "effects": [
+        {"type": "water_combat_enabled", "description": "Reduces penalties for fighting in water or aboard ships in rough conditions"}
+      ],
+      "incompatible_with": [],
+      "auto_for": [],
+      "discounted_for": ["lea_elves_culture"],
+      "description": "Reduces or eliminates penalties for fighting in water, reducing drowning risk during combat.",
+      "source": "BRW p. 103"
+    },
+    {
+      "id": "regeneration_i",
+      "name": "Regeneration I",
+      "german_name": "Regeneration I",
+      "category": "magic",
+      "ap_cost": 200,
+      "gp_cost_creation": 4,
+      "requirements": [],
+      "effects": [
+        {"type": "asp_regeneration_bonus", "value": 1, "description": "Recover 1 additional ASP per rest phase"}
+      ],
+      "incompatible_with": [],
+      "auto_for": [],
+      "discounted_for": ["lea_elves_culture"],
+      "description": "Recover 1 additional Astral Point during rest. The SA equivalent of the Astral Regeneration advantage for incremental advancement.",
+      "source": "BRW p. 46"
+    },
+    {
+      "id": "unarmed_style_hammerfist",
+      "name": "Unarmed Combat Style: Hammerfist",
+      "german_name": "Nahkampfstil: Hammerfaust",
+      "category": "melee_combat",
+      "ap_cost": 200,
+      "gp_cost_creation": 4,
+      "requirements": [
+        {"type": "talent_min", "talent": "brawling", "value": 5}
+      ],
+      "effects": [
+        {"type": "unarmed_technique", "description": "Specific Thorwalian brawling style; bonuses to Brawling attacks and specific grapple maneuvers"}
+      ],
+      "incompatible_with": [],
+      "auto_for": [],
+      "discounted_for": ["thorwal_culture"],
+      "description": "A traditional Thorwalian unarmed combat style focused on powerful hammer strikes with the fists.",
+      "source": "BRW p. 46"
+    },
+    {
+      "id": "unarmed_style_unauer",
+      "name": "Unarmed Combat Style: Unau School",
+      "german_name": "Nahkampfstil: Unauer Schule",
+      "category": "melee_combat",
+      "ap_cost": 200,
+      "gp_cost_creation": 4,
+      "requirements": [
+        {"type": "talent_min", "talent": "brawling", "value": 5}
+      ],
+      "effects": [
+        {"type": "unarmed_technique", "description": "Novadi wrestling and striking style; bonuses to grappling and unarmed combat"}
+      ],
+      "incompatible_with": [],
+      "auto_for": [],
+      "discounted_for": ["novadis_culture_men"],
+      "description": "A traditional Novadi unarmed combat school combining wrestling and striking techniques.",
+      "source": "BRW p. 46"
+    },
+    {
+      "id": "friendship_song",
+      "name": "Friendship Song",
+      "german_name": "Freundeslied",
+      "category": "magic",
+      "ap_cost": 100,
+      "gp_cost_creation": 2,
+      "requirements": [
+        {"type": "race", "race": "elf"}
+      ],
+      "effects": [
+        {"type": "elven_social_magic", "description": "A magical song that improves social reactions from animals and nature spirits"}
+      ],
+      "incompatible_with": [],
+      "auto_for": ["lea_elves_culture"],
+      "discounted_for": [],
+      "description": "An elven magical song that soothes animals and nature spirits, improving their reactions.",
+      "source": "BRW p. 46"
+    }
+  ]
+}

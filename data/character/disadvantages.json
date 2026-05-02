@@ -1,0 +1,1128 @@
+{
+  "meta": {
+    "schema_version": "1.0",
+    "last_updated": "2026-05-02",
+    "description": "All disadvantages (Nachteile) and Bad Traits (Schlechte Eigenschaften) for TDE4/DSA4.1. GP refunds are stored as negative values. Bad Traits (marked is_bad_trait: true) have a numeric rating and work like attributes for tests. Total GP from disadvantages may not exceed 50; at most 30 GP may come from Bad Traits. [M] = Magical disadvantage.",
+    "source_books": [
+      "DSA 4.1 Basisregelwerk p. 44, 124–135",
+      "TDE Basic Rules p. 58–65",
+      "wiki: https://tde4e.fandom.com/wiki/Advantages_and_Disadvantages"
+    ],
+    "gp_caps": {
+      "total_disadvantage_gp": 50,
+      "bad_trait_gp_subset": 30
+    }
+  },
+  "disadvantages": [
+    {
+      "id": "superstition",
+      "name": "Superstition",
+      "german_name": "Aberglaube",
+      "gp_refund_per_point": 1,
+      "is_leveled": true,
+      "is_bad_trait": true,
+      "is_magical": false,
+      "auto_only": false,
+      "min_rating": 1,
+      "max_rating": 10,
+      "effects": [
+        {"type": "compulsion", "description": "Hero must act according to superstitions; failure requires a test or causes distress"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": [],
+      "description": "The hero is deeply superstitious, following rituals and omens. The higher the rating, the more severely and often the superstition governs behavior. A test against the rating may be required to act against the superstition.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "albino",
+      "name": "Albino",
+      "german_name": "Albino",
+      "gp_refund": -7,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [
+        {"type": "light_sensitivity", "description": "Social penalties from appearance; penalties in bright light; pink eyes and white hair"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": ["good_looking", "outstanding_appearance"],
+      "description": "The hero is an albino — white hair, pale skin, and sensitive pink eyes. Social penalties apply in many cultures, and bright light can cause discomfort.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "fear_of",
+      "name": "Fear of [...]",
+      "german_name": "Angst vor [...]",
+      "gp_refund_per_point": -1.0,
+      "gp_refund_per_point_severe": -1.5,
+      "is_leveled": true,
+      "is_bad_trait": true,
+      "is_magical": false,
+      "auto_only": false,
+      "min_rating": 1,
+      "max_rating": 12,
+      "fear_types": ["spiders", "darkness", "heights", "fire", "undead", "crowds", "specific_creature"],
+      "effects": [
+        {"type": "phobia", "description": "Must test against fear rating when encountering the feared thing; on failure, must flee or freeze"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": [],
+      "description": "The hero has a specific phobia. When encountering the feared subject, they must test against the fear rating or be compelled to flee or freeze. Severity depends on rating.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "arcane_fear",
+      "name": "Arcane Fear",
+      "german_name": "Arkanophobie",
+      "gp_refund_per_2_points": -3,
+      "is_leveled": true,
+      "is_bad_trait": true,
+      "is_magical": false,
+      "auto_only": false,
+      "min_rating": 2,
+      "max_rating": 12,
+      "effects": [
+        {"type": "magic_phobia", "description": "Hero is terrified of magic and magical beings; must test when confronted with obvious magic"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": ["full_caster", "quarter_caster"],
+      "description": "The hero has a deep fear of magic and magical phenomena. When confronted with obvious magic, must test against this rating.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "arrogance",
+      "name": "Arrogance",
+      "german_name": "Arroganz",
+      "gp_refund_per_point": -1,
+      "is_leveled": true,
+      "is_bad_trait": true,
+      "is_magical": false,
+      "auto_only": false,
+      "min_rating": 1,
+      "max_rating": 10,
+      "effects": [
+        {"type": "social_penalty", "description": "Social penalties when hero must humble themselves or show deference; may refuse"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": [],
+      "description": "The hero considers themselves superior to others. Higher ratings require tests to accept orders, show deference, or acknowledge failure. Social penalties with those who perceive the arrogance.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "astral_block",
+      "name": "Astral Block",
+      "german_name": "Astraler Block",
+      "gp_refund": -5,
+      "gp_refund_severe": -10,
+      "is_leveled": true,
+      "levels": 2,
+      "gp_per_level": [-5, -10],
+      "is_bad_trait": false,
+      "is_magical": true,
+      "auto_only": false,
+      "effects": [
+        {"type": "asp_reduction", "description": "Permanently reduces Astral Points; interferes with spellcasting"}
+      ],
+      "prerequisites": [{"type": "magical_status", "value": "any_caster"}],
+      "incompatible_with": ["astral_power"],
+      "description": "The hero's magical potential is partially blocked. Permanent reduction of ASP and impaired spellcasting. Level I: -5 GP; Level II: -10 GP.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "blood_frenzy",
+      "name": "Blood Frenzy",
+      "german_name": "Blutrausch",
+      "gp_refund": -15,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [
+        {"type": "berserk_trigger", "description": "In combat, hero may enter an uncontrolled frenzy when they or allies take wounds"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": [],
+      "description": "The hero can lose control in combat when blood is shed. When triggered, they attack the nearest target (friend or foe) and cannot easily disengage.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "fear_of_dark",
+      "name": "Fear of Dark",
+      "german_name": "Dunkelangst",
+      "gp_refund_per_point": -2,
+      "is_leveled": true,
+      "is_bad_trait": true,
+      "is_magical": false,
+      "auto_only": false,
+      "min_rating": 1,
+      "max_rating": 12,
+      "effects": [
+        {"type": "darkness_phobia", "description": "Must test when in darkness; on failure, panics"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": [],
+      "description": "The hero fears darkness. Must test against this rating when in significant darkness.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "one_armed",
+      "name": "One-Armed",
+      "german_name": "Einarmig",
+      "gp_refund": -15,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [
+        {"type": "limb_missing", "limb": "arm", "description": "One arm is missing; severe penalties to two-handed tasks; cannot use shields or two-handed weapons"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": ["ambidextrous_combat_i"],
+      "description": "The hero is missing one arm. Cannot use two-handed weapons or shields. Significant penalties to tasks requiring two hands.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "one_eyed",
+      "name": "One-Eyed",
+      "german_name": "Einäugig",
+      "gp_refund": -5,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [
+        {"type": "vision_impairment", "description": "No depth perception; penalties to ranged attacks and fine motor tasks"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": [],
+      "description": "The hero has only one eye, losing depth perception. Penalties to ranged attacks, reading distances, and fine motor work.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "one_legged",
+      "name": "One-Legged",
+      "german_name": "Einbeinig",
+      "gp_refund": -25,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [
+        {"type": "limb_missing", "limb": "leg", "description": "Severely reduced movement speed; penalties to most physical activities"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": [],
+      "description": "The hero is missing one leg. Movement is severely impaired (requires a crutch or prosthetic). Severe penalties to all athletic and physical activities.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "impaired_sense",
+      "name": "Impaired Sense",
+      "german_name": "Eingeschränkter Sinn",
+      "gp_refund": -5,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_magical": false,
+      "auto_only": false,
+      "senses": ["hearing", "sight", "smell", "taste", "touch"],
+      "effects": [
+        {"type": "sense_impairment", "description": "One sense is significantly reduced; penalties to related tests"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": ["outstanding_sense_same"],
+      "description": "The hero has a significantly impaired sense (choose which). Penalties to all tests that rely on that sense.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "one_handed",
+      "name": "One-Handed",
+      "german_name": "Einhändig",
+      "gp_refund": -10,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [
+        {"type": "hand_dominance", "description": "Hero can only use one hand effectively; off-hand is non-functional but arm is present"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": [],
+      "description": "The hero has a paralyzed, withered, or otherwise non-functional hand. Off-hand is present but cannot be used, effectively limiting to one-handed activities.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "vanity",
+      "name": "Vanity",
+      "german_name": "Eitelkeit",
+      "gp_refund_per_point": -1,
+      "is_leveled": true,
+      "is_bad_trait": true,
+      "is_magical": false,
+      "auto_only": false,
+      "min_rating": 1,
+      "max_rating": 10,
+      "effects": [
+        {"type": "vanity_compulsion", "description": "Hero prioritizes appearance and reputation; may refuse tasks that could harm appearance or prestige"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": [],
+      "description": "The hero is vain about their appearance and reputation. Higher ratings require tests to do things that would harm their appearance or prestige.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "color_blind",
+      "name": "Color-Blind",
+      "german_name": "Farbenblind",
+      "gp_refund": -5,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [
+        {"type": "vision_impairment", "description": "Cannot distinguish colors; penalties to tasks requiring color identification"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": ["twilight_sight"],
+      "description": "The hero cannot distinguish colors. Penalties to tasks requiring color identification (such as Alchemy, identifying uniforms, etc.).",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "obese",
+      "name": "Obese",
+      "german_name": "Fettleibig",
+      "gp_refund": -15,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [
+        {"type": "speed_penalty", "description": "Reduced movement speed and athletic ability"},
+        {"type": "heat_vulnerability", "description": "Increased suffering from heat"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": ["fleet", "outstanding_balance"],
+      "description": "The hero is significantly overweight. Movement is slowed, athletic activities are penalized, heat affects them more severely, and they cannot wear standard armor without modification.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "miserliness",
+      "name": "Miserliness",
+      "german_name": "Geiz",
+      "gp_refund_per_2_points": -1,
+      "is_leveled": true,
+      "is_bad_trait": true,
+      "is_magical": false,
+      "auto_only": false,
+      "min_rating": 2,
+      "max_rating": 12,
+      "effects": [
+        {"type": "money_compulsion", "description": "Hero hoards money; must test to spend money even when necessary"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": [],
+      "description": "The hero is miserly. Must test against this rating when required to spend money; on failure, refuses or spends as little as possible.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "obsessive_justice",
+      "name": "Obsessive Justice",
+      "german_name": "Gerechtigkeitswahn",
+      "gp_refund_per_2_points": -1,
+      "is_leveled": true,
+      "is_bad_trait": true,
+      "is_magical": false,
+      "auto_only": false,
+      "min_rating": 2,
+      "max_rating": 12,
+      "effects": [
+        {"type": "justice_compulsion", "description": "Hero must right perceived injustices; cannot easily ignore unfair situations"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": [],
+      "description": "The hero has an obsessive need for justice. Must test when witnessing injustice; on failure, must intervene regardless of danger.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "wanted_i",
+      "name": "Wanted I",
+      "german_name": "Gesucht I",
+      "gp_refund": -5,
+      "is_leveled": true,
+      "levels": 3,
+      "gp_per_level": [-5, -10, -15],
+      "is_bad_trait": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [
+        {"type": "legal_status", "description": "Hero is wanted by authorities; bounty placed on head; severe penalties if caught"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": [],
+      "description": "The hero is wanted by authorities with a bounty on their head. Level I (-5 GP): minor warrant; Level II (-10 GP): significant bounty; Level III (-15 GP): major bounty with active pursuit. Severe penalties if caught.",
+      "source": "BRW p. 44; wiki"
+    },
+    {
+      "id": "glass_bones",
+      "name": "Glass Bones",
+      "german_name": "Glasknochen",
+      "gp_refund": -7,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [
+        {"type": "wound_threshold_penalty", "value": -2, "description": "Wound Threshold reduced by 2"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": ["iron"],
+      "description": "The hero's bones are unusually fragile. Wound Threshold is reduced by 2, meaning they suffer wounds from much less damage.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "greed",
+      "name": "Greed",
+      "german_name": "Goldgier",
+      "gp_refund_per_point": -1,
+      "is_leveled": true,
+      "is_bad_trait": true,
+      "is_magical": false,
+      "auto_only": false,
+      "min_rating": 1,
+      "max_rating": 12,
+      "effects": [
+        {"type": "greed_compulsion", "description": "Hero is compelled to take valuables; must test to ignore gold and treasure"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": [],
+      "description": "The hero is greedy for gold and valuables. Must test against this rating to ignore tempting wealth; on failure, must try to acquire it.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "vertigo",
+      "name": "Vertigo",
+      "german_name": "Höhenangst",
+      "gp_refund_per_2_points": -3,
+      "is_leveled": true,
+      "is_bad_trait": true,
+      "is_magical": false,
+      "auto_only": false,
+      "min_rating": 2,
+      "max_rating": 12,
+      "effects": [
+        {"type": "height_phobia", "description": "Must test when at significant heights; on failure, freezes or panics"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": [],
+      "description": "The hero fears heights. Must test when at significant heights; on failure, freezes, panics, or must retreat.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "violent_temper",
+      "name": "Violent Temper",
+      "german_name": "Jähzorn",
+      "gp_refund_per_2_points": -3,
+      "is_leveled": true,
+      "is_bad_trait": true,
+      "is_magical": false,
+      "auto_only": false,
+      "min_rating": 2,
+      "max_rating": 12,
+      "effects": [
+        {"type": "anger_trigger", "description": "When provoked, must test to avoid explosive anger; on failure, attacks or acts violently"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": [],
+      "description": "The hero has an explosive temper. When sufficiently provoked, must test against this rating to remain calm; on failure, explodes in anger.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "pathological_cleanliness",
+      "name": "Pathological Cleanliness",
+      "german_name": "Pathologische Sauberkeit",
+      "gp_refund_per_point": -1,
+      "is_leveled": true,
+      "is_bad_trait": true,
+      "is_magical": false,
+      "auto_only": false,
+      "min_rating": 1,
+      "max_rating": 10,
+      "effects": [
+        {"type": "cleanliness_compulsion", "description": "Hero is compelled to maintain extreme cleanliness; difficulties in wilderness or dirty environments"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": [],
+      "description": "The hero has an obsessive need for cleanliness. Must test in dirty environments; on failure, refuses to proceed or must clean immediately.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "prone_to_illness",
+      "name": "Prone to Illness",
+      "german_name": "Krankheitsanfällig",
+      "gp_refund": -7,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [
+        {"type": "disease_vulnerability", "description": "More likely to contract diseases and slower to recover"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": ["disease_immunity", "disease_resistance"],
+      "description": "The hero is unusually susceptible to illness. Disease tests are more difficult, recovery is slower, and minor infections become serious.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "short_winded",
+      "name": "Short-Winded",
+      "german_name": "Kurzatmig",
+      "gp_refund_per_2ep": -1,
+      "is_leveled": true,
+      "is_bad_trait": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [
+        {"type": "ep_reduction", "per_gp": 2, "description": "Each GP refunded reduces Endurance Points by 2"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": ["enduring"],
+      "description": "The hero has reduced endurance. Each refund of 1 GP reduces EP by 2.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "lame",
+      "name": "Lame",
+      "german_name": "Lahm",
+      "gp_refund": -15,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [
+        {"type": "movement_impairment", "description": "Significantly reduced movement speed; limps permanently"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": ["fleet"],
+      "description": "The hero has a permanent limp or walking impairment. Movement speed is significantly reduced and athletic activities are penalized.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "light_sensitive",
+      "name": "Light-Sensitive",
+      "german_name": "Lichtempfindlich",
+      "gp_refund": -15,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [
+        {"type": "light_pain", "description": "Sunlight and bright artificial light cause pain and penalties"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": ["twilight_sight"],
+      "description": "The hero is extremely sensitive to light. Sunlight and bright light cause pain, reducing combat effectiveness and perception.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "light_shy",
+      "name": "Light-Shy",
+      "german_name": "Lichtscheu",
+      "gp_refund": -10,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [
+        {"type": "light_discomfort", "description": "Uncomfortable in bright light; prefers darkness; penalties in full daylight"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": [],
+      "description": "The hero prefers dim light and is uncomfortable in bright conditions. Penalties in full daylight for extended exposure.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "fear_of_sea",
+      "name": "Fear of Sea",
+      "german_name": "Meeresangst",
+      "gp_refund_per_point": -1,
+      "is_leveled": true,
+      "is_bad_trait": true,
+      "is_magical": false,
+      "auto_only": false,
+      "min_rating": 1,
+      "max_rating": 12,
+      "effects": [
+        {"type": "sea_phobia", "description": "Must test near or on large bodies of water; on failure, panics"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": [],
+      "description": "The hero fears the sea and large bodies of water. Must test against this rating near or on large bodies of water.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "terrible_attribute",
+      "name": "Terrible Attribute",
+      "german_name": "Miserable Eigenschaft",
+      "gp_refund": -10,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [
+        {"type": "attribute_cap", "description": "One attribute is capped at a very low maximum; cannot advance above a certain value"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": ["outstanding_attribute_same"],
+      "description": "One attribute is permanently impaired and cannot be advanced above a significantly reduced cap.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "night_blind",
+      "name": "Night-Blind",
+      "german_name": "Nachtblind",
+      "gp_refund": -10,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [
+        {"type": "night_vision_penalty", "description": "Cannot see in darkness; even dim light causes perception penalties"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": ["twilight_sight", "light_sensitive"],
+      "description": "The hero is night-blind — even moderate darkness renders them nearly blind. Severe penalties in anything less than bright light.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "dietary_restriction",
+      "name": "Dietary Restriction",
+      "german_name": "Nahrungsrestriktion",
+      "gp_refund": -5,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [
+        {"type": "food_restriction", "description": "Hero cannot eat certain foods (e.g., meat, specific ingredients); social complications"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": [],
+      "description": "The hero has a significant dietary restriction (religious, personal, or medical). Acquiring appropriate food is more difficult in some situations.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "envy",
+      "name": "Envy",
+      "german_name": "Neid",
+      "gp_refund_per_2_points": -1,
+      "is_leveled": true,
+      "is_bad_trait": true,
+      "is_magical": false,
+      "auto_only": false,
+      "min_rating": 2,
+      "max_rating": 12,
+      "effects": [
+        {"type": "envy_compulsion", "description": "Hero is envious of others' possessions and status; may try to undermine or acquire what others have"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": [],
+      "description": "The hero is envious of others' possessions, status, or abilities. Must test when confronted with something they covet.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "curiosity",
+      "name": "Curiosity",
+      "german_name": "Neugier",
+      "gp_refund_per_point": -1,
+      "is_leveled": true,
+      "is_bad_trait": true,
+      "is_magical": false,
+      "auto_only": false,
+      "min_rating": 1,
+      "max_rating": 12,
+      "effects": [
+        {"type": "curiosity_compulsion", "description": "Hero must investigate interesting things; can be distracted by mysteries and unusual events"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": [],
+      "description": "The hero has an insatiable curiosity. Must test when confronted with something mysterious or interesting; on failure, must investigate regardless of risk.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "low_asp",
+      "name": "Low Astral Power",
+      "german_name": "Niedrige Astralkraft",
+      "gp_refund_per_asp": -1,
+      "is_leveled": true,
+      "is_bad_trait": false,
+      "is_magical": true,
+      "auto_only": false,
+      "effects": [
+        {"type": "asp_reduction", "per_gp": 1, "description": "Each GP refunded removes 1 ASP"}
+      ],
+      "prerequisites": [{"type": "magical_status", "value": "any_caster"}],
+      "incompatible_with": ["astral_power"],
+      "description": "The magical hero has reduced astral reserves. Each 1 GP refunded reduces ASP by 1.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "low_vitality",
+      "name": "Low Vitality",
+      "german_name": "Niedrige Lebenskraft",
+      "gp_refund_per_vp": -2,
+      "is_leveled": true,
+      "is_bad_trait": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [
+        {"type": "vp_reduction", "per_2gp": 1, "description": "Each 2 GP refunded reduces VP by 1"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": ["vigor"],
+      "description": "The hero has reduced life force. Each 2 GP refunded reduces VP by 1.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "low_rm",
+      "name": "Low Resistance to Magic",
+      "german_name": "Niedrige Magieresistenz",
+      "gp_refund_per_rm": -2,
+      "is_leveled": true,
+      "is_bad_trait": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [
+        {"type": "rm_reduction", "per_2gp": 1, "description": "Each 2 GP refunded reduces RM by 1"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": ["high_rm"],
+      "description": "The hero has reduced magical resistance. Each 2 GP refunded reduces RM by 1.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "claustrophobia",
+      "name": "Claustrophobia",
+      "german_name": "Platzangst",
+      "gp_refund_per_2_points": -3,
+      "is_leveled": true,
+      "is_bad_trait": true,
+      "is_magical": false,
+      "auto_only": false,
+      "min_rating": 2,
+      "max_rating": 12,
+      "effects": [
+        {"type": "confined_space_phobia", "description": "Must test in narrow or confined spaces; on failure, panics"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": [],
+      "description": "The hero fears confined or enclosed spaces. Must test against this rating in narrow tunnels, small rooms, or enclosed spaces.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "code_of_conduct",
+      "name": "Code of Conduct",
+      "german_name": "Prinzipientreue",
+      "gp_refund": -3,
+      "gp_refund_max": -12,
+      "gp_refund_range": [-3, -6, -9, -12],
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [
+        {"type": "behavior_constraint", "description": "Hero must adhere to a strict code of behavior; violations require atonement"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": [],
+      "description": "The hero follows a strict code of conduct (warrior's code, religious vows, knightly oaths, etc.). Cost depends on strictness (-3 to -12 GP). Violations have in-game consequences.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "vengefulness",
+      "name": "Vengefulness",
+      "german_name": "Rachsucht",
+      "gp_refund_per_point": -1,
+      "is_leveled": true,
+      "is_bad_trait": true,
+      "is_magical": false,
+      "auto_only": false,
+      "min_rating": 1,
+      "max_rating": 12,
+      "effects": [
+        {"type": "revenge_compulsion", "description": "Hero is compelled to seek revenge for any perceived slight or injustice"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": [],
+      "description": "The hero never lets a wrong go unavenged. Must test against this rating to let an offense pass; on failure, must plan or execute revenge.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "agoraphobia",
+      "name": "Agoraphobia",
+      "german_name": "Raumangst",
+      "gp_refund_per_2_points": -3,
+      "is_leveled": true,
+      "is_bad_trait": true,
+      "is_magical": false,
+      "auto_only": false,
+      "min_rating": 2,
+      "max_rating": 12,
+      "effects": [
+        {"type": "open_space_phobia", "description": "Must test in open, unenclosed spaces; on failure, panics or must retreat"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": [],
+      "description": "The hero fears wide open spaces. Must test against this rating in open fields, large rooms, or exposed outdoor areas.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "slow_regeneration",
+      "name": "Slow Regeneration",
+      "german_name": "Schlechte Regeneration",
+      "gp_refund": -10,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [
+        {"type": "healing_penalty", "description": "Heals fewer VP and EP per rest; wounds take longer to recover"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": ["fast_healing"],
+      "description": "The hero heals abnormally slowly. VP and EP recovery per rest is reduced; wounds take significantly longer to heal.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "sensitive_smell",
+      "name": "Sensitive Smell",
+      "german_name": "Sensibler Geruchssinn",
+      "gp_refund_per_2_points": -3,
+      "is_leveled": true,
+      "is_bad_trait": true,
+      "is_magical": false,
+      "auto_only": false,
+      "min_rating": 2,
+      "max_rating": 12,
+      "effects": [
+        {"type": "smell_overstimulation", "description": "Strong smells cause discomfort or nausea; penalties in cities, around animals, etc."}
+      ],
+      "prerequisites": [],
+      "incompatible_with": [],
+      "description": "The hero's sense of smell is overwhelmingly acute. Strong or unpleasant smells cause nausea and penalties. Automatic for elves (rating 6).",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "dietary_laws",
+      "name": "Dietary Laws",
+      "german_name": "Speisegebote",
+      "gp_refund": -5,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [
+        {"type": "food_restriction", "description": "Religious or cultural dietary laws; must follow specific food preparation rules"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": [],
+      "description": "The hero follows strict dietary laws of their culture or religion (e.g., Novadi halal-equivalent). More restrictive than Dietary Restriction.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "spell_impediment",
+      "name": "Spell Impediment",
+      "german_name": "Spruchhemmung",
+      "gp_refund": -10,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_magical": true,
+      "auto_only": false,
+      "effects": [
+        {"type": "spellcasting_penalty", "description": "Penalty to all spell casting tests; difficulty for a specific aspect of spellcasting"}
+      ],
+      "prerequisites": [{"type": "magical_status", "value": "any_caster"}],
+      "incompatible_with": [],
+      "description": "The hero has difficulty with a specific aspect of spellcasting (e.g., requires silence, cannot use the left hand, must speak aloud, etc.). Penalties to relevant spell tests.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "clumsy",
+      "name": "Clumsy",
+      "german_name": "Tollpatsch",
+      "gp_refund": -10,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [
+        {"type": "dexterity_penalty", "description": "General clumsiness; penalties to fine motor tasks and some physical activities"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": [],
+      "description": "The hero is accident-prone and clumsy. Penalties to tasks requiring fine motor control, and occasional mishaps at GM's discretion.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "fear_of_dead",
+      "name": "Fear of Dead",
+      "german_name": "Totenangst",
+      "gp_refund_per_point": -1,
+      "is_leveled": true,
+      "is_bad_trait": true,
+      "is_magical": false,
+      "auto_only": false,
+      "min_rating": 1,
+      "max_rating": 12,
+      "effects": [
+        {"type": "undead_phobia", "description": "Must test when confronted with undead or corpses; on failure, panics"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": [],
+      "description": "The hero fears the dead and undead. Must test against this rating when confronted with corpses or undead creatures.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "unpleasant_voice",
+      "name": "Unpleasant Voice",
+      "german_name": "Unangenehme Stimme",
+      "gp_refund": -5,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [
+        {"type": "voice_penalty", "description": "Social penalties related to speech; penalties to Sing and social tests"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": ["euphonic_voice"],
+      "description": "The hero has an unpleasant, grating, or off-putting voice. Social penalties in situations where voice matters.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "unattractive",
+      "name": "Unattractive",
+      "german_name": "Unansehnlich",
+      "gp_refund": -5,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [
+        {"type": "appearance_penalty", "description": "Social penalties in situations where appearance matters"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": ["good_looking", "outstanding_appearance"],
+      "description": "The hero is notably unattractive. Social penalties in situations where appearance matters.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "inaptitude_combat_physical_group",
+      "name": "Inaptitude (combat/physical talent group)",
+      "german_name": "Unfähigkeit (Kampf-/Körpertalentgruppe)",
+      "gp_refund": -15,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [
+        {"type": "talent_max_reduction", "value": -2, "description": "Maximum TP for this talent group reduced; advancement column worsens"},
+        {"type": "advancement_column_penalty"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": ["aptitude_same_group"],
+      "talent_categories": ["combat", "physical"],
+      "description": "The hero has a marked inability for an entire combat or physical talent group (-15 GP). Maximum TP decreases and advancement becomes more expensive.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "inaptitude_other_group",
+      "name": "Inaptitude (other talent group)",
+      "german_name": "Unfähigkeit (andere Talentgruppe)",
+      "gp_refund": -10,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [
+        {"type": "talent_max_reduction"},
+        {"type": "advancement_column_penalty"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": ["aptitude_same_group"],
+      "talent_categories": ["social", "nature", "lore", "language", "artisan"],
+      "description": "Inaptitude for an entire non-combat talent group (-10 GP).",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "inaptitude_melee",
+      "name": "Inaptitude (all melee talents)",
+      "german_name": "Unfähigkeit (alle Nahkampftalente)",
+      "gp_refund": -10,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [{"type": "melee_talent_max_reduction"}],
+      "prerequisites": [],
+      "incompatible_with": ["aptitude_melee_talents"],
+      "description": "Inaptitude for all melee combat talents (-10 GP).",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "inaptitude_ranged",
+      "name": "Inaptitude (all ranged talents)",
+      "german_name": "Unfähigkeit (alle Fernkampftalente)",
+      "gp_refund": -5,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [{"type": "ranged_talent_max_reduction"}],
+      "prerequisites": [],
+      "incompatible_with": ["aptitude_ranged_talents"],
+      "description": "Inaptitude for all ranged combat talents (-5 GP).",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "inaptitude_swimming",
+      "name": "Inaptitude Swimming",
+      "german_name": "Unfähigkeit Schwimmen",
+      "gp_refund": null,
+      "auto_only": true,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_magical": false,
+      "effects": [
+        {"type": "talent_locked", "talent": "swimming", "description": "Cannot learn the Swimming talent at all; automatically drowns in deep water"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": [],
+      "description": "The hero cannot swim and cannot learn the Swimming talent. Automatic for Dwarves. Not freely selectable.",
+      "source": "BRW p. 57"
+    },
+    {
+      "id": "inaptitude_drinking",
+      "name": "Inaptitude Drinking",
+      "german_name": "Unfähigkeit Zechen",
+      "gp_refund": null,
+      "auto_only": true,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_magical": false,
+      "effects": [
+        {"type": "talent_locked", "talent": "carouse", "description": "Cannot consume alcohol; any alcohol causes immediate illness"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": [],
+      "description": "The hero cannot consume alcohol. Any consumption causes immediate severe illness. Automatic for Elves. Not freely selectable.",
+      "source": "BRW p. 58"
+    },
+    {
+      "id": "obligations",
+      "name": "Obligations",
+      "german_name": "Verpflichtungen",
+      "gp_refund": -12,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [
+        {"type": "duty_constraint", "description": "Hero has significant ongoing obligations (debts, service, family duties) that must be met"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": [],
+      "description": "The hero has significant ongoing obligations — debts, feudal service, family duties — that require regular attention and resources.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "prejudice",
+      "name": "Prejudice",
+      "german_name": "Vorurteile",
+      "gp_refund_per_2_points": -1,
+      "is_leveled": true,
+      "is_bad_trait": true,
+      "is_magical": false,
+      "auto_only": false,
+      "min_rating": 2,
+      "max_rating": 12,
+      "effects": [
+        {"type": "social_bias", "description": "Social penalties when dealing with the disliked group; must test to act fairly toward them"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": [],
+      "description": "The hero has a strong prejudice against a specific group (culture, race, profession). Must test to treat them fairly.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "unworldly",
+      "name": "Unworldly",
+      "german_name": "Weltfremd",
+      "gp_refund_per_point": -1,
+      "is_leveled": true,
+      "is_bad_trait": true,
+      "is_magical": false,
+      "auto_only": false,
+      "notes": "Specific areas: Possessions, Religious Devotion, etc.",
+      "effects": [
+        {"type": "naivety", "description": "Hero is naive or inexperienced in a specific area of the world; penalties to related social tests"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": [],
+      "description": "The hero is unworldly in a specific area (e.g., Possessions — does not understand ownership; Religious Devotion — blindly follows religious teachings). Automatic for elves in their respective areas.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "hideous_appearance",
+      "name": "Hideous Appearance",
+      "german_name": "Widerwärtiges Aussehen",
+      "gp_refund": -15,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [
+        {"type": "appearance_severe_penalty", "description": "Major social penalties; strangers react with disgust or fear"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": ["good_looking", "outstanding_appearance", "unattractive"],
+      "description": "The hero's appearance is repulsive or horrifying. Strangers react with disgust; major penalties to social interactions.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "dwarfism",
+      "name": "Dwarfism",
+      "german_name": "Zwergenwuchs",
+      "gp_refund": -7,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [
+        {"type": "speed_reduction", "value": -2, "description": "Speed (GS) reduced by 2"},
+        {"type": "ec_halved", "description": "EC from armor and load is halved before subtracting from Speed"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": [],
+      "description": "The hero is significantly shorter and smaller than average, with stunted limbs. Speed is reduced by 2. Encumbrance from armor and load is halved before applying its Speed reduction.",
+      "source": "wiki: https://tde4e.fandom.com/wiki/Dwarfism"
+    },
+    {
+      "id": "elvish_world_view",
+      "name": "Elvish World View",
+      "german_name": "Elfische Weltsicht",
+      "gp_refund": null,
+      "auto_only": true,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_magical": false,
+      "effects": [
+        {"type": "lead_talents", "description": "Certain talents are Leittalente — they advance more cheaply but cost more to neglect. See Lea Elves culture for specific Leittalente."},
+        {"type": "worldview_penalties", "description": "Penalties when acting against elvish values and nature-connected worldview"}
+      ],
+      "prerequisites": [{"type": "race_and_culture", "value": "elf_lea_elves"}],
+      "incompatible_with": [],
+      "description": "An elvish disadvantage that comes with the Lea Elves culture. It designates certain talents as Leittalente (lead talents) that are cheaper to advance but have additional obligations. Specific lead talents are marked with (L) in the Lea Elves culture entry.",
+      "source": "BRW p. 72"
+    }
+  ]
+}

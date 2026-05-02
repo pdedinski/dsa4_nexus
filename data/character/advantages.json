@@ -1,0 +1,1160 @@
+{
+  "meta": {
+    "schema_version": "1.0",
+    "last_updated": "2026-05-02",
+    "description": "All advantages (Vorteile) for TDE4/DSA4.1. Costs are in GP at character creation. Advantages marked auto_only can only be granted by race/culture/profession packages, not freely chosen. [G] = Gift (natural talent, advances like a talent). [M] = Magical advantage.",
+    "source_books": [
+      "DSA 4.1 Basisregelwerk p. 44, 124–135",
+      "TDE Basic Rules p. 58–65",
+      "wiki: https://tde4e.fandom.com/wiki/Advantages_and_Disadvantages"
+    ]
+  },
+  "advantages": [
+    {
+      "id": "noble_birth",
+      "name": "Noble Birth",
+      "german_name": "Adlige Abstammung",
+      "gp_cost": 7,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_gift": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [
+        {"type": "so_bonus", "description": "Hero is treated as noble; social bonuses in aristocratic contexts"},
+        {"type": "social_status", "description": "Access to noble social circles; heraldic recognition"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": [],
+      "race_restrictions": [],
+      "culture_restrictions": ["not_thorwal", "not_anvil_dwarves"],
+      "description": "The hero descends from a noble family. They enjoy social advantages in aristocratic contexts, have access to higher social circles, and may claim a noble title appropriate to their culture.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "academic_training",
+      "name": "Academic Training",
+      "german_name": "Akademische Ausbildung",
+      "gp_cost": 7,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_gift": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [
+        {"type": "lore_bonus", "description": "Formal academic education; bonuses to lore talents and access to scholarly resources"},
+        {"type": "language_access", "description": "Access to academic script and language skills"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": [],
+      "description": "The hero has received formal academic education at a university or similar institution. They gain access to scholarly resources, academic networks, and bonuses to appropriate lore talents.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "age_resistance",
+      "name": "Age Resistance",
+      "german_name": "Altersresistenz",
+      "gp_cost": 3,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_gift": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [
+        {"type": "aging_resistance", "description": "Hero ages more slowly and suffers fewer penalties from aging"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": [],
+      "description": "The hero ages more gracefully than normal, suffering fewer penalties from the effects of aging.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "astral_regeneration_i",
+      "name": "Astral Regeneration I",
+      "german_name": "Astrale Regeneration I",
+      "gp_cost": 4,
+      "is_leveled": true,
+      "levels": 3,
+      "gp_per_level": [4, 8, 12],
+      "is_bad_trait": false,
+      "is_gift": false,
+      "is_magical": true,
+      "auto_only": false,
+      "effects": [
+        {"type": "asp_regeneration", "per_level": 1, "description": "Regenerate 1 additional ASP per rest phase per level"}
+      ],
+      "prerequisites": [{"type": "magical_status", "value": "any_caster"}],
+      "incompatible_with": ["slow_regeneration"],
+      "description": "The magic user's astral energy regenerates more quickly during rest. Level I: +1 ASP per rest; Level II: +2 ASP; Level III: +3 ASP. Cost: 4/8/12 GP.",
+      "source": "BRW p. 44; wiki"
+    },
+    {
+      "id": "astral_power",
+      "name": "Astral Power",
+      "german_name": "Astralmacht",
+      "gp_cost_per_asp": 1,
+      "is_leveled": true,
+      "is_bad_trait": false,
+      "is_gift": false,
+      "is_magical": true,
+      "auto_only": false,
+      "effects": [
+        {"type": "asp_increase", "per_gp": 1, "description": "Each GP spent grants 1 additional ASP permanently"}
+      ],
+      "prerequisites": [{"type": "magical_status", "value": "full_caster"}],
+      "incompatible_with": [],
+      "description": "The spellcaster has exceptional astral reserves. Each GP spent provides 1 additional permanent Astral Point.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "enduring",
+      "name": "Enduring",
+      "german_name": "Ausdauernd",
+      "gp_cost_per_2ep": 1,
+      "is_leveled": true,
+      "is_bad_trait": false,
+      "is_gift": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [
+        {"type": "ep_increase", "per_gp": 2, "description": "Each GP spent grants 2 additional Endurance Points"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": ["short_winded"],
+      "description": "The hero has exceptional stamina. Each GP spent provides 2 additional permanent Endurance Points.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "equipment_advantage",
+      "name": "Equipment Advantage",
+      "german_name": "Ausrüstungsvorteil",
+      "gp_cost_formula": "1 GP per SO*2 ducats",
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_gift": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [
+        {"type": "starting_equipment_bonus", "description": "Hero can spend additional starting money equal to SO × 2 ducats"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": [],
+      "description": "The hero starts with additional funds or equipment worth SO × 2 ducats beyond normal starting money.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "balance",
+      "name": "Balance",
+      "german_name": "Balance",
+      "gp_cost": 10,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_gift": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [
+        {"type": "balance_bonus", "description": "Knockdown ST test 2 points easier; bonuses to acrobatic balance tests"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": ["outstanding_balance"],
+      "description": "The hero has exceptional sense of balance. Knockdown resistance is improved by 2; benefits in any situation requiring balance.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "aptitude_single_talent_combat",
+      "name": "Aptitude (single combat/physical talent)",
+      "german_name": "Begabung (Einzeltalent, Kampf/Körper)",
+      "gp_cost": 6,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_gift": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [
+        {"type": "talent_max_increase", "value": 5, "description": "Maximum TP for this talent increases to highest attribute + 5 instead of + 3"},
+        {"type": "advancement_column_improvement", "description": "Advancement column moves one step easier"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": ["inaptitude_for_same_talent"],
+      "talent_categories": ["combat", "physical"],
+      "description": "The hero has a natural gift for a single combat or physical talent. Maximum starting TP increases to +5 above highest attribute (instead of +3), and the advancement column improves by one step. Cost: 6 GP for combat/physical talents.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "aptitude_single_talent_other",
+      "name": "Aptitude (single other talent)",
+      "german_name": "Begabung (Einzeltalent, sonstige)",
+      "gp_cost": 4,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_gift": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [
+        {"type": "talent_max_increase", "value": 5},
+        {"type": "advancement_column_improvement"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": ["inaptitude_for_same_talent"],
+      "talent_categories": ["social", "nature", "lore", "language", "artisan"],
+      "description": "The hero has a natural gift for a single non-combat talent. Maximum starting TP increases to +5 above highest attribute, and advancement column improves. Cost: 4 GP.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "aptitude_talent_group_combat",
+      "name": "Aptitude (combat/physical talent group)",
+      "german_name": "Begabung (Talentgruppe Kampf/Körper)",
+      "gp_cost": 30,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_gift": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [
+        {"type": "talent_group_max_increase", "value": 5},
+        {"type": "talent_group_column_improvement"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": [],
+      "description": "Aptitude for an entire combat or physical talent group (30 GP).",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "aptitude_talent_group_other",
+      "name": "Aptitude (other talent group)",
+      "german_name": "Begabung (Talentgruppe sonstige)",
+      "gp_cost": 20,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_gift": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [
+        {"type": "talent_group_max_increase", "value": 5},
+        {"type": "talent_group_column_improvement"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": [],
+      "description": "Aptitude for an entire non-combat talent group (20 GP).",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "aptitude_melee_talents",
+      "name": "Aptitude (all melee talents)",
+      "german_name": "Begabung (alle Nahkampftalente)",
+      "gp_cost": 20,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_gift": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [{"type": "melee_talent_max_increase", "value": 5}],
+      "prerequisites": [],
+      "incompatible_with": [],
+      "description": "Aptitude for all melee combat talents (20 GP).",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "aptitude_ranged_talents",
+      "name": "Aptitude (all ranged talents)",
+      "german_name": "Begabung (alle Fernkampftalente)",
+      "gp_cost": 15,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_gift": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [{"type": "ranged_talent_max_increase", "value": 5}],
+      "prerequisites": [],
+      "incompatible_with": [],
+      "description": "Aptitude for all ranged combat talents (15 GP).",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "aptitude_language_group",
+      "name": "Aptitude (languages)",
+      "german_name": "Begabung (Sprachen)",
+      "gp_cost": 10,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_gift": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [{"type": "language_max_increase", "value": 5}],
+      "prerequisites": [],
+      "incompatible_with": [],
+      "description": "Aptitude for all language and script talents (10 GP).",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "special_item",
+      "name": "Special Item",
+      "german_name": "Besonderer Besitz",
+      "gp_cost": 7,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_gift": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [
+        {"type": "special_possession", "description": "Hero receives one large/valuable item from their profession's special possession list (e.g. horse, boat). Cannot be immediately sold."}
+      ],
+      "prerequisites": [],
+      "incompatible_with": [],
+      "description": "The hero possesses one significant item from their profession's special possession list (e.g., a proven horse for Messengers, or a masterwork lockpick set for Burglars). This item cannot be immediately sold.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "twilight_sight",
+      "name": "Twilight Sight",
+      "german_name": "Dämmerungssicht",
+      "gp_cost": 10,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_gift": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [
+        {"type": "vision_enhancement", "description": "Can see in dim light and twilight conditions as if in daylight"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": ["night_blind", "light_sensitive"],
+      "description": "The hero can see in near-darkness and twilight as well as others see in daylight. Dwarves and Elves receive this automatically.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "iron",
+      "name": "Iron",
+      "german_name": "Eisern",
+      "gp_cost": 7,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_gift": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [
+        {"type": "wound_threshold_bonus", "value": 2, "description": "Wound Threshold increased by 2"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": ["glass_bones"],
+      "description": "The hero's body is exceptionally tough. Their Wound Threshold is increased by 2, meaning they require much more damage to suffer a wound.",
+      "source": "BRW p. 44; wiki"
+    },
+    {
+      "id": "fairy_friend",
+      "name": "Fairy Friend",
+      "german_name": "Feenfreund",
+      "gp_cost": 7,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_gift": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [
+        {"type": "fairy_relation", "description": "Neutral or positive relations with fairies and nature spirits; they do not automatically flee or attack"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": [],
+      "description": "The hero has a natural rapport with fairies and nature spirits. These beings treat the hero as neutral or friendly rather than with suspicion or hostility.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "fleet",
+      "name": "Fleet",
+      "german_name": "Flink",
+      "gp_cost": 10,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_gift": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [
+        {"type": "speed_bonus", "value": 1, "description": "Base Speed (GS) increased by 1"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": [],
+      "description": "The hero moves faster than average. Base Speed (GS) is increased by 1.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "educated",
+      "name": "Educated",
+      "german_name": "Gebildet",
+      "gp_cost_per_item": 1,
+      "is_leveled": true,
+      "is_bad_trait": false,
+      "is_gift": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [
+        {"type": "language_or_knowledge", "per_gp": 1, "description": "Each GP spent grants one additional language or knowledge talent at starting value"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": [],
+      "description": "The hero has additional education. Each GP spent provides one additional language or knowledge talent at its starting value.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "danger_instinct",
+      "name": "Danger Instinct",
+      "german_name": "Gefahreninstinkt",
+      "gp_cost": 12,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_gift": true,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [
+        {"type": "danger_sense", "description": "A Gift (Gabe) that works like a talent; can test against it to sense danger before it becomes apparent"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": [],
+      "creation_only": true,
+      "description": "A natural supernatural gift. Functions as a talent (starting value, can be advanced). The hero can test against Danger Instinct to sense approaching danger before others notice it. Can only be acquired at character creation.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "luck",
+      "name": "Luck",
+      "german_name": "Glück",
+      "gp_cost": 12,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_gift": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [
+        {"type": "luck_points", "description": "Hero gains Luck Points usable to re-roll failed tests a limited number of times"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": [],
+      "description": "The hero is blessed with exceptional luck. Gains Luck Points that can be spent to re-roll failed tests.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "lucky_gambler",
+      "name": "Lucky Gambler",
+      "german_name": "Glück im Spiel",
+      "gp_cost": 3,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_gift": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [
+        {"type": "gambling_bonus", "description": "Bonuses to gambling and games of chance"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": [],
+      "description": "The hero has a knack for games of chance and gambling, receiving bonuses to related tests.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "good_looking",
+      "name": "Good-Looking",
+      "german_name": "Gut Aussehend",
+      "gp_cost": 5,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_gift": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [
+        {"type": "social_bonus", "description": "Bonuses to Seduce, Persuade, and other social tests where appearance matters"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": ["unattractive", "repulsive_appearance"],
+      "description": "The hero is notably attractive, receiving social bonuses in situations where appearance matters.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "good_memory_i",
+      "name": "Good Memory I",
+      "german_name": "Gutes Gedächtnis I",
+      "gp_cost": 7,
+      "is_leveled": true,
+      "levels": 2,
+      "gp_per_level": [7, 12],
+      "is_bad_trait": false,
+      "is_gift": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [
+        {"type": "memory_bonus", "description": "Eases all tests involving memorization and recall"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": [],
+      "description": "The hero has an exceptionally good memory. Level I (7 GP) and Level II (12 GP) provide increasing bonuses to memory and recall tests.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "outstanding_balance",
+      "name": "Outstanding Balance",
+      "german_name": "Herausragende Balance",
+      "gp_cost": 20,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_gift": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [
+        {"type": "balance_bonus_superior", "description": "Knockdown ST test 4 points easier; exceptional balance in all situations"},
+        {"type": "knockdown_resistance", "value": -4}
+      ],
+      "prerequisites": [],
+      "incompatible_with": ["balance"],
+      "description": "Superior version of Balance. Knockdown resistance improves by 4. Cannot be combined with Balance.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "outstanding_attribute",
+      "name": "Outstanding Attribute",
+      "german_name": "Herausragende Eigenschaft",
+      "gp_cost_formula": "8+ GP (depends on attribute)",
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_gift": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [
+        {"type": "attribute_max_increase", "description": "Allows a single attribute to exceed the normal creation maximum"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": ["terrible_attribute_for_same"],
+      "description": "Allows one attribute to exceed the normally allowed creation maximum. Cost varies by attribute.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "outstanding_sense",
+      "name": "Outstanding Sense",
+      "german_name": "Herausragender Sinn",
+      "gp_cost": 5,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_gift": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [
+        {"type": "sense_enhancement", "description": "One sense (hearing, sight, smell, taste, or touch) is exceptionally acute"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": ["impaired_sense_same"],
+      "senses": ["hearing", "sight", "smell", "taste", "touch"],
+      "description": "The hero has an exceptionally acute sense. Choose one sense at acquisition.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "outstanding_appearance",
+      "name": "Outstanding Appearance",
+      "german_name": "Herausragendes Aussehen",
+      "gp_cost": 12,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_gift": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [
+        {"type": "social_bonus_major", "description": "Significant social bonuses; may cause strong reactions (envy, infatuation, etc.)"}
+      ],
+      "prerequisites": ["good_looking"],
+      "incompatible_with": ["unattractive", "hideous_appearance"],
+      "description": "The hero is strikingly, exceptionally beautiful or handsome. Provides major social bonuses but may also attract unwanted attention.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "heat_resistance",
+      "name": "Heat Resistance",
+      "german_name": "Hitzeresistenz",
+      "gp_cost": 5,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_gift": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [
+        {"type": "heat_immunity", "description": "Immune to non-magical heat effects; reduced damage from heat-based magical attacks"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": [],
+      "description": "The hero is exceptionally resistant to extreme heat and hot environments.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "vigor",
+      "name": "Vigor",
+      "german_name": "Hohe Lebenskraft",
+      "gp_cost_per_2vp": 2,
+      "is_leveled": true,
+      "is_bad_trait": false,
+      "is_gift": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [
+        {"type": "vp_increase", "per_2gp": 1, "description": "Each 2 GP spent grants 1 additional Vitality Point"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": ["low_vitality"],
+      "description": "The hero has exceptional life force. Each 2 GP spent provides 1 additional permanent Vitality Point.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "high_rm",
+      "name": "High Resistance to Magic",
+      "german_name": "Hohe Magieresistenz",
+      "gp_cost_per_rm": 2,
+      "is_leveled": true,
+      "is_bad_trait": false,
+      "is_gift": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [
+        {"type": "rm_increase", "per_2gp": 1, "description": "Each 2 GP spent grants 1 additional point of Resistance to Magic (RM)"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": ["low_rm"],
+      "description": "The hero is exceptionally resistant to magical effects. Each 2 GP spent adds 1 RM.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "immunity_individual_poison",
+      "name": "Immunity to Poison (individual)",
+      "german_name": "Immunität gegen einzelnes Gift",
+      "gp_cost": 5,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_gift": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [{"type": "poison_immunity", "scope": "individual_poison"}],
+      "prerequisites": [],
+      "incompatible_with": [],
+      "description": "Complete immunity to a single specific poison.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "immunity_poison_group",
+      "name": "Immunity to Poison (group)",
+      "german_name": "Immunität gegen Giftgruppe",
+      "gp_cost": 10,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_gift": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [{"type": "poison_immunity", "scope": "poison_group"}],
+      "prerequisites": [],
+      "incompatible_with": [],
+      "description": "Complete immunity to a group of related poisons (e.g., all mineral poisons, all plant alkaloids).",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "general_poison_immunity",
+      "name": "General Poison Immunity",
+      "german_name": "Allgemeine Giftimmunität",
+      "gp_cost": 35,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_gift": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [{"type": "poison_immunity", "scope": "all_non_magical"}],
+      "prerequisites": [],
+      "incompatible_with": [],
+      "description": "Complete immunity to all non-magical poisons.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "immunity_individual_disease",
+      "name": "Immunity to Disease (individual)",
+      "german_name": "Immunität gegen einzelne Krankheit",
+      "gp_cost": 3,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_gift": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [{"type": "disease_immunity", "scope": "individual"}],
+      "prerequisites": [],
+      "incompatible_with": [],
+      "description": "Complete immunity to a single specific disease.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "disease_immunity",
+      "name": "Disease Immunity",
+      "german_name": "Immunität gegen Krankheiten",
+      "gp_cost": 10,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_gift": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [{"type": "disease_immunity", "scope": "all"}],
+      "prerequisites": [],
+      "incompatible_with": ["prone_to_illness"],
+      "description": "Complete immunity to all non-magical diseases.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "mental_compass",
+      "name": "Mental Compass",
+      "german_name": "Innerer Kompass",
+      "gp_cost": 7,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_gift": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [
+        {"type": "orientation_bonus", "description": "Innate sense of cardinal direction; bonuses to Orientation tests"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": [],
+      "description": "The hero has an innate sense of direction, always knowing which way is north and gaining bonuses to Orientation tests.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "cold_resistance",
+      "name": "Cold Resistance",
+      "german_name": "Kälteresistenz",
+      "gp_cost": 5,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_gift": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [{"type": "cold_resistance", "description": "Resistant to extreme cold and cold-based effects"}],
+      "prerequisites": [],
+      "incompatible_with": [],
+      "description": "The hero is exceptionally resistant to extreme cold and frigid environments.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "battle_frenzy",
+      "name": "Battle Frenzy",
+      "german_name": "Kampfrausch",
+      "gp_cost": 15,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_gift": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [
+        {"type": "initiative_bonus", "description": "Bonus to Initiative and combat stamina when entering a battle frenzy state"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": [],
+      "description": "The hero can enter a battle frenzy, gaining bonuses to combat effectiveness at the cost of reduced defensive capacity and potential loss of control.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "kobold_friend",
+      "name": "Kobold Friend",
+      "german_name": "Koboldfreund",
+      "gp_cost": 10,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_gift": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [{"type": "kobold_relation", "description": "Kobolds and house spirits are friendly to the hero"}],
+      "prerequisites": [],
+      "incompatible_with": [],
+      "description": "The hero has a natural rapport with kobolds and house spirits. These mischievous beings treat the hero favorably.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "magic_sense",
+      "name": "Magic Sense",
+      "german_name": "Magiegespür",
+      "gp_cost": 12,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_gift": true,
+      "is_magical": true,
+      "auto_only": false,
+      "creation_only": true,
+      "effects": [
+        {"type": "magic_detection", "description": "A Gift (Gabe) that functions as a talent; can sense nearby magical auras and active spells"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": [],
+      "description": "A natural Gift for detecting magic. Functions as a talent with a starting value. The hero can sense nearby magical auras, active spells, and enchanted items. Can only be acquired at creation.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "master_craft",
+      "name": "Master Craft",
+      "german_name": "Meisterhandwerk",
+      "gp_cost_formula": "1 GP per talent (standard) or 5 GP (magical version)",
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_gift": false,
+      "is_magical": true,
+      "auto_only": false,
+      "effects": [
+        {"type": "asp_to_talent", "description": "The magical version allows ASP to be spent to ease talent tests. Standard version provides exceptional craft proficiency."}
+      ],
+      "prerequisites": [],
+      "incompatible_with": [],
+      "description": "Standard version (1 GP): exceptional crafting proficiency in a specific artisan talent. Magical version (5 GP) for magical dabblers: allows spending ASP to ease talent tests. Used by quarter-casters instead of full spells.",
+      "source": "BRW p. 44; wiki"
+    },
+    {
+      "id": "resistance_individual_poison",
+      "name": "Resistance to Poison (individual)",
+      "german_name": "Resistenz gegen einzelnes Gift",
+      "gp_cost": 3,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_gift": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [{"type": "poison_resistance", "scope": "individual"}],
+      "prerequisites": [],
+      "incompatible_with": [],
+      "description": "The hero is resistant (not immune) to a single specific poison, halving its effects.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "resistance_poison_group",
+      "name": "Resistance to Poison (group)",
+      "german_name": "Resistenz gegen Giftgruppe",
+      "gp_cost": 7,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_gift": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [{"type": "poison_resistance", "scope": "group"}],
+      "prerequisites": [],
+      "incompatible_with": [],
+      "description": "Resistance to a group of related poisons (e.g., mineral poisons).",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "general_poison_resistance",
+      "name": "General Poison Resistance",
+      "german_name": "Allgemeine Giftresistenz",
+      "gp_cost": 25,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_gift": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [{"type": "poison_resistance", "scope": "all_non_magical"}],
+      "prerequisites": [],
+      "incompatible_with": [],
+      "description": "Resistance to all non-magical poisons.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "disease_resistance",
+      "name": "Resistance to Diseases",
+      "german_name": "Resistenz gegen Krankheiten",
+      "gp_cost": 7,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_gift": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [{"type": "disease_resistance", "scope": "all"}],
+      "prerequisites": [],
+      "incompatible_with": ["prone_to_illness"],
+      "description": "The hero is resistant to all diseases, making infections less severe and easier to overcome.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "direction_sense",
+      "name": "Direction Sense",
+      "german_name": "Richtungssinn",
+      "gp_cost": 3,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_gift": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [{"type": "orientation_bonus", "value": 3, "description": "Bonuses to Orientation tests in familiar terrain types"}],
+      "prerequisites": [],
+      "incompatible_with": [],
+      "description": "The hero has an exceptional sense of direction, gaining bonuses to Orientation tests.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "snake_person",
+      "name": "Snake Person",
+      "german_name": "Schlangenmensch",
+      "gp_cost": 25,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_gift": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [
+        {"type": "contortion_bonus", "description": "Exceptional flexibility; can contort body in ways normally impossible"},
+        {"type": "escape_artist", "description": "Bonuses to escape from bonds, squeeze through tight spaces"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": [],
+      "description": "The hero's body is extraordinarily flexible, allowing for contortionist feats. Bonuses to Acrobatics, Binding/Escape, and similar tests.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "fast_healing",
+      "name": "Fast Healing",
+      "german_name": "Schnelle Heilung",
+      "gp_cost": 5,
+      "is_leveled": true,
+      "levels": 3,
+      "gp_per_level": [5, 10, 15],
+      "is_bad_trait": false,
+      "is_gift": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [
+        {"type": "vp_regeneration_bonus", "per_level": 1, "description": "Regenerate 1 additional VP per rest per level"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": ["slow_regeneration"],
+      "description": "The hero heals faster than normal. Level I (+1 VP/rest, 5 GP), Level II (+2 VP/rest, 10 GP), Level III (+3 VP/rest, 15 GP). Note: wiki shows this as 5/10/15 GP; BRW may vary.",
+      "source": "BRW p. 44; wiki"
+    },
+    {
+      "id": "guardian_spirit",
+      "name": "Guardian Spirit",
+      "german_name": "Schutzgeist",
+      "gp_cost": 3,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_gift": false,
+      "is_magical": true,
+      "auto_only": false,
+      "effects": [
+        {"type": "guardian_spirit", "description": "A protective spirit provides occasional warnings of danger or minor magical assistance"}
+      ],
+      "prerequisites": [{"type": "magical_status", "value": "any_caster"}],
+      "incompatible_with": [],
+      "description": "A guardian spirit watches over the hero, providing occasional warnings. Used by magical dabblers (quarter-casters) as one of their special magical abilities.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "hard_to_enspell",
+      "name": "Hard to Enspell",
+      "german_name": "Schwer zu verzaubern",
+      "gp_cost": 7,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_gift": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [
+        {"type": "domination_transformation_resistance", "difficulty_increase": 3, "description": "Domination and Transformation spells targeting this hero receive a Difficulty Increase of 3 points"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": [],
+      "description": "Domination and Transformation spells cast at the hero receive a Difficulty Increase of 3 points.",
+      "source": "BRW p. 44; wiki"
+    },
+    {
+      "id": "social_chameleon",
+      "name": "Social Chameleon",
+      "german_name": "Soziale Anpassungsfähigkeit",
+      "gp_cost": 7,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_gift": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [
+        {"type": "social_adaptability", "description": "Hero blends in easily across social classes; reduced suspicion when acting out of expected social role"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": [],
+      "description": "The hero adapts easily to different social contexts, blending in with nobles or commoners alike.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "supernatural_aptitude",
+      "name": "Supernatural Aptitude",
+      "german_name": "Übernatürliche Begabung",
+      "gp_cost_per_use": 1,
+      "is_leveled": true,
+      "is_bad_trait": false,
+      "is_gift": false,
+      "is_magical": true,
+      "auto_only": false,
+      "effects": [
+        {"type": "supernatural_power", "description": "A specific innate magical ability for magical dabblers (quarter-casters)"}
+      ],
+      "prerequisites": [{"type": "magical_status", "value": "quarter_caster"}],
+      "incompatible_with": [],
+      "description": "A supernatural power for magical dabblers (quarter-casters). Each use/activation costs 1 GP. These replace full spells for dabblers.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "connections",
+      "name": "Connections",
+      "german_name": "Verbindungen",
+      "gp_cost_formula": "1/3 of contact's SO in GP",
+      "is_leveled": true,
+      "is_bad_trait": false,
+      "is_gift": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [
+        {"type": "social_contact", "description": "The hero has a valuable contact in society who can provide help, information, or resources"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": [],
+      "description": "The hero has a connection to an important person. Cost equals 1/3 of the contact's Social Standing rounded up. Higher SO contacts are more expensive but more influential.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "quarter_caster",
+      "name": "Quarter Caster",
+      "german_name": "Viertelzauberer",
+      "gp_cost": 3,
+      "gp_cost_variant": 5,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_gift": false,
+      "is_magical": true,
+      "auto_only": false,
+      "effects": [
+        {"type": "magical_dabbler_status", "description": "Access to Supernatural Aptitudes, Master Craft (magical), and Guardian Spirit; negative ASP (not a full caster)"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": ["full_caster"],
+      "description": "The hero is a magical dabbler (Viertelzauberer). Gains access to Supernatural Aptitudes, magical Master Craft, and Guardian Spirit. Does NOT gain full spell access. Standard cost is 3 GP; an enhanced version costs 5 GP.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "full_caster",
+      "name": "Full Caster",
+      "german_name": "Vollzauberer",
+      "gp_cost": null,
+      "auto_only": true,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_gift": false,
+      "is_magical": true,
+      "effects": [
+        {"type": "full_magic_access", "description": "Access to the full spell system; Astral Points; spell advancement"},
+        {"type": "asp_modifier", "from_race_elf": 12, "from_profession_magician": 12}
+      ],
+      "prerequisites": [{"type": "profession_or_race", "value": "magician_or_elf"}],
+      "incompatible_with": ["quarter_caster"],
+      "description": "The hero is a full spellcaster (Vollzauberer). This is automatically granted by the Magician profession and by the Elf race. Cannot be freely selected; must come from race or profession.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "euphonic_voice",
+      "name": "Euphonic Voice",
+      "german_name": "Wohlklang",
+      "gp_cost": 10,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_gift": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [
+        {"type": "voice_bonus", "description": "Exceptionally pleasant voice; bonuses to Sing, Persuade, and performance tests"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": ["unpleasant_voice"],
+      "description": "The hero has a beautiful, melodious voice. Bonuses to Sing, Persuade, and any test where a pleasant voice matters.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "tough_dog",
+      "name": "Tough Dog",
+      "german_name": "Zäher Hund",
+      "gp_cost": 10,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_gift": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [
+        {"type": "low_hp_performance", "description": "Hero continues fighting effectively even at very low VP; reduced penalties from wounds"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": [],
+      "description": "The hero is exceptionally stubborn and hard to bring down. Reduced penalties for fighting at low VP and for wound effects.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "time_sense",
+      "name": "Time Sense",
+      "german_name": "Zeitgefühl",
+      "gp_cost": 3,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_gift": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [
+        {"type": "time_awareness", "description": "Accurate internal sense of time passing; no penalties for time-dependent tests"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": [],
+      "description": "The hero has an unerring sense of time, always knowing what time it is and how long things take.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "dwarf_nose",
+      "name": "Dwarf Nose",
+      "german_name": "Zwergennase",
+      "gp_cost": 12,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_gift": true,
+      "is_magical": false,
+      "auto_only": false,
+      "creation_only": true,
+      "effects": [
+        {"type": "geological_sense", "description": "A Gift (Gabe) that functions as a talent; sense underground structures, minerals, underground water, and distances below ground"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": [],
+      "description": "A natural Gift for geological awareness. Functions as a talent with a starting value. The hero can sense underground structures, ore veins, and distances below ground. Primarily associated with dwarves. Can only be acquired at creation.",
+      "source": "BRW p. 44"
+    },
+    {
+      "id": "noble_birth_wiki",
+      "name": "Noble Birth (wiki entry)",
+      "german_name": "Adlige Abstammung",
+      "gp_cost": 7,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_gift": false,
+      "is_magical": false,
+      "auto_only": false,
+      "effects": [
+        {"type": "noble_status", "description": "The hero is the offspring of a noble family"}
+      ],
+      "prerequisites": [],
+      "incompatible_with": [],
+      "description": "The hero is the offspring of a noble family. Grants social standing and access to noble circles.",
+      "source": "wiki: https://tde4e.fandom.com/wiki/Noble_Birth"
+    },
+    {
+      "id": "two_voiced_song",
+      "name": "Two-Voiced Song",
+      "german_name": "Zweistimmiger Gesang",
+      "gp_cost": null,
+      "auto_only": true,
+      "is_leveled": false,
+      "is_bad_trait": false,
+      "is_gift": false,
+      "is_magical": false,
+      "effects": [
+        {"type": "vocal_ability", "description": "Can produce two distinct vocal tones simultaneously; elvish singing technique"}
+      ],
+      "prerequisites": [{"type": "race", "value": "elf_or_half_elf_elvish_raised"}],
+      "incompatible_with": [],
+      "description": "The ability to sing in two voices simultaneously, a distinctive elvish vocal technique. Automatic for elves; half-elves raised in elvish culture also receive this.",
+      "source": "BRW p. 59"
+    }
+  ]
+}

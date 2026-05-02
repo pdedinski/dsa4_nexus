@@ -1,0 +1,363 @@
+{
+  "meta": {
+    "schema_version": "1.0",
+    "last_updated": "2026-05-02",
+    "description": "All playable races for TDE4/DSA4.1. Sourced from DSA 4.1 Basisregelwerk. Attribute modifiers are applied AFTER attribute purchase. Derived value modifiers are flat additions. Talent modifiers are added to the baseline before talent point spending.",
+    "source_books": [
+      "DSA 4.1 Basisregelwerk p. 55–59",
+      "TDE Basic Rules p. 38–41"
+    ]
+  },
+  "races": [
+    {
+      "id": "middenrealmian",
+      "name": "Middenrealmian",
+      "german_name": "Mittelländer",
+      "gp_cost": 0,
+      "attribute_modifiers": {},
+      "derived_modifiers": {
+        "VP": 10,
+        "EP": 10,
+        "RM": -4
+      },
+      "automatic_advantages": [],
+      "automatic_disadvantages": [],
+      "recommended_advantages": [],
+      "unsuitable_advantages": ["outstanding_balance", "dietary_restriction"],
+      "unsuitable_disadvantages": [],
+      "allowed_cultures": [
+        "middenrealm_cities",
+        "andergast_nostria",
+        "bornland",
+        "horasian_empire",
+        "southern_aventuria"
+      ],
+      "talent_modifiers": {},
+      "magic_status": "none",
+      "physical_appearance": {
+        "height_formula": "1.60 + 2d20 cm (range: 1.62–2.00 m)",
+        "weight_formula": "height_cm - 100 kg",
+        "hair_colors": {
+          "1-3": "black",
+          "4-7": "brown",
+          "8-12": "dark blond",
+          "13-16": "blond",
+          "17-18": "white-blond",
+          "19-20": "red"
+        },
+        "eye_colors": {
+          "1-2": "dark brown",
+          "3-9": "brown",
+          "10-11": "green",
+          "12-17": "blue",
+          "18-19": "gray",
+          "20": "black"
+        }
+      },
+      "special_notes": "Most versatile race with the widest culture and profession access. No inherent bonuses but RM penalty applies.",
+      "affinity_tags": ["any"],
+      "description": "Middenrealmians are the most common human ethnic group in Aventuria, hailing from the Middenrealm and surrounding regions. They are a broadly diverse people with no particularly dominant physical traits.",
+      "source": "BRW p. 56"
+    },
+    {
+      "id": "tulamide",
+      "name": "Tulamide",
+      "german_name": "Tulamide",
+      "gp_cost": 0,
+      "attribute_modifiers": {},
+      "derived_modifiers": {
+        "VP": 10,
+        "EP": 10,
+        "RM": -4
+      },
+      "automatic_advantages": [],
+      "automatic_disadvantages": [],
+      "recommended_advantages": [],
+      "unsuitable_advantages": ["outstanding_balance", "dietary_restriction"],
+      "unsuitable_disadvantages": [],
+      "allowed_cultures": [
+        "tulamidian_city_states",
+        "novadis",
+        "southern_aventuria"
+      ],
+      "talent_modifiers": {},
+      "magic_status": "none",
+      "physical_appearance": {
+        "height_formula": "1.55 + 2d20 cm (range: 1.57–1.95 m)",
+        "weight_formula": "height_cm - 105 kg",
+        "hair_colors": {
+          "1-6": "black",
+          "7-12": "dark brown",
+          "13-14": "medium brown",
+          "15-17": "light brown",
+          "18-19": "blond",
+          "20": "red"
+        },
+        "eye_colors": {
+          "1-4": "black",
+          "5-12": "dark brown",
+          "13-16": "brown",
+          "17-18": "gray",
+          "19": "green",
+          "20": "blue"
+        }
+      },
+      "special_notes": "Tulamides are a southern human ethnic group. Their cultures offer access to urban, trade, and magical archetypes. Tulamidian City-States culture grants an additional +1 RM for magic users.",
+      "affinity_tags": ["social", "scholar", "magical_guild", "rogue_criminal"],
+      "description": "Tulamides are a dark-complexioned people from the southern regions of Aventuria, known for their trading acumen, scholarship, and magical traditions.",
+      "source": "BRW p. 56"
+    },
+    {
+      "id": "thorwalian",
+      "name": "Thorwalian",
+      "german_name": "Thorwaler",
+      "gp_cost": 5,
+      "attribute_modifiers": {
+        "CO": 1,
+        "CN": 1,
+        "ST": 1
+      },
+      "derived_modifiers": {
+        "VP": 11,
+        "EP": 10,
+        "RM": -5
+      },
+      "automatic_advantages": [],
+      "automatic_disadvantages": [
+        {"id": "violent_temper", "rating": 6, "german": "Jähzorn 6"}
+      ],
+      "recommended_advantages": [
+        "enduring", "iron", "vigor", "battle_frenzy", "direction_sense", "tough_dog"
+      ],
+      "recommended_disadvantages": ["blood_frenzy"],
+      "unsuitable_advantages": ["outstanding_balance", "dietary_restriction"],
+      "unsuitable_disadvantages": ["glass_bones"],
+      "allowed_cultures": [
+        "thorwal",
+        "middenrealm_cities",
+        "andergast_nostria",
+        "southern_aventuria"
+      ],
+      "talent_modifiers": {
+        "athletics": 1,
+        "perception": 1,
+        "carouse": 1,
+        "weather_forecasting": 1
+      },
+      "magic_status": "none",
+      "physical_appearance": {
+        "height_formula": "1.68 + 2d20 cm (range: 1.70–2.08 m)",
+        "weight_formula": "height_cm - 95 kg",
+        "hair_colors": {
+          "typical": "blond to red, sometimes brown"
+        },
+        "eye_colors": {
+          "typical": "blue, gray, green"
+        }
+      },
+      "special_notes": "Thorwalians have the highest base attributes of any human race (+CO, +CN, +ST) and the highest VP modifier (+11). They automatically receive Violent Temper (Jähzorn) rating 6 and have the worst RM penalty (-5).",
+      "affinity_tags": ["combat_frontliner", "sailor", "combat_skirmisher", "ranged"],
+      "description": "Thorwalians are a fierce northern people, known as the \"sea wolves\" of Aventuria. They are tall, physically powerful, and culturally shaped by seafaring, raiding, and communal feasting. Their legendary tempers are as well-known as their battle prowess.",
+      "source": "BRW p. 57"
+    },
+    {
+      "id": "dwarf",
+      "name": "Dwarf",
+      "german_name": "Zwerg / Angroschim",
+      "gp_cost": 16,
+      "attribute_modifiers": {
+        "DE": 1,
+        "AG": -1,
+        "CN": 2,
+        "ST": 2
+      },
+      "derived_modifiers": {
+        "VP": 12,
+        "EP": 18,
+        "RM": -4
+      },
+      "automatic_advantages": [
+        {"id": "twilight_sight", "german": "Dämmerungssicht"},
+        {"id": "resistance_mineral_poisons", "german": "Resistenz gegen Mineralgifte"},
+        {"id": "disease_resistance", "german": "Resistenz gegen Krankheiten"},
+        {"id": "hard_to_enspell", "german": "Schwer zu verzaubern"}
+      ],
+      "automatic_disadvantages": [
+        {"id": "greed", "rating": 5, "german": "Goldgier 5"},
+        {"id": "inaptitude_swimming", "german": "Unfähigkeit Schwimmen"},
+        {"id": "dwarf_stature", "german": "Zwergenwuchs"}
+      ],
+      "recommended_advantages": [
+        "enduring", "iron", "good_memory_i", "heat_resistance", "vigor",
+        "high_rm", "battle_frenzy", "direction_sense", "tough_dog", "dwarf_nose"
+      ],
+      "recommended_disadvantages": ["blood_frenzy", "violent_temper", "light_shy", "claustrophobia", "unattractive"],
+      "unsuitable_advantages": [
+        "fairy_friend", "fleet", "outstanding_balance", "outstanding_appearance",
+        "kobold_friend", "magic_sense", "snake_person", "euphonic_voice"
+      ],
+      "unsuitable_disadvantages": [
+        "fear_of_dark", "glass_bones", "prone_to_illness", "night_blind", "agoraphobia"
+      ],
+      "allowed_cultures": [
+        "anvil_dwarves"
+      ],
+      "talent_modifiers": {
+        "wrestling": 1,
+        "acrobatics": -3,
+        "ride": -1,
+        "swimming": -3,
+        "willpower": 2,
+        "carouse": 1,
+        "orientation": 1,
+        "geology": 1
+      },
+      "magic_status": "none",
+      "physical_appearance": {
+        "height_formula": "1.28 + 2d6 cm (range: 1.30–1.40 m)",
+        "weight_formula": "height_cm - 80 kg",
+        "notes": "Stocky and powerful build. Dwarf-sized weapons and armor required."
+      },
+      "special_notes": "Dwarves cannot wear human-sized equipment without modification. They are exceptionally tough (highest EP modifier) and resistant to magic and disease. They cannot swim (Inaptitude Swimming). Dwarf Stature means they are smaller and require specially-made equipment.",
+      "affinity_tags": ["combat_frontliner", "scholar"],
+      "description": "Dwarves (the Angroschim, people of Angrosh) are a proud, stout folk of the mountains and mines of Aventuria. Fiercely loyal to their clans and their god Angrosh, they are renowned as master craftsmen and formidable warriors who can absorb tremendous punishment.",
+      "source": "BRW p. 57–58"
+    },
+    {
+      "id": "elf",
+      "name": "Elf",
+      "german_name": "Elf / Auelfe",
+      "gp_cost": 20,
+      "attribute_modifiers": {
+        "ST": -1,
+        "AG": 2,
+        "CL": -1,
+        "IN": 1
+      },
+      "derived_modifiers": {
+        "VP": 6,
+        "EP": 12,
+        "RM": -2,
+        "ASP": 12
+      },
+      "automatic_advantages": [
+        {"id": "age_resistance", "german": "Altersresistenz"},
+        {"id": "twilight_sight", "german": "Dämmerungssicht"},
+        {"id": "good_looking", "german": "Gut Aussehend"},
+        {"id": "outstanding_sense", "note": "choose one of hearing / smell / sight", "german": "Herausragender Sinn"},
+        {"id": "disease_resistance", "german": "Resistenz gegen Krankheiten"},
+        {"id": "full_caster", "german": "Vollzauberer"},
+        {"id": "euphonic_voice", "german": "Wohlklang"},
+        {"id": "two_voiced_song", "german": "Zweistimmiger Gesang"}
+      ],
+      "automatic_disadvantages": [
+        {"id": "sensitive_smell", "rating": 6, "german": "Sensibler Geruchssinn 6"},
+        {"id": "inaptitude_drinking", "german": "Unfähigkeit Zechen"}
+      ],
+      "recommended_advantages": [
+        "balance", "fairy_friend", "fleet", "outstanding_balance", "outstanding_appearance",
+        "night_sight", "direction_sense", "snake_person"
+      ],
+      "recommended_disadvantages": ["dietary_restriction", "agoraphobia"],
+      "unsuitable_advantages": [
+        "heat_resistance", "battle_frenzy", "hard_to_enspell", "dwarf_nose"
+      ],
+      "unsuitable_disadvantages": [
+        "blood_frenzy", "impaired_sense", "color_blind", "obese", "prone_to_illness",
+        "light_shy", "night_blind", "unpleasant_voice"
+      ],
+      "allowed_cultures": [
+        "lea_elves"
+      ],
+      "talent_modifiers": {
+        "body_control": 3,
+        "sneak": 2,
+        "sing": 2,
+        "perception": 5,
+        "dance": 1,
+        "carouse": -2
+      },
+      "magic_status": "full_caster",
+      "physical_appearance": {
+        "height_formula": "1.68 + 2d20 cm (range: 1.70–2.08 m)",
+        "weight_formula": "height_cm - 120 kg",
+        "notes": "Slender, graceful build. Slightly pointed ears. Otherworldly beauty."
+      },
+      "special_notes": "Elves are full casters (Vollzauberer) by racial heritage. Metal armor interferes with their magic. They cannot drink alcohol (Inaptitude Drinking). Sensitive Smell 6 is automatic and can cause problems in cities or near strong odors. The Vollzauberer advantage provides +12 ASP and the RM modifier given is inclusive of the Vollzauberer bonus. Only the Lea Elves culture is available in the Basic Rules.",
+      "affinity_tags": ["magical_elven", "ranged", "stealth", "wilderness"],
+      "description": "Elves (the Auelfen or Lea Elves in the Basic Rules) are ancient, magical beings of the forest. They are graceful, perceptive, and inherently magical, with a deep connection to nature. Elvish culture and worldview are radically different from human societies.",
+      "source": "BRW p. 58–59"
+    },
+    {
+      "id": "half_elf",
+      "name": "Half-Elf",
+      "german_name": "Halbelf",
+      "gp_cost": 3,
+      "attribute_modifiers": {
+        "ST": -1,
+        "AG": 1
+      },
+      "derived_modifiers": {
+        "VP": 8,
+        "EP": 10,
+        "RM": -4,
+        "ASP": -6
+      },
+      "automatic_advantages": [
+        {"id": "good_looking", "german": "Gut Aussehend"},
+        {"id": "quarter_caster", "note": "Default for human-raised half-elf; replaced by Vollzauberer if elvish-raised (+8 GP)", "german": "Viertelzauberer"}
+      ],
+      "automatic_disadvantages": [],
+      "recommended_advantages": [
+        "balance", "twilight_sight", "fairy_friend", "fleet", "outstanding_sense",
+        "outstanding_appearance", "magic_sense", "snake_person", "euphonic_voice",
+        "two_voiced_song"
+      ],
+      "recommended_disadvantages": ["dietary_restriction", "sensitive_smell"],
+      "unsuitable_advantages": [
+        "battle_frenzy", "dwarf_nose", "hard_to_enspell"
+      ],
+      "unsuitable_disadvantages": [
+        "blood_frenzy", "obese", "prone_to_illness", "light_shy", "night_blind",
+        "unpleasant_voice"
+      ],
+      "allowed_cultures": [
+        "lea_elves",
+        "andergast_nostria",
+        "bornland",
+        "middenrealm_cities",
+        "horasian_empire"
+      ],
+      "talent_modifiers": {
+        "body_control": 2,
+        "sneak": 1,
+        "sing": 1,
+        "perception": 2,
+        "dance": 1,
+        "carouse": -1
+      },
+      "magic_status": "quarter_caster",
+      "magic_status_notes": "Default is quarter_caster (magical dabbler). Can be upgraded to full_caster by spending +8 GP for elvish upbringing, in which case: ASP becomes +12 (not -6), RM becomes -2 (not -4), and Two-Voiced Song is gained automatically. If trained as guild magician, Magician profession costs 2 GP less.",
+      "elvish_upbringing_variant": {
+        "extra_gp_cost": 8,
+        "derived_modifiers_override": {
+          "ASP": 12,
+          "RM": -2
+        },
+        "additional_automatic_advantages": [
+          {"id": "full_caster", "german": "Vollzauberer"},
+          {"id": "two_voiced_song", "german": "Zweistimmiger Gesang"}
+        ]
+      },
+      "physical_appearance": {
+        "height_formula": "1.58 + 1d20 + 4d6 cm (range: approx. 1.63–2.02 m)",
+        "weight_formula": "height_cm - 120 kg",
+        "notes": "Mixed human-elven features. Usually slender with slightly pointed ears."
+      },
+      "special_notes": "The most flexible of all races. Default magical status is quarter_caster (Viertelzauberer, magical dabbler). Elvish upbringing costs extra 8 GP but grants full caster status. Magician profession is 2 GP cheaper for half-elves.",
+      "affinity_tags": ["magical_dabbler", "stealth", "ranged", "any"],
+      "description": "Half-Elves are born of unions between humans and elves, inheriting traits from both worlds. They tend to be beautiful and perceptive but often feel they don't fully belong in either human or elvish society. Most possess some innate magical sensitivity.",
+      "source": "BRW p. 59"
+    }
+  ]
+}
