@@ -1,4 +1,5 @@
 node_modules/
+.next/
 .env
 TDE4_PDF_reference.txt
 TDE4_character_creation_from_scratch.txt

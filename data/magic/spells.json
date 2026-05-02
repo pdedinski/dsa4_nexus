@@ -787,7 +787,7 @@
       "source": "BRW p. 204; Liber Cantiones p. 187"
     },
     {
-      "id": "breath_of_magic",
+      "id": "breath_of_magic_odem_arcanum",
       "name": "Breath of Magic",
       "german_name": "Odem Arcanum",
       "traditions": [
@@ -3065,7 +3065,7 @@
       "source": "Liber Cantiones p. 108"
     },
     {
-      "id": "foil_summoning",
+      "id": "foil_summoning_herbeirufung",
       "name": "Foil Summoning",
       "german_name": "Herbeirufung vereiteln",
       "traditions": [
@@ -6965,7 +6965,7 @@
       "source": "Liber Cantiones p. 280"
     },
     {
-      "id": "white_mane",
+      "id": "white_mane_liber_281",
       "name": "White Mane",
       "german_name": "Weisse Maehn",
       "traditions": [

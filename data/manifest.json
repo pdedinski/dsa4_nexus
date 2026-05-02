@@ -1,0 +1,21 @@
+[
+  { "category": "character",  "fileKey": "advantages",        "arrayKey": "advantages",        "label": "Advantages" },
+  { "category": "character",  "fileKey": "disadvantages",     "arrayKey": "disadvantages",     "label": "Disadvantages" },
+  { "category": "character",  "fileKey": "special_abilities", "arrayKey": "special_abilities", "label": "Special Abilities" },
+  { "category": "combat",     "fileKey": "combat_maneuvers",  "arrayKey": "combat_maneuvers",  "label": "Combat Maneuvers" },
+  { "category": "core",       "fileKey": "cultures",          "arrayKey": "cultures",          "label": "Cultures" },
+  { "category": "core",       "fileKey": "professions",       "arrayKey": "professions",       "label": "Professions" },
+  { "category": "core",       "fileKey": "races",             "arrayKey": "races",             "label": "Races" },
+  { "category": "equipment",  "fileKey": "armor",             "arrayKey": "armor",             "label": "Armor" },
+  { "category": "equipment",  "fileKey": "general_equipment", "arrayKey": "equipment",         "label": "General Equipment" },
+  { "category": "equipment",  "fileKey": "weapons",           "arrayKey": "weapons",           "label": "Weapons" },
+  { "category": "magic",      "fileKey": "spells",            "arrayKey": "spells",            "label": "Spells" },
+  { "category": "meta",       "fileKey": "advancement_costs", "arrayKey": "advancement_costs", "label": "Advancement Costs" },
+  { "category": "talents",    "fileKey": "artisan_talents",   "arrayKey": "talents",           "label": "Artisan Talents" },
+  { "category": "talents",    "fileKey": "combat_talents",    "arrayKey": "talents",           "label": "Combat Talents" },
+  { "category": "talents",    "fileKey": "languages_scripts", "arrayKey": "talents",           "label": "Languages & Scripts" },
+  { "category": "talents",    "fileKey": "lore_talents",      "arrayKey": "talents",           "label": "Lore Talents" },
+  { "category": "talents",    "fileKey": "nature_talents",    "arrayKey": "talents",           "label": "Nature Talents" },
+  { "category": "talents",    "fileKey": "physical_talents",  "arrayKey": "talents",           "label": "Physical Talents" },
+  { "category": "talents",    "fileKey": "social_talents",    "arrayKey": "talents",           "label": "Social Talents" }
+]

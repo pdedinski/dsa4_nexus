@@ -13,7 +13,7 @@ const requiredEnv = [
 ];
 for (const key of requiredEnv) {
   if (!process.env[key]) {
-    console.error(`Missing env: ${key}. Copy .env.example to .env and set values.`);
+    console.error(`Missing env: ${key}. Set it in .env.`);
     process.exit(1);
   }
 }

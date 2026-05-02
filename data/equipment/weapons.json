@@ -1,13 +1,37 @@
 {
   "meta": {
-    "schema_version": "1.0",
+    "schema_version": "1.2",
     "last_updated": "2026-05-02",
     "source_books": [
       "DSA 4.1 Basisregelwerk (BRW)",
       "Aventuria Armory (AA)",
       "Arsenal Kompendium (AK)"
     ],
-    "notes": "Weights from BRW are in Unzen (ounces, 25g each); converted to Stein (1 Stein = 40 Unzen = 1 kg) where specified. BRW prices in Silbertaler. Aventuria Armory uses TDE5 system (DP, AT/PA Mod, Reach) but English names provided."
+    "notes": "Weights from BRW are in Unzen (ounces, 25g each); converted to Stein (1 Stein = 40 Unzen = 1 kg) where specified. BRW prices in Silbertaler. Aventuria Armory uses TDE5 system (DP, AT/PA Mod, Reach) but English names provided.",
+    "ranged_and_throwing": {
+      "pdf_sources_for_range_bands": [
+        "tde_german_rules (DSA 4.1 Basisregelwerk.pdf): table Aventurische Schuss- und Wurfwaffen p.163; Entfernung / Reichweiteklassen erläutert p.152–155.",
+        "arsenal_kompendium (Arsenal_Kompendium.pdf): Schuss- und Wurfwaffen pp.6–7 where a weapon is absent from BRW p.163."
+      ],
+      "distance_class_span": "distance_class_min / distance_class_max remain the inclusive Entfernungsklassen (EK) span from the same BRW table (combat grid), separate from Schritt-based Reichweiteklassen.",
+      "reichweiteklassen_order": [
+        "sehr_nah",
+        "nah",
+        "mittel",
+        "weit",
+        "extrem_weit"
+      ],
+      "range_bands_schritt_upper_note": "Per-weapon array range_bands_schritt_upper: five upper inclusive limits in Schritt, in the same order as reichweiteklassen_order (BRW p.153: Entfernung bis zum ersten Wert = sehr nah, bis zum zweiten = nah, usw.).",
+      "tp_plus_by_range_band_note": "Per-weapon array tp_plus_by_range_band: optional-rule TP shifts from BRW column TP+ (parentheses). null means the table used an em dash (–) in that band (see weapon special rules).",
+      "fernkampf_fk_modifiers_by_reichweiteklasse_BRW": {
+        "sehr_nah": -2,
+        "nah": 0,
+        "mittel": 4,
+        "weit": 8,
+        "extrem_weit": 12
+      },
+      "weapons_without_schritt_bands_here": "Hand crossbow (Handarmbrust) is AA-only in this dataset; it does not appear on BRW p.163 or in the Arsenal Kompendium extract used — add RA from your AA/TDE5 table if needed."
+    }
   },
   "weapons": [
     {
@@ -45,7 +69,9 @@
       "special": "Broad, very sturdy dwarven dagger. Cannot parry attacks from chain weapons, two-handed blunt weapons, two-handed swords/sabers, or halberds. No known human-sized version.",
       "notes": "Dwarf-crafted. Non-dwarves suffer -1 AT, PA, DP.",
       "related_talents": [],
-      "typical_for": ["dwarves"],
+      "typical_for": [
+        "dwarves"
+      ],
       "source": "BRW p. 160"
     },
     {
@@ -64,7 +90,10 @@
       "special": "Cannot parry attacks from chain weapons, two-handed blunt weapons, two-handed swords/sabers, or halberds.",
       "notes": "Slightly curved, very sharp blade mainly for skinning animals. Sometimes has saw-back and breaker hook.",
       "related_talents": [],
-      "typical_for": ["hunters", "rangers"],
+      "typical_for": [
+        "hunters",
+        "rangers"
+      ],
       "source": "BRW p. 160"
     },
     {
@@ -82,7 +111,9 @@
       "cost": 45,
       "special": "Cannot parry attacks from chain weapons, two-handed blunt weapons, two-handed swords/sabers, or halberds.",
       "notes": "Relatively narrow, very long dagger. Can also be used with Fencing Weapons talent.",
-      "related_talents": ["fencing_weapons"],
+      "related_talents": [
+        "fencing_weapons"
+      ],
       "typical_for": [],
       "source": "BRW p. 160"
     },
@@ -121,7 +152,9 @@
       "special": "Cannot parry attacks from chain weapons, two-handed blunt weapons, or two-handed swords/sabers.",
       "notes": "Dagger with longer and broader blade than a standard dagger. Common sidearm or decorated officer's weapon.",
       "related_talents": [],
-      "typical_for": ["officers"],
+      "typical_for": [
+        "officers"
+      ],
       "source": "BRW p. 160"
     },
     {
@@ -141,9 +174,26 @@
       "cost": 30,
       "special": "Balanced for throwing. Improvised melee weapon (no grip plates). Cannot parry chain weapons, two-handed blunt weapons, two-handed swords/sabers, or halberds in melee.",
       "notes": "Slightly longer and heavier than throwing knife.",
-      "related_talents": ["daggers"],
+      "related_talents": [
+        "daggers"
+      ],
       "typical_for": [],
-      "source": "BRW p. 163"
+      "source": "BRW p. 163",
+      "range_bands_schritt_upper": [
+        2,
+        4,
+        6,
+        8,
+        15
+      ],
+      "tp_plus_by_range_band": [
+        1,
+        0,
+        0,
+        0,
+        -1
+      ],
+      "range_bands_source": "DSA 4.1 Basisregelwerk p.163 (Schuss- und Wurfwaffen)"
     },
     {
       "id": "throwing_knife",
@@ -162,9 +212,26 @@
       "cost": 15,
       "special": "Balanced for throwing. Improvised melee weapon. Cannot parry chain weapons, two-handed blunt weapons, or two-handed swords/sabers in melee.",
       "notes": "Without grip plates, unsuitable as serious melee weapon.",
-      "related_talents": ["daggers"],
+      "related_talents": [
+        "daggers"
+      ],
       "typical_for": [],
-      "source": "BRW p. 163"
+      "source": "BRW p. 163",
+      "range_bands_schritt_upper": [
+        2,
+        4,
+        6,
+        8,
+        15
+      ],
+      "tp_plus_by_range_band": [
+        1,
+        0,
+        0,
+        0,
+        -1
+      ],
+      "range_bands_source": "DSA 4.1 Basisregelwerk p.163 (Schuss- und Wurfwaffen)"
     },
     {
       "id": "basilisk_tongue",
@@ -182,7 +249,10 @@
       "special": "Sinuous blade resembling a serpent's tongue. Sanctified versions exist for Blessed Ones of Hesinde (and Nameless One). +2 DP in ambush. -1 DP vs armor PRO 2+.",
       "notes": "Popular with Hesinde clergy and assassins. Exceptional blade cuts easily through fur, cloth, flesh.",
       "related_talents": [],
-      "typical_for": ["hesinde_clergy", "assassins"],
+      "typical_for": [
+        "hesinde_clergy",
+        "assassins"
+      ],
       "source": "AA p. 59"
     },
     {
@@ -203,8 +273,25 @@
       "special": "Special throwing dagger from the Bornland, almost a throwing dart. Stable triangular blade. Also throwable.",
       "notes": "Bedingt nahkampftauglich (limited melee suitability).",
       "related_talents": [],
-      "typical_for": ["bornland"],
-      "source": "BRW p. 163 / AK p. 72"
+      "typical_for": [
+        "bornland"
+      ],
+      "source": "BRW p. 163 / AK p. 72",
+      "range_bands_schritt_upper": [
+        2,
+        4,
+        6,
+        8,
+        15
+      ],
+      "tp_plus_by_range_band": [
+        1,
+        0,
+        0,
+        0,
+        -1
+      ],
+      "range_bands_source": "DSA 4.1 Basisregelwerk p.163 (Schuss- und Wurfwaffen)"
     },
     {
       "id": "hook_dagger",
@@ -241,7 +328,10 @@
       "special": "Parrying weapon (+1 bonus to primary weapon's PA). Ignores normal -2 penalty for Deadly Thrust maneuver. -1 DP vs armor PRO 6+.",
       "notes": "Left-hand parrying dagger designed for dual-wielding with a sword or rapier.",
       "related_talents": [],
-      "typical_for": ["duellists", "fencers"],
+      "typical_for": [
+        "duellists",
+        "fencers"
+      ],
       "source": "AA p. 76 / AK p. 62"
     },
     {
@@ -260,7 +350,10 @@
       "special": "Poison weapon: target wounded by poisoned Mengbilar subtracts 1 from TOU on poison check. Breaks on confirmed botch during attack.",
       "notes": "Exotic dagger from Tulamydian region.",
       "related_talents": [],
-      "typical_for": ["al_anfa", "tulamydes"],
+      "typical_for": [
+        "al_anfa",
+        "tulamydes"
+      ],
       "source": "AA p. 77 / AK p. 68"
     },
     {
@@ -297,8 +390,13 @@
       "cost": 60,
       "special": "Broad curved dagger. Cannot parry chain weapons, two-handed blunt weapons, two-handed swords/sabers, or halberds. Subtracts 1 PRO from armor with PRO 2 or less.",
       "notes": "In the Tulamydian region (especially among Novadis) also serves as jewelry and symbol of honor.",
-      "related_talents": ["sabers"],
-      "typical_for": ["novadis", "tulamydes"],
+      "related_talents": [
+        "sabers"
+      ],
+      "typical_for": [
+        "novadis",
+        "tulamydes"
+      ],
       "source": "BRW p. 160 / AA p. 91"
     },
     {
@@ -316,8 +414,13 @@
       "cost": 120,
       "special": "Narrow sword with decorative guard. Transitions between rapier, epee, and sword are fluid.",
       "notes": "Can also be used with Swords talent.",
-      "related_talents": ["swords"],
-      "typical_for": ["almada", "horasian_empire"],
+      "related_talents": [
+        "swords"
+      ],
+      "typical_for": [
+        "almada",
+        "horasian_empire"
+      ],
       "source": "BRW p. 160 / AA p. 82"
     },
     {
@@ -336,7 +439,10 @@
       "special": "Very narrow sword with elaborate grip. Usually single-edged with pronounced tip. Cannot parry chain weapons, two-handed blunt weapons, or halberds.",
       "notes": "Considered the essence of fencing weapons. Widespread in Almada and Horasian Empire.",
       "related_talents": [],
-      "typical_for": ["almada", "horasian_empire"],
+      "typical_for": [
+        "almada",
+        "horasian_empire"
+      ],
       "source": "BRW p. 160"
     },
     {
@@ -355,7 +461,9 @@
       "special": "No cutting edge, only a tip. Bell-shaped guard with sweeping parry bars. Very flexible. Cannot parry chain weapons, two-handed blunt weapons, two-handed swords/sabers, or halberds. Foils can parry only daggers, other fencing weapons, and unarmed attacks.",
       "notes": "Highly specialized fencing weapon.",
       "related_talents": [],
-      "typical_for": ["horasian_empire"],
+      "typical_for": [
+        "horasian_empire"
+      ],
       "source": "BRW p. 160 / AA p. 67"
     },
     {
@@ -374,7 +482,10 @@
       "special": "Concealed blade within walking cane. Identifying as weapon requires Perception check. Opponent does not receive -1 defense penalty (normal for fencing weapons).",
       "notes": "Disguised weapon popular with merchants and nobles.",
       "related_talents": [],
-      "typical_for": ["merchants", "nobles"],
+      "typical_for": [
+        "merchants",
+        "nobles"
+      ],
       "source": "AA p. 88 / AK p. 64"
     },
     {
@@ -392,8 +503,13 @@
       "cost": 250,
       "special": "When opponents have same INI, wolf-knife always strikes first. When wielded by non-elves: -1 AT, PA, DP.",
       "notes": "Elven fencing weapon. Available only to glade elves and wood elves during hero creation.",
-      "related_talents": ["swords"],
-      "typical_for": ["glade_elves", "wood_elves"],
+      "related_talents": [
+        "swords"
+      ],
+      "typical_for": [
+        "glade_elves",
+        "wood_elves"
+      ],
       "source": "AA p. 92 / AK p. 91"
     },
     {
@@ -411,8 +527,14 @@
       "cost": 50,
       "special": "In cramped spaces receive only -2 to AT and PA. -1 PA vs two-handed weapons.",
       "notes": "Broad single-edged straight blade with basket guard. Typical sidearm of sailors, pirates, and naval warriors.",
-      "related_talents": ["sabers"],
-      "typical_for": ["pirates", "sailors", "coastal_regions"],
+      "related_talents": [
+        "sabers"
+      ],
+      "typical_for": [
+        "pirates",
+        "sailors",
+        "coastal_regions"
+      ],
       "source": "BRW p. 160 / AA p. 64"
     },
     {
@@ -430,7 +552,10 @@
       "cost": 80,
       "special": "Cannot parry chain weapons or two-handed blunt weapons.",
       "notes": "Straight blade with short cross-guard. Effective weapon popular for over 2,000 years in Aventuria.",
-      "related_talents": ["sabers", "daggers"],
+      "related_talents": [
+        "sabers",
+        "daggers"
+      ],
       "typical_for": [],
       "source": "BRW p. 160"
     },
@@ -449,8 +574,12 @@
       "cost": 160,
       "special": "Straight, usually sesquiedge blade with decorated narrow basket guard. Also known as 'Korbschwert'.",
       "notes": "Popular with naval warriors. Can also use Sabers talent.",
-      "related_talents": ["sabers"],
-      "typical_for": ["sea_warriors"],
+      "related_talents": [
+        "sabers"
+      ],
+      "typical_for": [
+        "sea_warriors"
+      ],
       "source": "BRW p. 160"
     },
     {
@@ -469,7 +598,10 @@
       "special": "The Aventurian longsword with straight or slightly downward-bent cross-guard.",
       "notes": "Quasi the status symbol of all fighting professions.",
       "related_talents": [],
-      "typical_for": ["warriors", "knights"],
+      "typical_for": [
+        "warriors",
+        "knights"
+      ],
       "source": "BRW p. 160 / AA p. 75"
     },
     {
@@ -488,7 +620,10 @@
       "special": "Can perform Shield-Splitter maneuver (normally not available to Swords technique). -2 PA vs Two-Handed Blunt Weapons and Two-Handed Swords.",
       "notes": "Popular in Albernia and Thorwal.",
       "related_talents": [],
-      "typical_for": ["albernia", "thorwal"],
+      "typical_for": [
+        "albernia",
+        "thorwal"
+      ],
       "source": "AA p. 62"
     },
     {
@@ -506,8 +641,13 @@
       "cost": 100,
       "special": "+1 DP in mounted combat. -1 DP vs armor PRO 4+.",
       "notes": "Single-edged slightly curved blade with elaborate tip. Typical cavalry sidearm.",
-      "related_talents": ["swords"],
-      "typical_for": ["cavalry", "riders"],
+      "related_talents": [
+        "swords"
+      ],
+      "typical_for": [
+        "cavalry",
+        "riders"
+      ],
       "source": "BRW p. 160 / AA p. 84"
     },
     {
@@ -525,8 +665,12 @@
       "cost": 130,
       "special": "Typical Tulamydian saber that widens from the hilt, making it 'top-heavy', has no tip. Bladestorm maneuver: reduce penalty for both attacks by 1. -1 DP vs armor PRO 5+.",
       "notes": "Traditional Tulamydian weapon.",
-      "related_talents": ["swords"],
-      "typical_for": ["tulamydes"],
+      "related_talents": [
+        "swords"
+      ],
+      "typical_for": [
+        "tulamydes"
+      ],
       "source": "BRW p. 160 / AA p. 73"
     },
     {
@@ -544,8 +688,13 @@
       "cost": 180,
       "special": "+2 DP when used while mounted. -2 PA vs Two-Handed Blunt Weapons and Two-Handed Swords.",
       "notes": "Named for the Amazon warriors. Slender single-edged sword with strongly curved blade, ideal for mounted use.",
-      "related_talents": ["sabers"],
-      "typical_for": ["amazons", "cavalry"],
+      "related_talents": [
+        "sabers"
+      ],
+      "typical_for": [
+        "amazons",
+        "cavalry"
+      ],
       "source": "AA p. 58 / AK p. 38"
     },
     {
@@ -564,7 +713,11 @@
       "special": "+1 bonus on Intimidation (Threats) checks. When two opponents have same INI, barbarian sword always strikes last.",
       "notes": "Wielded by Fjarnings, Gjalsks, and Troll Peakers. Heavy, slow, effective at smashing armor and shields.",
       "related_talents": [],
-      "typical_for": ["fjarnings", "gjalsks", "troll_peakers"],
+      "typical_for": [
+        "fjarnings",
+        "gjalsks",
+        "troll_peakers"
+      ],
       "source": "AA p. 59 / AK p. 74"
     },
     {
@@ -583,7 +736,9 @@
       "special": "Two-handed use grants +2 DP instead of +1 DP. Evil reputation causes -1 CHA for Social checks when onlookers know of it.",
       "notes": "Maraskan weapon with sinister reputation.",
       "related_talents": [],
-      "typical_for": ["maraskan"],
+      "typical_for": [
+        "maraskan"
+      ],
       "source": "AA p. 78 / AK p. 82"
     },
     {
@@ -602,7 +757,10 @@
       "special": "+1 DP vs unarmored humanoids (PRO 0). After successful parry roll 1d6: on 6, slave-death becomes entangled and wielder suffers -1 AT next round.",
       "notes": "Found in Al'Anfa and Far South regions.",
       "related_talents": [],
-      "typical_for": ["al_anfa", "far_south"],
+      "typical_for": [
+        "al_anfa",
+        "far_south"
+      ],
       "source": "AA p. 86 / AK p. 84"
     },
     {
@@ -621,7 +779,9 @@
       "special": "+1 DP vs animals of medium and large size categories. Non-elves suffer -1 AT, PA, DP.",
       "notes": "Firn elf weapon. Only available to frinelves during hero creation.",
       "related_talents": [],
-      "typical_for": ["frinelves"],
+      "typical_for": [
+        "frinelves"
+      ],
       "source": "AA p. 85 / AK p. 91"
     },
     {
@@ -639,8 +799,13 @@
       "cost": 250,
       "special": "Two-handed weapon (z). Can also be used with Two-Handed Swords talent. Versatile fighting style for one or two-handed use.",
       "notes": "Between a sword and a two-hander. Privileged weapon.",
-      "related_talents": ["two_handed_swords"],
-      "typical_for": ["warriors", "knights"],
+      "related_talents": [
+        "two_handed_swords"
+      ],
+      "typical_for": [
+        "warriors",
+        "knights"
+      ],
       "source": "BRW p. 160 / AA p. 60"
     },
     {
@@ -658,8 +823,12 @@
       "cost": 400,
       "special": "Two-handed weapon. Requires minimum AGI 15 to use at full effectiveness. Below AGI 15: -1 TP per point below, -1 INI bonus, -1 PA per point below.",
       "notes": "Maraskan sword with slightly curved sesquiedge blade. Fast due to light blade.",
-      "related_talents": ["two_handed_swords"],
-      "typical_for": ["maraskan"],
+      "related_talents": [
+        "two_handed_swords"
+      ],
+      "typical_for": [
+        "maraskan"
+      ],
       "source": "BRW p. 161"
     },
     {
@@ -678,7 +847,10 @@
       "special": "Two-handed weapon. Privileged weapon (may only be carried by recognized fighters, nobles).",
       "notes": "Classic two-hander: broad-bladed double-edged sword with long grip, quite front-heavy.",
       "related_talents": [],
-      "typical_for": ["warriors", "knights"],
+      "typical_for": [
+        "warriors",
+        "knights"
+      ],
       "source": "BRW p. 160 / AA p. 69"
     },
     {
@@ -697,7 +869,11 @@
       "special": "Two-handed weapon. Overlong two-handed sword with long false-edge. Despite its name, favored weapon of Almadan and Horasian double mercenaries.",
       "notes": "Privileged weapon.",
       "related_talents": [],
-      "typical_for": ["almada", "horasian_empire", "mercenaries"],
+      "typical_for": [
+        "almada",
+        "horasian_empire",
+        "mercenaries"
+      ],
       "source": "BRW p. 160"
     },
     {
@@ -716,7 +892,10 @@
       "special": "Two-handed weapon. Overlong curved sword with sesquiedge blade, designed for use against cavalry. Usually without cross-guard.",
       "notes": "Widespread in Almada and Aranien.",
       "related_talents": [],
-      "typical_for": ["almada", "aranien"],
+      "typical_for": [
+        "almada",
+        "aranien"
+      ],
       "source": "BRW p. 160"
     },
     {
@@ -735,7 +914,9 @@
       "special": "Two-handed weapon. On critical success, confirmation roll receives +2 bonus. Cannot perform Feints.",
       "notes": "Impressive Tulamydian blade weapon, usually carried by bodyguards or harem guards for intimidation.",
       "related_talents": [],
-      "typical_for": ["tulamydes"],
+      "typical_for": [
+        "tulamydes"
+      ],
       "source": "BRW p. 160 / AA p. 65"
     },
     {
@@ -754,7 +935,10 @@
       "special": "+1 Intimidation check bonus. +1 DP vs unarmored humanoids (PRO 0). On successful parry by opponent: roll 1d6, on 5-6 slave-death becomes stuck, -1 AT next round.",
       "notes": "Found in Al'Anfa and Far South.",
       "related_talents": [],
-      "typical_for": ["al_anfa", "far_south"],
+      "typical_for": [
+        "al_anfa",
+        "far_south"
+      ],
       "source": "AA p. 69 / AK p. 84"
     },
     {
@@ -773,7 +957,9 @@
       "special": "Sanctified (Rondra). Only Blessed Ones of Rondra may purchase sanctified versions. +1 bonus for Windmill maneuver. Cannot perform Quickdraw.",
       "notes": "Ceremonial weapon of Rondra's clergy. Priceless/unavailable commercially.",
       "related_talents": [],
-      "typical_for": ["rondra_clergy"],
+      "typical_for": [
+        "rondra_clergy"
+      ],
       "source": "AA p. 84 / AK p. 58"
     },
     {
@@ -792,7 +978,9 @@
       "special": "Two-handed improvised weapon. After attacking, cannot parry until end of next round (can dodge instead). On critical hit or 16+ DP, enemies within reach must make Willpower check or gain Fear 1 for 5 rounds.",
       "notes": "Weapon of executioners. Available in cities.",
       "related_talents": [],
-      "typical_for": ["executioners"],
+      "typical_for": [
+        "executioners"
+      ],
       "source": "AA p. 67 / AK p. 57"
     },
     {
@@ -811,7 +999,10 @@
       "special": "Two-handed weapon. Attacks of halberd cannot be parried by many weapons. In cramped spaces, reduce AT/PA penalties by 2.",
       "notes": "Classic infantry weapon capable of amazing maneuvers in single combat, but requires real mastery.",
       "related_talents": [],
-      "typical_for": ["infantry", "guards"],
+      "typical_for": [
+        "infantry",
+        "guards"
+      ],
       "source": "BRW p. 160 / AA p. 70"
     },
     {
@@ -830,7 +1021,9 @@
       "special": "Two-handed weapon. Two fighters with glaives can form a wall: both within 1.5 feet, facing same direction; +1 PA. Charge with wall: lose PA bonus but +1 DP.",
       "notes": "Common infantry weapon with broad single-edged blade usually without tip.",
       "related_talents": [],
-      "typical_for": ["infantry"],
+      "typical_for": [
+        "infantry"
+      ],
       "source": "BRW p. 160 / AA p. 68"
     },
     {
@@ -849,7 +1042,10 @@
       "special": "Two-handed weapon. Can unhorse riders.",
       "notes": "Inexpensive and widespread militia weapon. Seldom decorated.",
       "related_talents": [],
-      "typical_for": ["militia", "infantry"],
+      "typical_for": [
+        "militia",
+        "infantry"
+      ],
       "source": "BRW p. 160"
     },
     {
@@ -867,8 +1063,13 @@
       "cost": 80,
       "special": "Two-handed weapon. Polearm with broad thrust blade and symmetrical side blades. Can also use Spears talent.",
       "notes": "Often richly decorated as a courtly guard weapon.",
-      "related_talents": ["spears"],
-      "typical_for": ["palace_guards", "nobles"],
+      "related_talents": [
+        "spears"
+      ],
+      "typical_for": [
+        "palace_guards",
+        "nobles"
+      ],
       "source": "BRW p. 160"
     },
     {
@@ -887,7 +1088,9 @@
       "special": "Two-handed weapon. +1 AT bonus when using Onslaught maneuver. -1 penalty on Charge maneuver.",
       "notes": "When scythe blade is mounted lengthwise rather than crosswise, creates storm scythe - typical weapon for peasant militias.",
       "related_talents": [],
-      "typical_for": ["peasant_militia"],
+      "typical_for": [
+        "peasant_militia"
+      ],
       "source": "BRW p. 160 / AA p. 83"
     },
     {
@@ -906,7 +1109,9 @@
       "special": "Two-handed weapon. Sweep maneuver gets +1 bonus. Feint gets -1 penalty.",
       "notes": "Cyclopean weapon of great power.",
       "related_talents": [],
-      "typical_for": ["cyclopes_islands"],
+      "typical_for": [
+        "cyclopes_islands"
+      ],
       "source": "AK p. 85 / AA p. 81"
     },
     {
@@ -924,8 +1129,12 @@
       "cost": 120,
       "special": "Two-handed weapon. Dwarven variant of the partisan, proportioned for Angroschim.",
       "notes": "Can also use Spears talent.",
-      "related_talents": ["spears"],
-      "typical_for": ["dwarves"],
+      "related_talents": [
+        "spears"
+      ],
+      "typical_for": [
+        "dwarves"
+      ],
       "source": "BRW p. 160"
     },
     {
@@ -943,7 +1152,10 @@
       "cost": 150,
       "special": "Two-handed weapon. Long spike can be used as thrust weapon (Spears talent, AT -3, 1d6+5 DP). Subtracts 1 PRO from armor PRO 4+.",
       "notes": "Extremely effective multipurpose weapon with long thrust spike, flat hammer head, and straight axe blade.",
-      "related_talents": ["two_handed_blunt_weapons", "spears"],
+      "related_talents": [
+        "two_handed_blunt_weapons",
+        "spears"
+      ],
       "typical_for": [],
       "source": "BRW p. 161 / AA p. 92"
     },
@@ -963,7 +1175,9 @@
       "special": "Two-handed weapon. From KK 16 can be used one-handed: DP 1d6+4, TP/KK 13/5, WM 0/-5. Can be thrown (improvised).",
       "notes": "About one-and-a-half steps long with lancet-shaped thrust blade. Now mostly only used by hunters.",
       "related_talents": [],
-      "typical_for": ["hunters"],
+      "typical_for": [
+        "hunters"
+      ],
       "source": "BRW p. 160"
     },
     {
@@ -982,7 +1196,9 @@
       "special": "Two-handed weapon. Can also be thrown. Heavier variants with stone/horn tips add 1 TP.",
       "notes": "Simple straight spear with fire-hardened wooden tip. Typical weapon of primitive tribal societies.",
       "related_talents": [],
-      "typical_for": ["primitive_cultures"],
+      "typical_for": [
+        "primitive_cultures"
+      ],
       "source": "BRW p. 160 / AA p. 93"
     },
     {
@@ -1001,7 +1217,10 @@
       "special": "Also improvised weapon. Reduces penalties for fighting in water by 2. Disarm maneuver +1 bonus. -1 DP vs armor PRO 2+.",
       "notes": "Large fish spear common on the Aventurian west coast.",
       "related_talents": [],
-      "typical_for": ["coastal_regions", "fishermen"],
+      "typical_for": [
+        "coastal_regions",
+        "fishermen"
+      ],
       "source": "BRW p. 160 / AA p. 89"
     },
     {
@@ -1020,7 +1239,10 @@
       "special": "Two-handed weapon. Can be used in mounted combat and for Charge. -1 penalty on Takedown. Thrown from horseback inflicts +2 DP.",
       "notes": "Tulamydian short cavalry lance. Used by Novadis both mounted and on foot or as throwing weapon.",
       "related_talents": [],
-      "typical_for": ["novadis", "tulamydes"],
+      "typical_for": [
+        "novadis",
+        "tulamydes"
+      ],
       "source": "BRW p. 160 / AA p. 66"
     },
     {
@@ -1039,7 +1261,10 @@
       "special": "Two-handed weapon. Can be thrown. From KK 15 can be used one-handed: DP 1d6+5, TP/KK 13/5, WM 0/-4. Target attempting to escape Nail Down gets -1 on Feat of Strength check.",
       "notes": "Used especially by wood elves. Has a crossbar behind the blade to prevent deep penetration.",
       "related_talents": [],
-      "typical_for": ["hunters", "wood_elves"],
+      "typical_for": [
+        "hunters",
+        "wood_elves"
+      ],
       "source": "BRW p. 160 / AA p. 72"
     },
     {
@@ -1058,7 +1283,9 @@
       "special": "Two-handed weapon. Long spear with broad blade, usually with crossbar and hand-guard. Weapon for hunting large game.",
       "notes": null,
       "related_talents": [],
-      "typical_for": ["hunters"],
+      "typical_for": [
+        "hunters"
+      ],
       "source": "BRW p. 160"
     },
     {
@@ -1078,9 +1305,26 @@
       "cost": 30,
       "special": "Balanced for throwing. Improvised melee weapon. About four spans long, good balance, iron tip with long iron bands.",
       "notes": null,
-      "related_talents": ["spears"],
+      "related_talents": [
+        "spears"
+      ],
       "typical_for": [],
-      "source": "BRW p. 160 / AA p. 104"
+      "source": "BRW p. 160 / AA p. 104",
+      "range_bands_schritt_upper": [
+        5,
+        10,
+        15,
+        25,
+        40
+      ],
+      "tp_plus_by_range_band": [
+        3,
+        1,
+        0,
+        -1,
+        -1
+      ],
+      "range_bands_source": "DSA 4.1 Basisregelwerk p.163 (Schuss- und Wurfwaffen)"
     },
     {
       "id": "quarterstaff",
@@ -1098,7 +1342,11 @@
       "special": "Two-handed weapon. Takedown maneuver gets +1 bonus. Charge maneuver gets -1 penalty.",
       "notes": "About twice finger-thick, straight wooden staff about one and a half steps long, usually with iron bands at ends.",
       "related_talents": [],
-      "typical_for": ["mages", "travelers", "monks"],
+      "typical_for": [
+        "mages",
+        "travelers",
+        "monks"
+      ],
       "source": "BRW p. 161 / AA p. 81"
     },
     {
@@ -1117,7 +1365,9 @@
       "special": "Ritual instrument and status symbol of mages. Unbreakable combat staff (see Quarterstaff). Privileged weapon.",
       "notes": "Only available to Guild Mages. Value is effectively priceless (unavailable for purchase).",
       "related_talents": [],
-      "typical_for": ["guild_mages"],
+      "typical_for": [
+        "guild_mages"
+      ],
       "source": "BRW p. 161"
     },
     {
@@ -1136,7 +1386,9 @@
       "special": "Two-handed weapon. When making more than one PA in same round, reduce penalty by 1. Forceful Blow maneuver: -1 DP.",
       "notes": "Unusual weapon from the Grangor region: staff of about one step long with broad dagger blades and small barbs at both ends.",
       "related_talents": [],
-      "typical_for": ["grangor"],
+      "typical_for": [
+        "grangor"
+      ],
       "source": "BRW p. 161 / AA p. 90"
     },
     {
@@ -1231,7 +1483,9 @@
       "special": "Attacks with spike also inflict 1d6+4 DP. Subtract 2 PRO from armor PRO 6+. Mounted warriors gain +1 DP. On confirmed botch receive 1 level of Stupor.",
       "notes": "Typical light cavalry hammer with blunt and pointed sides.",
       "related_talents": [],
-      "typical_for": ["cavalry"],
+      "typical_for": [
+        "cavalry"
+      ],
       "source": "BRW p. 161 / AA p. 82"
     },
     {
@@ -1249,8 +1503,13 @@
       "cost": 100,
       "special": "Special form of mace with multiple spines from heavy ball. Can also be used to stab with central spine (Daggers talent, AT -3): 1d6+4 DP; following own parade also -3. On confirmed botch: 1 level Stupor.",
       "notes": "Usually decorated with a face, giving the weapon its name.",
-      "related_talents": ["daggers"],
-      "typical_for": ["al_anfa", "tulamydes"],
+      "related_talents": [
+        "daggers"
+      ],
+      "typical_for": [
+        "al_anfa",
+        "tulamydes"
+      ],
       "source": "BRW p. 161 / AA p. 61"
     },
     {
@@ -1269,7 +1528,9 @@
       "special": "+1 bonus to Intimidation (Threats) checks. When wielding two Molokdeshnajas at once: -1 penalty to all AT and PA.",
       "notes": "Bornland weapon.",
       "related_talents": [],
-      "typical_for": ["bornland"],
+      "typical_for": [
+        "bornland"
+      ],
       "source": "AK p. 75 / AA p. 77"
     },
     {
@@ -1287,8 +1548,12 @@
       "cost": 75,
       "special": "Shield Splitter maneuver inflicts +4 DP. -1 additional penalty when parrying daggers and fencing weapons. Two-handed weapon.",
       "notes": "Thorwaler axe with long downward-drawn ('bearded') blade. Can be used one-handed from KK 14 with Axes/Maces talent: TP/KK 13/3.",
-      "related_talents": ["two_handed_blunt_weapons"],
-      "typical_for": ["thorwal"],
+      "related_talents": [
+        "two_handed_blunt_weapons"
+      ],
+      "typical_for": [
+        "thorwal"
+      ],
       "source": "BRW p. 161 / AA p. 80"
     },
     {
@@ -1307,7 +1572,9 @@
       "special": "Dwarven hand axe with extremely 'long-bearded' blade. Very heavy for its small size.",
       "notes": null,
       "related_talents": [],
-      "typical_for": ["dwarves"],
+      "typical_for": [
+        "dwarves"
+      ],
       "source": "BRW p. 161"
     },
     {
@@ -1326,7 +1593,9 @@
       "special": "Sanctified (Praios). Only Blessed Ones of Praios may purchase. +1 PA during day. +1 DP vs beings with AE. -1 AT during night. -1 DP vs armor PRO 4+.",
       "notes": "Ceremonial weapon of Praios clergy.",
       "related_talents": [],
-      "typical_for": ["praios_clergy"],
+      "typical_for": [
+        "praios_clergy"
+      ],
       "source": "AK p. 59 / AA p. 88"
     },
     {
@@ -1345,7 +1614,9 @@
       "special": "Shield-Splitter maneuver +4 DP. -1 AT vs large and huge creatures. Non-dwarves: -1 AT, PA, DP.",
       "notes": "Dwarven weapon. Only available to dwarven cultures during hero creation.",
       "related_talents": [],
-      "typical_for": ["dwarves"],
+      "typical_for": [
+        "dwarves"
+      ],
       "source": "AA p. 94"
     },
     {
@@ -1364,7 +1635,9 @@
       "special": "Two-handed weapon. +1 Hammer Blow bonus. Shatter maneuver: roll 2d6, use better die. Non-dwarves: -2 AT, PA, DP. Botch on Forceful Blow/Hammer Blow: weapon stuck.",
       "notes": "Dwarven double-bladed axe proportioned for Angroschim.",
       "related_talents": [],
-      "typical_for": ["dwarves"],
+      "typical_for": [
+        "dwarves"
+      ],
       "source": "BRW p. 161 / AA p. 83"
     },
     {
@@ -1382,7 +1655,9 @@
       "cost": 120,
       "special": "Two-handed weapon. Can be used one-handed from KK 18 with Axes/Maces talent: TP/KK 15/3.",
       "notes": "Many variants exist. Strike face sometimes spiked to pierce armor.",
-      "related_talents": ["axes_maces"],
+      "related_talents": [
+        "axes_maces"
+      ],
       "typical_for": [],
       "source": "BRW p. 161 / AA p. 91"
     },
@@ -1402,7 +1677,11 @@
       "special": "Two-handed weapon. Requires minimum STR 15. On critical success or 14+ DP: all enemies within reach must make Willpower check (-1) or gain Fear 1 for 5 rounds. Confirmed botch: 1 level Stupor to wielder.",
       "notes": "Massive double-bladed axe used mainly in northern Aventuria (Thorwalers, Fjarnings, Gjalsks).",
       "related_talents": [],
-      "typical_for": ["thorwal", "fjarnings", "gjalsks"],
+      "typical_for": [
+        "thorwal",
+        "fjarnings",
+        "gjalsks"
+      ],
       "source": "BRW p. 161 / AA p. 58"
     },
     {
@@ -1421,7 +1700,9 @@
       "special": "Two-handed weapon. In cramped spaces: only -2 AT/PA penalty. Forceful Blow II/III: +1 DP. Non-dwarves: -2 AT, PA, DP. Feint: additional -1 penalty.",
       "notes": "Dwarven war hammer proportioned for Angroschim.",
       "related_talents": [],
-      "typical_for": ["dwarves"],
+      "typical_for": [
+        "dwarves"
+      ],
       "source": "BRW p. 161 / AA p. 66 / AK p. 89"
     },
     {
@@ -1576,7 +1857,22 @@
       "notes": "Also shoots from horseback.",
       "related_talents": [],
       "typical_for": [],
-      "source": "BRW p. 163 / AA p. 101"
+      "source": "BRW p. 163 / AA p. 101",
+      "range_bands_schritt_upper": [
+        5,
+        15,
+        25,
+        40,
+        60
+      ],
+      "tp_plus_by_range_band": [
+        1,
+        1,
+        0,
+        0,
+        -1
+      ],
+      "range_bands_source": "DSA 4.1 Basisregelwerk p.163 (Schuss- und Wurfwaffen)"
     },
     {
       "id": "longbow",
@@ -1596,8 +1892,27 @@
       "special": "Reload: 4 actions. Requires min STR 15 to use effectively; below that all targets count one class further and -2 DP. Cannot be used from horseback.",
       "notes": "Body-length bow of ash or yew. Primarily in northern Middenrealm, Nostria, and Andergast.",
       "related_talents": [],
-      "typical_for": ["middenrealm", "nostria", "andergast"],
-      "source": "BRW p. 163 / AA p. 101"
+      "typical_for": [
+        "middenrealm",
+        "nostria",
+        "andergast"
+      ],
+      "source": "BRW p. 163 / AA p. 101",
+      "range_bands_schritt_upper": [
+        10,
+        25,
+        50,
+        100,
+        200
+      ],
+      "tp_plus_by_range_band": [
+        3,
+        2,
+        1,
+        0,
+        -1
+      ],
+      "range_bands_source": "DSA 4.1 Basisregelwerk p.163 (Schuss- und Wurfwaffen)"
     },
     {
       "id": "composite_bow",
@@ -1618,7 +1933,22 @@
       "notes": "Made from multiple materials (horn, sinew, wood) for increased draw strength.",
       "related_talents": [],
       "typical_for": [],
-      "source": "BRW p. 163 / AA p. 97"
+      "source": "BRW p. 163 / AA p. 97",
+      "range_bands_schritt_upper": [
+        10,
+        20,
+        35,
+        50,
+        80
+      ],
+      "tp_plus_by_range_band": [
+        2,
+        1,
+        1,
+        0,
+        0
+      ],
+      "range_bands_source": "DSA 4.1 Basisregelwerk p.163 (Schuss- und Wurfwaffen)"
     },
     {
       "id": "war_bow",
@@ -1639,7 +1969,22 @@
       "notes": "Extremely strong and still quite short bow.",
       "related_talents": [],
       "typical_for": [],
-      "source": "BRW p. 163 / AA p. 101"
+      "source": "BRW p. 163 / AA p. 101",
+      "range_bands_schritt_upper": [
+        10,
+        20,
+        40,
+        80,
+        150
+      ],
+      "tp_plus_by_range_band": [
+        3,
+        2,
+        1,
+        0,
+        0
+      ],
+      "range_bands_source": "DSA 4.1 Basisregelwerk p.163 (Schuss- und Wurfwaffen)"
     },
     {
       "id": "elven_bow",
@@ -1659,8 +2004,25 @@
       "special": "Reload: 3 actions. Cannot be used from horseback. +1 bonus for Precise Shot. Non-elves: -2 RC penalty. Not purchasable - only found in elven hands.",
       "notes": "Slightly shorter than longbow. Demonstrates elven craftsmanship. Typically not for sale.",
       "related_talents": [],
-      "typical_for": ["elves"],
-      "source": "BRW p. 163 / AA p. 98"
+      "typical_for": [
+        "elves"
+      ],
+      "source": "BRW p. 163 / AA p. 98",
+      "range_bands_schritt_upper": [
+        10,
+        25,
+        50,
+        100,
+        200
+      ],
+      "tp_plus_by_range_band": [
+        3,
+        2,
+        1,
+        1,
+        0
+      ],
+      "range_bands_source": "DSA 4.1 Basisregelwerk p.163 (Schuss- und Wurfwaffen)"
     },
     {
       "id": "light_crossbow",
@@ -1681,7 +2043,22 @@
       "notes": "Popular as decorated hunting weapon and basic militia weapon.",
       "related_talents": [],
       "typical_for": [],
-      "source": "BRW p. 163 / AA p. 100"
+      "source": "BRW p. 163 / AA p. 100",
+      "range_bands_schritt_upper": [
+        10,
+        15,
+        25,
+        40,
+        60
+      ],
+      "tp_plus_by_range_band": [
+        1,
+        1,
+        0,
+        0,
+        -1
+      ],
+      "range_bands_source": "DSA 4.1 Basisregelwerk p.163 (Schuss- und Wurfwaffen)"
     },
     {
       "id": "heavy_crossbow",
@@ -1702,7 +2079,22 @@
       "notes": "Heavy crossbow with extreme long range and precision.",
       "related_talents": [],
       "typical_for": [],
-      "source": "BRW p. 163 / AA p. 100"
+      "source": "BRW p. 163 / AA p. 100",
+      "range_bands_schritt_upper": [
+        10,
+        30,
+        60,
+        100,
+        180
+      ],
+      "tp_plus_by_range_band": [
+        4,
+        2,
+        0,
+        -1,
+        -3
+      ],
+      "range_bands_source": "DSA 4.1 Basisregelwerk p.163 (Schuss- und Wurfwaffen)"
     },
     {
       "id": "iron_forest_crossbow",
@@ -1723,7 +2115,22 @@
       "notes": "Magazine crossbow for rapid fire.",
       "related_talents": [],
       "typical_for": [],
-      "source": "BRW p. 163 / AA p. 99"
+      "source": "BRW p. 163 / AA p. 99",
+      "range_bands_schritt_upper": [
+        5,
+        10,
+        15,
+        20,
+        40
+      ],
+      "tp_plus_by_range_band": [
+        1,
+        0,
+        0,
+        0,
+        -1
+      ],
+      "range_bands_source": "DSA 4.1 Basisregelwerk p.163 (Schuss- und Wurfwaffen)"
     },
     {
       "id": "balestrina",
@@ -1743,8 +2150,26 @@
       "special": "Reload: 2 actions. Fires bullets instead of bolts. Beloved by nobility for bird hunting. Botch roll of 20 jams weapon (2 actions to clear).",
       "notes": "Small crossbow shooting lead or stone balls.",
       "related_talents": [],
-      "typical_for": ["nobles", "hunters"],
-      "source": "BRW p. 163 / AA p. 95 / AK p. 41"
+      "typical_for": [
+        "nobles",
+        "hunters"
+      ],
+      "source": "BRW p. 163 / AA p. 95 / AK p. 41",
+      "range_bands_schritt_upper": [
+        2,
+        4,
+        8,
+        15,
+        25
+      ],
+      "tp_plus_by_range_band": [
+        2,
+        1,
+        0,
+        0,
+        -1
+      ],
+      "range_bands_source": "Arsenal Kompendium pp.6-7"
     },
     {
       "id": "hand_crossbow",
@@ -1784,9 +2209,26 @@
       "cost": 35,
       "special": "Target must be at least 5 steps away. Can also be used as improvised melee weapon. Cannot parry chain weapons or two-handed blunt weapons in melee.",
       "notes": "Small throwing axes usually made entirely of metal, sharpened on all sides except the handle.",
-      "related_talents": ["axes_maces"],
+      "related_talents": [
+        "axes_maces"
+      ],
       "typical_for": [],
-      "source": "BRW p. 163 / AA p. 102"
+      "source": "BRW p. 163 / AA p. 102",
+      "range_bands_schritt_upper": [
+        0,
+        5,
+        10,
+        15,
+        25
+      ],
+      "tp_plus_by_range_band": [
+        null,
+        1,
+        1,
+        0,
+        -1
+      ],
+      "range_bands_source": "DSA 4.1 Basisregelwerk p.163 (Schuss- und Wurfwaffen)"
     },
     {
       "id": "cut_tooth",
@@ -1806,8 +2248,25 @@
       "special": "Target must be at least 5 steps away. Thorwaler rune-ornamented throwing axe with complicated flight path. AT check is +1 harder. Powerful Throw: subtract 1 from damage threshold.",
       "notes": "AT probe erschwert um 1.",
       "related_talents": [],
-      "typical_for": ["thorwal"],
-      "source": "BRW p. 163 / AA p. 97"
+      "typical_for": [
+        "thorwal"
+      ],
+      "source": "BRW p. 163 / AA p. 97",
+      "range_bands_schritt_upper": [
+        0,
+        5,
+        10,
+        15,
+        30
+      ],
+      "tp_plus_by_range_band": [
+        null,
+        1,
+        1,
+        0,
+        -1
+      ],
+      "range_bands_source": "DSA 4.1 Basisregelwerk p.163 (Schuss- und Wurfwaffen)"
     },
     {
       "id": "throwing_club",
@@ -1828,7 +2287,22 @@
       "notes": null,
       "related_talents": [],
       "typical_for": [],
-      "source": "AK p. 77 / AA p. 102"
+      "source": "AK p. 77 / AA p. 102",
+      "range_bands_schritt_upper": [
+        0,
+        5,
+        15,
+        25,
+        40
+      ],
+      "tp_plus_by_range_band": [
+        null,
+        1,
+        1,
+        1,
+        0
+      ],
+      "range_bands_source": "Arsenal Kompendium pp.6-7"
     },
     {
       "id": "throwing_disc",
@@ -1849,7 +2323,22 @@
       "notes": "Sharpened or serrated metal discs.",
       "related_talents": [],
       "typical_for": [],
-      "source": "BRW p. 163 / AA p. 103"
+      "source": "BRW p. 163 / AA p. 103",
+      "range_bands_schritt_upper": [
+        2,
+        4,
+        8,
+        12,
+        20
+      ],
+      "tp_plus_by_range_band": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "range_bands_source": "DSA 4.1 Basisregelwerk p.163 (Schuss- und Wurfwaffen)"
     },
     {
       "id": "discus",
@@ -1870,7 +2359,22 @@
       "notes": "Also combat discus (Kampfdiskus) variant at 60 ST with better range and DP.",
       "related_talents": [],
       "typical_for": [],
-      "source": "AK p. 81 / AA p. 98"
+      "source": "AK p. 81 / AA p. 98",
+      "range_bands_schritt_upper": [
+        5,
+        10,
+        20,
+        30,
+        60
+      ],
+      "tp_plus_by_range_band": [
+        1,
+        0,
+        0,
+        0,
+        -1
+      ],
+      "range_bands_source": "Arsenal Kompendium pp.6-7"
     },
     {
       "id": "blowpipe",
@@ -1891,7 +2395,22 @@
       "notes": "Very low direct damage but excellent for delivering poisons.",
       "related_talents": [],
       "typical_for": [],
-      "source": "AK p. 83 / AA p. 95"
+      "source": "AK p. 83 / AA p. 95",
+      "range_bands_schritt_upper": [
+        2,
+        5,
+        10,
+        20,
+        40
+      ],
+      "tp_plus_by_range_band": [
+        0,
+        0,
+        0,
+        0,
+        -2
+      ],
+      "range_bands_source": "Arsenal Kompendium pp.6-7"
     },
     {
       "id": "buckler",
@@ -1985,7 +2504,11 @@
       "special": "Small shield. +1 PA bonus during Defensive Posture. Shield Smash inflicts only 1 DP.",
       "notes": "Round wooden frame covered with multiple layers of tough leather. Common among riding peoples (Orks, Novadis).",
       "related_talents": [],
-      "typical_for": ["novadis", "orcs", "steppe_peoples"],
+      "typical_for": [
+        "novadis",
+        "orcs",
+        "steppe_peoples"
+      ],
       "source": "BRW p. 165 / AA p. 74"
     },
     {
@@ -2004,7 +2527,9 @@
       "special": "Large shield. Larger, usually oval or teardrop-shaped, especially designed for cavalry use.",
       "notes": null,
       "related_talents": [],
-      "typical_for": ["cavalry"],
+      "typical_for": [
+        "cavalry"
+      ],
       "source": "BRW p. 165"
     },
     {
@@ -2023,7 +2548,9 @@
       "special": "Medium shield. When combined with main weapon for Charge: main weapon +1 DP. When used while mounted: only simple shield bonus.",
       "notes": "Large round wooden shield with iron edges and usually iron boss in center. Painted with ornaments in Thorwaler fashion.",
       "related_talents": [],
-      "typical_for": ["thorwal"],
+      "typical_for": [
+        "thorwal"
+      ],
       "source": "BRW p. 165 / AA p. 89"
     },
     {
@@ -2042,7 +2569,10 @@
       "special": "Large shield. -1 AT penalty to primary weapon additionally. Opponent without great shield always strikes first when same INI. Bearer -1 MOV. When parrying arrows/bolts: double PA bonus +1.",
       "notes": "Long teardrop-shaped cavalry shield of cross-glued layers of wood and leather.",
       "related_talents": [],
-      "typical_for": ["cavalry", "knights"],
+      "typical_for": [
+        "cavalry",
+        "knights"
+      ],
       "source": "BRW p. 165 / AA p. 68"
     }
   ]
