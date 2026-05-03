@@ -1,0 +1,375 @@
+{
+  "meta": {
+    "schema_version": "1.0",
+    "last_updated": "2026-05-02",
+    "description": "All combat actions and maneuvers for TDE4/DSA4.1. Maneuvers are grouped into attack actions and defense/parry actions. Basic maneuvers require no special ability; advanced maneuvers require the matching SA.",
+    "source_books": [
+      "DSA 4.1 Basisregelwerk p. 99–108",
+      "wiki: https://tde4e.fandom.com/wiki/Combat_Actions_and_Maneuvers"
+    ]
+  },
+  "the_call_rules": {
+    "description": "The Call is a self-imposed penalty on an Attack or Parry. The total penalty may never exceed the hero's Talent Prowess for the weapon used, nor higher than the relevant AT or PA value. If a maneuver with a Call fails, all of the attacker's tests (including the next AT or PA action and any Free Actions up to that point) are penalized by the full Call amount. The penalty ends when the next AT or PA action is used. A fighter with the Special Ability Blade Dancer suffers only half the failed Call as a penalty.",
+    "source": "wiki: https://tde4e.fandom.com/wiki/Combat_Actions_and_Maneuvers"
+  },
+  "attack_actions": [
+    {
+      "id": "standard_attack",
+      "name": "Standard Attack",
+      "german_name": "Normaler Angriff",
+      "type": "attack_action",
+      "base_modifier": "none",
+      "requires_sa": false,
+      "sa_requirement": null,
+      "compatible_talents": ["all_melee", "all_ranged"],
+      "description": "A normal attack against a single opponent. Success is determined by a roll against the attacker's Attack Value on a D20.",
+      "source": "BRW p. 99"
+    },
+    {
+      "id": "blade_storm",
+      "name": "Blade Storm",
+      "german_name": "Klingensturm",
+      "type": "attack_action",
+      "base_modifier": "AV/2 + 2 per attack",
+      "requires_sa": true,
+      "sa_requirement": "blade_storm",
+      "compatible_talents": ["bastard_swords", "daggers", "fencing_weapons", "infantry_weapons", "sabers", "swords", "spears", "staves"],
+      "max_ec": 4,
+      "shield_restriction": "no shield (except parrying weapons that count as shields)",
+      "description": "Attack two opponents in a single action. The fighter uses half their Attack Value plus 2 for each of the two attacks (e.g., AV 15 attacks twice with AV 10). Cannot be combined with another maneuver. Cannot split a converted Parry Action or an additional attack from off-hand weapon. Attacked opponents must already be within ideal distance class. With Combat Awareness, the improved AV can be freely distributed between two opponents (minimum 6 per attack). With Blade Dancer, attacks can be split among up to three opponents.",
+      "source": "wiki: https://tde4e.fandom.com/wiki/Combat_Actions_and_Maneuvers"
+    },
+    {
+      "id": "blunt_blow",
+      "name": "Blunt Blow",
+      "german_name": "Stumpfer Schlag",
+      "type": "attack_action",
+      "base_modifier": "AT -2 / -4 / -8 depending on weapon",
+      "requires_sa": false,
+      "sa_requirement": null,
+      "compatible_talents": ["bastard_swords", "axes_maces", "brawling", "sabers", "swords", "staves"],
+      "at_penalty_by_weapon": {
+        "combat_staves_and_clubs": -2,
+        "axes_maces_with_flat_side": -4,
+        "all_other_eligible_weapons": -8
+      },
+      "damage_type": "endurance_damage",
+      "sa_halves_penalty": "stun_blow",
+      "description": "Attack with the blunt side of a weapon to deal Endurance Damage Points instead of regular Hit Points. Useful for capturing opponents alive. ST-based damage modifiers still apply. With Stun Blow SA, the AT penalties are halved. Brawling with a weapon pommel inflicts real HP normally unless the fighter masters Stun Blow.",
+      "source": "wiki: https://tde4e.fandom.com/wiki/Combat_Actions_and_Maneuvers"
+    },
+    {
+      "id": "called_attack",
+      "name": "Called Attack",
+      "german_name": "Wuchtschlag",
+      "type": "attack_action",
+      "base_modifier": "+Call (self-chosen)",
+      "requires_sa": false,
+      "sa_requirement": null,
+      "sa_improves": "called_attack",
+      "compatible_talents": ["bastard_swords", "axes_maces", "infantry_weapons", "chain_weapons", "brawling", "wrestling", "sabers", "swords", "staves", "two_handed_blunt", "two_handed_swords"],
+      "damage_bonus_without_sa": "half of Call (rounded up)",
+      "damage_bonus_with_sa": "full Call",
+      "prerequisite_for": ["cleave_attack", "stun_blow", "hammer_strike", "knockdown", "shield_splitter", "charge"],
+      "description": "The attacker declares a Call (self-chosen AT penalty) before rolling. If the attack succeeds and the Parry fails, half the Call (rounded up) is added to Damage Points. With the Called Attack SA, the full Call is added to Damage Points. If the attack fails, the attacker suffers the failed Call penalty on all subsequent tests until the next AT or PA action.",
+      "source": "wiki: https://tde4e.fandom.com/wiki/Combat_Actions_and_Maneuvers"
+    },
+    {
+      "id": "charge",
+      "name": "Charge",
+      "german_name": "Sturmangriff",
+      "type": "attack_action",
+      "base_modifier": "AT +4 (difficulty increase); consumes Parry Action",
+      "requires_sa": true,
+      "sa_requirement": "charge",
+      "compatible_talents": ["bastard_swords", "axes_maces", "infantry_weapons", "chain_weapons", "sabers", "swords", "spears", "staves", "two_handed_blunt", "two_handed_swords"],
+      "requirements": [
+        {"type": "min_base_speed", "value": 4},
+        {"type": "min_run_up", "value": 4, "unit": "paces"}
+      ],
+      "damage_bonus_on_success": "half of Base Speed + 4 + optional Call",
+      "parry_action_consumed": true,
+      "counter_vulnerability": true,
+      "description": "Combines Move and Attack into one action. Gives up the Parry Action. Must achieve a 4+ pace run-up. AT is penalized by 4. Additional Call may be added for more damage. If the attack succeeds and the defender cannot parry/dodge, damage increases by half Base Speed + 4 + declared Call. Ends at attacker's desired distance class. If the defender has a longer-reach weapon and the Counter SA, they may attempt a Counter (Gegenhalten). Failure grants the defender a Free Attack and the attacker loses their Parry Action.",
+      "source": "wiki: https://tde4e.fandom.com/wiki/Combat_Actions_and_Maneuvers"
+    },
+    {
+      "id": "cleave_attack",
+      "name": "Cleave Attack",
+      "german_name": "Fegeangriff",
+      "type": "attack_action",
+      "base_modifier": "AT +4 per additional opponent; consumes Parry Action",
+      "requires_sa": true,
+      "sa_requirement": "cleave_attack",
+      "compatible_talents": ["bastard_swords", "axes_maces", "infantry_weapons", "chain_weapons", "sabers", "swords", "staves", "two_handed_blunt", "two_handed_swords"],
+      "max_targets": 3,
+      "parry_action_consumed": true,
+      "knockdown_automatic": true,
+      "description": "A sweeping attack against up to three opponents in sequence. The fighter must forfeit their Parry Action. AT is penalized by 4 per opponent (e.g., attacking two opponents: AT +8). Additional Call may be added for damage increase. If the attacker also masters Feint, the Call may instead penalize all opponents' Parries/Dodges, or split between damage and Parry penalty. Every target who fails their Parry is driven back one distance class, loses 1d6 Initiative, and the attack is automatically a Knockdown. If an opponent cannot step back, they suffer 1d6 additional damage.",
+      "source": "wiki: https://tde4e.fandom.com/wiki/Combat_Actions_and_Maneuvers"
+    },
+    {
+      "id": "death_blow",
+      "name": "Death Blow",
+      "german_name": "Todesstoß",
+      "type": "attack_action",
+      "base_modifier": "AT +8 + half opponent AR + optional Call; consumes Parry Action",
+      "requires_sa": true,
+      "sa_requirement": "death_blow",
+      "compatible_talents": ["daggers", "fencing_weapons", "swords_with_half_sword_sa", "spears"],
+      "restrictions": ["not against very large creatures"],
+      "parry_action_consumed": true,
+      "effects_on_success": [
+        "Armor is ignored (not natural armor)",
+        "Defender's Wound Threshold reduced by 2",
+        "Two additional wounds automatically inflicted"
+      ],
+      "failure_consequence": "Defender gets a Free Attack; attacker loses Parry Action for this turn; failed Call penalty applies",
+      "description": "A devastating thrust aimed at a vital spot. Must be declared no later than the attacker's Initiative Phase, forfeiting the Parry Action (not possible if Parry was already used). AT penalized by +8, plus half the opponent's Armor Rating (AR), plus optional Call. A shield adds its Parry modifier to the AT penalty. With the Called Attack SA, additional Call points may increase Damage Points. On success and failed Parry: armor ignored, Wound Threshold reduced by 2, and two extra wounds inflicted automatically. Not possible against very large creatures.",
+      "source": "wiki: https://tde4e.fandom.com/wiki/Combat_Actions_and_Maneuvers"
+    },
+    {
+      "id": "double_attack",
+      "name": "Double Attack",
+      "german_name": "Doppelangriff",
+      "type": "attack_action",
+      "base_modifier": "AT +2 per attack; +4 for non-identical weapons; -3 for off-hand without Ambidextrous Combat II",
+      "requires_sa": true,
+      "sa_requirement": "double_attack",
+      "prerequisite_sa": "ambidextrous_combat_i",
+      "compatible_talents": ["all_one_handed_except_chain_weapons_and_spears"],
+      "restrictions": [
+        "both weapons must be usable in the same distance class without penalty",
+        "cannot combine with Supplemental Action from Ambidextrous Combat II or Parrying Weapons II or Death from the Left in same turn"
+      ],
+      "description": "Simultaneously strike a single opponent with both weapons. Both ATs penalized by 2; off-hand gets additional -4 if weapons are not identical (the -3 off-hand penalty still applies unless Ambidextrous Combat II is known). Must be against a single opponent. Attacks roll individually. Neither partial attack can be a maneuver. Can conclude a Lunge and benefit from Master Parry bonus. If one partial attack is a Fumble, the other also automatically fails. Defender must use two Parry actions or a Targeted Dodge to avoid both.",
+      "source": "wiki: https://tde4e.fandom.com/wiki/Combat_Actions_and_Maneuvers"
+    },
+    {
+      "id": "feint",
+      "name": "Feint",
+      "german_name": "Finte",
+      "type": "attack_action",
+      "base_modifier": "+Call (self-chosen); AT penalized by Call",
+      "requires_sa": false,
+      "sa_requirement": null,
+      "sa_improves": "feint",
+      "compatible_talents": ["all_armed_melee_except_chain_weapons_and_two_handed_blunt"],
+      "max_ec": 4,
+      "shield_penalty": "additional -2 (except small shields)",
+      "parry_penalty_without_sa": "half of Call",
+      "parry_penalty_with_sa": "full Call",
+      "prerequisite_for": ["targeted_thrust", "stun_blow_advanced", "death_blow", "blade_storm", "knockdown_advanced", "trip"],
+      "description": "A deceptive strike — feign an attack at one body zone, then redirect. Declare a Call before rolling (same constraints as Called Attack). EC must not exceed 4 (Armor Use may reduce). Shield adds -2 penalty. If the maneuver succeeds, the defender's Parry (or Dodge) is penalized by half the Call (or full Call with the Feint SA). If the attack itself fails, the attacker suffers the failed Call penalty. Can be combined with Called Attack, and can use bonus points from a Master Parry or Bind maneuver.",
+      "source": "wiki: https://tde4e.fandom.com/wiki/Combat_Actions_and_Maneuvers"
+    },
+    {
+      "id": "hammer_strike",
+      "name": "Hammer Strike",
+      "german_name": "Hammerschlag",
+      "type": "attack_action",
+      "base_modifier": "AT +8 + optional Call; consumes ALL actions for the round (not Free Actions)",
+      "requires_sa": true,
+      "sa_requirement": "hammer_strike",
+      "compatible_talents": ["bastard_swords_except_nightwind", "axes_maces", "infantry_weapons", "chain_weapons", "two_handed_blunt", "two_handed_swords"],
+      "restrictions": [
+        "not against very large opponents",
+        "not against opponents carrying a large or very large shield"
+      ],
+      "damage_multiplier_on_success": 3,
+      "failure_consequence": "Defender gets a Free Attack the attacker cannot block",
+      "description": "A devastating full-commitment blow. Forfeit all other actions in the round (not Free Actions). If forced to parry before Initiative Phase, must choose between the Parry and the Hammer Strike. AT penalized by +8, plus optional Call for additional damage increase. Can be combined with Feint to penalize the Parry. On success with failed Parry: rolled Damage Points AND any declared damage Call are tripled. If a Parry succeeds, triggers a Break Test when the Call is +2 or more.",
+      "source": "wiki: https://tde4e.fandom.com/wiki/Combat_Actions_and_Maneuvers"
+    },
+    {
+      "id": "knockdown",
+      "name": "Knockdown",
+      "german_name": "Niederwerfen",
+      "type": "attack_action",
+      "base_modifier": "AT +4 + optional Call",
+      "requires_sa": true,
+      "sa_requirement": "knockdown",
+      "compatible_talents": ["bastard_swords", "axes_maces", "infantry_weapons", "chain_weapons", "sabers_limited", "swords", "staves", "two_handed_blunt", "two_handed_swords"],
+      "sabers_restriction": "only Arbach, Haumesser, Khunchomer, and Sklaventod",
+      "call_effect": "penalizes defender's ST test (not damage)",
+      "defender_st_test_modifiers": {
+        "steady_stand_sa": -1,
+        "balance_advantage": -2,
+        "outstanding_balance_advantage": -4
+      },
+      "on_st_test_success": "defender only loses 1d6 Initiative",
+      "on_st_test_failure": "defender falls prone, loses 2d6 Initiative",
+      "extra_damage_condition": "if Damage Points exceed defender's ST, excess applies as additional penalty to ST test",
+      "parry_may_trigger_break_test": true,
+      "description": "A powerful blow aimed to stagger or topple the opponent. AT penalized by +4, plus optional Call (which penalizes defender's ST test, not damage). On success with failed Parry: defender suffers normal damage AND must pass a Strength test or fall prone. Prone defenders suffer all associated disadvantages. Cannot be combined with other attack actions except Charge. A successful Parry may trigger a Break Test.",
+      "source": "wiki: https://tde4e.fandom.com/wiki/Combat_Actions_and_Maneuvers"
+    },
+    {
+      "id": "shield_splitter",
+      "name": "Shield Splitter",
+      "german_name": "Schildspalter",
+      "type": "attack_action",
+      "base_modifier": "AT +8 - shield's PA modifier",
+      "requires_sa": true,
+      "sa_requirement": "shield_splitter",
+      "compatible_talents": ["axes_maces", "chain_weapons", "two_handed_blunt", "two_handed_swords"],
+      "call_effect": "penalizes defender's Parry (if attacker has Feint SA) or reduces Break Test",
+      "break_test_modifier": "-4 - optional Call",
+      "description": "An attack aimed at the opponent's shield. AT penalized by 8 but eased by the shield's PA bonus (a large shield is easier to hit). Optional Call can penalize the Parry (with Feint SA) or reduce the Break Test. On success with failed Parry: immediate Break Test for the shield at -4 - optional Call. If Break Test fails, the shield is destroyed (no damage to bearer). If successful, the shield gains a Break Point. A roll of 12 forces an immediate Break Test for the attacker's weapon.",
+      "source": "wiki: https://tde4e.fandom.com/wiki/Combat_Actions_and_Maneuvers"
+    },
+    {
+      "id": "stun_blow",
+      "name": "Stun Blow",
+      "german_name": "Betäubungsschlag",
+      "type": "attack_action",
+      "base_modifier": "AT +2 / +4 / +8 depending on weapon + optional Call",
+      "requires_sa": true,
+      "sa_requirement": "stun_blow",
+      "compatible_talents": ["bastard_swords", "axes_maces", "brawling", "sabers", "swords", "staves"],
+      "at_penalty_by_weapon": {
+        "combat_staves_and_blunt_maces": 2,
+        "axes_maces_blunt_side": 4,
+        "all_other_eligible": 8
+      },
+      "damage_type": "endurance_damage",
+      "unconsciousness_trigger": "Endurance loss > Wound Threshold: CN test; Endurance loss > CN: automatic unconscious for 1d6 turns",
+      "description": "Combination of Blunt Blow and Called Attack. Requires Stun Blow SA. Deals Endurance Damage Points. Can be combined with Called Attack or Feint, and can use Master Parry or Bind bonus points. With Brawling and Stun Blow SA, can attempt to incapacitate with weapon pommel (AT -4). If Endurance loss exceeds Wound Threshold, defender must pass a CN test or fall unconscious for 1d6 turns. If Endurance loss exceeds CN, unconsciousness is automatic. Only works against creatures that can be stunned (not undead, demons, most slimes, etc.).",
+      "source": "wiki: https://tde4e.fandom.com/wiki/Combat_Actions_and_Maneuvers"
+    },
+    {
+      "id": "targeted_thrust",
+      "name": "Targeted Thrust",
+      "german_name": "Gezielter Stich",
+      "type": "attack_action",
+      "base_modifier": "AT +4 + half opponent AR + optional Call",
+      "requires_sa": true,
+      "sa_requirement": "targeted_thrust",
+      "compatible_talents": ["daggers", "fencing_weapons", "swords_with_half_sword_sa", "spears"],
+      "restrictions": ["only against creatures with discernible vulnerable points (not most demons, slime creatures, most undead)"],
+      "effects_on_success": [
+        "Armor ignored (even natural armor)",
+        "Wound Threshold reduced by 2",
+        "One additional wound automatically inflicted"
+      ],
+      "call_effect": "penalizes defender's Parry (Feint variant)",
+      "shield_penalty": "shield Parry modifier added to AT penalty",
+      "failure_consequence": "equivalent to failed Call of 4 + optional Call",
+      "description": "A precisely targeted thrust at a vulnerable spot. AT penalized by +4 + half opponent's AR. Shield adds its PA modifier to the AT penalty. Optional Call further penalizes the Parry. On success with failed Parry: armor is fully ignored, Wound Threshold reduced by 2, and one extra wound inflicted automatically. Requires Targeted Thrust SA.",
+      "source": "wiki: https://tde4e.fandom.com/wiki/Combat_Actions_and_Maneuvers"
+    }
+  ],
+  "defense_actions": [
+    {
+      "id": "standard_parry",
+      "name": "Parry",
+      "german_name": "Parade",
+      "type": "defense_action",
+      "description": "A defensive action using the hero's Parry Value (PA). The defender rolls a D20 against their PA value. Success means the attack is deflected. The PA value for a combat talent is Base PA + allocated PA points from the talent's TP split.",
+      "source": "BRW p. 99"
+    },
+    {
+      "id": "dodge",
+      "name": "Dodge",
+      "german_name": "Ausweichen",
+      "type": "defense_action",
+      "description": "An alternative defensive action. When a hero uses Dodge instead of Parry, they try to avoid the blow entirely. Specific rules and SA requirements vary (see Special Abilities: Dodge I / II). A Targeted Dodge allows evading multiple simultaneous attacks (e.g., from a Double Attack).",
+      "source": "BRW p. 99"
+    },
+    {
+      "id": "master_parry",
+      "name": "Master Parry",
+      "german_name": "Meisterparry",
+      "type": "defense_action",
+      "description": "An exceptionally successful Parry (typically rolling considerably under the PA value). Grants bonus points that can be added to the hero's next AT or used to power certain maneuvers like Feint or Bind. Exact thresholds for a Master Parry depend on the rulebook table.",
+      "source": "BRW p. 100"
+    },
+    {
+      "id": "bind",
+      "name": "Bind",
+      "german_name": "Binden",
+      "type": "defense_action",
+      "description": "A binding maneuver after a Parry that locks weapons together, granting bonus points usable for subsequent maneuvers (Feint, etc.). Details and prerequisites referenced in BRW combat chapter.",
+      "source": "BRW p. 101"
+    },
+    {
+      "id": "counter",
+      "name": "Counter",
+      "german_name": "Gegenhalten",
+      "type": "defense_action",
+      "description": "When an opponent executes a Charge and the defender wields a weapon with a greater reach/distance class and possesses the appropriate SA, they may attempt to make the charging opponent run onto their weapon. Requires the Counter special ability.",
+      "source": "wiki: https://tde4e.fandom.com/wiki/Combat_Actions_and_Maneuvers"
+    },
+    {
+      "id": "foresight",
+      "name": "Foresight",
+      "german_name": "Vorahnung",
+      "type": "defense_action",
+      "description": "Allows the hero to convert a Parry into two separate Parry actions in advance, enabling defense against a Double Attack. Requires the Foresight SA.",
+      "source": "BRW p. 101"
+    }
+  ],
+  "free_actions": [
+    {
+      "id": "orientation",
+      "name": "Orientation",
+      "german_name": "Ausrichten",
+      "type": "free_action_extended",
+      "time_required": "2 actions",
+      "description": "If a hero can concentrate and observe combat undisturbed for two actions and succeeds at an IN test, they regain INI lost due to combat and set their INI as if they had rolled a 6 at the start. Not possible if perception or movement is restricted (blinded, prone, etc.). Every 2 points in the Warcraft talent ease the IN test by 1. With Combat Awareness SA, only requires 1 action and no IN test. INI lost to wounds or active spells cannot be regained this way.",
+      "source": "wiki: https://tde4e.fandom.com/wiki/Combat"
+    },
+    {
+      "id": "draw_weapon",
+      "name": "Draw Weapon",
+      "german_name": "Waffe ziehen",
+      "type": "free_action",
+      "description": "Drawing a melee weapon normally requires one action. Quick Draw SA reduces this.",
+      "source": "BRW p. 99"
+    }
+  ],
+  "special_situations": [
+    {
+      "id": "fighting_multiple_opponents",
+      "name": "Fighting Multiple Opponents",
+      "german_name": "Kampf gegen mehrere Gegner",
+      "description": "When a hero is attacked by multiple opponents, the rules for multi-opponent combat apply. Specific AT/PA penalties and the restriction that focus cannot be placed on only one opponent are detailed in the combat chapter. Blade Storm requires these rules to be applied.",
+      "source": "BRW p. 106"
+    },
+    {
+      "id": "fumble",
+      "name": "Fumble",
+      "german_name": "Patzer",
+      "description": "A catastrophically bad roll (typically rolling the maximum on a D20 for AT or PA). Results in a severe combat disadvantage determined by the fumble table. In Double Attack, a fumble on one partial attack causes the other to automatically fail. A fumble result typically causes an INI penalty.",
+      "source": "BRW p. 100"
+    },
+    {
+      "id": "prone_fighter",
+      "name": "Prone Fighter",
+      "german_name": "Liegender Kämpfer",
+      "description": "A fighter who has been knocked down or fallen prone suffers significant disadvantages to all AT, PA, and movement actions as defined in the rules. Knockdown attack results land the opponent in an adjacent square away from the attacker (grid play).",
+      "source": "BRW p. 108"
+    },
+    {
+      "id": "weapons_in_both_hands",
+      "name": "Off-hand Combat",
+      "german_name": "Linkshändiger Kampf",
+      "description": "Fighting with a weapon in the off-hand incurs a -3 penalty to AT by default. Ambidextrous Combat I reduces this to -3/-3 and unlocks additional maneuvers. Ambidextrous Combat II removes the off-hand penalty entirely and grants an additional AT or PA with the secondary weapon.",
+      "source": "BRW p. 104"
+    },
+    {
+      "id": "mounted_combat",
+      "name": "Mounted Combat",
+      "german_name": "Kampf zu Pferd",
+      "description": "When fighting from horseback, the EEC of armor is halved: EEC = (EC/2) - weapon's EEC modifier. Lance riding (Jousting) has no EC penalty. Special rules apply for ranged combat from horseback (Mounted Marksman SA halves penalties).",
+      "source": "BRW p. 107"
+    },
+    {
+      "id": "break_test",
+      "name": "Break Test",
+      "german_name": "Bruchtest",
+      "description": "Certain powerful maneuvers (Hammer Strike, Shield Splitter, Knockdown parry) may trigger a Break Test for weapons or shields. Roll 2d6 and subtract the required modifier; if the result fails the test, the item is broken and destroyed.",
+      "source": "BRW p. 108"
+    }
+  ]
+}

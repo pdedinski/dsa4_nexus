@@ -1,4 +1,6 @@
 [
+  { "category": "bestiary",   "fileKey": "beasts",                 "arrayKey": "beasts",                 "label": "Creatures" },
+  { "category": "bestiary",   "fileKey": "summoned_creatures",    "arrayKey": "summoned_creatures",    "label": "WdZ Summons" },
   { "category": "character",  "fileKey": "advantages",        "arrayKey": "advantages",        "label": "Advantages" },
   { "category": "character",  "fileKey": "disadvantages",     "arrayKey": "disadvantages",     "label": "Disadvantages" },
   { "category": "character",  "fileKey": "special_abilities", "arrayKey": "special_abilities", "label": "Special Abilities" },

@@ -19,6 +19,7 @@ import {
   Star,
   BookMarked,
   UserCircle,
+  PawPrint,
 } from "lucide-react";
 import clsx from "clsx";
 import { signOut } from "next-auth/react";
@@ -35,6 +36,7 @@ export interface SidebarUser {
 }
 
 const CATEGORY_ICONS: Record<string, React.ElementType> = {
+  bestiary: PawPrint,
   character: Star,
   combat: Sword,
   core: Shield,
@@ -45,6 +47,7 @@ const CATEGORY_ICONS: Record<string, React.ElementType> = {
 };
 
 const CATEGORIES = [
+  { key: "bestiary", label: "Bestiary", files: ["beasts", "summoned_creatures"] },
   { key: "character", label: "Character", files: ["advantages", "disadvantages", "special_abilities"] },
   { key: "combat", label: "Combat", files: ["combat_maneuvers"] },
   { key: "core", label: "Core", files: ["cultures", "professions", "races"] },
@@ -67,6 +70,8 @@ const CATEGORIES = [
 ];
 
 const FILE_LABELS: Record<string, string> = {
+  beasts: "Creatures",
+  summoned_creatures: "WdZ Summons",
   advantages: "Advantages",
   disadvantages: "Disadvantages",
   special_abilities: "Special Abilities",

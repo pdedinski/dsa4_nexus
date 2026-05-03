@@ -1,0 +1,4888 @@
+{
+  "meta": {
+    "schema_version": "2.0",
+    "last_updated": "2026-05-03",
+    "description": "English-facing JSON extraction of summoned / invoked creatures from Wege der Zauberei, regenerated from the 2011 TruePDF rather than OCR. Entries cover elementals, spirits, demons, Thargunitoth undead, Asfaloth transformations / daimonids, and example golems.",
+    "source_books": [
+      "Wege der Zauberei (2011 TruePDF)"
+    ],
+    "source_file": "Wege der Zauberei (2011,TruePDF).pdf",
+    "source_pages": "Invocation chapter: Die Kunst der Invokation, especially Werte beschworener Wesen p.199-231 and Eigenschaften beschworener Wesen p.231-236.",
+    "entry_count": 116,
+    "category_counts": {
+      "elemental": 18,
+      "spirit": 5,
+      "demon": 75,
+      "undead": 5,
+      "chimera_or_daimonid": 8,
+      "golem": 5
+    },
+    "field_terms": {
+      "VP": "Life/Vitality Points (LeP)",
+      "EP": "Endurance Points (AuP)",
+      "AR": "Armor Rating (RS)",
+      "RM": "Resistance to Magic (MR)",
+      "CO/CL/IN/CH/DE/AG/CN/ST": "Attribute translations from MU/KL/IN/CH/FF/GE/KO/KK according to your preferred English TDE terminology.",
+      "SP/SP*": "Spell Prowess / remaining spell points where the German text used ZfW/ZfP*.",
+      "DP": "Damage Points where the German text used TP/SP depending on context."
+    },
+    "extraction_notes": [
+      "Generated from the TruePDF text layer using the same English-facing structure as the previous beasts/spells JSON files.",
+      "German proper names are preserved in german_name; display names, descriptions, attacks, services and rules labels are English wherever possible.",
+      "Entries with complex two-column layout or unclear prose keep needs_data_review=true, but the structured numeric fields are preserved in English-facing notation."
+    ],
+    "common_rules": {
+      "elementals": {
+        "entity_type": "elemental",
+        "common_rules": [
+          "Counts as a magical being, but not as a demonic being.",
+          "Regenerates 1 VP and 1d6 ASP per hour while within its own element.",
+          "Elemental spirits are Small; djinn are Medium; elemental masters are Large.",
+          "Elemental attacks cause magical and elemental damage of the corresponding element.",
+          "All elementals may use Feint, Called Attack, Knockdown and Counterhold; djinn and elemental masters also may use Blade Storm and Blade Wall.",
+          "All elementals have Attention and suffer no reductions from wounds or low life energy; their endurance is effectively unlimited.",
+          "All elementals can pass through their own element; are immune to poison, disease, their own element, profane and blessed attacks, and all traits except Damage; and are vulnerable to their opposite element and demonic counter-element."
+        ],
+        "talents_by_rank": {
+          "elemental_spirit": "Elemental Craftsmanship 7",
+          "djinn": "Clairvoyance 7, Elemental Craftsmanship 12",
+          "elemental_master": "Clairvoyance 12, Elemental Craftsmanship 20"
+        },
+        "spellcasting_by_rank": {
+          "djinn": "All spells with the trait of its element up to complexity D at SP 12.",
+          "elemental_master": "All spells with the trait of its element without complexity restriction at SP 20."
+        }
+      },
+      "spirits": {
+        "entity_type": "spirit",
+        "common_rules": [
+          "Spirits are individual beings from or bound near the Fourth Sphere; many are dead souls unable to find peace.",
+          "Spirit summoning blocks include Summoning, Control and Banishment values; Banishment modifies GEISTERBANN.",
+          "Most spirits require magical means or help resolving their unfinished condition; mundane weapons are usually ineffective unless magical."
+        ]
+      },
+      "golems": {
+        "medium_humanoid_golem_base_values": [
+          {
+            "material": "wood",
+            "construction_material_modifier": "+0",
+            "INI": "8",
+            "AT": "8",
+            "PA": "4",
+            "damage": "2d6",
+            "VP": "60",
+            "EP": "200",
+            "AR": "3",
+            "speed": "6",
+            "RM": "10",
+            "special": "Vulnerability to fire",
+            "attributes": {
+              "CO": "10",
+              "CL_IN_CH": "1 each",
+              "DE": "6",
+              "AG": "10",
+              "CN": "15",
+              "ST": "12"
+            },
+            "starting_loyalty": "1d6+7"
+          },
+          {
+            "material": "clay",
+            "construction_material_modifier": "+7",
+            "INI": "7",
+            "AT": "6",
+            "PA": "2",
+            "damage": "2d6+2",
+            "VP": "90",
+            "EP": "300",
+            "AR": "3",
+            "speed": "5",
+            "RM": "15",
+            "special": "Immunity to fire and piercing",
+            "attributes": {
+              "CO": "12",
+              "CL_IN_CH": "1 each",
+              "DE": "4",
+              "AG": "10",
+              "CN": "18",
+              "ST": "14"
+            },
+            "starting_loyalty": "1d6+8"
+          },
+          {
+            "material": "stone",
+            "construction_material_modifier": "+3",
+            "INI": "6",
+            "AT": "6",
+            "PA": "2",
+            "damage": "2d6+3",
+            "VP": "90",
+            "EP": "300",
+            "AR": "5",
+            "speed": "3",
+            "RM": "15",
+            "special": "Immunity to fire and piercing",
+            "attributes": {
+              "CO": "14",
+              "CL_IN_CH": "1 each",
+              "DE": "2",
+              "AG": "8",
+              "CN": "20",
+              "ST": "18"
+            },
+            "starting_loyalty": "1d6+9"
+          },
+          {
+            "material": "metal",
+            "construction_material_modifier": "+9",
+            "INI": "4",
+            "AT": "5",
+            "PA": "1",
+            "damage": "2d6+8",
+            "VP": "120",
+            "EP": "400",
+            "AR": "7",
+            "speed": "1",
+            "RM": "20",
+            "special": "Immunity to fire and piercing",
+            "attributes": {
+              "CO": "16",
+              "CL_IN_CH": "1 each",
+              "DE": "1",
+              "AG": "6",
+              "CN": "24",
+              "ST": "20"
+            },
+            "starting_loyalty": "1d6+10"
+          },
+          {
+            "material": "sand",
+            "construction_material_modifier": "+11",
+            "INI": "14",
+            "AT": "14",
+            "PA": "4",
+            "damage": "2d6",
+            "VP": "50",
+            "EP": "200",
+            "AR": "4",
+            "speed": "3",
+            "RM": "15",
+            "special": "Immunity to fire and piercing; vulnerability to cutting",
+            "attributes": {
+              "CO": "12",
+              "CL_IN_CH": "2 each",
+              "DE": "8",
+              "AG": "12",
+              "CN": "14",
+              "ST": "12"
+            },
+            "starting_loyalty": "1d6+7"
+          }
+        ],
+        "size_adjustment": "For each size class away from Medium, VP changes by one third, damage by half (minimum 1d3), CN and ST by 2; smaller golems are quicker and more dexterous, while larger golems are slower and stronger. DE, AG and Speed change by 2/2/1 respectively per size class. Tiny/very small use distance class H, small/medium HN, large/very large NS.",
+        "automatic_services": "Every golem receives Movement, Following and Waiting, plus one additional service chosen by the designer. Each further possible service increases construction difficulty by 3.",
+        "control_difficulty": "A golem's control difficulty for the service Following equals its CL, with each point above CL 6 counting double. Aura Armor and Frenzy each increase it by 1."
+      }
+    },
+    "entries_flagged_review": 93
+  },
+  "summoned_creatures": [
+    {
+      "id": "elementargeist_des_feuers",
+      "name": "Fire Spirit",
+      "german_name": "Elementargeist des Feuers",
+      "category": "elemental",
+      "rank": "elemental_spirit",
+      "element": "fire",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "source_page": 201,
+      "description": "A fire spirit usually appears as a small, brightly burning flame. It may move up to about 100 paces from the place of summoning.",
+      "stats": {
+        "INI": "10+1d6",
+        "PA": "4",
+        "VP": "12",
+        "ASP": "24",
+        "AR": "0",
+        "speed": "6",
+        "RM": "5"
+      },
+      "attacks": [
+        {
+          "name": "Flame hand",
+          "distance_class": "H",
+          "AT": 12,
+          "damage": "1d6+2"
+        }
+      ],
+      "special_properties": [
+        "Attack with Fire (3 paces)"
+      ],
+      "common_rules_ref": "meta.common_rules.elementals",
+      "source_book": "Wege der Zauberei",
+      "needs_data_review": false,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "elemental"
+    },
+    {
+      "id": "dschinn_des_feuers",
+      "name": "Djinn of Fire",
+      "german_name": "Dschinn des Feuers",
+      "category": "elemental",
+      "rank": "djinn",
+      "element": "fire",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "source_page": 201,
+      "description": "A fire djinn usually takes a humanoid shape of pure fire; its lower body often remains a flame or plume. It is passionate and volatile.",
+      "stats": {
+        "INI": "14+1d6",
+        "PA": "8",
+        "VP": "30",
+        "ASP": "60",
+        "AR": "0",
+        "speed": "9",
+        "RM": "11"
+      },
+      "attacks": [
+        {
+          "name": "Flame hand",
+          "distance_class": "HN",
+          "AT": 18,
+          "damage": "2d6+4"
+        }
+      ],
+      "special_properties": [
+        "Attack with Fire (7 paces)"
+      ],
+      "common_rules_ref": "meta.common_rules.elementals",
+      "source_book": "Wege der Zauberei",
+      "needs_data_review": false,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "elemental"
+    },
+    {
+      "id": "elementarer_meister_des_feuers",
+      "name": "Elemental Master of Fire",
+      "german_name": "Elementarer Meister des Feuers",
+      "category": "elemental",
+      "rank": "elemental_master",
+      "element": "fire",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "source_page": 200,
+      "description": "A master of fire contains all forms of fire: volcanic glow, blazing air, sparks and flame. It is difficult to negotiate with because it tends to see its surroundings, including the summoner, as fuel.",
+      "stats": {
+        "INI": "18+1d6",
+        "PA": "12",
+        "VP": "60",
+        "ASP": "120",
+        "AR": "0",
+        "speed": "12",
+        "RM": "18"
+      },
+      "attacks": [
+        {
+          "name": "Flame hand",
+          "distance_class": "HN",
+          "AT": 25,
+          "damage": "2d20+10"
+        }
+      ],
+      "special_properties": [
+        "Combat Sense",
+        "Can use Blade Storm/Blade Wall against up to 4 opponents",
+        "Attack with Fire (21 paces)"
+      ],
+      "common_rules_ref": "meta.common_rules.elementals",
+      "source_book": "Wege der Zauberei",
+      "needs_data_review": false,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "elemental"
+    },
+    {
+      "id": "elementargeist_des_wassers",
+      "name": "Water Spirit",
+      "german_name": "Elementargeist des Wassers",
+      "category": "elemental",
+      "rank": "elemental_spirit",
+      "element": "water",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "source_page": 200,
+      "description": "A water spirit usually appears as an oversized drop of water and can form whip-like tendrils for attacks. It may move up to about 10 miles from the place of summoning.",
+      "stats": {
+        "INI": "9+1d6",
+        "PA": "10",
+        "VP": "12",
+        "ASP": "24",
+        "AR": "1",
+        "speed": "8",
+        "RM": "7"
+      },
+      "attacks": [
+        {
+          "name": "Water whip",
+          "distance_class": "N",
+          "AT": 12,
+          "damage": "2d6+2"
+        }
+      ],
+      "special_properties": [
+        "Attack with Water (3 paces)"
+      ],
+      "common_rules_ref": "meta.common_rules.elementals",
+      "source_book": "Wege der Zauberei",
+      "needs_data_review": false,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "elemental"
+    },
+    {
+      "id": "dschinn_des_wassers",
+      "name": "Djinn of Water",
+      "german_name": "Dschinn des Wassers",
+      "category": "elemental",
+      "rank": "djinn",
+      "element": "water",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "source_page": 202,
+      "description": "A water djinn appears as a larger water body with humanoid upper features. It is fluid, adaptable, and may be serene or threatening depending on the command.",
+      "stats": {
+        "INI": "12+1d6",
+        "PA": "14",
+        "VP": "30",
+        "ASP": "60",
+        "AR": "2",
+        "speed": "10",
+        "RM": "13"
+      },
+      "attacks": [
+        {
+          "name": "Water whip",
+          "distance_class": "N",
+          "AT": 19,
+          "damage": "3d6+3"
+        }
+      ],
+      "special_properties": [
+        "Attack with Water (7 paces)"
+      ],
+      "common_rules_ref": "meta.common_rules.elementals",
+      "source_book": "Wege der Zauberei",
+      "needs_data_review": false,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "elemental"
+    },
+    {
+      "id": "elementarer_meister_des_wassers",
+      "name": "Elemental Master of Water",
+      "german_name": "Elementarer Meister des Wassers",
+      "category": "elemental",
+      "rank": "elemental_master",
+      "element": "water",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "source_page": 200,
+      "description": "A master of water often appears as a towering, threatening wave in which a face can be vaguely recognized. Fresh water, salt water and brackish water may mingle in its body.",
+      "stats": {
+        "INI": "15+1d6",
+        "PA": "20",
+        "VP": "60",
+        "ASP": "120",
+        "AR": "4",
+        "speed": "16",
+        "RM": "18"
+      },
+      "attacks": [
+        {
+          "name": "Water whip",
+          "distance_class": "NS",
+          "AT": 25,
+          "damage": "6d6+6"
+        }
+      ],
+      "special_properties": [
+        "Combat Sense",
+        "Can use Blade Storm/Blade Wall against up to 4 opponents",
+        "Attack with Water (21 paces)"
+      ],
+      "common_rules_ref": "meta.common_rules.elementals",
+      "source_book": "Wege der Zauberei",
+      "needs_data_review": false,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "elemental"
+    },
+    {
+      "id": "elementargeist_des_erzes",
+      "name": "Ore Spirit",
+      "german_name": "Elementargeist des Erzes",
+      "category": "elemental",
+      "rank": "elemental_spirit",
+      "element": "ore",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "source_page": 202,
+      "description": "An ore spirit usually appears as a large stone shot through with metallic veins. It is slow and may move only about 100 paces from the place of summoning.",
+      "stats": {
+        "INI": "8+1d6",
+        "PA": "0",
+        "VP": "12",
+        "ASP": "24",
+        "AR": "4",
+        "speed": "3",
+        "RM": "9"
+      },
+      "attacks": [
+        {
+          "name": "Fist",
+          "distance_class": "H",
+          "AT": 10,
+          "damage": "3d6+2"
+        }
+      ],
+      "special_properties": [
+        "Melee attacks made with weapons of ore, especially metal weapons, must make a breakage test or risk breaking."
+      ],
+      "common_rules_ref": "meta.common_rules.elementals",
+      "source_book": "Wege der Zauberei",
+      "needs_data_review": false,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "elemental"
+    },
+    {
+      "id": "dschinn_des_erzes",
+      "name": "Djinn of Ore",
+      "german_name": "Dschinn des Erzes",
+      "category": "elemental",
+      "rank": "djinn",
+      "element": "ore",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "source_page": 200,
+      "description": "An ore djinn commonly resembles a statue grown out of stone. Ore djinn are deliberate and stubborn, said to surpass even dwarves in obstinacy.",
+      "stats": {
+        "INI": "10+1d6",
+        "PA": "4",
+        "VP": "30",
+        "ASP": "60",
+        "AR": "8",
+        "speed": "5",
+        "RM": "15"
+      },
+      "attacks": [
+        {
+          "name": "Fist",
+          "distance_class": "N",
+          "AT": 15,
+          "damage": "4d6+6"
+        }
+      ],
+      "special_properties": [
+        "Attack with Ore (3 paces)",
+        "Melee attacks made with weapons of ore, especially metal weapons, must make a breakage test or risk breaking."
+      ],
+      "common_rules_ref": "meta.common_rules.elementals",
+      "source_book": "Wege der Zauberei",
+      "needs_data_review": false,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "elemental"
+    },
+    {
+      "id": "elementarer_meister_des_erzes",
+      "name": "Elemental Master of Ore",
+      "german_name": "Elementarer Meister des Erzes",
+      "category": "elemental",
+      "rank": "elemental_master",
+      "element": "ore",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "source_page": 200,
+      "description": "A master of ore appears as a gigantic shape made from rock, ores, native metals and gemstones. It embodies the heaviness and endurance of the element.",
+      "stats": {
+        "INI": "12+1d6",
+        "PA": "8",
+        "VP": "60",
+        "ASP": "120",
+        "AR": "15",
+        "speed": "7",
+        "RM": "21"
+      },
+      "attacks": [
+        {
+          "name": "Fist",
+          "distance_class": "NS",
+          "AT": 25,
+          "damage": "6d6+8"
+        }
+      ],
+      "special_properties": [
+        "Combat Sense",
+        "Can use Blade Storm/Blade Wall against up to 4 opponents",
+        "Attack with Ore (7 paces)",
+        "Melee attacks made with weapons of ore, especially metal weapons, must make a breakage test or risk breaking."
+      ],
+      "common_rules_ref": "meta.common_rules.elementals",
+      "source_book": "Wege der Zauberei",
+      "needs_data_review": false,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "elemental"
+    },
+    {
+      "id": "elementargeist_der_luft",
+      "name": "Air Spirit",
+      "german_name": "Elementargeist der Luft",
+      "category": "elemental",
+      "rank": "elemental_spirit",
+      "element": "air",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "source_page": 202,
+      "description": "An air spirit usually appears as a small whirlwind. It is extremely agile and may move up to 100 miles from the place of summoning.",
+      "stats": {
+        "INI": "8+1d6",
+        "PA": "12",
+        "VP": "12",
+        "ASP": "24",
+        "AR": "0",
+        "speed": "15",
+        "RM": "5"
+      },
+      "attacks": [
+        {
+          "name": "Gust",
+          "distance_class": "H",
+          "AT": 14,
+          "damage": "1d6+4"
+        }
+      ],
+      "special_properties": [
+        "Attack with Air (3 paces)"
+      ],
+      "common_rules_ref": "meta.common_rules.elementals",
+      "source_book": "Wege der Zauberei",
+      "needs_data_review": false,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "elemental"
+    },
+    {
+      "id": "dschinn_der_luft",
+      "name": "Djinn of Air",
+      "german_name": "Dschinn der Luft",
+      "category": "elemental",
+      "rank": "djinn",
+      "element": "air",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "source_page": 203,
+      "description": "An air djinn, or wind-bride, usually consists of a small whirlwind from which a humanoid upper body of pure air and drifting clouds rises. It is impulsive and restless.",
+      "stats": {
+        "INI": "13+1d6",
+        "PA": "18",
+        "VP": "30",
+        "ASP": "60",
+        "AR": "0",
+        "speed": "30",
+        "RM": "11"
+      },
+      "attacks": [
+        {
+          "name": "Air",
+          "distance_class": "H",
+          "AT": 18,
+          "damage": "2d6+2"
+        }
+      ],
+      "special_properties": [
+        "Attack with Air (21 paces)"
+      ],
+      "common_rules_ref": "meta.common_rules.elementals",
+      "source_book": "Wege der Zauberei",
+      "needs_data_review": false,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "elemental"
+    },
+    {
+      "id": "elementarer_meister_der_luft",
+      "name": "Elemental Master of Air",
+      "german_name": "Elementarer Meister der Luft",
+      "category": "elemental",
+      "rank": "elemental_master",
+      "element": "air",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "source_page": 200,
+      "description": "A master of air most often manifests as a house-sized whirlwind mixing icy high air and summer-warm ground air. It has a blustering temperament and speaks in a shrill, very fast language.",
+      "stats": {
+        "INI": "16+1d6",
+        "PA": "24",
+        "VP": "60",
+        "ASP": "120",
+        "AR": "0",
+        "speed": "45",
+        "RM": "24"
+      },
+      "attacks": [
+        {
+          "name": "Gust",
+          "distance_class": "H",
+          "AT": 20,
+          "damage": "1d20+10"
+        }
+      ],
+      "special_properties": [
+        "Combat Sense",
+        "Can use Blade Storm/Blade Wall against up to 4 opponents",
+        "Attack with Air (line of sight)"
+      ],
+      "common_rules_ref": "meta.common_rules.elementals",
+      "source_book": "Wege der Zauberei",
+      "needs_data_review": false,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "elemental"
+    },
+    {
+      "id": "elementargeist_des_humus",
+      "name": "Humus Spirit",
+      "german_name": "Elementargeist des Humus",
+      "category": "elemental",
+      "rank": "elemental_spirit",
+      "element": "humus",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "source_page": 203,
+      "description": "A humus spirit often manifests as a small tree or large shrub. It can move up to about 1 mile from the place of summoning and attacks with thorned, rapidly growing tendrils.",
+      "stats": {
+        "INI": "9+1d6",
+        "PA": "6",
+        "VP": "12",
+        "ASP": "24",
+        "AR": "2",
+        "speed": "6",
+        "RM": "7"
+      },
+      "attacks": [
+        {
+          "name": "Tendril attack",
+          "distance_class": "HN",
+          "AT": 12,
+          "damage": "2d6+1"
+        }
+      ],
+      "special_properties": [
+        "Attack with Humus (3 paces)",
+        "Additional service: Healing"
+      ],
+      "common_rules_ref": "meta.common_rules.elementals",
+      "source_book": "Wege der Zauberei",
+      "needs_data_review": false,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "elemental"
+    },
+    {
+      "id": "dschinn_des_humus",
+      "name": "Djinn of Humus",
+      "german_name": "Dschinn des Humus",
+      "category": "elemental",
+      "rank": "djinn",
+      "element": "humus",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "source_page": 203,
+      "description": "A humus djinn often resembles a forest spirit or living plant-being, usually with a more pleasant appearance. It is empathetic and well-disposed toward living things.",
+      "stats": {
+        "INI": "12+1d6",
+        "PA": "10",
+        "VP": "30",
+        "ASP": "60",
+        "AR": "4",
+        "speed": "9",
+        "RM": "13"
+      },
+      "attacks": [
+        {
+          "name": "Tendril attack",
+          "distance_class": "NS",
+          "AT": 18,
+          "damage": "3d6+2"
+        }
+      ],
+      "special_properties": [
+        "Attack with Humus (3 paces)",
+        "Additional service: Healing"
+      ],
+      "common_rules_ref": "meta.common_rules.elementals",
+      "source_book": "Wege der Zauberei",
+      "needs_data_review": false,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "elemental"
+    },
+    {
+      "id": "elementarer_meister_des_humus",
+      "name": "Elemental Master of Humus",
+      "german_name": "Elementarer Meister des Humus",
+      "category": "elemental",
+      "rank": "elemental_master",
+      "element": "humus",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "source_page": 200,
+      "description": "A master of humus resembles a large tree full of insects, small animals, moss and strange flowers. It sees all things in the context of the renewing cycle of life.",
+      "stats": {
+        "INI": "15+1d6",
+        "PA": "14",
+        "VP": "60",
+        "ASP": "120",
+        "AR": "6",
+        "speed": "12",
+        "RM": "23"
+      },
+      "attacks": [
+        {
+          "name": "Tendril attack",
+          "distance_class": "NSP",
+          "AT": 20,
+          "damage": "6d6+6"
+        }
+      ],
+      "special_properties": [
+        "Combat Sense",
+        "Can use Blade Storm/Blade Wall against up to 4 opponents",
+        "Attack with Humus (7 paces)",
+        "Additional service: Healing"
+      ],
+      "common_rules_ref": "meta.common_rules.elementals",
+      "source_book": "Wege der Zauberei",
+      "needs_data_review": false,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "elemental"
+    },
+    {
+      "id": "elementargeist_des_eises",
+      "name": "Ice Spirit",
+      "german_name": "Elementargeist des Eises",
+      "category": "elemental",
+      "rank": "elemental_spirit",
+      "element": "ice",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "source_page": 203,
+      "description": "A typical ice spirit appears as an oversized snow crystal and may move up to about 1 mile from the summoning place. It attacks with a formed, extremely sharp ice sword.",
+      "stats": {
+        "INI": "9+1d6",
+        "PA": "2",
+        "VP": "12",
+        "ASP": "24",
+        "AR": "3",
+        "speed": "4",
+        "RM": "9"
+      },
+      "attacks": [
+        {
+          "name": "Ice sword",
+          "distance_class": "HN",
+          "AT": 11,
+          "damage": "2d6+3"
+        }
+      ],
+      "special_properties": [],
+      "common_rules_ref": "meta.common_rules.elementals",
+      "source_book": "Wege der Zauberei",
+      "needs_data_review": false,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "elemental"
+    },
+    {
+      "id": "dschinn_des_eises",
+      "name": "Djinn of Ice",
+      "german_name": "Dschinn des Eises",
+      "category": "elemental",
+      "rank": "djinn",
+      "element": "ice",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "source_page": 203,
+      "description": "An ice djinn often looks like a statue carved from ice or even a snowman. It is governed by ice-cold logic and is hostile to living things, tolerating even its summoner only if convinced.",
+      "stats": {
+        "INI": "12+1d6",
+        "PA": "6",
+        "VP": "30",
+        "ASP": "60",
+        "AR": "6",
+        "speed": "6",
+        "RM": "15"
+      },
+      "attacks": [
+        {
+          "name": "Ice sword",
+          "distance_class": "HN",
+          "AT": 15,
+          "damage": "3d6+4"
+        }
+      ],
+      "special_properties": [
+        "Attack with Ice (3 paces)",
+        "Can be boand outside the Eternal Ice for at most one year."
+      ],
+      "common_rules_ref": "meta.common_rules.elementals",
+      "source_book": "Wege der Zauberei",
+      "needs_data_review": false,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "elemental"
+    },
+    {
+      "id": "elementarer_meister_des_eises",
+      "name": "Elemental Master of Ice",
+      "german_name": "Elementarer Meister des Eises",
+      "category": "elemental",
+      "rank": "elemental_master",
+      "element": "ice",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "source_page": 200,
+      "description": "A master of ice manifests like a small iceberg with falling snow and a cold aura. It is brilliant, hostile to life, and dangerous even to call. Living beings within 3 paces suffer 3 DP per game turn from the cold it radiates.",
+      "stats": {
+        "INI": "15+1d6",
+        "PA": "10",
+        "VP": "60",
+        "ASP": "120",
+        "AR": "9",
+        "speed": "8",
+        "RM": "24"
+      },
+      "attacks": [
+        {
+          "name": "Ice sword",
+          "distance_class": "NS",
+          "AT": 21,
+          "damage": "6d6+6"
+        }
+      ],
+      "special_properties": [
+        "Combat Sense",
+        "Can use Blade Storm/Blade Wall against up to 4 opponents",
+        "Attack with Ice (7 paces)",
+        "Ice Breath: living beings within 3 paces suffer 3 DP per game turn",
+        "Can be boand outside the Eternal Ice for at most one year."
+      ],
+      "common_rules_ref": "meta.common_rules.elementals",
+      "source_book": "Wege der Zauberei",
+      "needs_data_review": false,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "elemental"
+    },
+    {
+      "id": "gefesselte_seele",
+      "name": "Bound Soul",
+      "german_name": "Gefesselte Seele",
+      "category": "spirit",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "source_page": 204,
+      "description": "A soul bound to a fixed place, usually through curse, guilt or unfinished business. It usually cannot move more than 7 paces from its place of manifestation or death.",
+      "invocation": {
+        "summoning": "-1",
+        "control": "+1d6, rolled anew for each service",
+        "banishment": "+1d6"
+      },
+      "stats": {
+        "INI": "10+2d6",
+        "PA": "0",
+        "VP": "7",
+        "ASP": "18",
+        "AR": "1/2",
+        "speed": "10",
+        "RM": "10",
+        "GW": "7"
+      },
+      "attacks": [],
+      "special_properties": [
+        "Corporeality II",
+        "Frightening Presence I"
+      ],
+      "common_rules_ref": "meta.common_rules.spirits",
+      "source_book": "Wege der Zauberei",
+      "needs_data_review": false,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "spirit"
+    },
+    {
+      "id": "nachtalp",
+      "name": "Night Alp",
+      "german_name": "Nachtalp",
+      "category": "spirit",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "source_page": 204,
+      "description": "A nightmare spirit appearing as a black shadow that crouches on a sleeper's chest and forces dreams of suffocation or drowning. It may move up to about 1 mile from its summoning place or place of death.",
+      "invocation": {
+        "summoning": "+1",
+        "control": "+1 per 50 VP of the Alp",
+        "banishment": "+1 per 20 VP of the Alp"
+      },
+      "stats": {
+        "INI": "VP/20+1d6",
+        "PA": "10",
+        "VP": "up to 500",
+        "AR": "1/2",
+        "speed": "10",
+        "RM": "12",
+        "GW": "up to 15, depending on VP"
+      },
+      "attacks": [
+        {
+          "name": "Nightmare assault",
+          "distance_class": "HN",
+          "AT": 15,
+          "damage": "1d6 DP"
+        }
+      ],
+      "special_properties": [
+        "Targeted Attack",
+        "Life Drain",
+        "Frightening Presence"
+      ],
+      "common_rules_ref": "meta.common_rules.spirits",
+      "source_book": "Wege der Zauberei",
+      "needs_data_review": false,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "spirit"
+    },
+    {
+      "id": "spuk",
+      "name": "Spook",
+      "german_name": "Spuk",
+      "category": "spirit",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "source_page": 203,
+      "description": "A poltergeist-like haunting that cannot end its own invisibility and can damage only unliving matter. Its destructive effects can still harm bystanders indirectly.",
+      "invocation": {
+        "summoning": "+5",
+        "control": "+4",
+        "banishment": "+7"
+      },
+      "stats": {
+        "INI": "12+1d6",
+        "PA": "0",
+        "VP": "40",
+        "AR": "1/2",
+        "speed": "8",
+        "RM": "15",
+        "GW": "8"
+      },
+      "attacks": [
+        {
+          "name": "Polter",
+          "distance_class": "7 paces",
+          "AT": 10,
+          "damage": "3d6+6 structural damage"
+        }
+      ],
+      "special_properties": [
+        "Targeted attack against unliving matter",
+        "Natural invisibility"
+      ],
+      "common_rules_ref": "meta.common_rules.spirits",
+      "source_book": "Wege der Zauberei",
+      "needs_data_review": false,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "spirit"
+    },
+    {
+      "id": "irrlicht",
+      "name": "Will-o'-Wisp",
+      "german_name": "Irrlicht",
+      "category": "spirit",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "source_page": 205,
+      "description": "A ghostly light of swamp and marsh. It imitates moaning or cries and, by its nature, repeatedly draws victims into deadly bogs, though it cannot simply be commanded to lure a specific victim.",
+      "invocation": {
+        "summoning": "+4",
+        "control": "+4",
+        "banishment": "+7"
+      },
+      "stats": {
+        "INI": "10+1d6",
+        "PA": "0",
+        "VP": "20",
+        "AR": "1/2",
+        "speed": "30",
+        "RM": "18",
+        "GW": "10"
+      },
+      "attacks": [
+        {
+          "name": "Light and fear",
+          "distance_class": "HNS",
+          "AT": 14,
+          "damage": "3 DP"
+        }
+      ],
+      "special_properties": [
+        "Targeted Attack",
+        "Frightening Presence I through soands and light"
+      ],
+      "common_rules_ref": "meta.common_rules.spirits",
+      "source_book": "Wege der Zauberei",
+      "needs_data_review": false,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "spirit"
+    },
+    {
+      "id": "erscheinung",
+      "name": "Apparition",
+      "german_name": "Erscheinung",
+      "category": "spirit",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "source_page": 201,
+      "description": "An apparition is the half-material manifestation of a deceased animal or similar being. Its values match the living animal of the same kind, but with RM 12 and AR equal to half RM.",
+      "invocation": {
+        "summoning": "+5",
+        "control": "+0",
+        "banishment": "+2"
+      },
+      "stats": {
+        "rules": "Use the values of the living animal of the same species; RM 12; AR equals half RM."
+      },
+      "attacks": [],
+      "special_properties": [
+        "Damage against animated/unanimated matter depending on creature",
+        "Special combat rules depend on the animal"
+      ],
+      "common_rules_ref": "meta.common_rules.spirits",
+      "source_book": "Wege der Zauberei",
+      "needs_data_review": false,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "spirit"
+    },
+    {
+      "id": "einfuhrungvortrag_der_vormaligen_magistra_gehornter_diener_agrimoths_achorhobai",
+      "name": "Achorhobai",
+      "german_name": "-Einführungvortrag der vormaligen Magistra gehörnter Diener Agrimoths Achorhobai",
+      "category": "demon",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "Achorhobai, the White Worm and Great Alchemist, is a four-horned servant of Agrimoth. It resembles a huge white worm with wart-covered, acid-sweating skin, split tentacles and horns around a circular maw. It bores through rock to reach gems and metals, dissolving other material with vitriolic digestive fluids.",
+      "invocation": {
+        "summoning": "+16",
+        "control": "+5",
+        "true_name": "2/5",
+        "base_cost": "20"
+      },
+      "stats": {
+        "INI": "4+1d6",
+        "PA": "2",
+        "VP": "120",
+        "AR": "8",
+        "speed": "3",
+        "RM": "9",
+        "GW": "20"
+      },
+      "attacks": [],
+      "special_properties": [
+        "Attack with cursed element (acid, see above), Follow-up damage (acid, see above), Regeneration I, Vulnerability (Ingerimm, ore)"
+      ],
+      "possible_services": [
+        "Physical Aid",
+        "Smelting",
+        "Tunneling",
+        "Mining for gemstones and metals",
+        "Binding",
+        "Manifestation"
+      ],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_page": 206,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "demon"
+    },
+    {
+      "id": "agribaal",
+      "name": "Agribaal",
+      "german_name": "Agribaal",
+      "category": "demon",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "Agribaal, the Curse of Iron, is a one-horned servant of Agrimoth or Iribaar. It is a non-corporeal demon usually called down to inhabit artifacts, especially weapons, when a demonic presence is desired.",
+      "invocation": {
+        "summoning": "+10",
+        "control": "+7",
+        "true_name": "4/7",
+        "base_cost": "11"
+      },
+      "stats": {},
+      "attacks": [],
+      "special_properties": [
+        "Incorporeality 11"
+      ],
+      "possible_services": [
+        "Artifact Ensoulment",
+        "Auxiliary Magic",
+        "Possession"
+      ],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_page": 207,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "demon"
+    },
+    {
+      "id": "amrifas",
+      "name": "Amrifas",
+      "german_name": "Amrifas",
+      "category": "demon",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "Amrifas the Earth-Shaker is a nine-horned servant of Agrimoth. It is credited with the power to unleash earthquakes and volcanic eruptions; the force sacrificed by the summoner influences the strength of the disaster. No fixed worldly body is known.",
+      "invocation": {
+        "summoning": "+16",
+        "control": "+7",
+        "true_name": "2/5",
+        "base_cost": "30"
+      },
+      "stats": {
+        "speed": "3",
+        "RM": "18",
+        "GW": "20"
+      },
+      "attacks": [],
+      "special_properties": [
+        "Incorporeality 11"
+      ],
+      "possible_services": [
+        "Movement"
+      ],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_page": 207,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "demon"
+    },
+    {
+      "id": "amrychoth",
+      "name": "Amrychoth",
+      "german_name": "Amrychoth",
+      "category": "demon",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "Amrychoth, the Dark Ray and Shadow in the Cyclone, is a five-horned servant of Charyptoroth. It manifests like an enormous triangular ray moving through water, surrounded by demonic currents, and can alter sea currents or unleash underwater storms and maelstroms.",
+      "invocation": {
+        "summoning": "+15",
+        "control": "+7",
+        "true_name": "1/3",
+        "base_cost": "30"
+      },
+      "stats": {
+        "INI": "10+1d6",
+        "PA": "0",
+        "VP": "90",
+        "AR": "3",
+        "speed": "15",
+        "RM": "14",
+        "GW": "16"
+      },
+      "attacks": [],
+      "special_properties": [
+        "Attack with cursed water (AT 6, 3d6 DP), Regeneration I, waterwe sen"
+      ],
+      "possible_services": [
+        "Search and Destroy",
+        "Control over Water",
+        "Movement",
+        "Combat",
+        "Manifestation",
+        "Search"
+      ],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_page": 207,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "demon"
+    },
+    {
+      "id": "aphestadil",
+      "name": "Aphestadil",
+      "german_name": "Aphestadil",
+      "category": "demon",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "Aphestadil is a summoned demon listed in the Pandemonium / demon entries of the invocation chapter. This regenerated TruePDF version keeps the English name, invocation modifiers, combat statistics, attacks, special properties and services in English. The original prose block was not cleanly separable enough for a full reliable paragraph translation, so use the structured fields as the rules reference for this entry.",
+      "invocation": {
+        "summoning": "+21",
+        "control": "+10",
+        "true_name": "1/3",
+        "base_cost": "50"
+      },
+      "stats": {
+        "INI": "13+2d6",
+        "PA": "2",
+        "VP": "250",
+        "AR": "4"
+      },
+      "attacks": [],
+      "special_properties": [],
+      "possible_services": [],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_page": 208,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "demon"
+    },
+    {
+      "id": "arjunoor",
+      "name": "Arjunoor",
+      "german_name": "Arjunoor",
+      "category": "demon",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "Arjunoor is a summoned demon listed in the Pandemonium / demon entries of the invocation chapter. This regenerated TruePDF version keeps the English name, invocation modifiers, combat statistics, attacks, special properties and services in English. The original prose block was not cleanly separable enough for a full reliable paragraph translation, so use the structured fields as the rules reference for this entry.",
+      "invocation": {
+        "summoning": "+15",
+        "control": "+8",
+        "true_name": "3/5",
+        "base_cost": "30"
+      },
+      "stats": {
+        "INI": "13+2d6",
+        "PA": "2",
+        "VP": "250",
+        "AR": "4",
+        "speed": "50/4",
+        "RM": "16",
+        "GW": "21"
+      },
+      "attacks": [],
+      "special_properties": [
+        "Paraphysicality 11"
+      ],
+      "possible_services": [
+        "Binding"
+      ],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_page": 208,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "demon"
+    },
+    {
+      "id": "arkhobal",
+      "name": "Arkhobal",
+      "german_name": "Arkhobal",
+      "category": "demon",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "Arkhobal is a summoned demon listed in the Pandemonium / demon entries of the invocation chapter. This regenerated TruePDF version keeps the English name, invocation modifiers, combat statistics, attacks, special properties and services in English. The original prose block was not cleanly separable enough for a full reliable paragraph translation, so use the structured fields as the rules reference for this entry.",
+      "invocation": {
+        "summoning": "+17",
+        "control": "+9",
+        "true_name": "213",
+        "base_cost": "30"
+      },
+      "stats": {
+        "INI": "11+1d6",
+        "PA": "0",
+        "VP": "50",
+        "AR": "5+1",
+        "speed": "0",
+        "RM": "20",
+        "GW": "15"
+      },
+      "attacks": [],
+      "special_properties": [
+        "Does not have Paraphysicality I or Regeneration in the Limbus; has Attack with cursed Humus, Presence II and Regeneration I; spells: Pandemonium and Wall of Thorns."
+      ],
+      "possible_services": [],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_page": 208,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "demon"
+    },
+    {
+      "id": "asqarath",
+      "name": "Asqarath",
+      "german_name": "Asqarath",
+      "category": "demon",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "Asqarath is a summoned demon listed in the Pandemonium / demon entries of the invocation chapter. This regenerated TruePDF version keeps the English name, invocation modifiers, combat statistics, attacks, special properties and services in English. The original prose block was not cleanly separable enough for a full reliable paragraph translation, so use the structured fields as the rules reference for this entry.",
+      "invocation": {
+        "summoning": "+14",
+        "control": "+8",
+        "true_name": "2/4",
+        "base_cost": "16"
+      },
+      "stats": {
+        "INI": "12+1d6",
+        "PA": "9",
+        "VP": "50",
+        "AR": "5",
+        "speed": "18/6",
+        "RM": "15",
+        "GW": "18"
+      },
+      "attacks": [
+        {
+          "name": "Claws",
+          "distance_class": "NS",
+          "AT": "9",
+          "damage": "2d6+2"
+        },
+        {
+          "name": "Beak",
+          "distance_class": "N",
+          "AT": "16",
+          "damage": "1d6+8"
+        }
+      ],
+      "special_properties": [
+        "Paraphysicality 11, Re generation I, Vulnerability (Praios, water)"
+      ],
+      "possible_services": [
+        "Search and Destroy",
+        "Binding",
+        "Combat",
+        "Manifestation",
+        "Guard",
+        "Search"
+      ],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_page": 209,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "demon"
+    },
+    {
+      "id": "azzitai",
+      "name": "Azzitai",
+      "german_name": "Azzitai",
+      "category": "demon",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "Azzitai is a summoned demon listed in the Pandemonium / demon entries of the invocation chapter. This regenerated TruePDF version keeps the English name, invocation modifiers, combat statistics, attacks, special properties and services in English. The original prose block was not cleanly separable enough for a full reliable paragraph translation, so use the structured fields as the rules reference for this entry.",
+      "invocation": {
+        "summoning": "+13",
+        "control": "+6",
+        "true_name": "4/6",
+        "base_cost": "16"
+      },
+      "stats": {
+        "INI": "10+1d6",
+        "PA": "8",
+        "VP": "100",
+        "AR": "2",
+        "speed": "8",
+        "RM": "13",
+        "GW": "16"
+      },
+      "attacks": [
+        {
+          "name": "Fire Claws",
+          "distance_class": "HN",
+          "AT": "12",
+          "damage": "1d6+3"
+        },
+        {
+          "name": "Horns",
+          "distance_class": "N",
+          "AT": "5",
+          "damage": "1d6+?"
+        }
+      ],
+      "special_properties": [
+        "Follow-up damage: burning for 1d6 combat roands",
+        "Immunity to fire and piercing attacks",
+        "Vulnerability to water"
+      ],
+      "possible_services": [
+        "Binding",
+        "Combat",
+        "Manifestation",
+        "Guard"
+      ],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_page": 209,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "demon"
+    },
+    {
+      "id": "balkha_bul",
+      "name": "Balkha'bul",
+      "german_name": "Balkha'bul",
+      "category": "demon",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "Balkha'bul is a summoned demon listed in the Pandemonium / demon entries of the invocation chapter. This regenerated TruePDF version keeps the English name, invocation modifiers, combat statistics, attacks, special properties and services in English. The original prose block was not cleanly separable enough for a full reliable paragraph translation, so use the structured fields as the rules reference for this entry.",
+      "invocation": {
+        "summoning": "+18",
+        "control": "+10",
+        "true_name": "1/2",
+        "base_cost": "30"
+      },
+      "stats": {
+        "INI": "12+1d6",
+        "PA": "?",
+        "VP": "100",
+        "AR": "5",
+        "speed": "5",
+        "RM": "15",
+        "GW": "16"
+      },
+      "attacks": [
+        {
+          "name": "Bite",
+          "distance_class": "N",
+          "AT": "14",
+          "damage": "2d6+5"
+        },
+        {
+          "name": "Claws",
+          "distance_class": "HN",
+          "AT": "10",
+          "damage": "1d6+6"
+        },
+        {
+          "name": "Tail Strike",
+          "distance_class": "NS",
+          "AT": "8",
+          "damage": "1d6+5"
+        }
+      ],
+      "special_properties": [
+        "Durch ore gehen, Exi stenz, Immunity to profane weapons Formlosig"
+      ],
+      "possible_services": [],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "demon"
+    },
+    {
+      "id": "bha_levek",
+      "name": "Bha'Levek",
+      "german_name": "Bha'Levek",
+      "category": "demon",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "Bha'Levek is a summoned demon listed in the Pandemonium / demon entries of the invocation chapter. This regenerated TruePDF version keeps the English name, invocation modifiers, combat statistics, attacks, special properties and services in English. The original prose block was not cleanly separable enough for a full reliable paragraph translation, so use the structured fields as the rules reference for this entry.",
+      "invocation": {
+        "summoning": "+11",
+        "control": "+3",
+        "true_name": "4/5",
+        "base_cost": "7"
+      },
+      "stats": {},
+      "attacks": [],
+      "special_properties": [
+        "Incorporeality 11, Un sichtbarkeit 11"
+      ],
+      "possible_services": [
+        "Possession"
+      ],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "demon"
+    },
+    {
+      "id": "blutbeflecktes_gold",
+      "name": "Blood-Stained Gold",
+      "german_name": "Blutbeflecktes Gold",
+      "category": "demon",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "Blood-Stained Gold appears as a summoned vessel from which the summoner can draw false, cursed gold coins or richer-looking treasures. A mortal who willingly accepts such coins loses VP; the loss becomes obvious only later or when the demon vanishes and the coins disappear.",
+      "invocation": {
+        "summoning": "+8",
+        "control": "+0",
+        "true_name": "2/5",
+        "base_cost": "3"
+      },
+      "stats": {},
+      "attacks": [],
+      "special_properties": [
+        "Summoned cursed treasure: willingly accepted coins or valuables drain VP; the false treasure vanishes with the demon."
+      ],
+      "possible_services": [],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_page": 210,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "demon"
+    },
+    {
+      "id": "braggu",
+      "name": "Braggu",
+      "german_name": "Braggu",
+      "category": "demon",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "Braggu is a summoned demon listed in the Pandemonium / demon entries of the invocation chapter. This regenerated TruePDF version keeps the English name, invocation modifiers, combat statistics, attacks, special properties and services in English. The original prose block was not cleanly separable enough for a full reliable paragraph translation, so use the structured fields as the rules reference for this entry.",
+      "invocation": {
+        "summoning": "+9",
+        "control": "+1",
+        "true_name": "6/7",
+        "base_cost": "1"
+      },
+      "stats": {
+        "INI": "20+1d6",
+        "PA": "0",
+        "VP": "30",
+        "AR": "0",
+        "speed": "50",
+        "RM": "5",
+        "GW": "4"
+      },
+      "attacks": [
+        {
+          "name": "Stinking Fog",
+          "distance_class": "HNS",
+          "AT": "12",
+          "damage": "1d6"
+        }
+      ],
+      "special_properties": [
+        "Incorporeality I",
+        "Paraphysicality II",
+        "Terrifying Appearance II",
+        "Vulnerability to Boron",
+        "Spells: Evil Eye (18), Horriphobus (18)"
+      ],
+      "possible_services": [
+        "Movement",
+        "Binding",
+        "Guard"
+      ],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_page": 210,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "demon"
+    },
+    {
+      "id": "brukha_klah",
+      "name": "Brukha'Klah",
+      "german_name": "Brukha'Klah",
+      "category": "demon",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "Brukha'Klah is a summoned demon listed in the Pandemonium / demon entries of the invocation chapter. This regenerated TruePDF version keeps the English name, invocation modifiers, combat statistics, attacks, special properties and services in English. The original prose block was not cleanly separable enough for a full reliable paragraph translation, so use the structured fields as the rules reference for this entry.",
+      "invocation": {
+        "summoning": "+12",
+        "control": "+11",
+        "true_name": "2/4",
+        "base_cost": "16"
+      },
+      "stats": {
+        "INI": "8+1d6",
+        "PA": "6",
+        "VP": "75",
+        "AR": "5",
+        "speed": "3",
+        "RM": "18",
+        "GW": "14"
+      },
+      "attacks": [
+        {
+          "name": "Tentacles",
+          "distance_class": "N",
+          "AT": "11",
+          "damage": "1d6+2"
+        }
+      ],
+      "special_properties": [
+        "Follow-up damage: acid",
+        "Regeneration I"
+      ],
+      "possible_services": [
+        "Binding",
+        "Manifestation",
+        "Guard"
+      ],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "demon"
+    },
+    {
+      "id": "cha_muyan",
+      "name": "Cha'Muyan",
+      "german_name": "Cha'Muyan",
+      "category": "demon",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "Cha'Muyan is a summoned demon listed in the Pandemonium / demon entries of the invocation chapter. This regenerated TruePDF version keeps the English name, invocation modifiers, combat statistics, attacks, special properties and services in English. The original prose block was not cleanly separable enough for a full reliable paragraph translation, so use the structured fields as the rules reference for this entry.",
+      "invocation": {
+        "summoning": "+12",
+        "control": "+5",
+        "true_name": "1/4",
+        "base_cost": "10"
+      },
+      "stats": {
+        "INI": "14+1d6",
+        "PA": "10",
+        "VP": "65",
+        "AR": "6",
+        "speed": "10",
+        "RM": "8",
+        "GW": "15"
+      },
+      "attacks": [
+        {
+          "name": "Bite",
+          "distance_class": "H",
+          "AT": "16",
+          "damage": "1d6+8"
+        },
+        {
+          "name": "Claw Swipe",
+          "distance_class": "N",
+          "AT": "16",
+          "damage": "1d6+6"
+        }
+      ],
+      "special_properties": [
+        "Resistance to magical and blessed attacks",
+        "Search for the Unknown",
+        "Camouflage",
+        "Invisibility I"
+      ],
+      "possible_services": [
+        "Search and Destroy",
+        "Binding",
+        "Manifestation",
+        "Guard",
+        "Search"
+      ],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "demon"
+    },
+    {
+      "id": "dharai",
+      "name": "Dharai",
+      "german_name": "Dharai",
+      "category": "demon",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "Dharai is a summoned demon listed in the Pandemonium / demon entries of the invocation chapter. This regenerated TruePDF version keeps the English name, invocation modifiers, combat statistics, attacks, special properties and services in English. The original prose block was not cleanly separable enough for a full reliable paragraph translation, so use the structured fields as the rules reference for this entry.",
+      "invocation": {
+        "summoning": "+9",
+        "control": "+4",
+        "true_name": "2/3",
+        "base_cost": "10"
+      },
+      "stats": {
+        "INI": "4+1d6",
+        "PA": "0",
+        "VP": "180",
+        "AR": "3",
+        "speed": "4",
+        "RM": "18",
+        "GW": "12"
+      },
+      "attacks": [
+        {
+          "name": "Gallerttentakel",
+          "distance_class": "HN",
+          "AT": "4",
+          "damage": "special"
+        }
+      ],
+      "special_properties": [
+        "Formlessness I, Rege· neration I"
+      ],
+      "possible_services": [
+        "Physical Aid",
+        "Binding",
+        "Manifestation",
+        "Guard"
+      ],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_page": 211,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "demon"
+    },
+    {
+      "id": "difar",
+      "name": "Difar",
+      "german_name": "Difar",
+      "category": "demon",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "Difar is a summoned demon listed in the Pandemonium / demon entries of the invocation chapter. This regenerated TruePDF version keeps the English name, invocation modifiers, combat statistics, attacks, special properties and services in English. The original prose block was not cleanly separable enough for a full reliable paragraph translation, so use the structured fields as the rules reference for this entry.",
+      "invocation": {
+        "summoning": "+8",
+        "control": "+8",
+        "true_name": "6/6",
+        "base_cost": "2"
+      },
+      "stats": {
+        "INI": "21+3d6",
+        "PA": "18",
+        "VP": "18",
+        "AR": "1",
+        "speed": "100",
+        "RM": "5",
+        "GW": "3"
+      },
+      "attacks": [
+        {
+          "name": "Umschwirren",
+          "distance_class": "HNS",
+          "AT": "18",
+          "damage": "1SP"
+        }
+      ],
+      "special_properties": [
+        "Formlessness 11, Kri tische Konsistenz, Frenzy, Regeneration I"
+      ],
+      "possible_services": [
+        "Physical Aid",
+        "Movement",
+        "Binding",
+        "Combat",
+        "Manifestation",
+        "Espionage"
+      ],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_page": 211,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "demon"
+    },
+    {
+      "id": "duglum",
+      "name": "Duglum",
+      "german_name": "Duglum",
+      "category": "demon",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "Duglum is a summoned demon listed in the Pandemonium / demon entries of the invocation chapter. This regenerated TruePDF version keeps the English name, invocation modifiers, combat statistics, attacks, special properties and services in English. The original prose block was not cleanly separable enough for a full reliable paragraph translation, so use the structured fields as the rules reference for this entry.",
+      "invocation": {
+        "summoning": "+15",
+        "control": "+9",
+        "true_name": "3/3",
+        "base_cost": "15"
+      },
+      "stats": {
+        "INI": "15+1d6",
+        "PA": "5",
+        "VP": "150",
+        "AR": "6",
+        "speed": "6",
+        "RM": "20",
+        "GW": "19"
+      },
+      "attacks": [
+        {
+          "name": "Pincers",
+          "distance_class": "N",
+          "AT": "10",
+          "damage": "1d6"
+        }
+      ],
+      "special_properties": [
+        "Infection with any disease, especially demon rot; range 7 paces"
+      ],
+      "possible_services": [
+        "Search and Destroy",
+        "Binding",
+        "Manifestation",
+        "Search"
+      ],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_page": 211,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "demon"
+    },
+    {
+      "id": "eugalp",
+      "name": "Eugalp",
+      "german_name": "Eugalp",
+      "category": "demon",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "Eugalp is a summoned demon listed in the Pandemonium / demon entries of the invocation chapter. This regenerated TruePDF version keeps the English name, invocation modifiers, combat statistics, attacks, special properties and services in English. The original prose block was not cleanly separable enough for a full reliable paragraph translation, so use the structured fields as the rules reference for this entry.",
+      "invocation": {
+        "summoning": "+18",
+        "control": "+5",
+        "true_name": "212",
+        "base_cost": "10"
+      },
+      "stats": {
+        "INI": "10+1d6",
+        "PA": "12",
+        "VP": "80",
+        "AR": "1",
+        "speed": "3",
+        "RM": "20",
+        "GW": "18"
+      },
+      "attacks": [
+        {
+          "name": "Claws",
+          "distance_class": "N",
+          "AT": "13",
+          "damage": "1d6(+demon rot)"
+        }
+      ],
+      "special_properties": [
+        "Infection with demon rot, also transferable to food",
+        "Regeneration I"
+      ],
+      "possible_services": [],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_page": 211,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "demon"
+    },
+    {
+      "id": "gotongi",
+      "name": "Gotongi",
+      "german_name": "Gotongi",
+      "category": "demon",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "Gotongi is a summoned demon listed in the Pandemonium / demon entries of the invocation chapter. This regenerated TruePDF version keeps the English name, invocation modifiers, combat statistics, attacks, special properties and services in English. The original prose block was not cleanly separable enough for a full reliable paragraph translation, so use the structured fields as the rules reference for this entry.",
+      "invocation": {
+        "summoning": "+8",
+        "control": "+3",
+        "true_name": "3/6",
+        "base_cost": "3"
+      },
+      "stats": {
+        "INI": "16+1d6",
+        "PA": "18",
+        "VP": "12",
+        "speed": "25",
+        "RM": "12",
+        "GW": "6"
+      },
+      "attacks": [
+        {
+          "name": "Pinch",
+          "distance_class": "HNS",
+          "AT": "15",
+          "damage": "1SP"
+        }
+      ],
+      "special_properties": [
+        "Paraphysicality II",
+        "Invisibility II",
+        "Search for the Unknown",
+        "Link to the summoner",
+        "Vulnerability to magic"
+      ],
+      "possible_services": [
+        "Movement",
+        "Binding",
+        "Guard",
+        "Search",
+        "Espionage"
+      ],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_page": 212,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "demon"
+    },
+    {
+      "id": "grakvaloth",
+      "name": "Grakvaloth",
+      "german_name": "Grakvaloth",
+      "category": "demon",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "Grakvaloth is a summoned demon listed in the Pandemonium / demon entries of the invocation chapter. This regenerated TruePDF version keeps the English name, invocation modifiers, combat statistics, attacks, special properties and services in English. The original prose block was not cleanly separable enough for a full reliable paragraph translation, so use the structured fields as the rules reference for this entry.",
+      "invocation": {
+        "summoning": "+28",
+        "control": "+7",
+        "true_name": "214",
+        "base_cost": "20"
+      },
+      "stats": {
+        "INI": "14+1d6",
+        "PA": "14",
+        "VP": "40",
+        "AR": "5",
+        "speed": "25/12",
+        "RM": "17",
+        "GW": "15"
+      },
+      "attacks": [
+        {
+          "name": "Bite",
+          "distance_class": "HN",
+          "AT": "16",
+          "damage": "2d6+2"
+        }
+      ],
+      "special_properties": [
+        "Paraphysicality II",
+        "Resistance to blessed attacks",
+        "Terrifying Appearance I",
+        "Invisibility II; can reveal itself only to selected beings"
+      ],
+      "possible_services": [
+        "Movement",
+        "Binding",
+        "Search"
+      ],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_page": 212,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "demon"
+    },
+    {
+      "id": "gregorroth",
+      "name": "Gregorroth",
+      "german_name": "Gregorroth",
+      "category": "demon",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "Gregorroth is a summoned demon listed in the Pandemonium / demon entries of the invocation chapter. This regenerated TruePDF version keeps the English name, invocation modifiers, combat statistics, attacks, special properties and services in English. The original prose block was not cleanly separable enough for a full reliable paragraph translation, so use the structured fields as the rules reference for this entry.",
+      "invocation": {
+        "summoning": "+7",
+        "control": "+2",
+        "true_name": "213",
+        "base_cost": "2"
+      },
+      "stats": {
+        "RM": "-"
+      },
+      "attacks": [],
+      "special_properties": [
+        "Incorporeality II",
+        "Spoil music: singing or instrument tests are penalized by 13",
+        "Sphere-soand: creatures within 50 paces must pass an RM test or suffer a random Influence spell while the sphere-music continues",
+        "Invisibility II"
+      ],
+      "possible_services": [
+        "Binding"
+      ],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_page": 212,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "demon"
+    },
+    {
+      "id": "gurgulum",
+      "name": "Gurgulum",
+      "german_name": "Gurgulum",
+      "category": "demon",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "Gurgulum is a summoned demon listed in the Pandemonium / demon entries of the invocation chapter. This regenerated TruePDF version keeps the English name, invocation modifiers, combat statistics, attacks, special properties and services in English. The original prose block was not cleanly separable enough for a full reliable paragraph translation, so use the structured fields as the rules reference for this entry.",
+      "invocation": {
+        "summoning": "+11",
+        "control": "+4",
+        "true_name": "3/3",
+        "base_cost": "5"
+      },
+      "stats": {
+        "INI": "6+1d6",
+        "PA": "0",
+        "VP": "12",
+        "AR": "0",
+        "speed": "1",
+        "RM": "10",
+        "GW": "8"
+      },
+      "attacks": [],
+      "special_properties": [
+        "Kritische Konsistenz, Invisibility I, Existenz (automatisch, wenn eswith dem Wirtverschmolzen ist)"
+      ],
+      "possible_services": [],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_page": 212,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "demon"
+    },
+    {
+      "id": "hanaestil",
+      "name": "Hanaestil",
+      "german_name": "Hanaestil",
+      "category": "demon",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "Hanaestil is a summoned demon listed in the Pandemonium / demon entries of the invocation chapter. This regenerated TruePDF version keeps the English name, invocation modifiers, combat statistics, attacks, special properties and services in English. The original prose block was not cleanly separable enough for a full reliable paragraph translation, so use the structured fields as the rules reference for this entry.",
+      "invocation": {
+        "summoning": "+16",
+        "control": "+5",
+        "true_name": "2/5",
+        "base_cost": "16"
+      },
+      "stats": {
+        "INI": "14+1d6",
+        "PA": "1",
+        "AR": "2",
+        "speed": "30",
+        "RM": "14",
+        "GW": "16"
+      },
+      "attacks": [],
+      "special_properties": [
+        "Invisibility 11"
+      ],
+      "possible_services": [
+        "Physical Aid"
+      ],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_page": 212,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "demon"
+    },
+    {
+      "id": "hektabeli",
+      "name": "Hektabeli",
+      "german_name": "Hektabeli",
+      "category": "demon",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "Hektabeli is a summoned demon listed in the Pandemonium / demon entries of the invocation chapter. This regenerated TruePDF version keeps the English name, invocation modifiers, combat statistics, attacks, special properties and services in English. The original prose block was not cleanly separable enough for a full reliable paragraph translation, so use the structured fields as the rules reference for this entry.",
+      "invocation": {
+        "summoning": "+10",
+        "control": "+7",
+        "true_name": "3/6",
+        "base_cost": "7"
+      },
+      "stats": {
+        "INI": "12+1d6",
+        "PA": "9",
+        "VP": "20",
+        "AR": "2"
+      },
+      "attacks": [
+        {
+          "name": "Peitsche",
+          "distance_class": "SP",
+          "AT": "14",
+          "damage": "1d6"
+        }
+      ],
+      "special_properties": [
+        "Incorporeality 11, Infek tion (iede Krankheit bis Stufe 12), Invisibility I1"
+      ],
+      "possible_services": [
+        "Search"
+      ],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_page": 213,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "demon"
+    },
+    {
+      "id": "hesthot",
+      "name": "Hesthot",
+      "german_name": "Hesthot",
+      "category": "demon",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "Hesthot is a summoned demon listed in the Pandemonium / demon entries of the invocation chapter. This regenerated TruePDF version keeps the English name, invocation modifiers, combat statistics, attacks, special properties and services in English. The original prose block was not cleanly separable enough for a full reliable paragraph translation, so use the structured fields as the rules reference for this entry.",
+      "invocation": {
+        "summoning": "+11",
+        "control": "+2",
+        "true_name": "5/7",
+        "base_cost": "3"
+      },
+      "stats": {
+        "INI": "12+1d6",
+        "PA": "9",
+        "VP": "20",
+        "AR": "2",
+        "RM": "4"
+      },
+      "attacks": [
+        {
+          "name": "Peitsche",
+          "distance_class": "SP",
+          "AT": "14",
+          "damage": "1d6"
+        },
+        {
+          "name": "Schwert",
+          "distance_class": "NS",
+          "AT": "13",
+          "damage": "1d6+4"
+        }
+      ],
+      "special_properties": [
+        "keine spells: Dunkelheit (20)"
+      ],
+      "possible_services": [
+        "Search and Destroy",
+        "Binding",
+        "Combat",
+        "Manifestation",
+        "Search"
+      ],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_page": 213,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "demon"
+    },
+    {
+      "id": "hirr_nirat",
+      "name": "Hirr'Nirat",
+      "german_name": "Hirr'Nirat",
+      "category": "demon",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "Hirr'Nirat is a summoned demon listed in the Pandemonium / demon entries of the invocation chapter. This regenerated TruePDF version keeps the English name, invocation modifiers, combat statistics, attacks, special properties and services in English. The original prose block was not cleanly separable enough for a full reliable paragraph translation, so use the structured fields as the rules reference for this entry.",
+      "invocation": {
+        "summoning": "+10",
+        "control": "+2",
+        "true_name": "3/4",
+        "base_cost": "3"
+      },
+      "stats": {
+        "INI": "14+1d6",
+        "PA": "4",
+        "VP": "15",
+        "AR": "1",
+        "speed": "10",
+        "RM": "8",
+        "GW": "5"
+      },
+      "attacks": [
+        {
+          "name": "Bite",
+          "distance_class": "H",
+          "AT": "9",
+          "damage": "1d6+1"
+        }
+      ],
+      "special_properties": [
+        "Existenz, Pack, Un sichtbarkeit I"
+      ],
+      "possible_services": [
+        "Binding"
+      ],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "demon"
+    },
+    {
+      "id": "irhiadhzal",
+      "name": "Irhiadhzal",
+      "german_name": "Irhiadhzal",
+      "category": "demon",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "Irhiadhzal is a summoned demon listed in the Pandemonium / demon entries of the invocation chapter. This regenerated TruePDF version keeps the English name, invocation modifiers, combat statistics, attacks, special properties and services in English. The original prose block was not cleanly separable enough for a full reliable paragraph translation, so use the structured fields as the rules reference for this entry.",
+      "invocation": {
+        "summoning": "+16",
+        "control": "+10",
+        "true_name": "2/3",
+        "base_cost": "20"
+      },
+      "stats": {},
+      "attacks": [],
+      "special_properties": [
+        "Possession of animal bodies"
+      ],
+      "possible_services": [
+        "Search and Destroy",
+        "Binding",
+        "Search"
+      ],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_page": 214,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "demon"
+    },
+    {
+      "id": "isphanil",
+      "name": "Isphanil",
+      "german_name": "Isphanil",
+      "category": "demon",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "Isphanil is a summoned demon listed in the Pandemonium / demon entries of the invocation chapter. This regenerated TruePDF version keeps the English name, invocation modifiers, combat statistics, attacks, special properties and services in English. The original prose block was not cleanly separable enough for a full reliable paragraph translation, so use the structured fields as the rules reference for this entry.",
+      "invocation": {
+        "summoning": "+14",
+        "control": "+6",
+        "true_name": "3/4",
+        "base_cost": "9"
+      },
+      "stats": {
+        "INI": "14+1d6",
+        "PA": "8",
+        "VP": "35",
+        "AR": "0",
+        "speed": "60",
+        "RM": "10",
+        "GW": "5"
+      },
+      "attacks": [],
+      "special_properties": [
+        "Ausweichen in den Limbus, Incorporeality I, Limbusreisender, Search nach dem Unbekannten, Invisibility II spells: GROSSE VERWIRRUNG (18)"
+      ],
+      "possible_services": [
+        "Binding",
+        "Manifestation",
+        "Search"
+      ],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_page": 214,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "demon"
+    },
+    {
+      "id": "isyahadin",
+      "name": "Isyahadin",
+      "german_name": "Isyahadin",
+      "category": "demon",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "Isyahadin is a summoned demon listed in the Pandemonium / demon entries of the invocation chapter. This regenerated TruePDF version keeps the English name, invocation modifiers, combat statistics, attacks, special properties and services in English. The original prose block was not cleanly separable enough for a full reliable paragraph translation, so use the structured fields as the rules reference for this entry.",
+      "invocation": {
+        "summoning": "+14",
+        "control": "+16",
+        "true_name": "1/2",
+        "base_cost": "32"
+      },
+      "stats": {
+        "INI": "12+1d6",
+        "PA": "9",
+        "VP": "30",
+        "AR": "1",
+        "speed": "10",
+        "RM": "13",
+        "GW": "6"
+      },
+      "attacks": [
+        {
+          "name": "Flame Tongue",
+          "distance_class": "HNS",
+          "AT": "13",
+          "damage": "1d6+4"
+        }
+      ],
+      "special_properties": [],
+      "possible_services": [],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_page": 214,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "demon"
+    },
+    {
+      "id": "ivash",
+      "name": "Ivash",
+      "german_name": "Ivash",
+      "category": "demon",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "Ivash is a summoned demon listed in the Pandemonium / demon entries of the invocation chapter. This regenerated TruePDF version keeps the English name, invocation modifiers, combat statistics, attacks, special properties and services in English. The original prose block was not cleanly separable enough for a full reliable paragraph translation, so use the structured fields as the rules reference for this entry.",
+      "invocation": {
+        "summoning": "+18",
+        "control": "+4",
+        "true_name": "2/5",
+        "base_cost": "6"
+      },
+      "stats": {
+        "INI": "12+1d6",
+        "PA": "9",
+        "VP": "30",
+        "AR": "1",
+        "speed": "10",
+        "RM": "13",
+        "GW": "6"
+      },
+      "attacks": [
+        {
+          "name": "Flame Tongue",
+          "distance_class": "HNS",
+          "AT": "13",
+          "damage": "1d6+4"
+        }
+      ],
+      "special_properties": [
+        "Immunity to fire",
+        "Formlessness I",
+        "Resistance to blessed attacks",
+        "Vulnerability to water"
+      ],
+      "possible_services": [
+        "Binding",
+        "Combat",
+        "Manifestation",
+        "Guard"
+      ],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_page": 214,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "demon"
+    },
+    {
+      "id": "je_chrizlayk_ura",
+      "name": "Je-Chrizlayk-Ura",
+      "german_name": "Je-Chrizlayk-Ura",
+      "category": "demon",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "Je-Chrizlayk-Ura is a summoned demon listed in the Pandemonium / demon entries of the invocation chapter. This regenerated TruePDF version keeps the English name, invocation modifiers, combat statistics, attacks, special properties and services in English. The original prose block was not cleanly separable enough for a full reliable paragraph translation, so use the structured fields as the rules reference for this entry.",
+      "invocation": {
+        "summoning": "+10",
+        "control": "+4",
+        "true_name": "1/5",
+        "base_cost": "6"
+      },
+      "stats": {
+        "INI": "3+1d6",
+        "PA": "0",
+        "VP": "150",
+        "AR": "3",
+        "speed": "0",
+        "RM": "18",
+        "GW": "8"
+      },
+      "attacks": [
+        {
+          "name": "Pseudopodien",
+          "distance_class": "H",
+          "AT": "2",
+          "damage": "special"
+        }
+      ],
+      "special_properties": [
+        "Formlessness I, Rege neration I"
+      ],
+      "possible_services": [
+        "Physical Aid",
+        "Binding",
+        "Manifestation",
+        "Guard"
+      ],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_page": 215,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "demon"
+    },
+    {
+      "id": "kah_thurak_artai",
+      "name": "Kah-Thurak-Artai",
+      "german_name": "Kah-Thurak-Artai",
+      "category": "demon",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "Kah-Thurak-Artai is a summoned demon listed in the Pandemonium / demon entries of the invocation chapter. This regenerated TruePDF version keeps the English name, invocation modifiers, combat statistics, attacks, special properties and services in English. The original prose block was not cleanly separable enough for a full reliable paragraph translation, so use the structured fields as the rules reference for this entry.",
+      "invocation": {
+        "summoning": "+14",
+        "control": "+7",
+        "true_name": "1/3",
+        "base_cost": "30"
+      },
+      "stats": {
+        "INI": "20+1d6",
+        "PA": "12",
+        "VP": "200",
+        "AR": "10",
+        "speed": "15/5",
+        "RM": "25",
+        "GW": "21"
+      },
+      "attacks": [
+        {
+          "name": "Claws",
+          "distance_class": "NS",
+          "AT": "19",
+          "damage": "special"
+        }
+      ],
+      "special_properties": [
+        "Paraphysicality 11, Regeneration I, Terrifying Appearance I, Tarnung, Unsicht barkeit I"
+      ],
+      "possible_services": [
+        "Possession",
+        "Binding",
+        "Combat",
+        "Manifestation",
+        "Guard",
+        "Search"
+      ],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "demon"
+    },
+    {
+      "id": "karakil",
+      "name": "Karakil",
+      "german_name": "Karakil",
+      "category": "demon",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "Karakil is a summoned demon listed in the Pandemonium / demon entries of the invocation chapter. This regenerated TruePDF version keeps the English name, invocation modifiers, combat statistics, attacks, special properties and services in English. The original prose block was not cleanly separable enough for a full reliable paragraph translation, so use the structured fields as the rules reference for this entry.",
+      "invocation": {
+        "summoning": "+10",
+        "control": "+6",
+        "true_name": "3/5",
+        "base_cost": "9"
+      },
+      "stats": {
+        "INI": "12+1d6",
+        "PA": "3",
+        "VP": "110",
+        "AR": "5",
+        "speed": "18/1",
+        "RM": "14",
+        "GW": "14"
+      },
+      "attacks": [
+        {
+          "name": "Bite",
+          "distance_class": "SP",
+          "AT": "10",
+          "damage": "3d6+3"
+        }
+      ],
+      "special_properties": [
+        "Paraphysicality II",
+        "Regeneration I only when manifested",
+        "Expanded aura: special properties such as evasion into the Limbus can be extended to the rider"
+      ],
+      "possible_services": [
+        "Binding",
+        "Manifestation"
+      ],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_page": 215,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "demon"
+    },
+    {
+      "id": "karmanath",
+      "name": "Karmanath",
+      "german_name": "Karmanath",
+      "category": "demon",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "Karmanath is a summoned demon listed in the Pandemonium / demon entries of the invocation chapter. This regenerated TruePDF version keeps the English name, invocation modifiers, combat statistics, attacks, special properties and services in English. The original prose block was not cleanly separable enough for a full reliable paragraph translation, so use the structured fields as the rules reference for this entry.",
+      "invocation": {
+        "summoning": "+9",
+        "control": "+4",
+        "true_name": "4/5",
+        "base_cost": "8"
+      },
+      "stats": {
+        "INI": "15+1d6",
+        "PA": "12",
+        "VP": "25",
+        "AR": "3",
+        "speed": "12",
+        "RM": "12",
+        "GW": "10"
+      },
+      "attacks": [
+        {
+          "name": "Bite",
+          "distance_class": "N",
+          "AT": "15",
+          "damage": "1d6+7"
+        }
+      ],
+      "special_properties": [
+        "Frenzy, Regenerati -. onI, Pack, Schreckliches Geheul (Auswirkung wie Terrifying Appearance I), Vulnerability (Ifirn, Firun)"
+      ],
+      "possible_services": [
+        "Search and Destroy",
+        "Binding",
+        "Combat",
+        "Manifestation",
+        "Guard",
+        "Search"
+      ],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_page": 215,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "demon"
+    },
+    {
+      "id": "karmoth",
+      "name": "Karmoth",
+      "german_name": "Karmoth",
+      "category": "demon",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "Karmoth is a summoned demon listed in the Pandemonium / demon entries of the invocation chapter. This regenerated TruePDF version keeps the English name, invocation modifiers, combat statistics, attacks, special properties and services in English. The original prose block was not cleanly separable enough for a full reliable paragraph translation, so use the structured fields as the rules reference for this entry.",
+      "invocation": {
+        "summoning": "+25",
+        "control": "+20",
+        "true_name": "0/-",
+        "base_cost": "60"
+      },
+      "stats": {
+        "INI": "18+1d6",
+        "PA": "18",
+        "VP": "15",
+        "AR": "1",
+        "speed": "60",
+        "RM": "5",
+        "GW": "5"
+      },
+      "attacks": [],
+      "special_properties": [
+        "Immunity to the Damage trait; OCR fragment incomplete"
+      ],
+      "possible_services": [
+        "Combat"
+      ],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_page": 216,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "demon"
+    },
+    {
+      "id": "karunga",
+      "name": "Karunga",
+      "german_name": "Karunga",
+      "category": "demon",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "Karunga is a summoned demon listed in the Pandemonium / demon entries of the invocation chapter. This regenerated TruePDF version keeps the English name, invocation modifiers, combat statistics, attacks, special properties and services in English. The original prose block was not cleanly separable enough for a full reliable paragraph translation, so use the structured fields as the rules reference for this entry.",
+      "invocation": {
+        "summoning": "+8",
+        "control": "+1",
+        "true_name": "6/6",
+        "base_cost": "1"
+      },
+      "stats": {
+        "INI": "18+1d6",
+        "PA": "18",
+        "VP": "15",
+        "AR": "1",
+        "speed": "60",
+        "RM": "5",
+        "GW": "5"
+      },
+      "attacks": [],
+      "special_properties": [
+        "Immunity to the Damage trait",
+        "Formlessness II",
+        "Confusion spell: Karunga swarms around its victim and penalizes attacks or defense by 5; SP 13; costs Karunga no ASP"
+      ],
+      "possible_services": [
+        "Physical Aid",
+        "Binding",
+        "Combat",
+        "Manifestation"
+      ],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_page": 216,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "demon"
+    },
+    {
+      "id": "kharz_oreel",
+      "name": "Kharz'oreel",
+      "german_name": "Kharz'oreel",
+      "category": "demon",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "Kharz'oreel is a summoned demon listed in the Pandemonium / demon entries of the invocation chapter. This regenerated TruePDF version keeps the English name, invocation modifiers, combat statistics, attacks, special properties and services in English. The original prose block was not cleanly separable enough for a full reliable paragraph translation, so use the structured fields as the rules reference for this entry.",
+      "invocation": {
+        "summoning": "+9",
+        "control": "+5",
+        "true_name": "1/2",
+        "base_cost": "10"
+      },
+      "stats": {
+        "INI": "15+1d6",
+        "PA": "0",
+        "VP": "120",
+        "AR": "0",
+        "speed": "10",
+        "RM": "13",
+        "GW": "10"
+      },
+      "attacks": [],
+      "special_properties": [
+        "Incorporeality I"
+      ],
+      "possible_services": [
+        "Possession"
+      ],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "demon"
+    },
+    {
+      "id": "khidma_kha_bul",
+      "name": "Khidma'kha'bul",
+      "german_name": "Khidma'kha'bul",
+      "category": "demon",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "Khidma'kha'bul is a summoned demon listed in the Pandemonium / demon entries of the invocation chapter. This regenerated TruePDF version keeps the English name, invocation modifiers, combat statistics, attacks, special properties and services in English. The original prose block was not cleanly separable enough for a full reliable paragraph translation, so use the structured fields as the rules reference for this entry.",
+      "invocation": {
+        "summoning": "+15",
+        "control": "+3",
+        "true_name": "3/4",
+        "base_cost": "3"
+      },
+      "stats": {
+        "INI": "16+1d6",
+        "PA": "16",
+        "VP": "35",
+        "AR": "5",
+        "speed": "14",
+        "RM": "12",
+        "GW": "3"
+      },
+      "attacks": [
+        {
+          "name": "Bite",
+          "distance_class": "N",
+          "AT": "10",
+          "damage": "1d6+4"
+        }
+      ],
+      "special_properties": [
+        "Regeneration I, Pack, Vulnerability (Phex)"
+      ],
+      "possible_services": [
+        "Binding",
+        "Manifestation",
+        "Guard"
+      ],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "demon"
+    },
+    {
+      "id": "laraan",
+      "name": "Laraan",
+      "german_name": "Laraan",
+      "category": "demon",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "Laraan is a summoned demon listed in the Pandemonium / demon entries of the invocation chapter. This regenerated TruePDF version keeps the English name, invocation modifiers, combat statistics, attacks, special properties and services in English. The original prose block was not cleanly separable enough for a full reliable paragraph translation, so use the structured fields as the rules reference for this entry.",
+      "invocation": {
+        "summoning": "+12",
+        "control": "+6",
+        "true_name": "215",
+        "base_cost": "9"
+      },
+      "stats": {
+        "INI": "12+1d6",
+        "PA": "6",
+        "VP": "40",
+        "AR": "4",
+        "speed": "-W",
+        "RM": "21",
+        "GW": "10"
+      },
+      "attacks": [
+        {
+          "name": "Claws",
+          "distance_class": "N",
+          "AT": "14",
+          "damage": "1d6+2"
+        }
+      ],
+      "special_properties": [
+        "Mutation, Regenerati onI, Terrifying Appearance I, Tarnung, Invisibility"
+      ],
+      "possible_services": [
+        "Binding",
+        "Manifestation"
+      ],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_page": 216,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "demon"
+    },
+    {
+      "id": "fajlaraan",
+      "name": "Fajlaraan",
+      "german_name": "Fajlaraan",
+      "category": "demon",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "Fajlaraan is a summoned demon listed in the Pandemonium / demon entries of the invocation chapter. This regenerated TruePDF version keeps the English name, invocation modifiers, combat statistics, attacks, special properties and services in English. The original prose block was not cleanly separable enough for a full reliable paragraph translation, so use the structured fields as the rules reference for this entry.",
+      "invocation": {
+        "summoning": "+14",
+        "control": "+5",
+        "true_name": "2/2",
+        "base_cost": "12"
+      },
+      "stats": {},
+      "attacks": [],
+      "special_properties": [
+        "Existenz, Regenerati on I, Tarnung, Invisibility I. Ein Fajlaraan kann sich einmal am Tag foreine SR in eine Person ver wandeln, von derereine stoffliche Komponente hat (Blut, Haare, ...)"
+      ],
+      "possible_services": [
+        "Physical Aid",
+        "Binding",
+        "Manifestation"
+      ],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_page": 217,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "demon"
+    },
+    {
+      "id": "muwallaraan",
+      "name": "Muwallaraan",
+      "german_name": "Muwallaraan",
+      "category": "demon",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "Muwallaraan is a summoned demon listed in the Pandemonium / demon entries of the invocation chapter. This regenerated TruePDF version keeps the English name, invocation modifiers, combat statistics, attacks, special properties and services in English. The original prose block was not cleanly separable enough for a full reliable paragraph translation, so use the structured fields as the rules reference for this entry.",
+      "invocation": {
+        "summoning": "+11",
+        "control": "+5",
+        "true_name": "212",
+        "base_cost": "10"
+      },
+      "stats": {
+        "INI": "12+1d6",
+        "PA": "6",
+        "VP": "50",
+        "AR": "4",
+        "speed": "15",
+        "RM": "21",
+        "GW": "10"
+      },
+      "attacks": [
+        {
+          "name": "Hufe",
+          "distance_class": "N",
+          "AT": "14",
+          "damage": "2d6+4"
+        }
+      ],
+      "special_properties": [
+        "Presence I, Regeneration I"
+      ],
+      "possible_services": [
+        "Physical Aid",
+        "Daimonid Breeding",
+        "Binding",
+        "Manifestation"
+      ],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_page": 217,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "demon"
+    },
+    {
+      "id": "canilaraan_undshakalaraan",
+      "name": "Canilaraan and Shakalaraan",
+      "german_name": "Canilaraan undShakalaraan",
+      "category": "demon",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "Canilaraan and Shakalaraan is a summoned demon listed in the Pandemonium / demon entries of the invocation chapter. This regenerated TruePDF version keeps the English name, invocation modifiers, combat statistics, attacks, special properties and services in English. The original prose block was not cleanly separable enough for a full reliable paragraph translation, so use the structured fields as the rules reference for this entry.",
+      "invocation": {
+        "summoning": "+12",
+        "control": "+5",
+        "true_name": "2/3",
+        "base_cost": "5"
+      },
+      "stats": {
+        "INI": "12+1d6",
+        "PA": "5",
+        "VP": "30",
+        "AR": "4",
+        "speed": "9",
+        "RM": "21",
+        "GW": "10"
+      },
+      "attacks": [
+        {
+          "name": "Bite",
+          "distance_class": "N",
+          "AT": "12",
+          "damage": "1d6+4"
+        }
+      ],
+      "special_properties": [
+        "Pack"
+      ],
+      "possible_services": [
+        "Search and Destroy",
+        "Daimonid Breeding",
+        "Movement",
+        "Binding",
+        "Combat",
+        "Guard",
+        "Search"
+      ],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_page": 217,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "demon"
+    },
+    {
+      "id": "schworung",
+      "name": "Conjuration Fragment",
+      "german_name": "schwörung)",
+      "category": "demon",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "Conjuration Fragment is a summoned demon listed in the Pandemonium / demon entries of the invocation chapter. This regenerated TruePDF version keeps the English name, invocation modifiers, combat statistics, attacks, special properties and services in English. The original prose block was not cleanly separable enough for a full reliable paragraph translation, so use the structured fields as the rules reference for this entry.",
+      "invocation": {
+        "summoning": "+17",
+        "control": "+9",
+        "true_name": "1/2",
+        "base_cost": "27"
+      },
+      "stats": {
+        "INI": "2+1d6",
+        "VP": "150",
+        "AR": "6",
+        "speed": "2",
+        "RM": "18",
+        "GW": "11"
+      },
+      "attacks": [
+        {
+          "name": "Tendrils",
+          "distance_class": "H",
+          "AT": "4",
+          "damage": "1d6+2"
+        },
+        {
+          "name": "Branches",
+          "distance_class": "N",
+          "AT": "8",
+          "damage": "1d6+5"
+        }
+      ],
+      "special_properties": [
+        "Existence",
+        "Immunity to fire",
+        "Vulnerability to Efferd, Ingerimm, elemental Humus and elemental Water"
+      ],
+      "possible_services": [
+        "Binding",
+        "Combat",
+        "Manifestation"
+      ],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_page": 199,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "demon"
+    },
+    {
+      "id": "mactans",
+      "name": "Mactans",
+      "german_name": "Mactans",
+      "category": "demon",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "Mactans is a summoned demon listed in the Pandemonium / demon entries of the invocation chapter. This regenerated TruePDF version keeps the English name, invocation modifiers, combat statistics, attacks, special properties and services in English. The original prose block was not cleanly separable enough for a full reliable paragraph translation, so use the structured fields as the rules reference for this entry.",
+      "invocation": {
+        "summoning": "+12",
+        "control": "+9",
+        "true_name": "1/4",
+        "base_cost": "18"
+      },
+      "stats": {
+        "INI": "18+3d6",
+        "PA": "17",
+        "VP": "70",
+        "AR": "7",
+        "speed": "6",
+        "RM": "18",
+        "GW": "16"
+      },
+      "attacks": [
+        {
+          "name": "Tentacles",
+          "distance_class": "NS",
+          "AT": "15",
+          "damage": "1d6+7"
+        },
+        {
+          "name": "Beak",
+          "distance_class": "H",
+          "AT": "15",
+          "damage": "2d6+6"
+        }
+      ],
+      "special_properties": [
+        "Regeneration II",
+        "Terrifying Appearance I",
+        "Vulnerability to sea-serpent teeth",
+        "Spells: Arachnea, Eye of the Limbus, Granite and Marble, Great Confusion, Paralysis (each SP 12)"
+      ],
+      "possible_services": [
+        "Search and Destroy",
+        "Binding",
+        "Combat",
+        "Manifestation",
+        "Guard",
+        "Search"
+      ],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_page": 218,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "demon"
+    },
+    {
+      "id": "maruk_methai",
+      "name": "Maruk-Methai",
+      "german_name": "Maruk-Methai",
+      "category": "demon",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "Maruk-Methai is a summoned demon listed in the Pandemonium / demon entries of the invocation chapter. This regenerated TruePDF version keeps the English name, invocation modifiers, combat statistics, attacks, special properties and services in English. The original prose block was not cleanly separable enough for a full reliable paragraph translation, so use the structured fields as the rules reference for this entry.",
+      "invocation": {
+        "summoning": "+12",
+        "control": "+10",
+        "true_name": "1/5",
+        "base_cost": "20"
+      },
+      "stats": {
+        "AR": "+3"
+      },
+      "attacks": [],
+      "special_properties": [
+        "Incorporeality II"
+      ],
+      "possible_services": [
+        "Possession"
+      ],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_page": 218,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "demon"
+    },
+    {
+      "id": "morcan",
+      "name": "Morcan",
+      "german_name": "Morcan",
+      "category": "demon",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "Morcan is a summoned demon listed in the Pandemonium / demon entries of the invocation chapter. This regenerated TruePDF version keeps the English name, invocation modifiers, combat statistics, attacks, special properties and services in English. The original prose block was not cleanly separable enough for a full reliable paragraph translation, so use the structured fields as the rules reference for this entry.",
+      "invocation": {
+        "summoning": "+14",
+        "control": "+4",
+        "true_name": "3/4",
+        "base_cost": "12"
+      },
+      "stats": {
+        "INI": "15+1d6",
+        "VP": "40",
+        "AR": "0",
+        "speed": "100",
+        "RM": "8",
+        "GW": "12"
+      },
+      "attacks": [],
+      "special_properties": [
+        "Incorporeality I, Ver wandbarkeit (Boron)"
+      ],
+      "possible_services": [
+        "Possession",
+        "Binding",
+        "Combat",
+        "Espionage"
+      ],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_page": 218,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "demon"
+    },
+    {
+      "id": "nephazz",
+      "name": "Nephazz",
+      "german_name": "Nephazz",
+      "category": "demon",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "Nephazz is a summoned demon listed in the Pandemonium / demon entries of the invocation chapter. This regenerated TruePDF version keeps the English name, invocation modifiers, combat statistics, attacks, special properties and services in English. The original prose block was not cleanly separable enough for a full reliable paragraph translation, so use the structured fields as the rules reference for this entry.",
+      "invocation": {
+        "summoning": "+10",
+        "control": "+3",
+        "true_name": "4/5",
+        "base_cost": "6"
+      },
+      "stats": {},
+      "attacks": [],
+      "special_properties": [
+        "Incorporeality II",
+        "Undead activation: enters a dead body, which counts as andead for the duration"
+      ],
+      "possible_services": [
+        "Possession",
+        "Binding"
+      ],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_page": 218,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "demon"
+    },
+    {
+      "id": "nirraven",
+      "name": "Nirraven",
+      "german_name": "Nirraven",
+      "category": "demon",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "Nirraven is a summoned demon listed in the Pandemonium / demon entries of the invocation chapter. This regenerated TruePDF version keeps the English name, invocation modifiers, combat statistics, attacks, special properties and services in English. The original prose block was not cleanly separable enough for a full reliable paragraph translation, so use the structured fields as the rules reference for this entry.",
+      "invocation": {
+        "summoning": "+17",
+        "control": "+7",
+        "true_name": "1/2",
+        "base_cost": "18"
+      },
+      "stats": {
+        "RM": "+5"
+      },
+      "attacks": [],
+      "special_properties": [
+        "Incorporeality II"
+      ],
+      "possible_services": [
+        "Possession",
+        "Binding"
+      ],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_page": 219,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "demon"
+    },
+    {
+      "id": "nishkakat",
+      "name": "Nishkakat",
+      "german_name": "Nishkakat",
+      "category": "demon",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "Nishkakat is a summoned demon listed in the Pandemonium / demon entries of the invocation chapter. This regenerated TruePDF version keeps the English name, invocation modifiers, combat statistics, attacks, special properties and services in English. The original prose block was not cleanly separable enough for a full reliable paragraph translation, so use the structured fields as the rules reference for this entry.",
+      "invocation": {
+        "summoning": "+15",
+        "control": "+7",
+        "true_name": "2/2",
+        "base_cost": "12"
+      },
+      "stats": {
+        "INI": "11+1d6",
+        "PA": "15",
+        "VP": "18",
+        "AR": "3",
+        "speed": "8",
+        "RM": "16",
+        "GW": "7"
+      },
+      "attacks": [
+        {
+          "name": "Bite",
+          "distance_class": "H",
+          "AT": "9",
+          "damage": "1d6"
+        }
+      ],
+      "special_properties": [
+        "Paraphysicality 11, Un sichtbarkeit I, Vulnerability (Hesinde)"
+      ],
+      "possible_services": [
+        "Movement",
+        "Binding"
+      ],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_page": 219,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "demon"
+    },
+    {
+      "id": "nurumbaal",
+      "name": "Nurumbaal",
+      "german_name": "Nurumbaal",
+      "category": "demon",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "Nurumbaal is a summoned demon listed in the Pandemonium / demon entries of the invocation chapter. This regenerated TruePDF version keeps the English name, invocation modifiers, combat statistics, attacks, special properties and services in English. The original prose block was not cleanly separable enough for a full reliable paragraph translation, so use the structured fields as the rules reference for this entry.",
+      "invocation": {
+        "summoning": "+12",
+        "control": "+6",
+        "true_name": "1/3",
+        "base_cost": "9"
+      },
+      "stats": {
+        "INI": "12+1d6",
+        "PA": "12",
+        "VP": "50",
+        "AR": "3",
+        "speed": "8",
+        "RM": "7",
+        "GW": "10"
+      },
+      "attacks": [
+        {
+          "name": "Tritt",
+          "distance_class": "N",
+          "AT": "12",
+          "damage": "1d6+3"
+        },
+        {
+          "name": "Bite",
+          "distance_class": "H",
+          "AT": "14",
+          "damage": "1d6+5"
+        }
+      ],
+      "special_properties": [
+        "Vulnerability (Phex, Nandus), Goldproduktion (siehe oben)"
+      ],
+      "possible_services": [],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_page": 219,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "demon"
+    },
+    {
+      "id": "qasaar",
+      "name": "Qasaar",
+      "german_name": "Qasaar",
+      "category": "demon",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "Qasaar is a summoned demon listed in the Pandemonium / demon entries of the invocation chapter. This regenerated TruePDF version keeps the English name, invocation modifiers, combat statistics, attacks, special properties and services in English. The original prose block was not cleanly separable enough for a full reliable paragraph translation, so use the structured fields as the rules reference for this entry.",
+      "invocation": {
+        "summoning": "+8",
+        "control": "+3",
+        "true_name": "2/2",
+        "base_cost": "3"
+      },
+      "stats": {
+        "INI": "16+1d6",
+        "PA": "18",
+        "VP": "15",
+        "AR": "2",
+        "speed": "10",
+        "RM": "9",
+        "GW": "3"
+      },
+      "attacks": [
+        {
+          "name": "Bite",
+          "distance_class": "H",
+          "AT": "14",
+          "damage": "1d6+2"
+        }
+      ],
+      "special_properties": [
+        "Presence II",
+        "Regeneration I",
+        "Resistance to magical and blessed damage",
+        "Immunity to profane damage"
+      ],
+      "possible_services": [
+        "Movement",
+        "Binding"
+      ],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_page": 219,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "demon"
+    },
+    {
+      "id": "quitslinga",
+      "name": "Quitslinga",
+      "german_name": "Quitslinga",
+      "category": "demon",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "Quitslinga is a summoned demon listed in the Pandemonium / demon entries of the invocation chapter. This regenerated TruePDF version keeps the English name, invocation modifiers, combat statistics, attacks, special properties and services in English. The original prose block was not cleanly separable enough for a full reliable paragraph translation, so use the structured fields as the rules reference for this entry.",
+      "invocation": {
+        "summoning": "+16",
+        "control": "+8",
+        "true_name": "2/4",
+        "base_cost": "16"
+      },
+      "stats": {
+        "INI": "14+1d6",
+        "PA": "10",
+        "AR": "4",
+        "speed": "6",
+        "RM": "12",
+        "GW": "14"
+      },
+      "attacks": [
+        {
+          "name": "Tentacles",
+          "distance_class": "NS",
+          "AT": "14",
+          "damage": "1d6+5"
+        }
+      ],
+      "special_properties": [],
+      "possible_services": [],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_page": 213,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "demon"
+    },
+    {
+      "id": "rahastes",
+      "name": "Rahastes",
+      "german_name": "Rahastes",
+      "category": "demon",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "Rahastes is a summoned demon listed in the Pandemonium / demon entries of the invocation chapter. This regenerated TruePDF version keeps the English name, invocation modifiers, combat statistics, attacks, special properties and services in English. The original prose block was not cleanly separable enough for a full reliable paragraph translation, so use the structured fields as the rules reference for this entry.",
+      "invocation": {
+        "summoning": "+12",
+        "control": "+16",
+        "true_name": "1/2",
+        "base_cost": "32"
+      },
+      "stats": {
+        "INI": "8+1d6",
+        "PA": "4",
+        "VP": "35",
+        "AR": "2",
+        "speed": "3",
+        "RM": "10",
+        "GW": "10"
+      },
+      "attacks": [],
+      "special_properties": [],
+      "possible_services": [
+        "Combat"
+      ],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_page": 214,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "demon"
+    },
+    {
+      "id": "scylaphotai",
+      "name": "Scylaphotai",
+      "german_name": "Scylaphotai",
+      "category": "demon",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "Scylaphotai is a summoned demon listed in the Pandemonium / demon entries of the invocation chapter. This regenerated TruePDF version keeps the English name, invocation modifiers, combat statistics, attacks, special properties and services in English. The original prose block was not cleanly separable enough for a full reliable paragraph translation, so use the structured fields as the rules reference for this entry.",
+      "invocation": {
+        "summoning": "+9",
+        "control": "+3",
+        "true_name": "3/5",
+        "base_cost": "5"
+      },
+      "stats": {
+        "INI": "8+1d6",
+        "PA": "4",
+        "VP": "35",
+        "AR": "2",
+        "speed": "3",
+        "RM": "10",
+        "GW": "10"
+      },
+      "attacks": [],
+      "special_properties": [
+        "Formlessness I, Was serwesen"
+      ],
+      "possible_services": [
+        "Physical Aid",
+        "Binding",
+        "Combat",
+        "Manifestation",
+        "Guard"
+      ],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_page": 220,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "demon"
+    },
+    {
+      "id": "shihayazad",
+      "name": "Shihayazad",
+      "german_name": "Shihayazad",
+      "category": "demon",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "Shihayazad is a summoned demon listed in the Pandemonium / demon entries of the invocation chapter. This regenerated TruePDF version keeps the English name, invocation modifiers, combat statistics, attacks, special properties and services in English. The original prose block was not cleanly separable enough for a full reliable paragraph translation, so use the structured fields as the rules reference for this entry.",
+      "invocation": {
+        "summoning": "+12",
+        "control": "nicht",
+        "true_name": "01-",
+        "base_cost": "15"
+      },
+      "stats": {
+        "INI": "9+1d6",
+        "PA": "6",
+        "VP": "50",
+        "AR": "5",
+        "speed": "6",
+        "RM": "9",
+        "GW": "16"
+      },
+      "attacks": [
+        {
+          "name": "Tentacles",
+          "distance_class": "NSP",
+          "AT": "15",
+          "damage": "2d6+2"
+        },
+        {
+          "name": "Beak",
+          "distance_class": "HN",
+          "AT": "18",
+          "damage": "3d6+3"
+        }
+      ],
+      "special_properties": [],
+      "possible_services": [],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_page": 220,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "demon"
+    },
+    {
+      "id": "shruuf",
+      "name": "Shruuf",
+      "german_name": "Shruuf",
+      "category": "demon",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "Shruuf is a summoned demon listed in the Pandemonium / demon entries of the invocation chapter. This regenerated TruePDF version keeps the English name, invocation modifiers, combat statistics, attacks, special properties and services in English. The original prose block was not cleanly separable enough for a full reliable paragraph translation, so use the structured fields as the rules reference for this entry.",
+      "invocation": {
+        "summoning": "+12",
+        "control": "+5",
+        "true_name": "4/6",
+        "base_cost": "15"
+      },
+      "stats": {
+        "INI": "9+1d6",
+        "PA": "6",
+        "VP": "50",
+        "AR": "5",
+        "speed": "6",
+        "RM": "9",
+        "GW": "16"
+      },
+      "attacks": [
+        {
+          "name": "Tentacles",
+          "distance_class": "NSP",
+          "AT": "15",
+          "damage": "2d6+2"
+        },
+        {
+          "name": "Beak",
+          "distance_class": "HN",
+          "AT": "18",
+          "damage": "3d6+3"
+        }
+      ],
+      "special_properties": [
+        "Regeneration I while manifested",
+        "Resistance to magical attacks",
+        "Invisibility I"
+      ],
+      "possible_services": [
+        "Search and Destroy",
+        "Binding",
+        "Combat",
+        "Manifestation",
+        "Guard",
+        "Search"
+      ],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_page": 221,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "demon"
+    },
+    {
+      "id": "sordul",
+      "name": "Sordul",
+      "german_name": "Sordul",
+      "category": "demon",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "Sordul is a summoned demon listed in the Pandemonium / demon entries of the invocation chapter. This regenerated TruePDF version keeps the English name, invocation modifiers, combat statistics, attacks, special properties and services in English. The original prose block was not cleanly separable enough for a full reliable paragraph translation, so use the structured fields as the rules reference for this entry.",
+      "invocation": {
+        "summoning": "+6",
+        "control": "+4",
+        "true_name": "4/6",
+        "base_cost": "6"
+      },
+      "stats": {
+        "INI": "12+1d6",
+        "PA": "8",
+        "VP": "40",
+        "AR": "3",
+        "speed": "10",
+        "RM": "6",
+        "GW": "10"
+      },
+      "attacks": [
+        {
+          "name": "Claws",
+          "distance_class": "N",
+          "AT": "12",
+          "damage": "special"
+        },
+        {
+          "name": "Bite",
+          "distance_class": "H",
+          "AT": "16",
+          "damage": "1d6+8"
+        }
+      ],
+      "special_properties": [
+        "Follow-up damage: acid"
+      ],
+      "possible_services": [
+        "Physical Aid",
+        "Binding",
+        "Combat",
+        "Manifestation",
+        "Guard"
+      ],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_page": 221,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "demon"
+    },
+    {
+      "id": "taifelel",
+      "name": "Taifelel",
+      "german_name": "Taifelel",
+      "category": "demon",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "Taifelel is a summoned demon listed in the Pandemonium / demon entries of the invocation chapter. This regenerated TruePDF version keeps the English name, invocation modifiers, combat statistics, attacks, special properties and services in English. The original prose block was not cleanly separable enough for a full reliable paragraph translation, so use the structured fields as the rules reference for this entry.",
+      "invocation": {
+        "summoning": "+10",
+        "control": "+3",
+        "true_name": "2/5",
+        "base_cost": "9"
+      },
+      "stats": {
+        "INI": "7+1d6",
+        "PA": "5",
+        "VP": "66",
+        "AR": "0",
+        "speed": "4",
+        "RM": "11",
+        "GW": "8"
+      },
+      "attacks": [
+        {
+          "name": "Fire Claws",
+          "distance_class": "HN",
+          "AT": "12",
+          "damage": "1d6+4"
+        }
+      ],
+      "special_properties": [
+        "Follow-up damage: burning for 1d6 combat roands",
+        "Immunity to fire",
+        "Vulnerability to water"
+      ],
+      "possible_services": [
+        "Binding",
+        "Combat",
+        "Manifestation",
+        "Guard"
+      ],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_page": 221,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "demon"
+    },
+    {
+      "id": "thalon",
+      "name": "Thalon",
+      "german_name": "Thalon",
+      "category": "demon",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "Thalon is a summoned demon listed in the Pandemonium / demon entries of the invocation chapter. This regenerated TruePDF version keeps the English name, invocation modifiers, combat statistics, attacks, special properties and services in English. The original prose block was not cleanly separable enough for a full reliable paragraph translation, so use the structured fields as the rules reference for this entry.",
+      "invocation": {
+        "summoning": "+5",
+        "control": "+0",
+        "true_name": "4/6",
+        "base_cost": "2"
+      },
+      "stats": {
+        "INI": "14+1d6",
+        "PA": "18",
+        "VP": "15",
+        "AR": "2",
+        "speed": "13",
+        "RM": "10",
+        "GW": "6"
+      },
+      "attacks": [
+        {
+          "name": "Bite",
+          "distance_class": "H",
+          "AT": "16",
+          "damage": "1d6+4"
+        }
+      ],
+      "special_properties": [
+        "Frenzy, Regeneration I, Invisibility I, Vulnerability (Firun, Ifirn)"
+      ],
+      "possible_services": [
+        "Movement",
+        "Binding",
+        "Manifestation",
+        "Search",
+        "Espionage"
+      ],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_page": 221,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "demon"
+    },
+    {
+      "id": "thaz_laraanji",
+      "name": "Thaz-Laraanji",
+      "german_name": "Thaz-Laraanji",
+      "category": "demon",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "Thaz-Laraanji is a summoned demon listed in the Pandemonium / demon entries of the invocation chapter. This regenerated TruePDF version keeps the English name, invocation modifiers, combat statistics, attacks, special properties and services in English. The original prose block was not cleanly separable enough for a full reliable paragraph translation, so use the structured fields as the rules reference for this entry.",
+      "invocation": {
+        "summoning": "+8",
+        "control": "+3",
+        "true_name": "3/6",
+        "base_cost": "3"
+      },
+      "stats": {
+        "INI": "12+1d6",
+        "VP": "80",
+        "AR": "3",
+        "speed": "1",
+        "RM": "22",
+        "GW": "4"
+      },
+      "attacks": [],
+      "special_properties": [
+        "Incorporeality 11, Un sichtbarkeit 11"
+      ],
+      "possible_services": [
+        "Possession",
+        "Combat",
+        "Manifestation"
+      ],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_page": 222,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "demon"
+    },
+    {
+      "id": "tlaluc",
+      "name": "Tlaluc",
+      "german_name": "Tlaluc",
+      "category": "demon",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "Tlaluc is a summoned demon listed in the Pandemonium / demon entries of the invocation chapter. This regenerated TruePDF version keeps the English name, invocation modifiers, combat statistics, attacks, special properties and services in English. The original prose block was not cleanly separable enough for a full reliable paragraph translation, so use the structured fields as the rules reference for this entry.",
+      "invocation": {
+        "summoning": "+7",
+        "control": "+4",
+        "true_name": "4/6",
+        "base_cost": "6"
+      },
+      "stats": {
+        "INI": "12+1d6",
+        "VP": "80",
+        "AR": "3",
+        "speed": "1",
+        "RM": "22",
+        "GW": "4"
+      },
+      "attacks": [],
+      "special_properties": [
+        "Formlessness I"
+      ],
+      "possible_services": [
+        "Physical Aid",
+        "Binding",
+        "Manifestation",
+        "Guard"
+      ],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_page": 208,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "demon"
+    },
+    {
+      "id": "tuur_amash",
+      "name": "Tuur-Amash",
+      "german_name": "Tuur-Amash",
+      "category": "demon",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "Tuur-Amash is a summoned demon listed in the Pandemonium / demon entries of the invocation chapter. This regenerated TruePDF version keeps the English name, invocation modifiers, combat statistics, attacks, special properties and services in English. The original prose block was not cleanly separable enough for a full reliable paragraph translation, so use the structured fields as the rules reference for this entry.",
+      "invocation": {
+        "summoning": "+13",
+        "control": "+8",
+        "true_name": "2/3",
+        "base_cost": "20"
+      },
+      "stats": {
+        "INI": "18+1d6",
+        "PA": "5",
+        "VP": "200",
+        "AR": "7",
+        "speed": "2",
+        "RM": "18",
+        "GW": "14"
+      },
+      "attacks": [
+        {
+          "name": "Zunge",
+          "distance_class": "NSP",
+          "AT": "16",
+          "damage": "1d20"
+        }
+      ],
+      "special_properties": [
+        "Mutation, Regenerati onI"
+      ],
+      "possible_services": [
+        "Possession",
+        "Binding",
+        "Manifestation",
+        "Guard"
+      ],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_page": 222,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "demon"
+    },
+    {
+      "id": "ulchuchu",
+      "name": "Ulchuchu",
+      "german_name": "Ulchuchu",
+      "category": "demon",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "Ulchuchu is a summoned demon listed in the Pandemonium / demon entries of the invocation chapter. This regenerated TruePDF version keeps the English name, invocation modifiers, combat statistics, attacks, special properties and services in English. The original prose block was not cleanly separable enough for a full reliable paragraph translation, so use the structured fields as the rules reference for this entry.",
+      "invocation": {
+        "summoning": "+11",
+        "control": "+4",
+        "true_name": "3/4",
+        "base_cost": "6"
+      },
+      "stats": {
+        "INI": "8+1d6",
+        "PA": "8",
+        "VP": "65",
+        "AR": "1",
+        "speed": "3",
+        "RM": "11",
+        "GW": "15"
+      },
+      "attacks": [
+        {
+          "name": "Tangschlingen",
+          "distance_class": "HNS",
+          "AT": "12",
+          "damage": "1d6"
+        }
+      ],
+      "special_properties": [],
+      "possible_services": [],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_page": 222,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "demon"
+    },
+    {
+      "id": "umdoreel",
+      "name": "Umdoreel",
+      "german_name": "Umdoreel",
+      "category": "demon",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "Umdoreel is a summoned demon listed in the Pandemonium / demon entries of the invocation chapter. This regenerated TruePDF version keeps the English name, invocation modifiers, combat statistics, attacks, special properties and services in English. The original prose block was not cleanly separable enough for a full reliable paragraph translation, so use the structured fields as the rules reference for this entry.",
+      "invocation": {
+        "summoning": "+9",
+        "control": "+7",
+        "true_name": "2/3",
+        "base_cost": "14"
+      },
+      "stats": {
+        "INI": "13+1d6",
+        "PA": "10",
+        "VP": "70",
+        "AR": "4",
+        "speed": "10",
+        "RM": "18",
+        "GW": "16"
+      },
+      "attacks": [
+        {
+          "name": "Bite",
+          "distance_class": "N",
+          "AT": "14",
+          "damage": "3d6+5"
+        },
+        {
+          "name": "Claws",
+          "distance_class": "NS",
+          "AT": "16",
+          "damage": "2d6+2"
+        }
+      ],
+      "special_properties": [
+        "Regeneration Terrifying Appearance I, Vulnerability (Firun, Ifirn)"
+      ],
+      "possible_services": [
+        "Search and Destroy",
+        "Binding",
+        "Combat",
+        "Manifestation",
+        "Search"
+      ],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_page": 223,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "demon"
+    },
+    {
+      "id": "usuzoreel",
+      "name": "Usuzoreel",
+      "german_name": "Usuzoreel",
+      "category": "demon",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "Usuzoreel is a summoned demon listed in the Pandemonium / demon entries of the invocation chapter. This regenerated TruePDF version keeps the English name, invocation modifiers, combat statistics, attacks, special properties and services in English. The original prose block was not cleanly separable enough for a full reliable paragraph translation, so use the structured fields as the rules reference for this entry.",
+      "invocation": {
+        "summoning": "+6",
+        "control": "+2",
+        "true_name": "2/3",
+        "base_cost": "2"
+      },
+      "stats": {
+        "INI": "18+1d6",
+        "PA": "14",
+        "VP": "40",
+        "speed": "15",
+        "RM": "11",
+        "GW": "8"
+      },
+      "attacks": [],
+      "special_properties": [
+        "Paraphysicality 11, Re generation I, Pack, Terrifying Appearance I"
+      ],
+      "possible_services": [
+        "Physical Aid",
+        "Binding"
+      ],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_page": 223,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "demon"
+    },
+    {
+      "id": "uttara_vha",
+      "name": "Uttara'Vha",
+      "german_name": "Uttara'Vha",
+      "category": "demon",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "Uttara'Vha is a summoned demon listed in the Pandemonium / demon entries of the invocation chapter. This regenerated TruePDF version keeps the English name, invocation modifiers, combat statistics, attacks, special properties and services in English. The original prose block was not cleanly separable enough for a full reliable paragraph translation, so use the structured fields as the rules reference for this entry.",
+      "invocation": {
+        "summoning": "+6",
+        "control": "+0",
+        "true_name": "3/2",
+        "base_cost": "2"
+      },
+      "stats": {
+        "INI": "14+1d6",
+        "PA": "14",
+        "VP": "12",
+        "AR": "2",
+        "speed": "14/1",
+        "RM": "7",
+        "GW": "5"
+      },
+      "attacks": [
+        {
+          "name": "Claws",
+          "distance_class": "H",
+          "AT": "14",
+          "damage": "1d6+2"
+        }
+      ],
+      "special_properties": [
+        "Paraphysicality 11, Ver wandbarkeit (Phex, Nandus)"
+      ],
+      "possible_services": [
+        "Binding",
+        "Espionage",
+        "Theft"
+      ],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "demon"
+    },
+    {
+      "id": "vhatacheor",
+      "name": "Vhatacheor",
+      "german_name": "Vhatacheor",
+      "category": "demon",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "Vhatacheor is a summoned demon listed in the Pandemonium / demon entries of the invocation chapter. This regenerated TruePDF version keeps the English name, invocation modifiers, combat statistics, attacks, special properties and services in English. The original prose block was not cleanly separable enough for a full reliable paragraph translation, so use the structured fields as the rules reference for this entry.",
+      "invocation": {
+        "summoning": "+17",
+        "control": "+9",
+        "true_name": "1/3",
+        "base_cost": "27"
+      },
+      "stats": {
+        "INI": "18+1d6",
+        "PA": "10",
+        "VP": "250",
+        "AR": "5",
+        "speed": "10",
+        "RM": "15",
+        "GW": "20"
+      },
+      "attacks": [
+        {
+          "name": "Claws",
+          "distance_class": "NSP",
+          "AT": "14",
+          "damage": "2d6+4"
+        }
+      ],
+      "special_properties": [
+        "Follow-up damage (fire), Regeneration I, Terrifying Appearance I, Vulnerability (Efferd), waterwesen spells: BRENNE (15)"
+      ],
+      "possible_services": [
+        "Search and Destroy",
+        "Physical Aid",
+        "Binding",
+        "Combat",
+        "Search"
+      ],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_page": 223,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "demon"
+    },
+    {
+      "id": "wilde_jagd",
+      "name": "Wild Hunt",
+      "german_name": "Wilde Jagd",
+      "category": "demon",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "Wild Hunt is a summoned demon listed in the Pandemonium / demon entries of the invocation chapter. This regenerated TruePDF version keeps the English name, invocation modifiers, combat statistics, attacks, special properties and services in English. The original prose block was not cleanly separable enough for a full reliable paragraph translation, so use the structured fields as the rules reference for this entry.",
+      "invocation": {
+        "summoning": "+21",
+        "control": "+12",
+        "base_cost": "49"
+      },
+      "stats": {
+        "speed": "d"
+      },
+      "attacks": [],
+      "special_properties": [],
+      "possible_services": [],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_page": 223,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "demon"
+    },
+    {
+      "id": "yar_yuram",
+      "name": "Yar'Yuram",
+      "german_name": "Yar'Yuram",
+      "category": "demon",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "Yar'Yuram is a summoned demon listed in the Pandemonium / demon entries of the invocation chapter. This regenerated TruePDF version keeps the English name, invocation modifiers, combat statistics, attacks, special properties and services in English. The original prose block was not cleanly separable enough for a full reliable paragraph translation, so use the structured fields as the rules reference for this entry.",
+      "invocation": {
+        "summoning": "+12",
+        "control": "+6",
+        "true_name": "212",
+        "base_cost": "6"
+      },
+      "stats": {},
+      "attacks": [],
+      "special_properties": [
+        "Incorporeality 11, Lim busreisender"
+      ],
+      "possible_services": [
+        "Possession",
+        "Binding",
+        "Manifestation",
+        "Search"
+      ],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "demon"
+    },
+    {
+      "id": "yash_natam",
+      "name": "Yash'Natam",
+      "german_name": "Yash'Natam",
+      "category": "demon",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "Yash'Natam is a summoned demon listed in the Pandemonium / demon entries of the invocation chapter. This regenerated TruePDF version keeps the English name, invocation modifiers, combat statistics, attacks, special properties and services in English. The original prose block was not cleanly separable enough for a full reliable paragraph translation, so use the structured fields as the rules reference for this entry.",
+      "invocation": {
+        "summoning": "+9",
+        "control": "+5",
+        "true_name": "2/5",
+        "base_cost": "8"
+      },
+      "stats": {
+        "INI": "11+1d6",
+        "PA": "10",
+        "VP": "80",
+        "AR": "5",
+        "speed": "16",
+        "RM": "13",
+        "GW": "10"
+      },
+      "attacks": [
+        {
+          "name": "Hoof Strike",
+          "distance_class": "NS",
+          "AT": "14",
+          "damage": "2d6+2"
+        }
+      ],
+      "special_properties": [
+        "Presence I",
+        "Regeneration I"
+      ],
+      "possible_services": [
+        "Binding",
+        "Manifestation"
+      ],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "demon"
+    },
+    {
+      "id": "yash_oreel",
+      "name": "Yash'oreel",
+      "german_name": "Yash'oreel",
+      "category": "demon",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "Yash'oreel is a summoned demon listed in the Pandemonium / demon entries of the invocation chapter. This regenerated TruePDF version keeps the English name, invocation modifiers, combat statistics, attacks, special properties and services in English. The original prose block was not cleanly separable enough for a full reliable paragraph translation, so use the structured fields as the rules reference for this entry.",
+      "invocation": {
+        "summoning": "+12",
+        "control": "+10",
+        "true_name": "1/1",
+        "base_cost": "15"
+      },
+      "stats": {
+        "INI": "12+1d6",
+        "PA": "0",
+        "VP": "120",
+        "AR": "0",
+        "speed": "25",
+        "RM": "12",
+        "GW": "8"
+      },
+      "attacks": [],
+      "special_properties": [
+        "Incorporeality I",
+        "Presence II",
+        "Regeneration I",
+        "Vulnerability to magic; spells: Frigifaxius and Body of Ice"
+      ],
+      "possible_services": [],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "demon"
+    },
+    {
+      "id": "yel_arizel",
+      "name": "Yel'Arizel",
+      "german_name": "Yel'Arizel",
+      "category": "demon",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "Yel'Arizel is a summoned demon listed in the Pandemonium / demon entries of the invocation chapter. This regenerated TruePDF version keeps the English name, invocation modifiers, combat statistics, attacks, special properties and services in English. The original prose block was not cleanly separable enough for a full reliable paragraph translation, so use the structured fields as the rules reference for this entry.",
+      "invocation": {
+        "summoning": "+6",
+        "control": "+3",
+        "true_name": "3/4",
+        "base_cost": "2"
+      },
+      "stats": {},
+      "attacks": [],
+      "special_properties": [
+        "Incorporeality 11"
+      ],
+      "possible_services": [
+        "Possession",
+        "Movement",
+        "Espionage"
+      ],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "demon"
+    },
+    {
+      "id": "yo_nahoh",
+      "name": "Yo'Nahoh",
+      "german_name": "Yo'Nahoh",
+      "category": "demon",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "Yo'Nahoh is a summoned demon listed in the Pandemonium / demon entries of the invocation chapter. This regenerated TruePDF version keeps the English name, invocation modifiers, combat statistics, attacks, special properties and services in English. The original prose block was not cleanly separable enough for a full reliable paragraph translation, so use the structured fields as the rules reference for this entry.",
+      "invocation": {
+        "summoning": "+19",
+        "control": "+10",
+        "true_name": "2/2",
+        "base_cost": "36"
+      },
+      "stats": {},
+      "attacks": [],
+      "special_properties": [
+        "Existence",
+        "Follow-up damage: poison",
+        "Presence III",
+        "Regeneration II",
+        "Terrifying Appearance I",
+        "Vulnerability to pure elemental water, Efferd and Swafnir",
+        "Aquatic being"
+      ],
+      "possible_services": [
+        "Search and Destroy",
+        "Binding",
+        "Combat",
+        "Manifestation",
+        "Guard",
+        "Search"
+      ],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "demon"
+    },
+    {
+      "id": "zanl",
+      "name": "Zanl",
+      "german_name": "Zanl",
+      "category": "demon",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "Zanl is a summoned demon listed in the Pandemonium / demon entries of the invocation chapter. This regenerated TruePDF version keeps the English name, invocation modifiers, combat statistics, attacks, special properties and services in English. The original prose block was not cleanly separable enough for a full reliable paragraph translation, so use the structured fields as the rules reference for this entry.",
+      "invocation": {
+        "summoning": "+10",
+        "control": "+3",
+        "true_name": "5/6"
+      },
+      "stats": {
+        "INI": "16+1d6",
+        "PA": "8",
+        "VP": "30",
+        "AR": "3",
+        "speed": "8",
+        "RM": "12",
+        "GW": "13"
+      },
+      "attacks": [
+        {
+          "name": "Pranke",
+          "distance_class": "N",
+          "AT": "15",
+          "damage": "1d6+4"
+        },
+        {
+          "name": "Bite",
+          "distance_class": "HN",
+          "AT": "12",
+          "damage": "2d6+2"
+        }
+      ],
+      "special_properties": [],
+      "possible_services": [],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "demon"
+    },
+    {
+      "id": "lebender_leichnam",
+      "name": "Living Corpse",
+      "german_name": "Lebender Leichnam",
+      "category": "undead",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "A living corpse is an animated human or humanoid dead body. It fights with bare hands or simple weapons and is one of the basic forms of necromantic undead.",
+      "invocation": {
+        "summoning": "+2",
+        "control": "+3"
+      },
+      "stats": {
+        "INI": "9+1d6",
+        "PA": "4",
+        "VP": "25",
+        "AR": "0",
+        "GW": "4",
+        "speed": "5",
+        "RM": "5"
+      },
+      "attacks": [
+        {
+          "name": "Hands",
+          "distance_class": "H",
+          "AT": "8",
+          "damage": "1d6+2"
+        },
+        {
+          "name": "Weapon",
+          "distance_class": "N or S",
+          "AT": "8",
+          "damage": "by weapon"
+        }
+      ],
+      "special_properties": [],
+      "possible_services": [],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_page": 227,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "undead"
+    },
+    {
+      "id": "mumie",
+      "name": "Mummy",
+      "german_name": "Mumie",
+      "category": "undead",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "A mummy is a corpse preserved by embalming or drying. Its main traits are enormous physical strength and vulnerability to fire. Mummification is common in Tulamid lands and occasionally known farther north through Norbard influence.",
+      "invocation": {
+        "summoning": "+6control:",
+        "control": "+7"
+      },
+      "stats": {
+        "INI": "12+1d6",
+        "PA": "7",
+        "VP": "45",
+        "AR": "2",
+        "GW": "12",
+        "speed": "5",
+        "RM": "15"
+      },
+      "attacks": [
+        {
+          "name": "Hands",
+          "distance_class": "H",
+          "AT": "7",
+          "damage": "1d6+5"
+        },
+        {
+          "name": "Weapon",
+          "distance_class": "N or S",
+          "AT": "7",
+          "damage": "by weapon +8"
+        }
+      ],
+      "special_properties": [
+        "Resistance to profane weapons",
+        "Vulnerability to fire",
+        "Increased disease transmission"
+      ],
+      "possible_services": [],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_page": 219,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "undead"
+    },
+    {
+      "id": "skelett",
+      "name": "Skeleton",
+      "german_name": "Skelett",
+      "category": "undead",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "A skeleton is what remains when a corpse has lain long enough in the grave that only bones and metal grave goods remain. It may still use weapons and armor buried with it.",
+      "invocation": {
+        "summoning": "+4",
+        "control": "+5"
+      },
+      "stats": {
+        "INI": "10+1d6",
+        "PA": "3",
+        "VP": "30",
+        "AR": "0",
+        "GW": "7",
+        "speed": "5",
+        "RM": "5"
+      },
+      "attacks": [
+        {
+          "name": "Hands",
+          "distance_class": "H",
+          "AT": "9",
+          "damage": "1d6+2"
+        },
+        {
+          "name": "Weapon",
+          "distance_class": "N or S",
+          "AT": "9",
+          "damage": "by weapon"
+        }
+      ],
+      "special_properties": [],
+      "possible_services": [],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_page": 219,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "undead"
+    },
+    {
+      "id": "tierkadaver_und_skelett",
+      "name": "Animal Carcass and Skeleton",
+      "german_name": "Tierkadaver und-skelett",
+      "category": "undead",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "Animal carcasses and animal skeletons are necromantically animated dead beasts. Wolves, bulls, warhorses, dogs and great cats are especially common choices. Their values are based on the living animal and then modified by decay or skeletal condition.",
+      "invocation": {
+        "summoning": "+4bis+7control:",
+        "control": "+2bis+4"
+      },
+      "stats": {
+        "PA": "-4"
+      },
+      "attacks": [],
+      "special_properties": [],
+      "possible_services": [],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_page": 227,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "undead"
+    },
+    {
+      "id": "zombie",
+      "name": "Zombie",
+      "german_name": "Zombie",
+      "category": "undead",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "Zombies are heavily decayed undead. They are slow, too clumsy for armor, fight with their hands or remaining limbs, suffer no wounds, and are notorious carriers of disease.",
+      "invocation": {
+        "summoning": "+3",
+        "control": "+4"
+      },
+      "stats": {
+        "INI": "6+1d6",
+        "PA": "2",
+        "VP": "25",
+        "AR": "0",
+        "GW": "6",
+        "speed": "4",
+        "RM": "8"
+      },
+      "attacks": [
+        {
+          "name": "Hands",
+          "distance_class": "H",
+          "AT": "7",
+          "damage": "1d6+2"
+        }
+      ],
+      "special_properties": [
+        "Zombies suffer no woands"
+      ],
+      "possible_services": [],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_page": 227,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "undead"
+    },
+    {
+      "id": "hundeblume_gelegentlich_wird_er_von_der_rasenden_wut",
+      "name": "Dog-Flower",
+      "german_name": "Hundeblume Gelegentlich wird er von der rasenden Wut",
+      "category": "chimera_or_daimonid",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "Dog-Flower is a chimera entry. The OCR for this block is badly contaminated, so only the translated combat values and properties should be treated as tentative.",
+      "invocation": {
+        "summoning": "+11",
+        "control": "+2",
+        "true_name": "6/6"
+      },
+      "stats": {
+        "INI": "10+1d6",
+        "PA": "0",
+        "VP": "10",
+        "AR": "0",
+        "speed": "18/1",
+        "RM": "15",
+        "GW": "2",
+        "EP": "20"
+      },
+      "attacks": [
+        {
+          "name": "Bite",
+          "distance_class": "HN",
+          "AT": "10",
+          "damage": "1d6+1"
+        },
+        {
+          "name": "Claws",
+          "distance_class": "N",
+          "AT": "11",
+          "damage": "1d6+5"
+        },
+        {
+          "name": "Bite",
+          "distance_class": "H",
+          "AT": "11",
+          "damage": "1d6+2"
+        }
+      ],
+      "special_properties": [
+        "CL2"
+      ],
+      "possible_services": [],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_page": 228,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "chimera_or_daimonid"
+    },
+    {
+      "id": "klauen_dkn_at_11_tp_1w6_5_gso_aup_20_mr_15_gw2_manlikor",
+      "name": "Manlikor",
+      "german_name": "Claws: distance classN AT 11 DP 1d6+5 speedO EP 20 RM 15 G1d2 Manlikor",
+      "category": "chimera_or_daimonid",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "Manlikor is a chimera entry. The OCR mixed this block with neighboring entries, so its translated name and combat data are tentative and should be checked against the page image.",
+      "invocation": {
+        "summoning": "+3?",
+        "control": "+12",
+        "true_name": "4/5"
+      },
+      "stats": {
+        "INI": "11+1d6",
+        "PA": "9",
+        "VP": "42",
+        "AR": "5",
+        "speed": "18/1",
+        "RM": "11",
+        "GW": "8",
+        "EP": "100"
+      },
+      "attacks": [
+        {
+          "name": "Bite",
+          "distance_class": "H",
+          "AT": "11",
+          "damage": "1d6+2"
+        }
+      ],
+      "special_properties": [
+        "CL2"
+      ],
+      "possible_services": [
+        "Movement",
+        "Following",
+        "Guard",
+        "Wait"
+      ],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_page": 209,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "chimera_or_daimonid"
+    },
+    {
+      "id": "wolfsechse",
+      "name": "Wolf-Lizard",
+      "german_name": "Wolfsechse",
+      "category": "chimera_or_daimonid",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "The wolf-lizard is a chimera, probably an early experiment from the Borbaradian period. It is reptilian like other lizards and is cold-sensitive.",
+      "invocation": {
+        "summoning": "+12",
+        "control": "+4",
+        "true_name": "4/5"
+      },
+      "stats": {
+        "INI": "11+1d6",
+        "PA": "9",
+        "VP": "42",
+        "AR": "5",
+        "speed": "12",
+        "RM": "13",
+        "GW": "8",
+        "EP": "120"
+      },
+      "attacks": [
+        {
+          "name": "Bite",
+          "distance_class": "H",
+          "AT": "11",
+          "damage": "1d6+2"
+        }
+      ],
+      "special_properties": [
+        "CL 4, Disadvantage: Cold-sensitive (WdH 265)"
+      ],
+      "possible_services": [
+        "Movement",
+        "Following",
+        "Guard",
+        "Wait"
+      ],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_page": 229,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "chimera_or_daimonid"
+    },
+    {
+      "id": "widderhyane",
+      "name": "Ram-Hyena",
+      "german_name": "Widderhyäne",
+      "category": "chimera_or_daimonid",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "The ram-hyena was created by the great chimera-master Zurbaran as a guard creature. After Zurbaran's death, the creatures reproduced and have long been found in the High North; some snow goblin clans use them as mounts and battle companions.",
+      "invocation": {
+        "summoning": "+21",
+        "control": "+4",
+        "true_name": "1/6"
+      },
+      "stats": {
+        "INI": "9+1d6",
+        "PA": "8",
+        "VP": "38",
+        "AR": "2",
+        "speed": "18",
+        "RM": "8",
+        "GW": "7",
+        "EP": "60"
+      },
+      "attacks": [
+        {
+          "name": "Horns",
+          "distance_class": "H",
+          "AT": "10",
+          "damage": "1d6+2"
+        },
+        {
+          "name": "Bite",
+          "distance_class": "H",
+          "AT": "13",
+          "damage": "1d6+5"
+        }
+      ],
+      "special_properties": [
+        "CL 4",
+        "Able to reproduce"
+      ],
+      "possible_services": [],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_page": 229,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "chimera_or_daimonid"
+    },
+    {
+      "id": "schlangenmensch",
+      "name": "Snake-Man",
+      "german_name": "Schlangenmensch",
+      "category": "chimera_or_daimonid",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "The snake-man is a repulsive chimera made from a constrictor snake and a human. Its upper body, arms and head are human, while the long lower body is serpentine. It can use ordinary weapons and fitted armor, but is neither quick-witted nor fast to react.",
+      "invocation": {
+        "summoning": "+20",
+        "control": "+8",
+        "true_name": "3/6"
+      },
+      "stats": {
+        "INI": "10+1d6",
+        "PA": "9",
+        "VP": "60",
+        "AR": "1",
+        "speed": "8",
+        "RM": "13/15",
+        "GW": "6",
+        "EP": "50"
+      },
+      "attacks": [
+        {
+          "name": "Weapon",
+          "distance_class": "by weapon",
+          "AT": "12",
+          "damage": "by weapon"
+        }
+      ],
+      "special_properties": [
+        "CL7"
+      ],
+      "possible_services": [
+        "Movement",
+        "Combat",
+        "Wait"
+      ],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_page": 229,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "chimera_or_daimonid"
+    },
+    {
+      "id": "myrkkyaa_kaika",
+      "name": "Myrkkyaa-Kaika",
+      "german_name": "Myrkkyaa-Kaika",
+      "category": "chimera_or_daimonid",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "The Myrkkyaa-Kaika is an unnatural cross between a Usuzoreel and a snow lynx, known in the High North. It combines the lynx's intelligence with demonic malice, making it a merciless, cold-hearted hunter.",
+      "invocation": {
+        "summoning": "+29",
+        "control": "+9",
+        "true_name": "2/4"
+      },
+      "stats": {
+        "INI": "12+1d6",
+        "PA": "10",
+        "VP": "35",
+        "AR": "3W",
+        "speed": "20",
+        "RM": "11",
+        "GW": "13",
+        "EP": "70"
+      },
+      "attacks": [
+        {
+          "name": "Claw Swipe",
+          "distance_class": "H",
+          "AT": "15",
+          "damage": "1d6+5"
+        },
+        {
+          "name": "Bite",
+          "distance_class": "H",
+          "AT": "15",
+          "damage": "2d6+4"
+        }
+      ],
+      "special_properties": [
+        "CL 7"
+      ],
+      "possible_services": [
+        "Movement",
+        "Following",
+        "Combat",
+        "Wait",
+        "Search"
+      ],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_page": 230,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "chimera_or_daimonid"
+    },
+    {
+      "id": "famulus",
+      "name": "Famulus",
+      "german_name": "Famulus",
+      "category": "chimera_or_daimonid",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "The Famulus, called the Casteless Servant, is likely a cross between Dharai and human. It is created for brutal physical labor: mining, quarrying, hauling immense loads, or destroying whatever task is put before it.",
+      "invocation": {
+        "summoning": "+44",
+        "control": "+7",
+        "true_name": "1/3"
+      },
+      "stats": {
+        "INI": "11+1d6",
+        "PA": "12",
+        "VP": "50",
+        "AR": "4",
+        "speed": "5",
+        "RM": "5",
+        "GW": "13",
+        "EP": "90"
+      },
+      "attacks": [
+        {
+          "name": "Claw Blow",
+          "distance_class": "HN",
+          "AT": "9",
+          "damage": "2d6+6"
+        },
+        {
+          "name": "Trample",
+          "distance_class": "H",
+          "AT": "10",
+          "damage": "3d6+8"
+        }
+      ],
+      "special_properties": [
+        "CL5, Terrifying Appearance I"
+      ],
+      "possible_services": [
+        "Movement",
+        "Following",
+        "Wait"
+      ],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_page": 230,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "chimera_or_daimonid"
+    },
+    {
+      "id": "weisser_hetzer",
+      "name": "White Hunter",
+      "german_name": "Weißer Hetzer",
+      "category": "chimera_or_daimonid",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "The White Hunter is a daimonid with two wolf heads, a spiked tail and the shoulder height of about one pace. It is a cross between a silver wolf and Tuur-Amash and is especially common in Tobrien.",
+      "invocation": {
+        "summoning": "+20",
+        "control": "+9",
+        "true_name": "3/5"
+      },
+      "stats": {
+        "INI": "11+1d6",
+        "PA": "12",
+        "VP": "25",
+        "AR": "3",
+        "speed": "11",
+        "RM": "7",
+        "GW": "10",
+        "EP": "100"
+      },
+      "attacks": [
+        {
+          "name": "Bite",
+          "distance_class": "H",
+          "AT": "14",
+          "damage": "1d6+5"
+        }
+      ],
+      "special_properties": [
+        "CL5"
+      ],
+      "possible_services": [
+        "Movement",
+        "Following",
+        "Combat",
+        "Guard",
+        "Wait",
+        "Protection"
+      ],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_page": 230,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "chimera_or_daimonid"
+    },
+    {
+      "id": "homunculus",
+      "name": "Homunculus",
+      "german_name": "Homunculus",
+      "category": "golem",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "A homunculus is a grey-clay golem about nine spans tall with roughly human features. Its stiff face may show faint expression, but overall it is clumsy and could pass for a crude statue when motionless.",
+      "invocation": {
+        "summoning": "+16",
+        "control": "+3",
+        "true_name": "5/7"
+      },
+      "stats": {
+        "INI": "8+1d6",
+        "PA": "2",
+        "VP": "90",
+        "AR": "3",
+        "speed": "5",
+        "RM": "15",
+        "GW": "12",
+        "EP": "500"
+      },
+      "attacks": [
+        {
+          "name": "Fist",
+          "distance_class": "HN",
+          "AT": "6",
+          "damage": "2d6+2"
+        }
+      ],
+      "special_properties": [
+        "Immunity to piercing attacks and fire",
+        "Immunity to the Form trait",
+        "Slight sensitivity to blessed objects",
+        "Morate sensitivity to objects blessed by Tsa"
+      ],
+      "possible_services": [
+        "Movement",
+        "Following",
+        "Wait"
+      ],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_page": 230,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "golem"
+    },
+    {
+      "id": "laufende_truhe_holz",
+      "name": "Walking Chest (Wood)",
+      "german_name": "Laufende Truhe (Holz)",
+      "category": "golem",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "A walking chest is a creaking clothes chest that moves on four short legs like a small Tuzak hound. It can carry its creator's treasures and attacks enemies by snapping its lid open and shut.",
+      "invocation": {
+        "summoning": "+17",
+        "control": "+6",
+        "true_name": "2/4"
+      },
+      "stats": {
+        "INI": "6+1d6",
+        "PA": "5",
+        "VP": "50",
+        "AR": "4",
+        "speed": "2",
+        "RM": "12",
+        "GW": "5",
+        "EP": "200"
+      },
+      "attacks": [
+        {
+          "name": "Bite",
+          "distance_class": "H",
+          "AT": "10",
+          "damage": "1d6+1"
+        }
+      ],
+      "special_properties": [
+        "Immunity to the Form trait",
+        "Vulnerability to fire",
+        "Slight sensitivity to blessed objects",
+        "Morate sensitivity to objects blessed by Tsa"
+      ],
+      "possible_services": [
+        "Movement",
+        "Following",
+        "Wait",
+        "Espionage"
+      ],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_page": 231,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "golem"
+    },
+    {
+      "id": "mephir",
+      "name": "Mephir",
+      "german_name": "Mephir",
+      "category": "golem",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "A Mephir is a very small gargoyle-like golem used by its creator for spying. It is usually made of marble, about two spans tall, and resembles a little human whose arms have been replaced by wings.",
+      "invocation": {
+        "summoning": "+28",
+        "control": "+5",
+        "true_name": "1/4"
+      },
+      "stats": {
+        "INI": "6+1d6",
+        "PA": "2",
+        "VP": "40",
+        "AR": "5",
+        "speed": "5",
+        "RM": "15",
+        "GW": "4",
+        "EP": "300"
+      },
+      "attacks": [
+        {
+          "name": "Claws",
+          "distance_class": "H",
+          "AT": "6",
+          "damage": "1d3"
+        }
+      ],
+      "special_properties": [
+        "Link to the summoner",
+        "Immunity to fire, piercing attacks and the Form trait",
+        "Slight sensitivity to blessed objects",
+        "Morate sensitivity to objects blessed by Ingerimm"
+      ],
+      "possible_services": [
+        "Movement",
+        "Following",
+        "Wait"
+      ],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_page": 231,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "golem"
+    },
+    {
+      "id": "ogerstatue",
+      "name": "Ogre Statue",
+      "german_name": "Ogerstatue",
+      "category": "golem",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "An ogre statue is a bronze statue of a two-and-a-half-pace-tall ogre. It is not detailed, but imposing; legends say Leonardo the Mechanicus uses such beings to guard his greatest masterpieces.",
+      "invocation": {
+        "summoning": "+29",
+        "control": "+3",
+        "true_name": "216"
+      },
+      "stats": {
+        "INI": "4+1d6",
+        "PA": "1",
+        "VP": "160",
+        "AR": "7",
+        "speed": "1",
+        "RM": "20",
+        "GW": "14",
+        "EP": "400"
+      },
+      "attacks": [
+        {
+          "name": "Fist",
+          "distance_class": "NS",
+          "AT": "5",
+          "damage": "3d6+12"
+        }
+      ],
+      "special_properties": [
+        "Immunity to fire, piercing attacks and the Form trait",
+        "Slight sensitivity to blessed objects",
+        "Morate sensitivity to objects blessed by Ingerimm"
+      ],
+      "possible_services": [
+        "Physical Aid",
+        "Movement",
+        "Following",
+        "Combat",
+        "Guard",
+        "Wait"
+      ],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_page": 231,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "golem"
+    },
+    {
+      "id": "fliesssandgolemid",
+      "name": "Quicksand Golemid",
+      "german_name": "Fließsandgolemid",
+      "category": "golem",
+      "source": "Wege der Zauberei (2011 TruePDF), invocation chapter, values of summoned beings",
+      "description": "A quicksand golemid is an extremely rare sand construct whose grains are individually controlled. It can slide under doors and through bars, reform into a humanoid shape, move almost silently, and is effectively unharmed by normal weapons passing through it.",
+      "invocation": {
+        "summoning": "+41",
+        "control": "+8",
+        "true_name": "1/6(nur"
+      },
+      "stats": {
+        "INI": "13+1d6",
+        "PA": "6",
+        "VP": "45",
+        "AR": "2",
+        "speed": "6",
+        "RM": "15",
+        "GW": "14",
+        "EP": "200"
+      },
+      "attacks": [
+        {
+          "name": "Wrestling",
+          "distance_class": "H",
+          "AT": "16",
+          "damage": "1d6(A)"
+        }
+      ],
+      "special_properties": [
+        "Attack with Ore (6 paces, 2d6 DP)",
+        "Formlessness I",
+        "Immunity to profane weapons",
+        "Immunity to the Form trait"
+      ],
+      "possible_services": [
+        "Movement",
+        "Following",
+        "Combat",
+        "Wait",
+        "Search",
+        "Espionage"
+      ],
+      "needs_data_review": true,
+      "source_book": "Wege der Zauberei",
+      "source_page": 230,
+      "source_pdf": "Wege der Zauberei (2011,TruePDF).pdf",
+      "entity_type": "golem"
+    }
+  ]
+}

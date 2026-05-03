@@ -4,6 +4,8 @@ interface Props {
   payload: Record<string, unknown>;
   category: string;
   fileKey: string;
+  /** Full codex file object (when needed to resolve refs, e.g. common_rules_ref). */
+  codexRaw?: Record<string, unknown>;
 }
 
 // ─── helpers ─────────────────────────────────────────────────────────────────
@@ -164,7 +166,18 @@ function WeaponRangeBandsBlock({ p }: { p: Record<string, unknown> }) {
 
 // ─── Entry layouts ────────────────────────────────────────────────────────────
 
-export default function EntryDetail({ payload, category, fileKey }: Props) {
+export default function EntryDetail({
+  payload,
+  category,
+  fileKey,
+  codexRaw,
+}: Props) {
+  if (category === "bestiary" && fileKey === "summoned_creatures")
+    return (
+      <SummonedBeingDetail p={payload} codexRaw={codexRaw ?? null} />
+    );
+  if (category === "bestiary" && fileKey === "beasts")
+    return <BestiaryDetail p={payload} />;
   if (category === "magic" && fileKey === "spells")
     return <SpellDetail p={payload} />;
   if (category === "core" && fileKey === "races")
@@ -587,6 +600,429 @@ function CharacterTraitDetail({ p }: { p: Record<string, unknown> }) {
       {prereqs.length > 0 && (
         <Row label="Prerequisites" value={<Tags items={prereqs} />} />
       )}
+      <Source src={p.source} />
+    </div>
+  );
+}
+
+// ─── Wege der Zauberei summons ──────────────────────────────────────────────
+
+/** Category keys from data/bestiary/summoned_creatures.json */
+const SUMMON_KIND_LABELS: Record<string, string> = {
+  elemental: "Elementals",
+  spirit: "Spirits",
+  golem: "Golems",
+  demon: "Demons",
+  undead: "Undead",
+  chimera_or_daimonid: "Chimeras / daimonids",
+};
+
+const SUMMON_STAT_KEYS = [
+  "INI",
+  "PA",
+  "VP",
+  "EP",
+  "ASP",
+  "AR",
+  "speed",
+  "RM",
+  "GW",
+  "CN",
+] as const;
+
+function formatSummonCategory(cat: unknown): string {
+  const k = String(cat ?? "").trim();
+  return (SUMMON_KIND_LABELS[k] ?? k.replace(/_/g, " ")) || "—";
+}
+
+function getByDotPath(doc: Record<string, unknown>, refPath: string): unknown {
+  const parts = refPath
+    .trim()
+    .replace(/^\.+/, "")
+    .split(".")
+    .filter(Boolean);
+  let cur: unknown = doc;
+  for (const key of parts) {
+    if (cur == null || typeof cur !== "object") return undefined;
+    cur = (cur as Record<string, unknown>)[key];
+  }
+  return cur;
+}
+
+function SharedRulesFromMeta({ blob }: { blob: Record<string, unknown> }) {
+  const common = blob.common_rules;
+  const bullets = Array.isArray(common)
+    ? (common as unknown[]).filter((x) => x != null)
+    : null;
+  return (
+    <div className="rounded-lg border border-surface-border bg-surface-border/20 px-3 py-2 mt-2 text-sm space-y-2">
+      <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">
+        Shared rules (WdZ excerpt)
+      </p>
+      {str(blob.entity_type) && (
+        <p className="text-ink-muted text-xs">
+          Type: {str(blob.entity_type).replace(/_/g, " ")}
+        </p>
+      )}
+      {bullets && bullets.length > 0 ? (
+        <ul className="list-disc pl-5 space-y-1 text-ink text-sm leading-relaxed">
+          {bullets.map((b, i) => (
+            <li key={i}>{String(b)}</li>
+          ))}
+        </ul>
+      ) : null}
+      {typeof blob.talents_by_rank === "object" &&
+      blob.talents_by_rank !== null ? (
+        <div>
+          <p className="text-xs uppercase text-ink-muted mb-1">
+            Talents by rank
+          </p>
+          <pre className="text-xs text-ink-muted whitespace-pre-wrap">
+            {JSON.stringify(blob.talents_by_rank, null, 2)}
+          </pre>
+        </div>
+      ) : null}
+      {typeof blob.spellcasting_by_rank === "object" &&
+      blob.spellcasting_by_rank !== null ? (
+        <div>
+          <p className="text-xs uppercase text-ink-muted mb-1">
+            Spellcasting by rank
+          </p>
+          <pre className="text-xs text-ink-muted whitespace-pre-wrap">
+            {JSON.stringify(blob.spellcasting_by_rank, null, 2)}
+          </pre>
+        </div>
+      ) : null}
+      {blob.medium_humanoid_golem_base_values != null ? (
+        <p className="text-xs text-ink-muted italic">
+          Golem base materials appear in codex meta (common_rules.golems); open
+          the JSON or consult WdZ for full tables.
+        </p>
+      ) : null}
+    </div>
+  );
+}
+
+function SummonedBeingDetail({
+  p,
+  codexRaw,
+}: {
+  p: Record<string, unknown>;
+  codexRaw: Record<string, unknown> | null;
+}) {
+  const attacks = Array.isArray(p.attacks)
+    ? (p.attacks as Record<string, unknown>[])
+    : [];
+  const invocation =
+    typeof p.invocation === "object" && p.invocation !== null
+      ? (p.invocation as Record<string, unknown>)
+      : null;
+  const rawStats =
+    typeof p.stats === "object" && p.stats !== null && !Array.isArray(p.stats)
+      ? (p.stats as Record<string, unknown>)
+      : null;
+
+  const statsOrderKeys = SUMMON_STAT_KEYS as readonly string[];
+  const statCells: { k: string; v: string }[] = [];
+  if (rawStats) {
+    for (const key of SUMMON_STAT_KEYS) {
+      const v = rawStats[key];
+      if (v == null || v === "") continue;
+      statCells.push({
+        k: key,
+        v:
+          typeof v === "object" && !Array.isArray(v)
+            ? JSON.stringify(v)
+            : String(v),
+      });
+    }
+    for (const key of Object.keys(rawStats).filter((k) => !statsOrderKeys.includes(k))) {
+      const v = rawStats[key];
+      if (v == null || v === "") continue;
+      statCells.push({
+        k: key,
+        v:
+          typeof v === "object" && !Array.isArray(v)
+            ? JSON.stringify(v)
+            : String(v),
+      });
+    }
+  }
+
+  const ref = str(p.common_rules_ref).trim();
+  let sharedBlob: Record<string, unknown> | null = null;
+  if (ref && codexRaw != null) {
+    const blob = getByDotPath(codexRaw, ref);
+    if (blob && typeof blob === "object" && !Array.isArray(blob))
+      sharedBlob = blob as Record<string, unknown>;
+  }
+
+  return (
+    <div className="space-y-3">
+      {p.needs_data_review === true && (
+        <div className="rounded-md border border-amber-800/70 bg-amber-950/30 px-3 py-2 text-xs text-amber-200/95">
+          This row was OCR-derived or flagged in the extraction; verify against
+          Wege der Zauberei before relying on stats or services at the table.
+        </div>
+      )}
+
+      {str(p.description) && (
+        <p className="text-ink text-sm leading-relaxed">{str(p.description)}</p>
+      )}
+
+      <Row label="Kind" value={formatSummonCategory(p.category)} />
+      <Row label="English name" value={str(p.name)} />
+      {str(p.german_name) && str(p.german_name) !== str(p.name) ? (
+        <Row label="German name" value={str(p.german_name)} />
+      ) : null}
+      <Row
+        label="Rank"
+        value={str(p.rank) ? str(p.rank).replace(/_/g, " ") : ""}
+      />
+      <Row
+        label="Element"
+        value={str(p.element) ? str(p.element).replace(/_/g, " ") : ""}
+      />
+
+      {typeof p.source_page === "number" ? (
+        <Row label="WdZ page (approx.)" value={String(p.source_page)} />
+      ) : null}
+
+      {invocation && Object.keys(invocation).length > 0 ? (
+        <div>
+          <p className="text-xs uppercase tracking-wide text-ink-muted mb-1">
+            Invocation modifiers
+          </p>
+          {Object.entries(invocation).map(([k, v]) => (
+            <Row key={k} label={k} value={String(v)} />
+          ))}
+        </div>
+      ) : null}
+
+      {statCells.length > 0 ? (
+        <div>
+          <p className="text-xs uppercase tracking-wide text-ink-muted mb-2">
+            Statistics
+          </p>
+          <div className="flex flex-wrap gap-2">
+            {statCells.map(({ k, v }) => (
+              <Stat key={k} label={k} value={v} />
+            ))}
+          </div>
+        </div>
+      ) : null}
+
+      {attacks.length > 0 ? (
+        <div>
+          <p className="text-xs uppercase tracking-wide text-ink-muted mb-2">
+            Attacks
+          </p>
+          <div className="rounded-lg border border-surface-border overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-surface-border text-left text-xs text-ink-muted">
+                  <th className="px-3 py-2 font-normal">Name</th>
+                  <th className="px-3 py-2 font-normal">DC</th>
+                  <th className="px-3 py-2 font-normal">AT</th>
+                  <th className="px-3 py-2 font-normal">Damage</th>
+                </tr>
+              </thead>
+              <tbody>
+                {attacks.map((a, i) => (
+                  <tr key={i} className="border-b border-surface-border last:border-0">
+                    <td className="px-3 py-1.5 text-ink">{str(a.name) || "—"}</td>
+                    <td className="px-3 py-1.5 text-ink-muted">
+                      {str(a.distance_class) || "—"}
+                    </td>
+                    <td className="px-3 py-1.5 tabular-nums">
+                      {a.AT != null ? String(a.AT) : "—"}
+                    </td>
+                    <td className="px-3 py-1.5">{str(a.damage) || "—"}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      ) : null}
+
+      <Row
+        label="Traits / specials"
+        value={
+          Array.isArray(p.special_properties) ? (
+            <Tags items={p.special_properties as unknown[]} />
+          ) : null
+        }
+      />
+
+      <Row
+        label="Possible services"
+        value={
+          Array.isArray(p.possible_services) ? (
+            <Tags items={p.possible_services as unknown[]} />
+          ) : null
+        }
+      />
+
+      {ref ? (
+        <div>
+          <p className="text-xs uppercase tracking-wide text-ink-muted mb-1">
+            Shared rules
+          </p>
+          {sharedBlob ? (
+            <SharedRulesFromMeta blob={sharedBlob} />
+          ) : (
+            <p className="text-xs text-ink-muted italic">{ref}</p>
+          )}
+        </div>
+      ) : null}
+
+      <Source src={p.source} />
+    </div>
+  );
+}
+
+// ─── Bestiary ───────────────────────────────────────────────────────────────
+
+const STAT_PRIMARY_KEYS = [
+  "INI",
+  "PA",
+  "VP",
+  "AR",
+  "CN",
+  "speed",
+  "EP",
+  "RM",
+  "GW",
+  "AT",
+  "damage",
+] as const;
+
+function BestiaryDetail({ p }: { p: Record<string, unknown> }) {
+  const rawStats =
+    typeof p.stats === "object" && p.stats !== null && !Array.isArray(p.stats)
+      ? (p.stats as Record<string, unknown>)
+      : null;
+  const attrBlock =
+    rawStats &&
+    typeof rawStats.attributes === "object" &&
+    rawStats.attributes !== null &&
+    !Array.isArray(rawStats.attributes)
+      ? (rawStats.attributes as Record<string, unknown>)
+      : null;
+  const statCells: { k: string; v: string }[] = [];
+  if (rawStats) {
+    for (const key of STAT_PRIMARY_KEYS) {
+      const v = rawStats[key];
+      if (v == null || v === "") continue;
+      statCells.push({ k: key, v: String(v) });
+    }
+    const extra = Object.keys(rawStats).filter(
+      (k) => k !== "attributes" && !STAT_PRIMARY_KEYS.includes(k as (typeof STAT_PRIMARY_KEYS)[number]),
+    );
+    for (const key of extra) {
+      const v = rawStats[key];
+      if (v == null || v === "") continue;
+      statCells.push({ k: key, v: typeof v === "object" ? JSON.stringify(v) : String(v) });
+    }
+  }
+
+  const physical =
+    typeof p.physical === "object" &&
+    p.physical !== null &&
+    !Array.isArray(p.physical)
+      ? (p.physical as Record<string, unknown>)
+      : null;
+
+  return (
+    <div className="space-y-3">
+      {p.needs_data_review === true && (
+        <div className="rounded-md border border-amber-800/70 bg-amber-950/30 px-3 py-2 text-xs text-amber-200/95">
+          Auto-extracted stats on this entry look incomplete or malformed; verify
+          against the printed stat block before play.
+        </div>
+      )}
+
+      {str(p.parent_group_name) && (
+        <Row label="Category" value={str(p.parent_group_name)} />
+      )}
+
+      {str(p.description) && (
+        <p className="text-ink text-sm leading-relaxed">{str(p.description)}</p>
+      )}
+
+      {typeof p.source_page === "number" ? (
+        <Row label="PDF page (approx.)" value={String(p.source_page)} />
+      ) : null}
+
+      {(str(p.distribution) || str(p.appearance)) && (
+        <div className="space-y-0">
+          <Row label="Distribution" value={str(p.distribution)} />
+          <Row label="Appearance" value={str(p.appearance)} />
+        </div>
+      )}
+
+      {physical && Object.keys(physical).length > 0 ? (
+        <div>
+          <p className="text-xs uppercase tracking-wide text-ink-muted mb-1">
+            Physical
+          </p>
+          {Object.entries(physical).map(([k, v]) => (
+            <Row key={k} label={k} value={String(v)} />
+          ))}
+        </div>
+      ) : null}
+
+      {statCells.length > 0 ? (
+        <div>
+          <p className="text-xs uppercase tracking-wide text-ink-muted mb-2">
+            Combat statistics
+          </p>
+          <div className="flex flex-wrap gap-2">
+            {statCells.map(({ k, v }) => (
+              <Stat key={k} label={k} value={v} />
+            ))}
+          </div>
+        </div>
+      ) : null}
+
+      {attrBlock && Object.keys(attrBlock).length > 0 ? (
+        <div>
+          <p className="text-xs uppercase tracking-wide text-ink-muted mb-1">
+            Attributes
+          </p>
+          <ObjTable obj={attrBlock} />
+        </div>
+      ) : null}
+
+      <Row
+        label="Special combat"
+        value={
+          Array.isArray(p.special_combat_rules) ? (
+            <Tags items={p.special_combat_rules as unknown[]} />
+          ) : null
+        }
+      />
+      <Row
+        label="Special abilities"
+        value={
+          Array.isArray(p.special_abilities) ? (
+            <Tags items={p.special_abilities as unknown[]} />
+          ) : null
+        }
+      />
+
+      {typeof p.loot === "object" && p.loot !== null && !Array.isArray(p.loot) ? (
+        <div>
+          <p className="text-xs uppercase tracking-wide text-ink-muted mb-1">
+            Loot / use
+          </p>
+          {Object.entries(p.loot as Record<string, unknown>).map(([k, v]) => (
+            <Row key={k} label={k} value={String(v ?? "—")} />
+          ))}
+        </div>
+      ) : null}
+
       <Source src={p.source} />
     </div>
   );

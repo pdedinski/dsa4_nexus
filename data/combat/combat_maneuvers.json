@@ -1,16 +1,18 @@
 {
   "meta": {
     "schema_version": "1.0",
-    "last_updated": "2026-05-02",
-    "description": "All combat actions and maneuvers for TDE4/DSA4.1. Maneuvers are grouped into attack actions and defense/parry actions. Basic maneuvers require no special ability; advanced maneuvers require the matching SA.",
+    "last_updated": "2026-05-03",
+    "description": "Combat actions and maneuvers for TDE4/DSA4.1. Maneuvers listed on the TDE4e wiki have detailed formatted descriptions adapted from the wiki page; non-matching entries are preserved.",
     "source_books": [
       "DSA 4.1 Basisregelwerk p. 99–108",
       "wiki: https://tde4e.fandom.com/wiki/Combat_Actions_and_Maneuvers"
     ]
   },
   "the_call_rules": {
-    "description": "The Call is a self-imposed penalty on an Attack or Parry. The total penalty may never exceed the hero's Talent Prowess for the weapon used, nor higher than the relevant AT or PA value. If a maneuver with a Call fails, all of the attacker's tests (including the next AT or PA action and any Free Actions up to that point) are penalized by the full Call amount. The penalty ends when the next AT or PA action is used. A fighter with the Special Ability Blade Dancer suffers only half the failed Call as a penalty.",
-    "source": "wiki: https://tde4e.fandom.com/wiki/Combat_Actions_and_Maneuvers"
+    "description": "The Call.\n\nMany maneuvers let the fighter voluntarily make their own Attack or Parry harder. This self-chosen penalty is called a Call. Fixed maneuver penalties, such as the basic penalty for a Stun Blow with a club, are also counted as part of the maneuver's total penalty.\n\nLimits:\n- The total penalty may not exceed the Talent Prowess of the weapon used.\n- The total penalty may not exceed the relevant Attack or Parry Value.\n- For offensive maneuvers, use the Attack Value.\n- For defensive maneuvers, use the Parry Value.\n\nFailed Call:\n- If a maneuver with a Call fails, the fighter suffers the full failed Call as a penalty.\n- This penalty applies to all tests until the fighter uses their next Attack or Parry action.\n- It also applies to Free Actions that require tests during that time.\n- Once the next Attack or Parry action is used, the penalty is cleared.\n\nBlade Dancer:\n- A fighter with the Blade Dancer Special Ability suffers only half the declared points as the failed Call penalty.\n\nExample:\n- A fighter fails a Called Attack with a Call of 5.\n- Their next Parry, Attack, or test-based Free Action is penalized by 5.\n- After that next Attack or Parry action is used, the penalty no longer applies.",
+    "source": "wiki: https://tde4e.fandom.com/wiki/Combat_Actions_and_Maneuvers",
+    "format": "plain_text_paragraphs_and_bullets",
+    "wiki_matched": true
   },
   "attack_actions": [
     {
@@ -21,9 +23,13 @@
       "base_modifier": "none",
       "requires_sa": false,
       "sa_requirement": null,
-      "compatible_talents": ["all_melee", "all_ranged"],
+      "compatible_talents": [
+        "all_melee",
+        "all_ranged"
+      ],
       "description": "A normal attack against a single opponent. Success is determined by a roll against the attacker's Attack Value on a D20.",
-      "source": "BRW p. 99"
+      "source": "BRW p. 99",
+      "wiki_matched": false
     },
     {
       "id": "blade_storm",
@@ -33,11 +39,22 @@
       "base_modifier": "AV/2 + 2 per attack",
       "requires_sa": true,
       "sa_requirement": "blade_storm",
-      "compatible_talents": ["bastard_swords", "daggers", "fencing_weapons", "infantry_weapons", "sabers", "swords", "spears", "staves"],
+      "compatible_talents": [
+        "bastard_swords",
+        "daggers",
+        "fencing_weapons",
+        "infantry_weapons",
+        "sabers",
+        "swords",
+        "spears",
+        "staves"
+      ],
       "max_ec": 4,
       "shield_restriction": "no shield (except parrying weapons that count as shields)",
-      "description": "Attack two opponents in a single action. The fighter uses half their Attack Value plus 2 for each of the two attacks (e.g., AV 15 attacks twice with AV 10). Cannot be combined with another maneuver. Cannot split a converted Parry Action or an additional attack from off-hand weapon. Attacked opponents must already be within ideal distance class. With Combat Awareness, the improved AV can be freely distributed between two opponents (minimum 6 per attack). With Blade Dancer, attacks can be split among up to three opponents.",
-      "source": "wiki: https://tde4e.fandom.com/wiki/Combat_Actions_and_Maneuvers"
+      "description": "Attack Action.\n\nBlade Storm allows a trained fighter to split one Attack Action between two opponents. It is useful when fighting several weaker defenders, but it requires the Blade Storm Special Ability and a suitable weapon.\n\nUsable with:\n- Bastard Swords\n- Daggers\n- Fencing Weapons\n- Infantry Weapons\n- Sabers\n- Swords\n- Spears\n- Staves\n\nRestrictions:\n- The attacker may not carry a shield, except shields that also count as Parrying Weapons.\n- Maximum Encumbrance is EC 4.\n- Both targets must already be within the attacker's ideal distance class.\n- The maneuver cannot be combined with another attack maneuver.\n- A converted Parry Action cannot be split this way.\n- An additional attack from an off-hand weapon cannot be split this way.\n\nResolution:\n- The attacker makes two attacks, one after the other.\n- Each attack uses half the attacker's Attack Value, plus 2.\n- Example: Attack Value 15 becomes two attacks at Attack Value 10.\n- The normal rules for fighting multiple opponents still apply.\n- The attacker cannot concentrate only on one opponent.\n\nSpecial cases:\n- With Combat Awareness, the improved Attack Value may be distributed freely between two attacks, but each attack must receive at least 6 points.\n- With Blade Dancer, the attack may be split between up to three opponents.",
+      "source": "wiki: https://tde4e.fandom.com/wiki/Combat_Actions_and_Maneuvers",
+      "wiki_matched": true,
+      "format": "plain_text_paragraphs_and_bullets"
     },
     {
       "id": "blunt_blow",
@@ -47,7 +64,14 @@
       "base_modifier": "AT -2 / -4 / -8 depending on weapon",
       "requires_sa": false,
       "sa_requirement": null,
-      "compatible_talents": ["bastard_swords", "axes_maces", "brawling", "sabers", "swords", "staves"],
+      "compatible_talents": [
+        "bastard_swords",
+        "axes_maces",
+        "brawling",
+        "sabers",
+        "swords",
+        "staves"
+      ],
       "at_penalty_by_weapon": {
         "combat_staves_and_clubs": -2,
         "axes_maces_with_flat_side": -4,
@@ -55,8 +79,10 @@
       },
       "damage_type": "endurance_damage",
       "sa_halves_penalty": "stun_blow",
-      "description": "Attack with the blunt side of a weapon to deal Endurance Damage Points instead of regular Hit Points. Useful for capturing opponents alive. ST-based damage modifiers still apply. With Stun Blow SA, the AT penalties are halved. Brawling with a weapon pommel inflicts real HP normally unless the fighter masters Stun Blow.",
-      "source": "wiki: https://tde4e.fandom.com/wiki/Combat_Actions_and_Maneuvers"
+      "description": "Attack Action +2/+4/+8.\n\nBlunt Blow is used when the attacker wants to disable or subdue an opponent instead of killing or seriously injuring them. The attacker strikes with a blunt side, pommel, club-like part of the weapon, or a suitable brawling weapon.\n\nUsable with:\n- Bastard Swords\n- Axes and Maces\n- Brawling, only with a brawling weapon or weapon pommel\n- Sabers\n- Swords\n- Staves\n\nAttack penalty:\n- +2 with combat staves and clubs.\n- +4 with axes or maces that have a usable flat side.\n- +8 with other eligible weapons.\n\nEffect:\n- Strength-based damage modifiers still apply.\n- The attack causes Endurance Damage Points instead of normal weapon damage.\n- A fighter with the Stun Blow Special Ability halves the listed attack penalties.\n- A brawling attack with a weapon pommel normally causes real damage, unless the attacker has Stun Blow and uses it as a Blunt Blow.",
+      "source": "wiki: https://tde4e.fandom.com/wiki/Combat_Actions_and_Maneuvers",
+      "wiki_matched": true,
+      "format": "plain_text_paragraphs_and_bullets"
     },
     {
       "id": "called_attack",
@@ -67,12 +93,33 @@
       "requires_sa": false,
       "sa_requirement": null,
       "sa_improves": "called_attack",
-      "compatible_talents": ["bastard_swords", "axes_maces", "infantry_weapons", "chain_weapons", "brawling", "wrestling", "sabers", "swords", "staves", "two_handed_blunt", "two_handed_swords"],
+      "compatible_talents": [
+        "bastard_swords",
+        "axes_maces",
+        "infantry_weapons",
+        "chain_weapons",
+        "brawling",
+        "wrestling",
+        "sabers",
+        "swords",
+        "staves",
+        "two_handed_blunt",
+        "two_handed_swords"
+      ],
       "damage_bonus_without_sa": "half of Call (rounded up)",
       "damage_bonus_with_sa": "full Call",
-      "prerequisite_for": ["cleave_attack", "stun_blow", "hammer_strike", "knockdown", "shield_splitter", "charge"],
-      "description": "The attacker declares a Call (self-chosen AT penalty) before rolling. If the attack succeeds and the Parry fails, half the Call (rounded up) is added to Damage Points. With the Called Attack SA, the full Call is added to Damage Points. If the attack fails, the attacker suffers the failed Call penalty on all subsequent tests until the next AT or PA action.",
-      "source": "wiki: https://tde4e.fandom.com/wiki/Combat_Actions_and_Maneuvers"
+      "prerequisite_for": [
+        "cleave_attack",
+        "stun_blow",
+        "hammer_strike",
+        "knockdown",
+        "shield_splitter",
+        "charge"
+      ],
+      "description": "Attack Action + Call.\n\nCalled Attack is a forceful strike. The attacker accepts a self-chosen penalty to the Attack test in exchange for increased damage if the blow lands.\n\nUsable with:\n- Bastard Swords\n- Axes and Maces\n- Infantry Weapons\n- Chain Weapons\n- Brawling\n- Wrestling\n- Sabers\n- Swords\n- Staves\n- Two-Handed Blunt Weapons\n- Two-Handed Swords\n\nDeclaration:\n- Before rolling, the attacker declares the Call.\n- The Call may not exceed the attacker's Talent Prowess with the weapon.\n- The Call may not exceed the Attack Value being used.\n\nEffect on success:\n- If the Attack succeeds and the defender fails to parry, half the Call is added to Damage Points.\n- Round the half Call up.\n- If the attacker has the Called Attack Special Ability, the full Call is added instead.\n- Severe Hit and Wound rules apply normally.\n\nEffect on failure:\n- A failed Called Attack causes the normal failed Call penalty.\n- Until the next Attack or Parry action is used, the fighter's tests are penalized by the full Call.\n- This also affects Free Actions that require tests.\n\nRelated maneuvers:\n- Called Attack is the basis for several stronger maneuvers, including Cleave Attack, Stun Blow, Hammer Strike, Knockdown, Shield Splitter, and similar force-based techniques.",
+      "source": "wiki: https://tde4e.fandom.com/wiki/Combat_Actions_and_Maneuvers",
+      "wiki_matched": true,
+      "format": "plain_text_paragraphs_and_bullets"
     },
     {
       "id": "charge",
@@ -82,16 +129,36 @@
       "base_modifier": "AT +4 (difficulty increase); consumes Parry Action",
       "requires_sa": true,
       "sa_requirement": "charge",
-      "compatible_talents": ["bastard_swords", "axes_maces", "infantry_weapons", "chain_weapons", "sabers", "swords", "spears", "staves", "two_handed_blunt", "two_handed_swords"],
+      "compatible_talents": [
+        "bastard_swords",
+        "axes_maces",
+        "infantry_weapons",
+        "chain_weapons",
+        "sabers",
+        "swords",
+        "spears",
+        "staves",
+        "two_handed_blunt",
+        "two_handed_swords"
+      ],
       "requirements": [
-        {"type": "min_base_speed", "value": 4},
-        {"type": "min_run_up", "value": 4, "unit": "paces"}
+        {
+          "type": "min_base_speed",
+          "value": 4
+        },
+        {
+          "type": "min_run_up",
+          "value": 4,
+          "unit": "paces"
+        }
       ],
       "damage_bonus_on_success": "half of Base Speed + 4 + optional Call",
       "parry_action_consumed": true,
       "counter_vulnerability": true,
-      "description": "Combines Move and Attack into one action. Gives up the Parry Action. Must achieve a 4+ pace run-up. AT is penalized by 4. Additional Call may be added for more damage. If the attack succeeds and the defender cannot parry/dodge, damage increases by half Base Speed + 4 + declared Call. Ends at attacker's desired distance class. If the defender has a longer-reach weapon and the Counter SA, they may attempt a Counter (Gegenhalten). Failure grants the defender a Free Attack and the attacker loses their Parry Action.",
-      "source": "wiki: https://tde4e.fandom.com/wiki/Combat_Actions_and_Maneuvers"
+      "description": "Attack Action +4; also consumes the Parry Action.\n\nCharge combines movement and attack into one powerful opening strike. It is usually used to start melee, because after the first clash there may not be enough room for another run-up.\n\nRequirements:\n- Requires the Charge Special Ability.\n- The attacker must have Base Speed 4 or higher, after Encumbrance is considered.\n- The attacker must be able to make at least a 4-pace run-up.\n- The attacker gives up the Parry Action for the game turn.\n\nUsable with:\n- Bastard Swords\n- Axes and Maces\n- Infantry Weapons\n- Chain Weapons\n- Sabers\n- Swords\n- Spears\n- Staves\n- Two-Handed Blunt Weapons\n- Two-Handed Swords\n\nResolution:\n- The Attack test is penalized by +4.\n- Because this is a Called Attack variant, the attacker may add another Call for more damage.\n\nEffect on success:\n- If the Attack succeeds and the defender cannot parry or dodge, damage increases.\n- Add half the attacker's Base Speed.\n- Add another +4 Damage Points.\n- Add any declared Call used for damage.\n- The Charge ends at the distance class chosen by the attacker, normally the optimal distance of the attacker's weapon.\n\nCounterplay:\n- If the defender has a longer-distance weapon and the appropriate Special Ability, they may attempt Counter.\n- This represents making the charging attacker run onto the defender's weapon.\n\nEffect on failure:\n- The defender may immediately make a Free Attack.\n- The attacker has still spent the Parry Action for the game turn.\n- The attacker may also suffer the failed Call penalty.\n- If the defender's desired distance class is longer than the attacker's target distance, the attacker remains at the defender's distance class.",
+      "source": "wiki: https://tde4e.fandom.com/wiki/Combat_Actions_and_Maneuvers",
+      "wiki_matched": true,
+      "format": "plain_text_paragraphs_and_bullets"
     },
     {
       "id": "cleave_attack",
@@ -101,12 +168,24 @@
       "base_modifier": "AT +4 per additional opponent; consumes Parry Action",
       "requires_sa": true,
       "sa_requirement": "cleave_attack",
-      "compatible_talents": ["bastard_swords", "axes_maces", "infantry_weapons", "chain_weapons", "sabers", "swords", "staves", "two_handed_blunt", "two_handed_swords"],
+      "compatible_talents": [
+        "bastard_swords",
+        "axes_maces",
+        "infantry_weapons",
+        "chain_weapons",
+        "sabers",
+        "swords",
+        "staves",
+        "two_handed_blunt",
+        "two_handed_swords"
+      ],
       "max_targets": 3,
       "parry_action_consumed": true,
       "knockdown_automatic": true,
-      "description": "A sweeping attack against up to three opponents in sequence. The fighter must forfeit their Parry Action. AT is penalized by 4 per opponent (e.g., attacking two opponents: AT +8). Additional Call may be added for damage increase. If the attacker also masters Feint, the Call may instead penalize all opponents' Parries/Dodges, or split between damage and Parry penalty. Every target who fails their Parry is driven back one distance class, loses 1d6 Initiative, and the attack is automatically a Knockdown. If an opponent cannot step back, they suffer 1d6 additional damage.",
-      "source": "wiki: https://tde4e.fandom.com/wiki/Combat_Actions_and_Maneuvers"
+      "description": "Attack Action +4 per opponent; also consumes the Parry Action.\n\nCleave Attack is a sweeping blow against several nearby opponents. The fighter turns the attack through a wide arc, striking up to three targets one after another.\n\nRequirements:\n- Requires the Cleave Attack Special Ability.\n- The fighter must give up the Parry Action for the round.\n- The maneuver cannot be used if the fighter has already spent the reaction elsewhere.\n\nUsable with:\n- Bastard Swords\n- Axes and Maces\n- Infantry Weapons\n- Chain Weapons\n- Sabers\n- Swords\n- Staves\n- Two-Handed Blunt Weapons\n- Two-Handed Swords\n\nResolution:\n- The Attack test is penalized by +4 per opponent.\n- Because this is a Called Attack variant, the attacker may add another Call.\n- If the attack succeeds, each defender rolls their own Parry.\n\nUse of the additional Call:\n- The Call may increase Damage Points against every target hit.\n- If the attacker also has Feint, the Call may instead penalize all defenders' Parries or Dodges.\n- The attacker may split the Call between damage increase and Parry/Dodge penalty.\n\nEffects on each failed Parry:\n- The target is hit and may suffer wounds normally.\n- The target is driven back one distance class.\n- The target loses 1d6 Initiative.\n- The attack also counts as an automatic Knockdown Attack.\n- If the target cannot step back, they suffer 1d6 additional damage.",
+      "source": "wiki: https://tde4e.fandom.com/wiki/Combat_Actions_and_Maneuvers",
+      "wiki_matched": true,
+      "format": "plain_text_paragraphs_and_bullets"
     },
     {
       "id": "death_blow",
@@ -116,8 +195,15 @@
       "base_modifier": "AT +8 + half opponent AR + optional Call; consumes Parry Action",
       "requires_sa": true,
       "sa_requirement": "death_blow",
-      "compatible_talents": ["daggers", "fencing_weapons", "swords_with_half_sword_sa", "spears"],
-      "restrictions": ["not against very large creatures"],
+      "compatible_talents": [
+        "daggers",
+        "fencing_weapons",
+        "swords_with_half_sword_sa",
+        "spears"
+      ],
+      "restrictions": [
+        "not against very large creatures"
+      ],
       "parry_action_consumed": true,
       "effects_on_success": [
         "Armor is ignored (not natural armor)",
@@ -125,8 +211,10 @@
         "Two additional wounds automatically inflicted"
       ],
       "failure_consequence": "Defender gets a Free Attack; attacker loses Parry Action for this turn; failed Call penalty applies",
-      "description": "A devastating thrust aimed at a vital spot. Must be declared no later than the attacker's Initiative Phase, forfeiting the Parry Action (not possible if Parry was already used). AT penalized by +8, plus half the opponent's Armor Rating (AR), plus optional Call. A shield adds its Parry modifier to the AT penalty. With the Called Attack SA, additional Call points may increase Damage Points. On success and failed Parry: armor ignored, Wound Threshold reduced by 2, and two extra wounds inflicted automatically. Not possible against very large creatures.",
-      "source": "wiki: https://tde4e.fandom.com/wiki/Combat_Actions_and_Maneuvers"
+      "description": "Attack Action +8 + half the opponent's AR + Call; also consumes the Parry Action.\n\nDeath Blow is a high-risk thrust meant to decide a fight with one precise, lethal attack. It is the thrusting-weapon counterpart to Hammer Strike.\n\nRequirements:\n- Requires the Death Blow Special Ability.\n- The attacker must give up the Parry Action.\n- The Parry Action must be given up no later than the attacker's Initiative Phase.\n- If the attacker has already used a Parry Action this game turn, Death Blow is not possible.\n\nUsable with:\n- Daggers\n- Fencing Weapons\n- Swords, if the attacker also knows Half-Sword\n- Spears\n\nAttack penalty:\n- Base penalty is +8.\n- Add half the defender's Armor Rating.\n- If the defender carries a shield, add the shield's Parry modifier to the attack penalty.\n- The attacker may add a further Call as a Feint to penalize the defender's Parry.\n- If the attacker has Called Attack, Call points may also be assigned to damage increase, even if the weapon normally does not allow Called Attack.\n\nEffect on success:\n- If the Attack succeeds and is not parried, armor is ignored when calculating Damage Points.\n- Natural armor is not ignored.\n- The defender's Wound Threshold is reduced by 2 for this attack.\n- The defender automatically suffers two additional wounds.\n\nEffect on failure:\n- The defender receives a Free Attack.\n- The attacker has still spent the Parry Action for the game turn.\n- The attacker suffers the failed Call penalty from +8 plus any voluntary Call.\n\nRestriction:\n- Death Blow cannot be used against very large creatures.",
+      "source": "wiki: https://tde4e.fandom.com/wiki/Combat_Actions_and_Maneuvers",
+      "wiki_matched": true,
+      "format": "plain_text_paragraphs_and_bullets"
     },
     {
       "id": "double_attack",
@@ -137,13 +225,17 @@
       "requires_sa": true,
       "sa_requirement": "double_attack",
       "prerequisite_sa": "ambidextrous_combat_i",
-      "compatible_talents": ["all_one_handed_except_chain_weapons_and_spears"],
+      "compatible_talents": [
+        "all_one_handed_except_chain_weapons_and_spears"
+      ],
       "restrictions": [
         "both weapons must be usable in the same distance class without penalty",
         "cannot combine with Supplemental Action from Ambidextrous Combat II or Parrying Weapons II or Death from the Left in same turn"
       ],
-      "description": "Simultaneously strike a single opponent with both weapons. Both ATs penalized by 2; off-hand gets additional -4 if weapons are not identical (the -3 off-hand penalty still applies unless Ambidextrous Combat II is known). Must be against a single opponent. Attacks roll individually. Neither partial attack can be a maneuver. Can conclude a Lunge and benefit from Master Parry bonus. If one partial attack is a Fumble, the other also automatically fails. Defender must use two Parry actions or a Targeted Dodge to avoid both.",
-      "source": "wiki: https://tde4e.fandom.com/wiki/Combat_Actions_and_Maneuvers"
+      "description": "Attack Action +2.\n\nDouble Attack lets a fighter strike one opponent with both weapons at almost the same time. The goal is to force the defender to deal with two separate blows in a single Initiative Phase.\n\nRequirements:\n- Requires the Double Attack Special Ability.\n- Requires Ambidextrous Combat I.\n- Both weapons must be usable in the same distance class without penalty.\n\nUsable with:\n- All one-handed weapons except Chain Weapons and Spears.\n\nRestrictions:\n- The maneuver is always directed against one opponent.\n- A converted Parry Action cannot be used for a Double Attack.\n- It cannot be used in the same game turn as a Supplemental Action from Ambidextrous Combat II.\n- It cannot be used in the same game turn as a Supplemental Action from Parrying Weapons II.\n- It cannot be used in the same game turn as Death from the Left.\n\nAttack penalties:\n- Both attacks are penalized by +2.\n- If the weapons are not identical, the off-hand attack suffers an additional +4 penalty.\n- The normal off-hand penalty also applies unless the fighter has Ambidextrous Combat II.\n\nResolution:\n- Roll both attacks separately.\n- Neither partial attack may be another maneuver.\n- The maneuver may conclude a Lunge.\n- It may benefit from a preceding Master Parry.\n- If one partial attack is a Fumble, the other partial attack automatically fails too.\n\nDefense:\n- The defender must spend two Parries to block both blows.\n- This can come from prepared conversion, Foresight, Defensive Combat Style, Wall of Blades, or off-hand Supplemental Actions.\n- Alternatively, the defender may use a Targeted Dodge to leave the reach of both blows.\n- If the attacks hit and are not parried, roll and apply the damage from each weapon separately.",
+      "source": "wiki: https://tde4e.fandom.com/wiki/Combat_Actions_and_Maneuvers",
+      "wiki_matched": true,
+      "format": "plain_text_paragraphs_and_bullets"
     },
     {
       "id": "feint",
@@ -154,14 +246,25 @@
       "requires_sa": false,
       "sa_requirement": null,
       "sa_improves": "feint",
-      "compatible_talents": ["all_armed_melee_except_chain_weapons_and_two_handed_blunt"],
+      "compatible_talents": [
+        "all_armed_melee_except_chain_weapons_and_two_handed_blunt"
+      ],
       "max_ec": 4,
       "shield_penalty": "additional -2 (except small shields)",
       "parry_penalty_without_sa": "half of Call",
       "parry_penalty_with_sa": "full Call",
-      "prerequisite_for": ["targeted_thrust", "stun_blow_advanced", "death_blow", "blade_storm", "knockdown_advanced", "trip"],
-      "description": "A deceptive strike — feign an attack at one body zone, then redirect. Declare a Call before rolling (same constraints as Called Attack). EC must not exceed 4 (Armor Use may reduce). Shield adds -2 penalty. If the maneuver succeeds, the defender's Parry (or Dodge) is penalized by half the Call (or full Call with the Feint SA). If the attack itself fails, the attacker suffers the failed Call penalty. Can be combined with Called Attack, and can use bonus points from a Master Parry or Bind maneuver.",
-      "source": "wiki: https://tde4e.fandom.com/wiki/Combat_Actions_and_Maneuvers"
+      "prerequisite_for": [
+        "targeted_thrust",
+        "stun_blow_advanced",
+        "death_blow",
+        "blade_storm",
+        "knockdown_advanced",
+        "trip"
+      ],
+      "description": "Attack Action + Call.\n\nFeint is a deceptive attack. The attacker threatens one body zone, then redirects the weapon to create a harder-to-defend opening.\n\nUsable with:\n- All armed melee talents except Chain Weapons and Two-Handed Blunt Weapons.\n\nRestrictions:\n- The attacker must be agile enough to perform the maneuver.\n- Encumbrance may not exceed EC 4, after relevant reductions such as Armor Use.\n- Carrying a shield adds another +2 penalty because it restricts mobility.\n- The shield penalty does not apply to small shields.\n\nDeclaration:\n- Before rolling, the attacker declares a Call.\n- The Call may not exceed the attacker's Talent Prowess with the weapon.\n- The Call may not exceed the Attack Value being used.\n\nEffect on success:\n- The Call does not increase damage.\n- Instead, it penalizes the defender's Parry or Dodge.\n- Without the Feint Special Ability, the defender suffers half the Call as a penalty.\n- With the Feint Special Ability, the defender suffers the full Call as a penalty.\n- If the defense fails, damage is rolled normally.\n\nCombinations:\n- Feint can sometimes be combined with Called Attack.\n- In such cases, the Call may be split between Parry penalty and damage increase.\n- Bonus points from Master Parry or Bind may be used for the Feint.\n\nEffect on failure:\n- If the Attack itself fails, the attacker suffers the normal failed Call penalty.\n\nPrerequisite role:\n- Feint is a prerequisite for several maneuvers, including Lunge, Stun Blow, Targeted Thrust, Blade Storm, Death Blow, and Trip.",
+      "source": "wiki: https://tde4e.fandom.com/wiki/Combat_Actions_and_Maneuvers",
+      "wiki_matched": true,
+      "format": "plain_text_paragraphs_and_bullets"
     },
     {
       "id": "hammer_strike",
@@ -171,15 +274,24 @@
       "base_modifier": "AT +8 + optional Call; consumes ALL actions for the round (not Free Actions)",
       "requires_sa": true,
       "sa_requirement": "hammer_strike",
-      "compatible_talents": ["bastard_swords_except_nightwind", "axes_maces", "infantry_weapons", "chain_weapons", "two_handed_blunt", "two_handed_swords"],
+      "compatible_talents": [
+        "bastard_swords_except_nightwind",
+        "axes_maces",
+        "infantry_weapons",
+        "chain_weapons",
+        "two_handed_blunt",
+        "two_handed_swords"
+      ],
       "restrictions": [
         "not against very large opponents",
         "not against opponents carrying a large or very large shield"
       ],
       "damage_multiplier_on_success": 3,
       "failure_consequence": "Defender gets a Free Attack the attacker cannot block",
-      "description": "A devastating full-commitment blow. Forfeit all other actions in the round (not Free Actions). If forced to parry before Initiative Phase, must choose between the Parry and the Hammer Strike. AT penalized by +8, plus optional Call for additional damage increase. Can be combined with Feint to penalize the Parry. On success with failed Parry: rolled Damage Points AND any declared damage Call are tripled. If a Parry succeeds, triggers a Break Test when the Call is +2 or more.",
-      "source": "wiki: https://tde4e.fandom.com/wiki/Combat_Actions_and_Maneuvers"
+      "description": "Attack Action +8 + Call; consumes all actions of the current round.\n\nHammer Strike is a full-commitment attack meant to overwhelm an opponent with one devastating blow.\n\nRequirements:\n- Requires the Hammer Strike Special Ability.\n- The attacker must give up all other actions in the current round, except Free Actions.\n- If forced to parry before their Initiative Phase, the attacker must choose between the Parry and the Hammer Strike.\n\nUsable with:\n- Bastard Swords, except Nightwind\n- Axes and Maces\n- Infantry Weapons\n- Chain Weapons\n- Two-Handed Blunt Weapons\n- Two-Handed Swords\n\nResolution:\n- The Attack test is penalized by +8.\n- Because this is a Called Attack variant, the attacker may add another Call to increase damage.\n- The maneuver may be combined with a Feint to penalize the defender's Parry.\n\nEffect on success:\n- The defender may attempt an unmodified Parry.\n- If the Parry fails, the rolled Damage Points are tripled.\n- Any Call assigned to damage increase is also tripled.\n- If the defender parries a Hammer Strike with an added Call of +2 or more, a Break Test may be triggered.\n\nRestrictions:\n- Hammer Strike cannot be used against very large opponents.\n- It cannot be used against opponents carrying a large or very large shield.\n\nEffect on failure:\n- The defender receives a Free Attack.\n- The attacker cannot block that Free Attack.",
+      "source": "wiki: https://tde4e.fandom.com/wiki/Combat_Actions_and_Maneuvers",
+      "wiki_matched": true,
+      "format": "plain_text_paragraphs_and_bullets"
     },
     {
       "id": "knockdown",
@@ -189,7 +301,17 @@
       "base_modifier": "AT +4 + optional Call",
       "requires_sa": true,
       "sa_requirement": "knockdown",
-      "compatible_talents": ["bastard_swords", "axes_maces", "infantry_weapons", "chain_weapons", "sabers_limited", "swords", "staves", "two_handed_blunt", "two_handed_swords"],
+      "compatible_talents": [
+        "bastard_swords",
+        "axes_maces",
+        "infantry_weapons",
+        "chain_weapons",
+        "sabers_limited",
+        "swords",
+        "staves",
+        "two_handed_blunt",
+        "two_handed_swords"
+      ],
       "sabers_restriction": "only Arbach, Haumesser, Khunchomer, and Sklaventod",
       "call_effect": "penalizes defender's ST test (not damage)",
       "defender_st_test_modifiers": {
@@ -201,8 +323,10 @@
       "on_st_test_failure": "defender falls prone, loses 2d6 Initiative",
       "extra_damage_condition": "if Damage Points exceed defender's ST, excess applies as additional penalty to ST test",
       "parry_may_trigger_break_test": true,
-      "description": "A powerful blow aimed to stagger or topple the opponent. AT penalized by +4, plus optional Call (which penalizes defender's ST test, not damage). On success with failed Parry: defender suffers normal damage AND must pass a Strength test or fall prone. Prone defenders suffer all associated disadvantages. Cannot be combined with other attack actions except Charge. A successful Parry may trigger a Break Test.",
-      "source": "wiki: https://tde4e.fandom.com/wiki/Combat_Actions_and_Maneuvers"
+      "description": "Attack Action +4 + Call.\n\nKnockdown is a forceful blow meant to stagger the target or throw them to the ground.\n\nRequirements:\n- Requires the Knockdown Special Ability.\n\nUsable with:\n- Bastard Swords\n- Axes and Maces\n- Infantry Weapons\n- Chain Weapons\n- Sabers, only Arbach, Haumesser, Khunchomer, and Sklaventod\n- Swords\n- Staves\n- Two-Handed Blunt Weapons\n- Two-Handed Swords\n\nResolution:\n- The Attack test is penalized by +4.\n- Because this is a Called Attack variant, the attacker may add another Call.\n- In this maneuver, the voluntary Call does not increase damage.\n- Instead, the Call penalizes the defender's Strength test.\n\nEffect on success:\n- If the Attack succeeds and is not parried, the defender suffers normal weapon damage.\n- The defender must then pass a Strength test to remain standing.\n- Steady Stand eases this test by 1.\n- Balance eases this test by 2.\n- Outstanding Balance eases this test by 4.\n\nIf the Strength test succeeds:\n- The defender remains standing.\n- The defender loses 1d6 Initiative.\n\nIf the Strength test fails:\n- The defender falls prone.\n- The defender loses 2d6 Initiative.\n- In grid combat, the defender falls into the adjacent square away from the attacker.\n- The defender then suffers the normal disadvantages of being prone.\n\nAdditional penalty:\n- If one blow causes more Damage Points than the defender's Strength, the excess Damage Points are added as an extra penalty to the Strength test.\n\nRestrictions and notes:\n- Knockdown cannot be combined with another Attack Action except Charge.\n- It can use points from a preceding Master Parry.\n- A successful Parry against Knockdown may trigger a Break Test.",
+      "source": "wiki: https://tde4e.fandom.com/wiki/Combat_Actions_and_Maneuvers",
+      "wiki_matched": true,
+      "format": "plain_text_paragraphs_and_bullets"
     },
     {
       "id": "shield_splitter",
@@ -212,11 +336,18 @@
       "base_modifier": "AT +8 - shield's PA modifier",
       "requires_sa": true,
       "sa_requirement": "shield_splitter",
-      "compatible_talents": ["axes_maces", "chain_weapons", "two_handed_blunt", "two_handed_swords"],
+      "compatible_talents": [
+        "axes_maces",
+        "chain_weapons",
+        "two_handed_blunt",
+        "two_handed_swords"
+      ],
       "call_effect": "penalizes defender's Parry (if attacker has Feint SA) or reduces Break Test",
       "break_test_modifier": "-4 - optional Call",
-      "description": "An attack aimed at the opponent's shield. AT penalized by 8 but eased by the shield's PA bonus (a large shield is easier to hit). Optional Call can penalize the Parry (with Feint SA) or reduce the Break Test. On success with failed Parry: immediate Break Test for the shield at -4 - optional Call. If Break Test fails, the shield is destroyed (no damage to bearer). If successful, the shield gains a Break Point. A roll of 12 forces an immediate Break Test for the attacker's weapon.",
-      "source": "wiki: https://tde4e.fandom.com/wiki/Combat_Actions_and_Maneuvers"
+      "description": "Attack Action +8 minus the shield's Parry Value modifier.\n\nShield Splitter is an attack directed at the opponent's shield rather than the opponent. It aims to break, splinter, or deform the shield so it can no longer protect its bearer.\n\nRequirements:\n- Requires the Shield Splitter Special Ability.\n\nUsable with:\n- Axes and Maces\n- Chain Weapons\n- Two-Handed Blunt Weapons\n- Two-Handed Swords\n\nResolution:\n- The Attack test is penalized by +8.\n- The penalty is reduced by the shield's Parry Value bonus, because a larger shield is easier to hit.\n- The attacker may declare an additional Call.\n\nUse of the additional Call:\n- If the attacker has Feint, the Call may penalize the shield-bearer's Parry.\n- Otherwise, or instead, the Call may be subtracted from the following Break Test.\n- The Call does not increase damage to the shield-bearer.\n\nEffect on success:\n- If the Attack succeeds and the defender fails the shield Parry, the shield must immediately make a Break Test.\n- Subtract 4 plus any additional Call from the 2d6 Break Test roll.\n- If the Break Test fails, the shield is destroyed and grants no further protection.\n- The shield-bearer takes no direct damage from this maneuver.\n- If the Break Test succeeds, the shield gains 1 Break Point.\n- If the Break Test roll is 12, the attacker's weapon must also immediately make a Break Test.",
+      "source": "wiki: https://tde4e.fandom.com/wiki/Combat_Actions_and_Maneuvers",
+      "wiki_matched": true,
+      "format": "plain_text_paragraphs_and_bullets"
     },
     {
       "id": "stun_blow",
@@ -226,7 +357,14 @@
       "base_modifier": "AT +2 / +4 / +8 depending on weapon + optional Call",
       "requires_sa": true,
       "sa_requirement": "stun_blow",
-      "compatible_talents": ["bastard_swords", "axes_maces", "brawling", "sabers", "swords", "staves"],
+      "compatible_talents": [
+        "bastard_swords",
+        "axes_maces",
+        "brawling",
+        "sabers",
+        "swords",
+        "staves"
+      ],
       "at_penalty_by_weapon": {
         "combat_staves_and_blunt_maces": 2,
         "axes_maces_blunt_side": 4,
@@ -234,8 +372,10 @@
       },
       "damage_type": "endurance_damage",
       "unconsciousness_trigger": "Endurance loss > Wound Threshold: CN test; Endurance loss > CN: automatic unconscious for 1d6 turns",
-      "description": "Combination of Blunt Blow and Called Attack. Requires Stun Blow SA. Deals Endurance Damage Points. Can be combined with Called Attack or Feint, and can use Master Parry or Bind bonus points. With Brawling and Stun Blow SA, can attempt to incapacitate with weapon pommel (AT -4). If Endurance loss exceeds Wound Threshold, defender must pass a CN test or fall unconscious for 1d6 turns. If Endurance loss exceeds CN, unconsciousness is automatic. Only works against creatures that can be stunned (not undead, demons, most slimes, etc.).",
-      "source": "wiki: https://tde4e.fandom.com/wiki/Combat_Actions_and_Maneuvers"
+      "description": "Attack Action +2/+4/+8 + Call.\n\nStun Blow combines Blunt Blow and Called Attack. It is used to incapacitate a target through Endurance loss instead of normal killing damage.\n\nRequirements:\n- Requires the Stun Blow Special Ability.\n- The weapon must have a usable blunt side or striking surface.\n\nUsable with:\n- Bastard Swords\n- Axes and Maces\n- Brawling, only with brawling weapons or a weapon pommel\n- Sabers\n- Swords\n- Staves\n\nAttack penalty:\n- +2 with combat staves and blunt maces or clubs.\n- +4 with the blunt side of other axes and maces.\n- +8 with all other eligible weapons.\n\nEffect:\n- Damage is tracked as Endurance Damage Points.\n- The maneuver may be combined with Called Attack or Feint.\n- Bonus points from Master Parry or Bind may be used.\n\nPommel or brawling use:\n- A fighter with Stun Blow may try to incapacitate an opponent with a weapon pommel.\n- This is a Brawling Attack penalized by +4.\n- The attacker must be close enough to strike this way, usually Melee Distance Class if distance classes are used.\n\nIncapacitation:\n- If one blow causes Endurance loss greater than the target's Wound Threshold, the target must pass a Constitution test.\n- On a failed Constitution test, the target falls unconscious for 1d6 game turns.\n- If the Endurance loss is greater than the target's Constitution, unconsciousness is automatic.\n- A wound may still occur if the real Damage Points exceed the target's Wound Threshold.\n\nRestrictions:\n- Stun Blow only works against creatures that can be stunned.\n- It does not work against undead, demons, and many creatures without a skull or comparable anatomy, such as slimes or kraken.\n- Against animals, the attacker should succeed at an Animal Lore test to judge the anatomy correctly; the penalty is set by the GM according to the animal.",
+      "source": "wiki: https://tde4e.fandom.com/wiki/Combat_Actions_and_Maneuvers",
+      "wiki_matched": true,
+      "format": "plain_text_paragraphs_and_bullets"
     },
     {
       "id": "targeted_thrust",
@@ -245,8 +385,15 @@
       "base_modifier": "AT +4 + half opponent AR + optional Call",
       "requires_sa": true,
       "sa_requirement": "targeted_thrust",
-      "compatible_talents": ["daggers", "fencing_weapons", "swords_with_half_sword_sa", "spears"],
-      "restrictions": ["only against creatures with discernible vulnerable points (not most demons, slime creatures, most undead)"],
+      "compatible_talents": [
+        "daggers",
+        "fencing_weapons",
+        "swords_with_half_sword_sa",
+        "spears"
+      ],
+      "restrictions": [
+        "only against creatures with discernible vulnerable points (not most demons, slime creatures, most undead)"
+      ],
       "effects_on_success": [
         "Armor ignored (even natural armor)",
         "Wound Threshold reduced by 2",
@@ -255,8 +402,10 @@
       "call_effect": "penalizes defender's Parry (Feint variant)",
       "shield_penalty": "shield Parry modifier added to AT penalty",
       "failure_consequence": "equivalent to failed Call of 4 + optional Call",
-      "description": "A precisely targeted thrust at a vulnerable spot. AT penalized by +4 + half opponent's AR. Shield adds its PA modifier to the AT penalty. Optional Call further penalizes the Parry. On success with failed Parry: armor is fully ignored, Wound Threshold reduced by 2, and one extra wound inflicted automatically. Requires Targeted Thrust SA.",
-      "source": "wiki: https://tde4e.fandom.com/wiki/Combat_Actions_and_Maneuvers"
+      "description": "Attack Action +4 + half the opponent's AR + Call.\n\nTargeted Thrust is a precise attack with a thrusting weapon. It aims for a vulnerable point, bypassing armor and increasing the chance of a serious wound.\n\nRequirements:\n- Requires the Targeted Thrust Special Ability.\n\nUsable with:\n- Daggers\n- Fencing Weapons\n- Swords, if the attacker also knows Half-Sword\n- Spears\n\nAttack penalty:\n- Base penalty is +4.\n- Add half the defender's Armor Rating.\n- If the defender carries a shield, add the shield's Parry modifier to the attack penalty.\n- The attacker may add a further Call to penalize the defender's Parry.\n\nEffect on success:\n- If the Attack succeeds and is not parried, the attack hits a vulnerable point.\n- Armor is ignored.\n- Natural armor is also ignored.\n- Hit Points are effectively Damage Points.\n- The defender's Wound Threshold is reduced by 2 for this attack.\n- The defender automatically suffers one additional wound.\n\nEffect on failure:\n- A failed Targeted Thrust counts as a failed Call of 4 plus any voluntary Call.\n\nRestriction:\n- Targeted Thrust only works against creatures with recognizable vulnerable points.\n- It usually cannot be used against most demons, slime creatures, or most undead.",
+      "source": "wiki: https://tde4e.fandom.com/wiki/Combat_Actions_and_Maneuvers",
+      "wiki_matched": true,
+      "format": "plain_text_paragraphs_and_bullets"
     }
   ],
   "defense_actions": [
