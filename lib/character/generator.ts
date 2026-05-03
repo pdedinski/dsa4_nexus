@@ -1094,13 +1094,28 @@ export function generateCharacter(
     cultureNames.by_culture[culture.id as keyof typeof cultureNames.by_culture];
   let displayName = "Unnamed";
   if (nameEntry) {
-    const first =
-      gender === "male"
-        ? pick(rng, nameEntry.first_names_male.length ? nameEntry.first_names_male : nameEntry.first_names_female)
-        : pick(rng, nameEntry.first_names_female.length ? nameEntry.first_names_female : nameEntry.first_names_male);
-    const last =
-      nameEntry.last_names.length > 0 ? pick(rng, nameEntry.last_names) : "";
-    displayName = last ? `${first} ${last}` : first;
+    const male = nameEntry.first_names_male ?? [];
+    const female = nameEntry.first_names_female ?? [];
+    const unisex = (nameEntry as { unisex_names?: string[] }).unisex_names ?? [];
+    let firstPool: string[] = [];
+    if (unisex.length > 0 && male.length === 0 && female.length === 0) {
+      firstPool = unisex;
+    } else {
+      firstPool =
+        gender === "male"
+          ? male.length
+            ? male
+            : female
+          : female.length
+            ? female
+            : male;
+    }
+    if (firstPool.length > 0) {
+      const first = pick(rng, firstPool);
+      const lastNames = nameEntry.last_names ?? [];
+      const last = lastNames.length > 0 ? pick(rng, lastNames) : "";
+      displayName = last ? `${first} ${last}` : first;
+    }
   }
 
   const ageYears = 16 + Math.floor(rng() * 20) + (profession.time_consuming ? 3 : 0);
