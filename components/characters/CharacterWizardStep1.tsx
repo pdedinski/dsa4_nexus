@@ -7,7 +7,7 @@ import professionsData from "@/data/core/professions.json";
 import conceptWeights from "@/data/concepts/concept_weights.json";
 import type { ConceptId } from "@/lib/character/types";
 import type { GenerateCharacterInput } from "@/lib/character/types";
-import { needsSpellSelectionStep } from "@/lib/character/generator";
+import { needsSpellSelectionStep, satisfiesProfessionRaceRequirement } from "@/lib/character/generator";
 import BodyPortal from "@/components/ui/BodyPortal";
 
 function raceAllowsCulture(raceId: string, cultureId: string) {
@@ -34,7 +34,7 @@ function professionAllowedForRace(professionId: string, raceId: string) {
   const rr = p.requirements.find(
     (r): r is { type: "race"; race: string } => r.type === "race"
   );
-  if (rr && rr.race !== raceId) return false;
+  if (rr && !satisfiesProfessionRaceRequirement(rr.race, raceId)) return false;
   return true;
 }
 

@@ -191,10 +191,43 @@ export default function CharacterSheet({ sheet }: { sheet: Sheet }) {
         <ul className="list-none pl-0 mb-2 space-y-1">
           {sheetM.automaticDisadvantages.map((x, i) => (
             <li key={`auto-dis-${x.id}-${x.rating ?? ""}-${i}`}>
-              <CodexLink onOpen={() => setPeek({ kind: "trait", id: x.id })}>
-                {x.name ?? humanizeSnake(x.id)}
-                {x.rating != null ? ` (${x.rating})` : ""}
-              </CodexLink>
+              {x.pick_one_disadvantages &&
+              x.pick_one_disadvantages.length > 0 ? (
+                <span className="inline-flex flex-wrap items-baseline gap-x-1 gap-y-1">
+                  <span className="text-ink-muted shrink-0">Choose one:</span>
+                  {x.pick_one_disadvantages.map((alt, j) => (
+                    <span
+                      key={`${alt.id}-${j}`}
+                      className="inline-flex items-baseline gap-1"
+                    >
+                      {j > 0 ? (
+                        <span className="text-ink-muted"> · or · </span>
+                      ) : null}
+                      <CodexLink
+                        onOpen={() =>
+                          setPeek({ kind: "trait", id: alt.id })
+                        }
+                      >
+                        {humanizeSnake(alt.id)}
+                        {alt.rating != null ? ` (${alt.rating})` : ""}
+                      </CodexLink>
+                    </span>
+                  ))}
+                  {x.note ? (
+                    <span className="text-ink-muted text-xs"> — {x.note}</span>
+                  ) : null}
+                </span>
+              ) : (
+                <>
+                  <CodexLink onOpen={() => setPeek({ kind: "trait", id: x.id })}>
+                    {x.name ?? humanizeSnake(x.id)}
+                    {x.rating != null ? ` (${x.rating})` : ""}
+                  </CodexLink>
+                  {x.note ? (
+                    <span className="text-ink-muted text-xs"> — {x.note}</span>
+                  ) : null}
+                </>
+              )}
             </li>
           ))}
         </ul>

@@ -1,11 +1,12 @@
 {
   "meta": {
     "schema_version": "1.0",
-    "last_updated": "2026-05-02",
-    "description": "All playable races for TDE4/DSA4.1. Sourced from DSA 4.1 Basisregelwerk. Attribute modifiers are applied AFTER attribute purchase. Derived value modifiers are flat additions. Talent modifiers are added to the baseline before talent point spending.",
+    "last_updated": "2026-05-04",
+    "description": "All playable races for TDE4/DSA4.1. Sourced from DSA 4.1 Basisregelwerk. Attribute modifiers are applied AFTER attribute purchase. Derived value modifiers are flat additions. Talent modifiers are added to the baseline before talent point spending. Enriched with English race descriptions from Wege der Helden, preserving existing JSON structure and keys. Expanded with additional races and racial variants from Wege der Helden p. 24–38. Existing race ids keep their original values.",
     "source_books": [
       "DSA 4.1 Basisregelwerk p. 55–59",
-      "TDE Basic Rules p. 38–41"
+      "TDE Basic Rules p. 38–41",
+      "Wege der Helden p. 24–38"
     ]
   },
   "races": [
@@ -23,7 +24,10 @@
       "automatic_advantages": [],
       "automatic_disadvantages": [],
       "recommended_advantages": [],
-      "unsuitable_advantages": ["outstanding_balance", "dietary_restriction"],
+      "unsuitable_advantages": [
+        "outstanding_balance",
+        "dietary_restriction"
+      ],
       "unsuitable_disadvantages": [],
       "allowed_cultures": [
         "middenrealm_cities",
@@ -46,17 +50,19 @@
           "19-20": "red"
         },
         "eye_colors": {
+          "20": "black",
           "1-2": "dark brown",
           "3-9": "brown",
           "10-11": "green",
           "12-17": "blue",
-          "18-19": "gray",
-          "20": "black"
+          "18-19": "gray"
         }
       },
       "special_notes": "Most versatile race with the widest culture and profession access. No inherent bonuses but RM penalty applies.",
-      "affinity_tags": ["any"],
-      "description": "Middenrealmians are the most common human ethnic group in Aventuria, hailing from the Middenrealm and surrounding regions. They are a broadly diverse people with no particularly dominant physical traits.",
+      "affinity_tags": [
+        "any"
+      ],
+      "description": "Middenrealmians are the dominant human people of Aventuria and make up more than half of the continent's population. They descend from Güldenland settlers who landed on the coasts of the modern Horasian Empire roughly 2,500 years ago and spread quickly through conquest, migration, and settlement. Today they are found across the Middenrealm, Bornland, Horasian lands, Maraskan, the Svellt Valley, the southern city-states, and almost every other corner of Aventuria.\n\nBecause Middenrealmians are so widespread, they have no single fixed appearance. Their build and height vary widely, though true giants and very small people are unusual. Hair ranges from pale blond to black, with lighter tones more common in the north and darker tones more common in the south. Blue, green, and brown eyes are typical; very dark brown or black eyes usually point to Tulamidian or forest-people ancestry.\n\nAs a player race, Middenrealmians offer the greatest freedom. They have no inherent talent modifiers, no automatic advantages or disadvantages, and the broadest access to cultures and professions. They are the best default choice for characters whose identity should be shaped mainly by culture, profession, social background, and personal history rather than by strong racial traits.",
       "source": "BRW p. 56"
     },
     {
@@ -73,11 +79,15 @@
       "automatic_advantages": [],
       "automatic_disadvantages": [],
       "recommended_advantages": [],
-      "unsuitable_advantages": ["outstanding_balance", "dietary_restriction"],
+      "unsuitable_advantages": [
+        "outstanding_balance",
+        "dietary_restriction"
+      ],
       "unsuitable_disadvantages": [],
       "allowed_cultures": [
         "tulamidian_city_states",
-        "novadis",
+        "novadis_men",
+        "novadis_women",
         "southern_aventuria"
       ],
       "talent_modifiers": {},
@@ -86,25 +96,30 @@
         "height_formula": "1.55 + 2d20 cm (range: 1.57–1.95 m)",
         "weight_formula": "height_cm - 105 kg",
         "hair_colors": {
+          "20": "red",
           "1-6": "black",
           "7-12": "dark brown",
           "13-14": "medium brown",
           "15-17": "light brown",
-          "18-19": "blond",
-          "20": "red"
+          "18-19": "blond"
         },
         "eye_colors": {
+          "19": "green",
+          "20": "blue",
           "1-4": "black",
           "5-12": "dark brown",
           "13-16": "brown",
-          "17-18": "gray",
-          "19": "green",
-          "20": "blue"
+          "17-18": "gray"
         }
       },
       "special_notes": "Tulamides are a southern human ethnic group. Their cultures offer access to urban, trade, and magical archetypes. Tulamidian City-States culture grants an additional +1 RM for magic users.",
-      "affinity_tags": ["social", "scholar", "magical_guild", "rogue_criminal"],
-      "description": "Tulamides are a dark-complexioned people from the southern regions of Aventuria, known for their trading acumen, scholarship, and magical traditions.",
+      "affinity_tags": [
+        "social",
+        "scholar",
+        "magical_guild",
+        "rogue_criminal"
+      ],
+      "description": "Tulamides are one of the oldest human peoples of Aventuria and belong to the continent's ancient native populations. Their original homeland lies around the Raschtul Wall, from where they spread through much of southeastern Aventuria, including the regions between Baburin and Selem. Tulamidian ancestry also strongly shapes Almada, Al'Anfa, many southern cities, and parts of Maraskan.\n\nTulamides are usually of medium height, with light-brown skin, dark hair, sharp facial features, and dark eyes. In border regions near Middenrealmian settlement, lighter-skinned Tulamides with blue or green eyes, blond hair, or red hair can also be found. Long traditions of contact and mixing with forest peoples may produce darker skin, higher cheekbones, softer facial features, or a somewhat smaller build.\n\nTulamidian peoples are culturally varied, but the PDF emphasizes a shared love of life, wealth, spirituality, and mysteries. They are excellent for heroes tied to trade, scholarship, urban intrigue, desert or oasis culture, ancient lore, and magical traditions. Mechanically they remain flexible, with no inherent attribute or talent modifications beyond the standard human base values.",
       "source": "BRW p. 56"
     },
     {
@@ -124,14 +139,30 @@
       },
       "automatic_advantages": [],
       "automatic_disadvantages": [
-        {"id": "violent_temper", "rating": 6, "german": "Jähzorn 6"}
+        {
+          "id": "violent_temper",
+          "rating": 6,
+          "german": "Jähzorn 6"
+        }
       ],
       "recommended_advantages": [
-        "enduring", "iron", "vigor", "battle_frenzy", "direction_sense", "tough_dog"
+        "enduring",
+        "iron",
+        "vigor",
+        "battle_frenzy",
+        "direction_sense",
+        "tough_dog"
       ],
-      "recommended_disadvantages": ["blood_frenzy"],
-      "unsuitable_advantages": ["outstanding_balance", "dietary_restriction"],
-      "unsuitable_disadvantages": ["glass_bones"],
+      "recommended_disadvantages": [
+        "blood_frenzy"
+      ],
+      "unsuitable_advantages": [
+        "outstanding_balance",
+        "dietary_restriction"
+      ],
+      "unsuitable_disadvantages": [
+        "glass_bones"
+      ],
       "allowed_cultures": [
         "thorwal",
         "middenrealm_cities",
@@ -156,8 +187,13 @@
         }
       },
       "special_notes": "Thorwalians have the highest base attributes of any human race (+CO, +CN, +ST) and the highest VP modifier (+11). They automatically receive Violent Temper (Jähzorn) rating 6 and have the worst RM penalty (-5).",
-      "affinity_tags": ["combat_frontliner", "sailor", "combat_skirmisher", "ranged"],
-      "description": "Thorwalians are a fierce northern people, known as the \"sea wolves\" of Aventuria. They are tall, physically powerful, and culturally shaped by seafaring, raiding, and communal feasting. Their legendary tempers are as well-known as their battle prowess.",
+      "affinity_tags": [
+        "combat_frontliner",
+        "sailor",
+        "combat_skirmisher",
+        "ranged"
+      ],
+      "description": "Thorwalians are the great seafarers of Aventuria's northwest: tall, powerfully built men and women with wild blond, red-blond, or red hair, weather-beaten skin, and a reputation for directness. They are not known for subtle courtly diplomacy, which makes them easy to portray as straightforward, forceful, emotionally honest adventurers.\n\nTheir homeland stretches along the northwestern coast from the Ingval estuary to the Gulf of Riva, but Thorwalian blood and settlements can be found in pirate havens, sea-mercenary outposts, and coastal communities throughout Aventuria. The Gjalskerlanders and Fjarningers are counted among related Thorwalian peoples, all tracing their ancestry back to the legendary Hjaldingers who came from northern Güldenland around 2,650 years ago.\n\nPhysically, Thorwalians are the largest common human people. Muscular individuals over two paces tall are not rare. Light hair and blue eyes are common, though red hair with green eyes is also widespread. They tend toward abundant hair and beards, with braids and dramatic styles used as personal adornment.\n\nTheir fierce temper is part of the race package. The PDF notes that some Thorwalians can fall into a dangerous battle frenzy in which pain, friend, and foe cease to matter. In play, they are well suited to front-line fighters, sailors, raiders, mercenaries, and other heroes who solve problems through courage, strength, endurance, and bold action.",
       "source": "BRW p. 57"
     },
     {
@@ -177,27 +213,73 @@
         "RM": -4
       },
       "automatic_advantages": [
-        {"id": "twilight_sight", "german": "Dämmerungssicht"},
-        {"id": "resistance_mineral_poisons", "german": "Resistenz gegen Mineralgifte"},
-        {"id": "disease_resistance", "german": "Resistenz gegen Krankheiten"},
-        {"id": "hard_to_enspell", "german": "Schwer zu verzaubern"}
+        {
+          "id": "twilight_sight",
+          "german": "Dämmerungssicht"
+        },
+        {
+          "id": "resistance_mineral_poisons",
+          "german": "Resistenz gegen Mineralgifte"
+        },
+        {
+          "id": "disease_resistance",
+          "german": "Resistenz gegen Krankheiten"
+        },
+        {
+          "id": "hard_to_enspell",
+          "german": "Schwer zu verzaubern"
+        }
       ],
       "automatic_disadvantages": [
-        {"id": "greed", "rating": 5, "german": "Goldgier 5"},
-        {"id": "inaptitude_swimming", "german": "Unfähigkeit Schwimmen"},
-        {"id": "dwarf_stature", "german": "Zwergenwuchs"}
+        {
+          "id": "greed",
+          "rating": 5,
+          "german": "Goldgier 5"
+        },
+        {
+          "id": "inaptitude_swimming",
+          "german": "Unfähigkeit Schwimmen"
+        },
+        {
+          "id": "dwarf_stature",
+          "german": "Zwergenwuchs"
+        }
       ],
       "recommended_advantages": [
-        "enduring", "iron", "good_memory_i", "heat_resistance", "vigor",
-        "high_rm", "battle_frenzy", "direction_sense", "tough_dog", "dwarf_nose"
+        "enduring",
+        "iron",
+        "good_memory_i",
+        "heat_resistance",
+        "vigor",
+        "high_rm",
+        "battle_frenzy",
+        "direction_sense",
+        "tough_dog",
+        "dwarf_nose"
       ],
-      "recommended_disadvantages": ["blood_frenzy", "violent_temper", "light_shy", "claustrophobia", "unattractive"],
+      "recommended_disadvantages": [
+        "blood_frenzy",
+        "violent_temper",
+        "light_shy",
+        "claustrophobia",
+        "unattractive"
+      ],
       "unsuitable_advantages": [
-        "fairy_friend", "fleet", "outstanding_balance", "outstanding_appearance",
-        "kobold_friend", "magic_sense", "snake_person", "euphonic_voice"
+        "fairy_friend",
+        "fleet",
+        "outstanding_balance",
+        "outstanding_appearance",
+        "kobold_friend",
+        "magic_sense",
+        "snake_person",
+        "euphonic_voice"
       ],
       "unsuitable_disadvantages": [
-        "fear_of_dark", "glass_bones", "prone_to_illness", "night_blind", "agoraphobia"
+        "fear_of_dark",
+        "glass_bones",
+        "prone_to_illness",
+        "night_blind",
+        "agoraphobia"
       ],
       "allowed_cultures": [
         "anvil_dwarves"
@@ -219,8 +301,11 @@
         "notes": "Stocky and powerful build. Dwarf-sized weapons and armor required."
       },
       "special_notes": "Dwarves cannot wear human-sized equipment without modification. They are exceptionally tough (highest EP modifier) and resistant to magic and disease. They cannot swim (Inaptitude Swimming). Dwarf Stature means they are smaller and require specially-made equipment.",
-      "affinity_tags": ["combat_frontliner", "scholar"],
-      "description": "Dwarves (the Angroschim, people of Angrosh) are a proud, stout folk of the mountains and mines of Aventuria. Fiercely loyal to their clans and their god Angrosh, they are renowned as master craftsmen and formidable warriors who can absorb tremendous punishment.",
+      "affinity_tags": [
+        "combat_frontliner",
+        "scholar"
+      ],
+      "description": "Dwarves call themselves the Angroschim: Angroscho in the singular, Angroschna for a female dwarf, and Angroschax in the plural. They are among the oldest peoples of Aventuria and are famous for great craftsmen, feared warriors, excellent beer, stubborn memory, and a very practical sense of debts and obligations.\n\nTheir main homelands lie in the Iron Forest, the Ingra Peaks, the Kosch Mountains, the Anvil, the hill country near Lake Angbar, and the Raschtul Wall, though smaller clans and settlements exist in other mountain ranges. Some cities, especially Angbar and Zwerch, have large dwarf populations or entire dwarf quarters, and individual dwarves or small clans may be encountered almost anywhere.\n\nDwarves are short, compact, immensely sturdy, and built with dense muscles and heavy bones. This makes them famously tough, but also explains why swimming is nearly impossible for most of them. They are exceptionally resistant to disease and many mineral poisons, long-lived enough to commonly reach 300 to 400 years, and considered adults at about 35.\n\nThe PDF treats dwarf subtypes as minor variants of a shared dwarf race, while warning not to confuse racial variants with dwarf cultures. In Basic Rules terms this file uses the Anvil Dwarf-style values. Dwarves are excellent for warriors, craftsmen, miners, scholars of stone and metal, and stubborn adventurers who can endure hardship far better than most humans.",
       "source": "BRW p. 57–58"
     },
     {
@@ -241,30 +326,80 @@
         "ASP": 12
       },
       "automatic_advantages": [
-        {"id": "age_resistance", "german": "Altersresistenz"},
-        {"id": "twilight_sight", "german": "Dämmerungssicht"},
-        {"id": "good_looking", "german": "Gut Aussehend"},
-        {"id": "outstanding_sense", "note": "choose one of hearing / smell / sight", "german": "Herausragender Sinn"},
-        {"id": "disease_resistance", "german": "Resistenz gegen Krankheiten"},
-        {"id": "full_caster", "german": "Vollzauberer"},
-        {"id": "euphonic_voice", "german": "Wohlklang"},
-        {"id": "two_voiced_song", "german": "Zweistimmiger Gesang"}
+        {
+          "id": "age_resistance",
+          "german": "Altersresistenz"
+        },
+        {
+          "id": "twilight_sight",
+          "german": "Dämmerungssicht"
+        },
+        {
+          "id": "good_looking",
+          "german": "Gut Aussehend"
+        },
+        {
+          "id": "outstanding_sense",
+          "note": "choose one of hearing / smell / sight",
+          "german": "Herausragender Sinn"
+        },
+        {
+          "id": "disease_resistance",
+          "german": "Resistenz gegen Krankheiten"
+        },
+        {
+          "id": "full_caster",
+          "german": "Vollzauberer"
+        },
+        {
+          "id": "euphonic_voice",
+          "german": "Wohlklang"
+        },
+        {
+          "id": "two_voiced_song",
+          "german": "Zweistimmiger Gesang"
+        }
       ],
       "automatic_disadvantages": [
-        {"id": "sensitive_smell", "rating": 6, "german": "Sensibler Geruchssinn 6"},
-        {"id": "inaptitude_drinking", "german": "Unfähigkeit Zechen"}
+        {
+          "id": "sensitive_smell",
+          "rating": 6,
+          "german": "Sensibler Geruchssinn 6"
+        },
+        {
+          "id": "inaptitude_drinking",
+          "german": "Unfähigkeit Zechen"
+        }
       ],
       "recommended_advantages": [
-        "balance", "fairy_friend", "fleet", "outstanding_balance", "outstanding_appearance",
-        "night_sight", "direction_sense", "snake_person"
+        "balance",
+        "fairy_friend",
+        "fleet",
+        "outstanding_balance",
+        "outstanding_appearance",
+        "night_sight",
+        "direction_sense",
+        "snake_person"
       ],
-      "recommended_disadvantages": ["dietary_restriction", "agoraphobia"],
+      "recommended_disadvantages": [
+        "dietary_restriction",
+        "agoraphobia"
+      ],
       "unsuitable_advantages": [
-        "heat_resistance", "battle_frenzy", "hard_to_enspell", "dwarf_nose"
+        "heat_resistance",
+        "battle_frenzy",
+        "hard_to_enspell",
+        "dwarf_nose"
       ],
       "unsuitable_disadvantages": [
-        "blood_frenzy", "impaired_sense", "color_blind", "obese", "prone_to_illness",
-        "light_shy", "night_blind", "unpleasant_voice"
+        "blood_frenzy",
+        "impaired_sense",
+        "color_blind",
+        "obese",
+        "prone_to_illness",
+        "light_shy",
+        "night_blind",
+        "unpleasant_voice"
       ],
       "allowed_cultures": [
         "lea_elves"
@@ -284,8 +419,13 @@
         "notes": "Slender, graceful build. Slightly pointed ears. Otherworldly beauty."
       },
       "special_notes": "Elves are full casters (Vollzauberer) by racial heritage. Metal armor interferes with their magic. They cannot drink alcohol (Inaptitude Drinking). Sensitive Smell 6 is automatic and can cause problems in cities or near strong odors. The Vollzauberer advantage provides +12 ASP and the RM modifier given is inclusive of the Vollzauberer bonus. Only the Lea Elves culture is available in the Basic Rules.",
-      "affinity_tags": ["magical_elven", "ranged", "stealth", "wilderness"],
-      "description": "Elves (the Auelfen or Lea Elves in the Basic Rules) are ancient, magical beings of the forest. They are graceful, perceptive, and inherently magical, with a deep connection to nature. Elvish culture and worldview are radically different from human societies.",
+      "affinity_tags": [
+        "magical_elven",
+        "ranged",
+        "stealth",
+        "wilderness"
+      ],
+      "description": "Elves, who call themselves feya, are mysterious beings whose ultimate origin is linked in legend to the Light World beyond the known cosmos. Their Aventurian heartland is the enchanted forest region of the Salamander Stones, but several major peoples exist: forest elves, lea elves along lakes and rivers of northern and central Aventuria, firn elves in the far north, and steppe elves of the northern grasslands.\n\nElves are tall, slender, graceful, and immediately recognizable by their pointed ears, large slightly slanted eyes, high cheekbones, long necks, and otherworldly appearance. Their eyes may appear in vivid or unusual colors such as violet, amber, ruby red, sapphire blue, emerald green, or gold-flecked tones. Elven men do not grow beards, and both sexes often have androgynous features and wear their hair long.\n\nEvery elf is inherently magical and capable of the special two-voiced song. Their senses are sharper than those of humans, which can be a blessing in the wild and a problem around strong smells, cities, or certain foods and herbs. They are resistant or immune to some illnesses, but other diseases affect them more severely or differently.\n\nElves are far less fertile than humans, can live for centuries, and in rare cases nearly a thousand years. Their life span is tied less to ordinary aging and more to purpose: when an elf feels that their life's goal has been fulfilled, they may withdraw from the world and fade quickly. In play, elves are powerful but alien characters, best suited to wilderness, magic, archery, perception, song, and stories about the tension between elven worldview and human society.",
       "source": "BRW p. 58–59"
     },
     {
@@ -304,21 +444,44 @@
         "ASP": -6
       },
       "automatic_advantages": [
-        {"id": "good_looking", "german": "Gut Aussehend"},
-        {"id": "quarter_caster", "note": "Default for human-raised half-elf; replaced by Vollzauberer if elvish-raised (+8 GP)", "german": "Viertelzauberer"}
+        {
+          "id": "good_looking",
+          "german": "Gut Aussehend"
+        },
+        {
+          "id": "quarter_caster",
+          "note": "Default for human-raised half-elf; replaced by Vollzauberer if elvish-raised (+8 GP)",
+          "german": "Viertelzauberer"
+        }
       ],
       "automatic_disadvantages": [],
       "recommended_advantages": [
-        "balance", "twilight_sight", "fairy_friend", "fleet", "outstanding_sense",
-        "outstanding_appearance", "magic_sense", "snake_person", "euphonic_voice",
+        "balance",
+        "twilight_sight",
+        "fairy_friend",
+        "fleet",
+        "outstanding_sense",
+        "outstanding_appearance",
+        "magic_sense",
+        "snake_person",
+        "euphonic_voice",
         "two_voiced_song"
       ],
-      "recommended_disadvantages": ["dietary_restriction", "sensitive_smell"],
+      "recommended_disadvantages": [
+        "dietary_restriction",
+        "sensitive_smell"
+      ],
       "unsuitable_advantages": [
-        "battle_frenzy", "dwarf_nose", "hard_to_enspell"
+        "battle_frenzy",
+        "dwarf_nose",
+        "hard_to_enspell"
       ],
       "unsuitable_disadvantages": [
-        "blood_frenzy", "obese", "prone_to_illness", "light_shy", "night_blind",
+        "blood_frenzy",
+        "obese",
+        "prone_to_illness",
+        "light_shy",
+        "night_blind",
         "unpleasant_voice"
       ],
       "allowed_cultures": [
@@ -345,8 +508,14 @@
           "RM": -2
         },
         "additional_automatic_advantages": [
-          {"id": "full_caster", "german": "Vollzauberer"},
-          {"id": "two_voiced_song", "german": "Zweistimmiger Gesang"}
+          {
+            "id": "full_caster",
+            "german": "Vollzauberer"
+          },
+          {
+            "id": "two_voiced_song",
+            "german": "Zweistimmiger Gesang"
+          }
         ]
       },
       "physical_appearance": {
@@ -355,9 +524,2853 @@
         "notes": "Mixed human-elven features. Usually slender with slightly pointed ears."
       },
       "special_notes": "The most flexible of all races. Default magical status is quarter_caster (Viertelzauberer, magical dabbler). Elvish upbringing costs extra 8 GP but grants full caster status. Magician profession is 2 GP cheaper for half-elves.",
-      "affinity_tags": ["magical_dabbler", "stealth", "ranged", "any"],
-      "description": "Half-Elves are born of unions between humans and elves, inheriting traits from both worlds. They tend to be beautiful and perceptive but often feel they don't fully belong in either human or elvish society. Most possess some innate magical sensitivity.",
+      "affinity_tags": [
+        "magical_dabbler",
+        "stealth",
+        "ranged",
+        "any"
+      ],
+      "description": "Half-elves, called human-elves by elves, are children of human and elven ancestry. Contrary to many superstitions, it does not matter whether the mother or father is the elf; such children are simply rare because elves can consciously control fertility.\n\nA half-elf's identity depends strongly on the family and culture in which they are raised, but the PDF stresses that they often belong fully to neither side. Among humans, prejudice may constantly remind them that they are different. Among elves, they are also marked as other, especially because many half-elves lack the two-voiced song and cannot truly join the salasandra or elven magical songs. They may understand Asdharia, the ancient elven tongue, but cannot speak it with the beauty expected by elves.\n\nHalf-elves appear wherever elves and humans live near enough to meet, becoming rarer toward the south. Their exact appearance depends on the human parent, but most share clear, striking eyes, a slender build, slightly pointed ears, and a beauty that humans often find remarkable. They generally live somewhat longer than humans, but do not possess true elven agelessness.\n\nIn play, half-elves are highly flexible. They can remain magical dabblers, be trained in human magical professions, or, with elven upbringing, become full casters and gain the two-voiced song. They are excellent for characters caught between worlds: scouts, rogues, singers, mages, wanderers, diplomats, or outsiders searching for a place where they truly belong.",
       "source": "BRW p. 59"
+    },
+    {
+      "id": "nivesian",
+      "name": "Nivesian",
+      "german_name": "Nivese",
+      "gp_cost": 4,
+      "attribute_modifiers": {
+        "IN": 1,
+        "CN": 1
+      },
+      "derived_modifiers": {
+        "VP": 9,
+        "EP": 12,
+        "RM": -5
+      },
+      "automatic_advantages": [],
+      "automatic_disadvantages": [],
+      "recommended_advantages": [
+        "enduring",
+        "distance_sense",
+        "danger_sense",
+        "inner_compass",
+        "cold_resistance",
+        "direction_sense",
+        "wolf_child",
+        "tough_dog"
+      ],
+      "recommended_disadvantages": [
+        "heat_sensitive"
+      ],
+      "unsuitable_advantages": [
+        "outstanding_balance",
+        "dietary_restriction"
+      ],
+      "unsuitable_disadvantages": [
+        "heat_resistance",
+        "cold_sensitive",
+        "dietary_restriction",
+        "claustrophobia"
+      ],
+      "allowed_cultures": [
+        "andergast_nostria",
+        "bornland",
+        "fjarninger",
+        "maraskan",
+        "middenrealm_cities",
+        "nivesian_tribes",
+        "svellt_valley_northern_lands"
+      ],
+      "talent_modifiers": {
+        "sneak": 1,
+        "willpower": 1,
+        "orientation": 1
+      },
+      "magic_status": "none",
+      "physical_appearance": {
+        "height_formula": "1.55 + 2d20 cm (range: 1.57–1.95 m)",
+        "weight_formula": "height_cm - 110 kg",
+        "hair_colors": {
+          "16": "blond",
+          "19": "dark blond",
+          "20": "black",
+          "1-15": "copper-red",
+          "17-18": "brown"
+        },
+        "eye_colors": {
+          "20": "gray",
+          "1-2": "brown",
+          "3-9": "light brown",
+          "10-14": "amber",
+          "15-17": "green",
+          "18-19": "blue"
+        },
+        "notes": "Slender, slightly smaller than Middenrealmians, with almond-shaped eyes and weak beard/body hair."
+      },
+      "special_notes": "Native people of the northern steppes. They live as nomads or hunters and generally live longer than Middenrealmians. Best suited to wilderness, tracking, and northern-steppe characters.",
+      "affinity_tags": [
+        "wilderness",
+        "ranged",
+        "stealth"
+      ],
+      "description": "Nivesians are one of Aventuria's indigenous human peoples and are most at home in the cold northern steppes beyond the Salamander Stones and Bornland. Many roam as nomads; others hunt in the valleys of the Iron Sword, and a few have settled in Bornland.\n\nThey are usually slender and a little smaller than Middenrealmians. Their most recognizable features are slightly slanted, almond-shaped eyes and copper-red hair. Light brown and amber eyes are common, and beard or body hair is usually sparse. Nivesians are noted for their long lives and for a worldview that is very different from the settled southern cultures.",
+      "source": "WdH p. 26–27",
+      "chargen_culture_bridge_note": "Wege der Helden names homeland cultures beyond the Basisregelwerk; Nexus exposes those as cultures.json IDs where available alongside BR cultures so random pairing stays broad."
+    },
+    {
+      "id": "norbard",
+      "name": "Norbard",
+      "german_name": "Norbarde",
+      "gp_cost": 3,
+      "attribute_modifiers": {
+        "CH": 1
+      },
+      "derived_modifiers": {
+        "VP": 11,
+        "EP": 10,
+        "RM": -4
+      },
+      "automatic_advantages": [],
+      "automatic_disadvantages": [],
+      "recommended_advantages": [
+        "danger_sense",
+        "good_memory_i",
+        "inner_compass",
+        "cold_resistance",
+        "direction_sense",
+        "tough_dog"
+      ],
+      "recommended_disadvantages": [],
+      "unsuitable_advantages": [
+        "outstanding_balance",
+        "heat_resistance"
+      ],
+      "unsuitable_disadvantages": [
+        "dietary_restriction",
+        "claustrophobia"
+      ],
+      "allowed_cultures": [
+        "andergast_nostria",
+        "bornland",
+        "gjalskerland",
+        "middenrealm_cities",
+        "norbard_clan",
+        "svellt_valley_northern_lands",
+        "thorwal"
+      ],
+      "talent_modifiers": {
+        "orientation": 1,
+        "calculate": 1
+      },
+      "magic_status": "none",
+      "physical_appearance": {
+        "height_formula": "1.58 + 2d20 cm (range: 1.60–1.98 m)",
+        "weight_formula": "height_cm - 100 kg",
+        "hair_colors": {
+          "20": "blond",
+          "1-17": "black",
+          "18-19": "copper-red"
+        },
+        "eye_colors": {
+          "20": "blue",
+          "1-3": "black",
+          "4-13": "dark brown",
+          "14-17": "brown",
+          "18-19": "green"
+        },
+        "notes": "Darker complexion than most northerners; compact and muscular build; heavy head and body hair."
+      },
+      "special_notes": "Wandering northern traders descended from ancient Tulamides. Strong fit for merchants, travelers, negotiators, and hardy caravan people.",
+      "affinity_tags": [
+        "social",
+        "wilderness",
+        "merchant"
+      ],
+      "description": "Norbards are traveling merchants who move through northern Aventuria in clan wagons. They are open, talkative, sociable, fond of celebration, and still capable of surviving the lonely northern wilderness.\n\nTheir Tulamidian ancestry remains visible in their darker complexion, black hair, and dark eyes, though they are generally more compact and muscular than their southern ancestors. Norbard clans range from Bornland and Riva to the Gjalsker lands and Thorwal, with some families settled in northern towns or on the estates of Bornland nobles.",
+      "source": "WdH p. 27",
+      "chargen_culture_bridge_note": "Wege der Helden names homeland cultures beyond the Basisregelwerk; Nexus exposes those as cultures.json IDs where available alongside BR cultures so random pairing stays broad."
+    },
+    {
+      "id": "trollzacker",
+      "name": "Trollzacker",
+      "german_name": "Trollzacker / Kurga",
+      "gp_cost": 7,
+      "attribute_modifiers": {
+        "CO": 2,
+        "CL": -1,
+        "CN": 1,
+        "ST": 1
+      },
+      "derived_modifiers": {
+        "VP": 11,
+        "EP": 18,
+        "RM": -5
+      },
+      "automatic_advantages": [],
+      "automatic_disadvantages": [
+        {
+          "id": "agoraphobia",
+          "rating": 6,
+          "german": "Platzangst"
+        }
+      ],
+      "recommended_advantages": [
+        "enduring",
+        "balance",
+        "iron",
+        "distance_sense",
+        "battle_frenzy",
+        "high_vp",
+        "poison_resistance",
+        "disease_resistance",
+        "direction_sense",
+        "tough_dog"
+      ],
+      "recommended_disadvantages": [
+        "blood_frenzy",
+        "violent_temper",
+        "unpleasant_voice",
+        "unattractive"
+      ],
+      "unsuitable_advantages": [
+        "good_looking",
+        "outstanding_balance",
+        "euphonic_voice"
+      ],
+      "unsuitable_disadvantages": [
+        "dwarf_stature",
+        "dietary_restriction",
+        "poor_regeneration"
+      ],
+      "allowed_cultures": [
+        "bornland",
+        "gjalskerland",
+        "svellt_valley_northern_lands",
+        "thorwal",
+        "troll_peaks"
+      ],
+      "talent_modifiers": {
+        "athletics": 1,
+        "climbing": 1,
+        "willpower": 1,
+        "perception": 1
+      },
+      "magic_status": "none",
+      "physical_appearance": {
+        "height_formula": "1.95 + 1d20 cm (range: 1.96–2.15 m)",
+        "weight_formula": "height_cm - 100 kg",
+        "hair_colors": {
+          "18": "medium brown",
+          "19": "light brown",
+          "20": "dark blond",
+          "1-15": "black",
+          "16-17": "dark brown"
+        },
+        "eye_colors": {
+          "17": "dark brown",
+          "18": "brown",
+          "19": "gray",
+          "20": "green",
+          "1-16": "black"
+        },
+        "notes": "Very tall, lean, sinewy mountain people; the largest humans except the Rochshaz variant."
+      },
+      "special_notes": "Fierce mountain folk of the Trollzacken. Extremely strong, courageous, and hardy, but culturally exotic and difficult to integrate into ordinary campaigns.",
+      "affinity_tags": [
+        "combat_frontliner",
+        "wilderness"
+      ],
+      "description": "The Trollzackers, who call themselves Kurga, are a wild mountain people of the Trollzacken. Scholars connect them to the Ferkinas and to ancient Tulamidian clans that remained in the mountains during the Norbard migrations.\n\nThey have light-brown skin, dark hair and eyes, and extraordinary height. Unlike the broad Thorwalians, Trollzackers are usually lean and sinewy. Their harsh homeland, short life expectancy, and violent traditions make them strong but demanding player characters.",
+      "source": "WdH p. 27–28",
+      "variant_tags": [
+        "human",
+        "mountain_barbarian"
+      ],
+      "chargen_culture_bridge_note": "Wege der Helden names homeland cultures beyond the Basisregelwerk; Nexus exposes those as cultures.json IDs where available alongside BR cultures so random pairing stays broad."
+    },
+    {
+      "id": "rochshaz",
+      "name": "Rochshaz",
+      "german_name": "Rochshaz / Trolling",
+      "gp_cost": 6,
+      "attribute_modifiers": {
+        "CO": 2,
+        "CL": -1,
+        "AG": -1,
+        "DE": -1,
+        "CN": 2,
+        "ST": 2
+      },
+      "derived_modifiers": {
+        "VP": 12,
+        "EP": 20,
+        "RM": -5
+      },
+      "automatic_advantages": [],
+      "automatic_disadvantages": [
+        {
+          "id": "agoraphobia",
+          "rating": 6,
+          "german": "Platzangst"
+        },
+        {
+          "id": "violent_temper",
+          "rating": 6,
+          "german": "Jähzorn"
+        }
+      ],
+      "recommended_advantages": [
+        "enduring",
+        "balance",
+        "iron",
+        "distance_sense",
+        "battle_frenzy",
+        "high_vp",
+        "poison_resistance",
+        "disease_resistance",
+        "direction_sense",
+        "tough_dog"
+      ],
+      "recommended_disadvantages": [
+        "blood_frenzy",
+        "violent_temper",
+        "unpleasant_voice",
+        "unattractive",
+        "outsider"
+      ],
+      "unsuitable_advantages": [
+        "good_looking",
+        "outstanding_balance",
+        "euphonic_voice"
+      ],
+      "unsuitable_disadvantages": [
+        "dwarf_stature",
+        "dietary_restriction",
+        "poor_regeneration"
+      ],
+      "allowed_cultures": [
+        "bornland",
+        "gjalskerland",
+        "svellt_valley_northern_lands",
+        "thorwal",
+        "troll_peaks"
+      ],
+      "talent_modifiers": {
+        "athletics": 2,
+        "climbing": 1,
+        "willpower": 1,
+        "perception": 1
+      },
+      "magic_status": "none",
+      "physical_appearance": {
+        "height_formula": "2.15 + 1d20 cm (range: 2.16–2.35 m)",
+        "weight_formula": "height_cm - 95 kg",
+        "hair_colors": {
+          "as_trollzacker": "use Trollzacker table"
+        },
+        "eye_colors": {
+          "as_trollzacker": "use Trollzacker table"
+        },
+        "notes": "Giant Trollzacker variant, about one in twenty Trollzackers."
+      },
+      "special_notes": "Oversized Trollzacker variant; immensely strong and tough but less agile and dextrous. Use only with GM approval.",
+      "affinity_tags": [
+        "combat_frontliner",
+        "wilderness"
+      ],
+      "description": "Rochshaz, also called Trollings, are the huge variant of the Trollzackers. They are even taller and stronger than their already imposing kin and are almost exclusively found among the Trollzacken culture.\n\nThey are excellent for a brutal mountain-warrior concept, but their size, temper, and outsider status make them difficult in settled regions.",
+      "source": "WdH p. 28",
+      "variant_of": "trollzacker",
+      "variant_tags": [
+        "human",
+        "giant_variant"
+      ],
+      "chargen_culture_bridge_note": "Wege der Helden names homeland cultures beyond the Basisregelwerk; Nexus exposes those as cultures.json IDs where available alongside BR cultures so random pairing stays broad."
+    },
+    {
+      "id": "forest_person",
+      "name": "Forest Person",
+      "german_name": "Waldmensch",
+      "gp_cost": 5,
+      "attribute_modifiers": {
+        "CH": 1,
+        "AG": 1,
+        "CN": 1,
+        "ST": -1
+      },
+      "derived_modifiers": {
+        "VP": 8,
+        "EP": 12,
+        "RM": -6
+      },
+      "automatic_advantages": [],
+      "automatic_disadvantages": [],
+      "recommended_advantages": [
+        "enduring",
+        "balance",
+        "fleet",
+        "danger_sense",
+        "good_looking",
+        "heat_resistance",
+        "poison_resistance",
+        "snake_person"
+      ],
+      "recommended_disadvantages": [
+        "cold_sensitive"
+      ],
+      "unsuitable_advantages": [
+        "high_rm",
+        "cold_resistance",
+        "hard_to_enspell"
+      ],
+      "unsuitable_disadvantages": [
+        "heat_sensitive",
+        "dietary_restriction"
+      ],
+      "allowed_cultures": [
+        "southern_aventuria"
+      ],
+      "talent_modifiers": {
+        "climbing": 1,
+        "body_control": 2,
+        "sneak": 2,
+        "perception": 3,
+        "dance": 1,
+        "orientation": 1
+      },
+      "magic_status": "none",
+      "physical_appearance": {
+        "height_formula": "1.52 + 3d6 cm (range: 1.55–1.70 m)",
+        "weight_formula": "height_cm - 110 kg",
+        "hair_colors": {
+          "20": "dark brown",
+          "1-5": "black",
+          "6-19": "blue-black"
+        },
+        "eye_colors": {
+          "1-3": "light brown",
+          "4-10": "dark brown",
+          "11-20": "black"
+        },
+        "notes": "Dark skin from bronze to copper-brown or brown; elegant movements; little beard or body hair."
+      },
+      "special_notes": "Southern jungle people, often incorrectly called Mohas. Immune to Wurara, Flinker Difar, and Brabaker Sweat according to the description.",
+      "affinity_tags": [
+        "wilderness",
+        "stealth",
+        "social"
+      ],
+      "description": "Forest People live in the far south of Aventuria and on the Forest Islands. Outsiders often call them “Mohas” after one large tribe, but that name is imprecise. Some have been enslaved or born into slavery, while many others live freely in deep jungle regions.\n\nThey are graceful, dark-skinned humans with black or blue-black hair, dark eyes, and little body hair. The PDF notes their immunity to Wurara and to the diseases Flinker Difar and Brabaker Sweat. A Forest Person hero works well for jungle, stealth, and survival concepts, but the clash with northern “civilized” society should be played deliberately.",
+      "source": "WdH p. 28–29"
+    },
+    {
+      "id": "tocamuyac",
+      "name": "Tocamuyac",
+      "german_name": "Tocamuyac",
+      "gp_cost": 3,
+      "attribute_modifiers": {
+        "CH": 1,
+        "AG": 1,
+        "CN": 1,
+        "ST": -1
+      },
+      "derived_modifiers": {
+        "VP": 8,
+        "EP": 12,
+        "RM": -6
+      },
+      "automatic_advantages": [],
+      "automatic_disadvantages": [
+        {
+          "id": "dwarf_stature",
+          "german": "Kleinwüchsig"
+        }
+      ],
+      "recommended_advantages": [
+        "enduring",
+        "balance",
+        "fleet",
+        "danger_sense",
+        "good_looking",
+        "heat_resistance",
+        "poison_resistance",
+        "snake_person"
+      ],
+      "recommended_disadvantages": [
+        "cold_sensitive"
+      ],
+      "unsuitable_advantages": [
+        "high_rm",
+        "cold_resistance",
+        "hard_to_enspell"
+      ],
+      "unsuitable_disadvantages": [
+        "heat_sensitive",
+        "fear_of_sea",
+        "dietary_restriction"
+      ],
+      "allowed_cultures": [
+        "forest_island_utulus",
+        "jungle_tribes",
+        "miniwatu",
+        "southern_aventuria",
+        "tocamuyac",
+        "tulamidian_city_states"
+      ],
+      "talent_modifiers": {
+        "body_control": 3,
+        "swimming": 3,
+        "perception": 3,
+        "orientation": 1
+      },
+      "magic_status": "none",
+      "physical_appearance": {
+        "height_formula": "1.42 + 3d6 cm (range: 1.45–1.60 m)",
+        "weight_formula": "height_cm - 110 kg",
+        "hair_colors": {
+          "1-2": "blue-black",
+          "3-4": "black",
+          "5-10": "dark brown",
+          "11-20": "medium brown"
+        },
+        "eye_colors": {
+          "1-3": "light brown",
+          "4-10": "dark brown",
+          "11-20": "black"
+        },
+        "notes": "Smaller Forest Person variant with strong swimming and body-control talent modifiers."
+      },
+      "special_notes": "Small seafaring Forest Person variant. Uses its own values instead of the standard Forest Person values.",
+      "affinity_tags": [
+        "wilderness",
+        "sailor",
+        "stealth"
+      ],
+      "description": "The Tocamuyac are a small-bodied seafaring people counted among the Forest Peoples. They are shorter than most other Forest People and better adapted to swimming and life along coasts and islands.\n\nUse this as a separate race entry when a Tocamuyac origin matters mechanically; it replaces the normal Forest Person values rather than adding to them.",
+      "source": "WdH p. 29",
+      "variant_of": "forest_person",
+      "variant_tags": [
+        "human",
+        "forest_island",
+        "seafaring"
+      ],
+      "chargen_culture_bridge_note": "Wege der Helden names homeland cultures beyond the Basisregelwerk; Nexus exposes those as cultures.json IDs where available alongside BR cultures so random pairing stays broad."
+    },
+    {
+      "id": "utulu",
+      "name": "Utulu",
+      "german_name": "Utulu",
+      "gp_cost": 9,
+      "attribute_modifiers": {
+        "AG": 1,
+        "CN": 1
+      },
+      "derived_modifiers": {
+        "VP": 11,
+        "EP": 12,
+        "RM": -6
+      },
+      "automatic_advantages": [
+        {
+          "id": "heat_resistance",
+          "german": "Hitzeresistenz"
+        }
+      ],
+      "automatic_disadvantages": [],
+      "recommended_advantages": [
+        "enduring",
+        "balance",
+        "aptitude_music",
+        "danger_sense",
+        "good_looking",
+        "poison_resistance",
+        "snake_person",
+        "euphonic_voice"
+      ],
+      "recommended_disadvantages": [
+        "cold_sensitive"
+      ],
+      "unsuitable_advantages": [
+        "high_rm",
+        "cold_resistance",
+        "hard_to_enspell"
+      ],
+      "unsuitable_disadvantages": [
+        "heat_sensitive",
+        "dietary_restriction"
+      ],
+      "allowed_cultures": [
+        "southern_aventuria"
+      ],
+      "talent_modifiers": {
+        "climbing": 1,
+        "body_control": 2,
+        "sneak": 2,
+        "perception": 3,
+        "dance": 1,
+        "orientation": 1
+      },
+      "magic_status": "none",
+      "physical_appearance": {
+        "height_formula": "1.65 + 2d20 cm (range: 1.67–2.05 m)",
+        "weight_formula": "height_cm - 110 kg",
+        "hair_colors": {
+          "1-17": "black",
+          "18-20": "blue-black"
+        },
+        "eye_colors": {
+          "1-3": "light brown",
+          "4-10": "dark brown",
+          "11-20": "black"
+        },
+        "notes": "Ebony-black skin, curled or lightly frizzy black hair, tall and muscular build."
+      },
+      "special_notes": "Tall, muscular southern people, treated by some scholars as Forest People but presented as their own race. Immune to Wurara, Flinker Difar, and Brabaker Sweat according to the description; strongly musical, especially in rhythm.",
+      "affinity_tags": [
+        "wilderness",
+        "combat_skirmisher",
+        "social"
+      ],
+      "description": "Utulus are a distinct southern people, even though Aventurian scholars often group them with the Forest People. Their origin is unclear and is sometimes connected to the legendary southern continent Uthuria. Through slavery and seafaring contact, they can be encountered across much of southern Aventuria.\n\nThey are tall, muscular, ebony-skinned humans with black curled or lightly frizzy hair. Their cultures are strongly musical, especially in rhythm and drumming. The PDF notes their immunity to Wurara and to the diseases Flinker Difar and Brabaker Sweat.",
+      "source": "WdH p. 29"
+    },
+    {
+      "id": "forest_elf",
+      "name": "Forest Elf",
+      "german_name": "Waldelf",
+      "gp_cost": 23,
+      "attribute_modifiers": {
+        "CL": -1,
+        "IN": 2,
+        "AG": 2,
+        "ST": -1
+      },
+      "derived_modifiers": {
+        "VP": 6,
+        "EP": 10,
+        "ASP": 12,
+        "RM": -2
+      },
+      "automatic_advantages": [
+        {
+          "id": "age_resistance",
+          "german": "Altersresistenz"
+        },
+        {
+          "id": "twilight_sight",
+          "german": "Dämmerungssicht"
+        },
+        {
+          "id": "good_looking",
+          "german": "Gut Aussehend"
+        },
+        {
+          "id": "outstanding_sense",
+          "note": "hearing or smell",
+          "german": "Herausragender Sinn"
+        },
+        {
+          "id": "disease_resistance",
+          "german": "Resistenz gegen Krankheiten"
+        },
+        {
+          "id": "direction_sense",
+          "german": "Richtungssinn"
+        },
+        {
+          "id": "full_caster",
+          "german": "Vollzauberer"
+        },
+        {
+          "id": "euphonic_voice",
+          "german": "Wohlklang"
+        },
+        {
+          "id": "two_voiced_song",
+          "german": "Zweistimmiger Gesang"
+        }
+      ],
+      "automatic_disadvantages": [
+        {
+          "id": "sensitive_smell",
+          "rating": 6,
+          "german": "Sensibler Geruchssinn"
+        },
+        {
+          "id": "inaptitude_drinking",
+          "german": "Unfähigkeit Zechen"
+        }
+      ],
+      "recommended_advantages": [
+        "astral_regeneration",
+        "astral_power",
+        "balance",
+        "aptitude_singing",
+        "aptitude_music",
+        "ambidextrous",
+        "fairy_friend",
+        "fleet",
+        "outstanding_balance",
+        "outstanding_sense",
+        "outstanding_appearance",
+        "inner_compass",
+        "cold_resistance",
+        "night_sight",
+        "snake_person"
+      ],
+      "recommended_disadvantages": [
+        "dietary_restriction",
+        "fear_of_rooms"
+      ],
+      "unsuitable_advantages": [
+        "heat_resistance",
+        "battle_frenzy",
+        "hard_to_enspell",
+        "favored_by_fate",
+        "dwarf_nose"
+      ],
+      "unsuitable_disadvantages": [
+        "blood_frenzy",
+        "impaired_sense",
+        "obese",
+        "fear_of_heights",
+        "dwarf_stature",
+        "short_breath",
+        "night_blind",
+        "agoraphobia",
+        "unpleasant_smell"
+      ],
+      "allowed_cultures": [
+        "elven_settlement",
+        "forest_elven_clan",
+        "lea_elves",
+        "steppe_elven_clan"
+      ],
+      "talent_modifiers": {
+        "body_control": 4,
+        "sneak": 2,
+        "sing": 2,
+        "perception": 5,
+        "dance": 1,
+        "carouse": -2,
+        "orientation": 2
+      },
+      "magic_status": "full_caster",
+      "physical_appearance": {
+        "height_formula": "1.66 + 1d20 + 4d6 cm (range: 1.71–2.10 m)",
+        "weight_formula": "height_cm - 120 kg",
+        "hair_colors": {
+          "11": "white-blond",
+          "20": "gold-blond",
+          "1-3": "blue-black",
+          "4-7": "black",
+          "8-10": "silver",
+          "12-13": "light blond",
+          "14-16": "medium blond",
+          "17-19": "dark blond"
+        },
+        "eye_colors": {
+          "17": "gold-speckled",
+          "20": "amethyst violet",
+          "1-2": "black",
+          "3-4": "sapphire blue",
+          "5-8": "emerald green",
+          "9-12": "dark brown",
+          "13-16": "amber",
+          "18-19": "ruby red"
+        },
+        "notes": "Tall, graceful, beardless and hairless except scalp hair; pointed ears and striking eyes."
+      },
+      "special_notes": "Forest Elf racial variant. More intuitive than Lea/Au Elves, stronger orientation focus, and tied primarily to forest-elven clans.",
+      "affinity_tags": [
+        "magical_elven",
+        "ranged",
+        "stealth",
+        "wilderness"
+      ],
+      "description": "Forest Elves are one of the major elven peoples and are especially associated with the Salamander Stones. Like all elves, they are graceful, long-lived, inherently magical, and marked by pointed ears, striking eyes, and an alien worldview.\n\nCompared with Lea/Au Elves, Forest Elves are even more intuitive and wilderness-oriented. Their heightened senses and close connection to forest life make them excellent scouts, archers, and magical wilderness characters.",
+      "source": "WdH p. 30–31",
+      "variant_of": "elf",
+      "chargen_culture_bridge_note": "Wege der Helden names homeland cultures beyond the Basisregelwerk; Nexus exposes those as cultures.json IDs where available alongside BR cultures so random pairing stays broad."
+    },
+    {
+      "id": "firn_elf",
+      "name": "Firn Elf",
+      "german_name": "Firnelf",
+      "gp_cost": 24,
+      "attribute_modifiers": {
+        "CL": -1,
+        "IN": 1,
+        "AG": 2,
+        "CN": 1,
+        "ST": -1
+      },
+      "derived_modifiers": {
+        "VP": 7,
+        "EP": 15,
+        "ASP": 12,
+        "RM": -1
+      },
+      "automatic_advantages": [
+        {
+          "id": "age_resistance",
+          "german": "Altersresistenz"
+        },
+        {
+          "id": "twilight_sight",
+          "german": "Dämmerungssicht"
+        },
+        {
+          "id": "outstanding_sense",
+          "note": "hearing, sight, or touch",
+          "german": "Herausragender Sinn"
+        },
+        {
+          "id": "cold_resistance",
+          "german": "Kälteresistenz"
+        },
+        {
+          "id": "disease_resistance",
+          "german": "Resistenz gegen Krankheiten"
+        },
+        {
+          "id": "direction_sense",
+          "german": "Richtungssinn"
+        },
+        {
+          "id": "full_caster",
+          "german": "Vollzauberer"
+        },
+        {
+          "id": "euphonic_voice",
+          "german": "Wohlklang"
+        },
+        {
+          "id": "two_voiced_song",
+          "german": "Zweistimmiger Gesang"
+        }
+      ],
+      "automatic_disadvantages": [
+        {
+          "id": "heat_sensitive",
+          "german": "Hitzeempfindlich"
+        },
+        {
+          "id": "sensitive_smell",
+          "rating": 6,
+          "german": "Sensibler Geruchssinn"
+        },
+        {
+          "id": "inaptitude_drinking",
+          "german": "Unfähigkeit Zechen"
+        }
+      ],
+      "recommended_advantages": [
+        "astral_regeneration",
+        "astral_power",
+        "enduring",
+        "balance",
+        "aptitude_singing",
+        "aptitude_music",
+        "ambidextrous",
+        "fairy_friend",
+        "fleet",
+        "danger_sense",
+        "good_looking",
+        "outstanding_balance",
+        "outstanding_sense",
+        "inner_compass",
+        "night_sight",
+        "snake_person"
+      ],
+      "recommended_disadvantages": [
+        "albino",
+        "color_blind",
+        "dietary_restriction"
+      ],
+      "unsuitable_advantages": [
+        "heat_resistance",
+        "battle_frenzy",
+        "hard_to_enspell",
+        "favored_by_fate",
+        "dwarf_nose"
+      ],
+      "unsuitable_disadvantages": [
+        "sluggish",
+        "impaired_sense",
+        "obese",
+        "glass_bones",
+        "dwarf_stature",
+        "short_breath",
+        "night_blind",
+        "agoraphobia",
+        "indoor_person",
+        "unpleasant_smell",
+        "unattractive"
+      ],
+      "allowed_cultures": [
+        "firn_elven_clan",
+        "lea_elves"
+      ],
+      "talent_modifiers": {
+        "athletics": 1,
+        "body_control": 3,
+        "sneak": 2,
+        "sing": 1,
+        "perception": 5,
+        "carouse": -2,
+        "orientation": 2
+      },
+      "magic_status": "full_caster",
+      "physical_appearance": {
+        "height_formula": "1.56 + 2d20 cm (range: 1.58–1.96 m)",
+        "weight_formula": "height_cm - 120 kg",
+        "hair_colors": {
+          "1": "blue-black",
+          "2": "black",
+          "20": "dark blond",
+          "3-5": "silver",
+          "6-9": "snow-white",
+          "10-14": "white-blond",
+          "15-17": "light blond",
+          "18-19": "medium blond"
+        },
+        "eye_colors": {
+          "1": "black",
+          "19": "gold-speckled",
+          "20": "ruby red",
+          "2-3": "silver gray",
+          "4-7": "ice gray",
+          "8-11": "sapphire blue",
+          "12-15": "emerald green",
+          "16-18": "amber"
+        },
+        "notes": "Northern ice elf variant; shorter than other elves, cold-resistant, and very enduring."
+      },
+      "special_notes": "Northern ice elf racial variant. High EP and cold resistance; heat sensitivity is automatic.",
+      "affinity_tags": [
+        "magical_elven",
+        "ranged",
+        "stealth",
+        "wilderness"
+      ],
+      "description": "Firn Elves live in the far north: the Grimmfrost Wasteland, Ice Peaks, northern coasts, Nebelzinnen, and Yetiland. They share the alien grace and innate magic of all elves, but their bodies and customs are shaped by snow, ice, and hard survival.\n\nMechanically they are the most cold-adapted elven race variant: tougher, more enduring, resistant to cold, but sensitive to heat. They are excellent for arctic hunters, singers, and magical scouts.",
+      "source": "WdH p. 31",
+      "variant_of": "elf",
+      "chargen_culture_bridge_note": "Wege der Helden names homeland cultures beyond the Basisregelwerk; Nexus exposes those as cultures.json IDs where available alongside BR cultures so random pairing stays broad."
+    },
+    {
+      "id": "standard_dwarf",
+      "name": "Standard Dwarf",
+      "german_name": "Zwerg / Erz- oder Hügelzwerg",
+      "gp_cost": 12,
+      "attribute_modifiers": {
+        "DE": 1,
+        "AG": -1,
+        "CN": 2,
+        "ST": 1
+      },
+      "derived_modifiers": {
+        "VP": 11,
+        "EP": 15,
+        "RM": -4
+      },
+      "automatic_advantages": [
+        {
+          "id": "twilight_sight",
+          "german": "Dämmerungssicht"
+        },
+        {
+          "id": "resistance_mineral_poisons",
+          "german": "Resistenz gegen mineralische Gifte"
+        },
+        {
+          "id": "disease_resistance",
+          "german": "Resistenz gegen Krankheiten"
+        },
+        {
+          "id": "hard_to_enspell",
+          "german": "Schwer zu verzaubern"
+        }
+      ],
+      "automatic_disadvantages": [
+        {
+          "id": "greed",
+          "rating": 5,
+          "german": "Goldgier"
+        },
+        {
+          "id": "inaptitude_swimming",
+          "german": "Unfähigkeit Schwimmen"
+        },
+        {
+          "id": "dwarf_stature",
+          "german": "Zwergenwuchs"
+        }
+      ],
+      "recommended_advantages": [
+        "enduring",
+        "iron",
+        "danger_sense",
+        "good_memory_i",
+        "heat_resistance",
+        "high_rm",
+        "inner_compass",
+        "battle_frenzy",
+        "high_vp",
+        "night_sight",
+        "poison_resistance",
+        "direction_sense",
+        "tough_dog",
+        "dwarf_nose"
+      ],
+      "recommended_disadvantages": [
+        "blood_frenzy",
+        "violent_temper",
+        "light_shy",
+        "fear_of_sea",
+        "agoraphobia",
+        "unattractive"
+      ],
+      "unsuitable_advantages": [
+        "fairy_friend",
+        "outstanding_balance",
+        "outstanding_appearance",
+        "kobold_friend",
+        "magic_sense",
+        "snake_person",
+        "favored_by_fate",
+        "euphonic_voice"
+      ],
+      "unsuitable_disadvantages": [
+        "fear_of_dark",
+        "glass_bones",
+        "heat_sensitive",
+        "night_blind",
+        "low_rm",
+        "fear_of_rooms",
+        "alcohol_addiction",
+        "unstable"
+      ],
+      "allowed_cultures": [
+        "anvil_dwarves",
+        "brilliant_dwarves",
+        "hill_dwarves",
+        "ore_dwarves"
+      ],
+      "talent_modifiers": {
+        "wrestling": 1,
+        "acrobatics": -3,
+        "ride": -1,
+        "swimming": -3,
+        "willpower": 2,
+        "carouse": 1,
+        "orientation": 1,
+        "geology": 1
+      },
+      "magic_status": "none",
+      "physical_appearance": {
+        "height_formula": "1.28 + 2d6 cm (range: 1.30–1.40 m)",
+        "weight_formula": "height_cm - 80 kg",
+        "hair_colors": {
+          "14": "salt-white",
+          "15": "silver-white",
+          "1-5": "blond",
+          "6-9": "black",
+          "10-11": "dark gray",
+          "12-13": "light gray",
+          "16-17": "fire-red",
+          "18-20": "copper-red"
+        },
+        "eye_colors": {
+          "10": "blue",
+          "1-2": "dark brown",
+          "3-5": "brown",
+          "6-9": "green",
+          "11-14": "gray",
+          "15-20": "black"
+        },
+        "notes": "Default dwarf values in Wege der Helden for Ore and Hill Dwarves."
+      },
+      "special_notes": "Baseline dwarf race for Ore and Hill Dwarves in Wege der Helden. The original id `dwarf` in your file is preserved separately with its existing Anvil Dwarf-like values.",
+      "affinity_tags": [
+        "combat_frontliner",
+        "scholar"
+      ],
+      "description": "Dwarves, or Angroschim, are among the oldest peoples of Aventuria. They are compact, tough, long-lived, resistant to disease and mineral poisons, and famously stubborn. Their strong bodies make swimming almost impossible, and they require dwarf-sized weapons and armor.\n\nThis entry represents the default Wege der Helden dwarf values, used as the norm for Ore and Hill Dwarves. It has been added separately because the existing `dwarf` id in your original file already used stronger Anvil Dwarf-style values and has been kept unchanged.",
+      "source": "WdH p. 32–34",
+      "chargen_culture_bridge_note": "Wege der Helden names homeland cultures beyond the Basisregelwerk; Nexus exposes those as cultures.json IDs where available alongside BR cultures so random pairing stays broad."
+    },
+    {
+      "id": "brilliant_dwarf",
+      "name": "Brilliant Dwarf",
+      "german_name": "Brillantzwerg",
+      "gp_cost": 12,
+      "attribute_modifiers": {
+        "DE": 1,
+        "AG": -1,
+        "CN": 2,
+        "ST": 1
+      },
+      "derived_modifiers": {
+        "VP": 10,
+        "EP": 18,
+        "RM": -4
+      },
+      "automatic_advantages": [
+        {
+          "id": "twilight_sight",
+          "german": "Dämmerungssicht"
+        },
+        {
+          "id": "resistance_mineral_poisons",
+          "german": "Resistenz gegen mineralische Gifte"
+        },
+        {
+          "id": "disease_resistance",
+          "german": "Resistenz gegen Krankheiten"
+        },
+        {
+          "id": "hard_to_enspell",
+          "german": "Schwer zu verzaubern"
+        }
+      ],
+      "automatic_disadvantages": [
+        {
+          "id": "greed",
+          "rating": 5,
+          "german": "Goldgier"
+        },
+        {
+          "id": "inaptitude_swimming",
+          "german": "Unfähigkeit Schwimmen"
+        },
+        {
+          "id": "dwarf_stature",
+          "german": "Zwergenwuchs"
+        }
+      ],
+      "recommended_advantages": [
+        "enduring",
+        "iron",
+        "danger_sense",
+        "good_memory_i",
+        "heat_resistance",
+        "high_rm",
+        "inner_compass",
+        "battle_frenzy",
+        "high_vp",
+        "night_sight",
+        "poison_resistance",
+        "direction_sense",
+        "tough_dog",
+        "dwarf_nose"
+      ],
+      "recommended_disadvantages": [
+        "blood_frenzy",
+        "violent_temper",
+        "light_shy",
+        "fear_of_sea",
+        "agoraphobia",
+        "unattractive"
+      ],
+      "unsuitable_advantages": [
+        "fairy_friend",
+        "outstanding_balance",
+        "outstanding_appearance",
+        "kobold_friend",
+        "magic_sense",
+        "snake_person",
+        "favored_by_fate",
+        "euphonic_voice"
+      ],
+      "unsuitable_disadvantages": [
+        "fear_of_dark",
+        "glass_bones",
+        "heat_sensitive",
+        "night_blind",
+        "low_rm",
+        "fear_of_rooms",
+        "alcohol_addiction",
+        "unstable"
+      ],
+      "allowed_cultures": [
+        "anvil_dwarves",
+        "brilliant_dwarves",
+        "hill_dwarves",
+        "ore_dwarves"
+      ],
+      "talent_modifiers": {
+        "wrestling": 1,
+        "acrobatics": -3,
+        "ride": -1,
+        "swimming": -3,
+        "willpower": 2,
+        "carouse": 1,
+        "orientation": 1,
+        "geology": 1
+      },
+      "magic_status": "none",
+      "physical_appearance": {
+        "height_formula": "1.28 + 2d6 cm (range: 1.30–1.40 m)",
+        "weight_formula": "height_cm - 80 kg",
+        "hair_colors": {
+          "as_standard_dwarf": "use standard dwarf table"
+        },
+        "eye_colors": {
+          "as_standard_dwarf": "use standard dwarf table"
+        },
+        "notes": "Uses default dwarf appearance; WdH variant modifies VP by -1 and EP by +3 relative to standard dwarf."
+      },
+      "special_notes": "Dwarf racial variant from the Raschtulswall. Uses standard dwarf traits with VP -1 and EP +3 relative to the default dwarf.",
+      "affinity_tags": [
+        "combat_frontliner",
+        "scholar"
+      ],
+      "description": "Brilliant Dwarves are one of the major Angroschim peoples, associated with the Raschtulswall. They share the core dwarf traits: toughness, resistance to disease and mineral poisons, difficulty with swimming, and strong clan identity.\n\nMechanically this variant keeps the standard dwarf profile but shifts durability toward endurance: lower VP than the default dwarf, but higher EP.",
+      "source": "WdH p. 34",
+      "variant_of": "standard_dwarf",
+      "chargen_culture_bridge_note": "Wege der Helden names homeland cultures beyond the Basisregelwerk; Nexus exposes those as cultures.json IDs where available alongside BR cultures so random pairing stays broad."
+    },
+    {
+      "id": "wild_dwarf",
+      "name": "Wild Dwarf",
+      "german_name": "Wilder Zwerg",
+      "gp_cost": 16,
+      "attribute_modifiers": {
+        "AG": -1,
+        "CN": 2,
+        "ST": 2
+      },
+      "derived_modifiers": {
+        "VP": 12,
+        "EP": 18,
+        "RM": -4
+      },
+      "automatic_advantages": [
+        {
+          "id": "twilight_sight",
+          "german": "Dämmerungssicht"
+        },
+        {
+          "id": "resistance_mineral_poisons",
+          "german": "Resistenz gegen mineralische Gifte"
+        },
+        {
+          "id": "disease_resistance",
+          "german": "Resistenz gegen Krankheiten"
+        },
+        {
+          "id": "hard_to_enspell",
+          "german": "Schwer zu verzaubern"
+        },
+        {
+          "id": "left_handed",
+          "german": "Linkshänder"
+        }
+      ],
+      "automatic_disadvantages": [
+        {
+          "id": "greed",
+          "rating": 5,
+          "german": "Goldgier"
+        },
+        {
+          "id": "inaptitude_swimming",
+          "german": "Unfähigkeit Schwimmen"
+        },
+        {
+          "id": "dwarf_stature",
+          "german": "Zwergenwuchs"
+        }
+      ],
+      "recommended_advantages": [
+        "enduring",
+        "iron",
+        "danger_sense",
+        "good_memory_i",
+        "heat_resistance",
+        "high_rm",
+        "inner_compass",
+        "battle_frenzy",
+        "high_vp",
+        "night_sight",
+        "poison_resistance",
+        "direction_sense",
+        "tough_dog",
+        "dwarf_nose"
+      ],
+      "recommended_disadvantages": [
+        "blood_frenzy",
+        "violent_temper",
+        "light_shy",
+        "fear_of_sea",
+        "agoraphobia",
+        "unattractive"
+      ],
+      "unsuitable_advantages": [
+        "fairy_friend",
+        "outstanding_balance",
+        "outstanding_appearance",
+        "kobold_friend",
+        "magic_sense",
+        "snake_person",
+        "favored_by_fate",
+        "euphonic_voice"
+      ],
+      "unsuitable_disadvantages": [
+        "fear_of_dark",
+        "glass_bones",
+        "heat_sensitive",
+        "night_blind",
+        "low_rm",
+        "fear_of_rooms",
+        "alcohol_addiction",
+        "unstable"
+      ],
+      "allowed_cultures": [
+        "brobim"
+      ],
+      "talent_modifiers": {
+        "wrestling": 1,
+        "acrobatics": -3,
+        "ride": -1,
+        "swimming": -3,
+        "willpower": 2,
+        "carouse": 1,
+        "orientation": 1,
+        "geology": 1
+      },
+      "magic_status": "none",
+      "physical_appearance": {
+        "height_formula": "1.28 + 2d6 cm (range: 1.30–1.40 m)",
+        "weight_formula": "height_cm - 80 kg",
+        "hair_colors": {
+          "as_standard_dwarf": "use standard dwarf table"
+        },
+        "eye_colors": {
+          "as_standard_dwarf": "use standard dwarf table"
+        },
+        "notes": "Wild dwarf variant; no DE bonus, stronger ST, added left-handed advantage."
+      },
+      "special_notes": "Rare wild dwarf variant tied to the Brobim culture. Added as a separate exotic race option.",
+      "affinity_tags": [
+        "combat_frontliner",
+        "wilderness"
+      ],
+      "description": "Wild Dwarves are the mysterious dwarves of the Iron Sword, Bjaldorn Heights, and Ice Peaks. Aventurian tradition presents them as descendants of a lost dwarf people.\n\nThey use dwarf fundamentals but with a rougher, more isolated profile: strong, tough, left-handed by default, and normally limited to the Brobim culture.",
+      "source": "WdH p. 34",
+      "variant_of": "standard_dwarf",
+      "chargen_culture_bridge_note": "Wege der Helden names homeland cultures beyond the Basisregelwerk; Nexus exposes those as cultures.json IDs where available alongside BR cultures so random pairing stays broad."
+    },
+    {
+      "id": "ork",
+      "name": "Ork",
+      "german_name": "Ork",
+      "gp_cost": 12,
+      "attribute_modifiers": {
+        "CO": 2,
+        "CL": -2,
+        "CH": -2,
+        "DE": -1,
+        "CN": 2,
+        "ST": 2
+      },
+      "derived_modifiers": {
+        "VP": 12,
+        "EP": 18,
+        "RM": -7
+      },
+      "automatic_advantages": [
+        {
+          "id": "twilight_sight",
+          "german": "Dämmerungssicht"
+        },
+        {
+          "id": "cold_resistance",
+          "german": "Kälteresistenz"
+        },
+        {
+          "id": "natural_weapon_bite",
+          "note": "1d6+1 TP",
+          "german": "Natürliche Waffe: Biss"
+        },
+        {
+          "id": "natural_armor",
+          "rating": 1,
+          "german": "Natürlicher Rüstungsschutz"
+        },
+        {
+          "id": "direction_sense",
+          "german": "Richtungssinn"
+        },
+        {
+          "id": "tough_dog",
+          "german": "Zäher Hund"
+        }
+      ],
+      "automatic_disadvantages": [
+        {
+          "id": "violent_temper",
+          "rating": 6,
+          "german": "Jähzorn"
+        },
+        {
+          "id": "outsider",
+          "german": "Randgruppe"
+        },
+        {
+          "id": "predator_smell",
+          "german": "Raubtiergeruch"
+        }
+      ],
+      "recommended_advantages": [
+        "enduring",
+        "iron",
+        "distance_sense",
+        "poison_immunity",
+        "inner_compass",
+        "battle_frenzy",
+        "high_vp",
+        "poison_resistance"
+      ],
+      "recommended_disadvantages": [
+        "blood_frenzy",
+        "heat_sensitive",
+        "low_rm",
+        "unpleasant_smell",
+        "unpleasant_voice",
+        "unattractive",
+        "inaptitude_social_talents"
+      ],
+      "unsuitable_advantages": [
+        "fairy_friend",
+        "outstanding_appearance",
+        "high_rm",
+        "kobold_friend",
+        "snake_person",
+        "hard_to_enspell",
+        "animal_friend",
+        "euphonic_voice"
+      ],
+      "unsuitable_disadvantages": [
+        "many_fears",
+        "glass_bones",
+        "pathological_cleanliness",
+        "night_blind",
+        "poor_regeneration"
+      ],
+      "allowed_cultures": [
+        "bornland",
+        "middenrealm_cities",
+        "orkland",
+        "southern_aventuria",
+        "svellt_occupiers",
+        "thorwal"
+      ],
+      "talent_modifiers": {
+        "brawling": 1,
+        "wrestling": 1,
+        "athletics": 1,
+        "body_control": 1,
+        "sneak": 1,
+        "willpower": 1,
+        "sing": -2,
+        "perception": 2,
+        "orientation": 2,
+        "calculate": -1
+      },
+      "magic_status": "none",
+      "physical_appearance": {
+        "height_formula": "1.50 + 3d6 cm (range: 1.53–1.68 m); Zholochai +1d6 cm",
+        "weight_formula": "height_cm - 95 kg",
+        "hair_and_fur_colors": {
+          "1-5": "dark brown",
+          "6-11": "brown-black",
+          "12-19": "deep black",
+          "20-28": "blue-black; Zholochai roll +8; Mokolash always brown; Olochtai dense gray"
+        },
+        "eye_colors": {
+          "1-4": "yellow",
+          "5-12": "red",
+          "13-16": "gray",
+          "17-20": "black"
+        },
+        "notes": "Shorter than many humans but very muscular; dark fur, long arms, tusk-like lower canines."
+      },
+      "special_notes": "Full Ork player race. Very exotic; PDF explicitly says Ork heroes require GM approval and special adventures.",
+      "affinity_tags": [
+        "combat_frontliner",
+        "wilderness"
+      ],
+      "description": "Orks, the “Blackpelts,” are a harsh and violent people of the Orkland, with occupied settlements in the Svellt region and scattered exiles, mercenaries, and raiders elsewhere. Their own traditions claim a far older history than human scholars accept.\n\nThey are muscular, furred, long-armed, and physically powerful, with strong teeth and natural toughness. As player heroes they are strongly marked outsiders and should only be used in campaigns where the GM accepts the social consequences.",
+      "source": "WdH p. 34–35",
+      "automatic_SAs": [
+        {
+          "id": "unarmed_style_bite",
+          "german": "Waffenlose Sonderfertigkeit Biss"
+        }
+      ],
+      "chargen_culture_bridge_note": "Wege der Helden names homeland cultures beyond the Basisregelwerk; Nexus exposes those as cultures.json IDs where available alongside BR cultures so random pairing stays broad."
+    },
+    {
+      "id": "ork_woman",
+      "name": "Ork Woman",
+      "german_name": "Orkfrau",
+      "gp_cost": 2,
+      "attribute_modifiers": {
+        "CL": -2,
+        "CH": -2,
+        "DE": -1,
+        "CN": 1,
+        "ST": 1
+      },
+      "derived_modifiers": {
+        "VP": 10,
+        "EP": 15,
+        "RM": -7
+      },
+      "automatic_advantages": [
+        {
+          "id": "twilight_sight",
+          "german": "Dämmerungssicht"
+        },
+        {
+          "id": "cold_resistance",
+          "german": "Kälteresistenz"
+        },
+        {
+          "id": "natural_weapon_bite",
+          "note": "1d6+1 TP",
+          "german": "Natürliche Waffe: Biss"
+        },
+        {
+          "id": "natural_armor",
+          "rating": 1,
+          "german": "Natürlicher Rüstungsschutz"
+        },
+        {
+          "id": "direction_sense",
+          "german": "Richtungssinn"
+        },
+        {
+          "id": "tough_dog",
+          "german": "Zäher Hund"
+        }
+      ],
+      "automatic_disadvantages": [
+        {
+          "id": "outsider",
+          "german": "Randgruppe"
+        },
+        {
+          "id": "predator_smell",
+          "german": "Raubtiergeruch"
+        },
+        {
+          "id": "inaptitude_languages_scripts",
+          "german": "Unfähigkeit Sprachen und Schriften"
+        }
+      ],
+      "recommended_advantages": [
+        "enduring",
+        "iron",
+        "distance_sense",
+        "poison_immunity",
+        "inner_compass",
+        "battle_frenzy",
+        "high_vp",
+        "poison_resistance"
+      ],
+      "recommended_disadvantages": [
+        "blood_frenzy",
+        "heat_sensitive",
+        "low_rm",
+        "unpleasant_smell",
+        "unpleasant_voice",
+        "unattractive",
+        "inaptitude_social_talents"
+      ],
+      "unsuitable_advantages": [
+        "fairy_friend",
+        "outstanding_appearance",
+        "high_rm",
+        "kobold_friend",
+        "snake_person",
+        "hard_to_enspell",
+        "animal_friend",
+        "euphonic_voice"
+      ],
+      "unsuitable_disadvantages": [
+        "many_fears",
+        "glass_bones",
+        "pathological_cleanliness",
+        "night_blind",
+        "poor_regeneration"
+      ],
+      "allowed_cultures": [
+        "bornland",
+        "middenrealm_cities",
+        "orkland",
+        "southern_aventuria",
+        "svellt_occupiers",
+        "thorwal"
+      ],
+      "talent_modifiers": {
+        "brawling": 1,
+        "wrestling": 1,
+        "athletics": 1,
+        "body_control": 1,
+        "sneak": 1,
+        "willpower": 1,
+        "sing": -2,
+        "perception": 2,
+        "orientation": 2,
+        "calculate": -1
+      },
+      "magic_status": "none",
+      "physical_appearance": {
+        "height_formula": "1.45 + 3d6 cm (range: 1.48–1.63 m)",
+        "weight_formula": "height_cm - 90 kg",
+        "hair_and_fur_colors": {
+          "as_ork": "use Ork table"
+        },
+        "eye_colors": {
+          "as_ork": "use Ork table"
+        },
+        "notes": "Female Ork variant; smaller and less physically extreme, with language/script inaptitude and no automatic Violent Temper."
+      },
+      "special_notes": "Female Ork variant. Uses Ork values where not overridden, with lower physical modifiers and no automatic Violent Temper.",
+      "affinity_tags": [
+        "combat_frontliner",
+        "wilderness"
+      ],
+      "description": "Ork women use a distinct variant profile in Wege der Helden. The variant is still socially very difficult as a player option, but it is mechanically much cheaper than a male/full Ork and does not carry automatic Violent Temper.\n\nUse this as a separate entry when the character is specifically an Ork woman rather than a generic Ork profile.",
+      "source": "WdH p. 35",
+      "variant_of": "ork",
+      "automatic_SAs": [
+        {
+          "id": "unarmed_style_bite",
+          "german": "Waffenlose Sonderfertigkeit Biss"
+        }
+      ],
+      "chargen_culture_bridge_note": "Wege der Helden names homeland cultures beyond the Basisregelwerk; Nexus exposes those as cultures.json IDs where available alongside BR cultures so random pairing stays broad."
+    },
+    {
+      "id": "half_orc",
+      "name": "Half-Orc",
+      "german_name": "Halbork",
+      "gp_cost": 1,
+      "attribute_modifiers": {
+        "CO": 1,
+        "CL": -1,
+        "CH": -2,
+        "CN": 1,
+        "ST": 1
+      },
+      "derived_modifiers": {
+        "VP": 11,
+        "EP": 15,
+        "RM": -6
+      },
+      "automatic_advantages": [
+        {
+          "id": "direction_sense",
+          "german": "Richtungssinn"
+        },
+        {
+          "id": "tough_dog",
+          "german": "Zäher Hund"
+        }
+      ],
+      "automatic_disadvantages": [
+        {
+          "id": "violent_temper",
+          "rating": 6,
+          "german": "Jähzorn"
+        },
+        {
+          "id": "outsider",
+          "german": "Randgruppe"
+        }
+      ],
+      "recommended_advantages": [
+        "enduring",
+        "iron",
+        "distance_sense",
+        "danger_sense",
+        "inner_compass",
+        "battle_frenzy",
+        "cold_resistance",
+        "high_vp",
+        "poison_resistance",
+        "tough_dog"
+      ],
+      "recommended_disadvantages": [
+        "blood_frenzy",
+        "low_rm",
+        "unpleasant_smell",
+        "unpleasant_voice",
+        "unattractive"
+      ],
+      "unsuitable_advantages": [
+        "fairy_friend",
+        "good_looking",
+        "high_rm",
+        "kobold_friend",
+        "hard_to_enspell",
+        "euphonic_voice"
+      ],
+      "unsuitable_disadvantages": [
+        "glass_bones",
+        "night_blind",
+        "poor_regeneration"
+      ],
+      "allowed_cultures": [
+        "middenrealm_cities",
+        "orkland",
+        "southern_aventuria",
+        "svellt_occupiers",
+        "thorwal",
+        "tulamidian_city_states"
+      ],
+      "talent_modifiers": {
+        "wrestling": 1,
+        "athletics": 1,
+        "sneak": 1,
+        "willpower": 1,
+        "sing": -2
+      },
+      "magic_status": "none",
+      "physical_appearance": {
+        "height_formula": "1.60 + 4d6 cm (range: 1.64–1.84 m)",
+        "weight_formula": "height_cm - 100 kg",
+        "hair_colors": {
+          "1-2": "blond",
+          "3-6": "red",
+          "7-12": "brown",
+          "13-20": "black"
+        },
+        "eye_colors": {
+          "1-5": "red",
+          "6-8": "green",
+          "9-13": "brown",
+          "14-20": "black"
+        },
+        "notes": "Human-sized but powerfully built, strongly and darkly haired, with coarse facial features."
+      },
+      "special_notes": "Human-Ork mixed race. Very exotic and usually socially rejected; PDF says Half-Orc heroes require the same special approval as Orks.",
+      "affinity_tags": [
+        "combat_frontliner",
+        "wilderness"
+      ],
+      "description": "Half-Orcs usually arise in the Ork-occupied Svellt region or as rejected children of enslaved women. They are human-sized but stronger and coarser in appearance, with dark body hair and facial features that betray their Ork heritage.\n\nThey develop more like Orks than humans and often face severe prejudice. Mechanically they provide a harsh but playable bridge between human and Ork profiles.",
+      "source": "WdH p. 35",
+      "chargen_culture_bridge_note": "Wege der Helden names homeland cultures beyond the Basisregelwerk; Nexus exposes those as cultures.json IDs where available alongside BR cultures so random pairing stays broad."
+    },
+    {
+      "id": "goblin",
+      "name": "Goblin",
+      "german_name": "Goblin / Suulak",
+      "gp_cost": 3,
+      "attribute_modifiers": {
+        "CO": -1,
+        "CL": -2,
+        "DE": 2,
+        "AG": 2,
+        "ST": -1
+      },
+      "derived_modifiers": {
+        "VP": 4,
+        "EP": 12,
+        "RM": -5,
+        "INI_base": 2
+      },
+      "automatic_advantages": [
+        {
+          "id": "twilight_sight",
+          "german": "Dämmerungssicht"
+        },
+        {
+          "id": "fleet",
+          "german": "Flink"
+        },
+        {
+          "id": "danger_sense",
+          "german": "Gefahreninstinkt"
+        },
+        {
+          "id": "outstanding_sense",
+          "note": "hearing or smell",
+          "german": "Herausragender Sinn"
+        },
+        {
+          "id": "cold_resistance",
+          "german": "Kälteresistenz"
+        },
+        {
+          "id": "natural_weapon_bite",
+          "note": "1d6 TP",
+          "german": "Natürliche Waffe: Biss"
+        },
+        {
+          "id": "natural_armor",
+          "rating": 1,
+          "german": "Natürlicher RS"
+        }
+      ],
+      "automatic_disadvantages": [
+        {
+          "id": "dwarf_stature",
+          "german": "Kleinwüchsig"
+        },
+        {
+          "id": "outsider",
+          "german": "Randgruppe"
+        },
+        {
+          "id": "unstable",
+          "german": "Unstet"
+        }
+      ],
+      "recommended_advantages": [
+        "balance",
+        "outstanding_balance",
+        "ambidextrous",
+        "iron",
+        "distance_sense",
+        "luck",
+        "outstanding_sense",
+        "magic_sense",
+        "poison_resistance",
+        "poison_immunity",
+        "disease_resistance",
+        "direction_sense",
+        "snake_person",
+        "tough_dog"
+      ],
+      "recommended_disadvantages": [
+        "curiosity",
+        "low_rm",
+        "unpleasant_smell",
+        "unpleasant_voice",
+        "unattractive"
+      ],
+      "unsuitable_advantages": [
+        "fairy_friend",
+        "outstanding_appearance",
+        "high_rm_men",
+        "left_handed",
+        "hard_to_enspell",
+        "euphonic_voice"
+      ],
+      "unsuitable_disadvantages": [
+        "blood_frenzy",
+        "fear_of_dark",
+        "glass_bones",
+        "fear_of_heights",
+        "pathological_cleanliness",
+        "prone_to_illness",
+        "night_blind",
+        "dietary_restriction",
+        "fear_of_rooms",
+        "poor_regeneration"
+      ],
+      "allowed_cultures": [
+        "goblin_band",
+        "goblin_tribe",
+        "middenrealm_cities",
+        "southern_aventuria",
+        "tulamidian_city_states"
+      ],
+      "talent_modifiers": {
+        "climbing": 2,
+        "body_control": 1,
+        "sneak": 2,
+        "willpower": -1,
+        "hide": 1,
+        "sing": -1,
+        "perception": 4,
+        "carouse": -1,
+        "tracking": 1,
+        "orientation": 1,
+        "calculate": -1
+      },
+      "magic_status": "none",
+      "physical_appearance": {
+        "height_formula": "1.35 + 4d6 cm (range: 1.39–1.59 m)",
+        "weight_formula": "height_cm - 100 kg",
+        "hair_and_fur_colors": {
+          "1-2": "orange-red",
+          "3-7": "fire-red",
+          "8-13": "red-brown",
+          "14-18": "dark red",
+          "19-20": "red-gray"
+        },
+        "eye_colors": {
+          "1": "green",
+          "20": "red-violet",
+          "2-5": "yellow",
+          "6-11": "light red",
+          "12-17": "dark red",
+          "18-19": "red-brown"
+        },
+        "notes": "Small goblinesque race with long arms, nimble fingers, reddish fur and hair."
+      },
+      "special_notes": "Goblin player race. Very exotic; PDF says Goblin heroes require GM approval and special adventures. Magic only among women.",
+      "affinity_tags": [
+        "stealth",
+        "wilderness",
+        "rogue_criminal"
+      ],
+      "description": "Goblins, or Suulak, are the second most numerous race in Aventuria after humans. Many live in the Red and Black Sickle and the Green Plain, while others are found as bandits, laborers, slaves, or outcasts across the continent.\n\nThey are small, agile, red-furred goblinesques with long arms, dextrous fingers, sharp senses, and a natural bite. Their reputation among humans is terrible, so Goblin player characters need careful campaign approval.",
+      "source": "WdH p. 35–36",
+      "automatic_SAs": [
+        {
+          "id": "unarmed_style_bite",
+          "german": "Waffenlose Sonderfertigkeit Biss"
+        }
+      ],
+      "chargen_culture_bridge_note": "Wege der Helden names homeland cultures beyond the Basisregelwerk; Nexus exposes those as cultures.json IDs where available alongside BR cultures so random pairing stays broad."
+    },
+    {
+      "id": "goblin_woman",
+      "name": "Goblin Woman",
+      "german_name": "Goblinfrau",
+      "gp_cost": 7,
+      "attribute_modifiers": {
+        "CO": -1,
+        "CL": -2,
+        "IN": 1,
+        "DE": 2,
+        "AG": 2,
+        "ST": -1
+      },
+      "derived_modifiers": {
+        "VP": 4,
+        "EP": 12,
+        "RM": -5,
+        "INI_base": 2
+      },
+      "automatic_advantages": [
+        {
+          "id": "night_sight",
+          "german": "Nachtsicht"
+        },
+        {
+          "id": "fleet",
+          "german": "Flink"
+        },
+        {
+          "id": "danger_sense",
+          "german": "Gefahreninstinkt"
+        },
+        {
+          "id": "outstanding_sense",
+          "note": "hearing or smell",
+          "german": "Herausragender Sinn"
+        },
+        {
+          "id": "cold_resistance",
+          "german": "Kälteresistenz"
+        },
+        {
+          "id": "natural_weapon_bite",
+          "note": "1d6 TP",
+          "german": "Natürliche Waffe: Biss"
+        },
+        {
+          "id": "natural_armor",
+          "rating": 1,
+          "german": "Natürlicher RS"
+        }
+      ],
+      "automatic_disadvantages": [
+        {
+          "id": "dwarf_stature",
+          "german": "Kleinwüchsig"
+        },
+        {
+          "id": "outsider",
+          "german": "Randgruppe"
+        },
+        {
+          "id": "unstable",
+          "german": "Unstet"
+        }
+      ],
+      "recommended_advantages": [
+        "balance",
+        "outstanding_balance",
+        "ambidextrous",
+        "iron",
+        "distance_sense",
+        "luck",
+        "outstanding_sense",
+        "magic_sense",
+        "poison_resistance",
+        "poison_immunity",
+        "disease_resistance",
+        "direction_sense",
+        "snake_person",
+        "tough_dog"
+      ],
+      "recommended_disadvantages": [
+        "curiosity",
+        "low_rm",
+        "unpleasant_smell",
+        "unpleasant_voice",
+        "unattractive"
+      ],
+      "unsuitable_advantages": [
+        "fairy_friend",
+        "outstanding_appearance",
+        "left_handed",
+        "hard_to_enspell",
+        "euphonic_voice"
+      ],
+      "unsuitable_disadvantages": [
+        "blood_frenzy",
+        "fear_of_dark",
+        "glass_bones",
+        "fear_of_heights",
+        "pathological_cleanliness",
+        "prone_to_illness",
+        "night_blind",
+        "dietary_restriction",
+        "fear_of_rooms",
+        "poor_regeneration"
+      ],
+      "allowed_cultures": [
+        "goblin_band",
+        "goblin_tribe",
+        "middenrealm_cities",
+        "southern_aventuria",
+        "tulamidian_city_states"
+      ],
+      "talent_modifiers": {
+        "climbing": 2,
+        "body_control": 1,
+        "sneak": 2,
+        "willpower": -1,
+        "hide": 1,
+        "sing": -1,
+        "perception": 4,
+        "carouse": -3,
+        "tracking": 1,
+        "orientation": 1,
+        "calculate": -1
+      },
+      "magic_status": "none",
+      "physical_appearance": {
+        "height_formula": "1.35 + 4d6 cm (range: 1.39–1.59 m)",
+        "weight_formula": "height_cm - 100 kg",
+        "hair_and_fur_colors": {
+          "as_goblin": "use Goblin table"
+        },
+        "eye_colors": {
+          "as_goblin": "use Goblin table"
+        },
+        "notes": "Female Goblin variant: IN +1, Night Sight instead of Twilight Sight, carouse penalty worsens."
+      },
+      "special_notes": "Female Goblin variant. Magic is noted as occurring only among Goblin women.",
+      "affinity_tags": [
+        "stealth",
+        "wilderness",
+        "rogue_criminal",
+        "magical_dabbler"
+      ],
+      "description": "Goblin women use a more expensive variant profile with sharper intuition and Night Sight instead of Twilight Sight. The PDF notes that magical talent among Goblins occurs only in women.\n\nUse this entry when gender matters mechanically, especially for Goblin shamans or magic-linked character concepts.",
+      "source": "WdH p. 36",
+      "variant_of": "goblin",
+      "automatic_SAs": [
+        {
+          "id": "unarmed_style_bite",
+          "german": "Waffenlose Sonderfertigkeit Biss"
+        }
+      ],
+      "chargen_culture_bridge_note": "Wege der Helden names homeland cultures beyond the Basisregelwerk; Nexus exposes those as cultures.json IDs where available alongside BR cultures so random pairing stays broad."
+    },
+    {
+      "id": "achaz",
+      "name": "Achaz",
+      "german_name": "Achaz / Echsensumpf- oder Regenwald-Achaz",
+      "gp_cost": 14,
+      "attribute_modifiers": {
+        "CO": -1,
+        "IN": 2,
+        "DE": 1,
+        "AG": 1,
+        "CN": 1,
+        "ST": -1
+      },
+      "derived_modifiers": {
+        "VP": 8,
+        "EP": 7,
+        "RM": -2
+      },
+      "automatic_advantages": [
+        {
+          "id": "balance",
+          "german": "Balance"
+        },
+        {
+          "id": "aptitude_swimming",
+          "german": "Begabung: Schwimmen"
+        },
+        {
+          "id": "ambidextrous",
+          "german": "Beidhändig"
+        },
+        {
+          "id": "twilight_sight",
+          "german": "Dämmerungssicht"
+        },
+        {
+          "id": "outstanding_smell",
+          "german": "Herausragender Geruchssinn"
+        },
+        {
+          "id": "natural_weapon_bite",
+          "note": "1d6 TP(A)",
+          "german": "Natürliche Waffen: Biss"
+        },
+        {
+          "id": "natural_weapon_tail",
+          "note": "1d6 TP(A)",
+          "german": "Natürliche Waffen: Schwanz"
+        },
+        {
+          "id": "natural_armor",
+          "rating": 2,
+          "german": "Natürlicher Rüstungsschutz"
+        },
+        {
+          "id": "direction_sense",
+          "german": "Richtungssinn"
+        },
+        {
+          "id": "additional_limb_tail",
+          "german": "Zusätzliche Gliedmaße: Schwanz"
+        }
+      ],
+      "automatic_disadvantages": [
+        {
+          "id": "fear_of_dark",
+          "rating": 5,
+          "german": "Dunkelangst"
+        },
+        {
+          "id": "impaired_hearing",
+          "german": "Eingeschränkter Sinn: Gehör"
+        },
+        {
+          "id": "cold_stupor",
+          "german": "Kältestarre"
+        },
+        {
+          "id": "outsider",
+          "german": "Randgruppe"
+        },
+        {
+          "id": "predator_smell",
+          "german": "Raubtiergeruch"
+        },
+        {
+          "id": "inaptitude_singing",
+          "german": "Unfähigkeit Singen"
+        },
+        {
+          "id": "inaptitude_mimicry",
+          "german": "Unfähigkeit Stimmen Imitieren"
+        },
+        {
+          "id": "inaptitude_music",
+          "german": "Unfähigkeit Musizieren"
+        }
+      ],
+      "recommended_advantages": [
+        "good_memory_i",
+        "outstanding_balance",
+        "high_rm",
+        "inner_compass",
+        "poison_resistance",
+        "poison_immunity",
+        "snake_person",
+        "time_sense"
+      ],
+      "recommended_disadvantages": [
+        "short_breath",
+        "night_blind",
+        "dietary_restriction",
+        "sun_addiction",
+        "unpleasant_voice"
+      ],
+      "unsuitable_advantages": [
+        "enduring",
+        "aptitude_languages",
+        "distance_sense",
+        "fairy_friend",
+        "outstanding_sense_touch_or_hearing",
+        "outstanding_appearance",
+        "heat_resistance",
+        "cold_resistance",
+        "kobold_friend",
+        "favored_by_fate",
+        "euphonic_voice"
+      ],
+      "unsuitable_disadvantages": [
+        "obese",
+        "dwarf_stature",
+        "prone_to_illness",
+        "light_sensitive",
+        "light_shy"
+      ],
+      "allowed_cultures": [
+        "archaic_achaz",
+        "festum_ghetto",
+        "southern_aventuria",
+        "tribal_achaz",
+        "tulamidian_city_states"
+      ],
+      "talent_modifiers": {
+        "brawling": 1,
+        "body_control": 1,
+        "swimming": 5,
+        "sing": -3,
+        "perception": 5,
+        "mimicry": -3,
+        "carouse": -1,
+        "tracking": 2,
+        "fishing": 1,
+        "orientation": 1,
+        "weather_forecasting": 1,
+        "music": -3
+      },
+      "magic_status": "none",
+      "physical_appearance": {
+        "height_formula": "1.67 + 3d6 cm (range: 1.70–1.85 m)",
+        "weight_formula": "height_cm - 120 kg",
+        "scale_colors": {
+          "2 x d20": "light green, olive green, dark green, brown-green, or brown; usually two-colored horizontal stripes"
+        },
+        "eye_colors": {
+          "20": "copper",
+          "1-2": "golden",
+          "3-4": "yellow",
+          "5-9": "light green",
+          "10-14": "olive green",
+          "15-17": "dark green",
+          "18-19": "light brown"
+        },
+        "notes": "Humanoid lizard people with scales, tail, crest, webbed fingers/toes, and cold-blooded metabolism."
+      },
+      "special_notes": "Default Achaz race for Echsensumpf and Rainforest Achaz. Very exotic; PDF says Achaz heroes require GM approval and special adventures.",
+      "affinity_tags": [
+        "wilderness",
+        "swimmer",
+        "exotic"
+      ],
+      "description": "Achaz are the “eternal people,” lizardfolk descended from the ancient scaled civilizations of the Tenth Age. They are humanoid reptiles with scales, a tail, a crest from head to tail, webbed hands and feet, and a cold-blooded metabolism.\n\nTheir worldview and emotional life differ radically from mammalian peoples. They are conspicuous almost everywhere outside southern cities such as Selem, Brabak, and Port Corrad, so the PDF recommends using Achaz heroes rarely and with care.",
+      "source": "WdH p. 36–38",
+      "automatic_SAs": [
+        {
+          "id": "unarmed_style_tail_strike",
+          "german": "Waffenlose SF Schwanzschlag"
+        },
+        {
+          "id": "unarmed_style_bite",
+          "german": "Waffenlose SF Biss"
+        }
+      ],
+      "discounted_SAs": [
+        {
+          "id": "unarmed_style_tail_sweep",
+          "german": "Waffenlose SF Schwanzfeger"
+        }
+      ],
+      "chargen_culture_bridge_note": "Wege der Helden names homeland cultures beyond the Basisregelwerk; Nexus exposes those as cultures.json IDs where available alongside BR cultures so random pairing stays broad."
+    },
+    {
+      "id": "forest_island_achaz",
+      "name": "Forest Island Achaz",
+      "german_name": "Waldinsel-Achaz",
+      "gp_cost": 5,
+      "attribute_modifiers": {
+        "CO": -1,
+        "IN": 2,
+        "DE": -2,
+        "AG": 1,
+        "ST": -1
+      },
+      "derived_modifiers": {
+        "VP": 7,
+        "EP": 7,
+        "RM": -2
+      },
+      "automatic_advantages": [
+        {
+          "id": "balance",
+          "german": "Balance"
+        },
+        {
+          "id": "aptitude_swimming",
+          "german": "Begabung: Schwimmen"
+        },
+        {
+          "id": "ambidextrous",
+          "german": "Beidhändig"
+        },
+        {
+          "id": "twilight_sight",
+          "german": "Dämmerungssicht"
+        },
+        {
+          "id": "outstanding_smell",
+          "german": "Herausragender Geruchssinn"
+        },
+        {
+          "id": "natural_weapon_bite",
+          "note": "1d6 TP(A)",
+          "german": "Natürliche Waffen: Biss"
+        },
+        {
+          "id": "natural_weapon_tail",
+          "note": "1d6 TP(A)",
+          "german": "Natürliche Waffen: Schwanz"
+        },
+        {
+          "id": "natural_armor",
+          "rating": 2,
+          "german": "Natürlicher Rüstungsschutz"
+        },
+        {
+          "id": "direction_sense",
+          "german": "Richtungssinn"
+        },
+        {
+          "id": "additional_limb_tail",
+          "german": "Zusätzliche Gliedmaße: Schwanz"
+        }
+      ],
+      "automatic_disadvantages": [
+        {
+          "id": "fear_of_dark",
+          "rating": 5,
+          "german": "Dunkelangst"
+        },
+        {
+          "id": "impaired_hearing",
+          "german": "Eingeschränkter Sinn: Gehör"
+        },
+        {
+          "id": "cold_stupor",
+          "german": "Kältestarre"
+        },
+        {
+          "id": "outsider",
+          "german": "Randgruppe"
+        },
+        {
+          "id": "predator_smell",
+          "german": "Raubtiergeruch"
+        },
+        {
+          "id": "inaptitude_singing",
+          "german": "Unfähigkeit Singen"
+        },
+        {
+          "id": "inaptitude_mimicry",
+          "german": "Unfähigkeit Stimmen Imitieren"
+        },
+        {
+          "id": "inaptitude_music",
+          "german": "Unfähigkeit Musizieren"
+        }
+      ],
+      "recommended_advantages": [
+        "good_memory_i",
+        "outstanding_balance",
+        "high_rm",
+        "inner_compass",
+        "poison_resistance",
+        "poison_immunity",
+        "snake_person",
+        "time_sense"
+      ],
+      "recommended_disadvantages": [
+        "short_breath",
+        "night_blind",
+        "dietary_restriction",
+        "sun_addiction",
+        "unpleasant_voice"
+      ],
+      "unsuitable_advantages": [
+        "enduring",
+        "aptitude_languages",
+        "distance_sense",
+        "fairy_friend",
+        "outstanding_sense_touch_or_hearing",
+        "outstanding_appearance",
+        "heat_resistance",
+        "cold_resistance",
+        "kobold_friend",
+        "favored_by_fate",
+        "euphonic_voice"
+      ],
+      "unsuitable_disadvantages": [
+        "obese",
+        "dwarf_stature",
+        "prone_to_illness",
+        "light_sensitive",
+        "light_shy"
+      ],
+      "allowed_cultures": [
+        "forest_island_utulus",
+        "miniwatu",
+        "southern_aventuria",
+        "tulamidian_city_states"
+      ],
+      "talent_modifiers": {
+        "brawling": 1,
+        "body_control": 1,
+        "swimming": 5,
+        "sing": -3,
+        "perception": 5,
+        "mimicry": -3,
+        "carouse": -1,
+        "tracking": 2,
+        "fishing": 1,
+        "orientation": 1,
+        "weather_forecasting": 1,
+        "music": -3
+      },
+      "magic_status": "none",
+      "physical_appearance": {
+        "height_formula": "2.07 + 3d6 cm (range: 2.10–2.25 m)",
+        "weight_formula": "height_cm - 130 kg",
+        "scale_colors": {
+          "as_achaz": "use Achaz scale table"
+        },
+        "eye_colors": {
+          "as_achaz": "use Achaz eye table"
+        },
+        "notes": "Tall, slender Achaz variant from the Forest Islands; three-fingered hands are noted in the description."
+      },
+      "special_notes": "Forest Island Achaz variant. Much taller and cheaper than default Achaz, with reduced DE and VP.",
+      "affinity_tags": [
+        "wilderness",
+        "swimmer",
+        "exotic"
+      ],
+      "description": "Forest Island Achaz are the tall, slender Achaz of the Forest Islands. The PDF notes their distinctive hands, with a thumb and two fingers rather than the usual five fingers.\n\nThis variant replaces the default Achaz values. Use it for a very alien, conspicuous lizardfolk hero from the Forest Islands.",
+      "source": "WdH p. 38",
+      "variant_of": "achaz",
+      "automatic_SAs": [
+        {
+          "id": "unarmed_style_tail_strike",
+          "german": "Waffenlose SF Schwanzschlag"
+        },
+        {
+          "id": "unarmed_style_bite",
+          "german": "Waffenlose SF Biss"
+        }
+      ],
+      "discounted_SAs": [
+        {
+          "id": "unarmed_style_tail_sweep",
+          "german": "Waffenlose SF Schwanzfeger"
+        }
+      ],
+      "chargen_culture_bridge_note": "Wege der Helden names homeland cultures beyond the Basisregelwerk; Nexus exposes those as cultures.json IDs where available alongside BR cultures so random pairing stays broad."
+    },
+    {
+      "id": "maraskan_achaz",
+      "name": "Maraskan Achaz",
+      "german_name": "Maraskan-Achaz",
+      "gp_cost": 16,
+      "attribute_modifiers": {
+        "CO": -1,
+        "IN": 2,
+        "DE": 1,
+        "AG": 1,
+        "ST": -1
+      },
+      "derived_modifiers": {
+        "VP": 7,
+        "EP": 7,
+        "RM": -2
+      },
+      "automatic_advantages": [
+        {
+          "id": "balance",
+          "german": "Balance"
+        },
+        {
+          "id": "aptitude_swimming",
+          "german": "Begabung: Schwimmen"
+        },
+        {
+          "id": "ambidextrous",
+          "german": "Beidhändig"
+        },
+        {
+          "id": "twilight_sight",
+          "german": "Dämmerungssicht"
+        },
+        {
+          "id": "outstanding_smell",
+          "german": "Herausragender Geruchssinn"
+        },
+        {
+          "id": "natural_weapon_bite",
+          "note": "1d6 TP(A)",
+          "german": "Natürliche Waffen: Biss"
+        },
+        {
+          "id": "natural_weapon_tail",
+          "note": "1d6 TP(A)",
+          "german": "Natürliche Waffen: Schwanz"
+        },
+        {
+          "id": "natural_armor",
+          "rating": 2,
+          "german": "Natürlicher Rüstungsschutz"
+        },
+        {
+          "id": "direction_sense",
+          "german": "Richtungssinn"
+        },
+        {
+          "id": "additional_limb_tail",
+          "german": "Zusätzliche Gliedmaße: Schwanz"
+        },
+        {
+          "id": "animal_empathy_reptiles",
+          "german": "Tierempathie: Reptilien"
+        }
+      ],
+      "automatic_disadvantages": [
+        {
+          "id": "fear_of_dark",
+          "rating": 5,
+          "german": "Dunkelangst"
+        },
+        {
+          "id": "impaired_hearing",
+          "german": "Eingeschränkter Sinn: Gehör"
+        },
+        {
+          "id": "cold_stupor",
+          "german": "Kältestarre"
+        },
+        {
+          "id": "outsider",
+          "german": "Randgruppe"
+        },
+        {
+          "id": "predator_smell",
+          "german": "Raubtiergeruch"
+        },
+        {
+          "id": "inaptitude_singing",
+          "german": "Unfähigkeit Singen"
+        },
+        {
+          "id": "inaptitude_mimicry",
+          "german": "Unfähigkeit Stimmen Imitieren"
+        },
+        {
+          "id": "inaptitude_music",
+          "german": "Unfähigkeit Musizieren"
+        }
+      ],
+      "recommended_advantages": [
+        "good_memory_i",
+        "outstanding_balance",
+        "high_rm",
+        "inner_compass",
+        "poison_resistance",
+        "poison_immunity",
+        "snake_person",
+        "time_sense"
+      ],
+      "recommended_disadvantages": [
+        "short_breath",
+        "night_blind",
+        "dietary_restriction",
+        "sun_addiction",
+        "unpleasant_voice"
+      ],
+      "unsuitable_advantages": [
+        "enduring",
+        "aptitude_languages",
+        "distance_sense",
+        "fairy_friend",
+        "outstanding_sense_touch_or_hearing",
+        "outstanding_appearance",
+        "heat_resistance",
+        "cold_resistance",
+        "kobold_friend",
+        "favored_by_fate",
+        "euphonic_voice"
+      ],
+      "unsuitable_disadvantages": [
+        "obese",
+        "dwarf_stature",
+        "prone_to_illness",
+        "light_sensitive",
+        "light_shy"
+      ],
+      "allowed_cultures": [
+        "archaic_achaz",
+        "festum_ghetto",
+        "horasian_empire",
+        "maraskan",
+        "southern_aventuria",
+        "tribal_achaz",
+        "tulamidian_city_states"
+      ],
+      "talent_modifiers": {
+        "body_control": 1,
+        "swimming": 3,
+        "sing": -3,
+        "perception": 7,
+        "mimicry": -3,
+        "carouse": -1,
+        "tracking": 3,
+        "fishing": 1,
+        "orientation": 1,
+        "music": -3
+      },
+      "magic_status": "none",
+      "physical_appearance": {
+        "height_formula": "1.72 + 3d6 cm (range: 1.75–1.90 m)",
+        "weight_formula": "height_cm - 120 kg",
+        "scale_colors": {
+          "notes": "Maraskan males fade toward strong yellow on the belly; females have reddish scales."
+        },
+        "eye_colors": {
+          "as_achaz": "use Achaz eye table"
+        },
+        "notes": "Maraskan variant; includes reptile animal empathy and Sense Perception specialization for smell."
+      },
+      "special_notes": "Maraskan Achaz variant. More expensive, with reptile empathy and stronger perception/tracking profile.",
+      "affinity_tags": [
+        "wilderness",
+        "swimmer",
+        "exotic"
+      ],
+      "description": "Maraskan Achaz are a distinctive island variant. The PDF notes unusual coloration and even sex transformation traditions: on Maraskan, Achaz are born female and usually transform into males later.\n\nMechanically this variant adds reptile empathy and emphasizes perception and tracking, making it a strong exotic wilderness character if the campaign can support an Achaz hero.",
+      "source": "WdH p. 38",
+      "variant_of": "achaz",
+      "automatic_SAs": [
+        {
+          "id": "unarmed_style_tail_strike",
+          "german": "Waffenlose SF Schwanzschlag"
+        },
+        {
+          "id": "unarmed_style_bite",
+          "german": "Waffenlose SF Biss"
+        },
+        {
+          "id": "talent_specialization_perception_smell",
+          "german": "Talentspezialisierung Sinnenschärfe (Geruch)"
+        }
+      ],
+      "discounted_SAs": [
+        {
+          "id": "unarmed_style_tail_sweep",
+          "german": "Waffenlose SF Schwanzfeger"
+        }
+      ],
+      "chargen_culture_bridge_note": "Wege der Helden names homeland cultures beyond the Basisregelwerk; Nexus exposes those as cultures.json IDs where available alongside BR cultures so random pairing stays broad."
+    },
+    {
+      "id": "orkland_achaz",
+      "name": "Orkland Achaz",
+      "german_name": "Orkland-Achaz",
+      "gp_cost": 9,
+      "attribute_modifiers": {
+        "CO": -1,
+        "IN": 2,
+        "DE": 1,
+        "AG": 1,
+        "ST": -1
+      },
+      "derived_modifiers": {
+        "VP": 8,
+        "EP": 7,
+        "RM": -2
+      },
+      "automatic_advantages": [
+        {
+          "id": "balance",
+          "german": "Balance"
+        },
+        {
+          "id": "aptitude_swimming",
+          "german": "Begabung: Schwimmen"
+        },
+        {
+          "id": "ambidextrous",
+          "german": "Beidhändig"
+        },
+        {
+          "id": "twilight_sight",
+          "german": "Dämmerungssicht"
+        },
+        {
+          "id": "outstanding_smell",
+          "german": "Herausragender Geruchssinn"
+        },
+        {
+          "id": "natural_weapon_bite",
+          "note": "1d6 TP(A)",
+          "german": "Natürliche Waffen: Biss"
+        },
+        {
+          "id": "natural_weapon_tail",
+          "note": "1d6 TP(A)",
+          "german": "Natürliche Waffen: Schwanz"
+        },
+        {
+          "id": "natural_armor",
+          "rating": 1,
+          "german": "Natürlicher Rüstungsschutz"
+        },
+        {
+          "id": "direction_sense",
+          "german": "Richtungssinn"
+        },
+        {
+          "id": "additional_limb_tail",
+          "german": "Zusätzliche Gliedmaße: Schwanz"
+        }
+      ],
+      "automatic_disadvantages": [
+        {
+          "id": "fear_of_dark",
+          "rating": 5,
+          "german": "Dunkelangst"
+        },
+        {
+          "id": "impaired_hearing",
+          "german": "Eingeschränkter Sinn: Gehör"
+        },
+        {
+          "id": "outsider",
+          "german": "Randgruppe"
+        },
+        {
+          "id": "predator_smell",
+          "german": "Raubtiergeruch"
+        },
+        {
+          "id": "inaptitude_singing",
+          "german": "Unfähigkeit Singen"
+        },
+        {
+          "id": "inaptitude_mimicry",
+          "german": "Unfähigkeit Stimmen Imitieren"
+        },
+        {
+          "id": "inaptitude_music",
+          "german": "Unfähigkeit Musizieren"
+        }
+      ],
+      "recommended_advantages": [
+        "good_memory_i",
+        "outstanding_balance",
+        "high_rm",
+        "inner_compass",
+        "poison_resistance",
+        "poison_immunity",
+        "snake_person",
+        "time_sense"
+      ],
+      "recommended_disadvantages": [
+        "short_breath",
+        "night_blind",
+        "dietary_restriction",
+        "sun_addiction",
+        "unpleasant_voice"
+      ],
+      "unsuitable_advantages": [
+        "enduring",
+        "aptitude_languages",
+        "distance_sense",
+        "fairy_friend",
+        "outstanding_sense_touch_or_hearing",
+        "outstanding_appearance",
+        "heat_resistance",
+        "cold_resistance",
+        "kobold_friend",
+        "favored_by_fate",
+        "euphonic_voice"
+      ],
+      "unsuitable_disadvantages": [
+        "obese",
+        "dwarf_stature",
+        "prone_to_illness",
+        "light_sensitive",
+        "light_shy"
+      ],
+      "allowed_cultures": [
+        "tribal_achaz"
+      ],
+      "talent_modifiers": {
+        "brawling": 1,
+        "body_control": 1,
+        "swimming": 5,
+        "sing": -3,
+        "perception": 5,
+        "mimicry": -3,
+        "carouse": -1,
+        "tracking": 2,
+        "fishing": 1,
+        "orientation": 1,
+        "weather_forecasting": 1,
+        "music": -3
+      },
+      "magic_status": "none",
+      "physical_appearance": {
+        "height_formula": "1.59 + 3d6 cm (range: 1.62–1.77 m)",
+        "weight_formula": "height_cm - 120 kg",
+        "scale_colors": {
+          "as_achaz": "use Achaz scale table"
+        },
+        "eye_colors": {
+          "as_achaz": "use Achaz eye table"
+        },
+        "notes": "Smaller Orkland variant; natural armor is RS 1 and no cold-stupor disadvantage in the variant list."
+      },
+      "special_notes": "Orkland Achaz variant. Smaller, cheaper, and limited to Tribal Achaz culture according to the variant text.",
+      "affinity_tags": [
+        "wilderness",
+        "swimmer",
+        "exotic"
+      ],
+      "description": "Orkland Achaz are a smaller Achaz variant from the northwestern reptilefolk traditions. They are still exotic, reptilian outsiders, but their profile differs from the default swamp or rainforest Achaz by size and armor.\n\nThe variant text restricts them to the Tribal Achaz culture.",
+      "source": "WdH p. 38",
+      "variant_of": "achaz",
+      "automatic_SAs": [
+        {
+          "id": "unarmed_style_tail_strike",
+          "german": "Waffenlose SF Schwanzschlag"
+        },
+        {
+          "id": "unarmed_style_bite",
+          "german": "Waffenlose SF Biss"
+        }
+      ],
+      "discounted_SAs": [
+        {
+          "id": "unarmed_style_tail_sweep",
+          "german": "Waffenlose SF Schwanzfeger"
+        }
+      ],
+      "chargen_culture_bridge_note": "Wege der Helden names homeland cultures beyond the Basisregelwerk; Nexus exposes those as cultures.json IDs where available alongside BR cultures so random pairing stays broad."
     }
   ]
 }

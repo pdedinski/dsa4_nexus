@@ -66,7 +66,7 @@
       "sa_requirement": null,
       "compatible_talents": [
         "bastard_swords",
-        "axes_maces",
+        "axes_and_maces",
         "brawling",
         "sabers",
         "swords",
@@ -74,7 +74,7 @@
       ],
       "at_penalty_by_weapon": {
         "combat_staves_and_clubs": -2,
-        "axes_maces_with_flat_side": -4,
+        "axes_and_maces_with_flat_side": -4,
         "all_other_eligible_weapons": -8
       },
       "damage_type": "endurance_damage",
@@ -95,7 +95,7 @@
       "sa_improves": "called_attack",
       "compatible_talents": [
         "bastard_swords",
-        "axes_maces",
+        "axes_and_maces",
         "infantry_weapons",
         "chain_weapons",
         "brawling",
@@ -131,7 +131,7 @@
       "sa_requirement": "charge",
       "compatible_talents": [
         "bastard_swords",
-        "axes_maces",
+        "axes_and_maces",
         "infantry_weapons",
         "chain_weapons",
         "sabers",
@@ -170,7 +170,7 @@
       "sa_requirement": "cleave_attack",
       "compatible_talents": [
         "bastard_swords",
-        "axes_maces",
+        "axes_and_maces",
         "infantry_weapons",
         "chain_weapons",
         "sabers",
@@ -276,7 +276,7 @@
       "sa_requirement": "hammer_strike",
       "compatible_talents": [
         "bastard_swords_except_nightwind",
-        "axes_maces",
+        "axes_and_maces",
         "infantry_weapons",
         "chain_weapons",
         "two_handed_blunt",
@@ -303,7 +303,7 @@
       "sa_requirement": "knockdown",
       "compatible_talents": [
         "bastard_swords",
-        "axes_maces",
+        "axes_and_maces",
         "infantry_weapons",
         "chain_weapons",
         "sabers_limited",
@@ -337,7 +337,7 @@
       "requires_sa": true,
       "sa_requirement": "shield_splitter",
       "compatible_talents": [
-        "axes_maces",
+        "axes_and_maces",
         "chain_weapons",
         "two_handed_blunt",
         "two_handed_swords"
@@ -359,7 +359,7 @@
       "sa_requirement": "stun_blow",
       "compatible_talents": [
         "bastard_swords",
-        "axes_maces",
+        "axes_and_maces",
         "brawling",
         "sabers",
         "swords",
@@ -367,7 +367,7 @@
       ],
       "at_penalty_by_weapon": {
         "combat_staves_and_blunt_maces": 2,
-        "axes_maces_blunt_side": 4,
+        "axes_and_maces_blunt_side": 4,
         "all_other_eligible": 8
       },
       "damage_type": "endurance_damage",

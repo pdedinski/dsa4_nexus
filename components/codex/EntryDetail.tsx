@@ -14,6 +14,80 @@ function str(v: unknown): string {
   return v != null ? String(v) : "";
 }
 
+/**
+ * Multi-line prose from data (WdH-style `description` with `\\n` / blank lines).
+ * Default block layout collapses newlines into spaces unless `whitespace-pre-wrap` is used.
+ */
+function CodexPreserveNewlinesDescription({
+  text,
+  className,
+}: {
+  text: string;
+  className?: string;
+}) {
+  return (
+    <p
+      className={[
+        "text-ink text-sm leading-relaxed whitespace-pre-wrap",
+        className,
+      ]
+        .filter(Boolean)
+        .join(" ")}
+    >
+      {text}
+    </p>
+  );
+}
+
+/** Label for Tags chips — strings ids, or `{ id, rating?, note? }` from cultures/races/etc. */
+function tagChipText(item: unknown): string {
+  if (item == null || item === "") return "";
+  if (
+    typeof item === "string" ||
+    typeof item === "number" ||
+    typeof item === "boolean"
+  )
+    return String(item).replace(/_/g, " ");
+  if (Array.isArray(item)) return "";
+  if (typeof item === "object" && item !== null) {
+    const o = item as Record<string, unknown>;
+    const pickOnes = o.pick_one_disadvantages;
+    if (Array.isArray(pickOnes) && pickOnes.length > 0) {
+      const opts = pickOnes
+        .map((alt) =>
+          typeof alt === "object" && alt !== null
+            ? tagChipText(alt as Record<string, unknown>)
+            : "",
+        )
+        .filter(Boolean);
+      let line = opts.length ? `Pick one: ${opts.join(" · or · ")}` : "";
+      if (typeof o.rating !== "undefined" && o.rating !== null && o.rating !== "") {
+        const pr = `(rating ${String(o.rating)})`;
+        line = line ? `${line} ${pr}` : pr;
+      }
+      if (typeof o.note === "string" && o.note.trim())
+        line = line ? `${line} — ${o.note.trim()}` : o.note.trim();
+      return line;
+    }
+    const idRaw = o.id;
+    if (idRaw !== undefined && idRaw !== null && idRaw !== "") {
+      let label = String(idRaw).replace(/_/g, " ");
+      if (o.rating != null && o.rating !== "")
+        label += ` (${String(o.rating)})`;
+      if (typeof o.note === "string" && o.note.trim())
+        label += ` — ${o.note.trim()}`;
+      return label;
+    }
+    if (typeof o.note === "string" && o.note.trim()) return o.note.trim();
+    try {
+      return JSON.stringify(o);
+    } catch {
+      return String(item);
+    }
+  }
+  return String(item).replace(/_/g, " ");
+}
+
 function Row({ label, value }: { label: string; value: ReactNode }) {
   if (value === null || value === undefined || value === "" || value === false)
     return null;
@@ -29,14 +103,16 @@ function Row({ label, value }: { label: string; value: ReactNode }) {
 
 function Tags({ items }: { items: unknown[] }) {
   if (!items || items.length === 0) return null;
+  const chips = items.map(tagChipText).filter((x) => x !== "");
+  if (chips.length === 0) return null;
   return (
     <div className="flex flex-wrap gap-1">
-      {items.map((t, i) => (
+      {chips.map((text, i) => (
         <span
           key={i}
           className="text-xs px-2 py-0.5 rounded bg-surface-border text-ink-muted"
         >
-          {String(t).replace(/_/g, " ")}
+          {text}
         </span>
       ))}
     </div>
@@ -312,13 +388,16 @@ function RaceDetail({ p }: { p: Record<string, unknown> }) {
   const autoAdv = Array.isArray(p.automatic_advantages)
     ? (p.automatic_advantages as unknown[])
     : [];
+  const autoDis = Array.isArray(p.automatic_disadvantages)
+    ? (p.automatic_disadvantages as unknown[])
+    : [];
   const cultures = Array.isArray(p.allowed_cultures)
     ? (p.allowed_cultures as unknown[])
     : [];
   return (
     <div className="space-y-2">
       {str(p.description) && (
-        <p className="text-ink text-sm leading-relaxed">{str(p.description)}</p>
+        <CodexPreserveNewlinesDescription text={str(p.description)} />
       )}
       {p.gp_cost != null && <Row label="GP Cost" value={str(p.gp_cost)} />}
       {attrMod && Object.keys(attrMod).length > 0 && (
@@ -333,8 +412,16 @@ function RaceDetail({ p }: { p: Record<string, unknown> }) {
       {autoAdv.length > 0 && (
         <Row label="Auto Advantages" value={<Tags items={autoAdv} />} />
       )}
+      {autoDis.length > 0 && (
+        <Row label="Auto Disadvantages" value={<Tags items={autoDis} />} />
+      )}
       {cultures.length > 0 && (
         <Row label="Cultures" value={<Tags items={cultures} />} />
+      )}
+      {str(p.chargen_culture_bridge_note) && (
+        <p className="text-xs text-amber-200/90 rounded border border-amber-800/50 bg-amber-950/30 px-2 py-1.5">
+          {str(p.chargen_culture_bridge_note)}
+        </p>
       )}
       <Source src={p.source} />
     </div>
@@ -350,20 +437,71 @@ function CultureDetail({ p }: { p: Record<string, unknown> }) {
   const autoAdv = Array.isArray(p.automatic_advantages)
     ? (p.automatic_advantages as unknown[])
     : [];
+  const autoDis = Array.isArray(p.automatic_disadvantages)
+    ? (p.automatic_disadvantages as unknown[])
+    : [];
+  const recAdv = Array.isArray(p.recommended_advantages)
+    ? (p.recommended_advantages as unknown[])
+    : [];
+  const recDis = Array.isArray(p.recommended_disadvantages)
+    ? (p.recommended_disadvantages as unknown[])
+    : [];
+  const unsuitAdv = Array.isArray(p.unsuitable_advantages)
+    ? (p.unsuitable_advantages as unknown[])
+    : [];
+  const unsuitDis = Array.isArray(p.unsuitable_disadvantages)
+    ? (p.unsuitable_disadvantages as unknown[])
+    : [];
   const affinity = Array.isArray(p.affinity_tags)
     ? (p.affinity_tags as unknown[])
+    : [];
+  const cultureTags = Array.isArray(p.culture_tags)
+    ? (p.culture_tags as unknown[])
+    : [];
+  const variantTags = Array.isArray(p.variant_tags)
+    ? (p.variant_tags as unknown[])
     : [];
   return (
     <div className="space-y-2">
       {str(p.description) && (
-        <p className="text-ink text-sm leading-relaxed">{str(p.description)}</p>
+        <CodexPreserveNewlinesDescription text={str(p.description)} />
       )}
       {p.gp_cost != null && <Row label="GP Cost" value={str(p.gp_cost)} />}
       {races.length > 0 && (
         <Row label="Races" value={<Tags items={races} />} />
       )}
+      {cultureTags.length > 0 && (
+        <Row label="Culture tags" value={<Tags items={cultureTags} />} />
+      )}
+      {variantTags.length > 0 && (
+        <Row label="Variant tags" value={<Tags items={variantTags} />} />
+      )}
       {autoAdv.length > 0 && (
         <Row label="Auto Advantages" value={<Tags items={autoAdv} />} />
+      )}
+      {autoDis.length > 0 && (
+        <Row label="Auto Disadvantages" value={<Tags items={autoDis} />} />
+      )}
+      {recAdv.length > 0 && (
+        <Row label="Recommended advantages" value={<Tags items={recAdv} />} />
+      )}
+      {recDis.length > 0 && (
+        <Row
+          label="Recommended disadvantages"
+          value={<Tags items={recDis} />}
+        />
+      )}
+      {unsuitAdv.length > 0 && (
+        <Row
+          label="Unsuitable advantages"
+          value={<Tags items={unsuitAdv} />}
+        />
+      )}
+      {unsuitDis.length > 0 && (
+        <Row
+          label="Unsuitable disadvantages"
+          value={<Tags items={unsuitDis} />}
+        />
       )}
       {affinity.length > 0 && (
         <Row label="Affinity" value={<Tags items={affinity} />} />
@@ -385,7 +523,7 @@ function ProfessionDetail({ p }: { p: Record<string, unknown> }) {
   return (
     <div className="space-y-2">
       {str(p.description) && (
-        <p className="text-ink text-sm leading-relaxed">{str(p.description)}</p>
+        <CodexPreserveNewlinesDescription text={str(p.description)} />
       )}
       {p.gp_cost != null && <Row label="GP Cost" value={str(p.gp_cost)} />}
       {str(p.magical_status) && (
@@ -417,7 +555,7 @@ function TalentDetail({ p }: { p: Record<string, unknown> }) {
   return (
     <div className="space-y-2">
       {str(p.description) && (
-        <p className="text-ink text-sm leading-relaxed">{str(p.description)}</p>
+        <CodexPreserveNewlinesDescription text={str(p.description)} />
       )}
       <div className="flex flex-wrap gap-2">
         {attrs && <Stat label="Test" value={attrs} />}
@@ -458,7 +596,7 @@ function EquipmentDetail({
     return (
       <div className="space-y-2">
         {str(p.description) && (
-          <p className="text-ink text-sm">{str(p.description)}</p>
+          <CodexPreserveNewlinesDescription text={str(p.description)} />
         )}
         <div className="flex flex-wrap gap-2">
           {str(p.category) && (
@@ -490,8 +628,22 @@ function EquipmentDetail({
           {str(p.cost) && <Stat label="Cost" value={str(p.cost)} />}
         </div>
         <WeaponRangeBandsBlock p={p} />
-        {str(p.notes) && <Row label="Notes" value={str(p.notes)} />}
-        {str(p.special) && <Row label="Special" value={str(p.special)} />}
+        {str(p.notes) && (
+          <Row
+            label="Notes"
+            value={
+              <span className="whitespace-pre-wrap">{str(p.notes)}</span>
+            }
+          />
+        )}
+        {str(p.special) && (
+          <Row
+            label="Special"
+            value={
+              <span className="whitespace-pre-wrap">{str(p.special)}</span>
+            }
+          />
+        )}
         {str(p.combat_talent) && (
           <Row
             label="Combat Talent"
@@ -528,9 +680,21 @@ function EquipmentDetail({
           <Row label="Coverage" value={<Tags items={coverage} />} />
         )}
         {!coverage && str(p.coverage) && (
-          <Row label="Coverage" value={str(p.coverage)} />
+          <Row
+            label="Coverage"
+            value={
+              <span className="whitespace-pre-wrap">{str(p.coverage)}</span>
+            }
+          />
         )}
-        {str(p.special) && <Row label="Special" value={str(p.special)} />}
+        {str(p.special) && (
+          <Row
+            label="Special"
+            value={
+              <span className="whitespace-pre-wrap">{str(p.special)}</span>
+            }
+          />
+        )}
         <Source src={p.source} />
       </div>
     );
@@ -540,7 +704,7 @@ function EquipmentDetail({
   return (
     <div className="space-y-2">
       {str(p.description) && (
-        <p className="text-ink text-sm">{str(p.description)}</p>
+        <CodexPreserveNewlinesDescription text={str(p.description)} />
       )}
       <div className="flex flex-wrap gap-2">
         {str(p.weight) && <Stat label="Weight" value={str(p.weight)} />}
@@ -569,7 +733,7 @@ function CharacterTraitDetail({ p }: { p: Record<string, unknown> }) {
   return (
     <div className="space-y-2">
       {str(p.description) && (
-        <p className="text-ink text-sm leading-relaxed">{str(p.description)}</p>
+        <CodexPreserveNewlinesDescription text={str(p.description)} />
       )}
       <div className="flex flex-wrap gap-2">
         {p.gp_cost != null && (
@@ -592,7 +756,9 @@ function CharacterTraitDetail({ p }: { p: Record<string, unknown> }) {
                   {eff.type.replace(/_/g, " ")}:
                 </span>
               )}
-              <span className="text-ink">{eff.description}</span>
+              <span className="text-ink whitespace-pre-wrap">
+                {eff.description}
+              </span>
             </div>
           ))}
         </div>
@@ -767,7 +933,7 @@ function SummonedBeingDetail({
       )}
 
       {str(p.description) && (
-        <p className="text-ink text-sm leading-relaxed">{str(p.description)}</p>
+        <CodexPreserveNewlinesDescription text={str(p.description)} />
       )}
 
       <Row label="Kind" value={formatSummonCategory(p.category)} />
@@ -948,7 +1114,7 @@ function BestiaryDetail({ p }: { p: Record<string, unknown> }) {
       )}
 
       {str(p.description) && (
-        <p className="text-ink text-sm leading-relaxed">{str(p.description)}</p>
+        <CodexPreserveNewlinesDescription text={str(p.description)} />
       )}
 
       {typeof p.source_page === "number" ? (
@@ -957,8 +1123,26 @@ function BestiaryDetail({ p }: { p: Record<string, unknown> }) {
 
       {(str(p.distribution) || str(p.appearance)) && (
         <div className="space-y-0">
-          <Row label="Distribution" value={str(p.distribution)} />
-          <Row label="Appearance" value={str(p.appearance)} />
+          {str(p.distribution) ? (
+            <Row
+              label="Distribution"
+              value={
+                <span className="whitespace-pre-wrap">
+                  {str(p.distribution)}
+                </span>
+              }
+            />
+          ) : null}
+          {str(p.appearance) ? (
+            <Row
+              label="Appearance"
+              value={
+                <span className="whitespace-pre-wrap">
+                  {str(p.appearance)}
+                </span>
+              }
+            />
+          ) : null}
         </div>
       )}
 
@@ -1018,7 +1202,17 @@ function BestiaryDetail({ p }: { p: Record<string, unknown> }) {
             Loot / use
           </p>
           {Object.entries(p.loot as Record<string, unknown>).map(([k, v]) => (
-            <Row key={k} label={k} value={String(v ?? "—")} />
+            <Row
+              key={k}
+              label={k}
+              value={
+                typeof v === "string" ? (
+                  <span className="whitespace-pre-wrap">{v}</span>
+                ) : (
+                  String(v ?? "—")
+                )
+              }
+            />
           ))}
         </div>
       ) : null}
@@ -1037,7 +1231,7 @@ function CombatManeuverDetail({ p }: { p: Record<string, unknown> }) {
   return (
     <div className="space-y-2">
       {str(p.description) && (
-        <p className="text-ink text-sm leading-relaxed">{str(p.description)}</p>
+        <CodexPreserveNewlinesDescription text={str(p.description)} />
       )}
       {str(p.type) && (
         <Row label="Type" value={str(p.type).replace(/_/g, " ")} />
@@ -1066,9 +1260,10 @@ function GenericDetail({ p }: { p: Record<string, unknown> }) {
   return (
     <div>
       {str(p.description) && (
-        <p className="text-ink text-sm leading-relaxed mb-3">
-          {str(p.description)}
-        </p>
+        <CodexPreserveNewlinesDescription
+          text={str(p.description)}
+          className="mb-3"
+        />
       )}
       {Object.entries(p)
         .filter(([k]) => !skip.has(k) && k !== "description")

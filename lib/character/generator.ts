@@ -10,6 +10,7 @@ import cultureNames from "@/data/names/culture_names.json";
 import armorData from "@/data/equipment/armor.json";
 import weaponsData from "@/data/equipment/weapons.json";
 import { ALL_TALENT_IDS, TALENT_INDEX } from "@/lib/talents/catalog";
+import { mergeTalentModifiersNormalized } from "@/lib/talents/modifierNormalization";
 
 import {
   spellActivationCost,
@@ -36,6 +37,78 @@ import {
 } from "./meleeTpAllocation";
 
 const GP_START = 110;
+
+/** Dwarfish stature (Zwerg / Angroschim-style packages). */
+const DWARF_STATURE_RACE_IDS = new Set([
+  "dwarf",
+  "standard_dwarf",
+  "brilliant_dwarf",
+  "wild_dwarf",
+]);
+
+/** Rough height bands matching WdH text where we do not parse `height_formula`. */
+function approximateHeightCm(
+  rng: () => number,
+  raceId: string,
+): { heightCm: number; weightOffsetKg: number } {
+  if (DWARF_STATURE_RACE_IDS.has(raceId))
+    return {
+      heightCm: 128 + Math.floor(rng() * 13),
+      weightOffsetKg: 80,
+    };
+  if (raceId === "goblin" || raceId === "goblin_woman")
+    return {
+      heightCm: 135 + Math.floor(rng() * 25),
+      weightOffsetKg: 100,
+    };
+  if (raceId === "tocamuyac")
+    return {
+      heightCm: 142 + Math.floor(rng() * 16),
+      weightOffsetKg: 110,
+    };
+  if (raceId === "trollzacker" || raceId === "rochshaz")
+    return {
+      heightCm: 178 + Math.floor(rng() * 25),
+      weightOffsetKg: 95,
+    };
+  if (raceId === "ork" || raceId === "ork_woman" || raceId === "half_orc")
+    return {
+      heightCm: 168 + Math.floor(rng() * 28),
+      weightOffsetKg: 95,
+    };
+  if (raceId === "forest_person")
+    return {
+      heightCm: 152 + Math.floor(rng() * 16),
+      weightOffsetKg: 110,
+    };
+  if (raceId === "elf" || raceId === "forest_elf" || raceId === "firn_elf")
+    return {
+      heightCm: 168 + Math.floor(rng() * 40),
+      weightOffsetKg: 120,
+    };
+  return {
+    heightCm: 160 + Math.floor(rng() * 41),
+    weightOffsetKg: 100,
+  };
+}
+
+/** True elven peoples for profession requirements that still encode `"race":"elf"`. */
+export const ELF_KIND_PROFESSION_RACE_IDS = new Set([
+  "elf",
+  "forest_elf",
+  "firn_elf",
+]);
+
+export function satisfiesProfessionRaceRequirement(
+  requirementRaceId: string,
+  heroRaceId: string,
+): boolean {
+  if (requirementRaceId === heroRaceId) return true;
+  return (
+    requirementRaceId === "elf" &&
+    ELF_KIND_PROFESSION_RACE_IDS.has(heroRaceId)
+  );
+}
 
 function dedupeIds(ids: readonly string[]): string[] {
   const seen = new Set<string>();
@@ -359,39 +432,6 @@ function cultureAllowsRace(
   return culture.allowed_races.includes(raceId);
 }
 
-/**
- * Race/culture/profession JSON normally uses numeric talent modifiers. Cultures such as
- * Lea Elves use `{ value, is_leittalent }` for Leittalente; adding a number to that object
- * in JS yields strings like "0[object Object]", which then appear in the sheet UI.
- */
-function talentModifierPlus(raw: unknown): number {
-  if (typeof raw === "number" && Number.isFinite(raw)) return raw;
-  if (raw && typeof raw === "object" && "value" in raw) {
-    const v = (raw as { value?: unknown }).value;
-    if (typeof v === "number" && Number.isFinite(v)) return v;
-  }
-  return 0;
-}
-
-function mergeTalentModifiers(
-  race: (typeof racesData.races)[0],
-  culture: (typeof culturesData.cultures)[0],
-  profession: (typeof professionsData.professions)[0]
-): Record<string, number> {
-  const m: Record<string, number> = {};
-  const add = (mod?: Record<string, unknown>) => {
-    if (!mod) return;
-    for (const [k, raw] of Object.entries(mod)) {
-      const v = talentModifierPlus(raw);
-      m[k] = (m[k] ?? 0) + v;
-    }
-  };
-  add(race.talent_modifiers as unknown as Record<string, unknown> | undefined);
-  add(culture.talent_modifiers as unknown as Record<string, unknown> | undefined);
-  add(profession.talent_modifiers as unknown as Record<string, unknown> | undefined);
-  return m;
-}
-
 function professionSoRange(
   profession: (typeof professionsData.professions)[0]
 ): { min: number; max: number } {
@@ -489,7 +529,8 @@ function isFullCaster(
   halfElfFullCaster: boolean
 ): boolean {
   if (professionId === "magician") return true;
-  if (raceId === "elf") return true;
+  const row = racesData.races.find((r) => r.id === raceId);
+  if (row?.magic_status === "full_caster") return true;
   if (raceId === "half_elf" && halfElfFullCaster) return true;
   return false;
 }
@@ -599,11 +640,20 @@ export function generateCharacter(
   const culturesFiltered = culturesData.cultures.filter(
     (c) => raceAllowsCulture(race, c.id) && cultureAllowsRace(c, race.id)
   );
+  if (!culturesFiltered.length) {
+    throw new Error(
+      `No playable culture intersects race "${race.id}" — check races.json allowed_cultures and cultures.json allowed_races.`,
+    );
+  }
   let culture =
     input.cultureId === "random"
       ? pick(rng, culturesFiltered)
       : culturesData.cultures.find((c) => c.id === input.cultureId)!;
-  if (!culture || !raceAllowsCulture(race, culture.id)) {
+  if (
+    !culture ||
+    !raceAllowsCulture(race, culture.id) ||
+    !cultureAllowsRace(culture, race.id)
+  ) {
     culture = pick(rng, culturesFiltered);
     notes.push("Culture invalid for race; picked compatible culture.");
   }
@@ -613,7 +663,8 @@ export function generateCharacter(
     const raceReq = p.requirements.find(
       (r): r is { type: "race"; race: string } => r.type === "race"
     );
-    if (raceReq && raceReq.race !== race.id) return false;
+    if (raceReq && !satisfiesProfessionRaceRequirement(raceReq.race, race.id))
+      return false;
     return true;
   });
   let profession =
@@ -787,7 +838,7 @@ export function generateCharacter(
     : 0;
   const GS = 8;
 
-  const mergedTalents = mergeTalentModifiers(race, culture, profession);
+  const mergedTalents = mergeTalentModifiersNormalized(rng, race, culture, profession);
   const weaponBiasRows = collectWeaponBiasRows(input);
   const tgpTotal = (CL + IN) * 20;
   let tgpLeft = tgpTotal;
@@ -1053,11 +1104,8 @@ export function generateCharacter(
   }
 
   const ageYears = 16 + Math.floor(rng() * 20) + (profession.time_consuming ? 3 : 0);
-  const heightCm =
-    race.id === "dwarf"
-      ? 128 + Math.floor(rng() * 13)
-      : 160 + Math.floor(rng() * 41);
-  const weightKg = Math.max(35, heightCm - (race.id === "dwarf" ? 80 : 100));
+  const { heightCm, weightOffsetKg } = approximateHeightCm(rng, race.id);
+  const weightKg = Math.max(35, heightCm - weightOffsetKg);
 
   const header = {
     displayName,
@@ -1099,6 +1147,7 @@ export function generateCharacter(
     chosenAdvantages,
     chosenDisadvantages,
     specialAbilities: [
+      ...((race.automatic_SAs ?? []) as CharacterSheet["specialAbilities"]),
       ...((culture.automatic_SAs ?? []) as CharacterSheet["specialAbilities"]),
       ...((profession.automatic_SAs ?? []) as CharacterSheet["specialAbilities"]),
     ],

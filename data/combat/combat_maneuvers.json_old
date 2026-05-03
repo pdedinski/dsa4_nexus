@@ -47,10 +47,10 @@
       "base_modifier": "AT -2 / -4 / -8 depending on weapon",
       "requires_sa": false,
       "sa_requirement": null,
-      "compatible_talents": ["bastard_swords", "axes_maces", "brawling", "sabers", "swords", "staves"],
+      "compatible_talents": ["bastard_swords", "axes_and_maces", "brawling", "sabers", "swords", "staves"],
       "at_penalty_by_weapon": {
         "combat_staves_and_clubs": -2,
-        "axes_maces_with_flat_side": -4,
+        "axes_and_maces_with_flat_side": -4,
         "all_other_eligible_weapons": -8
       },
       "damage_type": "endurance_damage",
@@ -67,7 +67,7 @@
       "requires_sa": false,
       "sa_requirement": null,
       "sa_improves": "called_attack",
-      "compatible_talents": ["bastard_swords", "axes_maces", "infantry_weapons", "chain_weapons", "brawling", "wrestling", "sabers", "swords", "staves", "two_handed_blunt", "two_handed_swords"],
+      "compatible_talents": ["bastard_swords", "axes_and_maces", "infantry_weapons", "chain_weapons", "brawling", "wrestling", "sabers", "swords", "staves", "two_handed_blunt", "two_handed_swords"],
       "damage_bonus_without_sa": "half of Call (rounded up)",
       "damage_bonus_with_sa": "full Call",
       "prerequisite_for": ["cleave_attack", "stun_blow", "hammer_strike", "knockdown", "shield_splitter", "charge"],
@@ -82,7 +82,7 @@
       "base_modifier": "AT +4 (difficulty increase); consumes Parry Action",
       "requires_sa": true,
       "sa_requirement": "charge",
-      "compatible_talents": ["bastard_swords", "axes_maces", "infantry_weapons", "chain_weapons", "sabers", "swords", "spears", "staves", "two_handed_blunt", "two_handed_swords"],
+      "compatible_talents": ["bastard_swords", "axes_and_maces", "infantry_weapons", "chain_weapons", "sabers", "swords", "spears", "staves", "two_handed_blunt", "two_handed_swords"],
       "requirements": [
         {"type": "min_base_speed", "value": 4},
         {"type": "min_run_up", "value": 4, "unit": "paces"}
@@ -101,7 +101,7 @@
       "base_modifier": "AT +4 per additional opponent; consumes Parry Action",
       "requires_sa": true,
       "sa_requirement": "cleave_attack",
-      "compatible_talents": ["bastard_swords", "axes_maces", "infantry_weapons", "chain_weapons", "sabers", "swords", "staves", "two_handed_blunt", "two_handed_swords"],
+      "compatible_talents": ["bastard_swords", "axes_and_maces", "infantry_weapons", "chain_weapons", "sabers", "swords", "staves", "two_handed_blunt", "two_handed_swords"],
       "max_targets": 3,
       "parry_action_consumed": true,
       "knockdown_automatic": true,
@@ -171,7 +171,7 @@
       "base_modifier": "AT +8 + optional Call; consumes ALL actions for the round (not Free Actions)",
       "requires_sa": true,
       "sa_requirement": "hammer_strike",
-      "compatible_talents": ["bastard_swords_except_nightwind", "axes_maces", "infantry_weapons", "chain_weapons", "two_handed_blunt", "two_handed_swords"],
+      "compatible_talents": ["bastard_swords_except_nightwind", "axes_and_maces", "infantry_weapons", "chain_weapons", "two_handed_blunt", "two_handed_swords"],
       "restrictions": [
         "not against very large opponents",
         "not against opponents carrying a large or very large shield"
@@ -189,7 +189,7 @@
       "base_modifier": "AT +4 + optional Call",
       "requires_sa": true,
       "sa_requirement": "knockdown",
-      "compatible_talents": ["bastard_swords", "axes_maces", "infantry_weapons", "chain_weapons", "sabers_limited", "swords", "staves", "two_handed_blunt", "two_handed_swords"],
+      "compatible_talents": ["bastard_swords", "axes_and_maces", "infantry_weapons", "chain_weapons", "sabers_limited", "swords", "staves", "two_handed_blunt", "two_handed_swords"],
       "sabers_restriction": "only Arbach, Haumesser, Khunchomer, and Sklaventod",
       "call_effect": "penalizes defender's ST test (not damage)",
       "defender_st_test_modifiers": {
@@ -212,7 +212,7 @@
       "base_modifier": "AT +8 - shield's PA modifier",
       "requires_sa": true,
       "sa_requirement": "shield_splitter",
-      "compatible_talents": ["axes_maces", "chain_weapons", "two_handed_blunt", "two_handed_swords"],
+      "compatible_talents": ["axes_and_maces", "chain_weapons", "two_handed_blunt", "two_handed_swords"],
       "call_effect": "penalizes defender's Parry (if attacker has Feint SA) or reduces Break Test",
       "break_test_modifier": "-4 - optional Call",
       "description": "An attack aimed at the opponent's shield. AT penalized by 8 but eased by the shield's PA bonus (a large shield is easier to hit). Optional Call can penalize the Parry (with Feint SA) or reduce the Break Test. On success with failed Parry: immediate Break Test for the shield at -4 - optional Call. If Break Test fails, the shield is destroyed (no damage to bearer). If successful, the shield gains a Break Point. A roll of 12 forces an immediate Break Test for the attacker's weapon.",
@@ -226,10 +226,10 @@
       "base_modifier": "AT +2 / +4 / +8 depending on weapon + optional Call",
       "requires_sa": true,
       "sa_requirement": "stun_blow",
-      "compatible_talents": ["bastard_swords", "axes_maces", "brawling", "sabers", "swords", "staves"],
+      "compatible_talents": ["bastard_swords", "axes_and_maces", "brawling", "sabers", "swords", "staves"],
       "at_penalty_by_weapon": {
         "combat_staves_and_blunt_maces": 2,
-        "axes_maces_blunt_side": 4,
+        "axes_and_maces_blunt_side": 4,
         "all_other_eligible": 8
       },
       "damage_type": "endurance_damage",

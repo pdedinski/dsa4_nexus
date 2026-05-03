@@ -25,8 +25,27 @@ type CombatTalentJson = {
 };
 
 const COMBAT_TALENT_MAP = new Map<string, CombatTalentJson>(
-  (combatTalentsData.talents as CombatTalentJson[]).map((t) => [t.id, t])
+  (combatTalentsData.talents as CombatTalentJson[]).map((t) => [t.id, t]),
 );
+
+/** `weapons.json` uses shorter slugs in places; canonical ids live in combat_talents.json. */
+const WEAPON_COMBAT_TALENT_ALIASES: Record<string, string> = {
+  bastard_swords: "bastard_sword",
+  /** Approximate until a dedicated Kampftechnik row exists */
+  shields: "fencing_weapons",
+  discus: "throwing_knives",
+  blowpipes: "bows",
+};
+
+function canonicalCombatTalentId(
+  raw: string | undefined | null,
+): string | null {
+  if (raw == null || raw === "") return null;
+  if (COMBAT_TALENT_MAP.has(raw)) return raw;
+  const target = WEAPON_COMBAT_TALENT_ALIASES[raw];
+  if (target && COMBAT_TALENT_MAP.has(target)) return target;
+  return null;
+}
 
 /** Talents that use two-handed weapons incompatible with shield WM on the same line. */
 const MELEE_NO_SHIELD_TALENTS = new Set([
@@ -122,7 +141,7 @@ export function totalLoadoutEC(armors: SheetLoadoutArmor[] | undefined): number 
 
 function loadoutWeaponsToBiasRows(weapons: SheetLoadoutWeapon[]): WeaponBiasRow[] {
   return weapons.map((w) => ({
-    combatTalent: w.combatTalent,
+    combatTalent: canonicalCombatTalentId(w.combatTalent),
     atModifier: w.atModifier,
     paModifier: w.paModifier,
   }));
@@ -164,7 +183,9 @@ export function computeLoadoutWeaponLine(
   const list = armors ?? [];
   const totalEC = totalLoadoutEC(list);
   const shield = sumShieldModifiers(list);
-  const talentId = weapon.combatTalent;
+  const talentRaw = weapon.combatTalent ?? null;
+  /** Sheet combat rows use canonical KT ids from the talent catalog. */
+  const talentId = canonicalCombatTalentId(talentRaw);
   const def = talentId ? COMBAT_TALENT_MAP.get(talentId) : undefined;
   const combatType = def?.combat_type ?? "unknown";
   const eec = def?.eec;
@@ -275,7 +296,7 @@ export function computeLoadoutWeaponLine(
     weaponId: weapon.id,
     weaponName: weapon.name,
     kind,
-    combatTalentId: talentId,
+    combatTalentId: talentId ?? talentRaw,
     totalEC,
     ebe,
     baseAT,

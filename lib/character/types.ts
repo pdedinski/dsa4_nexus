@@ -66,11 +66,23 @@ export interface DerivedBlock {
   GS: number;
 }
 
+/** One branch of an automatic “pick one disadvantage” obligation (culture / race JSON). */
+export interface TraitPickOneAlternative {
+  id: string;
+  rating?: number;
+  note?: string;
+}
+
 export interface TraitInstance {
   id: string;
   name?: string;
   rating?: number;
   note?: string;
+  /**
+   * When set (e.g. Arrogance vs Vengefulness for Novadis), the hero takes exactly one
+   * of these disadvantages at the given rating — not every id in `pick_one_disadvantages`.
+   */
+  pick_one_disadvantages?: TraitPickOneAlternative[];
 }
 
 export interface SpecialAbilityInstance {

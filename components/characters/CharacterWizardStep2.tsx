@@ -129,7 +129,7 @@ export default function CharacterWizardStep2({
                   >
                     <div className="font-medium text-ink">{s.name}</div>
                     {s.description && (
-                      <p className="text-xs text-ink-muted line-clamp-2 mt-0.5">
+                      <p className="text-xs text-ink-muted line-clamp-2 mt-0.5 whitespace-pre-wrap">
                         {s.description}
                       </p>
                     )}
