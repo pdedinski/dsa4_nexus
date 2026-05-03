@@ -55,6 +55,7 @@ export default function CharacterWizardStep1({
   const [raceId, setRaceId] = useState<string>("random");
   const [cultureId, setCultureId] = useState<string>("random");
   const [professionId, setProfessionId] = useState<string>("random");
+  const [gender, setGender] = useState<"random" | "male" | "female">("random");
   const [extraAp, setExtraAp] = useState(0);
   const [halfElfFullCaster, setHalfElfFullCaster] = useState(false);
 
@@ -91,6 +92,7 @@ export default function CharacterWizardStep1({
       raceId: raceId === "random" ? "random" : raceId,
       cultureId: cultureId === "random" ? "random" : cultureId,
       professionId: professionId === "random" ? "random" : professionId,
+      gender,
       extraAp,
       halfElfFullCaster:
         raceId === "half_elf" ? halfElfFullCaster : false,
@@ -169,6 +171,20 @@ export default function CharacterWizardStep1({
                   {p.name}
                 </option>
               ))}
+            </select>
+          </label>
+          <label className="block">
+            <span className="text-ink-muted">Gender</span>
+            <select
+              className="mt-1 w-full rounded border border-surface-border px-2 py-2 scheme-dark bg-[#2c251f] text-[#f2e8dc]"
+              value={gender}
+              onChange={(e) =>
+                setGender(e.target.value as "random" | "male" | "female")
+              }
+            >
+              <option value="random">Random</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
             </select>
           </label>
           {raceId === "half_elf" && (

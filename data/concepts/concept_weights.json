@@ -1,7 +1,7 @@
 {
   "meta": {
-    "schema_version": "1.1",
-    "description": "Per-concept weights for random generation: talent_group_weights (TGP pick by group), talent_bias (optional talent id -> multiplier ≥1 stacked on group weight), at_pa_bias, race/profession hints, attribute_bias. talent_bias keys must match ids in data/talents/*.json."
+    "schema_version": "1.3",
+    "description": "Per-concept weights for random generation: talent_group_weights, talent_bias (TGP/AP talent picks), optional talent_avoid_bias (talent id -> multiplier in (0,1], default 1), at_pa_bias, attribute_bias, preferred_races/professions. talent_avoid_bias downweights off-theme talents after talent_bias; keys must exist in the talent catalog; values clamp to [0.06,1] in code. advantage_pick_bias / disadvantage_pick_bias: optional id -> relative weight (default 1) when randomly spending surplus GP on advantages or balancing GP with disadvantages; use values <1 for concept-inappropriate traits (e.g. one_handed for warriors), >1 for thematic fits. Adv/dis ids must exist in data/character/advantages.json and disadvantages.json."
   },
   "concepts": {
     "combat_frontliner": {
@@ -22,6 +22,40 @@
         "perception": 1.45
       },
       "at_pa_bias": "offensive",
+      "advantage_pick_bias": {
+        "iron": 1.65,
+        "enduring": 1.55,
+        "tough_dog": 1.45,
+        "danger_instinct": 1.45,
+        "vigor": 1.45,
+        "equipment_advantage": 1.4,
+        "fast_healing": 1.35,
+        "direction_sense": 1.3
+      },
+      "disadvantage_pick_bias": {
+        "one_handed": 0.07,
+        "one_armed": 0.07,
+        "lame": 0.12,
+        "one_legged": 0.12,
+        "glass_bones": 0.14,
+        "low_vitality": 0.18,
+        "inaptitude_melee": 0.1,
+        "inaptitude_combat_physical_group": 0.1,
+        "short_winded": 0.35,
+        "vertigo": 0.35
+      },
+      "talent_avoid_bias": {
+        "sing": 0.35,
+        "dance": 0.35,
+        "etiquette": 0.32,
+        "legend_lore": 0.35,
+        "seduce": 0.3,
+        "play_instrument": 0.32,
+        "alchemy": 0.38,
+        "heraldry": 0.35,
+        "board_games": 0.4,
+        "juggling": 0.38
+      },
       "preferred_races": ["thorwalian", "dwarf", "middenrealmian"],
       "preferred_professions": ["warrior", "mercenary", "knight", "scout"],
       "attribute_bias": { "CO": 2, "AG": 2, "CN": 2, "ST": 2, "CL": 0, "IN": 0, "CH": 0, "DE": 1 }
@@ -43,6 +77,33 @@
         "orientation": 1.45
       },
       "at_pa_bias": "balanced",
+      "advantage_pick_bias": {
+        "fleet": 1.55,
+        "balance": 1.5,
+        "danger_instinct": 1.45,
+        "twilight_sight": 1.35,
+        "equipment_advantage": 1.25,
+        "iron": 1.35
+      },
+      "disadvantage_pick_bias": {
+        "one_handed": 0.08,
+        "one_armed": 0.08,
+        "lame": 0.14,
+        "one_legged": 0.14,
+        "obese": 0.35,
+        "inaptitude_ranged": 0.12,
+        "inaptitude_melee": 0.12,
+        "slow_regeneration": 0.4
+      },
+      "talent_avoid_bias": {
+        "two_handed_swords": 0.38,
+        "two_handed_blunt_weapons": 0.38,
+        "infantry_weapons": 0.42,
+        "chain_weapons": 0.4,
+        "heraldry": 0.4,
+        "calculate": 0.42,
+        "jousting": 0.45
+      },
       "preferred_races": ["half_elf", "middenrealmian", "tulamide"],
       "preferred_professions": ["scout", "hunter", "explorer", "rogue"],
       "attribute_bias": { "CO": 1, "AG": 3, "DE": 2, "IN": 1, "ST": 1, "CN": 1, "CL": 0, "CH": 0 }
@@ -62,6 +123,30 @@
         "athletics": 1.45
       },
       "at_pa_bias": "offensive",
+      "advantage_pick_bias": {
+        "outstanding_sense": 1.55,
+        "direction_sense": 1.5,
+        "danger_instinct": 1.4,
+        "twilight_sight": 1.35,
+        "equipment_advantage": 1.35,
+        "iron": 1.25
+      },
+      "disadvantage_pick_bias": {
+        "one_eyed": 0.12,
+        "night_blind": 0.15,
+        "impaired_sense": 0.2,
+        "one_handed": 0.1,
+        "inaptitude_ranged": 0.1,
+        "vertigo": 0.35
+      },
+      "talent_avoid_bias": {
+        "two_handed_swords": 0.35,
+        "two_handed_blunt_weapons": 0.35,
+        "wrestling": 0.4,
+        "brawling": 0.4,
+        "etiquette": 0.38,
+        "infantry_weapons": 0.42
+      },
       "preferred_races": ["elf", "half_elf", "middenrealmian"],
       "preferred_professions": ["hunter", "scout", "warrior", "explorer"],
       "attribute_bias": { "IN": 2, "DE": 3, "AG": 1, "ST": 1, "CO": 1, "CN": 0, "CL": 0, "CH": 0 }
@@ -82,6 +167,30 @@
         "brawling": 1.5
       },
       "at_pa_bias": "defensive",
+      "advantage_pick_bias": {
+        "danger_instinct": 1.45,
+        "social_chameleon": 1.35,
+        "luck": 1.35,
+        "fleet": 1.3,
+        "twilight_sight": 1.35,
+        "equipment_advantage": 1.25
+      },
+      "disadvantage_pick_bias": {
+        "obese": 0.25,
+        "lame": 0.3,
+        "one_legged": 0.28,
+        "agoraphobia": 0.35,
+        "obsessive_justice": 0.45,
+        "code_of_conduct": 0.55
+      },
+      "talent_avoid_bias": {
+        "two_handed_swords": 0.38,
+        "infantry_weapons": 0.4,
+        "jousting": 0.45,
+        "etiquette": 0.35,
+        "heraldry": 0.38,
+        "board_games": 0.42
+      },
       "preferred_races": ["half_elf", "elf", "middenrealmian"],
       "preferred_professions": ["burglar", "rogue", "scout", "explorer"],
       "attribute_bias": { "AG": 3, "IN": 2, "DE": 2, "CO": 1, "CL": 0, "ST": 0, "CN": 0, "CH": 0 }
@@ -102,6 +211,31 @@
         "dance": 1.4
       },
       "at_pa_bias": "balanced",
+      "advantage_pick_bias": {
+        "noble_birth": 1.55,
+        "good_looking": 1.5,
+        "outstanding_appearance": 1.45,
+        "connections": 1.45,
+        "educated": 1.4,
+        "euphonic_voice": 1.35,
+        "social_chameleon": 1.35
+      },
+      "disadvantage_pick_bias": {
+        "unattractive": 0.2,
+        "unpleasant_voice": 0.22,
+        "hideous_appearance": 0.12,
+        "terrible_attribute": 0.35,
+        "agoraphobia": 0.45
+      },
+      "talent_avoid_bias": {
+        "two_handed_swords": 0.32,
+        "two_handed_blunt_weapons": 0.32,
+        "wrestling": 0.35,
+        "brawling": 0.35,
+        "chain_weapons": 0.38,
+        "infantry_weapons": 0.4,
+        "jousting": 0.45
+      },
       "preferred_races": ["middenrealmian", "tulamide", "thorwalian"],
       "preferred_professions": ["mountebank", "messenger", "physician", "explorer"],
       "attribute_bias": { "CH": 3, "CL": 2, "IN": 2, "CO": 0, "AG": 0, "DE": 0, "ST": 0, "CN": 0 }
@@ -124,6 +258,27 @@
         "perception": 1.55
       },
       "at_pa_bias": "balanced",
+      "advantage_pick_bias": {
+        "direction_sense": 1.55,
+        "heat_resistance": 1.35,
+        "cold_resistance": 1.35,
+        "enduring": 1.4,
+        "danger_instinct": 1.35,
+        "equipment_advantage": 1.25
+      },
+      "disadvantage_pick_bias": {
+        "fear_of_sea": 0.35,
+        "vertigo": 0.35,
+        "agoraphobia": 0.45
+      },
+      "talent_avoid_bias": {
+        "etiquette": 0.35,
+        "heraldry": 0.38,
+        "law": 0.4,
+        "seduce": 0.38,
+        "play_instrument": 0.4,
+        "board_games": 0.42
+      },
       "preferred_races": ["thorwalian", "middenrealmian", "half_elf"],
       "preferred_professions": ["hunter", "scout", "explorer", "warrior"],
       "attribute_bias": { "CN": 2, "CO": 2, "AG": 2, "IN": 1, "ST": 1, "CL": 0, "DE": 0, "CH": 0 }
@@ -145,6 +300,27 @@
         "perception": 1.4
       },
       "at_pa_bias": "defensive",
+      "advantage_pick_bias": {
+        "academic_training": 1.6,
+        "educated": 1.55,
+        "good_memory_i": 1.5,
+        "age_resistance": 1.25,
+        "mental_compass": 1.3
+      },
+      "disadvantage_pick_bias": {
+        "blood_frenzy": 0.35,
+        "violent_temper": 0.45,
+        "unworldly": 0.55,
+        "inaptitude_combat_physical_group": 0.5
+      },
+      "talent_avoid_bias": {
+        "two_handed_swords": 0.35,
+        "brawling": 0.38,
+        "wrestling": 0.38,
+        "infantry_weapons": 0.4,
+        "throwing_axes": 0.42,
+        "chain_weapons": 0.4
+      },
       "preferred_races": ["middenrealmian", "tulamide", "elf"],
       "preferred_professions": ["physician", "magician", "explorer", "messenger"],
       "attribute_bias": { "CL": 3, "IN": 2, "CO": 1, "CH": 1, "AG": 0, "DE": 0, "ST": 0, "CN": 0 }
@@ -164,6 +340,27 @@
         "perception": 1.4
       },
       "at_pa_bias": "defensive",
+      "advantage_pick_bias": {
+        "disease_resistance": 1.55,
+        "general_poison_resistance": 1.45,
+        "resistance_poison_group": 1.4,
+        "fast_healing": 1.35,
+        "educated": 1.35,
+        "good_memory_i": 1.3
+      },
+      "disadvantage_pick_bias": {
+        "blood_frenzy": 0.3,
+        "prone_to_illness": 0.55,
+        "slow_regeneration": 0.45,
+        "greed": 0.55
+      },
+      "talent_avoid_bias": {
+        "two_handed_swords": 0.38,
+        "chain_weapons": 0.4,
+        "wrestling": 0.4,
+        "brawling": 0.38,
+        "jousting": 0.45
+      },
       "preferred_races": ["middenrealmian", "tulamide", "half_elf"],
       "preferred_professions": ["physician", "explorer", "messenger"],
       "attribute_bias": { "CL": 2, "IN": 2, "CH": 2, "CN": 2, "CO": 0, "AG": 0, "DE": 0, "ST": 0 }
@@ -185,6 +382,26 @@
         "carouse": 1.4
       },
       "at_pa_bias": "offensive",
+      "advantage_pick_bias": {
+        "enduring": 1.45,
+        "direction_sense": 1.4,
+        "heat_resistance": 1.3,
+        "iron": 1.35,
+        "equipment_advantage": 1.35,
+        "danger_instinct": 1.3
+      },
+      "disadvantage_pick_bias": {
+        "fear_of_sea": 0.18,
+        "vertigo": 0.35,
+        "inaptitude_swimming": 0.12
+      },
+      "talent_avoid_bias": {
+        "etiquette": 0.38,
+        "heraldry": 0.42,
+        "law": 0.4,
+        "legend_lore": 0.42,
+        "board_games": 0.45
+      },
       "preferred_races": ["thorwalian", "middenrealmian"],
       "preferred_professions": ["pirate", "scout", "warrior", "mercenary"],
       "attribute_bias": { "CO": 2, "ST": 2, "AG": 2, "CN": 1, "IN": 0, "CL": 0, "DE": 0, "CH": 0 }
@@ -206,6 +423,26 @@
         "law": 1.4
       },
       "at_pa_bias": "balanced",
+      "advantage_pick_bias": {
+        "connections": 1.5,
+        "luck": 1.45,
+        "lucky_gambler": 1.35,
+        "danger_instinct": 1.35,
+        "social_chameleon": 1.3,
+        "equipment_advantage": 1.35
+      },
+      "disadvantage_pick_bias": {
+        "code_of_conduct": 0.5,
+        "obsessive_justice": 0.45,
+        "wanted_i": 1.25
+      },
+      "talent_avoid_bias": {
+        "two_handed_swords": 0.38,
+        "two_handed_blunt_weapons": 0.4,
+        "infantry_weapons": 0.4,
+        "jousting": 0.45,
+        "heraldry": 0.35
+      },
       "preferred_races": ["middenrealmian", "half_elf", "tulamide"],
       "preferred_professions": ["burglar", "rogue", "mountebank", "pirate"],
       "attribute_bias": { "AG": 2, "IN": 2, "DE": 2, "CL": 1, "CO": 0, "ST": 0, "CN": 0, "CH": 1 }
@@ -227,6 +464,27 @@
         "dance": 1.35
       },
       "at_pa_bias": "balanced",
+      "advantage_pick_bias": {
+        "noble_birth": 1.65,
+        "outstanding_appearance": 1.45,
+        "good_looking": 1.4,
+        "educated": 1.35,
+        "iron": 1.35,
+        "equipment_advantage": 1.3
+      },
+      "disadvantage_pick_bias": {
+        "unattractive": 0.22,
+        "hideous_appearance": 0.12,
+        "one_handed": 0.12,
+        "lame": 0.25
+      },
+      "talent_avoid_bias": {
+        "pick_pockets": 0.38,
+        "brawling": 0.4,
+        "cheat": 0.42,
+        "sneak": 0.45,
+        "streetwise": 0.45
+      },
       "preferred_races": ["middenrealmian", "thorwalian"],
       "preferred_professions": ["knight", "warrior", "scout", "mercenary"],
       "attribute_bias": { "CO": 2, "CH": 2, "AG": 1, "ST": 1, "CL": 1, "IN": 0, "DE": 0, "CN": 1 }
@@ -246,6 +504,28 @@
         "perception": 1.4
       },
       "at_pa_bias": "defensive",
+      "advantage_pick_bias": {
+        "magic_sense": 1.5,
+        "educated": 1.5,
+        "good_memory_i": 1.45,
+        "hard_to_enspell": 1.4,
+        "mental_compass": 1.35,
+        "luck": 1.3
+      },
+      "disadvantage_pick_bias": {
+        "arcane_fear": 0.14,
+        "low_asp": 0.22,
+        "spell_impediment": 0.18,
+        "astral_block": 0.25,
+        "inaptitude_combat_physical_group": 0.55
+      },
+      "talent_avoid_bias": {
+        "two_handed_swords": 0.35,
+        "wrestling": 0.38,
+        "brawling": 0.38,
+        "infantry_weapons": 0.42,
+        "chain_weapons": 0.4
+      },
       "preferred_races": ["middenrealmian", "tulamide", "half_elf"],
       "preferred_professions": ["magician", "physician", "explorer"],
       "attribute_bias": { "CL": 3, "IN": 2, "CH": 2, "CO": 1, "CN": 0, "AG": 0, "DE": 0, "ST": 0 }
@@ -267,6 +547,25 @@
         "orientation": 1.45
       },
       "at_pa_bias": "balanced",
+      "advantage_pick_bias": {
+        "twilight_sight": 1.55,
+        "good_looking": 1.45,
+        "magic_sense": 1.4,
+        "outstanding_sense": 1.35,
+        "fleet": 1.3
+      },
+      "disadvantage_pick_bias": {
+        "arcane_fear": 0.18,
+        "hideous_appearance": 0.2,
+        "obese": 0.35
+      },
+      "talent_avoid_bias": {
+        "brawling": 0.4,
+        "pick_pockets": 0.42,
+        "law": 0.4,
+        "cheat": 0.42,
+        "streetwise": 0.45
+      },
       "preferred_races": ["elf", "half_elf"],
       "preferred_professions": ["hunter", "scout", "explorer", "magician"],
       "attribute_bias": { "IN": 3, "AG": 2, "CL": 1, "CO": 1, "CH": 1, "DE": 0, "ST": 0, "CN": 0 }
@@ -286,6 +585,25 @@
         "climb": 1.35
       },
       "at_pa_bias": "balanced",
+      "advantage_pick_bias": {
+        "magic_sense": 1.35,
+        "luck": 1.35,
+        "connections": 1.35,
+        "educated": 1.3,
+        "danger_instinct": 1.25
+      },
+      "disadvantage_pick_bias": {
+        "arcane_fear": 0.25,
+        "astral_block": 0.35,
+        "spell_impediment": 0.35
+      },
+      "talent_avoid_bias": {
+        "two_handed_swords": 0.38,
+        "wrestling": 0.4,
+        "engineering": 0.42,
+        "infantry_weapons": 0.42,
+        "jousting": 0.45
+      },
       "preferred_races": ["half_elf", "middenrealmian"],
       "preferred_professions": ["burglar", "explorer", "mountebank", "rogue", "scout"],
       "attribute_bias": { "CL": 2, "IN": 2, "CH": 1, "AG": 1, "CO": 0, "DE": 0, "ST": 0, "CN": 0 }
@@ -307,6 +625,26 @@
         "perception": 1.35
       },
       "at_pa_bias": "balanced",
+      "advantage_pick_bias": {
+        "good_looking": 1.55,
+        "euphonic_voice": 1.55,
+        "outstanding_appearance": 1.45,
+        "luck": 1.3,
+        "social_chameleon": 1.3
+      },
+      "disadvantage_pick_bias": {
+        "unpleasant_voice": 0.18,
+        "unattractive": 0.25,
+        "agoraphobia": 0.45
+      },
+      "talent_avoid_bias": {
+        "two_handed_swords": 0.35,
+        "infantry_weapons": 0.38,
+        "wrestling": 0.4,
+        "trap": 0.42,
+        "survival": 0.42,
+        "track": 0.42
+      },
       "preferred_races": ["half_elf", "middenrealmian", "tulamide"],
       "preferred_professions": ["mountebank", "messenger", "rogue", "explorer"],
       "attribute_bias": { "CH": 3, "AG": 2, "IN": 1, "CL": 1, "CO": 0, "DE": 0, "ST": 0, "CN": 0 }
@@ -314,7 +652,10 @@
     "any": {
       "talent_group_weights": { "combat_talents": 0.18, "physical_talents": 0.18, "social_talents": 0.18, "lore_talents": 0.16, "nature_talents": 0.15, "artisan_talents": 0.15 },
       "talent_bias": {},
+      "talent_avoid_bias": {},
       "at_pa_bias": "balanced",
+      "advantage_pick_bias": {},
+      "disadvantage_pick_bias": {},
       "preferred_races": [],
       "preferred_professions": [],
       "attribute_bias": { "CO": 1, "CL": 1, "IN": 1, "CH": 1, "DE": 1, "AG": 1, "CN": 1, "ST": 1 }

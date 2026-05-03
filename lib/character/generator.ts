@@ -156,6 +156,55 @@ function normalizeTalentBias(
   return out;
 }
 
+const TALENT_AVOID_MIN = 0.06;
+const TALENT_AVOID_MAX = 1;
+
+/**
+ * Optional per-concept downweights for TGP picks: multiply pick weight (after talent_bias).
+ * Values in (0, 1]; ids must exist in TALENT_INDEX. Omitted talents use 1.
+ */
+function normalizeTalentAvoidBias(raw: unknown): Record<string, number> {
+  if (!raw || typeof raw !== "object") return {};
+  const out: Record<string, number> = {};
+  for (const [id, v] of Object.entries(raw as Record<string, unknown>)) {
+    if (!TALENT_INDEX.has(id)) continue;
+    if (typeof v !== "number" || !Number.isFinite(v) || v <= 0) continue;
+    out[id] = Math.min(TALENT_AVOID_MAX, Math.max(TALENT_AVOID_MIN, v));
+  }
+  return out;
+}
+
+/** Concept-driven relative weights for random advantage/disadvantage picks (≥0; default 1). */
+function normalizeTraitPickBias(raw: unknown): Record<string, number> {
+  if (!raw || typeof raw !== "object") return {};
+  const out: Record<string, number> = {};
+  for (const [id, v] of Object.entries(raw as Record<string, unknown>)) {
+    if (typeof v !== "number" || !Number.isFinite(v) || v < 0) continue;
+    out[id] = v;
+  }
+  return out;
+}
+
+function pickWeightedByIdBias<T extends { id: string }>(
+  rng: () => number,
+  items: T[],
+  bias: Record<string, number>
+): T {
+  if (items.length === 1) return items[0]!;
+  const ws = items.map((x) => {
+    const b = bias[x.id];
+    const mult = typeof b === "number" && b > 0 ? b : 1;
+    return Math.max(0.02, mult * (0.55 + rng() * 0.9));
+  });
+  const total = ws.reduce((a, b) => a + b, 0);
+  let r = rng() * total;
+  for (let i = 0; i < items.length; i++) {
+    r -= ws[i]!;
+    if (r <= 0) return items[i]!;
+  }
+  return items[items.length - 1]!;
+}
+
 /**
  * Picks one talent to raise by +1 TP. Uneven but not degenerate: concept group
  * weights bias the pool; optional per-talent multipliers from concept_weights;
@@ -166,18 +215,21 @@ function pickWeightedTalentForStep(
   candidateIds: string[],
   talentTp: Map<string, number>,
   groupWeights: Record<string, number> | undefined,
-  talentBias: Record<string, number> | undefined
+  talentBias: Record<string, number> | undefined,
+  talentAvoid: Record<string, number> | undefined
 ): string {
   if (candidateIds.length === 1) return candidateIds[0]!;
   const bias = talentBias ?? {};
+  const avoid = talentAvoid ?? {};
   const ws = candidateIds.map((id) => {
     const def = TALENT_INDEX.get(id);
     if (!def) return 0.05;
     const tp = talentTp.get(id) ?? 0;
     const g = talentGroupPriorWeight(def.group, groupWeights);
     const b = bias[id] ?? 1;
+    const av = avoid[id] ?? 1;
     const focus = (1 + tp * 0.45) ** 1.22;
-    return Math.max(0.05, g * b * focus * (0.55 + rng() * 0.9));
+    return Math.max(0.05, g * b * av * focus * (0.55 + rng() * 0.9));
   });
   const total = ws.reduce((a, b) => a + b, 0);
   let r = rng() * total;
@@ -188,13 +240,43 @@ function pickWeightedTalentForStep(
   return candidateIds[candidateIds.length - 1]!;
 }
 
-/** BRW / ENG: max starting TP = highest of the three test attributes + 3. */
-function maxStartingTpForTalent(
+/**
+ * BRW p.47 / ENG p.29: max starting TP = highest of the talent's three test attributes + 3.
+ * Begabung (Aptitude) advantages raise the ceiling to +5 for the covered talent scope
+ * (BRW p.44); single-talent aptitudes are not modeled without a chosen talent binding.
+ */
+function creationMaxTalentTp(
   def: NonNullable<ReturnType<typeof TALENT_INDEX.get>>,
-  attrsFinal: CharacterSheet["attributesFinal"]
+  attrsFinal: CharacterSheet["attributesFinal"],
+  advantageIds: ReadonlySet<string>
 ): number {
   const testA = (def.test_attributes ?? ["CL", "IN", "CH"]) as AttrCode[];
-  return Math.max(...testA.map((a) => attrsFinal[a] ?? 0), 0) + 3;
+  const hi = Math.max(...testA.map((a) => attrsFinal[a] ?? 0), 0);
+  let plus = 3;
+  const ct = def.combat_type;
+  if (advantageIds.has("aptitude_melee_talents") && (ct === "melee" || ct === "jousting")) {
+    plus = 5;
+  } else if (advantageIds.has("aptitude_ranged_talents") && ct === "ranged") {
+    plus = 5;
+  } else if (advantageIds.has("aptitude_talent_group_combat")) {
+    if (def.group === "combat_talents" || def.group === "physical_talents") plus = 5;
+  } else if (advantageIds.has("aptitude_talent_group_other")) {
+    if (def.group !== "combat_talents" && def.group !== "physical_talents") plus = 5;
+  }
+  return hi + plus;
+}
+
+function clampTalentTpMapToCreationMax(
+  talentTp: Map<string, number>,
+  attrsFinal: CharacterSheet["attributesFinal"],
+  advantageIds: ReadonlySet<string>
+) {
+  for (const [id, tp] of talentTp) {
+    const def = TALENT_INDEX.get(id);
+    if (!def) continue;
+    const cap = creationMaxTalentTp(def, attrsFinal, advantageIds);
+    if (tp > cap) talentTp.set(id, cap);
+  }
 }
 
 /**
@@ -208,12 +290,13 @@ function computeTalentSpend(
   cols: (typeof advancementCosts)["talent_columns"]["columns"],
   attrsFinal: CharacterSheet["attributesFinal"],
   activationsRemaining: number,
-  budget: number
+  budget: number,
+  advantageIds: ReadonlySet<string>
 ): { cost: number; nextTp: number; usesNewActivation: boolean } | null {
   const def = TALENT_INDEX.get(id);
   if (!def?.advancement_column) return null;
   const col = def.advancement_column;
-  const maxTp = maxStartingTpForTalent(def, attrsFinal);
+  const maxTp = creationMaxTalentTp(def, attrsFinal, advantageIds);
   const tp = talentTp.get(id);
 
   if (tp === undefined) {
@@ -483,6 +566,12 @@ export function generateCharacter(
       : (input.conceptId as ConceptId);
   const weights =
     conceptWeights.concepts[concept] ?? conceptWeights.concepts.any;
+  const advantagePickBias = normalizeTraitPickBias(
+    (weights as Record<string, unknown>).advantage_pick_bias
+  );
+  const disadvantagePickBias = normalizeTraitPickBias(
+    (weights as Record<string, unknown>).disadvantage_pick_bias
+  );
 
   let race =
     input.raceId === "random"
@@ -581,7 +670,7 @@ export function generateCharacter(
       return true;
     });
     if (!candidates.length) return false;
-    const d = pick(rng, candidates);
+    const d = pickWeightedByIdBias(rng, candidates, disadvantagePickBias);
     const g = disadvantageRefundGP(d);
     chosenDisadvantages.push({ id: d.id, name: d.name });
     disGpTotal += g;
@@ -608,7 +697,7 @@ export function generateCharacter(
   while (gp > 0 && advPool.length) {
     const affordable = advPool.filter((a) => a.gp_cost <= gp);
     if (!affordable.length) break;
-    const a = pick(rng, affordable);
+    const a = pickWeightedByIdBias(rng, affordable, advantagePickBias);
     chosenAdvantages.push({ id: a.id, name: a.name });
     gp -= a.gp_cost;
   }
@@ -623,6 +712,10 @@ export function generateCharacter(
     notes.push(
       `GP not fully spent (${gp} left); add advantages manually or lower attributes.`
     );
+
+  const advantageIdsForTalentCap = new Set(
+    chosenAdvantages.map((a) => a.id)
+  );
 
   const attrsFinalRecord = applyAttrMods(purchased, race, culture);
   const attrsFinal = { ...attrsFinalRecord, SO: so } as CharacterSheet["attributesFinal"];
@@ -686,6 +779,7 @@ export function generateCharacter(
   for (const [id, mod] of Object.entries(mergedTalents)) {
     talentTp.set(id, mod);
   }
+  clampTalentTpMapToCreationMax(talentTp, attrsFinal, advantageIdsForTalentCap);
   const cols = advancementCosts.talent_columns.columns;
   const groupWeights = weights.talent_group_weights as
     | Record<string, number>
@@ -703,6 +797,10 @@ export function generateCharacter(
     talentBias[tid] = (talentBias[tid] ?? 1) + WEAPON_COMBAT_TGP_NUDGE;
   }
 
+  const talentAvoid = normalizeTalentAvoidBias(
+    (weights as Record<string, unknown>).talent_avoid_bias
+  );
+
   /** BRW p. 46: at most 5 new specialized-talent activations during creation. */
   let activationsRemaining = 5;
   const spendPool = buildTalentSpendPool(Object.keys(mergedTalents));
@@ -717,7 +815,8 @@ export function generateCharacter(
         cols,
         attrsFinal,
         activationsRemaining,
-        tgpLeft
+        tgpLeft,
+        advantageIdsForTalentCap
       );
       return spend !== null;
     });
@@ -727,7 +826,8 @@ export function generateCharacter(
       candidates,
       talentTp,
       groupWeights,
-      talentBias
+      talentBias,
+      talentAvoid
     );
     const spend = computeTalentSpend(
       id,
@@ -735,7 +835,8 @@ export function generateCharacter(
       cols,
       attrsFinal,
       activationsRemaining,
-      tgpLeft
+      tgpLeft,
+      advantageIdsForTalentCap
     )!;
     tgpLeft -= spend.cost;
     if (spend.usesNewActivation) activationsRemaining--;
@@ -841,7 +942,8 @@ export function generateCharacter(
         cols,
         attrsFinal,
         activationsRemaining,
-        extraLeft
+        extraLeft,
+        advantageIdsForTalentCap
       );
       return spend !== null;
     });
@@ -851,7 +953,8 @@ export function generateCharacter(
       candidates,
       talentTp,
       groupWeights,
-      talentBias
+      talentBias,
+      talentAvoid
     );
     const spend = computeTalentSpend(
       id,
@@ -859,12 +962,15 @@ export function generateCharacter(
       cols,
       attrsFinal,
       activationsRemaining,
-      extraLeft
+      extraLeft,
+      advantageIdsForTalentCap
     )!;
     extraLeft -= spend.cost;
     if (spend.usesNewActivation) activationsRemaining--;
     talentTp.set(id, spend.nextTp);
   }
+
+  clampTalentTpMapToCreationMax(talentTp, attrsFinal, advantageIdsForTalentCap);
 
   for (const [id, tp] of talentTp.entries()) {
     const def = TALENT_INDEX.get(id);
