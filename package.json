@@ -52,5 +52,13 @@
     "react-dom": "^19.2.5",
     "tailwindcss": "^4.2.4",
     "typescript": "^6.0.3"
+  },
+  "overrides": {
+    "next": {
+      "postcss": "^8.5.10"
+    },
+    "@esbuild-kit/core-utils": {
+      "esbuild": "^0.25.4"
+    }
   }
 }

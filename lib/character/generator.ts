@@ -359,19 +359,36 @@ function cultureAllowsRace(
   return culture.allowed_races.includes(raceId);
 }
 
+/**
+ * Race/culture/profession JSON normally uses numeric talent modifiers. Cultures such as
+ * Lea Elves use `{ value, is_leittalent }` for Leittalente; adding a number to that object
+ * in JS yields strings like "0[object Object]", which then appear in the sheet UI.
+ */
+function talentModifierPlus(raw: unknown): number {
+  if (typeof raw === "number" && Number.isFinite(raw)) return raw;
+  if (raw && typeof raw === "object" && "value" in raw) {
+    const v = (raw as { value?: unknown }).value;
+    if (typeof v === "number" && Number.isFinite(v)) return v;
+  }
+  return 0;
+}
+
 function mergeTalentModifiers(
   race: (typeof racesData.races)[0],
   culture: (typeof culturesData.cultures)[0],
   profession: (typeof professionsData.professions)[0]
 ): Record<string, number> {
   const m: Record<string, number> = {};
-  const add = (mod?: Record<string, number>) => {
+  const add = (mod?: Record<string, unknown>) => {
     if (!mod) return;
-    for (const [k, v] of Object.entries(mod)) m[k] = (m[k] ?? 0) + v;
+    for (const [k, raw] of Object.entries(mod)) {
+      const v = talentModifierPlus(raw);
+      m[k] = (m[k] ?? 0) + v;
+    }
   };
-  add(race.talent_modifiers as unknown as Record<string, number> | undefined);
-  add(culture.talent_modifiers as unknown as Record<string, number> | undefined);
-  add(profession.talent_modifiers as unknown as Record<string, number> | undefined);
+  add(race.talent_modifiers as unknown as Record<string, unknown> | undefined);
+  add(culture.talent_modifiers as unknown as Record<string, unknown> | undefined);
+  add(profession.talent_modifiers as unknown as Record<string, unknown> | undefined);
   return m;
 }
 
