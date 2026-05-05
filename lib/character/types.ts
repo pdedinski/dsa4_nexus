@@ -32,6 +32,18 @@ export type ConceptId =
   | "magical_elven"
   | "magical_dabbler"
   | "entertainer"
+  | "merchant"
+  | "spy"
+  | "assassin"
+  | "commoner"
+  | "innkeeper"
+  | "craftsman_blacksmith"
+  | "craftsman_bowyer"
+  | "craftsman_tanner"
+  | "engineer"
+  | "lord"
+  | "warrior"
+  | "city_guard"
   | "any";
 
 /** Random SGP allocation: `none` excludes the spell from the weighted pool (default). */

@@ -315,12 +315,27 @@ function weaponTalentFocusFromLinked(
   return { melee, ranged };
 }
 
-/** Downweight combat talents that do not match the equipped weapon profile (no TP in this factor). */
+/**
+ * Downweight for a combat talent whose weapon type is represented in the
+ * loadout but the specific talent was not chosen (wrong sword family, etc.).
+ */
 const WEAPON_FOCUS_OFF_TYPE_FACTOR = 0.42;
 
 /**
+ * Downweight for a combat talent whose entire weapon type was NOT selected at
+ * all (e.g. all ranged talents when the player only picked melee weapons, or
+ * unarmed/brawling when only ranged weapons were chosen).
+ * Applied on top of WEAPON_FOCUS_OFF_TYPE_FACTOR when both conditions hold.
+ */
+const WEAPON_FOCUS_UNSELECTED_TYPE_FACTOR = 0.28;
+
+/**
  * Picks one talent to raise by +1 TP. Weight is group × talent_bias × talent_avoid × jitter.
- * Optional weapon focus downweights off-weapon melee/ranged combat talents; current TP is not used.
+ *
+ * Weapon focus rules (both applied without using current TP):
+ *  1. Off-weapon within a represented type  → ×WEAPON_FOCUS_OFF_TYPE_FACTOR
+ *  2. Completely unrepresented weapon type  → ×WEAPON_FOCUS_UNSELECTED_TYPE_FACTOR
+ *     (i.e. ranged when only melee weapons chosen, or vice-versa)
  */
 function pickWeightedTalentForStep(
   rng: () => number,
@@ -341,18 +356,25 @@ function pickWeightedTalentForStep(
     const av = avoid[id] ?? 1;
     let w = g * b * av * (0.55 + rng() * 0.9);
     if (weaponFocus && def.group === "combat_talents") {
-      if (
-        weaponFocus.melee.size > 0 &&
-        (def.combat_type === "melee" || def.combat_type === "jousting") &&
-        !weaponFocus.melee.has(id)
-      ) {
-        w *= WEAPON_FOCUS_OFF_TYPE_FACTOR;
-      } else if (
-        weaponFocus.ranged.size > 0 &&
-        def.combat_type === "ranged" &&
-        !weaponFocus.ranged.has(id)
-      ) {
-        w *= WEAPON_FOCUS_OFF_TYPE_FACTOR;
+      const isMelee = def.combat_type === "melee" || def.combat_type === "jousting";
+      const isRanged = def.combat_type === "ranged";
+
+      if (isMelee) {
+        if (weaponFocus.melee.size === 0 && weaponFocus.ranged.size > 0) {
+          // Ranged-only loadout: melee type entirely unrepresented.
+          w *= WEAPON_FOCUS_UNSELECTED_TYPE_FACTOR;
+        } else if (weaponFocus.melee.size > 0 && !weaponFocus.melee.has(id)) {
+          // Melee represented but this specific talent wasn't chosen.
+          w *= WEAPON_FOCUS_OFF_TYPE_FACTOR;
+        }
+      } else if (isRanged) {
+        if (weaponFocus.ranged.size === 0 && weaponFocus.melee.size > 0) {
+          // Melee-only loadout: ranged type entirely unrepresented.
+          w *= WEAPON_FOCUS_UNSELECTED_TYPE_FACTOR;
+        } else if (weaponFocus.ranged.size > 0 && !weaponFocus.ranged.has(id)) {
+          // Ranged represented but this specific talent wasn't chosen.
+          w *= WEAPON_FOCUS_OFF_TYPE_FACTOR;
+        }
       }
     }
     return Math.max(0.05, w);
@@ -513,6 +535,61 @@ function professionSoRange(
     | { min: number; max: number }
     | undefined;
   return r ? { min: r.min, max: r.max } : { min: 1, max: 13 };
+}
+
+/**
+ * BRW p.42: SO costs 1 GP per point above the profession minimum and directly
+ * determines starting money (SO × SO Silbertaler). This function generates a
+ * biased SO roll that respects both the profession's legal range and the
+ * concept's intended social tier.
+ *
+ * If the concept carries a `social_standing_bias` with `so_min`/`so_max`, the
+ * final SO is clamped to the intersection of profession range and concept range,
+ * then picked from a weighted distribution favouring the upper part of that
+ * intersection (so higher-status concepts spend GP toward comfortable SO).
+ */
+function generateSo(
+  rng: () => number,
+  profRange: { min: number; max: number },
+  conceptSoBias: { so_min: number; so_max: number } | null,
+): number {
+  const lo = profRange.min;
+  const hi = profRange.max;
+  if (lo >= hi) return lo;
+
+  if (!conceptSoBias) {
+    // Uniform fallback — slightly centre-weighted.
+    return Math.min(hi, Math.max(lo, Math.round(lo + rng() * (hi - lo))));
+  }
+
+  // Intersect concept preference with profession legality.
+  const prefLo = Math.max(lo, conceptSoBias.so_min);
+  const prefHi = Math.min(hi, conceptSoBias.so_max);
+
+  if (prefLo > prefHi) {
+    // No overlap: fall back to clamped concept midpoint inside profession range.
+    const mid = Math.round((conceptSoBias.so_min + conceptSoBias.so_max) / 2);
+    return Math.min(hi, Math.max(lo, mid));
+  }
+
+  // Draw from two‑segment distribution: 75 % of probability mass in the
+  // preferred window, 25 % spread across the rest of the profession range.
+  const usePreferred = rng() < 0.75;
+  if (usePreferred) {
+    return Math.min(prefHi, Math.max(prefLo, Math.round(prefLo + rng() * (prefHi - prefLo))));
+  }
+  // Remaining mass: draw uniformly from the full profession range, then
+  // clamp away from the preferred window to avoid double-counting.
+  const raw = Math.round(lo + rng() * (hi - lo));
+  if (raw >= prefLo && raw <= prefHi) {
+    // Re-map into the full range outside preferred window.
+    const below = prefLo - lo;
+    const above = hi - prefHi;
+    if (below === 0 && above === 0) return prefLo;
+    const pivot = rng() * (below + above);
+    return pivot < below ? lo + Math.floor(pivot) : prefHi + 1 + Math.floor(pivot - below);
+  }
+  return Math.min(hi, Math.max(lo, raw));
 }
 
 function professionAttrMins(
@@ -758,10 +835,10 @@ export function generateCharacter(
   const professionGp = profession.gp_cost ?? 0;
 
   const soRange = professionSoRange(profession);
-  const so = Math.min(
-    soRange.max,
-    Math.max(soRange.min, Math.floor(soRange.min + rng() * (soRange.max - soRange.min + 1)))
-  );
+  const conceptSoBias =
+    (weights as { social_standing_bias?: { so_min: number; so_max: number } })
+      .social_standing_bias ?? null;
+  const so = generateSo(rng, soRange, conceptSoBias);
   const soExtraGp = Math.max(0, so - soRange.min);
 
   const minsAfterMods: Partial<Record<AttrCode, number>> = {};
