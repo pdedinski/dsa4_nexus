@@ -122,6 +122,16 @@ function dedupeIds(ids: readonly string[]): string[] {
   return out;
 }
 
+const SHIELD_WEAPON_IDS_FOR_LOADOUT = new Set([
+  "buckler",
+  "small_shield",
+  "battle_shield",
+  "thorwaler_shield",
+  "great_shield",
+  "leather_shield",
+  "large_leather_shield",
+]);
+
 function resolveLoadout(input: GenerateCharacterInput): SheetLoadout | undefined {
   const weaponIdList = dedupeIds([
     ...(input.weaponIds ?? []),
@@ -140,6 +150,10 @@ function resolveLoadout(input: GenerateCharacterInput): SheetLoadout | undefined
       id: w.id,
       name: w.name,
       combatTalent: w.combat_talent ?? null,
+      ...((w as { is_shield?: boolean }).is_shield === true ||
+      SHIELD_WEAPON_IDS_FOR_LOADOUT.has(w.id)
+        ? { isShield: true }
+        : {}),
       damage: w.damage,
       atModifier: typeof w.at_modifier === "number" ? w.at_modifier : 0,
       paModifier: typeof w.pa_modifier === "number" ? w.pa_modifier : 0,
@@ -158,8 +172,8 @@ function resolveLoadout(input: GenerateCharacterInput): SheetLoadout | undefined
       ec: typeof a.ec === "number" ? a.ec : 0,
       iniModifier: typeof a.ini_modifier === "number" ? a.ini_modifier : 0,
       category: typeof a.category === "string" ? a.category : undefined,
-      ...(typeof a.at_modifier === "number" ? { atModifier: a.at_modifier } : {}),
-      ...(typeof a.pa_modifier === "number" ? { paModifier: a.pa_modifier } : {}),
+      ...(typeof (a as Record<string, unknown>).at_modifier === "number" ? { atModifier: (a as Record<string, unknown>).at_modifier as number } : {}),
+      ...(typeof (a as Record<string, unknown>).pa_modifier === "number" ? { paModifier: (a as Record<string, unknown>).pa_modifier as number } : {}),
     });
   }
 
@@ -278,18 +292,43 @@ function pickWeightedByIdBias<T extends { id: string }>(
   return items[items.length - 1]!;
 }
 
+/** Combat talents implied by chosen weapons, split by combat type (weapon focus). */
+type WeaponTalentFocus = {
+  melee: ReadonlySet<string>;
+  ranged: ReadonlySet<string>;
+};
+
+function weaponTalentFocusFromLinked(
+  linkedCombatIds: Set<string>,
+): WeaponTalentFocus | null {
+  if (linkedCombatIds.size === 0) return null;
+  const melee = new Set<string>();
+  const ranged = new Set<string>();
+  for (const id of linkedCombatIds) {
+    const def = TALENT_INDEX.get(id);
+    if (!def || def.group !== "combat_talents") continue;
+    const ct = def.combat_type;
+    if (ct === "melee" || ct === "jousting") melee.add(id);
+    else if (ct === "ranged") ranged.add(id);
+  }
+  if (melee.size === 0 && ranged.size === 0) return null;
+  return { melee, ranged };
+}
+
+/** Downweight combat talents that do not match the equipped weapon profile (no TP in this factor). */
+const WEAPON_FOCUS_OFF_TYPE_FACTOR = 0.42;
+
 /**
- * Picks one talent to raise by +1 TP. Uneven but not degenerate: concept group
- * weights bias the pool; optional per-talent multipliers from concept_weights;
- * higher current TP gets extra weight (specialists).
+ * Picks one talent to raise by +1 TP. Weight is group × talent_bias × talent_avoid × jitter.
+ * Optional weapon focus downweights off-weapon melee/ranged combat talents; current TP is not used.
  */
 function pickWeightedTalentForStep(
   rng: () => number,
   candidateIds: string[],
-  talentTp: Map<string, number>,
   groupWeights: Record<string, number> | undefined,
   talentBias: Record<string, number> | undefined,
-  talentAvoid: Record<string, number> | undefined
+  talentAvoid: Record<string, number> | undefined,
+  weaponFocus: WeaponTalentFocus | null,
 ): string {
   if (candidateIds.length === 1) return candidateIds[0]!;
   const bias = talentBias ?? {};
@@ -297,12 +336,26 @@ function pickWeightedTalentForStep(
   const ws = candidateIds.map((id) => {
     const def = TALENT_INDEX.get(id);
     if (!def) return 0.05;
-    const tp = talentTp.get(id) ?? 0;
     const g = talentGroupPriorWeight(def.group, groupWeights);
     const b = bias[id] ?? 1;
     const av = avoid[id] ?? 1;
-    const focus = (1 + tp * 0.45) ** 1.22;
-    return Math.max(0.05, g * b * av * focus * (0.55 + rng() * 0.9));
+    let w = g * b * av * (0.55 + rng() * 0.9);
+    if (weaponFocus && def.group === "combat_talents") {
+      if (
+        weaponFocus.melee.size > 0 &&
+        (def.combat_type === "melee" || def.combat_type === "jousting") &&
+        !weaponFocus.melee.has(id)
+      ) {
+        w *= WEAPON_FOCUS_OFF_TYPE_FACTOR;
+      } else if (
+        weaponFocus.ranged.size > 0 &&
+        def.combat_type === "ranged" &&
+        !weaponFocus.ranged.has(id)
+      ) {
+        w *= WEAPON_FOCUS_OFF_TYPE_FACTOR;
+      }
+    }
+    return Math.max(0.05, w);
   });
   const total = ws.reduce((a, b) => a + b, 0);
   let r = rng() * total;
@@ -311,6 +364,27 @@ function pickWeightedTalentForStep(
     if (r <= 0) return candidateIds[i]!;
   }
   return candidateIds[candidateIds.length - 1]!;
+}
+
+function collectWeaponLinkedCombatTalentIds(input: GenerateCharacterInput): Set<string> {
+  const out = new Set<string>();
+  const weaponIdList = dedupeIds([
+    ...(input.weaponIds ?? []),
+    ...(input.primaryWeaponId ? [input.primaryWeaponId] : []),
+  ]);
+  for (const wid of weaponIdList) {
+    const w = weaponsData.weapons.find((x) => x.id === wid);
+    if (!w) continue;
+    const add = (tid: string | null | undefined) => {
+      if (!tid) return;
+      const def = TALENT_INDEX.get(tid);
+      if (def?.group === "combat_talents") out.add(tid);
+    };
+    add(w.combat_talent ?? null);
+    const sec = (w as { secondary_talents?: string[] }).secondary_talents;
+    if (Array.isArray(sec)) for (const st of sec) add(st);
+  }
+  return out;
 }
 
 /**
@@ -840,6 +914,7 @@ export function generateCharacter(
 
   const mergedTalents = mergeTalentModifiersNormalized(rng, race, culture, profession);
   const weaponBiasRows = collectWeaponBiasRows(input);
+  const weaponLinkedCombatIds = collectWeaponLinkedCombatTalentIds(input);
   const tgpTotal = (CL + IN) * 20;
   let tgpLeft = tgpTotal;
   const talentRows: CharacterSheet["talents"] = [];
@@ -852,18 +927,21 @@ export function generateCharacter(
   const groupWeights = weights.talent_group_weights as
     | Record<string, number>
     | undefined;
-  /** Concept file bias + extra weight on combat talents tied to wizard weapon picks. */
-  const WEAPON_COMBAT_TGP_NUDGE = 0.42;
   const talentBias: Record<string, number> = {
     ...normalizeTalentBias(weights.talent_bias),
   };
-  for (const row of weaponBiasRows) {
-    const tid = row.combatTalent;
-    if (!tid) continue;
+  // Strong bias toward combat talents that match chosen weapons (primary + secondary_talents).
+  const WEAPON_TALENT_BIAS_ADD = 2.25;
+  const WEAPON_TALENT_BIAS_FLOOR = 3.75;
+  for (const tid of weaponLinkedCombatIds) {
     const def = TALENT_INDEX.get(tid);
     if (!def || def.group !== "combat_talents") continue;
-    talentBias[tid] = (talentBias[tid] ?? 1) + WEAPON_COMBAT_TGP_NUDGE;
+    talentBias[tid] = Math.max(
+      (talentBias[tid] ?? 1) + WEAPON_TALENT_BIAS_ADD,
+      WEAPON_TALENT_BIAS_FLOOR
+    );
   }
+  const weaponFocus = weaponTalentFocusFromLinked(weaponLinkedCombatIds);
 
   const talentAvoid = normalizeTalentAvoidBias(
     (weights as Record<string, unknown>).talent_avoid_bias
@@ -892,10 +970,10 @@ export function generateCharacter(
     const id = pickWeightedTalentForStep(
       rng,
       candidates,
-      talentTp,
       groupWeights,
       talentBias,
-      talentAvoid
+      talentAvoid,
+      weaponFocus,
     );
     const spend = computeTalentSpend(
       id,
@@ -1019,10 +1097,10 @@ export function generateCharacter(
     const id = pickWeightedTalentForStep(
       rng,
       candidates,
-      talentTp,
       groupWeights,
       talentBias,
-      talentAvoid
+      talentAvoid,
+      weaponFocus,
     );
     const spend = computeTalentSpend(
       id,

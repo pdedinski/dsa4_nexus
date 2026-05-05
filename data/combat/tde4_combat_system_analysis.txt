@@ -1,0 +1,612 @@
+================================================================================
+TDE 4.1 / DSA 4.1 COMBAT SYSTEM ANALYSIS
+================================================================================
+Sources: DSA 4.1 Basisregelwerk (BRW) pp. 99-168
+         Wege des Schwertes (WdS) pp. 58-107
+
+This document is structured similarly to tde_dsa41_character_generation_summary.txt.
+It describes the full combat system algorithmically — suitable for use as a
+reference when implementing combat logic or building a digital assistant.
+
+================================================================================
+SECTION 1 — COMBAT OVERVIEW & SEQUENCE
+================================================================================
+
+A combat encounter in TDE 4.1 proceeds in ROUNDS. Each round represents roughly
+3 seconds of in-fiction time and consists of these phases:
+
+  1. INITIATIVE PHASE
+     - Every participant rolls initiative (see Section 2).
+     - Act in order from highest to lowest. Ties broken by the rule below.
+
+  2. ACTION PHASE (in initiative order)
+     Each combatant, on their turn, has ONE ACTION to spend:
+       a) ATTACK ACTION  — strike, maneuver, charge, etc.
+       b) FREE ACTION    — declared before or after an attack (e.g. Call,
+                          Defensive Posture, Disarm)
+       c) SPECIAL ACTIONS — flee, mount/dismount, draw weapon, pick up item,
+                           call for help, etc.
+
+     After an attacker resolves an ATTACK ACTION:
+       - The TARGET may use a DEFENSE ACTION: Parry, Shield Parry, Dodge.
+       - Defenses are not limited to the defender's turn — they respond
+         to incoming attacks at any point in the round.
+       - A defender can only make ONE defense per incoming attack.
+       - Additional attackers increase defense difficulty (see Sec 9).
+
+  3. END OF ROUND
+     - Ongoing effects tick (bleed, poison, fire, etc.).
+     - Initiative is re-rolled only if the GM specifies; otherwise the order
+       from round 1 continues.
+
+KEY STATS USED IN COMBAT
+  AT  — Attack Value    (base = round((CO+AG+ST)/5) + melee talent TP allocation)
+  PA  — Parry Value     (base = round((IN+AG+ST)/5) + melee talent TP allocation)
+  FK  — Ranged Value    (base = round((IN+AG+ST)/5) = baseBRV + ranged talent TP)
+  INI — Initiative      (see Section 2)
+  TP  — Talent Prowess  (combat talent level, 0–21+ during creation)
+  WM  — Weapon Modifier (AT/PA modifiers on the weapon entry)
+  BE  — Encumbrance     (armor BE stacked; reduces AT/PA via EEC formula)
+  RS  — Armor Rating    (damage reduction applied to hits)
+  DP  — Damage Points   (raw damage dealt by a weapon hit)
+  VP  — Life Points     (derived: ceil((CN+CN+ST)/2) + racial/culture/profession mods)
+  EP  — Endurance       (derived: ceil((CO+CN+AG)/2) + modifiers)
+  KO  — Constitution    (base attribute; drives wound threshold)
+
+================================================================================
+SECTION 2 — INITIATIVE
+================================================================================
+
+FORMULA (BRW p. 101):
+  INI = round((CO + CO + IN + AG) / 5) + racial INI modifier + die roll
+
+DIE ROLL:
+  Roll 1d6 at the start of EACH round (some weapon/armor mods apply).
+  Add the die result to the base INI formula above.
+
+  Final INI = base INI + 1d6 + any situational modifiers
+
+MODIFIERS TO INI (applied each round):
+  Weapon ini_modifier   — heavy two-handed weapons typically -1 to -3
+  Armor ini_modifier    — heavier armor typically -1 to -4
+  Surprised combatant   — acts LAST in the first round of an ambush
+  Defensive Posture SA  — no penalty from WdS
+  Charge maneuver       — +1 INI on the charge round (WdS p. 65)
+
+TIEBREAKER (BRW p. 101):
+  1) Higher CO wins.
+  2) If still tied: simultaneous, both act at the same moment.
+
+DELAYED ACTION:
+  A combatant may choose to DELAY their turn. They may interrupt at any later
+  point in the round, acting before the next combatant in the order.
+  If they do not act before the round ends, their action is lost.
+
+================================================================================
+SECTION 3 — ATTACK RESOLUTION
+================================================================================
+
+MELEE ATTACK ROLL (BRW pp. 102-103):
+  Roll 1d20. If result ≤ finalAT → HIT. If result > finalAT → MISS.
+
+  finalAT = baseAT + talentTPforAT + weapon_AT_modifier - eBE_AT_penalty
+            + situational modifiers
+
+  where:
+    baseAT           = round((CO+AG+ST)/5)
+    talentTPforAT    = allocated portion of combat talent TP (see Section 3a)
+    weapon_AT_modifier = weapon's at_modifier field
+    eBE_AT_penalty   = floor(effectiveBE / 2) for melee (Section 8)
+
+RANGED ATTACK ROLL (BRW pp. 152-155):
+  Roll 1d20. If result ≤ finalFK → HIT.
+
+  finalFK = baseFKValue + talentTP - eBE_penalty
+            + range_band_FK_modifier + situational modifiers
+
+  where baseFKValue = round((IN+AG+ST)/5)  [= baseBRV in generator terms]
+  Range band FK modifiers (BRW p. 153):
+    sehr_nah    (very close): FK -2
+    nah         (close):      FK +0
+    mittel      (medium):     FK +4
+    weit        (far):        FK +8
+    extrem_weit (extreme):    FK +12
+
+CRITICAL HIT (BRW p. 103):
+  If unmodified die = 1  → possible critical. Roll 1d20 again.
+    If second roll also ≤ finalAT → CONFIRMED CRITICAL:
+      Damage is doubled (roll twice, sum both, OR roll once × 2; GM convention).
+      Target does NOT get a defense action.
+    If second roll > finalAT → normal hit. Target may defend normally.
+
+FUMBLE (BRW p. 103):
+  If unmodified die = 20 → FUMBLE. Roll 1d20 on fumble table.
+  Common fumble results: weapon dropped, attacker falls, weapon breaks, etc.
+  (Fumble table BRW p. 108.)
+
+SITUATIONAL AT MODIFIERS:
+  Fighting from behind        +4 AT
+  Target prone / on ground    +4 AT (melee), -4 AT (ranged)
+  Target unaware of attack    automatic hit or +4 AT (GM discretion)
+  Dim lighting                -2 AT
+  Darkness                    -6 AT (or automatic miss if completely blind)
+  Called shot to a body part  -4 AT (head: -8 AT), special effect on hit
+
+--- Section 3a — MELEE TP SPLIT (AT vs PA) ---
+
+Combat talent TP is split between AT and PA allocation (not spent separately):
+  at_allocated = floor(TP / 2)
+  pa_allocated = TP - at_allocated   [i.e., ceil(TP/2)]
+
+  Bias adjustment (±2 TP shift before clamp):
+    If the selected weapon's net (PA_mod - AT_mod) > 0 → "offensive" bias:
+      at_allocated += 2  (weapon favors AT due to low PA WM)
+    If net < 0 → "defensive" bias:
+      pa_allocated += 2  (weapon favors defense via high PA WM)
+    If net = 0 → use character concept bias (offensive/defensive/balanced)
+
+  Clamp: |at_allocated - pa_allocated| ≤ 5
+
+  Final melee AT = baseAT + at_allocated + weapon_AT_modifier - eBE_AT
+  Final melee PA = basePA + pa_allocated + weapon_PA_modifier - eBE_PA
+
+SHIELD MODIFIER (stacks with weapon, applies to all melee with that hand):
+  Shield AT modifier (negative) reduces AT
+  Shield PA modifier (positive) raises PA
+  Shield mods DO NOT apply when wielding two-handed weapons.
+  Chain weapons IGNORE the shield PA bonus.
+
+================================================================================
+SECTION 4 — DEFENSE RESOLUTION
+================================================================================
+
+After a successful hit, the defender may choose ONE defense:
+
+  a) PARRY (PA roll) — active block with weapon
+     Roll 1d20. If result ≤ finalPA → PARRIED.
+     finalPA = basePA + talentTPforPA + weapon_PA_modifier - eBE_PA_penalty
+     Restrictions:
+       - Cannot parry chain weapons with daggers.
+       - Cannot parry chain/two-handed blunt with fencing weapons.
+       - Cannot parry two-handed swords with daggers or fencing weapons.
+       - Shields add their PA modifier to any parry in the same hand.
+
+  b) SHIELD PARRY — parry with a shield (independent of main-hand weapon)
+     Roll against shield PA only (weapon talent AT/PA not involved).
+     Shield PA = basePA + shield_PA_modifier - eBE_PA_penalty
+     Chain weapons IGNORE this PA bonus.
+
+  c) DODGE (Ausweichen)
+     Roll 1d20 vs. Dodge value.
+     Dodge = (AG + GE + KK) / 5, rounded (BRW p. 104).
+     [Note: GE = Agility (already reflected in AG in this system; BRW uses it.]
+     Penalties:
+       - Each subsequent dodge attempt in the same round: -3 cumulative.
+       - Cannot dodge if already prone (GM discretion).
+
+FAILED DEFENSE:
+  If no defense succeeds (or attacker confirms critical), proceed to damage.
+
+CRITICAL PARRY (BRW p. 104):
+  Unmodified PA die = 1 → possible critical. Roll again.
+  If confirmed: attacker's weapon may be trapped/disarmed (STR contest).
+
+PARRY FUMBLE:
+  Unmodified PA die = 20 → defender's weapon may drop or break.
+
+================================================================================
+SECTION 5 — DAMAGE RESOLUTION
+================================================================================
+
+DAMAGE CALCULATION (BRW pp. 104-105):
+  DP (raw) = weapon damage roll (e.g., 1d6+4) + applicable bonuses
+  DP (effective) = max(0, DP - RS)   where RS is the armor's armor rating
+
+  RS = sum of body armor RS + helmet RS (for head hits) + limb RS (for limb hits)
+  (Overlapping armor is additive unless special rules apply.)
+
+WOUND THRESHOLD:
+  If effective DP ≥ KO/2 (rounded down):
+    → WOUND inflicted
+    Target suffers a wound marker.
+    First wound:  -1 AT, -1 PA, -1 to all checks
+    Second wound: -2 AT, -2 PA, -2 to all checks (cumulative from first)
+    Each subsequent wound: additional -1 per wound marker
+  If effective DP = 0: hit absorbed by armor, no damage.
+
+STUN (Betäubung):
+  If effective DP ≥ KO/2 AND weapon is blunt (Blunt Blow or blunt weapon):
+    → Target must pass a KO check (1d20 ≤ KO) or be stunned.
+    Stunned: cannot act for 1d3 rounds, PA only at -4.
+
+KNOCKDOWN:
+  Certain maneuvers (Sweeping Blow, etc.) may cause knockdown.
+  Prone target: +4 AT for attackers, standing up costs a full action.
+
+ENDURANCE VS LIFE POINTS:
+  Brawling / unarmed DP type (A) = half to LP, half to EP.
+  Normal weapon DP → full to LP.
+  EP (Endurance) loss from fatigue, exertion, unarmed hits, some spells.
+  VP (Life Points) loss from weapon hits after armor.
+
+DEATH & INCAPACITATION:
+  VP ≤ 0  → unconscious and dying (1 additional VP lost per round without help)
+  VP = -VP_max → dead
+  EP ≤ 0  → exhausted, collapses (unconscious)
+
+================================================================================
+SECTION 6 — THE CALL (Der Ansage)
+================================================================================
+
+Source: WdS pp. 58-60
+
+Many maneuvers allow the attacker to voluntarily reduce their own AT or PA
+(an "ante") to achieve a special effect. This self-chosen penalty is the CALL.
+
+RULES:
+  - The Call is declared BEFORE the die roll.
+  - Total penalty (maneuver base + Called points) must NOT exceed:
+      a) The TP of the weapon talent used, AND
+      b) The relevant AT or PA value itself.
+  - The declared Call must be a whole number ≥ 1.
+  - For OFFENSIVE maneuvers: Call reduces AT. Cap = min(TP, finalAT).
+  - For DEFENSIVE maneuvers: Call reduces PA. Cap = min(TP, finalPA).
+
+FAILED CALL PENALTY:
+  If a maneuver with a Call FAILS (AT or PA roll fails):
+    → Suffer the full Called value as a penalty to ALL subsequent rolls
+      until the fighter uses their next valid Attack or Parry action.
+    → This includes Free Actions requiring tests during that time.
+    → Once the next Attack or Parry is resolved, the penalty clears.
+
+BLADE DANCER SPECIAL ABILITY (WdS p. 60):
+  Reduces the failed-Call penalty to HALF (rounded down).
+
+EXAMPLES (BRW p. 60):
+  Call of 4 on a Feint: AT reduced by 4 for that roll.
+  If it fails → all actions penalized by 4 until next AT/PA action.
+  With Blade Dancer: penalty is only 2.
+
+================================================================================
+SECTION 7 — MANEUVER CATALOGUE SUMMARY
+================================================================================
+
+Each maneuver entry has: Type | Base Penalty | SA Required | Compatible Talents
+
+--- ATTACK ACTIONS ---
+
+Standard Attack
+  Penalty: none | SA: no | Talents: all
+  Basic offensive action. Roll AT; if successful target may defend.
+
+Feint
+  Penalty: AT -(Call, min 1) | SA: no | Talents: melee only
+  On success: defender's PA reduced by (Call × 2) for that defense.
+  The Call caps at min(TP, finalAT).
+
+Targeted Attack (Called Shot)
+  Penalty: AT -4 (body), -8 (head/neck), -2 (limbs) | SA: no
+  Hit to specific location. Effects vary by location hit.
+  Head: chance of stun/knockdown. Limb: reduced effectiveness of that limb.
+
+Sweeping Blow
+  Penalty: AT -4 | SA: no | Talents: axes, two-handed, staves, etc.
+  On hit: target must pass KK check (BRW: KK/2) or fall prone.
+
+Blade Storm (Klingensturm)
+  Penalty: each AT = AV/2+2 | SA: yes (Blade Storm SA)
+  Split one Attack Action between TWO opponents.
+  Max EC 4. No shield. Cannot combine with another maneuver.
+  With Combat Awareness: distribute freely (min 6 each).
+  With Blade Dancer: split among up to THREE opponents.
+
+Disarming Strike
+  Penalty: AT -4 | SA: no | Talents: melee (most)
+  On hit: instead of damage, attempt disarm (opposed STR check).
+
+Charge (Angriff mit Anlauf)
+  Bonus: +2 AT on charge round, +1 INI | Cost: must move at least 3 paces
+  Cannot combine with most other maneuvers.
+
+Blunt Blow (Stumpfer Schlag)
+  Penalty: AT -2 (club/staff), -4 (axe/mace flat), -8 (sword flat)
+  On hit: triggers stun check regardless of DP.
+
+Thrust (Stoß)  [spears, infantry weapons, staves]
+  Penalty: AT -(Call) | Effect: TP shifts toward distance-class effects.
+  Targets at incorrect range for weapon suffer additional penalties.
+
+Power Attack / All-Out Attack
+  Penalty: PA -4 until next turn | Bonus: AT +4, +1d6 DP if hit
+  Cannot combine with Call (the PA penalty is the built-in cost).
+
+--- DEFENSE ACTIONS ---
+
+Standard Parry
+  No penalty | SA: no | Talents: all melee capable of PA
+  Roll 1d20 ≤ PA. Success = hit negated.
+
+Evasive Maneuver (Ausweichen)
+  Roll Dodge value | SA: no | Talents: n/a
+  Each subsequent dodge this round: -3 cumulative.
+
+Defensive Posture (Verteidigungsposition)
+  Free Action (declared before combat or at start of round).
+  +2 PA for the entire round, -2 AT for the entire round.
+  With Defensive Posture SA (WdS): +4 PA, -2 AT.
+
+Full Defense (Volle Abwehr)
+  Spend the entire action on defense.
+  +4 PA for the round. No AT action possible.
+  With appropriate SA: may parry multiple attacks.
+
+Parrying Blade (Parierdolch / Sai)
+  Off-hand parrying weapon grants its PA modifier as additional PA.
+  Counts as a second defense per incoming attack (must be declared).
+
+--- FREE ACTIONS ---
+
+Free actions may be combined with an Attack or Defense action:
+
+Call Declaration    — declare Call amount before rolling
+Defensive Posture   — enter/exit defensive stance
+Readied Weapon      — quick-draw a prepared weapon (not sheathed)
+Taunting            — attempt to provoke opponent (social check)
+Combat Awareness    — activate SA effect (if available)
+Observation         — note attacker position for next round's modifier
+
+--- SPECIAL SITUATIONS ---
+
+Fighting Blind (Darkness)
+  -6 AT and -6 PA. Ranged attacks: near-impossible (-8 FK).
+
+Prone Target
+  Attacker: +4 AT (melee). Ranged: no modifier.
+  Prone defender: PA -4. Standing from prone: 1 full action.
+
+Fighting in Restricted Space
+  AT -2 to -4 depending on space. Long weapons suffer more.
+
+Two-Weapon Fighting (Zwei-Waffen-Kampf)
+  Off-hand weapon may be used for ONE attack per round.
+  Off-hand AT: -4 (or -2 with Two-Weapon Fighting SA).
+  Main hand AT: -2 (or no penalty with Two-Weapon Fighting SA).
+  Off-hand cannot be used for PA in the same round as attack.
+  Exception: parrying weapons (see Parrying Blade above).
+
+Grappling (Ringen)
+  Uses Wrestling talent. On hit: grapple begins.
+  Each round: opposed TP rolls. Winner may deal 1d6(A) or throw.
+  Choke: 1d6+1 DP per round if maintained; target must pass KO check.
+  Throw: grappler chooses to slam opponent; fall damage applies.
+
+================================================================================
+SECTION 8 — ENCUMBRANCE IN COMBAT
+================================================================================
+
+Source: BRW pp. 105-106
+
+BE (Behinderung) = Encumbrance value listed on each armor piece.
+
+STACKING ARMOR BE:
+  Body armor BE is listed per piece. Stack additively.
+  Exception: Quilted Underclothing does NOT add its BE to metal armor worn
+  over it. It only adds when worn alone.
+
+EC (Effective Encumbrance after talent reduction):
+  Each combat talent has an EEC (Effective Encumbrance threshold).
+  Format in data: "EC-4" means talent reduces total BE by 4.
+
+  eBE = max(0, totalBE - talent_EEC_reduction)
+
+PENALTY APPLICATION:
+  Melee AT penalty:  floor(eBE / 2)
+  Melee PA penalty:  ceil(eBE / 2)   [odd remainder goes to PA]
+  Ranged FK penalty: full eBE (not split)
+  Jousting AT penalty: full eBE
+
+EXAMPLE:
+  Character wears Full Chain (BE 5) + Open Helm (BE 1) = total BE 6.
+  Combat talent = Swords (EEC "EC-2") → eBE = max(0, 6-2) = 4.
+  AT penalty = floor(4/2) = 2.  PA penalty = ceil(4/2) = 2.
+
+SWIMMING, BALANCE, CLIMBING penalties from armor:
+  Armor BE applies fully to these physical checks (not reduced by combat talent).
+
+================================================================================
+SECTION 9 — FIGHTING MULTIPLE OPPONENTS
+================================================================================
+
+Source: BRW p. 106
+
+When a defender faces multiple simultaneous attackers:
+  Each attacker beyond the first imposes -1 PA on ALL parries for the round.
+  Two attackers:  defender PA -1
+  Three attackers: defender PA -2
+  Four attackers:  defender PA -3
+  (Cap at -5 for 6+ attackers. GM may rule differently.)
+
+The penalty does NOT reduce AT of the defender — only their ability to defend.
+
+FLANKING (BRW p. 106):
+  Attacking from behind or a flank: +4 AT for the flanking attacker.
+  Defender cannot use PA against attacks they cannot see.
+  Defender may Dodge instead (no facing restriction on Dodge).
+
+TEAM TACTICS:
+  Combatants may attempt to coordinate.
+  A flanking ally who succeeds at a Tactics/Military Doctrine check (WdS)
+  may give the primary attacker +2 AT for one round.
+
+================================================================================
+SECTION 10 — MOUNTED COMBAT
+================================================================================
+
+Source: WdS pp. 100-107
+
+PREREQUISITES:
+  Rider must have Riding talent (or applicable animal skill).
+  Combat while mounted: AT and PA at -2 unless Mounted Combat SA is known.
+
+MOUNTED ATTACK BONUSES:
+  Attacking on foot from horseback (disadvantaged: horse not fully trained):
+    Standard modifiers apply.
+  Charge with couched lance (Lanzenreiten talent):
+    Damage multiplied by mount speed factor.
+    Speed factor = (mount movement / 10) rounded, minimum ×2.
+    Lance cannot be used to parry. AT uses Jousting talent only.
+
+DISTANCE CLASSES FOR MOUNTED COMBAT (WdS p. 101):
+  Reaching opponents at wrong distance class: -2 AT per class off.
+  Lance at very close range: cannot be used offensively.
+  Short weapons (daggers) at long range: cannot strike.
+
+BREAKING OFF MOUNTED COMBAT:
+  Mounted combatant may disengage freely if mount's speed > opponent's speed.
+  On foot opponent: pursuit requires Movement check.
+
+CHARGING THROUGH INFANTRY:
+  Warhorse or destrier vs. infantry: each figure in the path must pass a
+  KK check or be knocked down (BRW horse charge rules, WdS p. 104).
+
+DISMOUNTING:
+  Voluntary: 1 full action.
+  Forced (from knockdown/lance hit): opposed KK check vs. DP dealt.
+  Fall damage from involuntary dismount: 1d6 per 2m height (horse = ~1.5m).
+
+================================================================================
+SECTION 11 — OPTIONAL RULES (Wege des Schwertes)
+================================================================================
+
+Source: WdS pp. 78-86
+
+These are explicitly marked as optional (optionale Regeln) in WdS.
+
+LOCATION HITS (Trefferzone, WdS p. 78):
+  Roll 1d20 on location table after a hit is confirmed.
+  Location affects which armor RS applies and wound effects.
+  d20 Location Table (approximate):
+    1-5:   Torso          (full body armor RS)
+    6-8:   Right arm      (arm armor RS, or 0 if none)
+    9-11:  Left arm       (arm armor RS, or 0 if none)
+    12-14: Right leg      (leg armor RS, or 0 if none)
+    15-17: Left leg       (leg armor RS, or 0 if none)
+    18-19: Head           (helmet RS, or 0 if none; wound = stun check)
+    20:    Called location (attacker chooses; -4 AT already paid if Called Shot)
+
+WEAPON BREAKAGE (WdS p. 79):
+  On a fumble, roll for weapon quality. Poor weapons may break.
+  On a critical parry, attacker's weapon trapped; STR contest for disarm/break.
+
+ARMOR DAMAGE (WdS p. 80):
+  After a wound, RS of struck armor piece may be permanently reduced.
+  Roll: if original DP ≥ RS of that piece, RS -1 (repaired with smithing skill).
+
+FATIGUE IN COMBAT (WdS p. 81):
+  Every 3 rounds of active combat: 1 EP lost.
+  At EP < 10%: -2 AT, -2 PA.
+  At EP = 0: collapse (unconscious).
+
+CALLED SHOTS (Gezielter Stoß, WdS p. 83):
+  Extended rules for targeting specific body parts with precise effects:
+    Throat: on wound → voice loss, choking damage
+    Hand/wrist: on wound → weapon drop (KK check to retain)
+    Eye: on wound → blindness (one eye), -3 AT permanently if not healed
+
+TERRAIN MODIFIERS (WdS p. 85):
+  Mud/ice: -2 AT and -2 PA, or risk of slipping (AG check)
+  Stairs/elevation: +1 AT for higher combatant, -1 for lower
+  Water (waist-deep): AT/PA halved (round down); Dodge impossible
+
+PSYCHOLOGICAL EFFECTS / MORALE (WdS p. 86):
+  Optional fear/morale checks using IN or MU attributes.
+  Triggered by: outnumbered ≥3:1, facing supernatural opponents,
+                seeing allies slain, etc.
+  Failed check: -2 AT/-2 PA (shaken) or flee (routed).
+
+================================================================================
+SECTION 12 — QUICK REFERENCE: KEY FORMULAS
+================================================================================
+
+  baseAT         = round((CO + AG + ST) / 5)
+  basePA         = round((IN + AG + ST) / 5)
+  baseFKValue    = round((IN + AG + ST) / 5)   [= baseBRV]
+  baseINI        = round((CO + CO + IN + AG) / 5) + racial INI mod
+  Initiative     = baseINI + 1d6 + weapon_INI_mod + armor_INI_mod
+
+  Final AT       = baseAT + at_alloc + weapon_AT_mod + shield_AT_mod - eBE_AT
+  Final PA       = basePA + pa_alloc + weapon_PA_mod + shield_PA_mod - eBE_PA
+  Final FK       = baseFKValue + talent_TP + weapon_AT_mod - eBE + range_mod
+
+  eBE            = max(0, totalBE - talent_EEC)
+  AT eBE penalty = floor(eBE / 2)
+  PA eBE penalty = ceil(eBE / 2)
+
+  Wound threshold = effective DP ≥ floor(KO / 2)
+
+  WM (Weapon Modifier):
+    at_modifier on weapon: adds to AT
+    pa_modifier on weapon: adds to PA (may be negative for offensive weapons)
+
+  TP Split (melee):
+    at_alloc = floor(TP / 2)  [+ or - 2 based on weapon WM bias, clamped]
+    pa_alloc = TP - at_alloc
+
+================================================================================
+SECTION 13 — GENERATOR COMPATIBILITY NOTES
+================================================================================
+
+These notes describe how the combat system maps to the DSA Nexus character
+generator (lib/character/generator.ts and related files).
+
+TALENT POOL (combat_talents.json):
+  Combat talents are separate from non-combat talents in the generator.
+  TGP (Talent Generation Points) are shared across all talent groups.
+  The generator biases TGP spending toward combat talents that match
+  the player's selected weapons (via WEAPON_TALENT_BOOST constant).
+
+MELEE TP SPLIT:
+  The generator calls allocateMeleeCombatTp(tp, bias) from meleeTpAllocation.ts.
+  The split result (allocatedAT, allocatedPA) is stored in combatMelee[].
+  The final AT and PA shown on the sheet are: baseAT + allocatedAT and
+  basePA + allocatedPA (before weapon modifiers and encumbrance).
+
+WEAPON MODIFIERS AT DISPLAY TIME:
+  Applied in loadoutCombatValues.ts → computeLoadoutWeaponLine().
+  Final AT = baseAT + at_alloc + weapon.at_modifier + shield.at_mod - eBE_AT.
+  Final PA = basePA + pa_alloc + weapon.pa_modifier + shield.pa_mod - eBE_PA.
+
+SHIELD MODIFIERS:
+  Shields stored in armorData (armor.json, category="shield").
+  The at_modifier and pa_modifier fields on shield entries are summed in
+  sumShieldModifiers() and applied to melee combat lines.
+  Two-handed weapon talents (MELEE_NO_SHIELD_TALENTS set) ignore shield mods.
+
+ENCUMBRANCE FLOW:
+  Generator does not apply eBE — it stores talent TP splits.
+  eBE application happens in loadoutCombatValues.ts at display time,
+  using the talent's eec field from combat_talents.json.
+
+RANGED TALENTS:
+  All TP goes to AT (no PA). Ranged combat does not use PA.
+  combatRanged[] stores: talentId, talentName, tp, finalAT.
+  finalAT = baseBRV + tp (generator). Weapon AT modifier applied at display.
+
+JOUSTING:
+  Similar to ranged (AT only). Uses baseAT + tp, not baseBRV.
+  Covered in computeLoadoutWeaponLine() with combatType === "jousting".
+
+SHIELDS AS WEAPONS:
+  Shields appear in weapons.json with combat_talent = null and is_shield = true.
+  Shield parry is not a Kampftechnik (combat talent): it uses base PA + shield weapon WM
+  + encumbrance + PA bonuses from the Special Abilities Off-hand Fighting (+1),
+  Shield Fighting I (+2), and Shield Fighting II (+2), summed from the character sheet.
+  loadoutCombatValues.ts treats these rows in computeLoadoutWeaponLine() separately from
+  melee-talent weapons. Companion shield WM (from another shield weapon in the loadout or
+  from armor rows with category shield) is added to one-handed melee weapon lines when
+  applicable. Legacy saved loadouts may still have combat_talent "shields" or omit is_shield;
+  known shield ids are detected as a fallback.
+
+================================================================================
+END OF DOCUMENT
+================================================================================

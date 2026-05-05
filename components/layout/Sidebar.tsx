@@ -20,6 +20,7 @@ import {
   BookMarked,
   UserCircle,
   PawPrint,
+  Scale,
 } from "lucide-react";
 import clsx from "clsx";
 import { signOut } from "next-auth/react";
@@ -103,6 +104,7 @@ export default function Sidebar({
 }) {
   const pathname = usePathname();
   const [codexOpen, setCodexOpen] = useState(true);
+  const [rulesOpen, setRulesOpen] = useState(false);
   const [expandedCategories, setExpandedCategories] = useState<Set<string>>(
     new Set(["core"])
   );
@@ -163,6 +165,39 @@ export default function Sidebar({
             <UserCircle className="w-3.5 h-3.5 shrink-0" />
             My Characters
           </Link>
+        </div>
+
+        {/* RULES section */}
+        <div>
+          <button
+            onClick={() => setRulesOpen((v) => !v)}
+            className="w-full flex items-center gap-2 px-2 py-2 rounded-lg text-ink-muted hover:text-ink hover:bg-surface-card transition-colors text-sm font-semibold uppercase tracking-wider"
+          >
+            <Scale className="w-4 h-4 shrink-0" />
+            <span className="flex-1 text-left">Rules</span>
+            {rulesOpen ? (
+              <ChevronDown className="w-3.5 h-3.5" />
+            ) : (
+              <ChevronRight className="w-3.5 h-3.5" />
+            )}
+          </button>
+          {rulesOpen && (
+            <div className="mt-1 ml-4 border-l border-surface-border pl-3 space-y-0.5">
+              <Link
+                href="/rules/combat"
+                onClick={() => onNavigate?.()}
+                className={clsx(
+                  "flex items-center gap-2 px-2 py-1.5 rounded-md text-sm transition-colors",
+                  pathname === "/rules/combat"
+                    ? "bg-brand-muted text-ink font-medium"
+                    : "text-ink-muted hover:text-ink hover:bg-surface-card"
+                )}
+              >
+                <Sword className="w-3.5 h-3.5 shrink-0" />
+                Combat
+              </Link>
+            </div>
+          )}
         </div>
 
         {/* CODEX section */}

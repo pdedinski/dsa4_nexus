@@ -18,6 +18,17 @@ import type {
   SheetLoadoutWeapon,
 } from "@/lib/character/types";
 
+const SHIELD_WEAPON_IDS = new Set([
+  /** Known shield weapon ids; same list as weapons.json is_shield rows + legacy loadouts. */
+  "buckler",
+  "small_shield",
+  "battle_shield",
+  "thorwaler_shield",
+  "great_shield",
+  "leather_shield",
+  "large_leather_shield",
+]);
+
 type CombatTalentJson = {
   id: string;
   eec?: string;
@@ -31,8 +42,6 @@ const COMBAT_TALENT_MAP = new Map<string, CombatTalentJson>(
 /** `weapons.json` uses shorter slugs in places; canonical ids live in combat_talents.json. */
 const WEAPON_COMBAT_TALENT_ALIASES: Record<string, string> = {
   bastard_swords: "bastard_sword",
-  /** Approximate until a dedicated Kampftechnik row exists */
-  shields: "fencing_weapons",
   discus: "throwing_knives",
   blowpipes: "bows",
 };
@@ -45,6 +54,12 @@ function canonicalCombatTalentId(
   const target = WEAPON_COMBAT_TALENT_ALIASES[raw];
   if (target && COMBAT_TALENT_MAP.has(target)) return target;
   return null;
+}
+
+function isShieldLoadoutWeapon(w: SheetLoadoutWeapon): boolean {
+  if (w.isShield === true) return true;
+  if (w.combatTalent === "shields") return true;
+  return SHIELD_WEAPON_IDS.has(w.id);
 }
 
 /** Talents that use two-handed weapons incompatible with shield WM on the same line. */
@@ -106,6 +121,39 @@ function sumShieldModifiers(armors: SheetLoadoutArmor[]): {
     if (typeof a.paModifier === "number") pa += a.paModifier;
   }
   return { at, pa };
+}
+
+/** Shield WM from armor rows plus other shield weapons (excludes the current weapon row). */
+function sumCompanionShieldModifiers(
+  armors: SheetLoadoutArmor[] | undefined,
+  allWeapons: SheetLoadoutWeapon[],
+  currentWeaponId: string,
+): { at: number; pa: number } {
+  const arm = sumShieldModifiers(armors ?? []);
+  let at = arm.at;
+  let pa = arm.pa;
+  for (const w of allWeapons) {
+    if (!isShieldLoadoutWeapon(w) || w.id === currentWeaponId) continue;
+    at += w.atModifier;
+    pa += w.paModifier;
+  }
+  return { at, pa };
+}
+
+/** PA bonus from Off-hand Fighting + Shield Fighting I/II (data/character/special_abilities.json). */
+const SHIELD_PAR_SA_BONUS: Record<string, number> = {
+  off_hand_fighting: 1,
+  shield_fighting_i: 2,
+  shield_fighting_ii: 2,
+};
+
+function shieldParrySaBonus(sheet: CharacterSheet): number {
+  const ids = new Set(sheet.specialAbilities.map((x) => x.id));
+  let s = 0;
+  for (const [saId, bonus] of Object.entries(SHIELD_PAR_SA_BONUS)) {
+    if (ids.has(saId)) s += bonus;
+  }
+  return s;
 }
 
 function armorIniSum(armors: SheetLoadoutArmor[]): number {
@@ -178,11 +226,53 @@ export function computeLoadoutWeaponLine(
   sheet: CharacterSheet,
   weapon: SheetLoadoutWeapon,
   armors: SheetLoadoutArmor[] | undefined,
-  weaponBiasContext: WeaponBiasRow[] = []
+  weaponBiasContext: WeaponBiasRow[] = [],
+  companionShieldMod?: { at: number; pa: number },
 ): LoadoutWeaponCombatLine {
   const list = armors ?? [];
   const totalEC = totalLoadoutEC(list);
-  const shield = sumShieldModifiers(list);
+  const shield =
+    companionShieldMod ?? sumShieldModifiers(list);
+
+  const notes: string[] = [];
+
+  /** Shield weapons: no Kampftechnik talent — parry = base PA + shield WM + Shield Fighting / Off-hand SA. */
+  if (isShieldLoadoutWeapon(weapon)) {
+    const ebeShield = parseEffectiveEncumbrance("EC", totalEC);
+    const splitShield = encumbranceSplitMelee(ebeShield);
+    const saPa = shieldParrySaBonus(sheet);
+    const baseAT = sheet.derived.baseAT;
+    const basePA = sheet.derived.basePA + saPa;
+    notes.push(
+      "Shield: parry uses base PA + shield WM + encumbrance + Off-hand Fighting / Shield Fighting SA (no combat talent TP).",
+    );
+
+    return {
+      weaponId: weapon.id,
+      weaponName: weapon.name,
+      kind: "melee",
+      combatTalentId: null,
+      totalEC,
+      ebe: ebeShield,
+      baseAT,
+      basePA,
+      weaponAT: weapon.atModifier,
+      weaponPA: weapon.paModifier,
+      shieldAT: 0,
+      shieldPA: 0,
+      encumbranceAT: splitShield.atPen,
+      encumbrancePA: splitShield.paPen,
+      finalAT: baseAT + weapon.atModifier - splitShield.atPen,
+      finalPA: basePA + weapon.paModifier - splitShield.paPen,
+      ini:
+        sheet.derived.baseINI +
+        armorIniSum(list) +
+        (typeof weapon.iniModifier === "number" ? weapon.iniModifier : 0),
+      damage: weapon.damage,
+      notes,
+    };
+  }
+
   const talentRaw = weapon.combatTalent ?? null;
   /** Sheet combat rows use canonical KT ids from the talent catalog. */
   const talentId = canonicalCombatTalentId(talentRaw);
@@ -191,9 +281,7 @@ export function computeLoadoutWeaponLine(
   const eec = def?.eec;
   const ebe = parseEffectiveEncumbrance(eec, totalEC);
   const meleeSplit = encumbranceSplitMelee(ebe);
-  const notes: string[] = [];
 
-  const tp = talentTp(sheet, talentId);
   const meleeRow = talentId
     ? sheet.combatMelee.find((r) => r.talentId === talentId)
     : undefined;
@@ -228,6 +316,7 @@ export function computeLoadoutWeaponLine(
     if (rangedRow) {
       baseAT = rangedRow.finalAT;
     } else {
+      const tp = talentTp(sheet, talentId);
       baseAT = sheet.derived.baseBRV + tp;
       if (tp <= 0) {
         notes.push("No ranged TP on sheet; FK base + 0 TP shown.");
@@ -240,6 +329,7 @@ export function computeLoadoutWeaponLine(
     encPA = 0;
     shieldAT = 0;
     shieldPA = 0;
+    const tp = talentTp(sheet, talentId);
     baseAT = sheet.derived.baseAT + tp;
     if (meleeRow) {
       notes.push("Jousting uses AT-only; sheet melee row ignored.");
@@ -320,8 +410,15 @@ export function computeAllLoadoutWeaponLines(
   loadout: SheetLoadout
 ): LoadoutWeaponCombatLine[] {
   const armors = loadout.armors;
-  const weaponBiasContext = loadoutWeaponsToBiasRows(loadout.weapons ?? []);
-  return (loadout.weapons ?? []).map((w) =>
-    computeLoadoutWeaponLine(sheet, w, armors, weaponBiasContext)
+  const allWeapons = loadout.weapons ?? [];
+  const weaponBiasContext = loadoutWeaponsToBiasRows(allWeapons);
+  return allWeapons.map((w) =>
+    computeLoadoutWeaponLine(
+      sheet,
+      w,
+      armors,
+      weaponBiasContext,
+      sumCompanionShieldModifiers(armors, allWeapons, w.id),
+    )
   );
 }

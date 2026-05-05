@@ -148,6 +148,8 @@ export interface SheetLoadoutWeapon {
   id: string;
   name: string;
   combatTalent: string | null;
+  /** Shields: parry uses Shield Fighting / Off-hand Fighting SAs, not a Kampftechnik talent. */
+  isShield?: boolean;
   damage?: string;
   atModifier: number;
   paModifier: number;

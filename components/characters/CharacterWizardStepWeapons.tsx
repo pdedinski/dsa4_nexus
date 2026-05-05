@@ -4,15 +4,33 @@ import { useEffect, useMemo, useState } from "react";
 import weaponsData from "@/data/equipment/weapons.json";
 import BodyPortal from "@/components/ui/BodyPortal";
 
+/** Matches loadoutCombatValues / weapons.json shield rows. */
+const SHIELD_WEAPON_IDS = new Set([
+  "buckler",
+  "small_shield",
+  "battle_shield",
+  "thorwaler_shield",
+  "great_shield",
+  "leather_shield",
+  "large_leather_shield",
+]);
+
 type WeaponRow = (typeof weaponsData.weapons)[number];
 
 function talentGroupKey(w: WeaponRow): string {
+  if (
+    ("is_shield" in w && (w as { is_shield?: boolean }).is_shield === true) ||
+    SHIELD_WEAPON_IDS.has(w.id)
+  ) {
+    return "shield";
+  }
   const t = w.combat_talent;
   return t && String(t).trim() ? String(t).trim() : "_other";
 }
 
 function talentLabel(key: string) {
   if (key === "_other") return "Other";
+  if (key === "shield") return "Shields (Shield Fighting)";
   return key.replace(/_/g, " ");
 }
 
