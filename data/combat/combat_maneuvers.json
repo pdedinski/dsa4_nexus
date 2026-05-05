@@ -1,11 +1,14 @@
 {
   "meta": {
     "schema_version": "1.0",
-    "last_updated": "2026-05-03",
-    "description": "Combat actions and maneuvers for TDE4/DSA4.1. Maneuvers listed on the TDE4e wiki have detailed formatted descriptions adapted from the wiki page; non-matching entries are preserved.",
+    "last_updated": "2026-05-05",
+    "description": "Combat actions, defense actions, free actions, maneuvers, and special combat situations for TDE4/DSA4.1. Entries that were previously extracted from the TDE4e wiki fandom page are intentionally left untouched. Non-wiki entries and newly added entries are enriched in English from Wege des Schwerts.",
     "source_books": [
       "DSA 4.1 Basisregelwerk p. 99–108",
-      "wiki: https://tde4e.fandom.com/wiki/Combat_Actions_and_Maneuvers"
+      "wiki: https://tde4e.fandom.com/wiki/Combat_Actions_and_Maneuvers",
+      "Wege des Schwerts p. 58–72: Kampfaktionen und Manöver",
+      "Wege des Schwerts p. 78–86: optionale Kampfregeln / special combat situations",
+      "Wege des Schwerts p. 100–107: mounted combat and related rules"
     ]
   },
   "the_call_rules": {
@@ -27,8 +30,8 @@
         "all_melee",
         "all_ranged"
       ],
-      "description": "A normal attack against a single opponent. Success is determined by a roll against the attacker's Attack Value on a D20.",
-      "source": "BRW p. 99",
+      "description": "Attack Action.\n\nA standard attack is the basic offensive combat action. The attacker uses the opening offered by the opponent to strike or thrust without trying to create a special additional effect.\n\nResolution:\n- Roll 1d20 against the attacker's Attack Value, modified only by the situation, weapon, distance class, lighting, position, and similar ordinary modifiers.\n- If the Attack succeeds, the defender must use a valid defense action such as Parry, shield parry, parrying-weapon parry, or Dodge.\n- If the defender's defense fails or is unavailable, the target is hit and damage is resolved normally.\n- If the Attack fails, it does not necessarily mean the blow visibly misses; it may have been delayed, poorly placed, deflected by clothing or armor, or otherwise harmless.\n\nLimits:\n- A normal attack has no Call and creates no additional wound, knockdown, disarm, or positioning effect by itself.\n- Special attack maneuvers replace or modify this basic action.",
+      "source": "WdS p. 58",
       "wiki_matched": false
     },
     {
@@ -406,6 +409,83 @@
       "source": "wiki: https://tde4e.fandom.com/wiki/Combat_Actions_and_Maneuvers",
       "wiki_matched": true,
       "format": "plain_text_paragraphs_and_bullets"
+    },
+    {
+      "id": "assault",
+      "name": "Assault",
+      "german_name": "Ausfall",
+      "type": "attack_maneuver",
+      "base_modifier": "AT +4 to initiate; continued attacks convert defense actions without normal conversion penalty",
+      "requires_sa": true,
+      "sa_requirement": "assault",
+      "compatible_talents": [
+        "bastard_swords",
+        "daggers",
+        "fencing_weapons",
+        "chain_staves",
+        "sabers",
+        "swords",
+        "spears",
+        "staves"
+      ],
+      "source": "WdS p. 58–59",
+      "description": "Attack Maneuver +4 to initiate.\n\nAssault is an aggressive sequence of attacks meant to force the opponent into pure defense. The attacker presses forward with repeated blows or thrusts, trying to keep the defender retreating until a decisive attack, Feint, or similar maneuver creates the opening.\n\nRequirements:\n- Requires the Assault Special Ability.\n- Usable with Bastard Swords, Daggers, Fencing Weapons, Chain Staves, Sabers, Swords, Spears, and Staves.\n- Both fighters must be in a suitable distance class; the attacker normally begins from the weapon's ideal distance.\n\nResolution:\n- The first Attack is penalized by +4, plus all other normal modifiers.\n- If it succeeds, the defender is forced into defense and can no longer make normal attacks while the Assault continues.\n- Each round the attacker converts the defense action into another attack without the usual conversion penalty.\n- Each attack is combined with a Free Action Step forward.\n- The defender is likewise forced to convert their own attacks into defenses and to step back, also without the normal conversion penalty unless their weapon normally forbids conversion; in that case the defender suffers +4.\n- The defender retreats even if the attacker's actual Attack roll fails, as long as the Assault sequence remains in effect according to the maneuver rules.\n\nAllowed follow-up maneuvers:\n- Wuchtschlag/Called Attack and Feint are generally possible during an Assault.\n- More complex maneuvers depend on the listed maneuver permissions and GM adjudication.\n\nEnding the Assault:\n- It can end when the attacker fails in a way that breaks the pressure, when the defender successfully uses a permitted countermeasure such as Targeted Dodge, when distance or terrain prevents further pressing, or when another listed condition in the combat rules applies."
+    },
+    {
+      "id": "disarm_attack",
+      "name": "Disarm",
+      "german_name": "Entwaffnen",
+      "type": "attack_maneuver",
+      "base_modifier": "AT +8 + optional Call; no damage",
+      "requires_sa": true,
+      "sa_requirement": "disarm",
+      "compatible_talents": [
+        "bastard_swords",
+        "fencing_weapons",
+        "infantry_weapons",
+        "chain_staves",
+        "whips",
+        "sabers",
+        "swords",
+        "spears",
+        "staves",
+        "two_handed_swords_with_half_sword"
+      ],
+      "source": "WdS p. 61–62",
+      "description": "Attack Maneuver +8 + Call.\n\nDisarm is a special attack aimed at the opponent's weapon arm, grip, or an exposed part of the weapon. It tries to knock, twist, or tear the weapon from the opponent's hand without causing damage.\n\nRequirements:\n- Requires Feint and Disarm.\n- The attacker may not carry a shield because many disarming techniques need the second hand.\n- Usable with Bastard Swords, Fencing Weapons, Infantry Weapons, Chain Staves, Whips, Sabers, Swords, Spears, Staves, and Two-Handed Swords/Sabers when using Half-Sword.\n- Fencing Weapons can disarm only other Fencing Weapons or Daggers.\n\nResolution:\n- Make an Attack +8.\n- If the defender's Parry fails, the defender may still keep the weapon by succeeding at a Strength test +8.\n- Against a fighter with Masterful Disarm, the Strength test is +10.\n- The target suffers no damage from the maneuver.\n\nModifiers and combinations:\n- A combat staff eases the Disarm attack by 2.\n- A chain staff or two-lilies weapon eases it by 4.\n- The maneuver can be combined with Feint by adding a voluntary Call.\n- The voluntary Call can penalize the defender's Parry and/or the later Strength test.\n- Bonus points from Master Parry or Bind can be used if the maneuver allows them.\n\nTwo-handed weapons:\n- Disarming a target using a two-handed weapon, except Bastard Swords, requires Masterful Disarm.\n- Sabers cannot be used for this special case."
+    },
+    {
+      "id": "pin_down",
+      "name": "Pin Down",
+      "german_name": "Festnageln",
+      "type": "attack_maneuver",
+      "base_modifier": "AT +4 + optional Call; consumes defense action",
+      "requires_sa": true,
+      "sa_requirement": "pin_down",
+      "compatible_talents": [
+        "spears",
+        "infantry_weapons"
+      ],
+      "source": "WdS p. 62–63",
+      "description": "Attack Maneuver +4 + Call; consumes the defense action.\n\nPin Down uses a straight-bladed polearm with a crosspiece or similar stop to pierce and lever the victim, drag them down, and hold them on the ground while their strength fades. It is especially associated with big-game hunting and is brutal but effective against oversized dangerous enemies.\n\nRequirements:\n- Requires the Pin Down Special Ability.\n- Usable only with suitable polearms such as trident, Efferdbart, elven hunting spear, hunting spear, boar spear, partisan, thrusting spear, and wurm spear.\n\nResolution:\n- The attacker makes Attack +4 and may add a voluntary Call.\n- If the attack succeeds, the weapon deals normal weapon damage, not increased by the voluntary Call.\n- A comparative Agility test determines whether the weapon stays set for the maneuver.\n- If the defender wins the Agility comparison, they free themselves but suffer an additional one-time 1d6 damage points.\n- If the attacker wins, a comparative Strength test follows to see whether the victim is thrown down.\n- The attacker receives a point pool equal to twice the voluntary Call to improve these comparison results.\n\nIf the attacker wins the Strength comparison:\n- The victim is prone and held by the attacker.\n- In the following combat rounds the weapon automatically deals its damage again, without Calls and without TP/ST.\n- Each round a new comparative Strength test is made; the victim is penalized by +2.\n- Remaining points from the original pool may still be used.\n\nMultiple attackers:\n- Several attackers can delay actions to Pin Down in the same Initiative phase.\n- Each additional successful attacker eases the comparative tests by 2.\n- The comparisons are still resolved separately for each attacker.\n\nAlready prone or held targets:\n- If the victim is already prone, no comparative Agility test is needed; only Strength is compared.\n- If the victim is already held down by another fighter, no comparison is needed and the Pin Down attack is not penalized.\n\nRestrictions:\n- While holding the victim, the attacker can do nothing else but spend actions maintaining the hold.\n- The victim can do nothing except spend actions trying to shake off the attacker."
+    },
+    {
+      "id": "trip",
+      "name": "Trip",
+      "german_name": "Umreißen",
+      "type": "attack_maneuver",
+      "base_modifier": "AT +4 + optional Call; no increased damage",
+      "requires_sa": true,
+      "sa_requirement": "trip",
+      "compatible_talents": [
+        "chain_staves",
+        "chain_weapons",
+        "whips",
+        "spears",
+        "staves"
+      ],
+      "source": "WdS p. 65",
+      "description": "Attack Maneuver +4 + Call.\n\nTrip is used to tear an opponent off balance with a hook, shaft, chain, whip, or similar weapon action. Unlike a pure force-based Knockdown, it relies more on leverage and destabilization than raw damage.\n\nRequirements:\n- Requires the Trip Special Ability.\n- Usually used with weapons suited to hooking, sweeping, or pulling, such as Chain Staves, Chain Weapons, Whips, Spears, and Staves, depending on the weapon list and GM ruling.\n\nResolution:\n- The attacker makes an Attack +4 and may add a voluntary Call.\n- If the attack succeeds and is not parried, the target suffers the normal weapon effect and must resist being pulled or thrown down.\n- The voluntary Call does not increase damage; it penalizes the target's resistance test.\n- On failure, the target falls prone and suffers the normal penalties for prone fighters.\n\nNotes:\n- The maneuver is less useful against creatures that cannot reasonably be tripped because of size, many legs, amorphous anatomy, flight, or supernatural stability.\n- The GM should adjust or forbid it against animals, demons, undead, and very large monsters when their body shape makes the maneuver implausible."
     }
   ],
   "defense_actions": [
@@ -414,32 +494,35 @@
       "name": "Parry",
       "german_name": "Parade",
       "type": "defense_action",
-      "description": "A defensive action using the hero's Parry Value (PA). The defender rolls a D20 against their PA value. Success means the attack is deflected. The PA value for a combat talent is Base PA + allocated PA points from the talent's TP split.",
-      "source": "BRW p. 99"
+      "description": "Defense Action.\n\nA standard Parry is the basic way to defend against a melee attack with the fighter's own weapon. It represents blocking, redirecting, letting a blow slide off the weapon, and using body movement and counter-threats to keep the attacker at a safe distance.\n\nResolution:\n- The defender must choose the defense type before rolling.\n- Roll 1d20 against the relevant Parry Value, modified by weapon, shield, distance class, situation, wounds, encumbrance, and maneuver penalties.\n- If the Parry succeeds, the attack is deflected and causes no damage.\n- If the Parry fails, the attack hits and damage is resolved normally.\n- A roll of 1 may be a lucky parry, with possible additional effects depending on the optional critical/parry rules.\n\nRestrictions and notes:\n- Some attacks or situations may forbid Parry, require a different defense, or add special modifiers.\n- The defender cannot wait to see the result and then change to a different defense type.\n- Shields and parrying weapons use their own detailed rules when chosen instead of a weapon Parry.",
+      "source": "WdS p. 66"
     },
     {
       "id": "dodge",
       "name": "Dodge",
       "german_name": "Ausweichen",
       "type": "defense_action",
-      "description": "An alternative defensive action. When a hero uses Dodge instead of Parry, they try to avoid the blow entirely. Specific rules and SA requirements vary (see Special Abilities: Dodge I / II). A Targeted Dodge allows evading multiple simultaneous attacks (e.g., from a Double Attack).",
-      "source": "BRW p. 99"
+      "ordinary_dodge_type": "free_defense_action",
+      "targeted_dodge_type": "standard_defense_action",
+      "description": "Defense Action / Free Defense Action.\n\nDodge means getting out of the reach of an incoming attack instead of stopping it with a weapon or shield. Wege des Schwerts distinguishes ordinary Dodge from Targeted Dodge.\n\nOrdinary Dodge:\n- Ordinary Dodge is a Free defense action.\n- On success, the defender completely avoids the attack.\n- Against several opponents, it avoids only one attack; the defender may still be threatened by other attacks.\n- The defender becomes somewhat disoriented: Initiative is reduced by 4.\n- The defender must spend an Action Position before actively rejoining the fight; until then, they can only continue dodging.\n- On failure, the defender is hit and also loses 4 Initiative.\n\nTargeted Dodge:\n- Targeted Dodge is a standard defense action, comparable to Parry.\n- The dodge test uses double the distance-class penalty, plus the normal values of other modifiers.\n- On success, the defender avoids the attack completely and can continue fighting normally.\n- Against several opponents, it still avoids only one attack unless a specific rule says otherwise.\n- On failure, the defender is hit as after a failed Parry and loses 2 Initiative.\n- Targeted Dodge can be used with a voluntary Call; on success this functions like a Master Parry, while failure has the normal failed Call consequences.\n- Targeted Dodge can end an opponent's Ausfall/Assault.\n\nTypical dodge modifiers:\n- Distance Class Handgemenge: +4.\n- Distance Class Nahkampf: +2.\n- Distance Class Stangenwaffe: +1.\n- Distance Class Pike: +0.\n- Targeted Dodge: distance-class modifier is doubled.\n- Each additional opponent: +2.\n- Surrounded by 4 or more opponents: impossible.\n- Encumbrance: +EC.\n- Dodge I / II / III Special Abilities reduce the penalty by 3 / 6 / 9.\n- Athletics Talent Prowess can reduce the penalty: every 3 TP above 9 gives -1.",
+      "source": "WdS p. 66–67"
     },
     {
       "id": "master_parry",
       "name": "Master Parry",
       "german_name": "Meisterparry",
       "type": "defense_action",
-      "description": "An exceptionally successful Parry (typically rolling considerably under the PA value). Grants bonus points that can be added to the hero's next AT or used to power certain maneuvers like Feint or Bind. Exact thresholds for a Master Parry depend on the rulebook table.",
-      "source": "BRW p. 100"
+      "description": "Defense Maneuver + Call.\n\nMaster Parry is an improved Parry in which the defender deliberately makes the defense harder in order to gain an advantage for the next action.\n\nDeclaration:\n- Before rolling the Parry, the defender declares a voluntary Call.\n- The Call may not exceed the fighter's Talent Prowess with the weapon and may not exceed the Parry Value used.\n- The maneuver requires the Master Parry Special Ability.\n\nEffect on success:\n- The Parry stops the attack normally.\n- The declared Call becomes bonus points for the defender's next Attack or for certain follow-up maneuvers that explicitly allow these points.\n- The bonus may be used, for example, to ease the defender's next attack, to support a Feint, or to power compatible maneuver effects.\n- The exact follow-up must still obey the rules of the selected maneuver and weapon.\n\nEffect on failure:\n- The attack hits normally.\n- The defender suffers the normal failed Call penalty: all tests until the next Attack or Parry action are penalized by the full declared Call.\n\nNotes:\n- A Master Parry is still a defense action and requires an incoming attack.\n- Some defensive forms, such as certain shield or parrying-weapon options, restrict whether Master Parry may be used.",
+      "source": "WdS p. 67"
     },
     {
       "id": "bind",
       "name": "Bind",
       "german_name": "Binden",
       "type": "defense_action",
-      "description": "A binding maneuver after a Parry that locks weapons together, granting bonus points usable for subsequent maneuvers (Feint, etc.). Details and prerequisites referenced in BRW combat chapter.",
-      "source": "BRW p. 101"
+      "base_modifier": "PA +4 or opponent Call, whichever is higher; optional extra Call possible with Master Parry",
+      "description": "Defense Maneuver +4.\n\nBind is a central fencing maneuver. The defender catches and maintains contact with the opponent's weapon, using strength and technique to control the weapon line. This improves the defender's next attack while making the opponent's next reaction worse.\n\nRequirements:\n- Requires the Bind Special Ability.\n- Also requires either Master Parry or Parrying Weapons I, depending on how the bind is performed.\n- Can be used with Bastard Swords, Daggers, Fencing Weapons, Infantry Weapons, Chain Staves, Sabers, Swords, Spears, Staves, and parrying weapons.\n- It cannot bind Axes and Maces, Chain Staves, Chain Weapons, Whips, Two-Handed Flails, Two-Handed Blunt Weapons, or Two-Handed Swords/Sabers.\n- It can be used against shield fighters, but it binds only one weapon or shield-line; a second weapon or parrying weapon remains free.\n\nResolution:\n- The defender makes a Parry +4.\n- If the incoming attack has a Call higher than 4, the Bind Parry is instead penalized by that higher Call.\n- If the defender binds with the main weapon and has Master Parry, they may add a voluntary Call.\n- If the defender binds with a parrying weapon and Parrying Weapons I, the fixed penalty usually counts as the Call without further increasing the roll.\n- If the defender has both methods and uses both weapons together, the fixed penalty and voluntary Call add together into one total Call.\n\nEffect on success:\n- The defender controls and obstructs the enemy weapon.\n- The defender's next Attack is eased by the total Call.\n- The opponent's following reaction against that attack is penalized by the same total Call.\n- These points can combine with a follow-up Feint or other compatible maneuver.\n\nEffect on failure:\n- The incoming attack is not parried.\n- The defender suffers the normal failed Call penalty.",
+      "source": "WdS p. 67–68"
     },
     {
       "id": "counter",
@@ -454,8 +537,164 @@
       "name": "Foresight",
       "german_name": "Vorahnung",
       "type": "defense_action",
-      "description": "Allows the hero to convert a Parry into two separate Parry actions in advance, enabling defense against a Double Attack. Requires the Foresight SA.",
-      "source": "BRW p. 101"
+      "description": "Defense Option.\n\nForesight represents preparing defensive timing early enough to answer multiple incoming blows, especially attacks that would otherwise arrive too close together.\n\nUse:\n- The fighter converts their available defensive planning into multiple separate defense opportunities before the attacks are resolved.\n- This is especially relevant against simultaneous or near-simultaneous attacks such as Double Attack.\n- The defender must have the appropriate Special Ability and must declare the conversion in time, before the relevant attacks are resolved.\n\nEffect:\n- The fighter may defend with two separate Parries instead of being limited to a single ordinary defense.\n- Each Parry is resolved separately against one incoming attack.\n- The usual limits for converted actions, available actions, distance, weapon restrictions, and maneuver restrictions still apply.\n\nNotes:\n- Foresight does not by itself grant unlimited defenses.\n- It is a planning and timing tool, not a damage-reduction rule.\n- Other rules such as Defensive Combat Style, Blade Wall, extra parrying-weapon parries, or shield-parry options may provide different ways to handle multiple attacks.",
+      "source": "WdS p. 68 / p. 75"
+    },
+    {
+      "id": "defensive_combat_style",
+      "name": "Defensive Combat Style",
+      "german_name": "Defensiver Kampfstil",
+      "type": "defense_maneuver",
+      "base_modifier": "no normal conversion penalty when converting Attack to Parry",
+      "requires_sa": true,
+      "sa_requirement": "defensive_combat_style",
+      "compatible_talents": [
+        "all_melee_except_chain_weapons_and_two_handed_flails"
+      ],
+      "source": "WdS p. 68",
+      "description": "Defense Maneuver.\n\nDefensive Combat Style is used when survival is more important than attacking, for example while waiting for help, buying time, or facing a foe the fighter cannot currently hurt.\n\nRequirements:\n- Requires the Defensive Combat Style Special Ability.\n- Usable with all armed melee talents except Chain Weapons and Two-Handed Flails.\n- Must be declared at the beginning of the combat round.\n\nEffect:\n- The fighter makes no own attacks and concentrates on defense.\n- The fighter may convert the Attack action into a Parry without the normal conversion penalty.\n- This allows two regular defenses in the round: two Parries, two Targeted Dodges, or one of each, subject to normal limits.\n- Each defense still applies only against one incoming attack; a Double Attack counts as two attacks.\n- The first of the two Parries may be a Master Parry if otherwise legal.\n- Dodge maneuvers used to disengage from an opponent are eased by 2.\n\nExtra actions:\n- An additional defense action from a shield or off-hand weapon can still be used normally.\n- An additional attack from an off-hand weapon is lost and cannot be converted."
+    },
+    {
+      "id": "disarm_parry",
+      "name": "Disarm from Parry",
+      "german_name": "Entwaffnen / Meisterliches Entwaffnen",
+      "type": "defense_maneuver",
+      "base_modifier": "PA +8 + optional Call",
+      "requires_sa": true,
+      "sa_requirement": "disarm_and_master_parry_or_parrying_weapons_i",
+      "compatible_talents": [
+        "bastard_swords",
+        "fencing_weapons",
+        "infantry_weapons",
+        "chain_staves",
+        "sabers",
+        "swords",
+        "spears",
+        "staves",
+        "two_handed_swords_with_half_sword",
+        "selected_parrying_weapons"
+      ],
+      "source": "WdS p. 68–69",
+      "description": "Defense Maneuver +8 + Call.\n\nDisarm from Parry is a Master Parry variant. The defender stops the incoming blow and simultaneously attempts to knock or wrench the attacker's weapon from their hand.\n\nRequirements:\n- Requires Disarm plus either Master Parry or Parrying Weapons I, depending on the method.\n- The defender may not carry a shield because many disarming techniques require the second hand.\n- Usable with Bastard Swords, Fencing Weapons, Infantry Weapons, Chain Staves, Sabers, Swords, Spears, Staves, and Two-Handed Swords/Sabers with Half-Sword.\n- Fencing Weapons can be used only against other Fencing Weapons or Daggers.\n- Parrying weapons such as buckler, hook dagger, left-hand dagger, or suitable dragon claw can also be used with Parrying Weapons I.\n\nResolution:\n- The defender rolls Parry +8.\n- If successful, the attacker may keep the weapon with a Strength test +8.\n- Against Masterful Disarm, the Strength test is +10.\n- If the defender added a voluntary Call, that Call further penalizes the attacker's Strength test.\n\nParrying weapon modifiers:\n- Buckler, hook dagger, left-hand dagger, or suitable dragon claw ease the maneuver by 2.\n\nTwo-handed weapons:\n- Disarming a two-handed weapon, except Bastard Swords, requires Masterful Disarm.\n- Sabers cannot be used for that case.\n- Among parrying weapons, only buckler and hook dagger can be used for that case."
+    },
+    {
+      "id": "formation_parry",
+      "name": "Formation Parry",
+      "german_name": "Formation",
+      "type": "defense_maneuver",
+      "base_modifier": "special; formation members may parry for adjacent allies",
+      "requires_sa": true,
+      "sa_requirement": "formation",
+      "compatible_talents": [
+        "infantry_weapons",
+        "spears",
+        "two_handed_swords",
+        "shields"
+      ],
+      "source": "WdS p. 69–70",
+      "description": "Defense Maneuver.\n\nFormation allows a trained group standing shoulder to shoulder with similar weapons to act as a defensive unit. With one-handed weapons and shields this is often a shield wall.\n\nRequirements:\n- All participating fighters must know Formation.\n- Usable with Infantry Weapons, Spears, Two-Handed Swords/Sabers, and Shields.\n- The fighters must actually stand in formation, normally adjacent to one another.\n- Entering formation when already next to each other requires an Action Position.\n\nEffect:\n- A formation member can parry an attack aimed at themselves, the ally to the left, or the ally to the right.\n- The defender must declare whether they will attempt to parry after a successful attack against themselves or a neighbor.\n- This consumes the defender's defense action for the round whether or not the Parry is later needed and whether or not it succeeds.\n- Declarations and Parries are handled in Initiative order; if the first Parry fails, another formation member may still attempt theirs.\n- A single attack may therefore have to pass through up to three Parries.\n\nMaster Parry and counterattack:\n- If the weapon allows it, the formation Parry may also be a Master Parry.\n- Bonus points from such a Call may be used by neighbors in the formation for the current defense or a subsequent counterattack.\n- Permitted counterattack maneuvers include Wuchtschlag/Called Attack, Knockdown, and Targeted Thrust.\n\nPolearms:\n- With Spears and Infantry Weapons at least two paces long, a formation member may use Counter instead of Parry, even if they have not learned Counter.\n- This can also apply against mounted attacks.\n\nRestrictions:\n- Formation members may not use maneuvers other than those explicitly allowed.\n- They attack together at the Initiative phase of the slowest participant.\n- Fighting in formation can still be affected by outnumbering, distance-class, and terrain rules.\n- Two Blade Dancers who also know Formation may use it as a pair instead of needing at least three fighters."
+    },
+    {
+      "id": "split_parry",
+      "name": "Split Parry",
+      "german_name": "Klingenwand",
+      "type": "defense_maneuver",
+      "base_modifier": "split PA into two Parries, each PA/2 +2; declare at start of round",
+      "requires_sa": true,
+      "sa_requirement": "blade_wall",
+      "compatible_talents": [
+        "bastard_swords",
+        "daggers",
+        "fencing_weapons",
+        "infantry_weapons",
+        "sabers",
+        "swords",
+        "spears",
+        "staves"
+      ],
+      "source": "WdS p. 70",
+      "description": "Defense Maneuver.\n\nBlade Wall splits one Parry into two separate Parries, allowing a defender to answer two attacks in one round with fast weapon work.\n\nRequirements:\n- Requires the Blade Wall Special Ability.\n- The weapon and talent must allow the maneuver.\n- The fighter must be mobile enough and may not be using an incompatible shield or extra-action option.\n\nResolution:\n- The fighter declares the split at the beginning of the combat round.\n- The defender makes two Parries instead of one.\n- Each Parry normally uses half the Parry Value plus 2.\n- The two Parries are resolved separately and can be used against different attacks.\n\nRestrictions:\n- The split Parries normally cannot carry additional Calls such as Master Parry unless a specific rule allows it.\n- They cannot be freely combined with every other extra defense source.\n- Failed Calls and fumbles affect the maneuver according to the normal rules for failed maneuvers and combat fumbles.\n\nNotes:\n- Blade Wall is the defensive counterpart to Blade Storm.\n- It is especially useful against Double Attack, multiple enemies, or enemies with extra attacks."
+    },
+    {
+      "id": "parry_with_shield",
+      "name": "Parry with Shield",
+      "german_name": "Parade mit dem Schild",
+      "type": "defense_action",
+      "base_modifier": "uses shield PA value and shield modifiers",
+      "requires_sa": false,
+      "sa_requirement": null,
+      "compatible_talents": [
+        "shields"
+      ],
+      "source": "WdS p. 70–71",
+      "description": "Defense Action.\n\nA shield is used to block or deflect an incoming blow. It does not count as armor rating, even though it physically covers parts of the body.\n\nUse:\n- The fighter attacks with the weapon in the main hand but usually defends with the shield.\n- The shield's Parry Value and weapon modifier are used for the defense rather than the main weapon's Parry Value.\n- Optional Break Factor rules are especially important for shields, because shields can be damaged or destroyed by heavy impacts.\n\nRestrictions:\n- Some maneuvers are limited or forbidden while using a shield.\n- Without Shield Combat II, many advanced defensive maneuvers such as Master Parry are not available with shields.\n- Chain staves, Chain Weapons, and Whips can deny the shield's Parry weapon modifier, making shield defense worse against those weapons.\n\nNotes:\n- Shield defense is strong against ordinary blows but less flexible than weapon or parrying-weapon fencing.\n- Some shields also count as parrying weapons and follow special exceptions."
+    },
+    {
+      "id": "weapon_breaker",
+      "name": "Weapon Breaker",
+      "german_name": "Waffe zerbrechen",
+      "type": "defense_maneuver",
+      "base_modifier": "PA +8 + optional Call, then Strength test modified by weapon type and Break Factor",
+      "requires_sa": true,
+      "sa_requirement": "weapon_breaker_and_parrying_weapons_i",
+      "compatible_talents": [
+        "selected_parrying_weapons",
+        "daggers"
+      ],
+      "source": "WdS p. 71–72",
+      "description": "Defense Maneuver +8 + Call.\n\nWeapon Breaker catches an incoming blade in the device of a hook dagger, left-hand dagger, dragon claw, or similar weapon and then breaks it with a forceful twist.\n\nRequirements:\n- Requires Weapon Breaker and Parrying Weapons I.\n- Usable with hook dagger, suitably equipped left-hand daggers, dragon claws, or similar weapons.\n- Works only against bladed weapons.\n- The weapon used for breaking is usually held as a parrying weapon in the off-hand, but it can also be the main weapon.\n\nResolution:\n- The defender makes a Parry +8 with any voluntary Call.\n- If the Parry succeeds, the defender makes a Strength test.\n- The Strength test is modified by the type of enemy blade and eased by the target weapon's Break Factor.\n- If both tests succeed, the blade breaks and the opponent is left with only the grip or a useless remnant.\n\nOpponent's choice:\n- Once the opponent realizes what is happening, they may drop the weapon after the successful Parry but before the Strength test.\n- In that case the opponent counts as disarmed, but the weapon is not broken.\n\nTypical Strength-test modifiers:\n- Longer Fencing Weapons: +4.\n- Other one-handed bladed weapons, including daggers: +6.\n- Two-handed bladed weapons: +10.\n- Subtract the weapon's Break Factor."
+    },
+    {
+      "id": "windmill",
+      "name": "Windmill",
+      "german_name": "Windmühle",
+      "type": "defense_maneuver",
+      "base_modifier": "PA penalty equal to incoming maneuver penalty and Call, minimum +8; successful Parry becomes Wuchtschlag counterattack",
+      "requires_sa": true,
+      "sa_requirement": "windmill",
+      "compatible_talents": [
+        "bastard_swords",
+        "axes_and_maces",
+        "infantry_weapons",
+        "chain_staves",
+        "chain_weapons",
+        "sabers",
+        "swords",
+        "staves",
+        "two_handed_flails",
+        "two_handed_blunt",
+        "two_handed_swords"
+      ],
+      "source": "WdS p. 72",
+      "description": "Defense Maneuver +8 or more.\n\nWindmill is a risky maneuver that catches the force of a heavy incoming blow, carries it through a circular motion, and redirects it into an even stronger counterattack.\n\nRequirements:\n- Requires the Windmill Special Ability.\n- Usable with Bastard Swords, Axes and Maces, Infantry Weapons, Chain Staves, Chain Weapons, Sabers, Swords, Staves, Two-Handed Flails, Two-Handed Blunt Weapons, and Two-Handed Swords/Sabers.\n- A fighter using a large or very large shield cannot declare Windmill.\n- The fighter must be attacked by a Wuchtschlag/Called Attack, Charge, Hammer Strike, or Cleave Attack.\n\nResolution:\n- Windmill is performed in place of a defense action, but no conversion is required.\n- It occurs in the attacker's Initiative phase.\n- The defender makes a Parry with a penalty equal to the incoming maneuver's base penalty plus the attacker's voluntary Call, minimum +8.\n- The required repositioning consumes a Free Action Step.\n\nEffect on success:\n- The Parry also counts as a successful Wuchtschlag/Called Attack by the defender.\n- The counterattack uses a Call equal to the full penalty the defender accepted.\n- The original attacker suffers a Parry penalty equal to their own original Call, as if their attack maneuver had failed.\n\nEffect on failure:\n- The defender takes full damage from the incoming attack.\n- The defender also suffers the normal failed Call penalty on the next action.\n\nRestrictions:\n- Converted defense actions, partial Parries from Blade Wall, Parries with parrying weapons, and Parries from two-weapon options cannot be Windmills.\n- Because it is still a Parry in principle, Break Tests for high-Call heavy attacks can apply."
+    },
+    {
+      "id": "second_parrying_weapon_parry",
+      "name": "Second Parrying-Weapon Parry",
+      "german_name": "Zweite Parierwaffen-Parade",
+      "type": "defense_action",
+      "base_modifier": "additional Parry once per combat round",
+      "requires_sa": true,
+      "sa_requirement": "parrying_weapons_ii",
+      "compatible_talents": [
+        "parrying_weapons"
+      ],
+      "source": "WdS p. 72",
+      "description": "Defense Action.\n\nA fighter with Parrying Weapons II may use the parrying weapon in the off-hand for one additional Parry per combat round.\n\nRules:\n- The additional Parry cannot include further maneuvers.\n- It cannot be used in the same combat round as Death from the Left with the parrying weapon.\n- The fighter may still convert the main weapon's Attack action into a defense action under the normal conversion rules, allowing up to three Parries in a round.\n- The use of two parrying-weapon Parries must be declared at the beginning of the combat round.\n- Improvised parrying weapons do not grant this second Parry."
+    },
+    {
+      "id": "second_shield_parry",
+      "name": "Second Shield Parry",
+      "german_name": "Zweite Schildparade",
+      "type": "defense_action",
+      "base_modifier": "additional ordinary shield Parry once per combat round",
+      "requires_sa": true,
+      "sa_requirement": "shield_combat_ii",
+      "compatible_talents": [
+        "shields"
+      ],
+      "source": "WdS p. 72",
+      "description": "Defense Action.\n\nA skilled shield fighter can position the shield to block two attacks in the same combat round, whether the attacks come from one enemy or several and even when they arrive almost simultaneously.\n\nRequirements:\n- Requires Shield Combat II.\n- Uses a shield in the off-hand, except tower shields.\n- The fighter must be sufficiently mobile and may have at most EC 4.\n\nRules:\n- If the fighter chooses two shield Parries, neither may be split, converted, or given a Call such as Master Parry.\n- Both are ordinary shield Parries.\n- The fighter may still convert the weapon Attack action into a defense action using the normal rules, allowing up to three Parries in a round.\n- The use of two shield Parries must be declared at the beginning of the combat round."
     }
   ],
   "free_actions": [
@@ -473,8 +712,8 @@
       "name": "Draw Weapon",
       "german_name": "Waffe ziehen",
       "type": "free_action",
-      "description": "Drawing a melee weapon normally requires one action. Quick Draw SA reduces this.",
-      "source": "BRW p. 99"
+      "description": "Free Action / Action depending on situation.\n\nDrawing a weapon means readying a weapon that is carried on the body. The exact time depends on how accessible the weapon is and whether the fighter has trained for quick weapon handling.\n\nTypical handling:\n- Drawing a normally worn, accessible melee weapon is often handled as a short action in combat.\n- If the weapon is awkwardly stored, tied down, hidden, very large, or hard to bring into line, the GM may require a full action or more.\n- Drawing while prone, kneeling, grappled, in cramped surroundings, or under poor visibility can be harder or impossible at the GM's discretion.\n- Quick Draw and similar Special Abilities can reduce the required time.\n\nCombat importance:\n- A fighter without a ready weapon may be unable to Parry with it.\n- Drawing a weapon at the wrong moment can provoke tactical disadvantages, especially if the enemy controls the distance.\n- Changing weapons is usually slower than simply continuing with the weapon already in hand.",
+      "source": "WdS p. 54 / p. 72"
     }
   ],
   "special_situations": [
@@ -482,43 +721,43 @@
       "id": "fighting_multiple_opponents",
       "name": "Fighting Multiple Opponents",
       "german_name": "Kampf gegen mehrere Gegner",
-      "description": "When a hero is attacked by multiple opponents, the rules for multi-opponent combat apply. Specific AT/PA penalties and the restriction that focus cannot be placed on only one opponent are detailed in the combat chapter. Blade Storm requires these rules to be applied.",
-      "source": "BRW p. 106"
+      "description": "Special Combat Situation.\n\nWhen several opponents fight one target, the single fighter cannot fully concentrate on only one enemy. Multiple-opponent rules apply to attacks, defenses, and maneuvers such as Blade Storm, Cleave Attack, Formation, Dodge, and Targeted Dodge.\n\nCore effects:\n- Additional opponents can penalize defenses; a common modifier is +1 to Parry per additional opponent, up to +2.\n- Friends outnumbering the enemy can ease attacks by 1 in suitable situations.\n- Ordinary Dodge or Targeted Dodge usually avoids only one attack; other attackers may still threaten the defender.\n- Some maneuvers explicitly use the multiple-opponent rules and forbid focusing all attention on one target.\n\nTactical notes:\n- Being surrounded by four or more opponents can make Dodge impossible.\n- Formations and shields can partially compensate by letting allies protect one another.\n- The GM should apply positioning, facing, terrain, weapon reach, and available space rather than treating all enemies as automatically able to attack at once.",
+      "source": "WdS p. 59–60 / p. 78–80"
     },
     {
       "id": "fumble",
       "name": "Fumble",
       "german_name": "Patzer",
-      "description": "A catastrophically bad roll (typically rolling the maximum on a D20 for AT or PA). Results in a severe combat disadvantage determined by the fumble table. In Double Attack, a fumble on one partial attack causes the other to automatically fail. A fumble result typically causes an INI penalty.",
-      "source": "BRW p. 100"
+      "description": "Special Combat Situation.\n\nA combat fumble is a disastrous attack or defense roll, usually connected to a natural 20 and then resolved using the combat fumble rules or table. It represents more than a simple miss: losing balance, overextending, exposing oneself, damaging the weapon, or creating an opening.\n\nCommon consequences:\n- Initiative loss.\n- A worsened position or loss of footing.\n- Dropping or damaging a weapon.\n- Granting the opponent an immediate tactical opportunity.\n- In some cases, weapon or shield stress may call for a Break Test.\n\nInteraction with maneuvers:\n- Maneuvers with Calls still apply the normal failed Call penalty when they fail.\n- In Double Attack, if one partial attack is a fumble, the other partial attack automatically fails as well.\n- The GM should distinguish an ordinary failed attack from a true fumble; a miss may simply be late, weak, or deflected, while a fumble creates a real complication.",
+      "source": "WdS p. 84–85"
     },
     {
       "id": "prone_fighter",
       "name": "Prone Fighter",
       "german_name": "Liegender Kämpfer",
-      "description": "A fighter who has been knocked down or fallen prone suffers significant disadvantages to all AT, PA, and movement actions as defined in the rules. Knockdown attack results land the opponent in an adjacent square away from the attacker (grid play).",
-      "source": "BRW p. 108"
+      "description": "Special Combat Situation.\n\nA fighter may end up kneeling or prone after a fall, a leap into cover, a failed maneuver, a fumble, or a successful knockdown-style attack. The fighter can spend actions to stand up, or continue fighting from the bad position.\n\nChanging position:\n- Changing from prone to kneeling, or kneeling to standing, requires one Action Position and no test.\n- Going directly from prone to standing in one action requires a Dexterity/Agility-style test penalized by full Encumbrance and still uses an Action Position.\n\nProne fighter:\n- Attacks and Parries are penalized by +3.\n- Targeted Dodge and Orientation cannot be used.\n- Other activities such as drawing a weapon may be harder or impossible depending on the situation.\n- Attacks against a prone target are easier: AT -3 and PA -5 for the attacker.\n\nKneeling fighter:\n- Attacks and Parries are penalized by +1.\n- Dodge is penalized by +4.\n- Some maneuvers may be impossible depending on weapon, reach, and exact circumstances.\n- Attacks against a kneeling target are easier: AT -1 and PA -3 for the attacker.",
+      "source": "WdS p. 57–58"
     },
     {
       "id": "weapons_in_both_hands",
       "name": "Off-hand Combat",
       "german_name": "Linkshändiger Kampf",
-      "description": "Fighting with a weapon in the off-hand incurs a -3 penalty to AT by default. Ambidextrous Combat I reduces this to -3/-3 and unlocks additional maneuvers. Ambidextrous Combat II removes the off-hand penalty entirely and grants an additional AT or PA with the secondary weapon.",
-      "source": "BRW p. 104"
+      "description": "Special Combat Situation.\n\nUsing the off-hand or fighting with weapons in both hands is difficult unless trained. The normal rules assume a dominant hand; using the wrong hand imposes major penalties that Special Abilities reduce.\n\nWrong-hand use:\n- A weapon used in the wrong hand normally suffers +9 to Attack and +9 to Parry.\n- Linkhand reduces this penalty by 3.\n- Ambidextrous Combat I reduces it by another 3.\n- Ambidextrous Combat II reduces it by another 3, effectively removing the normal wrong-hand penalty.\n- A TP/ST bonus with the wrong hand can only be used if the fighter has Ambidextrous Combat I.\n\nTwo-weapon implications:\n- Extra attacks or parries from the off-hand follow their own rules and cannot always be combined with other maneuvers.\n- Double Attack, Death from the Left, extra parrying-weapon parries, and shield parries are mutually restricted in several cases.\n- If only one of a fighter's weapons is bound, disarmed, or otherwise controlled, the other may still be available unless the specific maneuver says otherwise.",
+      "source": "WdS p. 58 / p. 72–75"
     },
     {
       "id": "mounted_combat",
       "name": "Mounted Combat",
       "german_name": "Kampf zu Pferd",
-      "description": "When fighting from horseback, the EEC of armor is halved: EEC = (EC/2) - weapon's EEC modifier. Lance riding (Jousting) has no EC penalty. Special rules apply for ranged combat from horseback (Mounted Marksman SA halves penalties).",
-      "source": "BRW p. 107"
+      "description": "Special Combat Situation.\n\nMounted combat changes movement, reach, initiative, attacks, defenses, and many maneuver options. The rider must control both their own weapon and the mount's movement.\n\nGeneral handling:\n- Riding tests are used at the start of combat to determine how well the rider controls the mount and gains combat options.\n- Further Riding tests may be required after the rider or mount is hit; failure can mean reduced options or falling from the saddle.\n- Armor encumbrance is treated more favorably on horseback: effective encumbrance is generally reduced compared with foot combat.\n- Jousting/lance-riding follows its own attack procedure and is not simply a normal melee attack.\n\nTypical modifiers to Riding tests include:\n- Untrained, inexperienced, tested, or trained horse.\n- No saddle or stirrups.\n- Steering without hands.\n- Charging several opponents.\n- Rider encumbrance and wounds.\n- Wounds to the mount.\n- Damage suffered by rider or mount.\n- Difficult terrain.\n\nTactical notes:\n- Mounted fighters can use speed and reach to gain strong attack positions.\n- A hit against rider or mount can quickly change the fight by forcing tests or causing a fall.\n- Some Special Abilities reduce mounted-combat penalties or improve lance-riding.",
+      "source": "WdS p. 100–107"
     },
     {
       "id": "break_test",
       "name": "Break Test",
       "german_name": "Bruchtest",
-      "description": "Certain powerful maneuvers (Hammer Strike, Shield Splitter, Knockdown parry) may trigger a Break Test for weapons or shields. Roll 2d6 and subtract the required modifier; if the result fails the test, the item is broken and destroyed.",
-      "source": "BRW p. 108"
+      "description": "Special Combat Situation.\n\nA Break Test checks whether a weapon or shield survives extreme stress. It is relevant after especially heavy blows, strong Parries, shield impacts, weapon-breaking maneuvers, and other situations where the rules call for item breakage.\n\nWhen it can occur:\n- Powerful attacks with high Calls, such as Hammer Strike or other Wuchtschlag-based maneuvers.\n- Shield Splitter or other attacks directed at equipment.\n- Windmill and similar defensive maneuvers that absorb and redirect a heavy blow.\n- Weapon Breaker and other techniques that directly try to destroy a blade.\n\nResolution:\n- Roll according to the item's Break Factor rules.\n- Modifiers from the maneuver, weapon type, shield type, or attack strength are applied.\n- If the test fails, the item breaks or is destroyed as specified by the rule.\n\nNotes:\n- Shields are especially likely to be checked if the optional Break Factor rules are used.\n- The GM should apply Break Tests only when the maneuver or situation calls for them; ordinary successful Parries do not automatically destroy equipment.",
+      "source": "WdS p. 85 / p. 191"
     }
   ]
 }
