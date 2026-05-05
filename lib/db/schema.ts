@@ -112,3 +112,27 @@ export const characters = pgTable(
 
 export type CharacterRow = typeof characters.$inferSelect;
 export type InsertCharacterRow = typeof characters.$inferInsert;
+
+// ── notes (personal TipTap JSON per user) ─────────────────────────────────────
+
+export const notes = pgTable(
+  "notes",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    userId: uuid("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    title: text("title").notNull().default(""),
+    content: jsonb("content").notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (t) => [index("notes_user_id_idx").on(t.userId)]
+);
+
+export type NoteRow = typeof notes.$inferSelect;
+export type InsertNoteRow = typeof notes.$inferInsert;

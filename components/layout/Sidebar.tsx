@@ -21,6 +21,7 @@ import {
   UserCircle,
   PawPrint,
   Scale,
+  StickyNote,
 } from "lucide-react";
 import clsx from "clsx";
 import { signOut } from "next-auth/react";
@@ -164,6 +165,19 @@ export default function Sidebar({
           >
             <UserCircle className="w-3.5 h-3.5 shrink-0" />
             My Characters
+          </Link>
+          <Link
+            href="/notes"
+            onClick={() => onNavigate?.()}
+            className={clsx(
+              "flex items-center gap-2 px-3 py-2 rounded-md text-sm transition-colors mt-0.5",
+              pathname === "/notes" || pathname.startsWith("/notes/")
+                ? "bg-brand-muted text-ink font-medium"
+                : "text-ink-muted hover:text-ink hover:bg-surface-card"
+            )}
+          >
+            <StickyNote className="w-3.5 h-3.5 shrink-0" />
+            My Notes
           </Link>
         </div>
 
