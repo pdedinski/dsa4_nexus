@@ -487,6 +487,68 @@ function computeTalentSpend(
   return { cost, nextTp: tp + 1, usesNewActivation: false };
 }
 
+const WEAPON_LOADOUT_MIN_COMBAT_TALENT_TP = 1;
+
+/**
+ * Chosen weapons imply combat technique talents. Spend creation TGP (and
+ * specialized activations when needed) so each linked talent reaches at least
+ * {@link WEAPON_LOADOUT_MIN_COMBAT_TALENT_TP} before random TGP spending.
+ * If that is impossible, throws with a user-facing message (API returns 400).
+ */
+function ensureWeaponCombatTalentsForLoadout(
+  requiredTalentIds: ReadonlySet<string>,
+  talentTp: Map<string, number>,
+  cols: (typeof advancementCosts)["talent_columns"]["columns"],
+  attrsFinal: CharacterSheet["attributesFinal"],
+  advantageIds: ReadonlySet<string>,
+  budget: { tgpLeft: number; activationsRemaining: number },
+): void {
+  if (requiredTalentIds.size === 0) return;
+
+  const sorted = [...requiredTalentIds].sort();
+  const minTp = WEAPON_LOADOUT_MIN_COMBAT_TALENT_TP;
+
+  for (const id of sorted) {
+    const def = TALENT_INDEX.get(id);
+    if (!def || def.group !== "combat_talents") {
+      throw new Error(
+        `Cannot complete generation: a chosen weapon references unknown combat talent "${id}".`,
+      );
+    }
+    const cap = creationMaxTalentTp(def, attrsFinal, advantageIds);
+    if (cap < minTp) {
+      throw new Error(
+        `Cannot complete generation: your chosen weapons require "${def.name}" (${id}) at TaW ${minTp}, but with this hero's attributes the creation maximum for that talent is only ${cap}.`,
+      );
+    }
+
+    while ((talentTp.get(id) ?? -999) < minTp) {
+      const spend = computeTalentSpend(
+        id,
+        talentTp,
+        cols,
+        attrsFinal,
+        budget.activationsRemaining,
+        budget.tgpLeft,
+        advantageIds,
+      );
+      if (!spend) {
+        const cur = talentTp.get(id);
+        const curLabel =
+          cur === undefined ? "not yet learned" : `currently TaW ${cur}`;
+        throw new Error(
+          `Cannot complete generation: your chosen weapons require combat talent "${def.name}" (${id}) at least at TaW ${minTp} (${curLabel}), but there are not enough creation resources left — ` +
+            `${budget.tgpLeft} TGP remaining and ${budget.activationsRemaining} specialized activation(s) remaining. ` +
+            `Choose weapons your profession or culture already covers, pick a build with more TGP, or free activations by reducing other new specialized talents.`,
+        );
+      }
+      budget.tgpLeft -= spend.cost;
+      if (spend.usesNewActivation) budget.activationsRemaining--;
+      talentTp.set(id, spend.nextTp);
+    }
+  }
+}
+
 /** Languages/scripts need culture mother-tongue rules; omit from random pool. */
 function buildTalentSpendPool(mergedIds: string[]): string[] {
   const out: string[] = [];
@@ -1026,6 +1088,18 @@ export function generateCharacter(
 
   /** BRW p. 46: at most 5 new specialized-talent activations during creation. */
   let activationsRemaining = 5;
+  const creationTalentBudget = { tgpLeft, activationsRemaining };
+  ensureWeaponCombatTalentsForLoadout(
+    weaponLinkedCombatIds,
+    talentTp,
+    cols,
+    attrsFinal,
+    advantageIdsForTalentCap,
+    creationTalentBudget,
+  );
+  tgpLeft = creationTalentBudget.tgpLeft;
+  activationsRemaining = creationTalentBudget.activationsRemaining;
+
   const spendPool = buildTalentSpendPool(Object.keys(mergedTalents));
   spendPool.sort(() => rng() - 0.5);
 
