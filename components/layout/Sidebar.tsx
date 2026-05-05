@@ -120,7 +120,7 @@ export default function Sidebar({
   }
 
   return (
-    <aside className="w-60 shrink-0 bg-surface-sidebar border-r border-surface-border flex flex-col h-full overflow-hidden">
+    <aside className="w-60 shrink-0 bg-[#110e0a] border-r border-surface-border flex flex-col h-full overflow-hidden">
       {/* Logo / header */}
       <div className="px-4 py-5 border-b border-surface-border flex items-center gap-3">
         <div className="w-8 h-8 rounded-full bg-brand-muted border border-brand flex items-center justify-center shrink-0">

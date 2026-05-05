@@ -53,15 +53,17 @@ export default function AppShell({
         <button
           type="button"
           aria-label="Close menu"
-          className="fixed inset-0 z-40 bg-black/50 md:hidden"
+          className="fixed inset-0 z-[90] bg-black/50 md:hidden"
           onClick={closeDrawer}
         />
       )}
 
       <div
         className={clsx(
-          "z-50 h-full shrink-0 transition-transform duration-200 ease-out",
-          "fixed inset-y-0 left-0 md:static md:z-auto md:translate-x-0",
+          /* Opaque bg + shadow live on this transformed layer so mobile WebKit does not
+           * composite the inner aside as see-through over main content. */
+          "fixed inset-y-0 left-0 z-[100] flex h-full min-h-0 w-60 shrink-0 flex-col bg-[#110e0a] shadow-[4px_0_24px_rgba(0,0,0,0.55)] transition-transform duration-200 ease-out",
+          "md:static md:z-auto md:h-full md:w-auto md:translate-x-0 md:bg-transparent md:shadow-none",
           drawerOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0",
           !drawerOpen && "pointer-events-none md:pointer-events-auto"
         )}
@@ -69,19 +71,23 @@ export default function AppShell({
         <Sidebar user={user} onNavigate={closeDrawer} />
       </div>
 
-      <div className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden">
-        <header className="sticky top-0 z-30 flex h-12 shrink-0 items-center gap-2 border-b border-surface-border bg-surface px-3 md:hidden">
+      <div className="isolate flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden">
+        <header className="relative z-10 flex min-h-12 shrink-0 items-center gap-2 border-b border-surface-border bg-surface px-3 py-1.5 pt-[max(0.375rem,env(safe-area-inset-top))] md:hidden">
           <button
             type="button"
             onClick={() => setDrawerOpen(true)}
             aria-label="Open menu"
-            className="flex h-10 w-10 items-center justify-center rounded-lg text-ink hover:bg-surface-card transition-colors"
+            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg text-ink hover:bg-surface-card transition-colors"
           >
-            <Menu className="h-5 w-5" />
+            <Menu className="h-5 w-5 shrink-0" />
           </button>
-          <span className="text-sm font-semibold text-ink">DSA Nexus</span>
+          <span className="min-w-0 flex-1 truncate text-sm font-semibold text-ink">
+            DSA Nexus
+          </span>
         </header>
-        <main className="min-h-0 flex-1 overflow-y-auto">{children}</main>
+        <main className="relative z-0 min-h-0 flex-1 overflow-y-auto">
+          {children}
+        </main>
       </div>
     </div>
   );
