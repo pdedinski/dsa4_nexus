@@ -8,3 +8,7 @@ scripts/_lc_translations.json
 TDE4_PDF_reference.txt
 TDE4_character_creation_from_scratch.txt
 ns1.htaccess.txt
+
+# Local deploy bundles (next build standalone + zip; regenerate on deploy machine)
+dist-deploy/
+dsa-nexus-deploy-*.zip
