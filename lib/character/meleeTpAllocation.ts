@@ -17,7 +17,10 @@ export function normalizeConceptAtPaBias(raw: unknown): AtPaBias {
   return "balanced";
 }
 
-/** Core split + optional ±2 TP toward AT or PA, then |AT−PA| ≤ 5 clamp (matches generator). */
+/**
+ * Core split + optional ±2 TP shifted toward AT or PA, then |AT−PA| ≤ 5 clamp (matches generator).
+ * `allocatedAT + allocatedPA` always equals `tp` after bias (points move between buckets; never created).
+ */
 export function allocateMeleeCombatTp(
   tp: number,
   bias: AtPaBias
@@ -25,8 +28,15 @@ export function allocateMeleeCombatTp(
   if (tp <= 0) return { allocatedAT: 0, allocatedPA: 0 };
   let at = Math.floor(tp / 2);
   let pa = tp - at;
-  if (bias === "offensive") at = Math.min(tp, at + 2);
-  if (bias === "defensive") pa = Math.min(tp, pa + 2);
+  if (bias === "offensive") {
+    const shift = Math.min(2, pa);
+    at += shift;
+    pa -= shift;
+  } else if (bias === "defensive") {
+    const shift = Math.min(2, at);
+    at -= shift;
+    pa += shift;
+  }
   while (Math.abs(at - pa) > 5) {
     if (at > pa) {
       at--;
