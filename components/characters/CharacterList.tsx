@@ -42,6 +42,14 @@ export default function CharacterList() {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [saveOpen, setSaveOpen] = useState(false);
   const [generating, setGenerating] = useState(false);
+  const [previewName, setPreviewName] = useState("");
+  const [nameEditMode, setNameEditMode] = useState(false);
+  const [rerolling, setRerolling] = useState(false);
+  const [lastGenInput, setLastGenInput] =
+    useState<GenerateCharacterInput | null>(null);
+  const [lastGenPriorities, setLastGenPriorities] = useState<
+    Record<string, SpellPriority> | undefined
+  >();
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -77,7 +85,12 @@ export default function CharacterList() {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error ?? "Generate failed");
-      setPreview(data.sheet);
+      setLastGenInput(input);
+      setLastGenPriorities(priorities);
+      const sheet = data.sheet as CharacterSheet;
+      setPreview(sheet);
+      setPreviewName(sheet.header.displayName);
+      setNameEditMode(false);
       setPreviewOpen(true);
       setWizard1(false);
       setWizard2(false);
@@ -91,6 +104,33 @@ export default function CharacterList() {
       alert(e instanceof Error ? e.message : "Generate failed");
     }
     setGenerating(false);
+  }
+
+  async function rerollName() {
+    if (!lastGenInput) return;
+    setRerolling(true);
+    try {
+      const res = await fetch("/api/characters/generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...lastGenInput,
+          spellPriorities: lastGenPriorities,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error ?? "Generate failed");
+      const sheet = data.sheet as CharacterSheet;
+      const newName = sheet.header.displayName;
+      setPreviewName(newName);
+      setPreview((p) =>
+        p ? { ...p, header: { ...p.header, displayName: newName } } : null
+      );
+      setNameEditMode(false);
+    } catch (e) {
+      alert(e instanceof Error ? e.message : "Reroll name failed");
+    }
+    setRerolling(false);
   }
 
   return (
@@ -280,13 +320,94 @@ export default function CharacterList() {
       {previewOpen && preview && (
         <BodyPortal>
           <div className="fixed inset-0 z-[200] flex flex-col bg-[#1a1410]">
-            <div className="flex shrink-0 items-center justify-between gap-3 border-b border-surface-border bg-surface-card px-4 py-3">
-              <h2 className="font-bold text-ink">Preview</h2>
+            <div className="flex shrink-0 flex-wrap items-center justify-between gap-3 border-b border-surface-border bg-surface-card px-4 py-3">
+              <div className="flex min-w-0 flex-1 flex-wrap items-center gap-2 sm:gap-3">
+                <h2 className="shrink-0 font-bold text-ink">Preview</h2>
+                {nameEditMode ? (
+                  <>
+                    <input
+                      type="text"
+                      value={previewName}
+                      onChange={(e) => setPreviewName(e.target.value)}
+                      className="min-w-[12rem] max-w-md flex-1 rounded-lg border border-surface-border bg-[#2c251f] px-3 py-1.5 text-sm text-[#f2e8dc]"
+                      autoFocus
+                      aria-label="Character name"
+                    />
+                    <button
+                      type="button"
+                      className="shrink-0 rounded-lg border border-surface-border px-3 py-1.5 text-sm text-ink hover:bg-surface-sidebar"
+                      onClick={() => {
+                        const trimmed = previewName.trim();
+                        if (trimmed) {
+                          setPreviewName(trimmed);
+                          setPreview((p) =>
+                            p
+                              ? {
+                                  ...p,
+                                  header: {
+                                    ...p.header,
+                                    displayName: trimmed,
+                                  },
+                                }
+                              : null
+                          );
+                        }
+                        setNameEditMode(false);
+                      }}
+                    >
+                      Done
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <span className="min-w-0 truncate text-sm font-medium text-ink">
+                      {previewName || preview.header.displayName}
+                    </span>
+                    <button
+                      type="button"
+                      className="shrink-0 rounded-lg border border-surface-border px-3 py-1.5 text-sm text-ink hover:bg-surface-sidebar"
+                      onClick={() => setNameEditMode(true)}
+                    >
+                      Edit name
+                    </button>
+                  </>
+                )}
+              </div>
               <div className="flex flex-wrap gap-2">
+                <button
+                  type="button"
+                  disabled={rerolling || generating || !lastGenInput}
+                  className="px-3 py-1.5 rounded-lg text-sm border border-surface-border text-ink hover:bg-surface-sidebar disabled:opacity-50"
+                  onClick={() => void rerollName()}
+                >
+                  Reroll name
+                </button>
+                <button
+                  type="button"
+                  disabled={generating || rerolling || !lastGenInput}
+                  className="px-3 py-1.5 rounded-lg text-sm border border-surface-border text-ink hover:bg-surface-sidebar disabled:opacity-50"
+                  onClick={() => {
+                    if (!lastGenInput) return;
+                    void runGenerate(lastGenInput, lastGenPriorities);
+                  }}
+                >
+                  Reroll character
+                </button>
                 <button
                   type="button"
                   className="px-3 py-1.5 rounded-lg text-sm bg-brand text-white"
                   onClick={() => {
+                    const trimmed =
+                      previewName.trim() || preview.header.displayName;
+                    setPreviewName(trimmed);
+                    setPreview((p) =>
+                      p
+                        ? {
+                            ...p,
+                            header: { ...p.header, displayName: trimmed },
+                          }
+                        : null
+                    );
                     setSaveOpen(true);
                   }}
                 >
@@ -298,6 +419,10 @@ export default function CharacterList() {
                   onClick={() => {
                     setPreview(null);
                     setPreviewOpen(false);
+                    setLastGenInput(null);
+                    setLastGenPriorities(undefined);
+                    setPreviewName("");
+                    setNameEditMode(false);
                   }}
                 >
                   Discard
@@ -305,7 +430,16 @@ export default function CharacterList() {
               </div>
             </div>
             <div className="min-h-0 flex-1 overflow-y-auto px-2 pb-4">
-              <CharacterSheetView sheet={preview} />
+              <CharacterSheetView
+                sheet={{
+                  ...preview,
+                  header: {
+                    ...preview.header,
+                    displayName:
+                      previewName.trim() || preview.header.displayName,
+                  },
+                }}
+              />
             </div>
           </div>
         </BodyPortal>
@@ -319,6 +453,10 @@ export default function CharacterList() {
           setSaveOpen(false);
           setPreviewOpen(false);
           setPreview(null);
+          setLastGenInput(null);
+          setLastGenPriorities(undefined);
+          setPreviewName("");
+          setNameEditMode(false);
           load();
           router.push(`/characters/${encodeURIComponent(cid)}`);
         }}

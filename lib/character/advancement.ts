@@ -1,7 +1,18 @@
 import type advancementCostsJson from "@/data/meta/advancement_costs.json";
 
 type TalentColumns = (typeof advancementCostsJson)["talent_columns"]["columns"];
-type SpellColumns = (typeof advancementCostsJson)["spell_columns"]["columns"];
+
+/** SKT row "Akt./0" (Basisregelwerk p. 198) — spell activation; same table for talents. */
+const SKT_ACTIVATION_BY_COLUMN: Partial<Record<string, number>> = {
+  A: 5,
+  B: 10,
+  C: 15,
+  D: 20,
+  E: 25,
+  F: 40,
+  G: 50,
+  H: 100,
+};
 
 export function talentActivationCost(
   columns: TalentColumns,
@@ -37,31 +48,26 @@ export function talentStepsCost(
   return sum;
 }
 
+/**
+ * Spell activation uses SKT row Akt./0 (p. 198). Pass the **effective** column after
+ * cross-tradition shifts (+2 columns, p. 204). Step costs use `talentStepsCost` with the
+ * same column (talent_columns SKT matches spell ZfW steps).
+ */
 export function spellActivationCost(
-  spellCols: SpellColumns,
-  col: string,
-  isGuildMagician: boolean
+  _talentCols: TalentColumns,
+  col: string
 ): number {
-  const c = spellCols[col as keyof SpellColumns];
-  if (!c) return 99;
-  if (isGuildMagician) return c.activation_cost_guild ?? 99;
-  return c.activation_cost_elf ?? 99;
+  return SKT_ACTIVATION_BY_COLUMN[col] ?? 999;
 }
 
+/**
+ * SP step costs use the same SKT step table as talents (one row per +1 SP).
+ */
 export function spellAdvancementStepCost(
-  spellCols: SpellColumns,
+  talentCols: TalentColumns,
   col: string,
   from: number,
   to: number
 ): number {
-  if (to <= from) return 0;
-  const c = spellCols[col as keyof SpellColumns];
-  if (!c) return 9999;
-  let sum = 0;
-  for (let v = from; v < to; v++) {
-    const key = `${v}_to_${v + 1}` as keyof typeof c.costs_by_value;
-    const step = c.costs_by_value[key];
-    sum += step ?? 99;
-  }
-  return sum;
+  return talentStepsCost(talentCols, col, from, to);
 }

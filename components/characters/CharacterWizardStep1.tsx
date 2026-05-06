@@ -201,8 +201,9 @@ export default function CharacterWizardStep1({
           )}
           <label className="block">
             <span className="text-ink-muted">
-              Extra AP (veteran) — only talents already on this sheet (same step
-              costs as the rulebook)
+              Extra AP (veteran) — raises talents and spell ZfW already on this
+              sheet (SKT step costs; spell share by concept weight and spell
+              priorities)
             </span>
             <input
               type="number"

@@ -36,6 +36,12 @@ import {
   type WeaponBiasRow,
 } from "./meleeTpAllocation";
 
+const SPELL_DEF_BY_ID = new Map(
+  spellsData.spells.map(
+    (s): [string, (typeof spellsData.spells)[number]] => [s.id, s],
+  ),
+);
+
 const GP_START = 110;
 
 /** Dwarfish stature (Zwerg / Angroschim-style packages). */
@@ -334,6 +340,46 @@ const WEAPON_FOCUS_OFF_TYPE_FACTOR = 0.42;
 const WEAPON_FOCUS_UNSELECTED_TYPE_FACTOR = 0.28;
 
 /**
+ * Weight for one talent +1 TP step (same formula as {@link pickWeightedTalentForStep}).
+ */
+function talentStepPickWeight(
+  rng: () => number,
+  id: string,
+  groupWeights: Record<string, number> | undefined,
+  talentBias: Record<string, number> | undefined,
+  talentAvoid: Record<string, number> | undefined,
+  weaponFocus: WeaponTalentFocus | null,
+): number {
+  const bias = talentBias ?? {};
+  const avoid = talentAvoid ?? {};
+  const def = TALENT_INDEX.get(id);
+  if (!def) return 0.05;
+  const g = talentGroupPriorWeight(def.group, groupWeights);
+  const b = bias[id] ?? 1;
+  const av = avoid[id] ?? 1;
+  let w = g * b * av * (0.55 + rng() * 0.9);
+  if (weaponFocus && def.group === "combat_talents") {
+    const isMelee = def.combat_type === "melee" || def.combat_type === "jousting";
+    const isRanged = def.combat_type === "ranged";
+
+    if (isMelee) {
+      if (weaponFocus.melee.size === 0 && weaponFocus.ranged.size > 0) {
+        w *= WEAPON_FOCUS_UNSELECTED_TYPE_FACTOR;
+      } else if (weaponFocus.melee.size > 0 && !weaponFocus.melee.has(id)) {
+        w *= WEAPON_FOCUS_OFF_TYPE_FACTOR;
+      }
+    } else if (isRanged) {
+      if (weaponFocus.ranged.size === 0 && weaponFocus.melee.size > 0) {
+        w *= WEAPON_FOCUS_UNSELECTED_TYPE_FACTOR;
+      } else if (weaponFocus.ranged.size > 0 && !weaponFocus.ranged.has(id)) {
+        w *= WEAPON_FOCUS_OFF_TYPE_FACTOR;
+      }
+    }
+  }
+  return Math.max(0.05, w);
+}
+
+/**
  * Picks one talent to raise by +1 TP. Weight is group × talent_bias × talent_avoid × jitter.
  *
  * Weapon focus rules (both applied without using current TP):
@@ -350,39 +396,16 @@ function pickWeightedTalentForStep(
   weaponFocus: WeaponTalentFocus | null,
 ): string {
   if (candidateIds.length === 1) return candidateIds[0]!;
-  const bias = talentBias ?? {};
-  const avoid = talentAvoid ?? {};
-  const ws = candidateIds.map((id) => {
-    const def = TALENT_INDEX.get(id);
-    if (!def) return 0.05;
-    const g = talentGroupPriorWeight(def.group, groupWeights);
-    const b = bias[id] ?? 1;
-    const av = avoid[id] ?? 1;
-    let w = g * b * av * (0.55 + rng() * 0.9);
-    if (weaponFocus && def.group === "combat_talents") {
-      const isMelee = def.combat_type === "melee" || def.combat_type === "jousting";
-      const isRanged = def.combat_type === "ranged";
-
-      if (isMelee) {
-        if (weaponFocus.melee.size === 0 && weaponFocus.ranged.size > 0) {
-          // Ranged-only loadout: melee type entirely unrepresented.
-          w *= WEAPON_FOCUS_UNSELECTED_TYPE_FACTOR;
-        } else if (weaponFocus.melee.size > 0 && !weaponFocus.melee.has(id)) {
-          // Melee represented but this specific talent wasn't chosen.
-          w *= WEAPON_FOCUS_OFF_TYPE_FACTOR;
-        }
-      } else if (isRanged) {
-        if (weaponFocus.ranged.size === 0 && weaponFocus.melee.size > 0) {
-          // Melee-only loadout: ranged type entirely unrepresented.
-          w *= WEAPON_FOCUS_UNSELECTED_TYPE_FACTOR;
-        } else if (weaponFocus.ranged.size > 0 && !weaponFocus.ranged.has(id)) {
-          // Ranged represented but this specific talent wasn't chosen.
-          w *= WEAPON_FOCUS_OFF_TYPE_FACTOR;
-        }
-      }
-    }
-    return Math.max(0.05, w);
-  });
+  const ws = candidateIds.map((id) =>
+    talentStepPickWeight(
+      rng,
+      id,
+      groupWeights,
+      talentBias,
+      talentAvoid,
+      weaponFocus,
+    ),
+  );
   const total = ws.reduce((a, b) => a + b, 0);
   let r = rng() * total;
   for (let i = 0; i < candidateIds.length; i++) {
@@ -762,6 +785,47 @@ function spellApplicable(
   return tr.includes("elven_heritage") || tr.includes("general");
 }
 
+const SKT_COL_ORDER = ["A", "B", "C", "D", "E", "F", "G", "H"] as const;
+
+/** Cross-tradition: +2 columns (Basisregelwerk p. 204). */
+function shiftSpellColumn(col: string, delta: number): string {
+  const idx = SKT_COL_ORDER.indexOf(col as (typeof SKT_COL_ORDER)[number]);
+  if (idx < 0) return col;
+  const next = Math.min(
+    SKT_COL_ORDER.length - 1,
+    Math.max(0, idx + delta)
+  );
+  return SKT_COL_ORDER[next]!;
+}
+
+/**
+ * Effective SKT column for activation and SP steps after tradition shift.
+ * Guild magician learning pure elven-heritage spells: +2 cols.
+ * Elf learning pure guild-magic spells: +2 cols.
+ */
+function effectiveSpellColumn(
+  spell: (typeof spellsData.spells)[0],
+  isGuildMagician: boolean
+): string {
+  const tr = spell.traditions ?? [];
+  const base = spell.advancement_column ?? "A";
+  if (
+    isGuildMagician &&
+    tr.includes("elven_heritage") &&
+    !tr.includes("guild_magic")
+  ) {
+    return shiftSpellColumn(base, 2);
+  }
+  if (
+    !isGuildMagician &&
+    tr.includes("guild_magic") &&
+    !tr.includes("elven_heritage")
+  ) {
+    return shiftSpellColumn(base, 2);
+  }
+  return base;
+}
+
 function maxStartingSpForSpell(
   spell: (typeof spellsData.spells)[0],
   role: "guild_magician" | "elf"
@@ -796,6 +860,26 @@ function spellPriorityBase(p?: SpellPriority): number {
   if (p === "medium") return 2;
   if (p === "low") return 1;
   return 0;
+}
+
+/** Priority multiplier for ZfW steps (SGP and veteran); "none" / unset uses 1. */
+function spellVeteranPriorityWeight(p?: SpellPriority): number {
+  const b = spellPriorityBase(p);
+  return b > 0 ? b : 1;
+}
+
+/**
+ * Pick weight for the next ZfW step on a spell (SGP or veteran). Uses
+ * {@link spell_group_weight} × priority × jitter. Same formula for both pools.
+ */
+function spellStepPickWeight(
+  priority: SpellPriority | undefined,
+  groupFactor: number,
+  rng: () => number,
+): number {
+  return (
+    groupFactor * spellVeteranPriorityWeight(priority) * (0.55 + rng() * 0.9)
+  );
 }
 
 export function needsSpellSelectionStep(
@@ -841,6 +925,21 @@ export function generateCharacter(
       : (input.conceptId as ConceptId);
   const weights =
     conceptWeights.concepts[concept] ?? conceptWeights.concepts.any;
+  const wSpellGwRaw = (weights as { spell_group_weight?: number })
+    .spell_group_weight;
+  const spellGroupWeightForVeteran =
+    typeof wSpellGwRaw === "number" &&
+    Number.isFinite(wSpellGwRaw) &&
+    wSpellGwRaw > 0
+      ? wSpellGwRaw
+      : 0;
+  /** SGP: use concept weight when >0, else 1 so priorities still skew ZfW spend among spells. */
+  const spellGroupWeightForSgp =
+    typeof wSpellGwRaw === "number" &&
+    Number.isFinite(wSpellGwRaw) &&
+    wSpellGwRaw > 0
+      ? wSpellGwRaw
+      : 1;
   const advantagePickBias = normalizeTraitPickBias(
     (weights as Record<string, unknown>).advantage_pick_bias
   );
@@ -1107,6 +1206,141 @@ export function generateCharacter(
   const spendPool = buildTalentSpendPool(Object.keys(mergedTalents));
   spendPool.sort(() => rng() - 0.5);
 
+  /**
+   * Spells **before** concept-biased talent spend: SGP and TGP→SGP conversion
+   * use `tgpLeft` while it is still full. `extraAp` (veteran) is applied later
+   * alongside talents, weighted by `spell_group_weight` and spell priorities.
+   */
+  const spells: CharacterSheet["spells"] = [];
+  let sgpTotal = (CL + IN) * 5;
+  let sgpLeft = sgpTotal;
+  let tgpConverted = 0;
+  const maxConvert = (CL + IN) * 10;
+  const isGuildMagician = profession.id === "magician";
+  const spellRole: "guild_magician" | "elf" = isGuildMagician
+    ? "guild_magician"
+    : "elf";
+
+  if (fullMagic) {
+    const pool = spellsData.spells.filter((s) => spellApplicable(s, spellRole));
+    type Scored = { s: (typeof pool)[0]; w: number; base: number };
+    const scored: Scored[] = pool.map((s) => {
+      const base = spellPriorityBase(input.spellPriorities?.[s.id]);
+      return { s, base, w: base + rng() * 0.01 };
+    });
+    let ranked = scored.filter((x) => x.base > 0);
+    if (ranked.length === 0) {
+      notes.push(
+        "All applicable spells were marked None for random allocation; used the full list with equal weight."
+      );
+      ranked = scored.map((x) => ({
+        s: x.s,
+        base: 1,
+        w: 1 + rng() * 0.01,
+      }));
+    }
+    ranked.sort((a, b) => b.w - a.w);
+    const maxActs = advancementCosts.spell_columns.max_activations_at_creation;
+    let acts = 0;
+    const talentCols = advancementCosts.talent_columns.columns;
+
+    /** Pay from SGP pool, converting TGP→SGP when allowed (BRW creation rules). */
+    function trySpendSgp(cost: number): boolean {
+      if (cost <= 0) return true;
+      if (cost > sgpLeft) {
+        const short = cost - sgpLeft;
+        const take = Math.min(short, tgpLeft, maxConvert - tgpConverted);
+        if (take < short) return false;
+        tgpLeft -= take;
+        tgpConverted += take;
+        sgpLeft += take;
+      }
+      if (cost > sgpLeft) return false;
+      sgpLeft -= cost;
+      return true;
+    }
+
+    type Activated = {
+      s: (typeof pool)[0];
+      col: string;
+      maxSp: number;
+      sp: number;
+    };
+    const activated: Activated[] = [];
+
+    /** Phase 1: activate as many prioritized spells as budget allows (each at ZfW 0). */
+    for (const { s } of ranked) {
+      if (acts >= maxActs) break;
+      const col = effectiveSpellColumn(s, isGuildMagician);
+      const act = spellActivationCost(talentCols, col);
+      if (!trySpendSgp(act)) continue;
+      acts++;
+      activated.push({
+        s,
+        col,
+        maxSp: maxStartingSpForSpell(s, spellRole),
+        sp: 0,
+      });
+    }
+
+    /** True if SGP (and TGP→SGP) can pay the step without mutating pools. */
+    function canSpendSgp(cost: number): boolean {
+      if (cost <= 0) return true;
+      if (cost <= sgpLeft) return true;
+      const short = cost - sgpLeft;
+      const take = Math.min(short, tgpLeft, maxConvert - tgpConverted);
+      return take >= short;
+    }
+
+    /**
+     * Phase 2: raise ZfW using spell priorities × spell_group_weight (same mix as veteran).
+     */
+    let sgpSpellGuards = 0;
+    while (sgpSpellGuards++ < 80_000) {
+      type Cand = { ent: Activated; cost: number; w: number };
+      const cand: Cand[] = [];
+      for (const ent of activated) {
+        if (ent.sp >= ent.maxSp) continue;
+        const step = spellAdvancementStepCost(
+          talentCols,
+          ent.col,
+          ent.sp,
+          ent.sp + 1,
+        );
+        if (!canSpendSgp(step)) continue;
+        const w = spellStepPickWeight(
+          input.spellPriorities?.[ent.s.id],
+          spellGroupWeightForSgp,
+          rng,
+        );
+        cand.push({ ent, cost: step, w });
+      }
+      if (cand.length === 0) break;
+      const wTotal = cand.reduce((a, c) => a + c.w, 0);
+      let r = rng() * wTotal;
+      let pick = cand[cand.length - 1]!;
+      for (let i = 0; i < cand.length; i++) {
+        r -= cand[i]!.w;
+        if (r <= 0) {
+          pick = cand[i]!;
+          break;
+        }
+      }
+      if (!trySpendSgp(pick.cost)) break;
+      pick.ent.sp++;
+    }
+
+    for (const ent of activated) {
+      spells.push({
+        id: ent.s.id,
+        name: ent.s.name,
+        sp: ent.sp,
+        tradition: (ent.s.traditions ?? []).join(","),
+        advancementColumn: ent.col,
+      });
+    }
+  }
+
   let tgpGuards = 0;
   while (tgpLeft > 0 && tgpGuards++ < 150_000) {
     const candidates = spendPool.filter((id) => {
@@ -1144,87 +1378,6 @@ export function generateCharacter(
     talentTp.set(id, spend.nextTp);
   }
 
-  const spells: CharacterSheet["spells"] = [];
-  let sgpTotal = (CL + IN) * 5;
-  let sgpLeft = sgpTotal;
-  let tgpConverted = 0;
-  const maxConvert = (CL + IN) * 10;
-  const isGuildMagician = profession.id === "magician";
-  const spellRole: "guild_magician" | "elf" = isGuildMagician
-    ? "guild_magician"
-    : "elf";
-
-  if (fullMagic) {
-    const pool = spellsData.spells.filter((s) => spellApplicable(s, spellRole));
-    type Scored = { s: (typeof pool)[0]; w: number; base: number };
-    const scored: Scored[] = pool.map((s) => {
-      const base = spellPriorityBase(input.spellPriorities?.[s.id]);
-      return { s, base, w: base + rng() * 0.01 };
-    });
-    let ranked = scored.filter((x) => x.base > 0);
-    if (ranked.length === 0) {
-      notes.push(
-        "All applicable spells were marked None for random allocation; used the full list with equal weight."
-      );
-      ranked = scored.map((x) => ({
-        s: x.s,
-        base: 1,
-        w: 1 + rng() * 0.01,
-      }));
-    }
-    ranked.sort((a, b) => b.w - a.w);
-    const maxActs = advancementCosts.spell_columns.max_activations_at_creation;
-    let acts = 0;
-    for (const { s } of ranked) {
-      if (acts >= maxActs) break;
-      const col = s.advancement_column ?? "A";
-      const act = spellActivationCost(
-        advancementCosts.spell_columns.columns,
-        col,
-        isGuildMagician
-      );
-      if (act > sgpLeft) {
-        const short = act - sgpLeft;
-        const take = Math.min(short, tgpLeft, maxConvert - tgpConverted);
-        if (take < short) continue;
-        tgpLeft -= take;
-        tgpConverted += take;
-        sgpLeft += take;
-      }
-      if (act > sgpLeft) continue;
-      sgpLeft -= act;
-      acts++;
-      const maxSp = maxStartingSpForSpell(s, spellRole);
-      let sp = 0;
-      while (sp < maxSp) {
-        const step = spellAdvancementStepCost(
-          advancementCosts.spell_columns.columns,
-          col,
-          sp,
-          sp + 1
-        );
-        if (step > sgpLeft) {
-          const need = step - sgpLeft;
-          const take = Math.min(need, tgpLeft, maxConvert - tgpConverted);
-          if (take < need) break;
-          tgpLeft -= take;
-          tgpConverted += take;
-          sgpLeft += take;
-        }
-        if (step > sgpLeft) break;
-        sgpLeft -= step;
-        sp++;
-      }
-      spells.push({
-        id: s.id,
-        name: s.name,
-        sp,
-        tradition: (s.traditions ?? []).join(","),
-        advancementColumn: col,
-      });
-    }
-  }
-
   /** Total TGP removed from pool: talents, activations, and TGP→SGP conversion. */
   const tgpSpent = tgpTotal - tgpLeft;
 
@@ -1232,11 +1385,48 @@ export function generateCharacter(
 
   const extraApBudget = Math.max(0, Math.floor(input.extraAp ?? 0));
   let extraLeft = extraApBudget;
-  /** Post-creation AP may only improve talents already on this hero (not the full catalog). */
+
+  /** Veteran AP: SKT steps on existing spells (ZfW) and talents; no new spell activations. */
   const apSpendTalentIds = Array.from(talentTp.keys()).sort(() => rng() - 0.5);
   let apGuards = 0;
   while (extraLeft > 0 && apGuards++ < 80_000) {
-    const candidates = apSpendTalentIds.filter((id) => {
+    type VeteranAction =
+      | { kind: "spell"; index: number; cost: number }
+      | {
+          kind: "talent";
+          id: string;
+          spend: NonNullable<ReturnType<typeof computeTalentSpend>>;
+        };
+
+    const actions: VeteranAction[] = [];
+    const actionWeights: number[] = [];
+
+    if (fullMagic && spells.length > 0 && spellGroupWeightForVeteran > 0) {
+      for (let i = 0; i < spells.length; i++) {
+        const row = spells[i]!;
+        const spellDef = SPELL_DEF_BY_ID.get(row.id);
+        if (!spellDef) continue;
+        const cap = maxStartingSpForSpell(spellDef, spellRole);
+        if (row.sp >= cap) continue;
+        const spellCol = effectiveSpellColumn(spellDef, isGuildMagician);
+        const stepCost = spellAdvancementStepCost(
+          cols,
+          spellCol,
+          row.sp,
+          row.sp + 1,
+        );
+        if (stepCost <= 0 || stepCost > extraLeft) continue;
+        const w = spellStepPickWeight(
+          input.spellPriorities?.[row.id],
+          spellGroupWeightForVeteran,
+          rng,
+        );
+        actions.push({ kind: "spell", index: i, cost: stepCost });
+        actionWeights.push(w);
+      }
+    }
+
+    const talentCandidates = apSpendTalentIds.filter((id) => {
       const spend = computeTalentSpend(
         id,
         talentTp,
@@ -1244,31 +1434,53 @@ export function generateCharacter(
         attrsFinal,
         activationsRemaining,
         extraLeft,
-        advantageIdsForTalentCap
+        advantageIdsForTalentCap,
       );
       return spend !== null;
     });
-    if (candidates.length === 0) break;
-    const id = pickWeightedTalentForStep(
-      rng,
-      candidates,
-      groupWeights,
-      talentBias,
-      talentAvoid,
-      weaponFocus,
-    );
-    const spend = computeTalentSpend(
-      id,
-      talentTp,
-      cols,
-      attrsFinal,
-      activationsRemaining,
-      extraLeft,
-      advantageIdsForTalentCap
-    )!;
-    extraLeft -= spend.cost;
-    if (spend.usesNewActivation) activationsRemaining--;
-    talentTp.set(id, spend.nextTp);
+    for (const id of talentCandidates) {
+      const spend = computeTalentSpend(
+        id,
+        talentTp,
+        cols,
+        attrsFinal,
+        activationsRemaining,
+        extraLeft,
+        advantageIdsForTalentCap,
+      )!;
+      const w = talentStepPickWeight(
+        rng,
+        id,
+        groupWeights,
+        talentBias,
+        talentAvoid,
+        weaponFocus,
+      );
+      actions.push({ kind: "talent", id, spend });
+      actionWeights.push(w);
+    }
+
+    if (actions.length === 0) break;
+
+    const wTotal = actionWeights.reduce((a, b) => a + b, 0);
+    let r = rng() * wTotal;
+    let pick = actions[actions.length - 1]!;
+    for (let i = 0; i < actions.length; i++) {
+      r -= actionWeights[i]!;
+      if (r <= 0) {
+        pick = actions[i]!;
+        break;
+      }
+    }
+
+    if (pick.kind === "spell") {
+      spells[pick.index]!.sp += 1;
+      extraLeft -= pick.cost;
+    } else {
+      extraLeft -= pick.spend.cost;
+      if (pick.spend.usesNewActivation) activationsRemaining--;
+      talentTp.set(pick.id, pick.spend.nextTp);
+    }
   }
 
   clampTalentTpMapToCreationMax(talentTp, attrsFinal, advantageIdsForTalentCap);

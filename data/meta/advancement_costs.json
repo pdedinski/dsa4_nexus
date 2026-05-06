@@ -2,7 +2,7 @@
   "meta": {
     "schema_version": "1.0",
     "last_updated": "2026-05-02",
-    "description": "Talent and spell advancement cost tables for TDE4/DSA4.1. Columns A–H are used for talents; columns A–C (subset) apply to spells. Each entry shows the AP cost to advance from the previous value to this value. Activation cost is the cost to bring a talent/spell from 'not known' to TP/SP 0.",
+    "description": "Talent and spell advancement cost tables for TDE4/DSA4.1. Spell ZfW uses the same SKT as talents (BRW p.198): activation row Akt./0; steps use talent_columns costs_by_value. Cross-tradition spells +2 columns (BRW p.204). Code: lib/character/advancement.ts, lib/character/generator.ts.",
     "source_books": ["DSA 4.1 Basisregelwerk p. 110–112", "TDE Basic Rules p. 29–30"]
   },
   "talent_columns": {
@@ -322,62 +322,16 @@
     }
   },
   "spell_columns": {
-    "description": "SP cost per advancement step for spells. Spells use columns A, B, or C depending on tradition and spell type.",
-    "columns": {
-      "A": {
-        "label": "A",
-        "activation_cost_guild": 5,
-        "activation_cost_elf": 10,
-        "description": "Guild magic spells (Stabzauber / Gildenmagie) and general spells for magicians. Activation: 5 SGP for guild magician, 10 SGP for elves.",
-        "costs_by_value": {
-          "0_to_1": 1,
-          "1_to_2": 1,
-          "2_to_3": 2,
-          "3_to_4": 2,
-          "4_to_5": 2,
-          "5_to_6": 2,
-          "6_to_7": 2,
-          "7_to_8": 3,
-          "8_to_9": 3,
-          "9_to_10": 3
-        }
-      },
-      "B": {
-        "label": "B",
-        "activation_cost_guild": 10,
-        "activation_cost_elf": 10,
-        "description": "Elven heritage spells (Elfenlied) for elves. Activation: 10 SGP.",
-        "costs_by_value": {
-          "0_to_1": 2,
-          "1_to_2": 2,
-          "2_to_3": 3,
-          "3_to_4": 3,
-          "4_to_5": 3,
-          "5_to_6": 4,
-          "6_to_7": 4,
-          "7_to_8": 4,
-          "8_to_9": 5,
-          "9_to_10": 5
-        }
-      },
-      "C": {
-        "label": "C",
-        "activation_cost_guild": 15,
-        "activation_cost_elf": null,
-        "description": "Elven heritage spells used by guild magicians (cross-tradition). Activation: 15 SGP for guild magicians. Elves cannot learn guild magic.",
-        "costs_by_value": {
-          "0_to_1": 3,
-          "1_to_2": 3,
-          "2_to_3": 4,
-          "3_to_4": 4,
-          "4_to_5": 5,
-          "5_to_6": 5,
-          "6_to_7": 6,
-          "7_to_8": 6,
-          "8_to_9": 7,
-          "9_to_10": 7
-        }
-      }
+    "description": "Spell activation uses SKT row Akt./0 (BRW p.198). SP step costs use talent_columns (same SKT). Per-spell activation_cost_guild / activation_cost_elf in spells.json; cross-tradition +2 columns for tradition-exclusive spells.",
+    "skt_activation_row_Akt_per_0": {
+      "A": 5,
+      "B": 10,
+      "C": 15,
+      "D": 20,
+      "E": 25,
+      "F": 40,
+      "G": 50,
+      "H": 100
     },
     "max_starting_sp": {
       "guild_magician_guild_spells": 10,
