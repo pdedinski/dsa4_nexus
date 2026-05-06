@@ -17,6 +17,11 @@ import type {
   SheetLoadoutArmor,
   SheetLoadoutWeapon,
 } from "@/lib/character/types";
+import {
+  resolveWeaponDamageAtStrength,
+  tpKkForLoadoutWeapon,
+  weaponDamageStrengthNote,
+} from "@/lib/combat/weaponDamageAtStrength";
 
 const SHIELD_WEAPON_IDS = new Set([
   /** Known shield weapon ids; same list as weapons.json is_shield rows + legacy loadouts. */
@@ -160,6 +165,22 @@ function armorIniSum(armors: SheetLoadoutArmor[]): number {
   return armors.reduce((s, a) => s + (typeof a.iniModifier === "number" ? a.iniModifier : 0), 0);
 }
 
+function loadoutWeaponDamageFields(
+  sheet: CharacterSheet,
+  weapon: SheetLoadoutWeapon,
+): { damage: string | undefined; damageStrengthNote: string | undefined } {
+  const raw = weapon.damage?.trim();
+  if (!raw) return { damage: undefined, damageStrengthNote: undefined };
+  const st = sheet.attributesFinal.ST;
+  const tpKk = tpKkForLoadoutWeapon(weapon.id, weapon.tpKk);
+  const resolved = resolveWeaponDamageAtStrength(st, raw, tpKk);
+  const n = weaponDamageStrengthNote(resolved, st);
+  return {
+    damage: resolved.display,
+    damageStrengthNote: n || undefined,
+  };
+}
+
 export type LoadoutWeaponCombatLine = {
   weaponId: string;
   weaponName: string;
@@ -179,6 +200,8 @@ export type LoadoutWeaponCombatLine = {
   finalPA: number | null;
   ini: number;
   damage?: string;
+  /** Present when codex TP/ST scaling applies (see `tp_kk` / loadout `tpKk`). */
+  damageStrengthNote?: string;
   notes: string[];
 };
 
@@ -247,6 +270,8 @@ export function computeLoadoutWeaponLine(
       "Shield: parry uses base PA + shield WM + encumbrance + Off-hand Fighting / Shield Fighting SA (no combat talent TP).",
     );
 
+    const dmgFields = loadoutWeaponDamageFields(sheet, weapon);
+
     return {
       weaponId: weapon.id,
       weaponName: weapon.name,
@@ -268,7 +293,7 @@ export function computeLoadoutWeaponLine(
         sheet.derived.baseINI +
         armorIniSum(list) +
         (typeof weapon.iniModifier === "number" ? weapon.iniModifier : 0),
-      damage: weapon.damage,
+      ...dmgFields,
       notes,
     };
   }
@@ -382,6 +407,8 @@ export function computeLoadoutWeaponLine(
     armorIniSum(list) +
     (typeof weapon.iniModifier === "number" ? weapon.iniModifier : 0);
 
+  const dmgFields = loadoutWeaponDamageFields(sheet, weapon);
+
   return {
     weaponId: weapon.id,
     weaponName: weapon.name,
@@ -400,7 +427,7 @@ export function computeLoadoutWeaponLine(
     finalAT,
     finalPA,
     ini,
-    damage: weapon.damage,
+    ...dmgFields,
     notes,
   };
 }

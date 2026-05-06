@@ -155,6 +155,10 @@ function resolveLoadout(input: GenerateCharacterInput): SheetLoadout | undefined
         ? { isShield: true }
         : {}),
       damage: w.damage,
+      ...(typeof (w as { tp_kk?: unknown }).tp_kk === "string" &&
+      String((w as { tp_kk: string }).tp_kk).trim() !== ""
+        ? { tpKk: String((w as { tp_kk: string }).tp_kk).trim() }
+        : {}),
       atModifier: typeof w.at_modifier === "number" ? w.at_modifier : 0,
       paModifier: typeof w.pa_modifier === "number" ? w.pa_modifier : 0,
       iniModifier: typeof w.ini_modifier === "number" ? w.ini_modifier : 0,

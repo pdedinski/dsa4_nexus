@@ -450,8 +450,15 @@ export default function CharacterSheet({ sheet }: { sheet: Sheet }) {
                           <td className="py-2 text-right font-mono tabular-nums text-ink pr-2">
                             {row.ini}
                           </td>
-                          <td className="py-2 pl-2 font-mono text-ink-muted break-words max-w-[12rem]">
-                            {row.damage ?? "—"}
+                          <td className="py-2 pl-2 align-top max-w-[12rem]">
+                            <div className="font-mono text-ink break-words">
+                              {row.damage ?? "—"}
+                            </div>
+                            {row.damageStrengthNote ? (
+                              <p className="mt-0.5 m-0 text-[10px] text-ink-faint leading-snug">
+                                {row.damageStrengthNote}
+                              </p>
+                            ) : null}
                           </td>
                         </tr>
                       ))}
@@ -459,7 +466,9 @@ export default function CharacterSheet({ sheet }: { sheet: Sheet }) {
                   </table>
                 </div>
                 <p className="mt-2 text-[11px] text-ink-faint leading-relaxed">
-                  WM tilt on TP split (PA−AT Σ per talent, then{" "}
+                  Damage uses final ST from the sheet plus the weapon&apos;s TP/ST rule from the codex
+                  (<span className="font-mono">tp_kk</span>) where present; dice are unchanged, bonus TP is
+                  added to the fixed modifier. WM tilt on TP split (PA−AT Σ per talent, then{" "}
                   <span className="font-mono">atPaBias</span> tie-break), shield WM,
                   INI = base + Σ armor INI + weapon INI, eBE from raw ΣEC{" "}
                   <strong>{loadoutTotalEc}</strong> (melee eBE split; ranged/jousting full

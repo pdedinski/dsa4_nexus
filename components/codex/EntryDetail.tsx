@@ -1,4 +1,10 @@
 import type { ReactNode } from "react";
+import {
+  WEAPON_RANGE_BAND_LABELS,
+  WEAPON_RANGE_FK_BY_BAND,
+  formatSignedMod,
+  formatTpPlusCell,
+} from "@/lib/combat/rangedBands";
 
 interface Props {
   payload: Record<string, unknown>;
@@ -151,32 +157,6 @@ function ObjTable({ obj }: { obj: Record<string, unknown> }) {
 function Source({ src }: { src: unknown }) {
   if (!src) return null;
   return <p className="text-xs text-ink-faint mt-3 italic">{String(src)}</p>;
-}
-
-/** BRW p.155 — ranged combat (RC) check modifiers per distance class. */
-const WEAPON_RANGE_FK_BY_BAND = [-2, 0, 4, 8, 12] as const;
-
-const WEAPON_RANGE_BAND_LABELS = [
-  "Very close",
-  "Close",
-  "Medium",
-  "Far",
-  "Very far",
-] as const;
-
-function formatSignedMod(n: number): string {
-  if (n === 0) return "±0";
-  if (n > 0) return `+${n}`;
-  return String(n);
-}
-
-function formatTpPlusCell(v: unknown): string {
-  if (v === null || v === undefined) return "—";
-  if (typeof v === "number" && Number.isFinite(v)) {
-    if (v === 0) return "0";
-    return formatSignedMod(v);
-  }
-  return String(v);
 }
 
 function WeaponRangeBandsBlock({ p }: { p: Record<string, unknown> }) {

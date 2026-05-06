@@ -3,6 +3,12 @@
 import { useEffect, useMemo, useState } from "react";
 import weaponsData from "@/data/equipment/weapons.json";
 import BodyPortal from "@/components/ui/BodyPortal";
+import {
+  WEAPON_RANGE_BAND_LABELS,
+  WEAPON_RANGE_FK_BY_BAND,
+  formatSignedMod,
+  formatTpPlusCell,
+} from "@/lib/combat/rangedBands";
 
 /** Matches loadoutCombatValues / weapons.json shield rows. */
 const SHIELD_WEAPON_IDS = new Set([
@@ -37,6 +43,60 @@ function talentLabel(key: string) {
 function toggleId(ids: string[], id: string): string[] {
   if (ids.includes(id)) return ids.filter((x) => x !== id);
   return [...ids, id];
+}
+
+/** Compact per-band TP and FK modifiers for ranged weapons (BRW/WdS). */
+function WizardWeaponRangeBandsMini({ w }: { w: WeaponRow }) {
+  if (w.category !== "ranged") return null;
+
+  const raw = w.range_bands_schritt_upper;
+  if (!Array.isArray(raw) || raw.length !== 5) return null;
+  const bands = raw.map((x) => Number(x));
+  if (bands.some((n) => !Number.isFinite(n))) return null;
+
+  const tpRaw = w.tp_plus_by_range_band;
+  const tpPlus =
+    Array.isArray(tpRaw) && tpRaw.length === 5 ? tpRaw : null;
+
+  return (
+    <div className="mt-2 rounded-md border border-surface-border/80 overflow-hidden max-w-xl">
+      <div className="bg-surface-border/60 px-2 py-1 text-[10px] font-medium uppercase tracking-wide text-ink-muted">
+        Range bands (paces, TP / FK modifiers)
+      </div>
+      <div className="overflow-x-auto">
+        <table className="w-full text-[11px]">
+          <thead>
+            <tr className="border-b border-surface-border/70 text-left text-ink-muted">
+              <th className="px-2 py-1 font-normal">Class</th>
+              <th className="px-2 py-1 font-normal tabular-nums">TP+</th>
+              <th className="px-2 py-1 font-normal tabular-nums">RC</th>
+            </tr>
+          </thead>
+          <tbody>
+            {bands.map((maxSchritt, i) => (
+              <tr
+                key={i}
+                className="border-b border-surface-border/40 last:border-b-0"
+              >
+                <td className="px-2 py-0.5 text-ink">
+                  {WEAPON_RANGE_BAND_LABELS[i]}
+                </td>
+                <td className="px-2 py-0.5 tabular-nums font-medium">
+                  {maxSchritt}
+                </td>
+                <td className="px-2 py-0.5 tabular-nums">
+                  {tpPlus ? formatTpPlusCell(tpPlus[i]) : "—"}
+                </td>
+                <td className="px-2 py-0.5 tabular-nums text-ink-muted">
+                  {formatSignedMod(WEAPON_RANGE_FK_BY_BAND[i])}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
 }
 
 export default function CharacterWizardStepWeapons({
@@ -208,6 +268,7 @@ export default function CharacterWizardStepWeapons({
                                   {w.damage}
                                 </span>
                               </span>
+                              <WizardWeaponRangeBandsMini w={w} />
                             </span>
                           </label>
                         </li>

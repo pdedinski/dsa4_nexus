@@ -163,6 +163,8 @@ export interface SheetLoadoutWeapon {
   /** Shields: parry uses Shield Fighting / Off-hand Fighting SAs, not a Kampftechnik talent. */
   isShield?: boolean;
   damage?: string;
+  /** WdS/BRW TP/ST thresholds for bonus damage TP (codex field `tp_kk`, e.g. "11/4"). */
+  tpKk?: string;
   atModifier: number;
   paModifier: number;
   iniModifier: number;

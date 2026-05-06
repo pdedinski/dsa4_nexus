@@ -6,9 +6,30 @@ import BodyPortal from "@/components/ui/BodyPortal";
 
 type ArmorRow = (typeof armorData.armor)[number];
 
-const CATEGORY_ORDER = ["light", "medium", "heavy", "shield"] as const;
+const CATEGORY_ORDER = [
+  "cloth",
+  "leather",
+  "chain_scale",
+  "plate",
+  "exotic",
+  "full_set",
+  "helmet",
+  "additional",
+  "light",
+  "medium",
+  "heavy",
+  "shield",
+] as const;
 
 function categoryLabel(cat: string) {
+  if (cat === "cloth") return "Cloth armor";
+  if (cat === "leather") return "Leather armor";
+  if (cat === "chain_scale") return "Chain & scale";
+  if (cat === "plate") return "Plate armor";
+  if (cat === "exotic") return "Exotic armor";
+  if (cat === "full_set") return "Full armor sets";
+  if (cat === "helmet") return "Helmets";
+  if (cat === "additional") return "Additional armor";
   if (cat === "light") return "Light armor";
   if (cat === "medium") return "Medium armor";
   if (cat === "heavy") return "Heavy armor";
