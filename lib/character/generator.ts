@@ -724,6 +724,26 @@ function applyAttrMods(
   return out;
 }
 
+/** Picks one attribute from `pool` with prob proportional to 2^bias[a] (concept-led but varied). */
+function weightedPickAttr(
+  rng: () => number,
+  pool: AttrCode[],
+  bias: Partial<Record<AttrCode, number>>
+): AttrCode {
+  const weights = pool.map((a) => Math.pow(2, bias[a] ?? 0));
+  const total = weights.reduce((s, w) => s + w, 0);
+  if (!(total > 0) || !Number.isFinite(total)) {
+    const i = Math.min(Math.floor(rng() * pool.length), pool.length - 1);
+    return pool[Math.max(0, i)]!;
+  }
+  let r = rng() * total;
+  for (let i = 0; i < pool.length; i++) {
+    r -= weights[i]!;
+    if (r <= 0) return pool[i]!;
+  }
+  return pool[pool.length - 1]!;
+}
+
 function solveAttributes(
   rng: () => number,
   minsNeeded: Partial<Record<AttrCode, number>>,
@@ -748,10 +768,7 @@ function solveAttributes(
   while (sum < maxSum) {
     const pool = ATTR_CODES.filter((a) => base[a] < 14);
     if (pool.length === 0) break;
-    pool.sort(
-      (a, b) => (bias[b] ?? 0) + rng() * 0.1 - ((bias[a] ?? 0) + rng() * 0.1)
-    );
-    const a = pool[0]!;
+    const a = weightedPickAttr(rng, pool, bias);
     base[a]++;
     sum++;
   }

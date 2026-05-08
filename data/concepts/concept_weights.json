@@ -1306,7 +1306,7 @@
         "mercenary"
       ],
       "attribute_bias": {
-        "CO": 2,
+        "CO": 3,
         "ST": 2,
         "CN": 2,
         "IN": 1,
@@ -1374,7 +1374,7 @@
         "rogue"
       ],
       "attribute_bias": {
-        "CH": 2,
+        "CH": 3,
         "IN": 2,
         "CL": 1,
         "CO": 1,
@@ -1442,7 +1442,7 @@
       ],
       "attribute_bias": {
         "ST": 3,
-        "CO": 2,
+        "CO": 3,
         "DE": 2,
         "CN": 1,
         "CL": 0,
@@ -1509,7 +1509,7 @@
       ],
       "attribute_bias": {
         "DE": 3,
-        "IN": 2,
+        "IN": 3,
         "CL": 1,
         "CO": 1,
         "AG": 1,
@@ -1572,10 +1572,10 @@
         "mercenary"
       ],
       "attribute_bias": {
+        "CN": 3,
         "ST": 2,
-        "CN": 2,
-        "IN": 1,
         "DE": 2,
+        "IN": 1,
         "CO": 1,
         "CL": 0,
         "AG": 0,
@@ -1717,7 +1717,7 @@
         "explorer"
       ],
       "attribute_bias": {
-        "CH": 3,
+        "CH": 4,
         "CL": 2,
         "CO": 1,
         "IN": 1,
@@ -1796,7 +1796,7 @@
         "mercenary"
       ],
       "attribute_bias": {
-        "CO": 2,
+        "CO": 3,
         "ST": 2,
         "CN": 2,
         "AG": 1,
@@ -1870,10 +1870,10 @@
         "scout"
       ],
       "attribute_bias": {
+        "IN": 3,
         "CO": 2,
         "ST": 2,
         "CN": 2,
-        "IN": 1,
         "AG": 1,
         "DE": 0,
         "CL": 0,

@@ -647,6 +647,9 @@ function EquipmentDetail({
       : null;
     return (
       <div className="space-y-2">
+        {str(p.description) && (
+          <CodexPreserveNewlinesDescription text={str(p.description)} />
+        )}
         <div className="flex flex-wrap gap-2">
           {p.ar != null && <Stat label="AR" value={str(p.ar)} />}
           {p.ec != null && <Stat label="EC" value={str(p.ec)} />}
