@@ -1,7 +1,8 @@
 /**
  * Loadout combat display: final AT/PA/INI from sheet + weapon + armor/shield + encumbrance (EEC/eBE).
- * Melee eBE split: floor to AT, ceil to PA (odd remainder hits PA). Ranged/jousting: full eBE from AT.
- * EC is summed over all chosen armor rows (simplified stacking).
+ * Melee eBE split: floor to AT, ceil to PA (odd remainder hits PA).
+ * Ranged/jousting: full eBE from AT.
+ * Rüstungsgewöhnung reduces per-piece EC before ΣEC → eBE (see encumbrance.ts).
  */
 
 import combatTalentsData from "@/data/talents/combat_talents.json";
@@ -11,6 +12,12 @@ import {
   normalizeConceptAtPaBias,
   type WeaponBiasRow,
 } from "@/lib/character/meleeTpAllocation";
+import {
+  computeLoadoutEncumbranceTotals,
+  parseEffectiveEncumbrance,
+  totalLoadoutECRaw,
+  type LoadoutEncumbranceTotals,
+} from "@/lib/character/encumbrance";
 import type {
   CharacterSheet,
   SheetLoadout,
@@ -23,8 +30,9 @@ import {
   weaponDamageStrengthNote,
 } from "@/lib/combat/weaponDamageAtStrength";
 
+export { parseEffectiveEncumbrance } from "@/lib/character/encumbrance";
+
 const SHIELD_WEAPON_IDS = new Set([
-  /** Known shield weapon ids; same list as weapons.json is_shield rows + legacy loadouts. */
   "buckler",
   "small_shield",
   "battle_shield",
@@ -44,7 +52,6 @@ const COMBAT_TALENT_MAP = new Map<string, CombatTalentJson>(
   (combatTalentsData.talents as CombatTalentJson[]).map((t) => [t.id, t]),
 );
 
-/** `weapons.json` uses shorter slugs in places; canonical ids live in combat_talents.json. */
 const WEAPON_COMBAT_TALENT_ALIASES: Record<string, string> = {
   bastard_swords: "bastard_sword",
   discus: "throwing_knives",
@@ -67,7 +74,6 @@ function isShieldLoadoutWeapon(w: SheetLoadoutWeapon): boolean {
   return SHIELD_WEAPON_IDS.has(w.id);
 }
 
-/** Talents that use two-handed weapons incompatible with shield WM on the same line. */
 const MELEE_NO_SHIELD_TALENTS = new Set([
   "two_handed_swords",
   "two_handed_blunt_weapons",
@@ -76,7 +82,6 @@ const MELEE_NO_SHIELD_TALENTS = new Set([
   "bastard_sword",
 ]);
 
-/** Untrained / fallback combat (BRW): −5 total as AT−2, PA−3 vs bases. */
 function fallbackMeleeBases(sheet: CharacterSheet): { at: number; pa: number } {
   return {
     at: sheet.derived.baseAT - 2,
@@ -88,23 +93,6 @@ function talentTp(sheet: CharacterSheet, talentId: string | null): number {
   if (!talentId) return 0;
   const row = sheet.talents.find((t) => t.id === talentId);
   return row?.tp ?? 0;
-}
-
-/**
- * Effective encumbrance (eBE) for a combat talent from total worn EC (BE).
- */
-export function parseEffectiveEncumbrance(
-  eecRaw: string | undefined,
-  totalEC: number
-): number {
-  const raw = (eecRaw ?? "EC").trim();
-  if (!raw || raw === "0") return 0;
-  const u = raw.toUpperCase();
-  if (u === "EC") return Math.max(0, totalEC);
-  const sub = /^EC-(\d+)$/i.exec(raw);
-  if (sub) return Math.max(0, totalEC - Number(sub[1]));
-  if (/^ECX2$/i.test(u)) return Math.max(0, totalEC * 2);
-  return Math.max(0, totalEC);
 }
 
 function encumbranceSplitMelee(ebe: number): { atPen: number; paPen: number } {
@@ -128,7 +116,6 @@ function sumShieldModifiers(armors: SheetLoadoutArmor[]): {
   return { at, pa };
 }
 
-/** Shield WM from armor rows plus other shield weapons (excludes the current weapon row). */
 function sumCompanionShieldModifiers(
   armors: SheetLoadoutArmor[] | undefined,
   allWeapons: SheetLoadoutWeapon[],
@@ -145,7 +132,6 @@ function sumCompanionShieldModifiers(
   return { at, pa };
 }
 
-/** PA bonus from Off-hand Fighting + Shield Fighting I/II (data/character/special_abilities.json). */
 const SHIELD_PAR_SA_BONUS: Record<string, number> = {
   off_hand_fighting: 1,
   shield_fighting_i: 2,
@@ -162,7 +148,32 @@ function shieldParrySaBonus(sheet: CharacterSheet): number {
 }
 
 function armorIniSum(armors: SheetLoadoutArmor[]): number {
-  return armors.reduce((s, a) => s + (typeof a.iniModifier === "number" ? a.iniModifier : 0), 0);
+  return armors.reduce(
+    (s, a) => s + (typeof a.iniModifier === "number" ? a.iniModifier : 0),
+    0,
+  );
+}
+
+function encDetailEbe(
+  eecLabel: string,
+  ebe: number,
+  rawTotalEC: number,
+  effectiveTotalEC: number,
+  kind: "melee_split" | "full_at",
+  encAT?: number,
+  encPA?: number,
+): string {
+  const parts = [
+    `EEC ${eecLabel}`,
+    `eBE ${ebe}`,
+    `ΣEC raw ${rawTotalEC} → effective ${effectiveTotalEC}`,
+  ];
+  if (kind === "melee_split" && encAT != null && encPA != null) {
+    parts.push(`melee penalty AT −${encAT} / PA −${encPA} (floor/ceil split)`);
+  } else {
+    parts.push(`FK/jousting: full eBE −${encAT ?? ebe} from AT`);
+  }
+  return parts.join("; ");
 }
 
 function loadoutWeaponDamageFields(
@@ -181,13 +192,59 @@ function loadoutWeaponDamageFields(
   };
 }
 
+function iniLinesFor(
+  sheet: CharacterSheet,
+  list: SheetLoadoutArmor[],
+  weapon: SheetLoadoutWeapon,
+): CombatValueBreakdownLine[] {
+  const lines: CombatValueBreakdownLine[] = [
+    {
+      label: "Base INI",
+      delta: sheet.derived.baseINI,
+      detail: "round((CO+CO+IN+AG)/5) + racial modifier",
+    },
+  ];
+  if (list.length) {
+    const sum = armorIniSum(list);
+    const detail = list
+      .map(
+        (a) =>
+          `${a.name}: ${a.iniModifier >= 0 ? "+" : ""}${a.iniModifier}`,
+      )
+      .join("; ");
+    lines.push({
+      label: "Armor / shield INI",
+      delta: sum,
+      detail,
+    });
+  }
+  if (typeof weapon.iniModifier === "number" && weapon.iniModifier !== 0) {
+    lines.push({
+      label: "Weapon INI modifier",
+      delta: weapon.iniModifier,
+      detail: "Heavy weapons / gear from codex",
+    });
+  }
+  return lines;
+}
+
+export type CombatValueBreakdownLine = {
+  label: string;
+  delta: number;
+  detail?: string;
+};
+
 export type LoadoutWeaponCombatLine = {
   weaponId: string;
   weaponName: string;
   kind: "melee" | "ranged" | "jousting" | "unknown";
   combatTalentId: string | null;
+  /** Raw Σ EC from codex rows (before Rüstungsgewöhnung). */
   totalEC: number;
+  /** Σ EC after Armor Use per-piece reductions. */
+  effectiveTotalEC: number;
   ebe: number;
+  combatTalentEec?: string;
   baseAT: number;
   basePA: number | null;
   weaponAT: number;
@@ -200,14 +257,16 @@ export type LoadoutWeaponCombatLine = {
   finalPA: number | null;
   ini: number;
   damage?: string;
-  /** Present when codex TP/ST scaling applies (see `tp_kk` / loadout `tpKk`). */
   damageStrengthNote?: string;
   notes: string[];
+  atBreakdown: CombatValueBreakdownLine[];
+  paBreakdown: CombatValueBreakdownLine[] | null;
+  iniBreakdown: CombatValueBreakdownLine[];
+  armorUseSummary: string;
 };
 
 export function totalLoadoutEC(armors: SheetLoadoutArmor[] | undefined): number {
-  if (!armors?.length) return 0;
-  return armors.reduce((s, a) => s + (typeof a.ec === "number" ? a.ec : 0), 0);
+  return totalLoadoutECRaw(armors);
 }
 
 function loadoutWeaponsToBiasRows(weapons: SheetLoadoutWeapon[]): WeaponBiasRow[] {
@@ -223,8 +282,8 @@ function meleeBasesFromTp(
   meleeRow: NonNullable<CharacterSheet["combatMelee"][number]>,
   talentId: string,
   weaponBiasContext: WeaponBiasRow[],
-  notes: string[]
-): { baseAT: number; basePA: number } {
+  notes: string[],
+): { baseAT: number; basePA: number; allocatedAT: number; allocatedPA: number } {
   const conceptBias = normalizeConceptAtPaBias(sheet.atPaBias);
   const meleeBias =
     weaponBiasContext.length > 0
@@ -236,12 +295,14 @@ function meleeBasesFromTp(
     split.allocatedPA !== meleeRow.allocatedPA
   ) {
     notes.push(
-      "Melee TP split from Σ(PA−AT) WM on chosen weapons for this talent (concept tie-break if neutral); may differ from combat table if loadout changed."
+      "Melee TP split from Σ(PA−AT) WM on chosen weapons for this talent (concept tie-break if neutral); may differ from combat table if loadout changed.",
     );
   }
   return {
     baseAT: sheet.derived.baseAT + split.allocatedAT,
     basePA: sheet.derived.basePA + split.allocatedPA,
+    allocatedAT: split.allocatedAT,
+    allocatedPA: split.allocatedPA,
   };
 }
 
@@ -251,17 +312,31 @@ export function computeLoadoutWeaponLine(
   armors: SheetLoadoutArmor[] | undefined,
   weaponBiasContext: WeaponBiasRow[] = [],
   companionShieldMod?: { at: number; pa: number },
+  encTotalsPre?: LoadoutEncumbranceTotals,
 ): LoadoutWeaponCombatLine {
   const list = armors ?? [];
-  const totalEC = totalLoadoutEC(list);
+  const encTotals =
+    encTotalsPre ??
+    computeLoadoutEncumbranceTotals(list, sheet.specialAbilities);
+  const rawTotalEC = encTotals.rawTotalEC;
+  const effectiveTotalEC = encTotals.effectiveTotalEC;
+  const armorUseSummary = encTotals.armorUse.summary;
+
+  if (rawTotalEC !== effectiveTotalEC && armorUseSummary) {
+    /* footnote optional — surfaced in breakdown detail */
+  }
+
   const shield =
     companionShieldMod ?? sumShieldModifiers(list);
 
   const notes: string[] = [];
 
-  /** Shield weapons: no Kampftechnik talent — parry = base PA + shield WM + Shield Fighting / Off-hand SA. */
+  const iniBreakdown = iniLinesFor(sheet, list, weapon);
+
+  /** Shield weapons */
   if (isShieldLoadoutWeapon(weapon)) {
-    const ebeShield = parseEffectiveEncumbrance("EC", totalEC);
+    const eecShield = "EC";
+    const ebeShield = parseEffectiveEncumbrance(eecShield, effectiveTotalEC);
     const splitShield = encumbranceSplitMelee(ebeShield);
     const saPa = shieldParrySaBonus(sheet);
     const baseAT = sheet.derived.baseAT;
@@ -272,13 +347,58 @@ export function computeLoadoutWeaponLine(
 
     const dmgFields = loadoutWeaponDamageFields(sheet, weapon);
 
+    const encDetail = encDetailEbe(
+      eecShield,
+      ebeShield,
+      rawTotalEC,
+      effectiveTotalEC,
+      "melee_split",
+      splitShield.atPen,
+      splitShield.paPen,
+    );
+
+    const atBreakdown: CombatValueBreakdownLine[] = [
+      { label: "Base AT", delta: sheet.derived.baseAT },
+      {
+        label: "Weapon AT modifier",
+        delta: weapon.atModifier,
+        detail: "Shield WM (AT)",
+      },
+      {
+        label: "Encumbrance (eBE/2 floor)",
+        delta: -splitShield.atPen,
+        detail: encDetail + (armorUseSummary ? `; ${armorUseSummary}` : ""),
+      },
+    ];
+
+    const paBreakdown: CombatValueBreakdownLine[] = [
+      { label: "Base PA", delta: sheet.derived.basePA },
+      {
+        label: "Off-hand / Shield Fighting SA",
+        delta: saPa,
+        detail: "data/character/special_abilities.json",
+      },
+      {
+        label: "Shield PA modifier",
+        delta: weapon.paModifier,
+        detail: "Shield WM (PA)",
+      },
+      {
+        label: "Encumbrance (eBE/2 ceil)",
+        delta: -splitShield.paPen,
+        detail: encDetail + (armorUseSummary ? `; ${armorUseSummary}` : ""),
+      },
+    ];
+
     return {
       weaponId: weapon.id,
       weaponName: weapon.name,
       kind: "melee",
       combatTalentId: null,
-      totalEC,
+      totalEC: rawTotalEC,
+      effectiveTotalEC,
       ebe: ebeShield,
+      combatTalentEec: eecShield,
       baseAT,
       basePA,
       weaponAT: weapon.atModifier,
@@ -295,16 +415,19 @@ export function computeLoadoutWeaponLine(
         (typeof weapon.iniModifier === "number" ? weapon.iniModifier : 0),
       ...dmgFields,
       notes,
+      atBreakdown,
+      paBreakdown,
+      iniBreakdown,
+      armorUseSummary,
     };
   }
 
   const talentRaw = weapon.combatTalent ?? null;
-  /** Sheet combat rows use canonical KT ids from the talent catalog. */
   const talentId = canonicalCombatTalentId(talentRaw);
   const def = talentId ? COMBAT_TALENT_MAP.get(talentId) : undefined;
   const combatType = def?.combat_type ?? "unknown";
   const eec = def?.eec;
-  const ebe = parseEffectiveEncumbrance(eec, totalEC);
+  const ebe = parseEffectiveEncumbrance(eec, effectiveTotalEC);
   const meleeSplit = encumbranceSplitMelee(ebe);
 
   const meleeRow = talentId
@@ -320,6 +443,9 @@ export function computeLoadoutWeaponLine(
   let encAT = meleeSplit.atPen;
   let encPA = meleeSplit.paPen;
 
+  const atBreakdown: CombatValueBreakdownLine[] = [];
+  let paBreakdown: CombatValueBreakdownLine[] | null = [];
+
   const allowsShield =
     combatType === "melee" &&
     !!talentId &&
@@ -331,6 +457,9 @@ export function computeLoadoutWeaponLine(
     notes.push("Shield modifiers omitted (two-handed / incompatible talent).");
   }
 
+  let allocatedAT = 0;
+  let allocatedPA = 0;
+
   if (combatType === "ranged") {
     kind = "ranged";
     basePA = null;
@@ -338,15 +467,32 @@ export function computeLoadoutWeaponLine(
     encPA = 0;
     shieldAT = 0;
     shieldPA = 0;
+    const tp = talentTp(sheet, talentId);
     if (rangedRow) {
       baseAT = rangedRow.finalAT;
+      atBreakdown.push(
+        { label: "Base BRV (FK)", delta: sheet.derived.baseBRV },
+        {
+          label: "Ranged TaW",
+          delta: tp,
+          detail: rangedRow.talentName,
+        },
+      );
     } else {
-      const tp = talentTp(sheet, talentId);
       baseAT = sheet.derived.baseBRV + tp;
+      atBreakdown.push(
+        { label: "Base BRV (FK)", delta: sheet.derived.baseBRV },
+        {
+          label: "Ranged TaW",
+          delta: tp,
+          detail: talentId ?? undefined,
+        },
+      );
       if (tp <= 0) {
         notes.push("No ranged TP on sheet; FK base + 0 TP shown.");
       }
     }
+    paBreakdown = null;
   } else if (combatType === "jousting") {
     kind = "jousting";
     basePA = null;
@@ -356,34 +502,119 @@ export function computeLoadoutWeaponLine(
     shieldPA = 0;
     const tp = talentTp(sheet, talentId);
     baseAT = sheet.derived.baseAT + tp;
+    atBreakdown.push(
+      { label: "Base AT", delta: sheet.derived.baseAT },
+      {
+        label: "Jousting TaW (→ AT only)",
+        delta: tp,
+        detail: talentId ?? undefined,
+      },
+    );
     if (meleeRow) {
       notes.push("Jousting uses AT-only; sheet melee row ignored.");
     }
+    paBreakdown = null;
   } else if (combatType === "melee") {
     kind = "melee";
     if (meleeRow && talentId) {
-      const mb = meleeBasesFromTp(sheet, meleeRow, talentId, weaponBiasContext, notes);
+      const mb = meleeBasesFromTp(
+        sheet,
+        meleeRow,
+        talentId,
+        weaponBiasContext,
+        notes,
+      );
       baseAT = mb.baseAT;
       basePA = mb.basePA;
+      allocatedAT = mb.allocatedAT;
+      allocatedPA = mb.allocatedPA;
+      atBreakdown.push(
+        { label: "Base AT", delta: sheet.derived.baseAT },
+        {
+          label: "Melee TaW → AT",
+          delta: allocatedAT,
+          detail: `TaW ${meleeRow.tp}; ${meleeRow.talentName}`,
+        },
+      );
+      paBreakdown!.push(
+        { label: "Base PA", delta: sheet.derived.basePA },
+        {
+          label: "Melee TaW → PA",
+          delta: allocatedPA,
+          detail: `TaW ${meleeRow.tp}; ${meleeRow.talentName}`,
+        },
+      );
     } else if (meleeRow) {
       baseAT = meleeRow.finalAT;
       basePA = meleeRow.finalPA;
+      allocatedAT = meleeRow.allocatedAT;
+      allocatedPA = meleeRow.allocatedPA;
+      atBreakdown.push({
+        label: "Melee combat table AT",
+        delta: baseAT,
+        detail: "From sheet (base + allocated AT)",
+      });
+      paBreakdown!.push({
+        label: "Melee combat table PA",
+        delta: basePA,
+        detail: "From sheet (base + allocated PA)",
+      });
     } else {
       const fb = fallbackMeleeBases(sheet);
       baseAT = fb.at;
       basePA = fb.pa;
+      atBreakdown.push(
+        { label: "Base AT", delta: sheet.derived.baseAT },
+        { label: "Untrained AT penalty", delta: -2 },
+      );
+      paBreakdown!.push(
+        { label: "Base PA", delta: sheet.derived.basePA },
+        { label: "Untrained PA penalty", delta: -3 },
+      );
       notes.push("No melee TP row; fallback AT−2 / PA−3 vs bases.");
     }
   } else {
     if (meleeRow && talentId) {
       kind = "melee";
-      const mb = meleeBasesFromTp(sheet, meleeRow, talentId, weaponBiasContext, notes);
+      const mb = meleeBasesFromTp(
+        sheet,
+        meleeRow,
+        talentId,
+        weaponBiasContext,
+        notes,
+      );
       baseAT = mb.baseAT;
       basePA = mb.basePA;
+      allocatedAT = mb.allocatedAT;
+      allocatedPA = mb.allocatedPA;
+      atBreakdown.push(
+        { label: "Base AT", delta: sheet.derived.baseAT },
+        {
+          label: "Melee TaW → AT",
+          delta: allocatedAT,
+          detail: `TaW ${meleeRow.tp}`,
+        },
+      );
+      paBreakdown!.push(
+        { label: "Base PA", delta: sheet.derived.basePA },
+        {
+          label: "Melee TaW → PA",
+          delta: allocatedPA,
+          detail: `TaW ${meleeRow.tp}`,
+        },
+      );
     } else if (meleeRow) {
       kind = "melee";
       baseAT = meleeRow.finalAT;
       basePA = meleeRow.finalPA;
+      atBreakdown.push({
+        label: "Melee combat table AT",
+        delta: baseAT,
+      });
+      paBreakdown!.push({
+        label: "Melee combat table PA",
+        delta: basePA,
+      });
     } else if (rangedRow) {
       kind = "ranged";
       baseAT = rangedRow.finalAT;
@@ -392,13 +623,79 @@ export function computeLoadoutWeaponLine(
       encPA = 0;
       shieldAT = 0;
       shieldPA = 0;
+      const tp = talentTp(sheet, talentId);
+      atBreakdown.push(
+        { label: "Base BRV (FK)", delta: sheet.derived.baseBRV },
+        { label: "Ranged TaW", delta: tp },
+      );
+      paBreakdown = null;
     } else {
+      atBreakdown.push({ label: "Base AT", delta: baseAT });
+      paBreakdown!.push({ label: "Base PA", delta: basePA ?? 0 });
       notes.push("Unknown combat talent; bases + weapon mods only.");
     }
   }
 
-  const finalAT =
-    baseAT + weapon.atModifier + shieldAT - encAT;
+  const encLbl = eec ?? "—";
+  const encDetail =
+    kind === "ranged" || kind === "jousting"
+      ? encDetailEbe(encLbl, ebe, rawTotalEC, effectiveTotalEC, "full_at", encAT, 0)
+      : encDetailEbe(
+          encLbl,
+          ebe,
+          rawTotalEC,
+          effectiveTotalEC,
+          "melee_split",
+          encAT,
+          encPA,
+        );
+
+  atBreakdown.push({
+    label: "Weapon AT modifier",
+    delta: weapon.atModifier,
+    detail: "WM from codex",
+  });
+  if (shieldAT !== 0) {
+    atBreakdown.push({
+      label: "Companion shield AT",
+      delta: shieldAT,
+      detail: "Shield WM from other hand / armor shield row",
+    });
+  }
+  atBreakdown.push({
+    label:
+      kind === "ranged" || kind === "jousting"
+        ? "Encumbrance (full eBE on AT)"
+        : "Encumbrance (eBE/2 floor)",
+    delta: -encAT,
+    detail:
+      encDetail +
+      (armorUseSummary ? `; ${armorUseSummary}` : ""),
+  });
+
+  if (paBreakdown) {
+    paBreakdown.push({
+      label: "Weapon PA modifier",
+      delta: weapon.paModifier,
+      detail: "WM from codex",
+    });
+    if (shieldPA !== 0) {
+      paBreakdown.push({
+        label: "Companion shield PA",
+        delta: shieldPA,
+        detail: "Shield WM from other hand / armor shield row",
+      });
+    }
+    paBreakdown.push({
+      label: "Encumbrance (eBE/2 ceil)",
+      delta: -encPA,
+      detail:
+        encDetail +
+        (armorUseSummary ? `; ${armorUseSummary}` : ""),
+    });
+  }
+
+  const finalAT = baseAT + weapon.atModifier + shieldAT - encAT;
   const finalPA =
     basePA === null ? null : basePA + weapon.paModifier + shieldPA - encPA;
 
@@ -414,8 +711,10 @@ export function computeLoadoutWeaponLine(
     weaponName: weapon.name,
     kind,
     combatTalentId: talentId ?? talentRaw,
-    totalEC,
+    totalEC: rawTotalEC,
+    effectiveTotalEC,
     ebe,
+    combatTalentEec: eec,
     baseAT,
     basePA,
     weaponAT: weapon.atModifier,
@@ -429,15 +728,23 @@ export function computeLoadoutWeaponLine(
     ini,
     ...dmgFields,
     notes,
+    atBreakdown,
+    paBreakdown,
+    iniBreakdown,
+    armorUseSummary,
   };
 }
 
 export function computeAllLoadoutWeaponLines(
   sheet: CharacterSheet,
-  loadout: SheetLoadout
+  loadout: SheetLoadout,
 ): LoadoutWeaponCombatLine[] {
   const armors = loadout.armors;
   const allWeapons = loadout.weapons ?? [];
+  const encTotals = computeLoadoutEncumbranceTotals(
+    armors,
+    sheet.specialAbilities,
+  );
   const weaponBiasContext = loadoutWeaponsToBiasRows(allWeapons);
   return allWeapons.map((w) =>
     computeLoadoutWeaponLine(
@@ -446,6 +753,7 @@ export function computeAllLoadoutWeaponLines(
       armors,
       weaponBiasContext,
       sumCompanionShieldModifiers(armors, allWeapons, w.id),
-    )
+      encTotals,
+    ),
   );
 }

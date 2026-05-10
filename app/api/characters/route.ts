@@ -5,6 +5,8 @@ import { requireAllowed } from "@/lib/auth/session";
 import { db } from "@/lib/db/client";
 import { characters } from "@/lib/db/schema";
 import type { CharacterSheet } from "@/lib/character/types";
+import { migrateCharacterSheet } from "@/lib/character/sheetMigration";
+import { sanitizeCharacterSheetForStorage } from "@/lib/character/sheetPersistence";
 
 export async function GET(req: NextRequest) {
   const session = await requireAllowed();
@@ -57,6 +59,10 @@ export async function POST(req: NextRequest) {
   if (!sheet || typeof sheet !== "object")
     return NextResponse.json({ error: "Missing sheet" }, { status: 400 });
 
+  const sheetToStore = sanitizeCharacterSheetForStorage(
+    migrateCharacterSheet(sheet as CharacterSheet),
+  );
+
   const [conflict] = await db
     .select({ id: characters.id })
     .from(characters)
@@ -80,7 +86,7 @@ export async function POST(req: NextRequest) {
     characterId,
     userId: session.user.id,
     name,
-    sheet: sheet as object,
+    sheet: sheetToStore as object,
   });
 
   return NextResponse.json({ id, characterId }, { status: 201 });

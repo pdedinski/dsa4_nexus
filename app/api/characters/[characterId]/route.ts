@@ -5,6 +5,7 @@ import { db } from "@/lib/db/client";
 import { characters } from "@/lib/db/schema";
 import type { CharacterSheet } from "@/lib/character/types";
 import { migrateCharacterSheet } from "@/lib/character/sheetMigration";
+import { sanitizeCharacterSheetForStorage } from "@/lib/character/sheetPersistence";
 
 type Ctx = { params: Promise<{ characterId: string }> };
 
@@ -57,7 +58,10 @@ export async function PATCH(req: NextRequest, ctx: Ctx) {
     updatedAt: new Date(),
   };
   if (typeof body.name === "string") updates.name = body.name.trim();
-  if (body.sheet && typeof body.sheet === "object") updates.sheet = body.sheet as object;
+  if (body.sheet && typeof body.sheet === "object")
+    updates.sheet = sanitizeCharacterSheetForStorage(
+      migrateCharacterSheet(body.sheet as CharacterSheet),
+    ) as object;
 
   const rows = await db
     .update(characters)

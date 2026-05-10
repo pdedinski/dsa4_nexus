@@ -13,6 +13,8 @@ export type TalentDef = {
   test_attributes?: string[];
   is_basic?: boolean;
   combat_type?: string | null;
+  /** Effective encumbrance class (EEC / eBE interaction), when present in JSON. */
+  eec?: string | null;
 };
 
 const TALENT_FILES: { group: string; data: { talents: TalentDef[] } }[] = [
@@ -40,6 +42,13 @@ export const TALENT_INDEX = buildTalentIndex();
 
 /** Stable list for TGP iteration (order not guaranteed). */
 export const ALL_TALENT_IDS: readonly string[] = Array.from(TALENT_INDEX.keys());
+
+/** Codex `eec` field for talent tests / encumbrance (not all groups define it). */
+export function getTalentEec(talentId: string): string | undefined {
+  const t = TALENT_INDEX.get(talentId);
+  const e = t?.eec;
+  return e == null || e === "" ? undefined : e;
+}
 
 export function getTalentCodexLocation(
   talentId: string

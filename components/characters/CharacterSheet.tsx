@@ -1,13 +1,29 @@
 "use client";
 
-import { useMemo, useState, type ReactNode } from "react";
+import {
+  useEffect,
+  useId,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+  useSyncExternalStore,
+  type CSSProperties,
+  type ReactNode,
+} from "react";
 import type { CharacterSheet as Sheet, SheetLoadoutArmor } from "@/lib/character/types";
+import BodyPortal from "@/components/ui/BodyPortal";
 import {
   computeAllLoadoutWeaponLines,
-  totalLoadoutEC,
+  type CombatValueBreakdownLine,
 } from "@/lib/character/loadoutCombatValues";
+import {
+  computeLoadoutEncumbranceTotals,
+  talentTpAfterEecEncumbrance,
+} from "@/lib/character/encumbrance";
 import { migrateCharacterSheet } from "@/lib/character/sheetMigration";
 import { humanizeSnake } from "@/lib/display/humanize";
+import { getTalentEec } from "@/lib/talents/catalog";
 import CodexEntryPeekModal, {
   type CodexPeekTarget,
 } from "@/components/characters/CodexEntryPeekModal";
@@ -49,6 +65,310 @@ function CodexLink({
   );
 }
 
+function formatSignedMod(n: number): string {
+  if (n > 0) return `+${n}`;
+  return String(n);
+}
+
+const HOVER_PANEL_CLOSE_MS = 220;
+
+function subscribeFinePointerHover(callback: () => void) {
+  const mq = window.matchMedia("(hover: hover) and (pointer: fine)");
+  mq.addEventListener("change", callback);
+  return () => mq.removeEventListener("change", callback);
+}
+
+function getFinePointerHoverSnapshot() {
+  return window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+}
+
+/** Desktop/laptop with real hover; phones and most tablets are false (tap-only UX). */
+function useFinePointerHover() {
+  return useSyncExternalStore(
+    subscribeFinePointerHover,
+    getFinePointerHoverSnapshot,
+    () => true,
+  );
+}
+
+function WeaponCombatStatBreakdown({
+  label,
+  valueDisplay,
+  lines,
+  expectedTotal,
+}: {
+  label: string;
+  valueDisplay: ReactNode;
+  lines: CombatValueBreakdownLine[];
+  expectedTotal: number;
+}) {
+  const finePointerHover = useFinePointerHover();
+  const [hover, setHover] = useState(false);
+  const [pinned, setPinned] = useState(false);
+  const show = pinned || (finePointerHover && hover);
+  const panelId = useId();
+  const anchorRef = useRef<HTMLButtonElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
+  const hoverCloseTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [panelStyle, setPanelStyle] = useState<CSSProperties | null>(null);
+  const lineSum = lines.reduce((s, l) => s + l.delta, 0);
+
+  function cancelScheduledHoverClose() {
+    if (hoverCloseTimerRef.current != null) {
+      clearTimeout(hoverCloseTimerRef.current);
+      hoverCloseTimerRef.current = null;
+    }
+  }
+
+  function scheduleHoverClose() {
+    cancelScheduledHoverClose();
+    hoverCloseTimerRef.current = setTimeout(() => {
+      hoverCloseTimerRef.current = null;
+      setHover(false);
+    }, HOVER_PANEL_CLOSE_MS);
+  }
+
+  useEffect(() => () => cancelScheduledHoverClose(), []);
+
+  useLayoutEffect(() => {
+    if (!show) {
+      setPanelStyle(null);
+      return;
+    }
+    function measure() {
+      const el = anchorRef.current;
+      if (!el) return;
+      const r = el.getBoundingClientRect();
+      const margin = 12;
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+      const compact = !finePointerHover || vw < 640;
+      const spaceBelow = vh - r.bottom - margin;
+      const spaceAbove = r.top - margin;
+      const preferBelow = spaceBelow >= 140 || spaceBelow >= spaceAbove;
+
+      if (compact) {
+        const reserveBottom = 28;
+        const maxHBelow = Math.min(
+          Math.floor(vh * 0.55),
+          Math.max(120, spaceBelow - reserveBottom),
+        );
+        const maxHAbove = Math.min(
+          Math.floor(vh * 0.55),
+          Math.max(120, spaceAbove - reserveBottom),
+        );
+        const maxHeight = preferBelow ? maxHBelow : maxHAbove;
+        if (preferBelow) {
+          setPanelStyle({
+            position: "fixed",
+            left: margin,
+            right: margin,
+            width: "auto",
+            top: r.bottom + margin,
+            maxHeight,
+            zIndex: 9999,
+            maxWidth: "100%",
+            boxSizing: "border-box",
+          });
+        } else {
+          setPanelStyle({
+            position: "fixed",
+            left: margin,
+            right: margin,
+            width: "auto",
+            bottom: vh - r.top + margin,
+            maxHeight,
+            zIndex: 9999,
+            maxWidth: "100%",
+            boxSizing: "border-box",
+          });
+        }
+        return;
+      }
+
+      const panelWidth = Math.min(22 * 16, vw * 0.9);
+      const maxHeight = preferBelow
+        ? Math.min(400, Math.max(100, spaceBelow - margin))
+        : Math.min(400, Math.max(100, spaceAbove - margin));
+      const right = Math.max(margin, vw - r.right);
+      if (preferBelow) {
+        setPanelStyle({
+          position: "fixed",
+          top: r.bottom + margin,
+          right,
+          width: panelWidth,
+          maxHeight,
+          zIndex: 9999,
+        });
+      } else {
+        setPanelStyle({
+          position: "fixed",
+          bottom: vh - r.top + margin,
+          right,
+          width: panelWidth,
+          maxHeight,
+          zIndex: 9999,
+        });
+      }
+    }
+    measure();
+    window.addEventListener("scroll", measure, true);
+    window.addEventListener("resize", measure);
+    return () => {
+      window.removeEventListener("scroll", measure, true);
+      window.removeEventListener("resize", measure);
+    };
+  }, [show, finePointerHover]);
+
+  useEffect(() => {
+    if (!pinned || finePointerHover) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [pinned, finePointerHover]);
+
+  useEffect(() => {
+    if (!pinned) return;
+    function onPointerDown(e: PointerEvent) {
+      const t = e.target;
+      if (!(t instanceof Node)) return;
+      if (anchorRef.current?.contains(t)) return;
+      if (panelRef.current?.contains(t)) return;
+      cancelScheduledHoverClose();
+      setHover(false);
+      setPinned(false);
+    }
+    document.addEventListener("pointerdown", onPointerDown);
+    return () => document.removeEventListener("pointerdown", onPointerDown);
+  }, [pinned]);
+
+  useEffect(() => {
+    if (!pinned) return;
+    function onKey(e: KeyboardEvent) {
+      if (e.key === "Escape") {
+        cancelScheduledHoverClose();
+        setHover(false);
+        setPinned(false);
+      }
+    }
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [pinned]);
+
+  return (
+    <div
+      className="relative w-full"
+      onMouseEnter={() => {
+        if (!finePointerHover) return;
+        cancelScheduledHoverClose();
+        setHover(true);
+      }}
+      onMouseLeave={() => {
+        if (!finePointerHover || pinned) return;
+        scheduleHoverClose();
+      }}
+    >
+      <button
+        ref={anchorRef}
+        type="button"
+        className={`w-full text-right font-mono tabular-nums text-ink underline decoration-dotted decoration-surface-border/80 underline-offset-2 hover:text-brand-muted rounded px-0.5 py-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 touch-manipulation sm:min-h-0 min-h-[2.75rem] sm:py-0.5 sm:px-0.5 ${finePointerHover ? "cursor-help" : "cursor-pointer active:opacity-90"}`}
+        aria-expanded={show}
+        aria-controls={panelId}
+        aria-haspopup="dialog"
+        onClick={() => setPinned((p) => !p)}
+      >
+        {valueDisplay}
+      </button>
+      {show && panelStyle ? (
+        <BodyPortal>
+          <>
+            {pinned && !finePointerHover ? (
+              <div
+                className="fixed inset-0 z-[9998] bg-black/35 touch-none"
+                aria-hidden
+                onPointerDown={(e) => {
+                  e.preventDefault();
+                  cancelScheduledHoverClose();
+                  setHover(false);
+                  setPinned(false);
+                }}
+              />
+            ) : null}
+            <div
+              ref={panelRef}
+              id={panelId}
+              role="dialog"
+              aria-label={`${label} modifiers`}
+              aria-modal={pinned && !finePointerHover ? true : undefined}
+              style={{
+                ...panelStyle,
+                backgroundColor: "#231c16",
+                backdropFilter: "none",
+                WebkitBackdropFilter: "none",
+                paddingBottom: "max(0.5rem, env(safe-area-inset-bottom, 0px))",
+              }}
+              className="isolate overflow-y-auto overscroll-contain rounded-lg border-2 border-surface-border p-2 text-ink shadow-2xl text-left pointer-events-auto opacity-100 touch-manipulation"
+              onMouseEnter={() => {
+                if (!finePointerHover) return;
+                cancelScheduledHoverClose();
+                setHover(true);
+              }}
+              onMouseLeave={() => {
+                if (!finePointerHover || pinned) return;
+                scheduleHoverClose();
+              }}
+            >
+            <p className="text-[10px] font-bold uppercase tracking-wide text-ink-muted mb-1.5">
+              {label} — modifiers
+            </p>
+            <ul className="list-none m-0 p-0 space-y-2 text-[11px] text-ink leading-snug">
+              {lines.map((l, i) => (
+                <li
+                  key={i}
+                  className="border-b border-surface-border/40 pb-1.5 last:border-0 last:pb-0"
+                >
+                  <div className="flex justify-between gap-2">
+                    <span className="text-ink-muted shrink min-w-0">
+                      {l.label}
+                    </span>
+                    <span className="font-mono tabular-nums shrink-0">
+                      {formatSignedMod(l.delta)}
+                    </span>
+                  </div>
+                  {l.detail ? (
+                    <p className="m-0 mt-0.5 text-[10px] text-ink-faint leading-snug">
+                      {l.detail}
+                    </p>
+                  ) : null}
+                </li>
+              ))}
+            </ul>
+            <p className="mt-2 text-[10px] text-ink-faint border-t border-surface-border pt-1.5">
+              Sum of lines:{" "}
+              <span className="font-mono text-ink">{lineSum}</span>
+              {lineSum !== expectedTotal ? (
+                <>
+                  {" "}
+                  · value shown{" "}
+                  <span className="font-mono">{expectedTotal}</span>
+                </>
+              ) : null}
+            </p>
+            <p className="mt-1 text-[10px] text-ink-faint">
+              {finePointerHover
+                ? "Click outside or Esc to close when pinned."
+                : "Tap the dimmed area, this value again, or Esc to close."}
+            </p>
+          </div>
+          </>
+        </BodyPortal>
+      ) : null}
+    </div>
+  );
+}
+
 export default function CharacterSheet({ sheet }: { sheet: Sheet }) {
   const sheetM = useMemo(() => migrateCharacterSheet(sheet), [sheet]);
   const loadoutWeaponLines = useMemo(() => {
@@ -56,9 +376,13 @@ export default function CharacterSheet({ sheet }: { sheet: Sheet }) {
     if (!lo?.weapons?.length) return [];
     return computeAllLoadoutWeaponLines(sheetM, lo);
   }, [sheetM]);
-  const loadoutTotalEc = useMemo(
-    () => totalLoadoutEC(sheetM.loadout?.armors),
-    [sheetM.loadout?.armors]
+  const loadoutEncTotals = useMemo(
+    () =>
+      computeLoadoutEncumbranceTotals(
+        sheetM.loadout?.armors,
+        sheetM.specialAbilities,
+      ),
+    [sheetM.loadout?.armors, sheetM.specialAbilities],
   );
   const MIN_ARMOR_TABLE_ROWS = 5;
   const loadoutArmorTable = useMemo(() => {
@@ -272,8 +596,10 @@ export default function CharacterSheet({ sheet }: { sheet: Sheet }) {
                 <table className="w-full text-xs border-collapse">
                   <thead>
                     <tr className="border-b border-surface-border text-left text-ink-muted">
-                      <th className="py-1 pr-2">Talent</th>
-                      <th className="py-1 font-mono text-right">TP</th>
+                      <th className="py-1 pr-2 align-bottom">Talent</th>
+                      <th className="py-1 font-mono text-right align-bottom tabular-nums">
+                        TP
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
@@ -291,12 +617,38 @@ export default function CharacterSheet({ sheet }: { sheet: Sheet }) {
                             {t.name}
                           </CodexLink>
                         </td>
-                        <td className="py-1 font-mono text-right">{t.tp}</td>
+                        <td className="py-1 text-right align-top">
+                          {(() => {
+                            const eec = getTalentEec(t.id);
+                            const { ebe, effectiveTp } = talentTpAfterEecEncumbrance(
+                              t.tp,
+                              eec,
+                              loadoutEncTotals.effectiveTotalEC,
+                            );
+                            const showBracket =
+                              eec != null &&
+                              String(eec).trim() !== "" &&
+                              String(eec).trim() !== "0" &&
+                              ebe > 0;
+                            return (
+                              <div className="inline-flex justify-end items-baseline gap-2 font-mono tabular-nums">
+                                <span className="inline-block min-w-[3.5rem] text-right text-[11px] text-ink-muted">
+                                  {showBracket ? `[${effectiveTp}]` : ""}
+                                </span>
+                                <span className="text-ink">{t.tp}</span>
+                              </div>
+                            );
+                          })()}
+                        </td>
                       </tr>
                     ))}
                   </tbody>
                 </table>
               </div>
+              <p className="mt-2 text-[10px] text-ink-faint leading-snug max-w-xl">
+                Leading brackets: TaW after eBE from worn armor (ΣEC after Armor Use × this
+                talent&apos;s EEC from the codex). Base TaW is the number on the right.
+              </p>
             </div>
           ))}
         </div>
@@ -441,14 +793,35 @@ export default function CharacterSheet({ sheet }: { sheet: Sheet }) {
                               </ul>
                             ) : null}
                           </td>
-                          <td className="py-2 text-right font-mono tabular-nums text-ink pr-2">
-                            {row.finalAT}
+                          <td className="py-2 pr-2 align-top">
+                            <WeaponCombatStatBreakdown
+                              label="AT"
+                              expectedTotal={row.finalAT}
+                              lines={row.atBreakdown}
+                              valueDisplay={row.finalAT}
+                            />
                           </td>
-                          <td className="py-2 text-right font-mono tabular-nums text-ink pr-2">
-                            {row.finalPA === null ? "—" : row.finalPA}
+                          <td className="py-2 pr-2 align-top">
+                            {row.finalPA === null ? (
+                              <span className="block text-right font-mono tabular-nums text-ink">
+                                —
+                              </span>
+                            ) : (
+                              <WeaponCombatStatBreakdown
+                                label="PA"
+                                expectedTotal={row.finalPA}
+                                lines={row.paBreakdown ?? []}
+                                valueDisplay={row.finalPA}
+                              />
+                            )}
                           </td>
-                          <td className="py-2 text-right font-mono tabular-nums text-ink pr-2">
-                            {row.ini}
+                          <td className="py-2 pr-2 align-top">
+                            <WeaponCombatStatBreakdown
+                              label="INI"
+                              expectedTotal={row.ini}
+                              lines={row.iniBreakdown}
+                              valueDisplay={row.ini}
+                            />
                           </td>
                           <td className="py-2 pl-2 align-top max-w-[12rem]">
                             <div className="font-mono text-ink break-words">
@@ -470,9 +843,14 @@ export default function CharacterSheet({ sheet }: { sheet: Sheet }) {
                   (<span className="font-mono">tp_kk</span>) where present; dice are unchanged, bonus TP is
                   added to the fixed modifier. WM tilt on TP split (PA−AT Σ per talent, then{" "}
                   <span className="font-mono">atPaBias</span> tie-break), shield WM,
-                  INI = base + Σ armor INI + weapon INI, eBE from raw ΣEC{" "}
-                  <strong>{loadoutTotalEc}</strong> (melee eBE split; ranged/jousting full
-                  from AT). RS stacking not modeled.
+                  INI = base + Σ armor INI + weapon INI. Encumbrance uses effective ΣEC{" "}
+                  <strong>{loadoutEncTotals.effectiveTotalEC}</strong> (raw{" "}
+                  <strong>{loadoutEncTotals.rawTotalEC}</strong>
+                  {loadoutEncTotals.armorUse.summary
+                    ? `; ${loadoutEncTotals.armorUse.summary}`
+                    : ""}
+                  ) for eBE (melee: floor/ceil split on AT/PA; ranged/jousting: full from AT). Hover or
+                  click AT/PA/INI for a full modifier list. RS stacking not modeled.
                 </p>
               </div>
             )}
@@ -555,9 +933,11 @@ export default function CharacterSheet({ sheet }: { sheet: Sheet }) {
                   </table>
                 </div>
                 <p className="mt-1.5 text-[11px] text-ink-faint leading-relaxed">
-                  Total EC shows max(0, ΣEC−1) as a simple outfit adjustment for display;
-                  combat eBE in the weapon table still uses raw ΣEC ({loadoutTotalEc}).
-                  Total AR is the sum of piece RS (stacking rules not modeled).
+                  Total EC shows max(0, ΣEC−1) as a simple outfit adjustment for display only;
+                  combat/talent eBE uses effective ΣEC{" "}
+                  <strong>{loadoutEncTotals.effectiveTotalEC}</strong> (after Rüstungsgewöhnung) vs
+                  raw ΣEC <strong>{loadoutEncTotals.rawTotalEC}</strong> from this table. Total AR is the
+                  sum of piece RS (stacking rules not modeled).
                 </p>
               </div>
             )}
