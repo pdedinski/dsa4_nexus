@@ -38,6 +38,7 @@ export default function CharacterList() {
   >();
   const [wipWeaponIds, setWipWeaponIds] = useState<string[]>([]);
   const [wipArmorIds, setWipArmorIds] = useState<string[]>([]);
+  const [wipBuyArmorUseSa, setWipBuyArmorUseSa] = useState(false);
   const [preview, setPreview] = useState<CharacterSheet | null>(null);
   const [previewOpen, setPreviewOpen] = useState(false);
   const [saveOpen, setSaveOpen] = useState(false);
@@ -100,6 +101,7 @@ export default function CharacterList() {
       setSpellPriorities(undefined);
       setWipWeaponIds([]);
       setWipArmorIds([]);
+      setWipBuyArmorUseSa(false);
     } catch (e) {
       alert(e instanceof Error ? e.message : "Generate failed");
     }
@@ -231,6 +233,7 @@ export default function CharacterList() {
           setSpellPriorities(undefined);
           setWipWeaponIds([]);
           setWipArmorIds([]);
+          setWipBuyArmorUseSa(false);
           setWizard1(false);
           if (needsSpells) {
             setWizard2(true);
@@ -275,6 +278,7 @@ export default function CharacterList() {
           setSpellPriorities(undefined);
           setWipWeaponIds([]);
           setWipArmorIds([]);
+          setWipBuyArmorUseSa(false);
         }}
         onBack={() => {
           setWizardWeapons(false);
@@ -283,6 +287,7 @@ export default function CharacterList() {
         }}
         onNext={() => {
           setWipArmorIds([]);
+          setWipBuyArmorUseSa(false);
           setWizardWeapons(false);
           setWizardArmor(true);
         }}
@@ -292,6 +297,8 @@ export default function CharacterList() {
         open={wizardArmor && Boolean(genInput)}
         selectedIds={wipArmorIds}
         onSelectedIdsChange={setWipArmorIds}
+        buyArmorUseSa={wipBuyArmorUseSa}
+        onBuyArmorUseSaChange={setWipBuyArmorUseSa}
         onCancel={() => {
           setWizardArmor(false);
           setWizardWeapons(false);
@@ -299,6 +306,7 @@ export default function CharacterList() {
           setSpellPriorities(undefined);
           setWipWeaponIds([]);
           setWipArmorIds([]);
+          setWipBuyArmorUseSa(false);
         }}
         onBack={() => {
           setWizardArmor(false);
@@ -311,6 +319,7 @@ export default function CharacterList() {
               ...genInput,
               weaponIds: wipWeaponIds.length ? wipWeaponIds : undefined,
               armorIds: wipArmorIds.length ? wipArmorIds : undefined,
+              buyArmorUseSa: wipBuyArmorUseSa || undefined,
             },
             spellPriorities
           );

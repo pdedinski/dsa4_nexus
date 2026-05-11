@@ -586,6 +586,10 @@ export default function CharacterSheet({ sheet }: { sheet: Sheet }) {
       </Section>
 
       <Section title="Talents">
+        <p className="mb-3 text-[10px] text-ink-faint leading-snug max-w-xl">
+          Leading brackets: TaW after eBE from worn armor (ΣEC after Armor Use × this
+          talent&apos;s EEC from the codex). Base TaW is the number on the right.
+        </p>
         <div className="space-y-5">
           {talentsByGroup.map(({ group, label, rows }) => (
             <div key={group}>
@@ -645,10 +649,6 @@ export default function CharacterSheet({ sheet }: { sheet: Sheet }) {
                   </tbody>
                 </table>
               </div>
-              <p className="mt-2 text-[10px] text-ink-faint leading-snug max-w-xl">
-                Leading brackets: TaW after eBE from worn armor (ΣEC after Armor Use × this
-                talent&apos;s EEC from the codex). Base TaW is the number on the right.
-              </p>
             </div>
           ))}
         </div>

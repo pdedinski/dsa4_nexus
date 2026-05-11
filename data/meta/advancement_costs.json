@@ -357,5 +357,10 @@
     "column_F": ["Rare specialty talents", "Some supernatural aptitudes"],
     "column_G": ["Supernatural aptitudes (advanced)", "Very rare abilities"],
     "column_H": ["Legendary abilities only"]
+  },
+  "post_creation_ap": {
+    "description": "Optional AP cost per +1 VP or +1 ASP for generator residual veteran AP (extraAp >= 2000, after talent loop and SA auto-buy). Set numeric vitality_point_ap / astral_point_ap to enable; omit or use non-numbers to skip.",
+    "vitality_point_ap": null,
+    "astral_point_ap": null
   }
 }

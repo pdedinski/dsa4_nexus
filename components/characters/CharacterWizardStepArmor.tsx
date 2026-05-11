@@ -46,6 +46,8 @@ export default function CharacterWizardStepArmor({
   open,
   selectedIds,
   onSelectedIdsChange,
+  buyArmorUseSa,
+  onBuyArmorUseSaChange,
   onBack,
   onGenerate,
   onCancel,
@@ -53,6 +55,8 @@ export default function CharacterWizardStepArmor({
   open: boolean;
   selectedIds: string[];
   onSelectedIdsChange: (ids: string[]) => void;
+  buyArmorUseSa: boolean;
+  onBuyArmorUseSaChange: (value: boolean) => void;
   onBack: () => void;
   onGenerate: () => void;
   onCancel: () => void;
@@ -82,6 +86,15 @@ export default function CharacterWizardStepArmor({
       return { category, rows };
     });
   }, []);
+
+  const hasShieldSelection = useMemo(
+    () =>
+      selectedIds.some((id) => {
+        const row = armorData.armor.find((a) => a.id === id);
+        return row?.category === "shield";
+      }),
+    [selectedIds],
+  );
 
   const filteredGroups = useMemo(() => {
     const q = filter.trim().toLowerCase();
@@ -135,6 +148,30 @@ export default function CharacterWizardStepArmor({
                 are per item in the codex; how they combine at the table follows the
                 rulebook.
               </p>
+              <label className="mt-3 flex cursor-pointer items-start gap-2 text-xs text-ink leading-snug">
+                <input
+                  type="checkbox"
+                  className="mt-0.5 shrink-0 rounded border-surface-border"
+                  checked={buyArmorUseSa}
+                  onChange={(e) => onBuyArmorUseSaChange(e.target.checked)}
+                />
+                <span>
+                  Get Armor Use talent (Rüstungsgewöhnung) — attempts to buy the SA for
+                  your highest-RS body armor (non-shield) using leftover veteran AP after
+                  talents; BRW requirements apply.
+                </span>
+              </label>
+              {hasShieldSelection ? (
+                <p className="mt-2 text-xs text-ink-muted leading-relaxed max-w-prose">
+                  A shield is selected: generation will try to buy Off-hand Fighting and
+                  Shield Fighting from leftover veteran AP when BRW requirements are met.
+                </p>
+              ) : (
+                <p className="mt-2 text-xs text-ink-muted leading-relaxed max-w-prose">
+                  Shields chosen in the weapons step also trigger the same Shield Fighting
+                  purchase attempt (not only armor listed here).
+                </p>
+              )}
               <div className="mt-2 flex flex-wrap items-center gap-2">
                 <span className="text-xs font-mono text-ink-muted tabular-nums">
                   {count} selected

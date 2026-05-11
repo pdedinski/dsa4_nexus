@@ -8,6 +8,7 @@ import advancementCosts from "@/data/meta/advancement_costs.json";
 import conceptWeights from "@/data/concepts/concept_weights.json";
 import cultureNames from "@/data/names/culture_names.json";
 import armorData from "@/data/equipment/armor.json";
+import specialAbilitiesData from "@/data/character/special_abilities.json";
 import weaponsData from "@/data/equipment/weapons.json";
 import { ALL_TALENT_IDS, TALENT_INDEX } from "@/lib/talents/catalog";
 import { mergeTalentModifiersNormalized } from "@/lib/talents/modifierNormalization";
@@ -26,6 +27,7 @@ import type {
   SheetLoadout,
   SheetLoadoutArmor,
   SheetLoadoutWeapon,
+  SpecialAbilityInstance,
   SpellPriority,
 } from "./types";
 import { ATTR_CODES } from "./types";
@@ -39,6 +41,15 @@ import {
 const SPELL_DEF_BY_ID = new Map(
   spellsData.spells.map(
     (s): [string, (typeof spellsData.spells)[number]] => [s.id, s],
+  ),
+);
+
+const SA_BY_ID = new Map(
+  specialAbilitiesData.special_abilities.map(
+    (s): [string, (typeof specialAbilitiesData.special_abilities)[number]] => [
+      s.id,
+      s,
+    ],
   ),
 );
 
@@ -899,6 +910,231 @@ function spellStepPickWeight(
   );
 }
 
+/** True when armor step lists a shield or weapons loadout includes a shield. */
+function inputIncludesShieldFromInput(input: GenerateCharacterInput): boolean {
+  const armorIdList = dedupeIds([
+    ...(input.armorIds ?? []),
+    ...(input.primaryArmorId ? [input.primaryArmorId] : []),
+  ]);
+  for (const id of armorIdList) {
+    const a = armorData.armor.find((x) => x.id === id);
+    if (a && a.category === "shield") return true;
+  }
+  const weaponIdList = dedupeIds([
+    ...(input.weaponIds ?? []),
+    ...(input.primaryWeaponId ? [input.primaryWeaponId] : []),
+  ]);
+  for (const id of weaponIdList) {
+    const w = weaponsData.weapons.find((x) => x.id === id);
+    if (!w) continue;
+    if ((w as { is_shield?: boolean }).is_shield === true) return true;
+    if (w.combat_talent === "shields") return true;
+    if (SHIELD_WEAPON_IDS_FOR_LOADOUT.has(w.id)) return true;
+  }
+  return false;
+}
+
+/** Note text for Armor Use I (category + piece name) from highest RS non-shield armor. */
+function pickArmorUseOneNoteForInput(
+  input: GenerateCharacterInput,
+): string | null {
+  const armorIdList = dedupeIds([
+    ...(input.armorIds ?? []),
+    ...(input.primaryArmorId ? [input.primaryArmorId] : []),
+  ]);
+  let best: {
+    ar: number;
+    id: string;
+    category: string;
+    name: string;
+  } | null = null;
+  for (const id of armorIdList) {
+    const a = armorData.armor.find((x) => x.id === id);
+    if (!a) continue;
+    if (a.category === "shield") continue;
+    const ar = typeof a.ar === "number" ? a.ar : 0;
+    if (
+      !best ||
+      ar > best.ar ||
+      (ar === best.ar && id.localeCompare(best.id) < 0)
+    ) {
+      best = {
+        ar,
+        id,
+        category: typeof a.category === "string" ? a.category : "other",
+        name: a.name,
+      };
+    }
+  }
+  if (!best) return null;
+  return `${best.category.replace(/_/g, " ")} (${best.name})`;
+}
+
+/** One row per SA id: culture + profession often repeat the same automatic SA (e.g. Armor Use I). */
+function dedupeSpecialAbilitiesById(
+  list: SpecialAbilityInstance[],
+): SpecialAbilityInstance[] {
+  const out: SpecialAbilityInstance[] = [];
+  const indexById = new Map<string, number>();
+  for (const s of list) {
+    const id = s.id;
+    const existingIdx = indexById.get(id);
+    if (existingIdx === undefined) {
+      indexById.set(id, out.length);
+      out.push({ id, name: s.name, ...(s.note ? { note: s.note } : {}) });
+    } else {
+      const prev = out[existingIdx]!;
+      const name = prev.name ?? s.name;
+      const noteParts = [prev.note, s.note].filter(
+        (n): n is string => typeof n === "string" && n.trim() !== "",
+      );
+      const unique = [...new Set(noteParts.map((n) => n.trim()))];
+      const note =
+        unique.length === 0 ? undefined : unique.join("; ");
+      out[existingIdx] = {
+        id,
+        ...(name ? { name } : {}),
+        ...(note ? { note } : {}),
+      };
+    }
+  }
+  return out;
+}
+
+/**
+ * Purchase SAs in order with AP; stops on first unmet prereq, unmet attribute, or unaffordable cost.
+ */
+function purchaseApSaChain(
+  orderedIds: readonly string[],
+  attrsFinal: CharacterSheet["attributesFinal"],
+  existing: SpecialAbilityInstance[],
+  startExtraLeft: number,
+  outNotes: string[],
+  opts?: { armorUseINote?: string },
+): { newSas: SpecialAbilityInstance[]; extraLeft: number } {
+  const mergedIds = new Set(existing.map((s) => s.id));
+  const newSas: SpecialAbilityInstance[] = [];
+  let left = startExtraLeft;
+
+  for (const saId of orderedIds) {
+    if (mergedIds.has(saId)) continue;
+    const def = SA_BY_ID.get(saId);
+    if (!def || typeof def.ap_cost !== "number") {
+      outNotes.push(`SA "${saId}" missing from catalog or has no ap_cost.`);
+      break;
+    }
+    const reqs = def.requirements ?? [];
+    let abortChain = false;
+    for (const raw of reqs) {
+      const r = raw as {
+        type?: string;
+        attr?: string;
+        value?: number;
+        sa?: string;
+      };
+      if (r.type === "attr_min" && r.attr && typeof r.value === "number") {
+        const ac = r.attr as AttrCode;
+        const have = attrsFinal[ac] ?? 0;
+        if (have < r.value) {
+          outNotes.push(
+            `Could not buy ${def.name ?? saId}: need ${r.attr} ${r.value}+ (have ${have}).`,
+          );
+          abortChain = true;
+          break;
+        }
+      }
+    }
+    if (abortChain) break;
+    for (const raw of reqs) {
+      const r = raw as { type?: string; sa?: string };
+      if (r.type === "sa_required" && r.sa && !mergedIds.has(r.sa)) {
+        outNotes.push(
+          `Could not buy ${def.name ?? saId}: missing prerequisite SA "${r.sa}".`,
+        );
+        abortChain = true;
+        break;
+      }
+    }
+    if (abortChain) break;
+    if (left < def.ap_cost) {
+      outNotes.push(
+        `Could not buy ${def.name ?? saId}: needs ${def.ap_cost} AP (${left} AP left).`,
+      );
+      break;
+    }
+    const inst: SpecialAbilityInstance = {
+      id: saId,
+      name: def.name,
+      ...(saId === "armor_use_i" && opts?.armorUseINote
+        ? { note: opts.armorUseINote }
+        : {}),
+    };
+    newSas.push(inst);
+    mergedIds.add(saId);
+    left -= def.ap_cost;
+  }
+
+  return { newSas, extraLeft: left };
+}
+
+type PostCreationApCosts = {
+  post_creation_ap?: {
+    vitality_point_ap?: number | null;
+    astral_point_ap?: number | null;
+  };
+};
+
+/** Spend residual veteran AP on VP / ASP when costs are present in advancement JSON. */
+function trySpendResidualVpAsp(
+  extraApBudget: number,
+  extraLeft: number,
+  fullMagic: boolean,
+  outNotes: string[],
+): {
+  extraLeft: number;
+  vpDelta: number;
+  aspDelta: number;
+} {
+  if (extraApBudget < 2000) {
+    return { extraLeft, vpDelta: 0, aspDelta: 0 };
+  }
+  const post = (advancementCosts as PostCreationApCosts).post_creation_ap;
+  if (!post) return { extraLeft, vpDelta: 0, aspDelta: 0 };
+
+  let left = extraLeft;
+  let vpDelta = 0;
+  let aspDelta = 0;
+  const vpCost = post.vitality_point_ap;
+  if (typeof vpCost === "number" && vpCost > 0) {
+    let n = 0;
+    while (n < 5 && left >= vpCost) {
+      left -= vpCost;
+      vpDelta += 1;
+      n++;
+    }
+    if (n > 0) {
+      outNotes.push(`Veteran AP residual: +${n} VP (${vpCost} AP each).`);
+    }
+  }
+  const aspCost = post.astral_point_ap;
+  if (
+    fullMagic &&
+    typeof aspCost === "number" &&
+    aspCost > 0
+  ) {
+    let n = 0;
+    while (n < 10 && left >= aspCost) {
+      left -= aspCost;
+      aspDelta += 1;
+      n++;
+    }
+    if (n > 0) {
+      outNotes.push(`Veteran AP residual: +${n} ASP (${aspCost} AP each).`);
+    }
+  }
+  return { extraLeft: left, vpDelta, aspDelta };
+}
+
 export function needsSpellSelectionStep(
   raceId: string,
   professionId: string,
@@ -934,6 +1170,7 @@ export function generateCharacter(
 ): CharacterSheet {
   const rng = mulberry32(seed ?? Date.now() % 2147483647);
   const notes: string[] = [];
+  const extraApBudget = Math.max(0, Math.floor(input.extraAp ?? 0));
 
   const conceptPool = Object.keys(conceptWeights.concepts) as ConceptId[];
   const concept: ConceptId =
@@ -1035,10 +1272,24 @@ export function generateCharacter(
     minsAfterMods[a] = Math.max(8, Math.min(14, req - rm - cm));
   }
 
+  const effectiveAttrBias: Partial<Record<AttrCode, number>> = {
+    ...((weights.attribute_bias ?? {}) as Partial<Record<AttrCode, number>>),
+  };
+  if (extraApBudget >= 1000) {
+    effectiveAttrBias.CO = (effectiveAttrBias.CO ?? 0) + 1;
+    effectiveAttrBias.AG = (effectiveAttrBias.AG ?? 0) + 1;
+    effectiveAttrBias.ST = (effectiveAttrBias.ST ?? 0) + 1;
+    effectiveAttrBias.DE = (effectiveAttrBias.DE ?? 0) + 0.5;
+  }
+  if (extraApBudget >= 2000) {
+    effectiveAttrBias.ST = (effectiveAttrBias.ST ?? 0) + 1;
+    effectiveAttrBias.IN = (effectiveAttrBias.IN ?? 0) + 0.5;
+  }
+
   const purchased = solveAttributes(
     rng,
     minsAfterMods,
-    (weights.attribute_bias ?? {}) as Partial<Record<AttrCode, number>>
+    effectiveAttrBias
   );
   const attrSum = ATTR_CODES.reduce((s, a) => s + purchased[a], 0);
 
@@ -1130,7 +1381,7 @@ export function generateCharacter(
   const CH = attrsFinal.CH;
   const DE = attrsFinal.DE;
 
-  const VP =
+  let derivedVP =
     Math.ceil((CN + CN + ST) / 2) +
     (race.derived_modifiers?.VP ?? 0) +
     (culture.derived_modifiers?.VP ?? 0) +
@@ -1163,7 +1414,7 @@ export function generateCharacter(
     (culture.derived_modifiers as { ASP?: number } | undefined)?.ASP ?? 0;
   const profAsp =
     (profession.derived_modifiers as { ASP?: number } | undefined)?.ASP ?? 0;
-  const ASP = fullMagic
+  let derivedASP = fullMagic
     ? Math.ceil((CO + IN + CH) / 2) +
       (race.derived_modifiers?.ASP ?? 0) +
       cultAsp +
@@ -1400,10 +1651,64 @@ export function generateCharacter(
 
   const sgpSpent = sgpTotal + tgpConverted - sgpLeft;
 
-  const extraApBudget = Math.max(0, Math.floor(input.extraAp ?? 0));
   let extraLeft = extraApBudget;
 
-  /** Veteran AP: SKT steps on existing spells (ZfW) and talents; no new spell activations. */
+  let specialAbilitiesOut = dedupeSpecialAbilitiesById([
+    ...((race.automatic_SAs ?? []) as CharacterSheet["specialAbilities"]),
+    ...((culture.automatic_SAs ?? []) as CharacterSheet["specialAbilities"]),
+    ...((profession.automatic_SAs ?? []) as CharacterSheet["specialAbilities"]),
+  ]);
+  const allowSaHighTiers = extraApBudget >= 1000;
+  /** Shield/armor SA AP buys: before talents if enough veteran AP, else after (residual). */
+  const SA_AP_PURCHASE_FIRST_THRESHOLD = 2000;
+  const saPurchaseFirst = extraApBudget >= SA_AP_PURCHASE_FIRST_THRESHOLD;
+
+  function applyShieldAndArmorSaAp(): void {
+    if (inputIncludesShieldFromInput(input)) {
+      const hasShieldSa = specialAbilitiesOut.some(
+        (s) => s.id === "shield_fighting_i" || s.id === "shield_fighting_ii",
+      );
+      const shieldChain: string[] = [];
+      if (!hasShieldSa) {
+        shieldChain.push("off_hand_fighting");
+      }
+      shieldChain.push("shield_fighting_i");
+      if (allowSaHighTiers) shieldChain.push("shield_fighting_ii");
+      const shieldBuy = purchaseApSaChain(
+        shieldChain,
+        attrsFinal,
+        specialAbilitiesOut,
+        extraLeft,
+        notes,
+      );
+      specialAbilitiesOut.push(...shieldBuy.newSas);
+      extraLeft = shieldBuy.extraLeft;
+    }
+
+    if (input.buyArmorUseSa) {
+      const armorNote = pickArmorUseOneNoteForInput(input);
+      if (armorNote) {
+        const armorChain = ["armor_use_i"];
+        if (allowSaHighTiers) armorChain.push("armor_use_ii", "armor_use_iii");
+        const armorBuy = purchaseApSaChain(
+          armorChain,
+          attrsFinal,
+          specialAbilitiesOut,
+          extraLeft,
+          notes,
+          { armorUseINote: armorNote },
+        );
+        specialAbilitiesOut.push(...armorBuy.newSas);
+        extraLeft = armorBuy.extraLeft;
+      }
+    }
+  }
+
+  if (saPurchaseFirst) {
+    applyShieldAndArmorSaAp();
+  }
+
+  /** Veteran AP: spell ZfW and talent SKT from remaining AP (SA buys may have run first if veteran AP ≥ threshold). */
   const apSpendTalentIds = Array.from(talentTp.keys()).sort(() => rng() - 0.5);
   let apGuards = 0;
   while (extraLeft > 0 && apGuards++ < 80_000) {
@@ -1499,6 +1804,20 @@ export function generateCharacter(
       talentTp.set(pick.id, pick.spend.nextTp);
     }
   }
+
+  if (!saPurchaseFirst) {
+    applyShieldAndArmorSaAp();
+  }
+
+  const residualVpAsp = trySpendResidualVpAsp(
+    extraApBudget,
+    extraLeft,
+    fullMagic,
+    notes,
+  );
+  extraLeft = residualVpAsp.extraLeft;
+  derivedVP += residualVpAsp.vpDelta;
+  derivedASP += residualVpAsp.aspDelta;
 
   clampTalentTpMapToCreationMax(talentTp, attrsFinal, advantageIdsForTalentCap);
 
@@ -1605,7 +1924,7 @@ export function generateCharacter(
     attributesPurchased: purchased,
     attributesFinal: attrsFinal,
     derived: {
-      VP,
+      VP: derivedVP,
       EP,
       WT,
       baseAT,
@@ -1613,7 +1932,7 @@ export function generateCharacter(
       baseBRV,
       baseINI,
       RM,
-      ASP,
+      ASP: derivedASP,
       GS,
     },
     automaticAdvantages: (race.automatic_advantages ?? []) as CharacterSheet["automaticAdvantages"],
@@ -1623,11 +1942,7 @@ export function generateCharacter(
     ],
     chosenAdvantages,
     chosenDisadvantages,
-    specialAbilities: [
-      ...((race.automatic_SAs ?? []) as CharacterSheet["specialAbilities"]),
-      ...((culture.automatic_SAs ?? []) as CharacterSheet["specialAbilities"]),
-      ...((profession.automatic_SAs ?? []) as CharacterSheet["specialAbilities"]),
-    ],
+    specialAbilities: specialAbilitiesOut,
     talents: talentRows,
     spells,
     combatMelee,

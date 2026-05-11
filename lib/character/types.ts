@@ -242,6 +242,8 @@ export interface GenerateCharacterInput {
   weaponIds?: string[];
   /** Optional armor `id`s from `data/equipment/armor.json` */
   armorIds?: string[];
+  /** If true, generator attempts to buy Armor Use (Rüstungsgewöhnung) for highest-RS non-shield armor. */
+  buyArmorUseSa?: boolean;
   /** @deprecated use `weaponIds` */
   primaryWeaponId?: string;
   /** @deprecated use `armorIds` */
