@@ -425,8 +425,8 @@ export default function CharacterSheet({ sheet }: { sheet: Sheet }) {
           {h.raceName} · {h.cultureName} · {h.professionName}
         </p>
         <p className="text-xs text-ink-faint mt-1">
-          Concept: {humanizeSnake(h.conceptId)} · {h.gender} · {h.ageYears}{" "}
-          years
+          Concept: {humanizeSnake(h.conceptId)} | {h.gender} | {h.ageYears}{" "}
+          years old
         </p>
       </header>
 
@@ -449,22 +449,43 @@ export default function CharacterSheet({ sheet }: { sheet: Sheet }) {
             <dd>{a.CN}</dd>
             <dt className="text-ink-muted">ST</dt>
             <dd>{a.ST}</dd>
-            <dt className="text-ink-muted">SO</dt>
+            <dt className="text-ink-muted">
+              <abbr title="Social Standing" className="no-underline cursor-help">
+                SO
+              </abbr>
+            </dt>
             <dd>{a.SO}</dd>
           </dl>
         </Section>
 
         <Section title="Derived values">
           <dl className="grid grid-cols-2 gap-x-4 gap-y-1">
-            <dt className="text-ink-muted">VP</dt>
+            <dt className="text-ink-muted">
+              <abbr title="Vitality Points" className="no-underline cursor-help">
+                VP
+              </abbr>
+            </dt>
             <dd>{sheetM.derived.VP}</dd>
-            <dt className="text-ink-muted">EP</dt>
+            <dt className="text-ink-muted">
+              <abbr title="Endurance Points" className="no-underline cursor-help">
+                EP
+              </abbr>
+            </dt>
             <dd>{sheetM.derived.EP}</dd>
-            <dt className="text-ink-muted">WT</dt>
+            <dt className="text-ink-muted">
+              <abbr title="Wound Threshold" className="no-underline cursor-help">
+                WT
+              </abbr>
+            </dt>
             <dd>{sheetM.derived.WT}</dd>
             <dt className="text-ink-muted">
               Base AT / PA /{" "}
-              <abbr title="Base Ranged Value (German: FK-Basiswert)">BRV</abbr>
+              <abbr
+                title="Base Ranged Value — base score for ranged attacks"
+                className="no-underline cursor-help"
+              >
+                BRV
+              </abbr>
             </dt>
             <dd>
               {sheetM.derived.baseAT} / {sheetM.derived.basePA} /{" "}
@@ -472,11 +493,26 @@ export default function CharacterSheet({ sheet }: { sheet: Sheet }) {
             </dd>
             <dt className="text-ink-muted">Base INI</dt>
             <dd>{sheetM.derived.baseINI}</dd>
-            <dt className="text-ink-muted">RM</dt>
+            <dt className="text-ink-muted">
+              <abbr
+                title="Resistance Modifier — bonus to saving throws vs. magic and similar effects"
+                className="no-underline cursor-help"
+              >
+                RM
+              </abbr>
+            </dt>
             <dd>{sheetM.derived.RM}</dd>
-            <dt className="text-ink-muted">ASP</dt>
+            <dt className="text-ink-muted">
+              <abbr title="Astral Points" className="no-underline cursor-help">
+                ASP
+              </abbr>
+            </dt>
             <dd>{sheetM.derived.ASP}</dd>
-            <dt className="text-ink-muted">GS</dt>
+            <dt className="text-ink-muted">
+              <abbr title="Speed (movement)" className="no-underline cursor-help">
+                GS
+              </abbr>
+            </dt>
             <dd>{sheetM.derived.GS}</dd>
           </dl>
         </Section>
@@ -838,14 +874,19 @@ export default function CharacterSheet({ sheet }: { sheet: Sheet }) {
                   </table>
                 </div>
                 <p className="mt-2 text-[11px] text-ink-faint leading-relaxed">
-                  Damage: final ST as on the sheet; weapon <span className="font-mono">tp_kk</span> from the codex when
-                  present; dice unchanged, fixed TP bonus added. WMs shift the TP AT/PA split via Σ(PA−AT); shield WM;
-                  INI = base + Σ armor INI + weapon INI. Effective EC uses total worn EC after Armor Use{" "}
-                  <strong>{loadoutEncTotals.effectiveTotalEC}</strong> (raw per-piece EC sum{" "}
+                  Damage uses final ST from the sheet plus the weapon&apos;s TP/ST rule from the
+                  codex (<span className="font-mono">tp_kk</span>) where present; dice are
+                  unchanged; bonus TP from the Strength rule adds to the fixed modifier. WMs tilt
+                  the TP split across AT and PA (per-talent Σ of PA − AT), including shields. INI =
+                  base + Σ armor INI + weapon INI. Encumbrance: worn EC total is{" "}
+                  <strong>{loadoutEncTotals.effectiveTotalEC}</strong> (raw{" "}
                   <strong>{loadoutEncTotals.rawTotalEC}</strong>
-                  {loadoutEncTotals.armorUse.summary ? ` — ${loadoutEncTotals.armorUse.summary}` : ""}
-                  ); melee: ⌊/⌉ halves of effective EC on AT/PA; ranged / jousting: full penalty on AT. Expand AT/PA/INI
-                  for the breakdown. AR stacking is not modeled.
+                  {loadoutEncTotals.armorUse.summary
+                    ? ` — ${loadoutEncTotals.armorUse.summary}`
+                    : ""}
+                  ); melee applies ⌊effective EC / 2⌋ to AT and ⌈effective EC / 2⌉ to PA; ranged and
+                  jousting apply the full effective EC penalty to AT. Hover or tap AT, PA, or INI for
+                  the full breakdown. AR stacking is not modeled.
                 </p>
               </div>
             )}
@@ -933,11 +974,11 @@ export default function CharacterSheet({ sheet }: { sheet: Sheet }) {
                   </table>
                 </div>
                 <p className="mt-1.5 text-[11px] text-ink-faint leading-relaxed">
-                  Total row: effective worn EC after Armor Use (<strong>{loadoutEncTotals.effectiveTotalEC}</strong>) —
-                  Armor Use RG I–III applies once to the aggregate, not per piece. Rows show per-piece EC (codex/sheet{" "}
-                  <span className="font-mono">ec</span>). Raw EC sum for this loadout:{" "}
-                  <strong>{loadoutEncTotals.rawTotalEC}</strong>. Total AR sums per-piece AR values (stacking rules not
-                  modeled).
+                  The <strong>Total</strong> EC (<strong>{loadoutEncTotals.effectiveTotalEC}</strong>)
+                  is the aggregate after Armor Use (Armor Use RG I–III reduces the total once, not per
+                  piece). Rows show each piece&apos;s codex EC (
+                  <span className="font-mono">ec</span>). Raw sum: <strong>{loadoutEncTotals.rawTotalEC}</strong>.
+                  Total AR is the sum of individual piece AR; stacking rules are not modeled.
                 </p>
               </div>
             )}
@@ -945,7 +986,7 @@ export default function CharacterSheet({ sheet }: { sheet: Sheet }) {
         </Section>
       )}
 
-      <Section title="Equipment & wealth">
+      <Section title="Starting equipment">
         <p className="mb-2">
           Starting money:{" "}
           <strong>{sheetM.startingMoneySilbertaler}</strong> Silbertaler (SO²)
@@ -977,15 +1018,15 @@ export default function CharacterSheet({ sheet }: { sheet: Sheet }) {
         </dl>
       </Section>
 
-      <Section title="Generation budgets">
+      <Section title="Generation summary">
         <dl className="grid grid-cols-2 gap-x-4 gap-y-1 text-xs font-mono">
-          <dt className="text-ink-muted">GP end</dt>
+          <dt className="text-ink-muted">Remaining GP</dt>
           <dd>{sheetM.budgets.gpEnd}</dd>
-          <dt className="text-ink-muted">TGP spent / total</dt>
+          <dt className="text-ink-muted">Talent GP used / total</dt>
           <dd>
             {sheetM.budgets.tgpSpent} / {sheetM.budgets.tgpTotal}
           </dd>
-          <dt className="text-ink-muted">SGP spent / total</dt>
+          <dt className="text-ink-muted">Spell GP used / total</dt>
           <dd>
             {sheetM.budgets.sgpSpent} / {sheetM.budgets.sgpTotal}
           </dd>

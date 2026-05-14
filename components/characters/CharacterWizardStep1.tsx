@@ -145,7 +145,7 @@ export default function CharacterWizardStep1({
     <BodyPortal>
     <div className="fixed inset-0 z-[180] flex items-center justify-center p-4 bg-black/50">
       <div className="bg-surface-card border border-surface-border rounded-xl shadow-xl max-w-lg w-full max-h-[90vh] overflow-y-auto p-5">
-        <h2 className="text-lg font-bold text-ink mb-4">New random character</h2>
+        <h2 className="text-lg font-bold text-ink mb-4">Create a new hero</h2>
         <div className="space-y-3 text-sm">
           <label className="block">
             <span className="text-ink-muted">Concept</span>
@@ -242,9 +242,9 @@ export default function CharacterWizardStep1({
           )}
           <label className="block">
             <span className="text-ink-muted">
-              Extra AP (veteran) — raises talents and spell ZfW already on this
-              sheet (SKT step costs; spell share by concept weight and spell
-              priorities)
+              Extra AP (veteran) — boosts existing talents and spell skill ratings
+              using the advancement-column costs; spell share follows concept
+              weight and spell priorities.
             </span>
             <input
               type="number"
@@ -287,7 +287,7 @@ export default function CharacterWizardStep1({
             className="px-3 py-2 rounded-lg text-sm bg-brand text-white font-medium"
             onClick={submit}
           >
-            Next step
+            Next
           </button>
         </div>
       </div>

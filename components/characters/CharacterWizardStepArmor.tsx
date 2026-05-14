@@ -162,7 +162,7 @@ export default function CharacterWizardStepArmor({
               {hasShieldSelection ? (
                 <p className="mt-2 text-xs text-ink-muted leading-relaxed max-w-prose">
                   A shield is selected: generation will try to buy Off-hand Fighting and
-                  Shield Fighting from leftover veteran AP when BRW requirements are met.
+                  Shield Fighting from leftover veteran AP when Basic Rules prerequisites are met.
                 </p>
               ) : (
                 <p className="mt-2 text-xs text-ink-muted leading-relaxed max-w-prose">

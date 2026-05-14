@@ -75,7 +75,7 @@ const CATEGORIES = [
 
 const FILE_LABELS: Record<string, string> = {
   beasts: "Creatures",
-  summoned_creatures: "WdZ Summons",
+  summoned_creatures: "Summoned Beings (WdZ)",
   advantages: "Advantages",
   disadvantages: "Disadvantages",
   special_abilities: "Special Abilities",

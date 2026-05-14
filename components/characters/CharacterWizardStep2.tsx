@@ -93,13 +93,13 @@ export default function CharacterWizardStep2({
                 id="spell-select-title"
                 className="text-lg font-bold text-ink"
               >
-                Select spells
+                Set spell priorities
               </h2>
               <p className="text-xs text-ink-muted mt-1 leading-relaxed">
                 Default is <span className="font-medium text-ink">None</span> — the
-                random generator will only spend SGP on spells you mark Low, Medium, or
-                High (a smaller pool). If every spell stays None, the generator falls
-                back to the full list with equal weight.
+                random generator spends spell GP (SGP) only on spells you mark Low,
+                Medium, or High (a smaller pool). If every spell stays None, the
+                generator falls back to the full list with equal weight.
               </p>
               <label className="mt-3 block text-xs text-ink-muted">
                 <span className="sr-only">Search spells</span>

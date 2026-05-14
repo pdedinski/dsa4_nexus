@@ -190,7 +190,7 @@ export default function CharacterList() {
           className="px-4 py-2 rounded-lg bg-brand text-white text-sm font-medium disabled:opacity-50"
           onClick={() => setWizard1(true)}
         >
-          New random character
+          New hero
         </button>
         <div className="flex items-center gap-2 text-sm">
           <span className="text-ink-muted">Sort:</span>
@@ -460,7 +460,7 @@ export default function CharacterList() {
                     void runGenerate(lastGenInput, lastGenPriorities);
                   }}
                 >
-                  Reroll character
+                  Reroll
                 </button>
                 <button
                   type="button"

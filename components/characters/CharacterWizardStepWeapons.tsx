@@ -45,7 +45,7 @@ function toggleId(ids: string[], id: string): string[] {
   return [...ids, id];
 }
 
-/** Compact per-band TP and FK modifiers for ranged weapons (BRW/WdS). */
+/** Compact per-band TP and BRV modifiers for ranged weapons (Basic Rules / WdS). */
 function WizardWeaponRangeBandsMini({ w }: { w: WeaponRow }) {
   if (w.category !== "ranged") return null;
 
@@ -61,15 +61,16 @@ function WizardWeaponRangeBandsMini({ w }: { w: WeaponRow }) {
   return (
     <div className="mt-2 rounded-md border border-surface-border/80 overflow-hidden max-w-xl">
       <div className="bg-surface-border/60 px-2 py-1 text-[10px] font-medium uppercase tracking-wide text-ink-muted">
-        Range bands (paces, TP / FK modifiers)
+        Range bands (paces) — TP bonus and BRV modifier per band
       </div>
       <div className="overflow-x-auto">
         <table className="w-full text-[11px]">
           <thead>
             <tr className="border-b border-surface-border/70 text-left text-ink-muted">
               <th className="px-2 py-1 font-normal">Class</th>
+              <th className="px-2 py-1 font-normal tabular-nums">Paces</th>
               <th className="px-2 py-1 font-normal tabular-nums">TP+</th>
-              <th className="px-2 py-1 font-normal tabular-nums">RC</th>
+              <th className="px-2 py-1 font-normal tabular-nums">BRV mod</th>
             </tr>
           </thead>
           <tbody>
@@ -183,9 +184,9 @@ export default function CharacterWizardStepWeapons({
                 Weapons
               </h2>
               <p className="text-xs text-ink-muted mt-1.5 leading-relaxed max-w-prose">
-                Select any number of weapons (grouped by combat talent). Modifiers are
-                from the codex; final AT/PA still follow your talent rows and armor per
-                the rulebook.
+                Select any number of weapons (grouped by combat talent). WMs (AT/PA
+                modifiers) are from the codex; final AT and PA also reflect your
+                talent TP and worn armor EC per the Basic Rules.
               </p>
               <div className="mt-2 flex flex-wrap items-center gap-2">
                 <span className="text-xs font-mono text-ink-muted tabular-nums">

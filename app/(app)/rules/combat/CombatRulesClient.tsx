@@ -130,7 +130,7 @@ const COMBAT_FLOW = [
   { step: "1", label: "Initiative", detail: "Roll 1d6 + base INI (round((CO+CO+IN+AG)/5) + racial mod) + weapon/armor INI modifiers. Highest acts first." },
   { step: "2", label: "Action", detail: "Each combatant spends ONE action: Attack, Free Action, or Special Action (flee, draw weapon, etc.)." },
   { step: "3", label: "Defense", detail: "After a successful attack, the target chooses ONE defense: Parry (PA roll), Shield Parry, or Dodge." },
-  { step: "4", label: "Damage", detail: "On failed defense: roll weapon TP, subtract RS. If TP ≥ KO/2 → wound (-1 AT/PA/checks per wound marker)." },
+  { step: "4", label: "Damage", detail: "On failed defense: roll weapon damage dice, subtract AR (Armor Rating). If damage TP ≥ KO/2 → wound (−1 AT/PA/checks per wound marker)." },
   { step: "5", label: "End of Round", detail: "Ongoing effects resolve (bleed, poison, etc.). Initiative order continues from round 1 unless re-rolled." },
 ];
 
@@ -161,11 +161,11 @@ const STAT_FORMULAS = [
 ];
 
 const RANGE_MODS = [
-  { band: "Very Close (sehr nah)", mod: "BRV −2" },
-  { band: "Close (nah)", mod: "BRV +0" },
-  { band: "Medium (mittel)", mod: "BRV +4" },
-  { band: "Far (weit)", mod: "BRV +8" },
-  { band: "Extreme (extrem weit)", mod: "BRV +12" },
+  { band: "Very Close", mod: "BRV −2" },
+  { band: "Close", mod: "BRV +0" },
+  { band: "Medium", mod: "BRV +4" },
+  { band: "Far", mod: "BRV +8" },
+  { band: "Extreme", mod: "BRV +12" },
 ];
 
 export default function CombatRulesClient({ data }: { data: CombatData }) {
@@ -189,7 +189,7 @@ export default function CombatRulesClient({ data }: { data: CombatData }) {
           Combat Rules
         </h1>
         <p className="text-ink-muted text-sm mt-1">
-          TDE 4.1 / DSA 4.1 — Sources: BRW pp. 99–108, Wege des Schwertes pp. 58–107
+          TDE 4.1 — Sources: Basic Rules pp. 99–108, Sword Paths (WdS) pp. 58–107
         </p>
       </div>
 
@@ -280,7 +280,7 @@ export default function CombatRulesClient({ data }: { data: CombatData }) {
             </div>
             <div className="bg-surface-card border border-surface-border rounded-lg px-4 py-3">
               <p className="font-semibold text-ink text-sm mb-1">Fumble (20 on d20)</p>
-              <p className="text-ink-muted text-sm">Roll on fumble table (BRW p. 108). Common results: weapon dropped, attacker falls, weapon breaks.</p>
+              <p className="text-ink-muted text-sm">Roll on fumble table (Basic Rules p. 108). Common results: weapon dropped, attacker falls, weapon breaks.</p>
             </div>
           </div>
 
