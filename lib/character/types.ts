@@ -274,6 +274,11 @@ export interface GenerateCharacterInput {
   /** If true, generator attempts to buy Armor Use SA for the highest-AR body armor (excluding shields). */
   buyArmorUseSa?: boolean;
   /**
+   * If true, generator attempts to buy Off-hand Fighting → Parrying Weapons I → Parrying Weapons II
+   * SA chain when a parrying weapon is included in the loadout.
+   */
+  buyParryingWeaponSa?: boolean;
+  /**
    * When true, {@link CharacterSheet.debugLog} is filled with step-by-step GP/AP diagnostics.
    * Server should only honor this for superusers.
    */

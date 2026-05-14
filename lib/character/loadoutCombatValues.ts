@@ -5,6 +5,7 @@
  */
 
 import combatTalentsData from "@/data/talents/combat_talents.json";
+import weaponsDataForParry from "@/data/equipment/weapons.json";
 import {
   allocateMeleeCombatTp,
   meleeBiasForTalentFromWeapons,
@@ -71,6 +72,29 @@ function isShieldLoadoutWeapon(w: SheetLoadoutWeapon): boolean {
   if (w.isShield === true) return true;
   if (w.combatTalent === "shields") return true;
   return SHIELD_WEAPON_IDS.has(w.id);
+}
+
+function isParryingLoadoutWeapon(w: SheetLoadoutWeapon): boolean {
+  const def = (weaponsDataForParry.weapons as Array<{ id: string; is_parrying_weapon?: boolean }>).find(
+    (x) => x.id === w.id,
+  );
+  return def?.is_parrying_weapon === true;
+}
+
+/** Parierwaffen in codex often omit `combat_talent`; Dolche applies (WdS Linkhand/Hakendolch rows). */
+function meleeCombatTalentIdForWeapon(w: SheetLoadoutWeapon): {
+  talentId: string | null;
+  inferredDaggersForParrying: boolean;
+} {
+  const prior = canonicalCombatTalentId(w.combatTalent);
+  if (prior) return { talentId: prior, inferredDaggersForParrying: false };
+  if (isParryingLoadoutWeapon(w)) {
+    return {
+      talentId: canonicalCombatTalentId("daggers"),
+      inferredDaggersForParrying: true,
+    };
+  }
+  return { talentId: null, inferredDaggersForParrying: false };
 }
 
 const MELEE_NO_SHIELD_TALENTS = new Set([
@@ -144,6 +168,70 @@ function shieldParrySaBonus(sheet: CharacterSheet): number {
     if (ids.has(saId)) s += bonus;
   }
   return s;
+}
+
+type ParryingWeaponBonusResult = {
+  bonus: number;
+  saLevel: "none" | "parrying_weapons_i" | "parrying_weapons_ii";
+  parryingWeaponName: string;
+  parryingWeaponPv: number;
+};
+
+/**
+ * Returns the Parrying Weapons SA bonus for a primary (non-parrying) weapon's PA.
+ * Looks for a companion parrying weapon in the loadout and the highest tier of
+ * Parrying Weapons SA owned by the character.
+ *
+ * Rules (BRW p.102 / WdS):
+ *   Parrying Weapons I:  primary PA += −1 + parrying_weapon_PV
+ *   Parrying Weapons II: primary PA += +2 + parrying_weapon_PV
+ */
+function parryingWeaponSaBonus(
+  sheet: CharacterSheet,
+  allWeapons: SheetLoadoutWeapon[],
+  currentWeaponId: string,
+): ParryingWeaponBonusResult {
+  const saIds = new Set(sheet.specialAbilities.map((x) => x.id));
+  const hasI = saIds.has("parrying_weapons_i");
+  const hasII = saIds.has("parrying_weapons_ii");
+  if (!hasI && !hasII) {
+    return { bonus: 0, saLevel: "none", parryingWeaponName: "", parryingWeaponPv: 0 };
+  }
+
+  // Find the best parrying weapon in the loadout (highest PV), exclude current weapon
+  let bestPv = 0;
+  let bestName = "";
+  for (const w of allWeapons) {
+    if (w.id === currentWeaponId) continue;
+    const def = (weaponsDataForParry.weapons as Array<{ id: string; is_parrying_weapon?: boolean; parrying_weapon_pv?: number; name: string }>).find(
+      (x) => x.id === w.id,
+    );
+    if (!def?.is_parrying_weapon) continue;
+    const pv = typeof def.parrying_weapon_pv === "number" ? def.parrying_weapon_pv : 0;
+    if (pv > bestPv || (pv === bestPv && bestName === "")) {
+      bestPv = pv;
+      bestName = w.name;
+    }
+  }
+
+  if (bestPv === 0 && bestName === "") {
+    return { bonus: 0, saLevel: "none", parryingWeaponName: "", parryingWeaponPv: 0 };
+  }
+
+  if (hasII) {
+    return {
+      bonus: 2 + bestPv,
+      saLevel: "parrying_weapons_ii",
+      parryingWeaponName: bestName,
+      parryingWeaponPv: bestPv,
+    };
+  }
+  return {
+    bonus: -1 + bestPv,
+    saLevel: "parrying_weapons_i",
+    parryingWeaponName: bestName,
+    parryingWeaponPv: bestPv,
+  };
 }
 
 function armorIniSum(armors: SheetLoadoutArmor[]): number {
@@ -250,6 +338,8 @@ export type LoadoutWeaponCombatLine = {
   weaponPA: number;
   shieldAT: number;
   shieldPA: number;
+  /** PA bonus from an off-hand parrying weapon (Parrying Weapons I/II SA). 0 when not applicable. */
+  parryingWeaponPA: number;
   encumbranceAT: number;
   encumbrancePA: number;
   finalAT: number;
@@ -312,6 +402,7 @@ export function computeLoadoutWeaponLine(
   weaponBiasContext: WeaponBiasRow[] = [],
   companionShieldMod?: { at: number; pa: number },
   encTotalsPre?: LoadoutEncumbranceTotals,
+  allLoadoutWeapons?: SheetLoadoutWeapon[],
 ): LoadoutWeaponCombatLine {
   const list = armors ?? [];
   const encTotals =
@@ -404,6 +495,7 @@ export function computeLoadoutWeaponLine(
       weaponPA: weapon.paModifier,
       shieldAT: 0,
       shieldPA: 0,
+      parryingWeaponPA: 0,
       encumbranceAT: splitShield.atPen,
       encumbrancePA: splitShield.paPen,
       finalAT: baseAT + weapon.atModifier - splitShield.atPen,
@@ -422,7 +514,12 @@ export function computeLoadoutWeaponLine(
   }
 
   const talentRaw = weapon.combatTalent ?? null;
-  const talentId = canonicalCombatTalentId(talentRaw);
+  const { talentId, inferredDaggersForParrying } = meleeCombatTalentIdForWeapon(weapon);
+  if (inferredDaggersForParrying) {
+    notes.push(
+      "Parrying weapon: Dolche (Daggers) talent assumed for melee TP — codex omits combat_talent on this Parierwaffe (same convention as Linkhand/WdS).",
+    );
+  }
   const def = talentId ? COMBAT_TALENT_MAP.get(talentId) : undefined;
   const combatType = def?.combat_type ?? "unknown";
   const eec = def?.eec;
@@ -455,6 +552,12 @@ export function computeLoadoutWeaponLine(
   if (!allowsShield && (shield.at !== 0 || shield.pa !== 0)) {
     notes.push("Shield modifiers omitted (two-handed / incompatible talent).");
   }
+
+  // Parrying Weapons SA bonus: only applies to non-parrying-weapon melee lines
+  const parryResult =
+    combatType === "melee" && !isParryingLoadoutWeapon(weapon)
+      ? parryingWeaponSaBonus(sheet, allLoadoutWeapons ?? [], weapon.id)
+      : { bonus: 0, saLevel: "none" as const, parryingWeaponName: "", parryingWeaponPv: 0 };
 
   let allocatedAT = 0;
   let allocatedPA = 0;
@@ -685,6 +788,27 @@ export function computeLoadoutWeaponLine(
         detail: "Shield WM from other hand / armor shield row",
       });
     }
+    if (parryResult.bonus !== 0) {
+      const saLabel =
+        parryResult.saLevel === "parrying_weapons_ii"
+          ? "Parrying Weapons II"
+          : "Parrying Weapons I";
+      const pvFormula =
+        parryResult.saLevel === "parrying_weapons_ii"
+          ? `+2 + PV ${parryResult.parryingWeaponPv}`
+          : `−1 + PV ${parryResult.parryingWeaponPv}`;
+      paBreakdown.push({
+        label: `${saLabel} (${parryResult.parryingWeaponName})`,
+        delta: parryResult.bonus,
+        detail: `${pvFormula} = ${parryResult.bonus >= 0 ? "+" : ""}${parryResult.bonus} PA (BRW p.102)`,
+      });
+    } else if (parryResult.saLevel !== "none") {
+      paBreakdown.push({
+        label: `Parrying Weapons I (${parryResult.parryingWeaponName})`,
+        delta: 0,
+        detail: `−1 + PV ${parryResult.parryingWeaponPv} = 0 net PA`,
+      });
+    }
     paBreakdown.push({
       label: "Encumbrance (⌈eff. EC/2⌉ from PA)",
       delta: -encPA,
@@ -694,9 +818,17 @@ export function computeLoadoutWeaponLine(
     });
   }
 
+  if (parryResult.bonus !== 0 || parryResult.saLevel !== "none") {
+    const saName =
+      parryResult.saLevel === "parrying_weapons_ii" ? "Parrying Weapons II" : "Parrying Weapons I";
+    notes.push(
+      `${saName}: PA of this weapon is adjusted by ${parryResult.bonus >= 0 ? "+" : ""}${parryResult.bonus} (−1 + PV ${parryResult.parryingWeaponPv} of ${parryResult.parryingWeaponName}).`,
+    );
+  }
+
   const finalAT = baseAT + weapon.atModifier + shieldAT - encAT;
   const finalPA =
-    basePA === null ? null : basePA + weapon.paModifier + shieldPA - encPA;
+    basePA === null ? null : basePA + weapon.paModifier + shieldPA + parryResult.bonus - encPA;
 
   const ini =
     sheet.derived.baseINI +
@@ -720,6 +852,7 @@ export function computeLoadoutWeaponLine(
     weaponPA: weapon.paModifier,
     shieldAT,
     shieldPA,
+    parryingWeaponPA: parryResult.bonus,
     encumbranceAT: encAT,
     encumbrancePA: encPA,
     finalAT,
@@ -753,6 +886,7 @@ export function computeAllLoadoutWeaponLines(
       weaponBiasContext,
       sumCompanionShieldModifiers(armors, allWeapons, w.id),
       encTotals,
+      allWeapons,
     ),
   );
 }

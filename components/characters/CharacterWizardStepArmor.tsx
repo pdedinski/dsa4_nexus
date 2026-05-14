@@ -48,6 +48,9 @@ export default function CharacterWizardStepArmor({
   onSelectedIdsChange,
   buyArmorUseSa,
   onBuyArmorUseSaChange,
+  hasParryingWeapon,
+  buyParryingWeaponSa,
+  onBuyParryingWeaponSaChange,
   onBack,
   onGenerate,
   onCancel,
@@ -57,6 +60,9 @@ export default function CharacterWizardStepArmor({
   onSelectedIdsChange: (ids: string[]) => void;
   buyArmorUseSa: boolean;
   onBuyArmorUseSaChange: (value: boolean) => void;
+  hasParryingWeapon: boolean;
+  buyParryingWeaponSa: boolean;
+  onBuyParryingWeaponSaChange: (value: boolean) => void;
   onBack: () => void;
   onGenerate: () => void;
   onCancel: () => void;
@@ -169,6 +175,22 @@ export default function CharacterWizardStepArmor({
                   Shields chosen in the weapons step also trigger the same Shield Fighting
                   purchase attempt (not only armor listed here).
                 </p>
+              )}
+              {hasParryingWeapon && (
+                <label className="mt-3 flex cursor-pointer items-start gap-2 text-xs text-ink leading-snug">
+                  <input
+                    type="checkbox"
+                    className="mt-0.5 shrink-0 rounded border-surface-border"
+                    checked={buyParryingWeaponSa}
+                    onChange={(e) => onBuyParryingWeaponSaChange(e.target.checked)}
+                  />
+                  <span>
+                    Acquire <strong>Parrying Weapons</strong> SA chain — generation will spend veteran
+                    AP on Off-hand Fighting → Parrying Weapons I → II. With the SA, your primary
+                    weapon&apos;s PA is modified by the parrying weapon&apos;s PV (−1 + PV with I;
+                    +2 + PV with II). Basic Rules prerequisites (AG ≥ 12 / 15) still apply.
+                  </span>
+                </label>
               )}
               <div className="mt-2 flex flex-wrap items-center gap-2">
                 <span className="text-xs font-mono text-ink-muted tabular-nums">

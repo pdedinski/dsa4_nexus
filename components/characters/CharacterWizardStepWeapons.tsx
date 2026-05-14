@@ -23,12 +23,19 @@ const SHIELD_WEAPON_IDS = new Set([
 
 type WeaponRow = (typeof weaponsData.weapons)[number];
 
+function isParryingWeaponRow(w: WeaponRow): boolean {
+  return (w as { is_parrying_weapon?: boolean }).is_parrying_weapon === true;
+}
+
 function talentGroupKey(w: WeaponRow): string {
   if (
     ("is_shield" in w && (w as { is_shield?: boolean }).is_shield === true) ||
     SHIELD_WEAPON_IDS.has(w.id)
   ) {
     return "shield";
+  }
+  if (isParryingWeaponRow(w)) {
+    return "parrying_weapon";
   }
   const t = w.combat_talent;
   return t && String(t).trim() ? String(t).trim() : "_other";
@@ -37,6 +44,7 @@ function talentGroupKey(w: WeaponRow): string {
 function talentLabel(key: string) {
   if (key === "_other") return "Other";
   if (key === "shield") return "Shields (Shield Fighting)";
+  if (key === "parrying_weapon") return "Parrying Weapons (Parierwaffen)";
   return key.replace(/_/g, " ");
 }
 
@@ -112,10 +120,19 @@ export default function CharacterWizardStepWeapons({
   selectedIds: string[];
   onSelectedIdsChange: (ids: string[]) => void;
   onBack: () => void;
-  onNext: () => void;
+  onNext: (hasParryingWeapon: boolean) => void;
   onCancel: () => void;
 }) {
   const [filter, setFilter] = useState("");
+
+  const hasParryingWeaponSelected = useMemo(
+    () =>
+      selectedIds.some((id) => {
+        const row = weaponsData.weapons.find((w) => w.id === id);
+        return row && isParryingWeaponRow(row);
+      }),
+    [selectedIds],
+  );
 
   const groups = useMemo(() => {
     const map = new Map<string, WeaponRow[]>();
@@ -188,6 +205,20 @@ export default function CharacterWizardStepWeapons({
                 modifiers) are from the codex; final AT and PA also reflect your
                 talent TP and worn armor EC per the Basic Rules.
               </p>
+              {hasParryingWeaponSelected ? (
+                <p className="mt-2 text-xs text-ink-muted leading-relaxed max-w-prose">
+                  A parrying weapon is selected: the next step lets you acquire the{" "}
+                  <strong>Parrying Weapons</strong> SA chain (Off-hand Fighting → Parrying
+                  Weapons I → II). With the SA, the primary weapon&apos;s PA is modified by
+                  the parrying weapon&apos;s PV (−1 + PV with I; +2 + PV with II).
+                </p>
+              ) : (
+                <p className="mt-2 text-xs text-ink-muted leading-relaxed max-w-prose">
+                  Parrying weapons (Parierwaffen group) grant a PA bonus to your primary
+                  weapon when used with the Parrying Weapons SA chain. If selected, you
+                  can opt in to the SA chain on the next step.
+                </p>
+              )}
               <div className="mt-2 flex flex-wrap items-center gap-2">
                 <span className="text-xs font-mono text-ink-muted tabular-nums">
                   {count} selected
@@ -299,7 +330,7 @@ export default function CharacterWizardStepWeapons({
                 <button
                   type="button"
                   className="px-3 py-2 rounded-lg text-sm bg-brand text-white font-medium"
-                  onClick={onNext}
+                  onClick={() => onNext(hasParryingWeaponSelected)}
                 >
                   Next: Armor
                 </button>

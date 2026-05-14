@@ -43,6 +43,8 @@ export default function CharacterList() {
   const [wipWeaponIds, setWipWeaponIds] = useState<string[]>([]);
   const [wipArmorIds, setWipArmorIds] = useState<string[]>([]);
   const [wipBuyArmorUseSa, setWipBuyArmorUseSa] = useState(false);
+  const [wipHasParryingWeapon, setWipHasParryingWeapon] = useState(false);
+  const [wipBuyParryingWeaponSa, setWipBuyParryingWeaponSa] = useState(false);
   const [preview, setPreview] = useState<CharacterSheet | null>(null);
   const [previewOpen, setPreviewOpen] = useState(false);
   const [saveOpen, setSaveOpen] = useState(false);
@@ -312,15 +314,19 @@ export default function CharacterList() {
           setWipWeaponIds([]);
           setWipArmorIds([]);
           setWipBuyArmorUseSa(false);
+          setWipHasParryingWeapon(false);
+          setWipBuyParryingWeaponSa(false);
         }}
         onBack={() => {
           setWizardWeapons(false);
           if (needsSpellsFlag) setWizard2(true);
           else setWizard1(true);
         }}
-        onNext={() => {
+        onNext={(hasParryingWeapon) => {
           setWipArmorIds([]);
           setWipBuyArmorUseSa(false);
+          setWipHasParryingWeapon(hasParryingWeapon);
+          setWipBuyParryingWeaponSa(hasParryingWeapon);
           setWizardWeapons(false);
           setWizardArmor(true);
         }}
@@ -332,6 +338,9 @@ export default function CharacterList() {
         onSelectedIdsChange={setWipArmorIds}
         buyArmorUseSa={wipBuyArmorUseSa}
         onBuyArmorUseSaChange={setWipBuyArmorUseSa}
+        hasParryingWeapon={wipHasParryingWeapon}
+        buyParryingWeaponSa={wipBuyParryingWeaponSa}
+        onBuyParryingWeaponSaChange={setWipBuyParryingWeaponSa}
         onCancel={() => {
           setWizardArmor(false);
           setWizardWeapons(false);
@@ -340,6 +349,8 @@ export default function CharacterList() {
           setWipWeaponIds([]);
           setWipArmorIds([]);
           setWipBuyArmorUseSa(false);
+          setWipHasParryingWeapon(false);
+          setWipBuyParryingWeaponSa(false);
         }}
         onBack={() => {
           setWizardArmor(false);
@@ -353,6 +364,7 @@ export default function CharacterList() {
               weaponIds: wipWeaponIds.length ? wipWeaponIds : undefined,
               armorIds: wipArmorIds.length ? wipArmorIds : undefined,
               buyArmorUseSa: wipBuyArmorUseSa || undefined,
+              buyParryingWeaponSa: wipBuyParryingWeaponSa || undefined,
             },
             spellPriorities
           );

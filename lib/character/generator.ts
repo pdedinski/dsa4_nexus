@@ -154,6 +154,17 @@ const SHIELD_WEAPON_IDS_FOR_LOADOUT = new Set([
   "large_leather_shield",
 ]);
 
+/** Parierwaffen without `combat_talent` still use Daggers for TP/display (WdS convention). */
+function codexMeleeCombatTalentForSheet(
+  w: (typeof weaponsData.weapons)[number],
+): string | null {
+  const t = w.combat_talent;
+  if (t != null && String(t).trim() !== "") return String(t).trim();
+  if ((w as { is_parrying_weapon?: boolean }).is_parrying_weapon === true)
+    return "daggers";
+  return null;
+}
+
 function resolveLoadout(input: GenerateCharacterInput): SheetLoadout | undefined {
   const weaponIdList = dedupeIds([
     ...(input.weaponIds ?? []),
@@ -171,7 +182,7 @@ function resolveLoadout(input: GenerateCharacterInput): SheetLoadout | undefined
     weapons.push({
       id: w.id,
       name: w.name,
-      combatTalent: w.combat_talent ?? null,
+      combatTalent: codexMeleeCombatTalentForSheet(w),
       ...((w as { is_shield?: boolean }).is_shield === true ||
       SHIELD_WEAPON_IDS_FOR_LOADOUT.has(w.id)
         ? { isShield: true }
@@ -221,7 +232,7 @@ function collectWeaponBiasRows(input: GenerateCharacterInput): WeaponBiasRow[] {
     const w = weaponsData.weapons.find((x) => x.id === id);
     if (!w) continue;
     rows.push({
-      combatTalent: w.combat_talent ?? null,
+      combatTalent: codexMeleeCombatTalentForSheet(w),
       atModifier: typeof w.at_modifier === "number" ? w.at_modifier : 0,
       paModifier: typeof w.pa_modifier === "number" ? w.pa_modifier : 0,
     });
@@ -939,6 +950,19 @@ function inputIncludesShieldFromInput(input: GenerateCharacterInput): boolean {
   return false;
 }
 
+function inputIncludesParryingWeapon(input: GenerateCharacterInput): boolean {
+  const weaponIdList = dedupeIds([
+    ...(input.weaponIds ?? []),
+    ...(input.primaryWeaponId ? [input.primaryWeaponId] : []),
+  ]);
+  for (const id of weaponIdList) {
+    const w = weaponsData.weapons.find((x) => x.id === id);
+    if (!w) continue;
+    if ((w as { is_parrying_weapon?: boolean }).is_parrying_weapon === true) return true;
+  }
+  return false;
+}
+
 /** Note text for Armor Use I (category + piece name) from highest RS non-shield armor. */
 function pickArmorUseOneNoteForInput(
   input: GenerateCharacterInput,
@@ -1011,6 +1035,109 @@ type SaApPurchaseOpts = {
   /** Optional trace for superuser debug mode. */
   dbg?: (line: string) => void;
 };
+
+/** GP spent on SAs during character creation (BRW gp_cost_creation column). Fallback: ⌈AP/50⌉. */
+function gpCreationCostForSa(saId: string): number | null {
+  const def = SA_BY_ID.get(saId);
+  if (!def) return null;
+  const gpc = (def as { gp_cost_creation?: unknown }).gp_cost_creation;
+  if (typeof gpc === "number" && gpc > 0) return gpc;
+  if (typeof def.ap_cost === "number" && def.ap_cost > 0) {
+    return Math.max(1, Math.ceil(def.ap_cost / 50));
+  }
+  return null;
+}
+
+/**
+ * Purchase SAs in order with **creation GP** (not veteran AP).
+ * Mirrors {@link purchaseApSaChain}: prereqs, armor_use_i note handling.
+ */
+function purchaseGpSaChain(
+  orderedIds: readonly string[],
+  attrsFinal: CharacterSheet["attributesFinal"],
+  existing: SpecialAbilityInstance[],
+  gpStart: number,
+  outNotes: string[],
+  opts?: SaApPurchaseOpts,
+): { newSas: SpecialAbilityInstance[]; gpRemaining: number } {
+  const mergedIds = new Set(existing.map((s) => s.id));
+  const newSas: SpecialAbilityInstance[] = [];
+  let left = gpStart;
+  const trace = opts?.dbg;
+
+  for (const saId of orderedIds) {
+    if (mergedIds.has(saId)) {
+      trace?.(`[GP:SA] skip ${saId} (already owned)`);
+      continue;
+    }
+    const def = SA_BY_ID.get(saId);
+    const gpCost = gpCreationCostForSa(saId);
+    if (!def || gpCost == null) {
+      outNotes.push(`SA "${saId}" missing from catalog or has no GP creation cost.`);
+      trace?.(`[GP:SA] abort: "${saId}" invalid or missing GP cost`);
+      break;
+    }
+    const reqs = def.requirements ?? [];
+    let abortChain = false;
+    for (const raw of reqs) {
+      const r = raw as {
+        type?: string;
+        attr?: string;
+        value?: number;
+        sa?: string;
+      };
+      if (r.type === "attr_min" && r.attr && typeof r.value === "number") {
+        const ac = r.attr as AttrCode;
+        const have = attrsFinal[ac] ?? 0;
+        if (have < r.value) {
+          outNotes.push(
+            `Could not buy ${def.name ?? saId} with GP: need ${r.attr} ${r.value}+ (have ${have}).`,
+          );
+          trace?.(
+            `[GP:SA] blocked ${def.name ?? saId}: need ${r.attr} ${r.value}+ (have ${have})`,
+          );
+          abortChain = true;
+          break;
+        }
+      }
+    }
+    if (abortChain) break;
+    for (const raw of reqs) {
+      const r = raw as { type?: string; sa?: string };
+      if (r.type === "sa_required" && r.sa && !mergedIds.has(r.sa)) {
+        outNotes.push(
+          `Could not buy ${def.name ?? saId} with GP: missing prerequisite SA "${r.sa}".`,
+        );
+        trace?.(
+          `[GP:SA] blocked ${def.name ?? saId}: missing prerequisite SA "${r.sa}"`,
+        );
+        abortChain = true;
+        break;
+      }
+    }
+    if (abortChain) break;
+    if (left < gpCost) {
+      outNotes.push(
+        `Could not buy ${def.name ?? saId} with GP: needs ${gpCost} GP (${left} GP left).`,
+      );
+      trace?.(
+        `[GP:SA] insufficient GP for ${def.name ?? saId}: needs ${gpCost}, have ${left}`,
+      );
+      break;
+    }
+    const inst: SpecialAbilityInstance = {
+      id: saId,
+      name: def.name,
+      ...(saId === "armor_use_i" && opts?.armorUseINote ? { note: opts.armorUseINote } : {}),
+    };
+    newSas.push(inst);
+    mergedIds.add(saId);
+    left -= gpCost;
+    trace?.(`[GP:SA] bought ${def.name ?? saId} (${saId}) cost=${gpCost} GP → ${left} GP left`);
+  }
+
+  return { newSas, gpRemaining: left };
+}
 
 /**
  * Purchase SAs in order with AP; stops on first unmet prereq, unmet attribute, or unaffordable cost.
@@ -1157,6 +1284,31 @@ function orderedGenerationArmorSaIds(allowSaHighTiers: boolean): string[] {
   ids.push("armor_use_i");
   if (allowSaHighTiers) {
     ids.push("armor_use_ii", "armor_use_iii");
+  }
+  return ids;
+}
+
+/**
+ * Ordered parrying weapon SA chain IDs when loadout includes a parrying weapon and the player
+ * opted in: off_hand_fighting (if missing) → parrying_weapons_i → parrying_weapons_ii.
+ * Skips steps already owned.
+ */
+function orderedGenerationParryingWeaponSaIds(
+  merged: Set<string>,
+  allowSaHighTiers: boolean,
+  input: GenerateCharacterInput,
+): string[] {
+  if (!inputIncludesParryingWeapon(input)) return [];
+  if (!input.buyParryingWeaponSa) return [];
+  const ids: string[] = [];
+  if (!merged.has("off_hand_fighting")) {
+    ids.push("off_hand_fighting");
+  }
+  if (!merged.has("parrying_weapons_i")) {
+    ids.push("parrying_weapons_i");
+  }
+  if (allowSaHighTiers && !merged.has("parrying_weapons_ii")) {
+    ids.push("parrying_weapons_ii");
   }
   return ids;
 }
@@ -1570,6 +1722,71 @@ export function generateCharacter(
       break;
     }
   }
+
+  /** Attributes stable for SA prereqs (race/culture only; advantages do not change attrs here). */
+  const attrsForCreationSaPurchases = {
+    ...applyAttrMods(purchased, race, culture),
+    SO: so,
+  } as CharacterSheet["attributesFinal"];
+
+  const creationAutomaticSa = dedupeSpecialAbilitiesById([
+    ...((race.automatic_SAs ?? []) as CharacterSheet["specialAbilities"]),
+    ...((culture.automatic_SAs ?? []) as CharacterSheet["specialAbilities"]),
+    ...((profession.automatic_SAs ?? []) as CharacterSheet["specialAbilities"]),
+  ]);
+  let gpCombatLoadoutPurchased: CharacterSheet["specialAbilities"] = [];
+  /** Creation GP buys loadout-required combat SAs before random advantages consume GP (veteran AP still tops up afterward). */
+  {
+    let workingSasForGp = [...creationAutomaticSa];
+    const includeHighTierSasForGp = true;
+
+    const runGpCombatLoadout = (ids: readonly string[], armorUseINote?: string | null) => {
+      if (ids.length === 0) return;
+      const res = purchaseGpSaChain(
+        ids,
+        attrsForCreationSaPurchases,
+        workingSasForGp,
+        gp,
+        notes,
+        {
+          dbg,
+          ...(armorUseINote ? { armorUseINote } : {}),
+        },
+      );
+      gpCombatLoadoutPurchased.push(...res.newSas);
+      workingSasForGp.push(...res.newSas);
+      gp = res.gpRemaining;
+    };
+
+    runGpCombatLoadout(
+      orderedGenerationShieldSaIds(
+        new Set(workingSasForGp.map((s) => s.id)),
+        includeHighTierSasForGp,
+        input,
+      ),
+    );
+
+    if (input.buyArmorUseSa) {
+      const armorGpNote = pickArmorUseOneNoteForInput(input);
+      if (armorGpNote) {
+        runGpCombatLoadout(
+          orderedGenerationArmorSaIds(includeHighTierSasForGp),
+          armorGpNote,
+        );
+      }
+    }
+
+    if (input.buyParryingWeaponSa && inputIncludesParryingWeapon(input)) {
+      runGpCombatLoadout(
+        orderedGenerationParryingWeaponSaIds(
+          new Set(workingSasForGp.map((s) => s.id)),
+          includeHighTierSasForGp,
+          input,
+        ),
+      );
+    }
+  }
+
   while (gp > 0 && advPool.length) {
     const affordable = advPool.filter((a) => a.gp_cost <= gp);
     if (!affordable.length) break;
@@ -1887,9 +2104,8 @@ export function generateCharacter(
   dbg(`[VeteranAP] pool start extraApBudget=${extraApBudget} (extraLeft=${extraLeft})`);
 
   let specialAbilitiesOut = dedupeSpecialAbilitiesById([
-    ...((race.automatic_SAs ?? []) as CharacterSheet["specialAbilities"]),
-    ...((culture.automatic_SAs ?? []) as CharacterSheet["specialAbilities"]),
-    ...((profession.automatic_SAs ?? []) as CharacterSheet["specialAbilities"]),
+    ...creationAutomaticSa,
+    ...gpCombatLoadoutPurchased,
   ]);
   const allowSaHighTiers = extraApBudget >= 1000;
   /** Shield/armor SA AP buys: before talents if enough veteran AP, else after (residual). */
@@ -1927,6 +2143,23 @@ export function generateCharacter(
         );
         specialAbilitiesOut.push(...armorBuy.newSas);
         extraLeft = armorBuy.extraLeft;
+      }
+    }
+
+    if (input.buyParryingWeaponSa && inputIncludesParryingWeapon(input)) {
+      const mergedAfter = new Set(specialAbilitiesOut.map((s) => s.id));
+      const parryIds = orderedGenerationParryingWeaponSaIds(mergedAfter, allowSaHighTiers, input);
+      if (parryIds.length > 0) {
+        const parryBuy = purchaseApSaChain(
+          parryIds,
+          attrsFinal,
+          specialAbilitiesOut,
+          extraLeft,
+          notes,
+          { dbg },
+        );
+        specialAbilitiesOut.push(...parryBuy.newSas);
+        extraLeft = parryBuy.extraLeft;
       }
     }
   }
@@ -2106,6 +2339,12 @@ export function generateCharacter(
       }
     }
 
+    if (input.buyParryingWeaponSa && inputIncludesParryingWeapon(input)) {
+      for (const id of orderedGenerationParryingWeaponSaIds(merged, allowSaHighTiers, input)) {
+        if (!merged.has(id)) addAttrMinsForSaId(id);
+      }
+    }
+
     for (const def of specialAbilitiesData.special_abilities) {
       if (!def.ap_cost || typeof def.ap_cost !== "number") continue;
       if (merged.has(def.id)) continue;
@@ -2207,6 +2446,29 @@ export function generateCharacter(
             const spentA = capArmor - rArmor.extraLeft;
             extraLeft -= spentA;
             remaining -= spentA;
+            progressed = true;
+          }
+        }
+      }
+
+      const capParry = Math.min(extraLeft, remaining);
+      if (capParry > 0 && input.buyParryingWeaponSa && inputIncludesParryingWeapon(input)) {
+        const mergedParry = new Set(specialAbilitiesOut.map((s) => s.id));
+        const parryIds = orderedGenerationParryingWeaponSaIds(mergedParry, allowSaHighTiers, input);
+        if (parryIds.length > 0) {
+          const rParry = purchaseApSaChain(
+            parryIds,
+            attrsFinal,
+            specialAbilitiesOut,
+            capParry,
+            notes,
+            { dbg },
+          );
+          if (rParry.newSas.length > 0) {
+            specialAbilitiesOut.push(...rParry.newSas);
+            const spentP = capParry - rParry.extraLeft;
+            extraLeft -= spentP;
+            remaining -= spentP;
             progressed = true;
           }
         }
