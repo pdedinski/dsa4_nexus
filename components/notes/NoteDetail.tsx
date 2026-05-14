@@ -9,6 +9,10 @@ import type {
   CharacterRowBrief,
   CharacterMentionCtx,
 } from "./createCharacterMentionExtension";
+import type {
+  NoteRowBrief,
+  NoteMentionCtx,
+} from "./createNoteMentionExtension";
 import { emptyNoteDoc, isTipTapDoc } from "@/lib/notes/emptyNoteDoc";
 
 export default function NoteDetail({ noteId }: { noteId: string }) {
@@ -22,18 +26,36 @@ export default function NoteDetail({ noteId }: { noteId: string }) {
   const [pickCharacter, setPickCharacter] = useState<string | null>(null);
 
   const [characters, setCharacters] = useState<CharacterRowBrief[]>([]);
+  const [notesForMentions, setNotesForMentions] = useState<NoteRowBrief[]>([]);
 
   const ctxRef = useRef<CharacterMentionCtx>({
     characters: [],
     onCharacterClick: undefined,
   });
 
+  const noteMentionCtxRef = useRef<NoteMentionCtx>({
+    notes: [],
+    excludeNoteId: undefined,
+    onNoteClick: undefined,
+  });
+
   const openCharacter = useCallback((characterId: string) => {
     setPickCharacter(characterId);
   }, []);
 
+  const openNote = useCallback(
+    (linkedNoteId: string) => {
+      router.push(`/notes/${linkedNoteId}`);
+    },
+    [router]
+  );
+
   ctxRef.current.characters = characters;
   ctxRef.current.onCharacterClick = openCharacter;
+
+  noteMentionCtxRef.current.notes = notesForMentions;
+  noteMentionCtxRef.current.excludeNoteId = noteId;
+  noteMentionCtxRef.current.onNoteClick = openNote;
 
   useEffect(() => {
     let cancelled = false;
@@ -43,6 +65,25 @@ export default function NoteDetail({ noteId }: { noteId: string }) {
       if (cancelled) return;
       const list = (data.characters ?? []) as CharacterRowBrief[];
       setCharacters(list);
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  useEffect(() => {
+    let cancelled = false;
+    void (async () => {
+      const res = await fetch("/api/notes");
+      const data = await res.json();
+      if (cancelled) return;
+      const raw = (data.notes ?? []) as Array<{
+        id: string;
+        title: string;
+      }>;
+      setNotesForMentions(
+        raw.map((n) => ({ id: n.id, title: typeof n.title === "string" ? n.title : "" }))
+      );
     })();
     return () => {
       cancelled = true;
@@ -187,12 +228,15 @@ export default function NoteDetail({ noteId }: { noteId: string }) {
 
       <p className="text-xs text-ink-faint mb-3">
         Tip: type <kbd className="rounded border border-surface-border px-1">@</kbd> to
-        mention a saved character. Names link to their sheet (view mode).
+        mention a saved character (opens sheet in view mode). Type{" "}
+        <kbd className="rounded border border-surface-border px-1">#</kbd> to link another
+        note (opens it when clicked in view mode).
       </p>
 
       <NoteEditor
         key={noteId}
         ctxRef={ctxRef}
+        noteMentionCtxRef={noteMentionCtxRef}
         contentJson={content}
         editable={isEditing}
         onChange={setContent}

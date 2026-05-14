@@ -9,6 +9,10 @@ import {
   createCharacterMentionExtension,
   type CharacterMentionCtxRef,
 } from "./createCharacterMentionExtension";
+import {
+  createNoteMentionExtension,
+  type NoteMentionCtxRef,
+} from "./createNoteMentionExtension";
 
 function MenuBar({ editor }: { editor: Editor }) {
   return (
@@ -67,21 +71,28 @@ export default function NoteEditor({
   editable,
   onChange,
   ctxRef,
+  noteMentionCtxRef,
 }: {
   contentJson: Record<string, unknown>;
   editable: boolean;
   onChange?: (json: Record<string, unknown>) => void;
   ctxRef: CharacterMentionCtxRef;
+  noteMentionCtxRef: NoteMentionCtxRef;
 }) {
   const mentionExtension = useMemo(
     () => createCharacterMentionExtension(ctxRef),
     [ctxRef]
   );
 
+  const noteMentionExtension = useMemo(
+    () => createNoteMentionExtension(noteMentionCtxRef),
+    [noteMentionCtxRef]
+  );
+
   const editor = useEditor(
     {
       immediatelyRender: false,
-      extensions: [StarterKit, mentionExtension],
+      extensions: [StarterKit, mentionExtension, noteMentionExtension],
       content: contentJson as JSONContent,
       editable,
       editorProps: {
@@ -94,7 +105,7 @@ export default function NoteEditor({
         onChange?.(ed.getJSON() as Record<string, unknown>);
       },
     },
-    [mentionExtension]
+    [mentionExtension, noteMentionExtension]
   );
 
   useEffect(() => {

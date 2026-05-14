@@ -143,8 +143,8 @@ export default function CharacterWizardStep1({
 
   return (
     <BodyPortal>
-    <div className="fixed inset-0 z-[180] flex items-center justify-center p-4 bg-black/50">
-      <div className="bg-surface-card border border-surface-border rounded-xl shadow-xl max-w-lg w-full max-h-[90vh] overflow-y-auto p-5">
+    <div className="fixed inset-0 z-[180] flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm">
+      <div className="relative z-[1] max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-xl border border-surface-border bg-surface-card p-5 shadow-2xl ring-1 ring-black/40">
         <h2 className="text-lg font-bold text-ink mb-4">Create a new hero</h2>
         <div className="space-y-3 text-sm">
           <label className="block">
