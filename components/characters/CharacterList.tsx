@@ -15,6 +15,7 @@ import CharacterWizardStepArmor from "./CharacterWizardStepArmor";
 import SaveCharacterDialog from "./SaveCharacterDialog";
 import BodyPortal from "@/components/ui/BodyPortal";
 import DebugLogModal from "./DebugLogModal";
+import { postGenerateSheet } from "./postGenerateSheet";
 import { DEBUG_MODE_CHANGED_EVENT } from "@/components/manage/ManageSettingsClient";
 
 type Row = {
@@ -118,20 +119,13 @@ export default function CharacterList() {
     setGenerating(true);
     try {
       const debugModePayload = isSuperuser && debugLocalPreference;
-      const res = await fetch("/api/characters/generate", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...input,
-          spellPriorities: priorities,
-          ...(debugModePayload ? { debugMode: true } : {}),
-        }),
+      const sheet = await postGenerateSheet({
+        input,
+        spellPriorities: priorities,
+        debugMode: debugModePayload,
       });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error ?? "Generate failed");
       setLastGenInput(input);
       setLastGenPriorities(priorities);
-      const sheet = data.sheet as CharacterSheet;
       setPreview(sheet);
       setPreviewName(sheet.header.displayName);
       setNameEditMode(false);
@@ -157,18 +151,11 @@ export default function CharacterList() {
     setRerolling(true);
     try {
       const debugModePayload = isSuperuser && debugLocalPreference;
-      const res = await fetch("/api/characters/generate", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...lastGenInput,
-          spellPriorities: lastGenPriorities,
-          ...(debugModePayload ? { debugMode: true } : {}),
-        }),
+      const sheet = await postGenerateSheet({
+        input: lastGenInput,
+        spellPriorities: lastGenPriorities,
+        debugMode: debugModePayload,
       });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error ?? "Generate failed");
-      const sheet = data.sheet as CharacterSheet;
       const newName = sheet.header.displayName;
       setPreviewName(newName);
       setPreview((p) =>

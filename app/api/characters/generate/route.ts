@@ -5,31 +5,37 @@ import { resolveApSpendingProfileForGenerate } from "@/lib/character/resolveApPr
 import type { GenerateCharacterInput } from "@/lib/character/types";
 
 export async function POST(req: NextRequest) {
-  const session = await requireAllowed();
-  if (!session)
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-
-  let body: GenerateCharacterInput;
   try {
-    body = (await req.json()) as GenerateCharacterInput;
-  } catch {
-    return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
-  }
+    const session = await requireAllowed();
+    if (!session)
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-  try {
-    const { resolvedApSpendingProfile: _discard, ...rest } = body;
-    const resolvedApSpendingProfile = await resolveApSpendingProfileForGenerate(
-      rest.apProfileId
-    );
-    const debugMode = Boolean(body.debugMode) && session.user.isSuperuser;
-    const sheet = generateCharacter({
-      ...rest,
-      resolvedApSpendingProfile,
-      debugMode,
-    });
-    return NextResponse.json({ sheet });
+    let body: GenerateCharacterInput;
+    try {
+      body = (await req.json()) as GenerateCharacterInput;
+    } catch {
+      return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
+    }
+
+    try {
+      const { resolvedApSpendingProfile: _discard, ...rest } = body;
+      const resolvedApSpendingProfile = await resolveApSpendingProfileForGenerate(
+        rest.apProfileId
+      );
+      const debugMode = Boolean(body.debugMode) && session.user.isSuperuser;
+      const sheet = generateCharacter({
+        ...rest,
+        resolvedApSpendingProfile,
+        debugMode,
+      });
+      return NextResponse.json({ sheet });
+    } catch (e) {
+      const msg = e instanceof Error ? e.message : "Generation failed";
+      return NextResponse.json({ error: msg }, { status: 400 });
+    }
   } catch (e) {
-    const msg = e instanceof Error ? e.message : "Generation failed";
-    return NextResponse.json({ error: msg }, { status: 400 });
+    console.error("[api/characters/generate]", e);
+    const msg = e instanceof Error ? e.message : "Server error during generation";
+    return NextResponse.json({ error: msg }, { status: 500 });
   }
 }
