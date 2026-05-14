@@ -27,3 +27,10 @@ export async function requireAdmin() {
   if (!session.user.isAdmin && !session.user.isSuperuser) return null;
   return session;
 }
+
+export async function requireSuperuser() {
+  const session = await requireSession();
+  if (!session) return null;
+  if (!session.user.isSuperuser) return null;
+  return session;
+}

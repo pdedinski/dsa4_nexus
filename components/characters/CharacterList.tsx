@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { Bug } from "lucide-react";
 import type { CharacterSheet } from "@/lib/character/types";
 import type { GenerateCharacterInput } from "@/lib/character/types";
 import type { SpellPriority } from "@/lib/character/types";
@@ -13,6 +14,8 @@ import CharacterWizardStepWeapons from "./CharacterWizardStepWeapons";
 import CharacterWizardStepArmor from "./CharacterWizardStepArmor";
 import SaveCharacterDialog from "./SaveCharacterDialog";
 import BodyPortal from "@/components/ui/BodyPortal";
+import DebugLogModal from "./DebugLogModal";
+import { DEBUG_MODE_CHANGED_EVENT } from "@/components/manage/ManageSettingsClient";
 
 type Row = {
   id: string;
@@ -51,6 +54,9 @@ export default function CharacterList() {
   const [lastGenPriorities, setLastGenPriorities] = useState<
     Record<string, SpellPriority> | undefined
   >();
+  const [isSuperuser, setIsSuperuser] = useState(false);
+  const [debugLocalPreference, setDebugLocalPreference] = useState(false);
+  const [debugLogOpen, setDebugLogOpen] = useState(false);
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -63,6 +69,38 @@ export default function CharacterList() {
   useEffect(() => {
     load();
   }, [load]);
+
+  useEffect(() => {
+    void (async () => {
+      try {
+        const res = await fetch("/api/auth/session");
+        const data = (await res.json()) as { user?: { isSuperuser?: boolean } };
+        setIsSuperuser(Boolean(data?.user?.isSuperuser));
+      } catch {
+        setIsSuperuser(false);
+      }
+    })();
+  }, []);
+
+  useEffect(() => {
+    const readPreference = () => {
+      try {
+        setDebugLocalPreference(localStorage.getItem("dsa_debug_mode") === "1");
+      } catch {
+        setDebugLocalPreference(false);
+      }
+    };
+    readPreference();
+    const onVis = () => {
+      if (document.visibilityState === "visible") readPreference();
+    };
+    window.addEventListener(DEBUG_MODE_CHANGED_EVENT, readPreference);
+    document.addEventListener("visibilitychange", onVis);
+    return () => {
+      window.removeEventListener(DEBUG_MODE_CHANGED_EVENT, readPreference);
+      document.removeEventListener("visibilitychange", onVis);
+    };
+  }, []);
 
   useEffect(() => {
     if (!previewOpen) return;
@@ -79,10 +117,15 @@ export default function CharacterList() {
   ) {
     setGenerating(true);
     try {
+      const debugModePayload = isSuperuser && debugLocalPreference;
       const res = await fetch("/api/characters/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...input, spellPriorities: priorities }),
+        body: JSON.stringify({
+          ...input,
+          spellPriorities: priorities,
+          ...(debugModePayload ? { debugMode: true } : {}),
+        }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error ?? "Generate failed");
@@ -92,6 +135,7 @@ export default function CharacterList() {
       setPreview(sheet);
       setPreviewName(sheet.header.displayName);
       setNameEditMode(false);
+      setDebugLogOpen(false);
       setPreviewOpen(true);
       setWizard1(false);
       setWizard2(false);
@@ -112,12 +156,14 @@ export default function CharacterList() {
     if (!lastGenInput) return;
     setRerolling(true);
     try {
+      const debugModePayload = isSuperuser && debugLocalPreference;
       const res = await fetch("/api/characters/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...lastGenInput,
           spellPriorities: lastGenPriorities,
+          ...(debugModePayload ? { debugMode: true } : {}),
         }),
       });
       const data = await res.json();
@@ -383,6 +429,20 @@ export default function CharacterList() {
                 )}
               </div>
               <div className="flex flex-wrap gap-2">
+                {isSuperuser &&
+                  debugLocalPreference &&
+                  preview.debugLog &&
+                  preview.debugLog.length > 0 && (
+                    <button
+                      type="button"
+                      title="Open generation debug trace"
+                      aria-label="Open generation debug trace"
+                      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-amber-800/70 bg-amber-950/40 text-amber-400 hover:bg-amber-950/70"
+                      onClick={() => setDebugLogOpen(true)}
+                    >
+                      <Bug className="h-4 w-4" />
+                    </button>
+                  )}
                 <button
                   type="button"
                   disabled={rerolling || generating || !lastGenInput}
@@ -451,6 +511,15 @@ export default function CharacterList() {
               />
             </div>
           </div>
+        </BodyPortal>
+      )}
+
+      {debugLogOpen && preview?.debugLog && preview.debugLog.length > 0 && (
+        <BodyPortal>
+          <DebugLogModal
+            lines={preview.debugLog}
+            onClose={() => setDebugLogOpen(false)}
+          />
         </BodyPortal>
       )}
 

@@ -13,7 +13,7 @@ export type TalentDef = {
   test_attributes?: string[];
   is_basic?: boolean;
   combat_type?: string | null;
-  /** Effective encumbrance class (EEC / eBE interaction), when present in JSON. */
+  /** Effective encumbrance class (EEC / effective EC interaction), when present in JSON. */
   eec?: string | null;
 };
 

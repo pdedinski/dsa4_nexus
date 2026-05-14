@@ -1,5 +1,6 @@
 /**
- * Encumbrance (BE/EC), EEC parsing, and Rüstungsgewöhnung (Armor Use I–III) for loadout + talent display.
+ * Encumbrance (EC): codex armor field `ec`; talent **EEC** → **effective EC**; Armor Use (RG) I–III.
+ * See `TDE4_character_creation_from_scratch.txt` and English Basic Rules (TDE_basicrules.pdf).
  */
 
 import type {
@@ -17,7 +18,7 @@ function normalizeEecRaw(raw: string): string {
 }
 
 /**
- * Effective encumbrance (eBE) used for combat/talent encumbrance interaction from total worn EC (BE).
+ * Applies combat talent **EEC** to worn aggregate EC (`effectiveTotalEC` after Armor Use) → **effective EC** (numeric penalty).
  * After {@link computeEffectiveArmorEcPerPiece}, pass `effectiveTotalEC` here.
  */
 export function parseEffectiveEncumbrance(
@@ -48,7 +49,7 @@ function pieceEc(a: SheetLoadoutArmor): number {
   return typeof a.ec === "number" ? a.ec : 0;
 }
 
-/** Deterministic tie-break: higher EC, then armor id. */
+/** Tie-break: higher EC, then armor id. */
 function pickHighestEcArmor(
   armors: SheetLoadoutArmor[],
 ): SheetLoadoutArmor | null {
@@ -66,9 +67,7 @@ function pickHighestEcArmor(
   return best;
 }
 
-/**
- * Map SA note + loadout to armor category slug (e.g. chain_scale) for Armor Use I.
- */
+/** Armor category slug for Armor Use I from SA note + loadout (e.g. chain_scale). */
 export function resolveArmorUseOneCategory(
   armors: SheetLoadoutArmor[] | undefined,
   specialAbilities: SpecialAbilityInstance[],
@@ -104,7 +103,6 @@ export function resolveArmorUseOneCategory(
   const fromNote = noteToCategory();
   if (fromNote) return fromNote;
 
-  /** Try matching note tokens to armor ids (e.g. "long_chainmail"). */
   const token = note.replace(/\s+/g, "_");
   if (token) {
     const byId = arm.find((a) => a.id.includes(token) || token.includes(a.id));
@@ -115,12 +113,22 @@ export function resolveArmorUseOneCategory(
   return hi?.category ?? null;
 }
 
+function rgOneCategoryRepresentedOnLoadout(
+  list: SheetLoadoutArmor[],
+  categoryOne: string | null,
+): boolean {
+  return (
+    !!categoryOne &&
+    list.some((a) => (a.category ?? "") === categoryOne)
+  );
+}
+
 export type ArmorUseReductionSummary = {
   hasOne: boolean;
   hasTwo: boolean;
   hasThree: boolean;
   categoryOne: string | null;
-  /** Human-readable armor use line for UI/tooltips. */
+  /** Armor Use / aggregate EC reduction — surfaced in sheet + combat tooltips. */
   summary: string;
 };
 
@@ -134,25 +142,36 @@ export function summarizeArmorUseReductions(
   const hasOne = ids.has(ARMOR_USE_I);
   const categoryOne = resolveArmorUseOneCategory(armors, specialAbilities);
 
+  const list = armors ?? [];
+  const rgOneApplicable =
+    hasOne &&
+    rgOneCategoryRepresentedOnLoadout(list, categoryOne ?? null);
+
   const parts: string[] = [];
-  if (hasThree) parts.push("Armor Use III: −2 EC per armor piece");
-  else {
-    if (hasTwo) parts.push("Armor Use II: −1 EC per armor piece");
-    if (hasOne) {
-      parts.push(
-        categoryOne
-          ? `Armor Use I: −1 EC for category “${categoryOne.replace(/_/g, " ")}”`
-          : "Armor Use I: −1 EC (category from highest-EC worn piece)",
-      );
-    }
+  if (hasThree) {
+    parts.push(
+      "Armor Use III (RG III): −2 total worn EC (Sword Paths / WdS supplement).",
+    );
+  } else if (hasTwo) {
+    parts.push(
+      "Armor Use II (RG II): −1 total worn EC; does not stack with Armor Use I (Basic Rules).",
+    );
+  } else if (hasOne && rgOneApplicable) {
+    parts.push(
+      categoryOne
+        ? `Armor Use I (RG I): −1 total worn EC for armor type “${categoryOne.replace(/_/g, " ")}”.`
+        : "Armor Use I (RG I): −1 total worn EC for qualifying worn armor.",
+    );
   }
+
   const summary = parts.length ? parts.join("; ") : "";
 
   return { hasOne, hasTwo, hasThree, categoryOne, summary };
 }
 
 /**
- * Per-piece EC after Rüstungsgewöhnung. III: −2 each (replaces lower-tier global steps). Else II: −1 each; I: extra −1 on matching category.
+ * Armor Use reduces **aggregate worn EC once** (Basic Rules + optional WdS tier III).
+ * `pieces`: raw per-piece EC for display; `effectiveTotalEC`: EC after Armor Use.
  */
 export function computeEffectiveArmorEcPerPiece(
   armors: SheetLoadoutArmor[] | undefined,
@@ -164,25 +183,25 @@ export function computeEffectiveArmorEcPerPiece(
     return { pieces: [], effectiveTotalEC: 0, rawTotalEC: 0 };
   }
 
-  const { hasOne, hasTwo, hasThree, categoryOne } =
-    summarizeArmorUseReductions(list, specialAbilities);
+  const ids = new Set(specialAbilities.map((x) => x.id));
+  const hasThree = ids.has(ARMOR_USE_III);
+  const hasTwo = ids.has(ARMOR_USE_II);
+  const hasOne = ids.has(ARMOR_USE_I);
+  const categoryOne = resolveArmorUseOneCategory(list, specialAbilities);
 
-  const pieces = list.map((a) => {
-    let ec = pieceEc(a);
-    const cat = a.category ?? "";
+  const rgOneApplicable =
+    hasOne &&
+    !hasTwo &&
+    !hasThree &&
+    rgOneCategoryRepresentedOnLoadout(list, categoryOne);
 
-    if (hasThree) {
-      ec = Math.max(0, ec - 2);
-    } else {
-      if (hasTwo) ec = Math.max(0, ec - 1);
-      if (hasOne && categoryOne && cat === categoryOne) {
-        ec = Math.max(0, ec - 1);
-      }
-    }
-    return ec;
-  });
+  let reduction = 0;
+  if (hasThree) reduction = 2;
+  else if (hasTwo) reduction = 1;
+  else if (rgOneApplicable) reduction = 1;
 
-  const effectiveTotalEC = pieces.reduce((s, n) => s + n, 0);
+  const effectiveTotalEC = Math.max(0, rawTotalEC - reduction);
+  const pieces = list.map((a) => pieceEc(a));
   return { pieces, effectiveTotalEC, rawTotalEC };
 }
 
@@ -205,14 +224,17 @@ export function computeLoadoutEncumbranceTotals(
 }
 
 /**
- * Talent test display: effective TP after encumbrance malus from eBE (full value, not melee split).
- * Matches using eBE as points that reduce usable TP on encumbered tests.
+ * Talent row: usable **TP** after subtracting full **effective EC** from codex **EEC** (not the melee AT/PA half split).
+ * Missing codex `eec`: no EC penalty here (not implicitly “full EC”).
  */
 export function talentTpAfterEecEncumbrance(
   tp: number,
   eecRaw: string | undefined,
   effectiveTotalEC: number,
 ): { ebe: number; effectiveTp: number } {
+  if (eecRaw == null || String(eecRaw).trim() === "") {
+    return { ebe: 0, effectiveTp: tp };
+  }
   const ebe = parseEffectiveEncumbrance(eecRaw, effectiveTotalEC);
   return { ebe, effectiveTp: tp - ebe };
 }

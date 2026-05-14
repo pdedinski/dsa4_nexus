@@ -144,9 +144,8 @@ export default function CharacterWizardStepArmor({
                 Armor
               </h2>
               <p className="text-xs text-ink-muted mt-1.5 leading-relaxed max-w-prose">
-                Select any combination of armor pieces and shields. RS (AR) and EC (BE)
-                are per item in the codex; how they combine at the table follows the
-                rulebook.
+                Pick any mix of armor and shield pieces. Per entry: AR (often labeled RS on printed sheets), EC (codex /
+                JSON field <span className="font-mono">ec</span>). Resolve stacking at the table per Basic Rules.
               </p>
               <label className="mt-3 flex cursor-pointer items-start gap-2 text-xs text-ink leading-snug">
                 <input
@@ -156,9 +155,8 @@ export default function CharacterWizardStepArmor({
                   onChange={(e) => onBuyArmorUseSaChange(e.target.checked)}
                 />
                 <span>
-                  Get Armor Use talent (Rüstungsgewöhnung) — attempts to buy the SA for
-                  your highest-RS body armor (non-shield) using leftover veteran AP after
-                  talents; BRW requirements apply.
+                  Acquire <strong>Armor Use</strong> (SA) — generation will spend veteran AP on matching RG tiers for the
+                  highest-AR body armor (shields excluded); Basic Rules prerequisites still apply.
                 </span>
               </label>
               {hasShieldSelection ? (
@@ -234,7 +232,7 @@ export default function CharacterWizardStepArmor({
                                 {a.name}
                               </span>
                               <span className="mt-1 grid grid-cols-2 sm:grid-cols-3 gap-x-3 gap-y-1 text-xs font-mono text-ink-muted tabular-nums">
-                                <span>RS {ar}</span>
+                                <span>AR {ar}</span>
                                 <span>EC {ec}</span>
                                 <span>
                                   INI {ini >= 0 ? "+" : ""}

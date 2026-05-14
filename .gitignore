@@ -13,3 +13,4 @@ WDS_WEAPONS_REPLACEMENT_PLAN.txt
 # Local deploy bundles (next build standalone + zip; regenerate on deploy machine)
 dist-deploy/
 dsa-nexus-deploy-*.zip
+*.pdf

@@ -388,12 +388,10 @@ export default function CharacterSheet({ sheet }: { sheet: Sheet }) {
   const loadoutArmorTable = useMemo(() => {
     const list = sheetM.loadout?.armors ?? [];
     const sumAr = list.reduce((s, a) => s + a.ar, 0);
-    const sumEcRaw = list.reduce((s, a) => s + a.ec, 0);
     const sumIni = list.reduce((s, a) => s + a.iniModifier, 0);
-    const totalEcDisplay = list.length > 0 ? Math.max(0, sumEcRaw - 1) : 0;
     const slots: (SheetLoadoutArmor | null)[] = [...list];
     while (slots.length < MIN_ARMOR_TABLE_ROWS) slots.push(null);
-    return { slots, sumAr, sumIni, totalEcDisplay };
+    return { slots, sumAr, sumIni };
   }, [sheetM.loadout?.armors]);
   const hideCombatTalentTables =
     (sheetM.loadout?.weapons?.length ?? 0) > 0;
@@ -587,8 +585,9 @@ export default function CharacterSheet({ sheet }: { sheet: Sheet }) {
 
       <Section title="Talents">
         <p className="mb-3 text-[10px] text-ink-faint leading-snug max-w-xl">
-          Leading brackets: TaW after eBE from worn armor (ΣEC after Armor Use × this
-          talent&apos;s EEC from the codex). Base TaW is the number on the right.
+          Square brackets: TP after applying effective EC (from total worn EC after Armor Use, via this talent’s
+          codex <span className="font-mono">eec</span> pattern). If <span className="font-mono">eec</span> is missing in
+          the codex, there is no encumbrance penalty here. Base TP is on the right.
         </p>
         <div className="space-y-5">
           {talentsByGroup.map(({ group, label, rows }) => (
@@ -839,18 +838,14 @@ export default function CharacterSheet({ sheet }: { sheet: Sheet }) {
                   </table>
                 </div>
                 <p className="mt-2 text-[11px] text-ink-faint leading-relaxed">
-                  Damage uses final ST from the sheet plus the weapon&apos;s TP/ST rule from the codex
-                  (<span className="font-mono">tp_kk</span>) where present; dice are unchanged, bonus TP is
-                  added to the fixed modifier. WM tilt on TP split (PA−AT Σ per talent, then{" "}
-                  <span className="font-mono">atPaBias</span> tie-break), shield WM,
-                  INI = base + Σ armor INI + weapon INI. Encumbrance uses effective ΣEC{" "}
-                  <strong>{loadoutEncTotals.effectiveTotalEC}</strong> (raw{" "}
+                  Damage: final ST as on the sheet; weapon <span className="font-mono">tp_kk</span> from the codex when
+                  present; dice unchanged, fixed TP bonus added. WMs shift the TP AT/PA split via Σ(PA−AT); shield WM;
+                  INI = base + Σ armor INI + weapon INI. Effective EC uses total worn EC after Armor Use{" "}
+                  <strong>{loadoutEncTotals.effectiveTotalEC}</strong> (raw per-piece EC sum{" "}
                   <strong>{loadoutEncTotals.rawTotalEC}</strong>
-                  {loadoutEncTotals.armorUse.summary
-                    ? `; ${loadoutEncTotals.armorUse.summary}`
-                    : ""}
-                  ) for eBE (melee: floor/ceil split on AT/PA; ranged/jousting: full from AT). Hover or
-                  click AT/PA/INI for a full modifier list. RS stacking not modeled.
+                  {loadoutEncTotals.armorUse.summary ? ` — ${loadoutEncTotals.armorUse.summary}` : ""}
+                  ); melee: ⌊/⌉ halves of effective EC on AT/PA; ranged / jousting: full penalty on AT. Expand AT/PA/INI
+                  for the breakdown. AR stacking is not modeled.
                 </p>
               </div>
             )}
@@ -870,7 +865,12 @@ export default function CharacterSheet({ sheet }: { sheet: Sheet }) {
                           AR
                         </th>
                         <th className="border border-surface-border/80 px-2 py-1.5 font-semibold text-center w-[3.5rem]">
-                          EC
+                          <abbr
+                            title="Encumbrance (codex JSON field ec)"
+                            className="no-underline cursor-help"
+                          >
+                            EC
+                          </abbr>
                         </th>
                         <th className="border border-surface-border/80 px-2 py-1.5 font-semibold text-center w-[3.5rem]">
                           INI
@@ -922,7 +922,7 @@ export default function CharacterSheet({ sheet }: { sheet: Sheet }) {
                           {loadoutArmorTable.sumAr}
                         </td>
                         <td className="border-x border-surface-border/50 px-2 py-2 text-center font-mono tabular-nums">
-                          {loadoutArmorTable.totalEcDisplay}
+                          {loadoutEncTotals.effectiveTotalEC}
                         </td>
                         <td className="border-x border-surface-border/50 px-2 py-2 text-center font-mono tabular-nums">
                           {loadoutArmorTable.sumIni >= 0 ? "+" : ""}
@@ -933,11 +933,11 @@ export default function CharacterSheet({ sheet }: { sheet: Sheet }) {
                   </table>
                 </div>
                 <p className="mt-1.5 text-[11px] text-ink-faint leading-relaxed">
-                  Total EC shows max(0, ΣEC−1) as a simple outfit adjustment for display only;
-                  combat/talent eBE uses effective ΣEC{" "}
-                  <strong>{loadoutEncTotals.effectiveTotalEC}</strong> (after Rüstungsgewöhnung) vs
-                  raw ΣEC <strong>{loadoutEncTotals.rawTotalEC}</strong> from this table. Total AR is the
-                  sum of piece RS (stacking rules not modeled).
+                  Total row: effective worn EC after Armor Use (<strong>{loadoutEncTotals.effectiveTotalEC}</strong>) —
+                  Armor Use RG I–III applies once to the aggregate, not per piece. Rows show per-piece EC (codex/sheet{" "}
+                  <span className="font-mono">ec</span>). Raw EC sum for this loadout:{" "}
+                  <strong>{loadoutEncTotals.rawTotalEC}</strong>. Total AR sums per-piece AR values (stacking rules not
+                  modeled).
                 </p>
               </div>
             )}

@@ -226,6 +226,26 @@ export interface CharacterSheet {
   atPaBias?: "offensive" | "defensive" | "balanced";
   /** Generator diagnostics (optional) */
   notes?: string[];
+  /** Superuser debug trace (only when `debugMode` was set on input). */
+  debugLog?: string[];
+}
+
+/** One band in a veteran AP spending profile (`from`/`to`: 1-based AP ordinal within the veteran pool). */
+export interface ApSpendingBand {
+  from: number;
+  to: number | null;
+  /** Percent (0–100) of pool slice for post-creation attribute raises (SKT column H). */
+  attributes?: number;
+  special_abilities?: number;
+  talents?: number;
+  spells?: number;
+}
+
+export interface ApSpendingProfile {
+  id: string;
+  name: string;
+  description?: string;
+  bands: ApSpendingBand[];
 }
 
 export interface GenerateCharacterInput {
@@ -234,6 +254,15 @@ export interface GenerateCharacterInput {
   cultureId: string | "random";
   professionId: string | "random";
   extraAp: number;
+  /**
+   * Veteran AP spending profile: `"default"` or a DB row UUID.
+   * Resolved server-side into `resolvedApSpendingProfile` for generation.
+   */
+  apProfileId?: string;
+  /**
+   * Filled by `/api/characters/generate` from `apProfileId` (not sent by client).
+   */
+  resolvedApSpendingProfile?: ApSpendingProfile;
   /** When race is half_elf, user may opt into elvish upbringing full caster (+8 GP in rules) */
   halfElfFullCaster?: boolean;
   gender?: "male" | "female" | "random";
@@ -242,8 +271,13 @@ export interface GenerateCharacterInput {
   weaponIds?: string[];
   /** Optional armor `id`s from `data/equipment/armor.json` */
   armorIds?: string[];
-  /** If true, generator attempts to buy Armor Use (Rüstungsgewöhnung) for highest-RS non-shield armor. */
+  /** If true, generator attempts to buy Armor Use SA for the highest-AR body armor (excluding shields). */
   buyArmorUseSa?: boolean;
+  /**
+   * When true, {@link CharacterSheet.debugLog} is filled with step-by-step GP/AP diagnostics.
+   * Server should only honor this for superusers.
+   */
+  debugMode?: boolean;
   /** @deprecated use `weaponIds` */
   primaryWeaponId?: string;
   /** @deprecated use `armorIds` */

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { requireAllowed } from "@/lib/auth/session";
 import { generateCharacter } from "@/lib/character/generator";
+import { resolveApSpendingProfileForGenerate } from "@/lib/character/resolveApProfile";
 import type { GenerateCharacterInput } from "@/lib/character/types";
 
 export async function POST(req: NextRequest) {
@@ -16,7 +17,16 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const sheet = generateCharacter(body);
+    const { resolvedApSpendingProfile: _discard, ...rest } = body;
+    const resolvedApSpendingProfile = await resolveApSpendingProfileForGenerate(
+      rest.apProfileId
+    );
+    const debugMode = Boolean(body.debugMode) && session.user.isSuperuser;
+    const sheet = generateCharacter({
+      ...rest,
+      resolvedApSpendingProfile,
+      debugMode,
+    });
     return NextResponse.json({ sheet });
   } catch (e) {
     const msg = e instanceof Error ? e.message : "Generation failed";

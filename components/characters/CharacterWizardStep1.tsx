@@ -1,13 +1,17 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import racesData from "@/data/core/races.json";
 import culturesData from "@/data/core/cultures.json";
 import professionsData from "@/data/core/professions.json";
 import conceptWeights from "@/data/concepts/concept_weights.json";
 import type { ConceptId } from "@/lib/character/types";
 import type { GenerateCharacterInput } from "@/lib/character/types";
-import { needsSpellSelectionStep, satisfiesProfessionRaceRequirement } from "@/lib/character/generator";
+import {
+  needsSpellSelectionStep,
+  satisfiesProfessionRaceRequirement,
+} from "@/lib/character/generator";
+import { DEFAULT_AP_PROFILE_ID } from "@/lib/character/apProfiles";
 import BodyPortal from "@/components/ui/BodyPortal";
 
 function raceAllowsCulture(raceId: string, cultureId: string) {
@@ -42,6 +46,12 @@ const CONCEPT_IDS = (Object.keys(conceptWeights.concepts) as ConceptId[]).filter
   (c) => c !== "any"
 );
 
+type ApProfileOption = {
+  id: string;
+  name: string;
+  isBuiltin?: boolean;
+};
+
 export default function CharacterWizardStep1({
   open,
   onClose,
@@ -58,6 +68,36 @@ export default function CharacterWizardStep1({
   const [gender, setGender] = useState<"random" | "male" | "female">("random");
   const [extraAp, setExtraAp] = useState(0);
   const [halfElfFullCaster, setHalfElfFullCaster] = useState(false);
+  const [apProfileId, setApProfileId] = useState(DEFAULT_AP_PROFILE_ID);
+  const [apProfileOptions, setApProfileOptions] = useState<ApProfileOption[]>(
+    [{ id: DEFAULT_AP_PROFILE_ID, name: "Default", isBuiltin: true }],
+  );
+
+  useEffect(() => {
+    if (!open) return;
+    let cancelled = false;
+    void (async () => {
+      try {
+        const res = await fetch("/api/ap-profiles");
+        const data = (await res.json().catch(() => ({}))) as {
+          profiles?: ApProfileOption[];
+        };
+        if (cancelled) return;
+        const list = Array.isArray(data.profiles)
+          ? data.profiles.filter((p): p is ApProfileOption => Boolean(p?.id))
+          : [];
+        if (list.length) setApProfileOptions(list);
+        setApProfileId((prev) =>
+          prev && list.some((p) => p.id === prev) ? prev : DEFAULT_AP_PROFILE_ID,
+        );
+      } catch {
+        /* keep built-in defaults */
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [open]);
 
   const cultures = useMemo(() => {
     if (raceId === "random") return culturesData.cultures;
@@ -96,6 +136,7 @@ export default function CharacterWizardStep1({
       extraAp,
       halfElfFullCaster:
         raceId === "half_elf" ? halfElfFullCaster : false,
+      apProfileId,
       needsSpells,
     });
   }
@@ -212,6 +253,25 @@ export default function CharacterWizardStep1({
               value={extraAp}
               onChange={(e) => setExtraAp(Number(e.target.value) || 0)}
             />
+          </label>
+          <label className="block">
+            <span className="text-ink-muted">Veteran AP spending profile</span>
+            <select
+              className="mt-1 w-full rounded border border-surface-border px-2 py-2 scheme-dark bg-[#2c251f] text-[#f2e8dc]"
+              value={
+                apProfileOptions.some((p) => p.id === apProfileId)
+                  ? apProfileId
+                  : DEFAULT_AP_PROFILE_ID
+              }
+              onChange={(e) => setApProfileId(e.target.value)}
+            >
+              {apProfileOptions.map((p) => (
+                <option key={p.id} value={p.id}>
+                  {p.name}
+                  {p.isBuiltin ? " (built-in)" : ""}
+                </option>
+              ))}
+            </select>
           </label>
         </div>
         <div className="flex justify-end gap-2 mt-6">

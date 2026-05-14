@@ -136,3 +136,30 @@ export const notes = pgTable(
 
 export type NoteRow = typeof notes.$inferSelect;
 export type InsertNoteRow = typeof notes.$inferInsert;
+
+// ── ap_spending_profiles (veteran AP spending presets, admin-managed) ──────────
+
+export const apSpendingProfiles = pgTable(
+  "ap_spending_profiles",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    name: text("name").notNull(),
+    description: text("description"),
+    bands: jsonb("bands").notNull(),
+    createdBy: uuid("created_by").references(() => users.id, {
+      onDelete: "set null",
+    }),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (t) => [index("ap_spending_profiles_created_at_idx").on(t.createdAt)]
+);
+
+export type ApSpendingProfileRow = typeof apSpendingProfiles.$inferSelect;
+export type InsertApSpendingProfileRow =
+  typeof apSpendingProfiles.$inferInsert;
+

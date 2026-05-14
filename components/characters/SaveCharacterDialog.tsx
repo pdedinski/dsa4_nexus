@@ -50,13 +50,14 @@ export default function SaveCharacterDialog({
     setError(null);
     setSaving(true);
     try {
+      const { debugLog: _omitDebug, ...persistableSheet } = sheet;
       const res = await fetch("/api/characters", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           characterId: characterId.trim().toLowerCase(),
           name: sheet.header.displayName,
-          sheet,
+          sheet: persistableSheet,
         }),
       });
       const data = await res.json().catch(() => ({}));

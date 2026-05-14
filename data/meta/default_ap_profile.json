@@ -1,0 +1,23 @@
+{
+  "id": "default",
+  "name": "Default",
+  "description": "Built-in veteran AP spending: first 1000 AP uses the standard talent/spell loop; AP 1001–2500 and 2501+ allocate 30% to attributes (column H) and 30% to special abilities, remainder uses the standard loop.",
+  "bands": [
+    {
+      "from": 1,
+      "to": 1000
+    },
+    {
+      "from": 1001,
+      "to": 2500,
+      "attributes": 30,
+      "special_abilities": 30
+    },
+    {
+      "from": 2501,
+      "to": null,
+      "attributes": 30,
+      "special_abilities": 30
+    }
+  ]
+}

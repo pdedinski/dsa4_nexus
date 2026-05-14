@@ -135,22 +135,37 @@ const COMBAT_FLOW = [
 ];
 
 const STAT_FORMULAS = [
-  { stat: "AT", formula: "round((CO+AG+ST)/5) + melee TP allocation + weapon AT mod - eBE" },
-  { stat: "PA", formula: "round((IN+AG+ST)/5) + melee TP allocation + weapon PA mod - eBE" },
-  { stat: "FK", formula: "round((IN+AG+ST)/5) + ranged TP + weapon AT mod - eBE + range mod" },
+  {
+    stat: "AT",
+    formula:
+      "round((CO+AG+ST)/5) + melee TP allocation + weapon AT mod − ⌊effective EC / 2⌋ (melee encumbrance)",
+  },
+  {
+    stat: "PA",
+    formula:
+      "round((IN+AG+ST)/5) + melee TP allocation + weapon PA mod − ⌈effective EC / 2⌉ (melee encumbrance)",
+  },
+  {
+    stat: "BRV",
+    formula:
+      "round((IN+AG+ST)/5) + ranged TP + weapon AT mod − effective EC + range mod (ranged attack value)",
+  },
   { stat: "INI", formula: "round((CO+CO+IN+AG)/5) + racial mod + 1d6" },
-  { stat: "eBE", formula: "max(0, totalBE - talent_EEC)" },
-  { stat: "AT eBE", formula: "floor(eBE / 2)" },
-  { stat: "PA eBE", formula: "ceil(eBE / 2)" },
+  {
+    stat: "effective EC",
+    formula: "encumbrance after applying the combat talent’s EEC pattern to total worn EC (Armor Use applied first)",
+  },
+  { stat: "Melee AT (EC)", formula: "⌊effective EC / 2⌋" },
+  { stat: "Melee PA (EC)", formula: "⌈effective EC / 2⌉" },
   { stat: "Wound", formula: "effective DP ≥ floor(KO / 2)" },
 ];
 
 const RANGE_MODS = [
-  { band: "Very Close (sehr nah)", mod: "FK −2" },
-  { band: "Close (nah)", mod: "FK +0" },
-  { band: "Medium (mittel)", mod: "FK +4" },
-  { band: "Far (weit)", mod: "FK +8" },
-  { band: "Extreme (extrem weit)", mod: "FK +12" },
+  { band: "Very Close (sehr nah)", mod: "BRV −2" },
+  { band: "Close (nah)", mod: "BRV +0" },
+  { band: "Medium (mittel)", mod: "BRV +4" },
+  { band: "Far (weit)", mod: "BRV +8" },
+  { band: "Extreme (extrem weit)", mod: "BRV +12" },
 ];
 
 export default function CombatRulesClient({ data }: { data: CombatData }) {
@@ -238,7 +253,7 @@ export default function CombatRulesClient({ data }: { data: CombatData }) {
 
           {/* Range modifiers */}
           <div>
-            <SectionHeader icon={Shield} title="Ranged FK Modifiers" count={RANGE_MODS.length} />
+            <SectionHeader icon={Shield} title="BRV range modifiers" count={RANGE_MODS.length} />
             <div className="border border-surface-border rounded-lg overflow-hidden">
               {RANGE_MODS.map(({ band, mod }, i) => (
                 <div

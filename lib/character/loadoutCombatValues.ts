@@ -1,8 +1,7 @@
 /**
- * Loadout combat display: final AT/PA/INI from sheet + weapon + armor/shield + encumbrance (EEC/eBE).
- * Melee eBE split: floor to AT, ceil to PA (odd remainder hits PA).
- * Ranged/jousting: full eBE from AT.
- * Rüstungsgewöhnung reduces per-piece EC before ΣEC → eBE (see encumbrance.ts).
+ * Loadout combat AT/PA/INI: applies combat talent **EEC** to worn **EC** (after Armor Use) → **effective EC**.
+ * Melee: ⌊effective EC/2⌋ from AT, ⌈effective EC/2⌉ from PA.
+ * Ranged / jousting: full effective EC from AT.
  */
 
 import combatTalentsData from "@/data/talents/combat_talents.json";
@@ -165,13 +164,13 @@ function encDetailEbe(
 ): string {
   const parts = [
     `EEC ${eecLabel}`,
-    `eBE ${ebe}`,
-    `ΣEC raw ${rawTotalEC} → effective ${effectiveTotalEC}`,
+    `effective EC ${ebe}`,
+    `raw total EC ${rawTotalEC} → after Armor Use ${effectiveTotalEC}`,
   ];
   if (kind === "melee_split" && encAT != null && encPA != null) {
-    parts.push(`melee penalty AT −${encAT} / PA −${encPA} (floor/ceil split)`);
+    parts.push(`melee AT −${encAT} / PA −${encPA} (⌊eff. EC/2⌋ / ⌈eff. EC/2⌉)`);
   } else {
-    parts.push(`FK/jousting: full eBE −${encAT ?? ebe} from AT`);
+    parts.push(`ranged/jousting: full effective EC −${encAT ?? ebe} from AT`);
   }
   return parts.join("; ");
 }
@@ -239,9 +238,9 @@ export type LoadoutWeaponCombatLine = {
   weaponName: string;
   kind: "melee" | "ranged" | "jousting" | "unknown";
   combatTalentId: string | null;
-  /** Raw Σ EC from codex rows (before Rüstungsgewöhnung). */
+  /** Sum of worn per-piece codex EC (`ec`) before Armor Use. */
   totalEC: number;
-  /** Σ EC after Armor Use per-piece reductions. */
+  /** Worn aggregate EC after Armor Use (input to effective EC / EEC). */
   effectiveTotalEC: number;
   ebe: number;
   combatTalentEec?: string;
@@ -342,7 +341,7 @@ export function computeLoadoutWeaponLine(
     const baseAT = sheet.derived.baseAT;
     const basePA = sheet.derived.basePA + saPa;
     notes.push(
-      "Shield: parry uses base PA + shield WM + encumbrance + Off-hand Fighting / Shield Fighting SA (no combat talent TP).",
+      "Shield: parry uses base PA + shield WM + effective EC + SA Off-hand Fighting / Shield Fighting (no shield combat talent TP).",
     );
 
     const dmgFields = loadoutWeaponDamageFields(sheet, weapon);
@@ -365,7 +364,7 @@ export function computeLoadoutWeaponLine(
         detail: "Shield WM (AT)",
       },
       {
-        label: "Encumbrance (eBE/2 floor)",
+        label: "Encumbrance (⌊eff. EC/2⌋ from AT)",
         delta: -splitShield.atPen,
         detail: encDetail + (armorUseSummary ? `; ${armorUseSummary}` : ""),
       },
@@ -384,7 +383,7 @@ export function computeLoadoutWeaponLine(
         detail: "Shield WM (PA)",
       },
       {
-        label: "Encumbrance (eBE/2 ceil)",
+        label: "Encumbrance (⌈eff. EC/2⌉ from PA)",
         delta: -splitShield.paPen,
         detail: encDetail + (armorUseSummary ? `; ${armorUseSummary}` : ""),
       },
@@ -473,7 +472,7 @@ export function computeLoadoutWeaponLine(
       atBreakdown.push(
         { label: "Base BRV (FK)", delta: sheet.derived.baseBRV },
         {
-          label: "Ranged TaW",
+          label: "Ranged TP",
           delta: tp,
           detail: rangedRow.talentName,
         },
@@ -483,7 +482,7 @@ export function computeLoadoutWeaponLine(
       atBreakdown.push(
         { label: "Base BRV (FK)", delta: sheet.derived.baseBRV },
         {
-          label: "Ranged TaW",
+          label: "Ranged TP",
           delta: tp,
           detail: talentId ?? undefined,
         },
@@ -505,7 +504,7 @@ export function computeLoadoutWeaponLine(
     atBreakdown.push(
       { label: "Base AT", delta: sheet.derived.baseAT },
       {
-        label: "Jousting TaW (→ AT only)",
+        label: "Jousting TP (AT only)",
         delta: tp,
         detail: talentId ?? undefined,
       },
@@ -531,17 +530,17 @@ export function computeLoadoutWeaponLine(
       atBreakdown.push(
         { label: "Base AT", delta: sheet.derived.baseAT },
         {
-          label: "Melee TaW → AT",
+          label: "Melee TP → AT",
           delta: allocatedAT,
-          detail: `TaW ${meleeRow.tp}; ${meleeRow.talentName}`,
+          detail: `TP ${meleeRow.tp}; ${meleeRow.talentName}`,
         },
       );
       paBreakdown!.push(
         { label: "Base PA", delta: sheet.derived.basePA },
         {
-          label: "Melee TaW → PA",
+          label: "Melee TP → PA",
           delta: allocatedPA,
-          detail: `TaW ${meleeRow.tp}; ${meleeRow.talentName}`,
+          detail: `TP ${meleeRow.tp}; ${meleeRow.talentName}`,
         },
       );
     } else if (meleeRow) {
@@ -590,17 +589,17 @@ export function computeLoadoutWeaponLine(
       atBreakdown.push(
         { label: "Base AT", delta: sheet.derived.baseAT },
         {
-          label: "Melee TaW → AT",
+          label: "Melee TP → AT",
           delta: allocatedAT,
-          detail: `TaW ${meleeRow.tp}`,
+          detail: `TP ${meleeRow.tp}`,
         },
       );
       paBreakdown!.push(
         { label: "Base PA", delta: sheet.derived.basePA },
         {
-          label: "Melee TaW → PA",
+          label: "Melee TP → PA",
           delta: allocatedPA,
-          detail: `TaW ${meleeRow.tp}`,
+          detail: `TP ${meleeRow.tp}`,
         },
       );
     } else if (meleeRow) {
@@ -626,7 +625,7 @@ export function computeLoadoutWeaponLine(
       const tp = talentTp(sheet, talentId);
       atBreakdown.push(
         { label: "Base BRV (FK)", delta: sheet.derived.baseBRV },
-        { label: "Ranged TaW", delta: tp },
+        { label: "Ranged TP", delta: tp },
       );
       paBreakdown = null;
     } else {
@@ -665,8 +664,8 @@ export function computeLoadoutWeaponLine(
   atBreakdown.push({
     label:
       kind === "ranged" || kind === "jousting"
-        ? "Encumbrance (full eBE on AT)"
-        : "Encumbrance (eBE/2 floor)",
+        ? "Encumbrance (full effective EC from AT)"
+        : "Encumbrance (⌊eff. EC/2⌋ from AT)",
     delta: -encAT,
     detail:
       encDetail +
@@ -687,7 +686,7 @@ export function computeLoadoutWeaponLine(
       });
     }
     paBreakdown.push({
-      label: "Encumbrance (eBE/2 ceil)",
+      label: "Encumbrance (⌈eff. EC/2⌉ from PA)",
       delta: -encPA,
       detail:
         encDetail +
