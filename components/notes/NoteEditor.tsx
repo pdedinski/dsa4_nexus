@@ -13,6 +13,10 @@ import {
   createNoteMentionExtension,
   type NoteMentionCtxRef,
 } from "./createNoteMentionExtension";
+import {
+  createImageMentionExtension,
+  type ImageMentionCtxRef,
+} from "./createImageMentionExtension";
 
 function MenuBar({ editor }: { editor: Editor }) {
   return (
@@ -72,12 +76,14 @@ export default function NoteEditor({
   onChange,
   ctxRef,
   noteMentionCtxRef,
+  imageMentionCtxRef,
 }: {
   contentJson: Record<string, unknown>;
   editable: boolean;
   onChange?: (json: Record<string, unknown>) => void;
   ctxRef: CharacterMentionCtxRef;
   noteMentionCtxRef: NoteMentionCtxRef;
+  imageMentionCtxRef: ImageMentionCtxRef;
 }) {
   const mentionExtension = useMemo(
     () => createCharacterMentionExtension(ctxRef),
@@ -89,10 +95,20 @@ export default function NoteEditor({
     [noteMentionCtxRef]
   );
 
+  const imageMentionExtension = useMemo(
+    () => createImageMentionExtension(imageMentionCtxRef),
+    [imageMentionCtxRef]
+  );
+
   const editor = useEditor(
     {
       immediatelyRender: false,
-      extensions: [StarterKit, mentionExtension, noteMentionExtension],
+      extensions: [
+        StarterKit,
+        mentionExtension,
+        noteMentionExtension,
+        imageMentionExtension,
+      ],
       content: contentJson as JSONContent,
       editable,
       editorProps: {
@@ -105,7 +121,7 @@ export default function NoteEditor({
         onChange?.(ed.getJSON() as Record<string, unknown>);
       },
     },
-    [mentionExtension, noteMentionExtension]
+    [mentionExtension, noteMentionExtension, imageMentionExtension]
   );
 
   useEffect(() => {

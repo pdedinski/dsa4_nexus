@@ -5,6 +5,9 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import NoteEditor from "./NoteEditor";
 import CharacterStatModal from "./CharacterStatModal";
+import ImagePreviewModal, {
+  type ImagePreviewTarget,
+} from "@/components/images/ImagePreviewModal";
 import type {
   CharacterRowBrief,
   CharacterMentionCtx,
@@ -13,6 +16,10 @@ import type {
   NoteRowBrief,
   NoteMentionCtx,
 } from "./createNoteMentionExtension";
+import type {
+  ImageRowBrief,
+  ImageMentionCtx,
+} from "./createImageMentionExtension";
 import { emptyNoteDoc, isTipTapDoc } from "@/lib/notes/emptyNoteDoc";
 
 export default function NoteDetail({ noteId }: { noteId: string }) {
@@ -24,9 +31,13 @@ export default function NoteDetail({ noteId }: { noteId: string }) {
   const [isEditing, setIsEditing] = useState(false);
   const [saving, setSaving] = useState(false);
   const [pickCharacter, setPickCharacter] = useState<string | null>(null);
+  const [pickImage, setPickImage] = useState<ImagePreviewTarget | null>(null);
 
   const [characters, setCharacters] = useState<CharacterRowBrief[]>([]);
   const [notesForMentions, setNotesForMentions] = useState<NoteRowBrief[]>([]);
+  const [imagesForMentions, setImagesForMentions] = useState<ImageRowBrief[]>(
+    []
+  );
 
   const ctxRef = useRef<CharacterMentionCtx>({
     characters: [],
@@ -37,6 +48,11 @@ export default function NoteDetail({ noteId }: { noteId: string }) {
     notes: [],
     excludeNoteId: undefined,
     onNoteClick: undefined,
+  });
+
+  const imageMentionCtxRef = useRef<ImageMentionCtx>({
+    images: [],
+    onImageClick: undefined,
   });
 
   const openCharacter = useCallback((characterId: string) => {
@@ -50,12 +66,22 @@ export default function NoteDetail({ noteId }: { noteId: string }) {
     [router]
   );
 
+  const openImage = useCallback(
+    (imageId: string, url: string, label: string) => {
+      setPickImage({ id: imageId, fallbackUrl: url, fallbackLabel: label });
+    },
+    []
+  );
+
   ctxRef.current.characters = characters;
   ctxRef.current.onCharacterClick = openCharacter;
 
   noteMentionCtxRef.current.notes = notesForMentions;
   noteMentionCtxRef.current.excludeNoteId = noteId;
   noteMentionCtxRef.current.onNoteClick = openNote;
+
+  imageMentionCtxRef.current.images = imagesForMentions;
+  imageMentionCtxRef.current.onImageClick = openImage;
 
   useEffect(() => {
     let cancelled = false;
@@ -83,6 +109,30 @@ export default function NoteDetail({ noteId }: { noteId: string }) {
       }>;
       setNotesForMentions(
         raw.map((n) => ({ id: n.id, title: typeof n.title === "string" ? n.title : "" }))
+      );
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  useEffect(() => {
+    let cancelled = false;
+    void (async () => {
+      const res = await fetch("/api/images");
+      const data = await res.json();
+      if (cancelled) return;
+      const raw = (data.images ?? []) as Array<{
+        id: string;
+        name: string;
+        url: string;
+      }>;
+      setImagesForMentions(
+        raw.map((img) => ({
+          id: img.id,
+          name: typeof img.name === "string" ? img.name : "",
+          url: typeof img.url === "string" ? img.url : "",
+        }))
       );
     })();
     return () => {
@@ -230,13 +280,16 @@ export default function NoteDetail({ noteId }: { noteId: string }) {
         Tip: type <kbd className="rounded border border-surface-border px-1">@</kbd> to
         mention a saved character (opens sheet in view mode). Type{" "}
         <kbd className="rounded border border-surface-border px-1">#</kbd> to link another
-        note (opens it when clicked in view mode).
+        note (opens it when clicked in view mode). Type{" "}
+        <kbd className="rounded border border-surface-border px-1">^</kbd> to link an
+        uploaded image (opens it in a popup when clicked in view mode).
       </p>
 
       <NoteEditor
         key={noteId}
         ctxRef={ctxRef}
         noteMentionCtxRef={noteMentionCtxRef}
+        imageMentionCtxRef={imageMentionCtxRef}
         contentJson={content}
         editable={isEditing}
         onChange={setContent}
@@ -245,6 +298,11 @@ export default function NoteDetail({ noteId }: { noteId: string }) {
       <CharacterStatModal
         characterId={pickCharacter}
         onClose={() => setPickCharacter(null)}
+      />
+
+      <ImagePreviewModal
+        target={pickImage}
+        onClose={() => setPickImage(null)}
       />
     </div>
   );

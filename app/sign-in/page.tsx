@@ -6,7 +6,7 @@ export default async function SignInPage() {
   const session = await auth();
   if (session?.user?.id) {
     if (session.user.isAllowed || session.user.isSuperuser) {
-      redirect("/codex");
+      redirect("/codex/core/races");
     } else {
       redirect("/pending");
     }

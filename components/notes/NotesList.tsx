@@ -125,8 +125,9 @@ export default function NotesList() {
         <p className="text-sm text-ink-muted">
           No notes yet. Create one to start writing — use{" "}
           <kbd className="rounded border border-surface-border px-1">@</kbd> to mention
-          characters and <kbd className="rounded border border-surface-border px-1">#</kbd>{" "}
-          to link other notes while editing.
+          characters, <kbd className="rounded border border-surface-border px-1">#</kbd>{" "}
+          to link other notes, and <kbd className="rounded border border-surface-border px-1">^</kbd>{" "}
+          to link uploaded images while editing.
         </p>
       ) : (
         <ul className="space-y-2">

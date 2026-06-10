@@ -6,8 +6,10 @@ export default function NotesPage() {
       <h1 className="text-2xl font-bold text-ink mb-2">My Notes</h1>
       <p className="text-sm text-ink-muted mb-6">
         Personal notes with rich text. Type <kbd className="rounded border border-surface-border px-1">@</kbd> while
-        editing to insert a link to one of your characters; click the link in view
-        mode to see their sheet.
+        editing to insert a link to one of your characters; type{" "}
+        <kbd className="rounded border border-surface-border px-1">#</kbd> to link another note; type{" "}
+        <kbd className="rounded border border-surface-border px-1">^</kbd> to link an uploaded image.
+        Click links in view mode to open the character sheet, note, or image.
       </p>
       <NotesList />
     </div>

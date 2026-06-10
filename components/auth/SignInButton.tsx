@@ -5,7 +5,7 @@ import { signIn } from "next-auth/react";
 export default function SignInButton() {
   return (
     <button
-      onClick={() => signIn("google", { callbackUrl: "/codex" })}
+      onClick={() => signIn("google", { callbackUrl: "/codex/core/races" })}
       className="w-full flex items-center justify-center gap-3 bg-white text-gray-700 font-medium py-2.5 px-4 rounded-lg hover:bg-gray-50 transition-colors border border-gray-200 shadow-sm"
     >
       <svg viewBox="0 0 24 24" className="w-5 h-5" aria-hidden>

@@ -163,3 +163,25 @@ export type ApSpendingProfileRow = typeof apSpendingProfiles.$inferSelect;
 export type InsertApSpendingProfileRow =
   typeof apSpendingProfiles.$inferInsert;
 
+// ── user_images (Cloudinary-backed uploads per user) ──────────────────────────
+
+export const userImages = pgTable(
+  "user_images",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    userId: uuid("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    name: text("name").notNull(),
+    url: text("url").notNull(),
+    publicId: text("public_id").notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (t) => [index("user_images_user_created_idx").on(t.userId, t.createdAt)]
+);
+
+export type UserImageRow = typeof userImages.$inferSelect;
+export type InsertUserImageRow = typeof userImages.$inferInsert;
+

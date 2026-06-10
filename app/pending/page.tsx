@@ -6,7 +6,8 @@ export default async function PendingPage() {
   const session = await auth();
 
   if (!session?.user?.id) redirect("/sign-in");
-  if (session.user.isAllowed || session.user.isSuperuser) redirect("/codex");
+  if (session.user.isAllowed || session.user.isSuperuser)
+    redirect("/codex/core/races");
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-surface px-4">
