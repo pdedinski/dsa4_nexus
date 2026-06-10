@@ -33,7 +33,7 @@ export default async function CharacterViewPage({
 
   return (
     <div className="min-h-full bg-surface-app">
-      <div className="border-b border-surface-border px-4 py-2 flex items-center gap-4 text-sm">
+      <div className="border-b border-surface-border px-4 py-2 flex flex-wrap items-center gap-4 text-sm">
         <Link href="/characters" className="text-brand font-medium">
           ← My Characters
         </Link>
@@ -43,6 +43,16 @@ export default async function CharacterViewPage({
         >
           Edit
         </Link>
+        {row.imageUrl ? (
+          <a
+            href={row.imageUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-brand font-medium"
+          >
+            Character image
+          </a>
+        ) : null}
       </div>
       <CharacterSheetView sheet={sheet} />
     </div>

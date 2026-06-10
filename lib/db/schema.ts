@@ -97,6 +97,8 @@ export const characters = pgTable(
       .references(() => users.id, { onDelete: "cascade" }),
     name: text("name").notNull(),
     sheet: jsonb("sheet").notNull(),
+    imageUrl: text("image_url"),
+    imagePublicId: text("image_public_id"),
     createdAt: timestamp("created_at", { withTimezone: true })
       .notNull()
       .defaultNow(),

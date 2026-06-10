@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { eq, and } from "drizzle-orm";
 import { requireAllowed } from "@/lib/auth/session";
+import { isCloudinaryConfigured } from "@/lib/cloudinary/config";
+import { destroyImage } from "@/lib/cloudinary/destroy";
 import { db } from "@/lib/db/client";
 import { characters } from "@/lib/db/schema";
 import type { CharacterSheet } from "@/lib/character/types";
@@ -34,8 +36,10 @@ export async function GET(_req: NextRequest, ctx: Ctx) {
     characterId: row.characterId,
     name: row.name,
     sheet,
+    imageUrl: row.imageUrl,
     createdAt: row.createdAt,
     updatedAt: row.updatedAt,
+    cloudinaryConfigured: isCloudinaryConfigured(),
   });
 }
 
@@ -84,15 +88,36 @@ export async function DELETE(_req: NextRequest, ctx: Ctx) {
   const { characterId } = await ctx.params;
   const cid = decodeURIComponent(characterId).toLowerCase();
 
-  const deleted = await db
-    .delete(characters)
+  const [row] = await db
+    .select()
+    .from(characters)
     .where(
       and(eq(characters.userId, session.user.id), eq(characters.characterId, cid))
     )
-    .returning({ id: characters.id });
+    .limit(1);
 
-  if (!deleted.length)
-    return NextResponse.json({ error: "Not found" }, { status: 404 });
+  if (!row) return NextResponse.json({ error: "Not found" }, { status: 404 });
+
+  if (row.imagePublicId) {
+    if (!isCloudinaryConfigured()) {
+      return NextResponse.json(
+        {
+          error:
+            "Cloudinary is not configured; cannot delete character image from cloud storage",
+        },
+        { status: 503 }
+      );
+    }
+    try {
+      await destroyImage(row.imagePublicId);
+    } catch (err) {
+      const message =
+        err instanceof Error ? err.message : "Cloudinary delete failed";
+      return NextResponse.json({ error: message }, { status: 502 });
+    }
+  }
+
+  await db.delete(characters).where(eq(characters.id, row.id));
 
   return NextResponse.json({ ok: true });
 }

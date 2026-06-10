@@ -20,7 +20,8 @@ function configureCloudinary() {
 
 export async function uploadImageBuffer(
   buffer: Buffer,
-  publicId: string
+  publicId: string,
+  options?: { overwrite?: boolean }
 ): Promise<CloudinaryUploadResult> {
   const config = configureCloudinary();
 
@@ -33,7 +34,7 @@ export async function uploadImageBuffer(
         folder: config.folder,
         public_id: publicId,
         resource_type: "image",
-        overwrite: false,
+        overwrite: options?.overwrite ?? false,
       },
       (err, res) => {
         if (err || !res) reject(err ?? new Error("Upload failed"));
