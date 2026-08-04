@@ -248,8 +248,8 @@ export default function MyImagesList() {
       )}
 
       {confirmDeleteId && (
-        <div className="fixed inset-0 z-[230] flex items-center justify-center bg-black/55 p-4">
-          <div className="w-full max-w-sm rounded-xl border border-surface-border bg-surface-card p-4 shadow-xl">
+        <div className="fixed inset-0 z-[230] flex items-center justify-center bg-black/80 p-4">
+          <div className="w-full max-w-sm rounded-xl border border-surface-border bg-[#1a1410] p-4 shadow-2xl">
             <p className="text-sm text-ink">Delete this image from your library?</p>
             {cloudinaryConfigured ? (
               <label className="mt-3 flex items-start gap-2 text-sm text-ink-muted cursor-pointer">
