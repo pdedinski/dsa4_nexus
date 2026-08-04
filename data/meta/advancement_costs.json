@@ -2,7 +2,7 @@
   "meta": {
     "schema_version": "1.0",
     "last_updated": "2026-05-02",
-    "description": "Talent and spell advancement cost tables for TDE4/DSA4.1. Spell ZfW uses the same SKT as talents (BRW p.198): activation row Akt./0; steps use talent_columns costs_by_value. Cross-tradition spells +2 columns (BRW p.204). Code: lib/character/advancement.ts, lib/character/generator.ts.",
+    "description": "Talent and spell advancement cost tables for TDE4/DSA4.1. Spell SP uses the same ACT as talents (BRW p.198): activation row Akt./0; steps use talent_columns costs_by_value. Cross-tradition spells +2 columns (BRW p.204). Code: lib/character/advancement.ts, lib/character/generator.ts.",
     "source_books": ["DSA 4.1 Basisregelwerk p. 110–112", "TDE Basic Rules p. 29–30"]
   },
   "talent_columns": {

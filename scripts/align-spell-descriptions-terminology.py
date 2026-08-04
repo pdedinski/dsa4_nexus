@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 """
-Align spell description abbreviations with TDE4_character_creation_from_scratch.txt
-section CC-01 (English terminology).
+Align spell description abbreviations with official English TDE terminology.
+
+Reference: TDE_DSA4_1_German_English_Abbreviations_and_Terminology.txt (project root).
 
 Only touches each spell's "description" string in data/magic/spells.json.
 """

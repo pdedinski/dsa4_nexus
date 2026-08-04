@@ -1,0 +1,32 @@
+---
+description: Official TDE/DSA 4.x German–English terminology and abbreviations
+alwaysApply: true
+---
+
+# TDE / DSA terminology
+
+When writing UI labels, data fields, comments, docs, or translating German source material, use the **official English terms** from:
+
+`TDE_DSA4_1_German_English_Abbreviations_and_Terminology.txt` (project root)
+
+Consult that file for attributes, abbreviations, talents, advantages/disadvantages, weapons, and collision traps. Do not invent English names when the reference provides one.
+
+## Critical abbreviation collisions
+
+Never blindly translate these — German and English reuse the same letters:
+
+| Letters | German rules | English rules |
+|---------|--------------|---------------|
+| TP | Trefferpunkte (weapon damage) | Talent Prowess (skill value) |
+| SP | Schadenspunkte (damage after armor) | Spell Prowess (spell skill value) |
+| ST | Silbertaler (currency) | Strength (attribute) |
+
+## Project defaults (English UI)
+
+- Attributes: CO, CL, IN, CH, DE, AG, CN, ST (not MU/KL/FF/GE/KO/KK)
+- Vitality: VP (not LeP); Endurance: EP (not AuP); Magic: ASP (not AsP)
+- Talent skill value: **TP**; spell skill value: **SP**
+- Weapon damage before armor: **HP**; damage after armor: **DP**
+- Armor: AR; encumbrance: EC / EEC; magic resistance: RM
+
+When `german_name` is stored alongside an English `name`, keep the German original in data and show English in the UI per the reference file.

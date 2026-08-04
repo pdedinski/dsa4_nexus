@@ -131,7 +131,7 @@
     },
     {
       "id": "blood_frenzy",
-      "name": "Blood Frenzy",
+      "name": "Bloodlust",
       "german_name": "Blutrausch",
       "gp_refund": -15,
       "is_leveled": false,
@@ -364,7 +364,7 @@
     },
     {
       "id": "glass_bones",
-      "name": "Glass Bones",
+      "name": "Brittle Bones",
       "german_name": "Glasknochen",
       "gp_refund": -7,
       "is_leveled": false,
@@ -758,7 +758,7 @@
     },
     {
       "id": "agoraphobia",
-      "name": "Agoraphobia",
+      "name": "Fear of Open Spaces",
       "german_name": "Raumangst",
       "gp_refund_per_2_points": -3,
       "is_leveled": true,
@@ -864,7 +864,7 @@
     },
     {
       "id": "fear_of_dead",
-      "name": "Fear of Dead",
+      "name": "Fear of the Dead",
       "german_name": "Totenangst",
       "gp_refund_per_point": -1,
       "is_leveled": true,
@@ -985,7 +985,7 @@
     },
     {
       "id": "inaptitude_swimming",
-      "name": "Inaptitude Swimming",
+      "name": "Inability to Swim",
       "german_name": "Unfähigkeit Schwimmen",
       "gp_refund": null,
       "auto_only": true,
@@ -1055,7 +1055,7 @@
     },
     {
       "id": "unworldly",
-      "name": "Unworldly",
+      "name": "Out of Touch with Reality",
       "german_name": "Weltfremd",
       "gp_refund_per_point": -1,
       "is_leveled": true,
@@ -1073,7 +1073,7 @@
     },
     {
       "id": "hideous_appearance",
-      "name": "Hideous Appearance",
+      "name": "Ugly",
       "german_name": "Widerwärtiges Aussehen",
       "gp_refund": -15,
       "is_leveled": false,
@@ -1108,7 +1108,7 @@
     },
     {
       "id": "elvish_world_view",
-      "name": "Elvish World View",
+      "name": "Elven Worldview",
       "german_name": "Elfische Weltsicht",
       "gp_refund": null,
       "auto_only": true,

@@ -10,6 +10,7 @@ Primary source basis
 - German DSA 4.1 Basisregelwerk is the rules source for the process.
 - English TDE_basicrules.pdf is used for English terms and abbreviations.
 - The English Basic Rules are an older/condensed translation, so when German and English differ, use the German DSA 4.1 Basisregelwerk as the authority and use English terminology only for display.
+- Canonical German–English term mapping: TDE_DSA4_1_German_English_Abbreviations_and_Terminology.txt (project root). Consult it for attributes, talents, advantages, weapons, and abbreviation collisions.
 
 Important English terminology / abbreviations
 ---------------------------------------------

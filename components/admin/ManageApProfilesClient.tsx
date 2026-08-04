@@ -178,7 +178,7 @@ export default function ManageApProfilesClient() {
       <p className="text-sm text-ink-muted">
         Profiles split veteran AP by <strong className="text-ink">from</strong> /
         <strong className="text-ink"> to</strong> (1-based ordinals along the veteran
-        pool). Use empty optional percents — remainder uses the normal talent/ZfW
+        pool). Use empty optional percents — remainder uses the normal talent/SP
         combined loop after each slice.
       </p>
       <div className="flex justify-end">

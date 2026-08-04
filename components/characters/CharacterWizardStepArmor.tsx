@@ -161,7 +161,7 @@ export default function CharacterWizardStepArmor({
                   onChange={(e) => onBuyArmorUseSaChange(e.target.checked)}
                 />
                 <span>
-                  Acquire <strong>Armor Use</strong> (SA) — generation will spend veteran AP on matching RG tiers for the
+                  Acquire <strong>Armor Use</strong> (SA) — generation will spend veteran AP on matching Armor Use tiers for the
                   highest-AR body armor (shields excluded); Basic Rules prerequisites still apply.
                 </span>
               </label>

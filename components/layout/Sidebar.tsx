@@ -147,7 +147,7 @@ export default function Sidebar({
             DSA Nexus
           </p>
           <p className="text-ink-faint text-xs leading-none mt-0.5 truncate">
-            Das Schwarze Auge
+            The Dark Eye
           </p>
         </div>
       </div>

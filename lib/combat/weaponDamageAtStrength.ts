@@ -57,7 +57,7 @@ export function applyTpBonusToDamageString(damage: string, bonusTp: number): str
   if (bonusTp === 0) return damage.trim();
   const { core, suffix } = splitDiceAndSuffix(damage);
   const merged = mergeFixedModifierIntoDiceCore(core, bonusTp);
-  if (merged == null) return `${core.trim()} + ${bonusTp} TP${suffix}`;
+  if (merged == null) return `${core.trim()} + ${bonusTp} HP${suffix}`;
   return `${merged}${suffix}`;
 }
 
@@ -97,9 +97,9 @@ export function weaponDamageStrengthNote(resolved: ResolvedWeaponDamage, strengt
   const { bonusTp, ruleLabel } = resolved;
   if (!ruleLabel) return "";
   if (bonusTp > 0) {
-    return `+${bonusTp} TP from ST ${strength} (TP/ST ${ruleLabel}).`;
+    return `+${bonusTp} HP from ST ${strength} (HP/ST ${ruleLabel}).`;
   }
-  return `TP/ST ${ruleLabel}: no extra TP at ST ${strength} (base damage).`;
+  return `HP/ST ${ruleLabel}: no extra HP at ST ${strength} (base damage).`;
 }
 
 /** Prefer stored sheet value; otherwise look up current codex (older sheets predate `tpKk` on loadout). */

@@ -36,7 +36,7 @@
     },
     {
       "id": "bows",
-      "name": "Bows",
+      "name": "Bow",
       "german_name": "Bogen",
       "is_basic": false,
       "test_attributes": ["CO", "AG", "ST"],
@@ -44,7 +44,7 @@
       "eec": "EC-3",
       "combat_type": "ranged",
       "related_talents": [],
-      "description": "Covers all bow types: short bow, composite bow, war bow, long bow, elf bow. Bows are the weapon of choice for steppe, desert, and meadow dwellers. Both elves and orks, Weideners and Novadis are known for their bow skills. Whenever a hit with an arrow deals more than KO/2-2 damage points, it inflicts a wound.",
+      "description": "Covers all bow types: short bow, composite bow, war bow, long bow, elf bow. Bows are the weapon of choice for steppe, desert, and meadow dwellers. Both elves and orks, Weideners and Novadis are known for their bow skills. Whenever a hit with an arrow deals more than CN/2-2 damage points, it inflicts a wound.",
       "specializations": ["Short Bow", "Long Bow", "War Bow", "Composite Bow", "Elf Bow"],
       "source": "BRW p. 115"
     },
@@ -58,7 +58,7 @@
       "eec": "EC",
       "combat_type": "unarmed",
       "related_talents": [],
-      "description": "The skill of causing damage through use of hands, feet, and teeth — punches, straights, claw blows, head butts, bites, knee strikes, and spinning jump kicks all fall under this talent — or avoiding such attacks by blocking, dodging, sidestepping, and similar techniques. Attacks with bare hands or feet normally deal 1d6 TP(A): these points are deducted from Endurance, with half also deducted from Life Points.",
+      "description": "The skill of causing damage through use of hands, feet, and teeth — punches, straights, claw blows, head butts, bites, knee strikes, and spinning jump kicks all fall under this talent — or avoiding such attacks by blocking, dodging, sidestepping, and similar techniques. Attacks with bare hands or feet normally deal 1d6 HP (ED): these points are deducted from Endurance, with half also deducted from VP.",
       "specializations": ["Punching", "Kicking", "Combined"],
       "source": "BRW p. 115"
     },
@@ -78,7 +78,7 @@
     },
     {
       "id": "crossbows",
-      "name": "Crossbows",
+      "name": "Crossbow",
       "german_name": "Armbrust",
       "is_basic": false,
       "test_attributes": ["CO", "AG", "ST"],
@@ -86,7 +86,7 @@
       "eec": "EC-5",
       "combat_type": "ranged",
       "related_talents": ["bows"],
-      "description": "All crossbow-type weapons have a stock, trigger, and cocking mechanism and are fired by aiming and pulling the trigger. Whenever a crossbow bolt deals more than KO/2-2 damage points, it inflicts a wound (except for ball-firing ballistae, which use the normal KO/2 threshold).",
+      "description": "All crossbow-type weapons have a stock, trigger, and cocking mechanism and are fired by aiming and pulling the trigger. Whenever a crossbow bolt deals more than CN/2-2 damage points, it inflicts a wound (except for ball-firing ballistae, which use the normal CN/2 threshold).",
       "specializations": ["Light Crossbow", "Heavy Crossbow", "Ballista"],
       "source": "BRW p. 115"
     },
@@ -232,7 +232,7 @@
     },
     {
       "id": "throwing_spears",
-      "name": "Throwing Spears/Javelins",
+      "name": "Javelins",
       "german_name": "Wurfspeere",
       "is_basic": false,
       "test_attributes": ["CO", "AG", "ST"],
@@ -246,7 +246,7 @@
     },
     {
       "id": "two_handed_blunt_weapons",
-      "name": "Two-Handed Axes/Maces",
+      "name": "Two-Handed Blunt Weapons",
       "german_name": "Zweihand-Hiebwaffen",
       "is_basic": false,
       "test_attributes": ["CO", "AG", "ST"],
@@ -282,7 +282,7 @@
       "eec": "EC",
       "combat_type": "unarmed",
       "related_talents": [],
-      "description": "Covers all techniques for grabbing an opponent, holding, gripping, throwing to the ground, or pinning, as well as defensive options against such attacks — from simply evading to actively freeing oneself (which can even be used to escape from the coils of a kraken or a snake). Wrestling attacks as a throw deal 1d6 TP(A) or bring the opponent into an unfavorable position, facilitating subsequent attacks.",
+      "description": "Covers all techniques for grabbing an opponent, holding, gripping, throwing to the ground, or pinning, as well as defensive options against such attacks — from simply evading to actively freeing oneself (which can even be used to escape from the coils of a kraken or a snake). Wrestling attacks as a throw deal 1d6 HP (ED) or bring the opponent into an unfavorable position, facilitating subsequent attacks.",
       "specializations": ["Grappling", "Throws", "Holds/Pins"],
       "source": "BRW p. 115"
     },
@@ -296,7 +296,7 @@
       "eec": "EC-1",
       "combat_type": "melee",
       "related_talents": ["chain_weapons", "two_handed_flails"],
-      "description": "Two round hardwood staves (approximately two spans each) connected by a chain of equal length. Requires minimum AG 15 to wield effectively. Ignores the PA bonus provided by shields. Disarming from the attack is 4 points easier. Converting attack actions into defense actions (from TaW 10) is possible without penalty. The three-section staff (Dreigliederstab) is a variant with three shorter sections.",
+      "description": "Two round hardwood staves (approximately two spans each) connected by a chain of equal length. Requires minimum AG 15 to wield effectively. Ignores the PA bonus provided by shields. Disarming from the attack is 4 points easier. Converting attack actions into defense actions (from TP 10) is possible without penalty. The three-section staff (Dreigliederstab) is a variant with three shorter sections.",
       "specializations": ["Chain Staff", "Three-Section Staff"],
       "source": "WdS p. 20"
     },
@@ -352,7 +352,7 @@
       "eec": "EC-2",
       "combat_type": "ranged",
       "related_talents": [],
-      "description": "Flat disc-shaped throwing weapons of Maraskan origin, usually made of hardwood and often brightly decorated. The combat discus (Kampfdiskus) has a razor-sharp steel edge and requires a special throwing glove (15 S) and minimum ST 14. Some examples produce howling sounds in flight. Optional TP/KK damage scaling is available.",
+      "description": "Flat disc-shaped throwing weapons of Maraskan origin, usually made of hardwood and often brightly decorated. The combat discus (Kampfdiskus) has a razor-sharp steel edge and requires a special throwing glove (15 S) and minimum ST 14. Some examples produce howling sounds in flight. Optional HP/ST damage scaling is available.",
       "specializations": ["Hunting Discus", "Combat Discus"],
       "source": "WdS p. 19"
     },

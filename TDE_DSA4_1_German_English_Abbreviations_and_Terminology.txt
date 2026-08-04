@@ -556,4 +556,461 @@ LE/VI  LeP/VP  AU/ED  AuP/EP  AE/AE  AsP/ASP  MR/RM  SO/SO
 RS/AR  BE/EC  eBE/EEC  GS/SD  GW/TH  BF/BP  DK/DC  KR/CR  SR/GT
 TaW->TP  TaP*->TP*  ZfW->SP  ZfP*->SP*  TP->HP  SP->DP  TP/KK->HP/ST
 
-End of reference.
+
+12. GERMAN-ENGLISH TALENT NAME CROSS-REFERENCE
+======================================================================================================================
+This section maps the Talent names used by the German 2008 DSA 4.1 Basisregelwerk to the official
+English names used by The Dark Eye Basic Rules (FanPro, 2004).
+
+Edition note
+------------
+The English Basic Rules represent an earlier fourth-edition rules version. The German 2008
+Basisregelwerk contains some revised, renamed, added, or differently grouped Talents. Where the
+English book has no direct named counterpart, no new official English term should be inferred.
+The table below prioritizes names explicitly used in the two core books.
+
+Important potentially confusing mappings:
+  Hiebwaffen                 = Axes and Maces
+  Überreden                  = Fast Talk
+  Überzeugen                 = Persuade
+  Menschenkenntnis           = Human Nature
+  Sich Verkleiden            = Masquerade
+  Selbstbeherrschung         = Willpower
+  Sinnenschärfe              = Perception
+  Gaukeleien                 = Juggling
+  Baukunst                   = Engineering
+  Feinmechanik / Mechanik    = Light Engineering / Engineering, depending on edition and context
+
+
+Combat Talents
+--------------
++------------------------------+--------------------------+
+| German talent                | English talent           |
++------------------------------+--------------------------+
+| Anderthalbhänder             | Bastard Sword            |
+| Armbrust                     | Crossbow                 |
+| Bogen                        | Bow                      |
+| Dolche                       | Daggers                  |
+| Fechtwaffen                  | Fencing Weapons          |
+| Hiebwaffen                   | Axes and Maces           |
+| Infanteriewaffen             | Infantry Weapons         |
+| Kettenwaffen                 | Chain Weapons            |
+| Lanzenreiten                 | Jousting                 |
+| Raufen                       | Brawling                 |
+| Ringen                       | Wrestling                |
+| Säbel                        | Sabers                   |
+| Speere                       | Spears                   |
+| Stäbe                        | Staves                   |
+| Schwerter                    | Swords                   |
+| Wurfbeile                    | Throwing Axes            |
+| Wurfmesser                   | Throwing Knives          |
+| Wurfspeere                   | Javelins                 |
+| Zweihand-Hiebwaffen          | Two-Handed Blunt Weapons |
+| Zweihandschwerter und -säbel | Two-Handed Swords        |
++------------------------------+--------------------------+
+
+Physical Talents
+----------------
++--------------------+----------------+
+| German talent      | English talent |
++--------------------+----------------+
+| Akrobatik          | Acrobatics     |
+| Athletik           | Athletics      |
+| Gaukeleien         | Juggling       |
+| Klettern           | Climb          |
+| Körperbeherrschung | Body Control   |
+| Reiten             | Ride           |
+| Schleichen         | Sneak          |
+| Schwimmen          | Swim           |
+| Selbstbeherrschung | Willpower      |
+| Sich Verstecken    | Hide           |
+| Singen             | Sing           |
+| Sinnenschärfe      | Perception     |
+| Stimmen Imitieren  | Voice Mimicry  |
+| Tanzen             | Dance          |
+| Taschendiebstahl   | Pick Pockets   |
+| Zechen             | Carouse        |
++--------------------+----------------+
+
+Social Talents
+--------------
++------------------+----------------+
+| German talent    | English talent |
++------------------+----------------+
+| Betören          | Seduce         |
+| Etikette         | Etiquette      |
+| Gassenwissen     | Streetwise     |
+| Lehren           | Teach          |
+| Menschenkenntnis | Human Nature   |
+| Sich Verkleiden  | Masquerade     |
+| Überreden        | Fast Talk      |
+| Überzeugen       | Persuade       |
++------------------+----------------+
+
+Nature Talents
+--------------
++--------------------+----------------+
+| German talent      | English talent |
++--------------------+----------------+
+| Fährtensuchen      | Track          |
+| Fesseln/Entfesseln | Bind/Escape    |
+| Fischen/Angeln     | Fish           |
+| Fallenstellen      | Trap           |
+| Orientierung       | Orientation    |
+| Wettervorhersage   | Weather Sense  |
+| Wildnisleben       | Survival       |
++--------------------+----------------+
+
+Lore Talents
+------------
++--------------------+-------------------+
+| German talent      | English talent    |
++--------------------+-------------------+
+| Anatomie           | Anatomy           |
+| Baukunst           | Engineering       |
+| Brett-/Kartenspiel | Board Games       |
+| Geographie         | Geography         |
+| Geschichtswissen   | History           |
+| Gesteinskunde      | Stone Lore        |
+| Götter/Kulte       | Religious Lore    |
+| Heraldik           | Heraldry          |
+| Kriegskunst        | Warcraft          |
+| Magiekunde         | Arcane Lore       |
+| Mechanik           | Light Engineering |
+| Pflanzenkunde      | Plant Lore        |
+| Rechnen            | Calculate         |
+| Rechtskunde        | Law               |
+| Sagen/Legenden     | Legend Lore       |
+| Schätzen           | Appraise          |
+| Sprachenkunde      | Language Lore     |
+| Sternkunde         | Starcraft         |
+| Tierkunde          | Animal Lore       |
++--------------------+-------------------+
+
+Languages and Scripts
+---------------------
++---------------------------+---------------------+
+| German talent             | English talent      |
++---------------------------+---------------------+
+| Sprachen Kennen [Sprache] | Tongues [language]  |
+| Lesen/Schreiben [Schrift] | Read/Write [script] |
++---------------------------+---------------------+
+
+Artisan Talents
+---------------
++-------------------------+---------------------+
+| German talent           | English talent      |
++-------------------------+---------------------+
+| Ackerbau                | Farming             |
+| Abrichten               | Train Animals       |
+| Alchimie                | Alchemy             |
+| Bergbau                 | Mining              |
+| Boote Fahren            | Boats               |
+| Bogenbau                | Bowyer              |
+| Fahrzeug Lenken         | Drive               |
+| Falschspiel             | Cheat               |
+| Feinmechanik            | Light Engineering   |
+| Fleischer               | Butcher             |
+| Gerber/Kürschner        | Tanner/Furrier      |
+| Glaskunst               | Glasscraft          |
+| Grobschmied             | Blacksmith          |
+| Handel                  | Trade               |
+| Heilkunde Gift          | Treat Poison        |
+| Heilkunde Krankheiten   | Treat Disease       |
+| Heilkunde Wunden        | Treat Wounds        |
+| Holzbearbeitung         | Woodcraft           |
+| Kartographie            | Cartography         |
+| Kochen                  | Cook                |
+| Lederarbeiten           | Leathercraft        |
+| Malen/Zeichnen          | Paint/Draw          |
+| Maurer                  | Stonemason          |
+| Musizieren              | Play Instrument     |
+| Schlösser Knacken       | Pick Locks          |
+| Schneidern              | Tailor              |
+| Steinschneider/Juwelier | Stonecutter/Jeweler |
+| Tätowieren              | Tattooing           |
+| Zimmermann              | Carpenter           |
++-------------------------+---------------------+
+
+Core-book coverage note
+-----------------------
+The English Basic Rules divide Talents into Basic, Specialized, and Professional Talents. The
+German 2008 Basisregelwerk instead primarily distinguishes Basis-Talente and Spezial-Talente and
+uses a later revised Talent list. Therefore, the presence of a mapping does not imply identical
+activation rules, advancement costs, prerequisites, or category treatment in both editions.
+
+13. GERMAN-ENGLISH ADVANTAGE AND DISADVANTAGE CROSS-REFERENCE
+======================================================================================================================
+This section maps names found in the German 2008 DSA 4.1 Basisregelwerk to the official terminology
+used by the English The Dark Eye Basic Rules (FanPro, 2004).
+
+Edition warning
+---------------
+The English book reflects an earlier fourth-edition rules version. The German 2008 DSA 4.1 core book
+contains additional, renamed, divided, or revised Advantages and Disadvantages. A matching name does
+not guarantee identical GP cost, prerequisites, level structure, or mechanical effect.
+
+Advantages
+----------
++----------------------------------+---------------------------------+---------------------------------------------------------+
+| German name                      | Official English name           | Notes                                                   |
++----------------------------------+---------------------------------+---------------------------------------------------------+
+| Akademische Ausbildung (Magier)  | Academic Training (Magician)    | Direct core-book counterpart.                           |
+| Akademische Ausbildung (Krieger) | Academic Training (Warrior)     | Direct core-book counterpart.                           |
+| Begabung für [Talent]            | Aptitude for [Talent of Choice] | Direct core-book counterpart.                           |
+| Balance                          | Balance                         | Same name.                                              |
+| Beidhändig                       | Ambidextrous                    | English core term.                                      |
+| Besonderer Besitz                | Special Possession              | English core term.                                      |
+| Dämmerungssicht                  | Low-Light Vision                | Direct counterpart.                                     |
+| Eisern                           | Toughness                       | Official English core term; not 'Iron'.                 |
+| Entfernungssinn                  | Distance Sense                  | English core term.                                      |
+| Feenfreund                       | Friend of the Fey               | English core term.                                      |
+| Flink                            | Fast                            | English core term.                                      |
+| Gefahreninstinkt                 | Danger Sense                    | Direct counterpart.                                     |
+| Glück                            | Luck                            | Direct counterpart.                                     |
+| Gutaussehend                     | Good-Looking                    | Direct counterpart.                                     |
+| Gutes Gedächtnis                 | Good Memory                     | Direct counterpart.                                     |
+| Herausragendes Aussehen          | Outstanding Appearance          | Direct counterpart.                                     |
+| Herausragender Sinn              | Acute Sense                     | English core term.                                      |
+| Hitzeresistenz                   | Resistance to Heat              | English core term.                                      |
+| Hohe Lebenskraft                 | High Vitality                   | English core term.                                      |
+| Hohe Magieresistenz              | High Resistance to Magic        | English core term.                                      |
+| Immunität gegen Gift             | Immunity to Poison              | May specify poison category.                            |
+| Immunität gegen Krankheit        | Immunity to Disease             | May specify disease.                                    |
+| Kälteresistenz                   | Resistance to Cold              | English core term.                                      |
+| Kampfrausch                      | Rage                            | Official English core name.                             |
+| Magiegespür                      | Sense of Magic                  | English core term.                                      |
+| Nachtsicht                       | Night Vision                    | English core term.                                      |
+| Resistenz gegen Gift             | Resistance to Poison            | May specify poison category.                            |
+| Resistenz gegen Krankheit        | Resistance to Disease           | Direct counterpart.                                     |
+| Richtungssinn                    | Direction Sense                 | Direct counterpart.                                     |
+| Schlangenmensch                  | Contortionist                   | Official English core term.                             |
+| Schnelle Heilung                 | Fast Healing                    | English core term.                                      |
+| Schwer zu verzaubern             | Hard to Enspell                 | Official English core term.                             |
+| Soziale Anpassungsfähigkeit      | Social Chameleon                | Official English core term.                             |
+| Vollzauberer                     | Spellcaster                     | English core collapses later DSA 4.1 caster gradations. |
+| Wohlklang                        | Bardic Voice                    | Official English core term.                             |
+| Zauberhaar                       | Magic Hair                      | English core term.                                      |
+| Zäher Hund                       | Tough as Nails                  | English core term; distinct from Eisern/Toughness.      |
+| Zwergennase                      | Dwarfnose                       | Official English core term.                             |
++----------------------------------+---------------------------------+---------------------------------------------------------+
+
+Disadvantages
+-------------
++------------------------------+---------------------------+---------------------------------------------------------------+
+| German name                  | Official English name     | Notes                                                         |
++------------------------------+---------------------------+---------------------------------------------------------------+
+| Aberglaube                   | Superstition              | Direct counterpart.                                           |
+| Angst vor [Auslöser]         | Fear of [Trigger]         | Includes Fear of the Sea/Open Spaces, etc.                    |
+| Arroganz                     | Arrogance                 | Direct counterpart.                                           |
+| Astraler Block               | Astral Block              | Direct counterpart.                                           |
+| Blutrausch                   | Bloodlust                 | English core term.                                            |
+| Eitelkeit                    | Vanity                    | Direct counterpart.                                           |
+| Elfische Weltsicht           | Elven Worldview           | Official English core term.                                   |
+| Fettleibig                   | Obese                     | English core term.                                            |
+| Gesucht                      | Wanted                    | English core term.                                            |
+| Glasknochen                  | Brittle Bones             | English core term.                                            |
+| Goldgier                     | Greed                     | Direct counterpart.                                           |
+| Jähzorn                      | Violent Temper            | Official English core term.                                   |
+| Kleinwüchsig                 | Dwarfism                  | English core term.                                            |
+| Krankheitsanfällig           | Prone to Illness          | Official English core term.                                   |
+| Kurzatmig                    | Short-Winded              | English core term.                                            |
+| Lahm                         | Lame                      | Direct counterpart.                                           |
+| Lichtscheu                   | Light-Sensitive           | English core term.                                            |
+| Nachtblind                   | Night-Blind               | English core term.                                            |
+| Neugier                      | Curiosity                 | Direct counterpart.                                           |
+| Niedrige Magieresistenz      | Low Resistance to Magic   | Official English core term.                                   |
+| Prinzipientreue / Moralkodex | Code of Conduct           | English core uses Code of Conduct.                            |
+| Raumangst                    | Fear of Open Spaces       | Official English core wording is broader than literal German. |
+| Schlechte Regeneration       | Slow Regeneration         | English core term.                                            |
+| Schlechter Ruf               | Bad Reputation            | English core term.                                            |
+| Schwerhörig                  | Bad Hearing               | Official English core term.                                   |
+| Stubenhocker                 | Stay-at-Home              | English core term.                                            |
+| Sucht                        | Addiction                 | Direct counterpart.                                           |
+| Totenangst                   | Fear of the Dead          | English core term.                                            |
+| Unangenehme Stimme           | Unpleasant Voice          | English core term.                                            |
+| Unansehnlich                 | Unattractive              | Direct counterpart.                                           |
+| Unfähigkeit für [Talent]     | Inaptitude with [Talent]  | Official English core construction.                           |
+| Unfähigkeit zu schwimmen     | Inability to Swim         | Official English core term.                                   |
+| Unstet                       | Fickle                    | English core term.                                            |
+| Verpflichtungen              | Obligations               | Direct counterpart.                                           |
+| Vergesslichkeit              | Forgetful                 | English core term.                                            |
+| Vorurteile                   | Prejudice                 | Often written with the target group.                          |
+| Weltfremd                    | Out of Touch with Reality | English core term; Elven Worldview is a separate entry.       |
+| Widerwärtiges Aussehen       | Ugly                      | Official English core term.                                   |
+| Rachsucht                    | Vengefulness              | Direct counterpart.                                           |
++------------------------------+---------------------------+---------------------------------------------------------------+
+
+Important translation traps
+---------------------------
+  Eisern                         = Toughness
+  Zäher Hund                     = Tough as Nails
+  Kampfrausch                    = Rage
+  Jähzorn                        = Violent Temper
+  Soziale Anpassungsfähigkeit    = Social Chameleon
+  Wohlklang                      = Bardic Voice
+  Schlangenmensch                = Contortionist
+  Schwer zu verzaubern           = Hard to Enspell
+  Elfische Weltsicht             = Elven Worldview
+  Niedrige/Hohe Magieresistenz   = Low/High Resistance to Magic
+  Prinzipientreue or Moralkodex  = Code of Conduct
+  Unfähigkeit für [Talent]       = Inaptitude with [Talent]
+
+Coverage note
+-------------
+Only names with an identifiable counterpart in the English Basic Rules are presented as official
+English terminology. Later DSA 4.1 Advantages and Disadvantages without a counterpart in that
+English core book should be translated descriptively and marked as unofficial rather than assigned
+a fabricated official name.
+
+14. GERMAN-ENGLISH WEAPON NAME CROSS-REFERENCE
+======================================================================================================================
+This section maps common weapon names from the German DSA 4.1 Basisregelwerk and Wege des Schwerts
+to clear English equivalents.
+
+Translation policy
+------------------
+Names that are ordinary historical weapons use their standard English weapon name. Distinctive
+Aventurian, regional, dwarven, Tulamidian, Thorwalian, or Orcish proper names are retained rather
+than replaced with an invented 'official' English name. A literal or descriptive gloss is supplied
+where that makes the weapon easier to recognize.
+
+Melee weapons
+-------------
++--------------------+-----------------------+---------------------------------------------------------------------------------------+
+| German weapon      | English translation   | Notes                                                                                 |
++--------------------+-----------------------+---------------------------------------------------------------------------------------+
+| Anderthalbhänder   | Hand-and-a-Half Sword | Also commonly rendered as bastard sword; distinct from the DSA weapon Bastardschwert. |
+| Arbach             | Arbach                | Aventurian proper name; retain untranslated.                                          |
+| Baccanaq           | Baccanaq              | Aventurian proper name; retain untranslated.                                          |
+| Barbarenschwert    | Barbarian Sword       | Descriptive translation.                                                              |
+| Barbarenstreitaxt  | Barbarian Battle Axe  | Descriptive translation.                                                              |
+| Basiliskenzunge    | Basilisk Tongue       | Literal Aventurian weapon name.                                                       |
+| Bastardschwert     | Bastard Sword         | Direct counterpart.                                                                   |
+| Beil               | Hatchet               | Short one-handed axe.                                                                 |
+| Boronssichel       | Boron Scythe          | Aventurian religious weapon name.                                                     |
+| Brabakbengel       | Brabak Cudgel         | Aventurian proper name plus descriptive term.                                         |
+| Breitschwert       | Broadsword            | Direct counterpart.                                                                   |
+| Byakka             | Byakka                | Orcish proper name; retain untranslated.                                              |
+| Degen              | Epee                  | Official English core terminology commonly uses Epee.                                 |
+| Dolch              | Dagger                | Direct counterpart.                                                                   |
+| Drachenklauen      | Dragon Claws          | Hand-mounted claw weapons.                                                            |
+| Drachentöter       | Dragon Slayer         | Dwarven spear; literal translation.                                                   |
+| Drachenzahn        | Dragon Tooth          | Dwarven dagger; literal translation.                                                  |
+| Dreigliederstab    | Three-Section Staff   | Direct descriptive counterpart.                                                       |
+| Dreizack           | Trident               | Direct counterpart.                                                                   |
+| Dreschflegel       | Threshing Flail       | Agricultural flail used as a weapon.                                                  |
+| Dschadra           | Dschadra              | Tulamidian proper name; retain untranslated.                                          |
+| Eberfänger         | Boar Spear Dagger     | Heavy hunting dagger; sometimes simply boar dagger.                                   |
+| Echsische Axt      | Lizardman Axe         | Descriptive translation.                                                              |
+| Felsspalter        | Rock Splitter         | Dwarven axe; literal Aventurian name.                                                 |
+| Florett            | Foil                  | Direct counterpart.                                                                   |
+| Geißel             | Scourge               | Direct counterpart.                                                                   |
+| Große Knochenkeule | Great Bone Club       | Descriptive translation.                                                              |
+| Hakendolch         | Hook Dagger           | Direct descriptive counterpart.                                                       |
+| Hellebarde         | Halberd               | Direct counterpart.                                                                   |
+| Holzspeer          | Wooden Spear          | Direct descriptive counterpart.                                                       |
+| Jagdmesser         | Hunting Knife         | Direct counterpart.                                                                   |
+| Jagdspieß          | Hunting Spear         | Direct counterpart.                                                                   |
+| Kampfstab          | Quarterstaff          | Official English generic term.                                                        |
+| Kettenstab         | Chain Staff           | Aventurian weapon; descriptive translation.                                           |
+| Keule              | Club                  | Direct counterpart.                                                                   |
+| Knüppel            | Cudgel                | Direct counterpart.                                                                   |
+| Korspieß           | Kor Spear             | Weapon associated with Kor.                                                           |
+| Kriegshammer       | Warhammer             | Direct counterpart.                                                                   |
+| Kriegslanze        | War Lance             | Direct counterpart.                                                                   |
+| Kurzschwert        | Short Sword           | Direct counterpart.                                                                   |
+| Langdolch          | Long Dagger           | Direct counterpart.                                                                   |
+| Lindwurmschläger   | Lindworm Beater       | Dwarven weapon; literal Aventurian name.                                              |
+| Linkhand           | Main-Gauche           | Left-hand parrying dagger.                                                            |
+| Magierdegen        | Mage's Epee           | Aventurian weapon name.                                                               |
+| Magierstab         | Mage's Staff          | Direct descriptive counterpart.                                                       |
+| Molokdeschnaja     | Molokdeshnaya         | Bornish proper name; transliterated.                                                  |
+| Morgenstern        | Morning Star          | Direct counterpart.                                                                   |
+| Neethaner Langaxt  | Neethan Long Axe      | Regional Aventurian weapon name.                                                      |
+| Neunschwänziger    | Cat-o'-Nine-Tails     | Direct counterpart.                                                                   |
+| Ogerfänger         | Ogre Catcher          | Literal Aventurian weapon name.                                                       |
+| Ogerschelle        | Ogre Knocker          | Literal/descriptive Aventurian name.                                                  |
+| Pailos             | Pailos                | Aventurian proper name; retain untranslated.                                          |
+| Pike               | Pike                  | Direct counterpart.                                                                   |
+| Rabenschnabel      | Raven's Beak          | War pick; literal Aventurian name.                                                    |
+| Rapier             | Rapier                | Same term.                                                                            |
+| Richtschwert       | Executioner's Sword   | Direct descriptive counterpart.                                                       |
+| Rondrakamm         | Rondra's Crest        | Sacred Rondran weapon name.                                                           |
+| Säbel              | Sabre                 | Direct counterpart.                                                                   |
+| Scheibendolch      | Disk Dagger           | Dagger with disk-shaped guard.                                                        |
+| Schmiedehammer     | Smith's Hammer        | Direct descriptive counterpart.                                                       |
+| Schwerer Dolch     | Heavy Dagger          | Direct counterpart.                                                                   |
+| Schwert            | Sword                 | Direct counterpart.                                                                   |
+| Skraja             | Skraja                | Thorwalian proper name; retain untranslated.                                          |
+| Sonnenszepter      | Sun Sceptre           | Praios-associated mace.                                                               |
+| Speer              | Spear                 | Direct counterpart.                                                                   |
+| Stockdegen         | Sword Cane            | Direct counterpart.                                                                   |
+| Streitkolben       | Mace                  | Direct counterpart.                                                                   |
+| Streitaxt          | Battle Axe            | Direct counterpart.                                                                   |
+| Tuzakmesser        | Tuzak Knife           | Maraskan proper name plus descriptive term.                                           |
+| Vulkanglasdolch    | Volcanic-Glass Dagger | Obsidian dagger.                                                                      |
+| Waqqif             | Waqqif                | Tulamidian proper name; retain untranslated.                                          |
+| Warunker Hammer    | Warunk Hammer         | Regional Aventurian weapon name.                                                      |
+| Wolfsmesser        | Wolf Knife            | Aventurian weapon name.                                                               |
+| Wurmspieß          | Wyrm Spear            | Dwarven weapon; literal translation.                                                  |
+| Zweililien         | Twin Lilies           | Aventurian double weapon name.                                                        |
+| Zweihänder         | Greatsword            | Two-handed sword.                                                                     |
+| Zweihandflegel     | Two-Handed Flail      | Direct descriptive counterpart.                                                       |
+| Zwergenschlägel    | Dwarven Maul          | Dwarven hammer weapon.                                                                |
+| Zwergenskraja      | Dwarven Skraja        | Dwarven variant of the Skraja.                                                        |
++--------------------+-----------------------+---------------------------------------------------------------------------------------+
+
+Ranged and thrown weapons
+-------------------------
++-----------------------+---------------------+----------------------------------------------------------+
+| German weapon         | English translation | Notes                                                    |
++-----------------------+---------------------+----------------------------------------------------------+
+| Blasrohr              | Blowpipe            | Direct counterpart.                                      |
+| Bola                  | Bola                | Same term.                                               |
+| Bogen                 | Bow                 | Generic term.                                            |
+| Elfenbogen            | Elven Bow           | Direct descriptive counterpart.                          |
+| Kompositbogen         | Composite Bow       | Direct counterpart.                                      |
+| Kurzbogen             | Shortbow            | Direct counterpart.                                      |
+| Langbogen             | Longbow             | Direct counterpart.                                      |
+| Orkischer Reiterbogen | Orcish Horse Bow    | Descriptive translation.                                 |
+| Armbrust              | Crossbow            | Generic term.                                            |
+| Balestrina            | Balestrina          | Aventurian proper weapon name; retain untranslated.      |
+| Eisenwalder           | Eisenwalder         | Aventurian repeating crossbow name; retain untranslated. |
+| Handarmbrust          | Hand Crossbow       | Direct counterpart.                                      |
+| Leichte Armbrust      | Light Crossbow      | Direct counterpart.                                      |
+| Schwere Armbrust      | Heavy Crossbow      | Direct counterpart.                                      |
+| Windenarmbrust        | Windlass Crossbow   | Direct counterpart.                                      |
+| Diskus                | Discus              | Direct counterpart.                                      |
+| Schleuder             | Sling               | Direct counterpart.                                      |
+| Stabschleuder         | Staff Sling         | Direct counterpart.                                      |
+| Wurfbeil              | Throwing Axe        | Direct counterpart.                                      |
+| Wurfkeule             | Throwing Club       | Direct counterpart.                                      |
+| Wurfmesser            | Throwing Knife      | Direct counterpart.                                      |
+| Wurfspeer             | Javelin             | Official English generic term.                           |
+| Wurfstern             | Throwing Star       | Direct counterpart.                                      |
+| Netz                  | Net                 | Direct counterpart.                                      |
+| Lasso                 | Lasso               | Same term.                                               |
++-----------------------+---------------------+----------------------------------------------------------+
+
+Important distinctions
+----------------------
+  Anderthalbhänder = Hand-and-a-Half Sword
+  Bastardschwert   = Bastard Sword
+  Degen            = Epee
+  Florett          = Foil
+  Linkhand         = Main-Gauche
+  Kampfstab        = Quarterstaff
+  Streitkolben     = Mace
+  Morgenstern      = Morning Star
+  Rabenschnabel    = Raven's Beak / war pick
+  Zweihänder       = Greatsword
+  Wurfspeer        = Javelin
+
+Edition and canon note
+----------------------
+Wege des Schwerts contains substantially more weapons than the older English Basic Rules. Therefore,
+many entries in this section are accurate descriptive translations rather than names attested in
+the English core book. Proper Aventurian names are deliberately preserved to avoid inventing canon.
+
+End of updated reference.

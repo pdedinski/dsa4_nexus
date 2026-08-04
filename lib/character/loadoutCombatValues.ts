@@ -517,7 +517,7 @@ export function computeLoadoutWeaponLine(
   const { talentId, inferredDaggersForParrying } = meleeCombatTalentIdForWeapon(weapon);
   if (inferredDaggersForParrying) {
     notes.push(
-      "Parrying weapon: Dolche (Daggers) talent assumed for melee TP — codex omits combat_talent on this Parierwaffe (same convention as Linkhand/WdS).",
+      "Parrying weapon: Daggers talent assumed for melee TP — codex omits combat_talent on this parrying weapon (same convention as Linkhand/WdS).",
     );
   }
   const def = talentId ? COMBAT_TALENT_MAP.get(talentId) : undefined;
@@ -573,7 +573,7 @@ export function computeLoadoutWeaponLine(
     if (rangedRow) {
       baseAT = rangedRow.finalAT;
       atBreakdown.push(
-        { label: "Base BRV (FK)", delta: sheet.derived.baseBRV },
+        { label: "Base BRV", delta: sheet.derived.baseBRV },
         {
           label: "Ranged TP",
           delta: tp,
@@ -583,7 +583,7 @@ export function computeLoadoutWeaponLine(
     } else {
       baseAT = sheet.derived.baseBRV + tp;
       atBreakdown.push(
-        { label: "Base BRV (FK)", delta: sheet.derived.baseBRV },
+        { label: "Base BRV", delta: sheet.derived.baseBRV },
         {
           label: "Ranged TP",
           delta: tp,
@@ -591,7 +591,7 @@ export function computeLoadoutWeaponLine(
         },
       );
       if (tp <= 0) {
-        notes.push("No ranged TP on sheet; FK base + 0 TP shown.");
+        notes.push("No ranged TP on sheet; base BRV + 0 TP shown.");
       }
     }
     paBreakdown = null;
@@ -727,7 +727,7 @@ export function computeLoadoutWeaponLine(
       shieldPA = 0;
       const tp = talentTp(sheet, talentId);
       atBreakdown.push(
-        { label: "Base BRV (FK)", delta: sheet.derived.baseBRV },
+        { label: "Base BRV", delta: sheet.derived.baseBRV },
         { label: "Ranged TP", delta: tp },
       );
       paBreakdown = null;

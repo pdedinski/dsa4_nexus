@@ -7,7 +7,7 @@
       "Arsenal Kompendium (AK)",
       "Wege des Schwertes (WdS)"
     ],
-    "notes": "Weights in Stein (1 Stein = 1 kg = 40 weight ounces, ~25 g each per CC conventions). Prices in silver thalers (CC-01). Weapons from Wege des Schwertes (WdS 2011) pp.124–133. secondary_talents lists every alternative combat talent; combat_talent drives UI grouping. Weapon focus bias at creation: use the highest talent among combat_talent + secondary_talents for AT/PA. New fields vs schema 1.x: break_factor (WdS BF column, break threshold); length_cm; tp_kk encodes TP/ST damage-scaling thresholds (e.g. '12/4'); distance_class (WdS DK — H grapple, N melee, S pole-arm, P pike; array when several apply); is_improvised ('i'); is_two_handed ('z'); is_ritual ('p'); reload_actions (WdS reloading steps, ranged); wounds_at_kko2minus2 (* in WdS table: shot may wound at CN/2 - 2 damage).",
+    "notes": "Weights in Stein (1 Stein = 1 kg = 40 weight ounces, ~25 g each per CC conventions). Prices in silver thalers (CC-01). Weapons from Wege des Schwertes (WdS 2011) pp.124–133. secondary_talents lists every alternative combat talent; combat_talent drives UI grouping. Weapon focus bias at creation: use the highest talent among combat_talent + secondary_talents for AT/PA. New fields vs schema 1.x: break_factor (WdS BF column, break threshold); length_cm; tp_kk encodes HP/ST damage-scaling thresholds (e.g. '12/4'); distance_class (WdS DK — H grapple, N melee, S pole-arm, P pike; array when several apply); is_improvised ('i'); is_two_handed ('z'); is_ritual ('p'); reload_actions (WdS reloading steps, ranged); wounds_at_kko2minus2 (* in WdS table: shot may wound at CN/2 - 2 damage).",
     "ranged_and_throwing": {
       "pdf_sources_for_range_bands": [
         "wege_des_schwertes: Schuss- und Wurfwaffen pp.130-131.",
@@ -22,7 +22,7 @@
         "extrem_weit"
       ],
       "range_bands_schritt_upper_note": "range_bands_schritt_upper: five upper inclusive limits in paces; order matches Reichweitenklassen (reichweiteklassen_order).",
-      "tp_plus_by_range_band_note": "tp_plus_by_range_band: optional TP shifts per band. null = not applicable (dash in table).",
+      "tp_plus_by_range_band_note": "tp_plus_by_range_band: optional HP+ shifts per band. null = not applicable (dash in table).",
       "fernkampf_fk_modifiers_by_reichweiteklasse_BRW": {
         "sehr_nah": -2,
         "nah": 0,
@@ -35,7 +35,7 @@
   "weapons": [
     {
       "id": "anderthalbhaender",
-      "name": "Bastard Sword (Anderthalbhänder)",
+      "name": "Bastard Sword",
       "german_name": "Anderthalbhänder",
       "category": "melee",
       "combat_talent": "bastard_sword",
@@ -89,7 +89,7 @@
       "break_factor": 2,
       "cost": 200,
       "distance_class": "N",
-      "special": "One-handed (Swords) or two-handed (Bastard Sword talent). At ST 15+ one-handed: TP/ST 12/4, INI -1. No shield when two-handed.",
+      "special": "One-handed (Swords) or two-handed (Bastard Sword talent). At ST 15+ one-handed: HP/ST 12/4, INI -1. No shield when two-handed.",
       "notes": "Five to six spans blade, long grip.",
       "related_talents": [
         "bastard_sword"
@@ -120,7 +120,7 @@
       "break_factor": 0,
       "cost": 500,
       "distance_class": "N",
-      "special": "Single-edged Maraskan blade; reinforced scabbard can parry. Multiple blades linkable. At AG 16+: one-handed with Swords (TP/ST unchanged).",
+      "special": "Single-edged Maraskan blade; reinforced scabbard can parry. Multiple blades linkable. At AG 16+: one-handed with Swords (HP/ST unchanged).",
       "notes": "Blade usually blackened.",
       "related_talents": [
         "swords"
@@ -132,7 +132,7 @@
     },
     {
       "id": "rondrakamm",
-      "name": "Rondra's Comb",
+      "name": "Rondra's Crest",
       "german_name": "Rondrakamm",
       "category": "melee",
       "combat_talent": "bastard_sword",
@@ -188,7 +188,7 @@
         "N",
         "S"
       ],
-      "special": "Maraskan sword; slightly curved 1.5-edged blade. Minimum AG 15; each point below reduces TP by 1, INI by 1, PA by 1.",
+      "special": "Maraskan sword; slightly curved 1.5-edged blade. Minimum AG 15; each point below reduces HP by 1, INI by 1, PA by 1.",
       "notes": "Wielded very fast; requires exceptional agility.",
       "related_talents": [
         "two_handed_swords"
@@ -298,7 +298,7 @@
       "break_factor": 0,
       "cost": 120,
       "distance_class": "H",
-      "special": "Broad sturdy dwarven dagger. Non-dwarves: -1 AT, PA, TP. Cannot parry chain, two-handed blunt, or two-handed swords.",
+      "special": "Broad sturdy dwarven dagger. Non-dwarves: -1 AT, PA, HP. Cannot parry chain, two-handed blunt, or two-handed swords.",
       "notes": "Dwarf-crafted; no known human-sized version.",
       "related_talents": [],
       "typical_for": [
@@ -720,7 +720,7 @@
     },
     {
       "id": "degen",
-      "name": "Épée",
+      "name": "Epee",
       "german_name": "Degen",
       "category": "melee",
       "combat_talent": "fencing_weapons",
@@ -1011,7 +1011,7 @@
       "break_factor": 1,
       "cost": 100,
       "distance_class": "N",
-      "special": "Mace with spines on heavy ball. Central spine: Daggers AT+3, own PA after+3, deals 1d6+6 TP; Knockdown rule does not apply to spike thrust.",
+      "special": "Mace with spines on heavy ball. Central spine: Daggers AT+3, own PA after+3, deals 1d6+6 HP; Knockdown rule does not apply to spike thrust.",
       "notes": "Named for its face-like decoration.",
       "related_talents": [
         "daggers"
@@ -1042,7 +1042,7 @@
       "break_factor": 3,
       "cost": 90,
       "distance_class": "N",
-      "special": "Orkish axe like enlarged Thorwaler Skraja. Spike thrust: Daggers AT+3, own PA after+3, deals 1d6+6 TP; Knockdown rule does not apply.",
+      "special": "Orkish axe like enlarged Thorwaler Skraja. Spike thrust: Daggers AT+3, own PA after+3, deals 1d6+6 HP; Knockdown rule does not apply.",
       "notes": "Favored ork weapon.",
       "related_talents": [
         "daggers"
@@ -1230,7 +1230,7 @@
       "break_factor": 3,
       "cost": 250,
       "distance_class": "H",
-      "special": "Aranean decorative fan as weapon. Opening/closing: 1 action each. Closed: dagger-like parrying restrictions. Open: only vs. daggers and fencing weapons. Full-metal variant usable as small shield vs. ranged ≤1d6+4 TP.",
+      "special": "Aranean decorative fan as weapon. Opening/closing: 1 action each. Closed: dagger-like parrying restrictions. Open: only vs. daggers and fencing weapons. Full-metal variant usable as small shield vs. ranged ≤1d6+4 HP.",
       "notes": "Elegant exotic weapon.",
       "related_talents": [],
       "typical_for": [
@@ -1315,7 +1315,7 @@
       "break_factor": 4,
       "cost": 75,
       "distance_class": "N",
-      "special": "Thorwaler bearded axe. Can be used one-handed with Axes/Maces at ST 14+ (TP/ST 13/3). Primary entry; see Two-Handed Blunt for two-handed use.",
+      "special": "Thorwaler bearded axe. Can be used one-handed with Axes/Maces at ST 14+ (HP/ST 13/3). Primary entry; see Two-Handed Blunt for two-handed use.",
       "notes": "Traditional Thorwaler battleaxe.",
       "related_talents": [
         "two_handed_blunt_weapons"
@@ -1423,7 +1423,7 @@
       "break_factor": 4,
       "cost": 50,
       "distance_class": "N",
-      "special": "Thorwaler double-bladed hand axe, often with additional long spike at tip. Spike thrust (Daggers AT+3): 1d6+3 TP.",
+      "special": "Thorwaler double-bladed hand axe, often with additional long spike at tip. Spike thrust (Daggers AT+3): 1d6+3 HP.",
       "notes": "Traditional Thorwaler weapon.",
       "related_talents": [
         "daggers"
@@ -1807,7 +1807,7 @@
       "break_factor": 3,
       "cost": 300,
       "distance_class": "S",
-      "special": "Heavy axe blade and thrust tip on massive shaft with hand guard. Only two-handed blunt maneuvers allowed. Thrust (Spears AT+5, PA+5): 1d6+7 TP; can Knockdown. Two-handed.",
+      "special": "Heavy axe blade and thrust tip on massive shaft with hand guard. Only two-handed blunt maneuvers allowed. Thrust (Spears AT+5, PA+5): 1d6+7 HP; can Knockdown. Two-handed.",
       "notes": "Rare powerful combination polearm.",
       "related_talents": [
         "two_handed_blunt_weapons"
@@ -1874,7 +1874,7 @@
         "N",
         "S"
       ],
-      "special": "Blade-staff developed from war scythe. At AG 16+: one-handed with Spears or Axes/Maces (TP 1d6+3, TP/ST 15/5; AT/PA weapon mod. 0/-1). Two-handed.",
+      "special": "Blade-staff developed from war scythe. At AG 16+: one-handed with Spears or Axes/Maces (HP 1d6+3, HP/ST 15/5; AT/PA weapon mod. 0/-1). Two-handed.",
       "notes": "Popular in Balash and Maraskan.",
       "related_talents": [
         "two_handed_blunt_weapons",
@@ -1974,7 +1974,7 @@
         "N",
         "S"
       ],
-      "special": "Multi-purpose weapon: thrust tip, flat hammer head, and axe blade on long haft with hand guard. Thrust (Spears AT+3): 1d6+5 TP, cannot Knockdown. Two-handed.",
+      "special": "Multi-purpose weapon: thrust tip, flat hammer head, and axe blade on long haft with hand guard. Thrust (Spears AT+3): 1d6+5 HP, cannot Knockdown. Two-handed.",
       "notes": "Deadly versatile infantry weapon.",
       "related_talents": [
         "two_handed_blunt_weapons"
@@ -2152,7 +2152,7 @@
     },
     {
       "id": "neunschwanzige",
-      "name": "Nine-Tails",
+      "name": "Cat-o'-Nine-Tails",
       "german_name": "Neunschwänzige",
       "category": "melee",
       "combat_talent": "chain_weapons",
@@ -2168,7 +2168,7 @@
       "break_factor": 5,
       "cost": 60,
       "distance_class": "N",
-      "special": "Nine lash cords weighted at ends. Ignores shield PA bonus. Vs. swarms: AT/2 hits 2 targets, critical hits 3 (equal TP roll). Vs. human: AT/2 +1 TP.",
+      "special": "Nine lash cords weighted at ends. Ignores shield PA bonus. Vs. swarms: AT/2 hits 2 targets, critical hits 3 (equal HP roll). Vs. human: AT/2 +1 HP.",
       "notes": "Specialized crowd-control weapon.",
       "related_talents": [],
       "typical_for": [],
@@ -2549,7 +2549,7 @@
       "break_factor": 3,
       "cost": 80,
       "distance_class": "N",
-      "special": "Tournament-balanced sword with blunt soft edges; deals TP(A). Wooden version: TP 1d6+1(A), BF 5.",
+      "special": "Tournament-balanced sword with blunt soft edges; deals HP (ED). Wooden version: HP 1d6+1(A), BF 5.",
       "notes": "Training and tournament weapon.",
       "related_talents": [],
       "typical_for": [
@@ -2630,7 +2630,7 @@
       "break_factor": 6,
       "cost": 120,
       "distance_class": "S",
-      "special": "Tulamide short cavalry lance. Usable on horseback, in melee, or thrown (Throwing Spears). Thrown from horseback: +2 TP.",
+      "special": "Tulamide short cavalry lance. Usable on horseback, in melee, or thrown (Throwing Spears). Thrown from horseback: +2 HP.",
       "notes": "Universal Novadi weapon.",
       "related_talents": [
         "throwing_spears"
@@ -2693,7 +2693,7 @@
       "break_factor": 5,
       "cost": 10,
       "distance_class": "S",
-      "special": "-2 TP vs. plate armor. Stone/horn tip variants +1 TP vs. cloth/thin leather (BF check vs. plate). One-handed (TP 1d6+2, TP/ST 13/5; AT/PA weapon mod. -1/-6). Can be thrown.",
+      "special": "-2 HP vs. plate armor. Stone/horn tip variants +1 HP vs. cloth/thin leather (BF check vs. plate). One-handed (HP 1d6+2, HP/ST 13/5; AT/PA weapon mod. -1/-6). Can be thrown.",
       "notes": "Tribal weapon.",
       "related_talents": [
         "throwing_spears"
@@ -2721,7 +2721,7 @@
       "break_factor": 3,
       "cost": 80,
       "distance_class": "S",
-      "special": "Spear with crossbar behind blade to prevent over-penetration. One-handed at ST 15+ (TP 1d6+5, TP/ST 13/5; AT/PA weapon mod. 0/-4). Elven variants: lighter (75 wt. oz.), sturdier (BF 2).",
+      "special": "Spear with crossbar behind blade to prevent over-penetration. One-handed at ST 15+ (HP 1d6+5, HP/ST 13/5; AT/PA weapon mod. 0/-4). Elven variants: lighter (75 wt. oz.), sturdier (BF 2).",
       "notes": "Wood Elven hunting spear.",
       "related_talents": [
         "throwing_spears"
@@ -2808,7 +2808,7 @@
       "break_factor": 5,
       "cost": 30,
       "distance_class": "S",
-      "special": "~1.5-pace shaft with lance-shaped thrust blade. One-handed at ST 16+ (TP 1d6+4, TP/ST 13/5; AT/PA weapon mod. 0/-5). Can be thrown (improvised).",
+      "special": "~1.5-pace shaft with lance-shaped thrust blade. One-handed at ST 16+ (HP 1d6+4, HP/ST 13/5; AT/PA weapon mod. 0/-5). Can be thrown (improvised).",
       "notes": "Standard spear; mainly for hunters now.",
       "related_talents": [
         "throwing_spears"
@@ -2864,7 +2864,7 @@
       "break_factor": 8,
       "cost": 50,
       "distance_class": "P",
-      "special": "Values for improvised use on foot (deals TP(A)). For jousting use see WdS p. 106. Very fragile. Two-handed.",
+      "special": "Values for improvised use on foot (deals HP (ED)). For jousting use see WdS p. 106. Very fragile. Two-handed.",
       "notes": "Tournament weapon.",
       "related_talents": [],
       "typical_for": [
@@ -3102,7 +3102,7 @@
         "N",
         "S"
       ],
-      "special": "Rare long-hafted double-bladed axe of the Achaz. Thrust tip (Spears AT+3): 1d6+4 TP; Knockdown rule does not apply. All Staves maneuvers and Pinning usable. Two-handed. Not commercially available.",
+      "special": "Rare long-hafted double-bladed axe of the Achaz. Thrust tip (Spears AT+3): 1d6+4 HP; Knockdown rule does not apply. All Staves maneuvers and Pinning usable. Two-handed. Not commercially available.",
       "notes": "Extremely rare Achaz weapon.",
       "related_talents": [
         "spears",
@@ -3161,7 +3161,7 @@
       "break_factor": 3,
       "cost": 120,
       "distance_class": "N",
-      "special": "Orkish war hammer with spines on large striking face. One-handed with Axes/Maces at ST 18+ (TP/ST 15/3). Two-handed.",
+      "special": "Orkish war hammer with spines on large striking face. One-handed with Axes/Maces at ST 18+ (HP/ST 15/3). Two-handed.",
       "notes": "Heavy ork war hammer.",
       "related_talents": [
         "axes_and_maces"
@@ -3218,7 +3218,7 @@
       "break_factor": 2,
       "cost": 120,
       "distance_class": "N",
-      "special": "Heavy war hammer. One-handed with Axes/Maces at ST 18+ (TP/ST 15/3). Striking face sometimes spiked. Two-handed.",
+      "special": "Heavy war hammer. One-handed with Axes/Maces at ST 18+ (HP/ST 15/3). Striking face sometimes spiked. Two-handed.",
       "notes": "Devastating heavy hammer.",
       "related_talents": [
         "axes_and_maces"
@@ -3281,7 +3281,7 @@
       "break_factor": 4,
       "cost": 75,
       "distance_class": "N",
-      "special": "Thorwaler bearded axe. One-handed with Axes/Maces at ST 14+ (TP/ST 13/3). Two-handed.",
+      "special": "Thorwaler bearded axe. One-handed with Axes/Maces at ST 14+ (HP/ST 13/3). Two-handed.",
       "notes": "Thorwaler bearded axe.",
       "related_talents": [
         "axes_and_maces"
@@ -3312,7 +3312,7 @@
       "break_factor": 3,
       "cost": 300,
       "distance_class": "S",
-      "special": "Only two-handed blunt maneuvers. Thrust (Spears AT+5, PA+5): 1d6+7 TP; can Knockdown. Two-handed.",
+      "special": "Only two-handed blunt maneuvers. Thrust (Spears AT+5, PA+5): 1d6+7 HP; can Knockdown. Two-handed.",
       "notes": "Rare combination polearm.",
       "related_talents": [
         "infantry_weapons"
@@ -3373,7 +3373,7 @@
       "break_factor": 5,
       "cost": 20,
       "distance_class": "N",
-      "special": "Work tool; improvised weapon. One-handed with Axes/Maces at ST 18+ (TP/ST 14/3). Two-handed.",
+      "special": "Work tool; improvised weapon. One-handed with Axes/Maces at ST 18+ (HP/ST 14/3). Two-handed.",
       "notes": "Mining pickaxe.",
       "related_talents": [],
       "typical_for": [],
@@ -3430,7 +3430,7 @@
         "N",
         "S"
       ],
-      "special": "Multi-purpose: thrust tip, hammer head, axe blade. Thrust (Spears AT+3): 1d6+5 TP, cannot Knockdown. Two-handed.",
+      "special": "Multi-purpose: thrust tip, hammer head, axe blade. Thrust (Spears AT+3): 1d6+5 HP, cannot Knockdown. Two-handed.",
       "notes": "Deadly versatile weapon.",
       "related_talents": [
         "infantry_weapons"
@@ -3621,7 +3621,7 @@
     },
     {
       "id": "rondrakamm_2hs",
-      "name": "Rondra's Comb (Two-Handed Swords)",
+      "name": "Rondra's Crest (Two-Handed Swords)",
       "german_name": "Rondrakamm",
       "category": "melee",
       "combat_talent": "two_handed_swords",
@@ -3815,7 +3815,7 @@
       "break_factor": 0,
       "cost": 350,
       "distance_class": "H",
-      "special": "Deals real TP (not TP(A)). No other weapon or shield in that hand. Interchangeable attachments. Not commercially available at base price.",
+      "special": "Deals real HP (not HP (ED)). No other weapon or shield in that hand. Interchangeable attachments. Not commercially available at base price.",
       "notes": "Versatile combat gauntlet.",
       "related_talents": [],
       "typical_for": [],
@@ -3839,7 +3839,7 @@
       "break_factor": 4,
       "cost": 250,
       "distance_class": "H",
-      "special": "Four short blades spring from back of hand when fist is clenched. Deals real TP. No other weapon or shield in that hand.",
+      "special": "Four short blades spring from back of hand when fist is clenched. Deals real HP. No other weapon or shield in that hand.",
       "notes": "Concealed blade prosthetic.",
       "related_talents": [],
       "typical_for": [],
@@ -3863,7 +3863,7 @@
       "break_factor": 0,
       "cost": 25,
       "distance_class": "H",
-      "special": "Bronze/iron rings. Deals TP(A) but +2 more than bare fist. No other weapon or shield in that hand.",
+      "special": "Bronze/iron rings. Deals HP (ED) but +2 more than bare fist. No other weapon or shield in that hand.",
       "notes": "Brass knuckles.",
       "related_talents": [],
       "typical_for": [],
@@ -3887,7 +3887,7 @@
       "break_factor": 3,
       "cost": 180,
       "distance_class": "H",
-      "special": "Curved blades smithed onto knuckle duster; hand resembles claw. Deals real TP. No other weapon or shield in that hand.",
+      "special": "Curved blades smithed onto knuckle duster; hand resembles claw. Deals real HP. No other weapon or shield in that hand.",
       "notes": "Exotic southern claw weapon.",
       "related_talents": [],
       "typical_for": [],
@@ -3911,7 +3911,7 @@
       "break_factor": -2,
       "cost": 140,
       "distance_class": "H",
-      "special": "Stiff armored gauntlet extending past elbow with spike at clenched fist. Used primarily as shield/parry. Deals real TP.",
+      "special": "Stiff armored gauntlet extending past elbow with spike at clenched fist. Used primarily as shield/parry. Deals real HP.",
       "notes": "Armored combat gauntlet.",
       "related_talents": [],
       "typical_for": [],
@@ -4271,7 +4271,7 @@
       ],
       "distance_class_min": 2,
       "distance_class_max": 10,
-      "special": "Tulamide cavalry javelin. +2 TP when thrown from horseback.",
+      "special": "Tulamide cavalry javelin. +2 HP when thrown from horseback.",
       "notes": "Universal Novadi weapon.",
       "related_talents": [],
       "typical_for": [
@@ -4680,7 +4680,7 @@
       ],
       "distance_class_min": 0,
       "distance_class_max": 10,
-      "special": "Tumbling throwing stick. Deals 2d6+4 TP(A) + half rolled points as real damage.",
+      "special": "Tumbling throwing stick. Deals 2d6+4 HP (ED) + half rolled points as real damage.",
       "notes": "Head-heavy throwing stick.",
       "related_talents": [],
       "typical_for": [],
@@ -5097,7 +5097,7 @@
       ],
       "distance_class_min": 3,
       "distance_class_max": 16,
-      "special": "Layered horn/sinew/wood construction. Minimum ST 15; below that all targets one range class farther and -2 TP. Hit can wound at CN/2 - 2.",
+      "special": "Layered horn/sinew/wood construction. Minimum ST 15; below that all targets one range class farther and -2 HP. Hit can wound at CN/2 - 2.",
       "notes": "Layered composite bow.",
       "related_talents": [],
       "typical_for": [
@@ -5141,7 +5141,7 @@
       ],
       "distance_class_min": 3,
       "distance_class_max": 18,
-      "special": "Extremely stiff short bow. Minimum ST 16; below that all targets one class farther, -2 TP. Mounted use only for Cavalry Archers. Hit can wound at CN/2 - 2.",
+      "special": "Extremely stiff short bow. Minimum ST 16; below that all targets one class farther, -2 HP. Mounted use only for Cavalry Archers. Hit can wound at CN/2 - 2.",
       "notes": "Heavy military war bow.",
       "related_talents": [],
       "typical_for": [
@@ -5227,7 +5227,7 @@
       ],
       "distance_class_min": 3,
       "distance_class_max": 18,
-      "special": "Body-length bow (8+ spans). Minimum ST 15; below that all targets one class farther, -2 TP. Cannot be used from horseback. Hit can wound at CN/2 - 2.",
+      "special": "Body-length bow (8+ spans). Minimum ST 15; below that all targets one class farther, -2 HP. Cannot be used from horseback. Hit can wound at CN/2 - 2.",
       "notes": "Traditional infantry long bow.",
       "related_talents": [],
       "typical_for": [
@@ -5312,7 +5312,7 @@
       ],
       "distance_class_min": 1,
       "distance_class_max": 7,
-      "special": "Two metal weights on cord. Deals no real TP — value is escape check difficulty penalty (per round; fail = +1 difficulty).",
+      "special": "Two metal weights on cord. Deals no real HP — value is escape check difficulty penalty (per round; fail = +1 difficulty).",
       "notes": "Cord-and-weight entangling weapon.",
       "related_talents": [],
       "typical_for": [],
@@ -5433,7 +5433,7 @@
       ],
       "distance_class_min": 1,
       "distance_class_max": 6,
-      "special": "Leather rope with weighted loop. Deals no real TP — value is escape check difficulty penalty.",
+      "special": "Leather rope with weighted loop. Deals no real HP — value is escape check difficulty penalty.",
       "notes": "Cowboy/Novadi entangling weapon.",
       "related_talents": [],
       "typical_for": [
@@ -5475,7 +5475,7 @@
       ],
       "distance_class_min": 1,
       "distance_class_max": 10,
-      "special": "Shepherd weapon. Special lead shot: +1 TP. Ordinary matching stones freely available.",
+      "special": "Shepherd weapon. Special lead shot: +1 HP. Ordinary matching stones freely available.",
       "notes": "Classic shepherd sling.",
       "related_talents": [],
       "typical_for": [],
@@ -5592,7 +5592,7 @@
       ],
       "distance_class_min": 2,
       "distance_class_max": 12,
-      "special": "Maraskan hardwood throwing disc, often decorated. Optional TP/ST 13/3.",
+      "special": "Maraskan hardwood throwing disc, often decorated. Optional HP/ST 13/3.",
       "notes": "Standard Maraskan discus.",
       "related_talents": [],
       "typical_for": [],
@@ -5631,7 +5631,7 @@
       ],
       "distance_class_min": 2,
       "distance_class_max": 12,
-      "special": "Deals TP(A). Hunting variant. Optional TP/ST 13/3.",
+      "special": "Deals HP (ED). Hunting variant. Optional HP/ST 13/3.",
       "notes": "Hunting discus.",
       "related_talents": [],
       "typical_for": [

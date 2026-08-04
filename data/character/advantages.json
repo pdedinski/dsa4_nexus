@@ -306,7 +306,7 @@
     },
     {
       "id": "twilight_sight",
-      "name": "Twilight Sight",
+      "name": "Low-Light Vision",
       "german_name": "Dämmerungssicht",
       "gp_cost": 10,
       "is_leveled": false,
@@ -324,7 +324,7 @@
     },
     {
       "id": "iron",
-      "name": "Iron",
+      "name": "Toughness",
       "german_name": "Eisern",
       "gp_cost": 7,
       "is_leveled": false,
@@ -342,7 +342,7 @@
     },
     {
       "id": "fairy_friend",
-      "name": "Fairy Friend",
+      "name": "Friend of the Fey",
       "german_name": "Feenfreund",
       "gp_cost": 7,
       "is_leveled": false,
@@ -360,7 +360,7 @@
     },
     {
       "id": "fleet",
-      "name": "Fleet",
+      "name": "Fast",
       "german_name": "Flink",
       "gp_cost": 10,
       "is_leveled": false,
@@ -396,7 +396,7 @@
     },
     {
       "id": "danger_instinct",
-      "name": "Danger Instinct",
+      "name": "Danger Sense",
       "german_name": "Gefahreninstinkt",
       "gp_cost": 12,
       "is_leveled": false,
@@ -563,7 +563,7 @@
     },
     {
       "id": "heat_resistance",
-      "name": "Heat Resistance",
+      "name": "Resistance to Heat",
       "german_name": "Hitzeresistenz",
       "gp_cost": 5,
       "is_leveled": false,
@@ -581,7 +581,7 @@
     },
     {
       "id": "vigor",
-      "name": "Vigor",
+      "name": "High Vitality",
       "german_name": "Hohe Lebenskraft",
       "gp_cost_per_2vp": 2,
       "is_leveled": true,
@@ -715,7 +715,7 @@
     },
     {
       "id": "cold_resistance",
-      "name": "Cold Resistance",
+      "name": "Resistance to Cold",
       "german_name": "Kälteresistenz",
       "gp_cost": 5,
       "is_leveled": false,
@@ -731,7 +731,7 @@
     },
     {
       "id": "battle_frenzy",
-      "name": "Battle Frenzy",
+      "name": "Rage",
       "german_name": "Kampfrausch",
       "gp_cost": 15,
       "is_leveled": false,
@@ -882,7 +882,7 @@
     },
     {
       "id": "snake_person",
-      "name": "Snake Person",
+      "name": "Contortionist",
       "german_name": "Schlangenmensch",
       "gp_cost": 25,
       "is_leveled": false,
@@ -1030,7 +1030,7 @@
     },
     {
       "id": "full_caster",
-      "name": "Full Caster",
+      "name": "Spellcaster",
       "german_name": "Vollzauberer",
       "gp_cost": null,
       "auto_only": true,
@@ -1049,7 +1049,7 @@
     },
     {
       "id": "euphonic_voice",
-      "name": "Euphonic Voice",
+      "name": "Bardic Voice",
       "german_name": "Wohlklang",
       "gp_cost": 10,
       "is_leveled": false,
@@ -1067,7 +1067,7 @@
     },
     {
       "id": "tough_dog",
-      "name": "Tough Dog",
+      "name": "Tough as Nails",
       "german_name": "Zäher Hund",
       "gp_cost": 10,
       "is_leveled": false,
@@ -1103,7 +1103,7 @@
     },
     {
       "id": "dwarf_nose",
-      "name": "Dwarf Nose",
+      "name": "Dwarfnose",
       "german_name": "Zwergennase",
       "gp_cost": 12,
       "is_leveled": false,

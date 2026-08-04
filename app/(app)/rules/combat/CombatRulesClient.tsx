@@ -130,7 +130,7 @@ const COMBAT_FLOW = [
   { step: "1", label: "Initiative", detail: "Roll 1d6 + base INI (round((CO+CO+IN+AG)/5) + racial mod) + weapon/armor INI modifiers. Highest acts first." },
   { step: "2", label: "Action", detail: "Each combatant spends ONE action: Attack, Free Action, or Special Action (flee, draw weapon, etc.)." },
   { step: "3", label: "Defense", detail: "After a successful attack, the target chooses ONE defense: Parry (PA roll), Shield Parry, or Dodge." },
-  { step: "4", label: "Damage", detail: "On failed defense: roll weapon damage dice, subtract AR (Armor Rating). If damage TP ≥ KO/2 → wound (−1 AT/PA/checks per wound marker)." },
+  { step: "4", label: "Damage", detail: "On failed defense: roll weapon damage dice, subtract AR (Armor Rating). If effective DP ≥ CN/2 → wound (−1 AT/PA/checks per wound marker)." },
   { step: "5", label: "End of Round", detail: "Ongoing effects resolve (bleed, poison, etc.). Initiative order continues from round 1 unless re-rolled." },
 ];
 
@@ -157,7 +157,7 @@ const STAT_FORMULAS = [
   },
   { stat: "Melee AT (EC)", formula: "⌊effective EC / 2⌋" },
   { stat: "Melee PA (EC)", formula: "⌈effective EC / 2⌉" },
-  { stat: "Wound", formula: "effective DP ≥ floor(KO / 2)" },
+  { stat: "Wound", formula: "effective DP ≥ floor(CN / 2)" },
 ];
 
 const RANGE_MODS = [

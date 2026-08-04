@@ -495,7 +495,7 @@ export default function CharacterSheet({ sheet }: { sheet: Sheet }) {
             <dd>{sheetM.derived.baseINI}</dd>
             <dt className="text-ink-muted">
               <abbr
-                title="Resistance Modifier — bonus to saving throws vs. magic and similar effects"
+                title="Resistance to Magic — bonus to saving throws vs. magic and similar effects"
                 className="no-underline cursor-help"
               >
                 RM
@@ -510,7 +510,7 @@ export default function CharacterSheet({ sheet }: { sheet: Sheet }) {
             <dd>{sheetM.derived.ASP}</dd>
             <dt className="text-ink-muted">
               <abbr title="Speed (movement)" className="no-underline cursor-help">
-                GS
+                SD
               </abbr>
             </dt>
             <dd>{sheetM.derived.GS}</dd>
@@ -874,9 +874,9 @@ export default function CharacterSheet({ sheet }: { sheet: Sheet }) {
                   </table>
                 </div>
                 <p className="mt-2 text-[11px] text-ink-faint leading-relaxed">
-                  Damage uses final ST from the sheet plus the weapon&apos;s TP/ST rule from the
+                  Damage uses final ST from the sheet plus the weapon&apos;s HP/ST rule from the
                   codex (<span className="font-mono">tp_kk</span>) where present; dice are
-                  unchanged; bonus TP from the Strength rule adds to the fixed modifier. WMs tilt
+                  unchanged; bonus HP from the Strength rule adds to the fixed modifier. WMs tilt
                   the TP split across AT and PA (per-talent Σ of PA − AT), including shields. INI =
                   base + Σ armor INI + weapon INI. Encumbrance: worn EC total is{" "}
                   <strong>{loadoutEncTotals.effectiveTotalEC}</strong> (raw{" "}
@@ -975,7 +975,7 @@ export default function CharacterSheet({ sheet }: { sheet: Sheet }) {
                 </div>
                 <p className="mt-1.5 text-[11px] text-ink-faint leading-relaxed">
                   The <strong>Total</strong> EC (<strong>{loadoutEncTotals.effectiveTotalEC}</strong>)
-                  is the aggregate after Armor Use (Armor Use RG I–III reduces the total once, not per
+                  is the aggregate after Armor Use (tiers I–III reduce the total once, not per
                   piece). Rows show each piece&apos;s codex EC (
                   <span className="font-mono">ec</span>). Raw sum: <strong>{loadoutEncTotals.rawTotalEC}</strong>.
                   Total AR is the sum of individual piece AR; stacking rules are not modeled.
@@ -989,7 +989,7 @@ export default function CharacterSheet({ sheet }: { sheet: Sheet }) {
       <Section title="Starting equipment">
         <p className="mb-2">
           Starting money:{" "}
-          <strong>{sheetM.startingMoneySilbertaler}</strong> Silbertaler (SO²)
+          <strong>{sheetM.startingMoneySilbertaler}</strong> silver thaler (SO²)
         </p>
         <ul className="list-none pl-0 text-xs space-y-1">
           {sheetM.startingEquipment.map((id) => (

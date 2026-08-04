@@ -2029,7 +2029,7 @@ export function generateCharacter(
     }
 
     dbg(
-      `[Spells:Creation] Phase2: ZfW_raise_steps=${spellZfwRaiseSteps}, SGP_remaining=${sgpLeft}, TGP_remaining=${tgpLeft}, TGP_to_SGP=${tgpConverted}`,
+      `[Spells:Creation] Phase2: SP_raise_steps=${spellZfwRaiseSteps}, SGP_remaining=${sgpLeft}, TGP_remaining=${tgpLeft}, TGP_to_SGP=${tgpConverted}`,
     );
 
     for (const ent of activated) {
@@ -2280,7 +2280,7 @@ export function generateCharacter(
       row.sp += 1;
       extraLeft -= pick.cost;
       dbg(
-        `[VeteranAP:${mode}] "${row.name}" ZfW+1 (−${pick.cost} AP, ceiling≤${ceiling}) → ${extraLeft} AP remaining`,
+        `[VeteranAP:${mode}] "${row.name}" SP+1 (−${pick.cost} AP, ceiling≤${ceiling}) → ${extraLeft} AP remaining`,
       );
     } else {
       extraLeft -= pick.spend.cost;
@@ -2691,7 +2691,7 @@ export function generateCharacter(
         row.sp += 1;
         extraLeft -= pick.cost;
         dbg(
-          `[VeteranAP:default_pool] spell "${row.name}" ZfW+1 (−${pick.cost} AP) → ${extraLeft} AP remaining`,
+          `[VeteranAP:default_pool] spell "${row.name}" SP+1 (−${pick.cost} AP) → ${extraLeft} AP remaining`,
         );
       } else {
         extraLeft -= pick.spend.cost;

@@ -2310,7 +2310,7 @@
         },
         {
           "id": "natural_weapon_bite",
-          "note": "1d6 TP",
+          "note": "1d6 HP",
           "german": "Natürliche Waffe: Biss"
         },
         {
@@ -2476,7 +2476,7 @@
         },
         {
           "id": "natural_weapon_bite",
-          "note": "1d6 TP",
+          "note": "1d6 HP",
           "german": "Natürliche Waffe: Biss"
         },
         {
@@ -2632,12 +2632,12 @@
         },
         {
           "id": "natural_weapon_bite",
-          "note": "1d6 TP(A)",
+          "note": "1d6 HP (ED)",
           "german": "Natürliche Waffen: Biss"
         },
         {
           "id": "natural_weapon_tail",
-          "note": "1d6 TP(A)",
+          "note": "1d6 HP (ED)",
           "german": "Natürliche Waffen: Schwanz"
         },
         {
@@ -2831,12 +2831,12 @@
         },
         {
           "id": "natural_weapon_bite",
-          "note": "1d6 TP(A)",
+          "note": "1d6 HP (ED)",
           "german": "Natürliche Waffen: Biss"
         },
         {
           "id": "natural_weapon_tail",
-          "note": "1d6 TP(A)",
+          "note": "1d6 HP (ED)",
           "german": "Natürliche Waffen: Schwanz"
         },
         {
@@ -3024,12 +3024,12 @@
         },
         {
           "id": "natural_weapon_bite",
-          "note": "1d6 TP(A)",
+          "note": "1d6 HP (ED)",
           "german": "Natürliche Waffen: Biss"
         },
         {
           "id": "natural_weapon_tail",
-          "note": "1d6 TP(A)",
+          "note": "1d6 HP (ED)",
           "german": "Natürliche Waffen: Schwanz"
         },
         {
@@ -3226,12 +3226,12 @@
         },
         {
           "id": "natural_weapon_bite",
-          "note": "1d6 TP(A)",
+          "note": "1d6 HP (ED)",
           "german": "Natürliche Waffen: Biss"
         },
         {
           "id": "natural_weapon_tail",
-          "note": "1d6 TP(A)",
+          "note": "1d6 HP (ED)",
           "german": "Natürliche Waffen: Schwanz"
         },
         {

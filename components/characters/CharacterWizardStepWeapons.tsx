@@ -44,7 +44,7 @@ function talentGroupKey(w: WeaponRow): string {
 function talentLabel(key: string) {
   if (key === "_other") return "Other";
   if (key === "shield") return "Shields (Shield Fighting)";
-  if (key === "parrying_weapon") return "Parrying Weapons (Parierwaffen)";
+  if (key === "parrying_weapon") return "Parrying Weapons";
   return key.replace(/_/g, " ");
 }
 
@@ -69,7 +69,7 @@ function WizardWeaponRangeBandsMini({ w }: { w: WeaponRow }) {
   return (
     <div className="mt-2 rounded-md border border-surface-border/80 overflow-hidden max-w-xl">
       <div className="bg-surface-border/60 px-2 py-1 text-[10px] font-medium uppercase tracking-wide text-ink-muted">
-        Range bands (paces) — TP bonus and BRV modifier per band
+        Range bands (paces) — HP+ bonus and BRV modifier per band
       </div>
       <div className="overflow-x-auto">
         <table className="w-full text-[11px]">
@@ -77,7 +77,7 @@ function WizardWeaponRangeBandsMini({ w }: { w: WeaponRow }) {
             <tr className="border-b border-surface-border/70 text-left text-ink-muted">
               <th className="px-2 py-1 font-normal">Class</th>
               <th className="px-2 py-1 font-normal tabular-nums">Paces</th>
-              <th className="px-2 py-1 font-normal tabular-nums">TP+</th>
+              <th className="px-2 py-1 font-normal tabular-nums">HP+</th>
               <th className="px-2 py-1 font-normal tabular-nums">BRV mod</th>
             </tr>
           </thead>
@@ -214,7 +214,7 @@ export default function CharacterWizardStepWeapons({
                 </p>
               ) : (
                 <p className="mt-2 text-xs text-ink-muted leading-relaxed max-w-prose">
-                  Parrying weapons (Parierwaffen group) grant a PA bonus to your primary
+                  Parrying weapons grant a PA bonus to your primary
                   weapon when used with the Parrying Weapons SA chain. If selected, you
                   can opt in to the SA chain on the next step.
                 </p>

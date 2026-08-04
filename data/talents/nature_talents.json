@@ -58,7 +58,7 @@
       "eec": "0",
       "combat_type": null,
       "related_talents": [],
-      "description": "This talent encompasses all the small things important for life under the open sky: choosing and setting up a suitable and sheltered campsite, lighting fires, finding optimal firewood that also works when wet for a campfire, and so on. A hero who fails this test shouldn't be surprised if their tent along with all their equipment floats away during a nightly downpour because they badly underestimated the small stream they camped beside. Survival tests can be rolled secretly by the Highlord; depending on the known environment, an appropriate Geländekunde (Terrain Knowledge) special ability can make Survival tests easier. EEC varies by situation; when assessing situations, BE is irrelevant.",
+      "description": "This talent encompasses all the small things important for life under the open sky: choosing and setting up a suitable and sheltered campsite, lighting fires, finding optimal firewood that also works when wet for a campfire, and so on. A hero who fails this test shouldn't be surprised if their tent along with all their equipment floats away during a nightly downpour because they badly underestimated the small stream they camped beside. Survival tests can be rolled secretly by the Highlord; depending on the known environment, an appropriate Geländekunde (Terrain Knowledge) special ability can make Survival tests easier. EEC varies by situation; when assessing situations, EC is irrelevant.",
       "specializations": ["Forest", "Desert", "Arctic/Mountain", "Coastal/Marsh"],
       "source": "BRW p. 120"
     },
@@ -78,7 +78,7 @@
     },
     {
       "id": "trap",
-      "name": "Traps",
+      "name": "Trap",
       "german_name": "Fallenstellen",
       "is_basic": false,
       "test_attributes": ["CL", "DE", "ST"],

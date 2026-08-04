@@ -246,7 +246,7 @@
     },
     {
       "id": "seafaring",
-      "name": "Seafaring",
+      "name": "Boats",
       "german_name": "Seefahrt",
       "is_basic": false,
       "test_attributes": ["DE", "AG", "ST"],
@@ -352,7 +352,7 @@
       "eec": null,
       "combat_type": null,
       "related_talents": [],
-      "description": "A successful Recognition test (possibly harder by half the poison's level for especially insidious poisons) identifies the poison. The Highlord names the poison type and explains how the poisoning must be treated — the healer may first need to gather certain herbs or other ingredients. With prerequisites met, the healer can roll a Treatment test (difficulty = full poison level) to stop the poison's effect and restore TP equal to remaining points. A Follow-up test (possible once, 12 hours later) can restore additional TP. Failed tests have serious consequences (1d6 SP). Each test requires different time: recognition 5 combat rounds minimum, treatment 1 SR minimum, follow-up 1 SR minimum.",
+      "description": "A successful Recognition test (possibly harder by half the poison's level for especially insidious poisons) identifies the poison. The Highlord names the poison type and explains how the poisoning must be treated — the healer may first need to gather certain herbs or other ingredients. With prerequisites met, the healer can roll a Treatment test (difficulty = full poison level) to stop the poison's effect and restore TP equal to remaining points. A Follow-up test (possible once, 12 hours later) can restore additional TP. Failed tests have serious consequences (1d6 DP). Each test requires different time: recognition 5 combat rounds minimum, treatment 1 GT minimum, follow-up 1 GT minimum.",
       "specializations": ["Animal Venoms", "Plant Poisons", "Mineral Poisons", "Magical Poisons"],
       "source": "BRW p. 125"
     },
@@ -366,7 +366,7 @@
       "eec": null,
       "combat_type": null,
       "related_talents": [],
-      "description": "Fractures, cuts, stabs, and other combat or accident injuries are treated with this talent. First Aid: a critically injured hero (0 or fewer LP) can be saved by a successful test, harder by twice the negative LP count; takes twice as many combat rounds as LP below 0, minus remaining TP after test. If failed, patient suffers 1d6 additional damage. On success, patient has exactly 1 LP. Wound Healing: first test (general wound care; prevents wound fever), second test to initiate healing (difficulty +3 per wound); remaining TP after second test ease the patient's KO test for natural healing. Failed tests or fumbles cause 1d6 additional damage or stop healing for 24 hours.",
+      "description": "Fractures, cuts, stabs, and other combat or accident injuries are treated with this talent. First Aid: a critically injured hero (0 or fewer VP) can be saved by a successful test, harder by twice the negative VP count; takes twice as many combat rounds as VP below 0, minus remaining TP after test. If failed, patient suffers 1d6 additional damage. On success, patient has exactly 1 VP. Wound Healing: first test (general wound care; prevents wound fever), second test to initiate healing (difficulty +3 per wound); remaining TP after second test ease the patient's CN check for natural healing. Failed tests or fumbles cause 1d6 additional damage or stop healing for 24 hours.",
       "specializations": ["Field Surgery", "Fracture Setting", "Wound Closure", "Wound Care"],
       "source": "BRW p. 126"
     },

@@ -39,7 +39,7 @@ export default async function SignInPage() {
               DSA Nexus
             </h1>
             <p className="text-ink-muted text-sm mt-1">
-              Das Schwarze Auge · Reference & Editor
+              The Dark Eye · Reference & Editor
             </p>
           </div>
         </div>

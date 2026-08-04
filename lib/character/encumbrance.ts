@@ -150,17 +150,17 @@ export function summarizeArmorUseReductions(
   const parts: string[] = [];
   if (hasThree) {
     parts.push(
-      "Armor Use III (RG III): −2 total worn EC (Sword Paths / WdS supplement).",
+      "Armor Use III: −2 total worn EC (Sword Paths / WdS supplement).",
     );
   } else if (hasTwo) {
     parts.push(
-      "Armor Use II (RG II): −1 total worn EC; does not stack with Armor Use I (Basic Rules).",
+      "Armor Use II: −1 total worn EC; does not stack with Armor Use I (Basic Rules).",
     );
   } else if (hasOne && rgOneApplicable) {
     parts.push(
       categoryOne
-        ? `Armor Use I (RG I): −1 total worn EC for armor type “${categoryOne.replace(/_/g, " ")}”.`
-        : "Armor Use I (RG I): −1 total worn EC for qualifying worn armor.",
+        ? `Armor Use I: −1 total worn EC for armor type “${categoryOne.replace(/_/g, " ")}”.`
+        : "Armor Use I: −1 total worn EC for qualifying worn armor.",
     );
   }
 

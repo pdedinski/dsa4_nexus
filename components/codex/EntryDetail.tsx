@@ -181,9 +181,9 @@ function WeaponRangeBandsBlock({ p }: { p: Record<string, unknown> }) {
               <th className="px-3 py-2 font-normal">Class</th>
               <th className="px-3 py-2 font-normal">≤ paces</th>
               {tpPlus ? (
-                <th className="px-3 py-2 font-normal">TP+ (optional)</th>
+                <th className="px-3 py-2 font-normal">HP+ (optional)</th>
               ) : null}
-              <th className="px-3 py-2 font-normal">RC</th>
+              <th className="px-3 py-2 font-normal">BRV mod</th>
             </tr>
           </thead>
           <tbody>
@@ -779,6 +779,16 @@ const SUMMON_STAT_KEYS = [
   "CN",
 ] as const;
 
+/** Display labels for stat keys stored in data (GW, speed) without changing JSON field names. */
+const STAT_KEY_LABELS: Record<string, string> = {
+  GW: "TH",
+  speed: "SD",
+};
+
+function formatStatKeyLabel(key: string): string {
+  return STAT_KEY_LABELS[key] ?? key;
+}
+
 function formatSummonCategory(cat: unknown): string {
   const k = String(cat ?? "").trim();
   return (SUMMON_KIND_LABELS[k] ?? k.replace(/_/g, " ")) || "—";
@@ -955,7 +965,7 @@ function SummonedBeingDetail({
           </p>
           <div className="flex flex-wrap gap-2">
             {statCells.map(({ k, v }) => (
-              <Stat key={k} label={k} value={v} />
+              <Stat key={k} label={formatStatKeyLabel(k)} value={v} />
             ))}
           </div>
         </div>
@@ -1147,7 +1157,7 @@ function BestiaryDetail({ p }: { p: Record<string, unknown> }) {
           </p>
           <div className="flex flex-wrap gap-2">
             {statCells.map(({ k, v }) => (
-              <Stat key={k} label={k} value={v} />
+              <Stat key={k} label={formatStatKeyLabel(k)} value={v} />
             ))}
           </div>
         </div>

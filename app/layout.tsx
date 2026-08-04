@@ -3,7 +3,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "DSA Nexus",
-  description: "Das Schwarze Auge — Reference & Editor",
+  description: "The Dark Eye — Reference & Editor",
 };
 
 export default function RootLayout({
