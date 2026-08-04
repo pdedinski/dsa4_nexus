@@ -425,8 +425,16 @@ export default function CharacterSheet({ sheet }: { sheet: Sheet }) {
           {h.raceName} · {h.cultureName} · {h.professionName}
         </p>
         <p className="text-xs text-ink-faint mt-1">
-          Concept: {humanizeSnake(h.conceptId)} | {h.gender} | {h.ageYears}{" "}
-          years old
+          {h.professionCategory
+            ? `${humanizeSnake(h.professionCategory)} · `
+            : ""}
+          {h.gender} | {h.ageYears} years old
+          {h.conceptId ? (
+            <>
+              {" "}
+              | Concept (legacy): {humanizeSnake(h.conceptId)}
+            </>
+          ) : null}
         </p>
       </header>
 

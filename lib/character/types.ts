@@ -51,13 +51,19 @@ export type SpellPriority = "none" | "high" | "medium" | "low";
 
 export interface CharacterHeader {
   displayName: string;
-  conceptId: ConceptId;
+  /**
+   * Legacy generation-weight archetype. Optional so pre-profession-weight sheets
+   * keep loading; new characters omit this field.
+   */
+  conceptId?: ConceptId;
   raceId: string;
   raceName: string;
   cultureId: string;
   cultureName: string;
   professionId: string;
   professionName: string;
+  /** WdH profession category (combat, social, …); optional on legacy sheets. */
+  professionCategory?: string;
   gender: "male" | "female";
   ageYears: number;
 }
@@ -249,10 +255,11 @@ export interface ApSpendingProfile {
 }
 
 export interface GenerateCharacterInput {
-  conceptId: ConceptId | "random";
   raceId: string | "random";
   cultureId: string | "random";
   professionId: string | "random";
+  /** Reserved for WdH academy/unit variants; `"base"` or omitted = parent profile. */
+  professionVariantId?: string | "base" | "random";
   extraAp: number;
   /**
    * Veteran AP spending profile: `"default"` or a DB row UUID.

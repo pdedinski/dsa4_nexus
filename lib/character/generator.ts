@@ -5,7 +5,6 @@ import spellsData from "@/data/magic/spells.json";
 import disadvantagesData from "@/data/character/disadvantages.json";
 import advantagesData from "@/data/character/advantages.json";
 import advancementCosts from "@/data/meta/advancement_costs.json";
-import conceptWeights from "@/data/concepts/concept_weights.json";
 import cultureNames from "@/data/names/culture_names.json";
 import armorData from "@/data/equipment/armor.json";
 import specialAbilitiesData from "@/data/character/special_abilities.json";
@@ -22,7 +21,6 @@ import {
 import type {
   AttrCode,
   CharacterSheet,
-  ConceptId,
   GenerateCharacterInput,
   SheetLoadout,
   SheetLoadoutArmor,
@@ -57,6 +55,56 @@ const SA_BY_ID = new Map(
     ],
   ),
 );
+
+const ADVANTAGE_BY_ID = new Map(
+  advantagesData.advantages.map(
+    (a): [string, (typeof advantagesData.advantages)[number]] => [a.id, a],
+  ),
+);
+
+const DISADVANTAGE_BY_ID = new Map(
+  disadvantagesData.disadvantages.map(
+    (d): [string, (typeof disadvantagesData.disadvantages)[number]] => [
+      d.id,
+      d,
+    ],
+  ),
+);
+
+/** Legacy / misparsed ids → catalog ids (advantages.json / disadvantages.json). */
+const TRAIT_ID_ALIASES: Record<string, string> = {
+  tough_as_nails: "tough_dog", // Zäher Hund — official English: Tough as Nails
+};
+
+function resolveTraitId(id: string): string {
+  return TRAIT_ID_ALIASES[id] ?? id;
+}
+
+function enrichTraitInstance(
+  raw: {
+    id: string;
+    name?: string;
+    rating?: number;
+    note?: string;
+    pick_one_disadvantages?: CharacterSheet["automaticDisadvantages"][number]["pick_one_disadvantages"];
+  },
+  kind: "advantage" | "disadvantage",
+): CharacterSheet["automaticAdvantages"][number] {
+  const id = resolveTraitId(raw.id);
+  const catalog =
+    kind === "advantage"
+      ? ADVANTAGE_BY_ID.get(id)
+      : DISADVANTAGE_BY_ID.get(id);
+  return {
+    id,
+    name: raw.name ?? catalog?.name,
+    ...(raw.rating !== undefined ? { rating: raw.rating } : {}),
+    ...(raw.note !== undefined ? { note: raw.note } : {}),
+    ...(raw.pick_one_disadvantages
+      ? { pick_one_disadvantages: raw.pick_one_disadvantages }
+      : {}),
+  };
+}
 
 const GP_START = 110;
 
@@ -267,7 +315,7 @@ function talentGroupPriorWeight(
 const TALENT_BIAS_MIN = 1;
 const TALENT_BIAS_MAX = 3.5;
 
-/** Per-talent multipliers from concept_weights (stacked on group weight). */
+/** Per-talent multipliers from profession weights (stacked on group weight). */
 function normalizeTalentBias(
   raw: unknown
 ): Record<string, number> {
@@ -284,7 +332,7 @@ const TALENT_AVOID_MIN = 0.06;
 const TALENT_AVOID_MAX = 1;
 
 /**
- * Optional per-concept downweights for TGP picks: multiply pick weight (after talent_bias).
+ * Optional per-profession downweights for TGP picks: multiply pick weight (after talent_bias).
  * Values in (0, 1]; ids must exist in TALENT_INDEX. Omitted talents use 1.
  */
 function normalizeTalentAvoidBias(raw: unknown): Record<string, number> {
@@ -637,6 +685,12 @@ function cultureAllowsProfession(
   return list.includes(professionId);
 }
 
+function isProfessionSelectable(
+  profession: (typeof professionsData.professions)[number]
+): boolean {
+  return (profession as { selectable?: boolean }).selectable !== false;
+}
+
 function cultureAllowsRace(
   culture: (typeof culturesData.cultures)[0],
   raceId: string
@@ -655,57 +709,17 @@ function professionSoRange(
 
 /**
  * BRW p.42: SO costs 1 GP per point above the profession minimum and directly
- * determines starting money (SO × SO Silbertaler). This function generates a
- * biased SO roll that respects both the profession's legal range and the
- * concept's intended social tier.
- *
- * If the concept carries a `social_standing_bias` with `so_min`/`so_max`, the
- * final SO is clamped to the intersection of profession range and concept range,
- * then picked from a weighted distribution favouring the upper part of that
- * intersection (so higher-status concepts spend GP toward comfortable SO).
+ * determines starting money (SO × SO Silbertaler). Rolls within the profession's
+ * legal SO range (slightly centre-weighted).
  */
 function generateSo(
   rng: () => number,
   profRange: { min: number; max: number },
-  conceptSoBias: { so_min: number; so_max: number } | null,
 ): number {
   const lo = profRange.min;
   const hi = profRange.max;
   if (lo >= hi) return lo;
-
-  if (!conceptSoBias) {
-    // Uniform fallback — slightly centre-weighted.
-    return Math.min(hi, Math.max(lo, Math.round(lo + rng() * (hi - lo))));
-  }
-
-  // Intersect concept preference with profession legality.
-  const prefLo = Math.max(lo, conceptSoBias.so_min);
-  const prefHi = Math.min(hi, conceptSoBias.so_max);
-
-  if (prefLo > prefHi) {
-    // No overlap: fall back to clamped concept midpoint inside profession range.
-    const mid = Math.round((conceptSoBias.so_min + conceptSoBias.so_max) / 2);
-    return Math.min(hi, Math.max(lo, mid));
-  }
-
-  // Draw from two‑segment distribution: 75 % of probability mass in the
-  // preferred window, 25 % spread across the rest of the profession range.
-  const usePreferred = rng() < 0.75;
-  if (usePreferred) {
-    return Math.min(prefHi, Math.max(prefLo, Math.round(prefLo + rng() * (prefHi - prefLo))));
-  }
-  // Remaining mass: draw uniformly from the full profession range, then
-  // clamp away from the preferred window to avoid double-counting.
-  const raw = Math.round(lo + rng() * (hi - lo));
-  if (raw >= prefLo && raw <= prefHi) {
-    // Re-map into the full range outside preferred window.
-    const below = prefLo - lo;
-    const above = hi - prefHi;
-    if (below === 0 && above === 0) return prefLo;
-    const pivot = rng() * (below + above);
-    return pivot < below ? lo + Math.floor(pivot) : prefHi + 1 + Math.floor(pivot - below);
-  }
-  return Math.min(hi, Math.max(lo, raw));
+  return Math.min(hi, Math.max(lo, Math.round(lo + rng() * (hi - lo))));
 }
 
 function professionAttrMins(
@@ -751,7 +765,7 @@ function applyAttrMods(
   return out;
 }
 
-/** Picks one attribute from `pool` with prob proportional to 2^bias[a] (concept-led but varied). */
+/** Picks one attribute from `pool` with prob proportional to 2^bias[a] (profession-led but varied). */
 function weightedPickAttr(
   rng: () => number,
   pool: AttrCode[],
@@ -813,6 +827,14 @@ function isFullCaster(
   halfElfFullCaster: boolean
 ): boolean {
   if (professionId === "magician") return true;
+  const profession = professionsData.professions.find((p) => p.id === professionId);
+  if (
+    profession &&
+    "magical_status" in profession &&
+    (profession as { magical_status?: string }).magical_status === "full_caster"
+  ) {
+    return true;
+  }
   const row = racesData.races.find((r) => r.id === raceId);
   if (row?.magic_status === "full_caster") return true;
   if (raceId === "half_elf" && halfElfFullCaster) return true;
@@ -1538,35 +1560,6 @@ export function generateCharacter(
     `[Start] seed=${seed !== undefined ? String(seed) : "auto"} extraAp=${extraApBudget} apProfile=${input.apProfileId ?? "default"} buyArmorUse=${Boolean(input.buyArmorUseSa)}`,
   );
 
-  const conceptPool = Object.keys(conceptWeights.concepts) as ConceptId[];
-  const concept: ConceptId =
-    input.conceptId === "random"
-      ? pick(rng, conceptPool.filter((c) => c !== "any")) || "any"
-      : (input.conceptId as ConceptId);
-  const weights =
-    conceptWeights.concepts[concept] ?? conceptWeights.concepts.any;
-  const wSpellGwRaw = (weights as { spell_group_weight?: number })
-    .spell_group_weight;
-  const spellGroupWeightForVeteran =
-    typeof wSpellGwRaw === "number" &&
-    Number.isFinite(wSpellGwRaw) &&
-    wSpellGwRaw > 0
-      ? wSpellGwRaw
-      : 0;
-  /** SGP: use concept weight when >0, else 1 so priorities still skew ZfW spend among spells. */
-  const spellGroupWeightForSgp =
-    typeof wSpellGwRaw === "number" &&
-    Number.isFinite(wSpellGwRaw) &&
-    wSpellGwRaw > 0
-      ? wSpellGwRaw
-      : 1;
-  const advantagePickBias = normalizeTraitPickBias(
-    (weights as Record<string, unknown>).advantage_pick_bias
-  );
-  const disadvantagePickBias = normalizeTraitPickBias(
-    (weights as Record<string, unknown>).disadvantage_pick_bias
-  );
-
   let race =
     input.raceId === "random"
       ? pick(rng, racesData.races)
@@ -1595,6 +1588,7 @@ export function generateCharacter(
   }
 
   const profs = professionsData.professions.filter((p) => {
+    if (!isProfessionSelectable(p)) return false;
     if (!cultureAllowsProfession(culture, p.id)) return false;
     const raceReq = p.requirements.find(
       (r): r is { type: "race"; race: string } => r.type === "race"
@@ -1605,15 +1599,51 @@ export function generateCharacter(
   });
   let profession =
     input.professionId === "random"
-      ? pick(rng, profs.length ? profs : professionsData.professions)
+      ? pick(rng, profs.length ? profs : professionsData.professions.filter(isProfessionSelectable))
       : professionsData.professions.find((p) => p.id === input.professionId)!;
-  if (!profession || !cultureAllowsProfession(culture, profession.id)) {
-    profession = pick(rng, profs.length ? profs : professionsData.professions);
+  if (
+    !profession ||
+    !isProfessionSelectable(profession) ||
+    !cultureAllowsProfession(culture, profession.id)
+  ) {
+    profession = pick(rng, profs.length ? profs : professionsData.professions.filter(isProfessionSelectable));
     notes.push("Profession invalid for culture; picked compatible profession.");
   }
 
+  // Generation weights now live on the profession (formerly concepts).
+  type ProfWeights = {
+    talent_group_weights?: Record<string, number>;
+    talent_bias?: Record<string, number>;
+    talent_avoid_bias?: Record<string, number>;
+    attribute_bias?: Partial<Record<AttrCode, number>>;
+    advantage_pick_bias?: Record<string, number>;
+    disadvantage_pick_bias?: Record<string, number>;
+    at_pa_bias?: string;
+    spell_group_weight?: number;
+    category?: string;
+  };
+  const weights = profession as typeof profession & ProfWeights;
+  const wSpellGwRaw = weights.spell_group_weight;
+  const spellGroupWeightForVeteran =
+    typeof wSpellGwRaw === "number" &&
+    Number.isFinite(wSpellGwRaw) &&
+    wSpellGwRaw > 0
+      ? wSpellGwRaw
+      : 0;
+  /** SGP: use profession weight when >0, else 1 so priorities still skew SP spend among spells. */
+  const spellGroupWeightForSgp =
+    typeof wSpellGwRaw === "number" &&
+    Number.isFinite(wSpellGwRaw) &&
+    wSpellGwRaw > 0
+      ? wSpellGwRaw
+      : 1;
+  const advantagePickBias = normalizeTraitPickBias(weights.advantage_pick_bias);
+  const disadvantagePickBias = normalizeTraitPickBias(
+    weights.disadvantage_pick_bias
+  );
+
   dbg(
-    `[Identity] concept=${concept} race=${race.id} culture=${culture.id} profession=${profession.id}`,
+    `[Identity] race=${race.id} culture=${culture.id} profession=${profession.id}`,
   );
 
   const halfElfFullCaster = Boolean(input.halfElfFullCaster);
@@ -1624,10 +1654,7 @@ export function generateCharacter(
   const professionGp = profession.gp_cost ?? 0;
 
   const soRange = professionSoRange(profession);
-  const conceptSoBias =
-    (weights as { social_standing_bias?: { so_min: number; so_max: number } })
-      .social_standing_bias ?? null;
-  const so = generateSo(rng, soRange, conceptSoBias);
+  const so = generateSo(rng, soRange);
   const soExtraGp = Math.max(0, so - soRange.min);
 
   const minsAfterMods: Partial<Record<AttrCode, number>> = {};
@@ -1879,9 +1906,7 @@ export function generateCharacter(
   }
   const weaponFocus = weaponTalentFocusFromLinked(weaponLinkedCombatIds);
 
-  const talentAvoid = normalizeTalentAvoidBias(
-    (weights as Record<string, unknown>).talent_avoid_bias
-  );
+  const talentAvoid = normalizeTalentAvoidBias(weights.talent_avoid_bias);
 
   /** BRW p. 46: at most 5 new specialized-talent activations during creation. */
   let activationsRemaining = 5;
@@ -1901,7 +1926,7 @@ export function generateCharacter(
   spendPool.sort(() => rng() - 0.5);
 
   /**
-   * Spells **before** concept-biased talent spend: SGP and TGP→SGP conversion
+   * Spells **before** profession-biased talent spend: SGP and TGP→SGP conversion
    * use `tgpLeft` while it is still full. `extraAp` (veteran) is applied later
    * alongside talents, weighted by `spell_group_weight` and spell priorities.
    */
@@ -2755,7 +2780,7 @@ export function generateCharacter(
 
   const combatMelee: CharacterSheet["combatMelee"] = [];
   const combatRanged: CharacterSheet["combatRanged"] = [];
-  const conceptBias = normalizeConceptAtPaBias(weights.at_pa_bias);
+  const professionAtPaBias = normalizeConceptAtPaBias(weights.at_pa_bias);
   const finalAttributeSumPurchased = ATTR_CODES.reduce(
     (s, code) => s + purchased[code],
     0,
@@ -2764,7 +2789,7 @@ export function generateCharacter(
     const def = TALENT_INDEX.get(id);
     if (!def || tp <= 0) continue;
     if (def.combat_type === "melee") {
-      const meleeBias = meleeBiasForTalentFromWeapons(id, weaponBiasRows, conceptBias);
+      const meleeBias = meleeBiasForTalentFromWeapons(id, weaponBiasRows, professionAtPaBias);
       const { allocatedAT: at, allocatedPA: pa } = allocateMeleeCombatTp(tp, meleeBias);
       combatMelee.push({
         talentId: id,
@@ -2827,13 +2852,13 @@ export function generateCharacter(
 
   const header = {
     displayName,
-    conceptId: concept,
     raceId: race.id,
     raceName: race.name,
     cultureId: culture.id,
     cultureName: culture.name,
     professionId: profession.id,
     professionName: profession.name,
+    ...(weights.category ? { professionCategory: weights.category } : {}),
     gender,
     ageYears,
   };
@@ -2852,10 +2877,16 @@ export function generateCharacter(
     attributesPurchased: purchased,
     attributesFinal: attrsFinal,
     derived,
-    automaticAdvantages: (race.automatic_advantages ?? []) as CharacterSheet["automaticAdvantages"],
+    automaticAdvantages: (race.automatic_advantages ?? []).map((t) =>
+      enrichTraitInstance(t, "advantage"),
+    ),
     automaticDisadvantages: [
-      ...((race.automatic_disadvantages ?? []) as CharacterSheet["automaticDisadvantages"]),
-      ...((culture.automatic_disadvantages ?? []) as CharacterSheet["automaticDisadvantages"]),
+      ...(race.automatic_disadvantages ?? []).map((t) =>
+        enrichTraitInstance(t, "disadvantage"),
+      ),
+      ...(culture.automatic_disadvantages ?? []).map((t) =>
+        enrichTraitInstance(t, "disadvantage"),
+      ),
     ],
     chosenAdvantages,
     chosenDisadvantages,
@@ -2888,7 +2919,7 @@ export function generateCharacter(
       tgpConvertedToSgp: tgpConverted,
     },
     ...(loadout ? { loadout } : {}),
-    atPaBias: conceptBias,
+    atPaBias: professionAtPaBias,
     notes,
     ...(input.debugMode ? { debugLog } : {}),
   };

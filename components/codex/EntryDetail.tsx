@@ -499,23 +499,111 @@ function ProfessionDetail({ p }: { p: Record<string, unknown> }) {
   const autoAdv = Array.isArray(p.automatic_advantages)
     ? (p.automatic_advantages as unknown[])
     : [];
+  const autoDis = Array.isArray(p.automatic_disadvantages)
+    ? (p.automatic_disadvantages as unknown[])
+    : [];
+  const autoSas = Array.isArray(p.automatic_SAs)
+    ? (p.automatic_SAs as unknown[])
+    : [];
+  const discSas = Array.isArray(p.discounted_SAs)
+    ? (p.discounted_SAs as unknown[])
+    : [];
   const affinity = Array.isArray(p.affinity_tags)
     ? (p.affinity_tags as unknown[])
     : [];
+  const equipment = Array.isArray(p.starting_equipment)
+    ? (p.starting_equipment as unknown[])
+    : [];
+  const variants = Array.isArray(p.variants) ? (p.variants as unknown[]) : [];
+  const reqs = Array.isArray(p.requirements)
+    ? (p.requirements as Array<Record<string, unknown>>)
+    : [];
+  const talentMods =
+    p.talent_modifiers && typeof p.talent_modifiers === "object"
+      ? (p.talent_modifiers as Record<string, unknown>)
+      : {};
+  const soReq = reqs.find((r) => r.type === "SO_range");
+  const attrReqs = reqs.filter((r) => r.type === "attr_min");
+
   return (
     <div className="space-y-2">
       {str(p.description) && (
         <CodexPreserveNewlinesDescription text={str(p.description)} />
       )}
+      {str(p.category) && (
+        <Row label="Category" value={str(p.category).replace(/_/g, " ")} />
+      )}
       {p.gp_cost != null && <Row label="GP Cost" value={str(p.gp_cost)} />}
+      {p.time_consuming === true && (
+        <Row label="Training" value="Time-consuming" />
+      )}
       {str(p.magical_status) && (
         <Row label="Magical Status" value={str(p.magical_status)} />
+      )}
+      {soReq && (
+        <Row
+          label="Social Standing"
+          value={`${str(soReq.min)}–${str(soReq.max)}`}
+        />
+      )}
+      {attrReqs.length > 0 && (
+        <Row
+          label="Attribute mins"
+          value={attrReqs
+            .map((r) => `${str(r.attr)} ${str(r.value)}`)
+            .join(", ")}
+        />
+      )}
+      {Object.keys(talentMods).length > 0 && (
+        <Row
+          label="Talent package"
+          value={
+            <span className="text-sm">
+              {Object.entries(talentMods)
+                .map(([id, v]) => `${id.replace(/_/g, " ")} +${String(v)}`)
+                .join(", ")}
+            </span>
+          }
+        />
       )}
       {autoAdv.length > 0 && (
         <Row label="Auto Advantages" value={<Tags items={autoAdv} />} />
       )}
+      {autoDis.length > 0 && (
+        <Row label="Auto Disadvantages" value={<Tags items={autoDis} />} />
+      )}
+      {autoSas.length > 0 && (
+        <Row label="Automatic SAs" value={<Tags items={autoSas} />} />
+      )}
+      {discSas.length > 0 && (
+        <Row label="Discounted SAs" value={<Tags items={discSas} />} />
+      )}
+      {equipment.length > 0 && (
+        <Row
+          label="Starting equipment"
+          value={
+            <span className="text-sm">
+              {equipment.map((e) => String(e)).join("; ")}
+            </span>
+          }
+        />
+      )}
+      {str(p.special_possession) && (
+        <Row label="Special Possession" value={str(p.special_possession)} />
+      )}
       {affinity.length > 0 && (
         <Row label="Affinity" value={<Tags items={affinity} />} />
+      )}
+      <Row
+        label="Variants"
+        value={
+          variants.length === 0
+            ? "Base only (academy/unit variants in a later pass)"
+            : `${variants.length} variant(s)`
+        }
+      />
+      {p.data_complete === false && str(p.data_notes) && (
+        <Row label="Data notes" value={str(p.data_notes)} />
       )}
       <Source src={p.source} />
     </div>
