@@ -17,6 +17,7 @@ import BodyPortal from "@/components/ui/BodyPortal";
 import DebugLogModal from "./DebugLogModal";
 import { postGenerateSheet } from "./postGenerateSheet";
 import { DEBUG_MODE_CHANGED_EVENT } from "@/components/manage/ManageSettingsClient";
+import { useCampaign } from "@/components/campaigns/CampaignContext";
 
 type Row = {
   id: string;
@@ -28,6 +29,7 @@ type Row = {
 
 export default function CharacterList() {
   const router = useRouter();
+  const { selectedCampaignId } = useCampaign();
   const [rows, setRows] = useState<Row[]>([]);
   const [sort, setSort] = useState<"name" | "created">("created");
   const [loading, setLoading] = useState(true);
@@ -63,11 +65,13 @@ export default function CharacterList() {
 
   const load = useCallback(async () => {
     setLoading(true);
-    const res = await fetch(`/api/characters?sort=${sort}`);
+    const qs = new URLSearchParams({ sort });
+    if (selectedCampaignId) qs.set("campaignId", selectedCampaignId);
+    const res = await fetch(`/api/characters?${qs.toString()}`);
     const data = await res.json();
     setRows(data.characters ?? []);
     setLoading(false);
-  }, [sort]);
+  }, [sort, selectedCampaignId]);
 
   useEffect(() => {
     load();

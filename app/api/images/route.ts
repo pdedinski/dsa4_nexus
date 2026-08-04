@@ -1,12 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 import { randomUUID } from "crypto";
-import { desc, eq } from "drizzle-orm";
+import { and, desc, eq } from "drizzle-orm";
 import { requireAllowed } from "@/lib/auth/session";
+import { assignAssetToCampaign } from "@/lib/campaigns/assets";
 import { isCloudinaryConfigured } from "@/lib/cloudinary/config";
 import { thumbnailSecureUrl } from "@/lib/cloudinary/thumbnail";
 import { uploadImageWithThumbnail } from "@/lib/cloudinary/upload";
 import { db } from "@/lib/db/client";
-import { userImages } from "@/lib/db/schema";
+import { campaignAssets, userImages } from "@/lib/db/schema";
 
 const MAX_BYTES = 10 * 1024 * 1024;
 const ALLOWED_TYPES = new Set([
@@ -16,10 +17,53 @@ const ALLOWED_TYPES = new Set([
   "image/gif",
 ]);
 
-export async function GET() {
+const UUID_RE =
+  /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+
+export async function GET(req: NextRequest) {
   const session = await requireAllowed();
   if (!session)
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
+  const campaignId = req.nextUrl.searchParams.get("campaignId");
+  const cloudinaryConfigured = isCloudinaryConfigured();
+
+  if (campaignId) {
+    if (!UUID_RE.test(campaignId)) {
+      return NextResponse.json(
+        { error: "Invalid campaign id" },
+        { status: 400 }
+      );
+    }
+    const rows = await db
+      .select({
+        id: userImages.id,
+        name: userImages.name,
+        url: userImages.url,
+        publicId: userImages.publicId,
+        createdAt: userImages.createdAt,
+      })
+      .from(userImages)
+      .innerJoin(
+        campaignAssets,
+        and(
+          eq(campaignAssets.assetId, userImages.id),
+          eq(campaignAssets.assetType, "image"),
+          eq(campaignAssets.campaignId, campaignId)
+        )
+      )
+      .where(eq(userImages.userId, session.user.id))
+      .orderBy(desc(userImages.createdAt));
+
+    const images = rows.map(({ publicId, ...row }) => ({
+      ...row,
+      thumbnailUrl: cloudinaryConfigured
+        ? thumbnailSecureUrl(publicId)
+        : row.url,
+    }));
+
+    return NextResponse.json({ images, cloudinaryConfigured });
+  }
 
   const rows = await db
     .select({
@@ -33,7 +77,6 @@ export async function GET() {
     .where(eq(userImages.userId, session.user.id))
     .orderBy(desc(userImages.createdAt));
 
-  const cloudinaryConfigured = isCloudinaryConfigured();
   const images = rows.map(({ publicId, ...row }) => ({
     ...row,
     thumbnailUrl: cloudinaryConfigured
@@ -128,6 +171,20 @@ export async function POST(req: NextRequest) {
 
   if (!row)
     return NextResponse.json({ error: "Create failed" }, { status: 500 });
+
+  const campaignRaw = form.get("campaignId");
+  const campaignId =
+    typeof campaignRaw === "string" && campaignRaw.trim()
+      ? campaignRaw.trim()
+      : null;
+  if (campaignId) {
+    await assignAssetToCampaign({
+      campaignId,
+      assetType: "image",
+      assetId: row.id,
+      userId: session.user.id,
+    });
+  }
 
   return NextResponse.json(
     {

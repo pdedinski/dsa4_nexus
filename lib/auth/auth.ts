@@ -114,6 +114,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           token.isEditor = row.isEditor;
           token.isAdmin = row.isAdmin;
           token.isSuperuser = row.isSuperuser;
+          token.selectedCampaignId = row.selectedCampaignId ?? null;
         }
       }
       return token;
@@ -133,6 +134,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           session.user.isEditor = row.isEditor;
           session.user.isAdmin = row.isAdmin;
           session.user.isSuperuser = row.isSuperuser;
+          session.user.selectedCampaignId = row.selectedCampaignId ?? null;
         }
       }
       return session;
@@ -152,6 +154,7 @@ declare module "next-auth" {
       isEditor: boolean;
       isAdmin: boolean;
       isSuperuser: boolean;
+      selectedCampaignId: string | null;
     };
   }
 }

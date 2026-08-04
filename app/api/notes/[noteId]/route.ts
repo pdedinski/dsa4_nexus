@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { and, eq } from "drizzle-orm";
 import { requireAllowed } from "@/lib/auth/session";
+import { removeAssetFromAllCampaigns } from "@/lib/campaigns/assets";
 import { db } from "@/lib/db/client";
 import { notes } from "@/lib/db/schema";
 
@@ -90,6 +91,17 @@ export async function DELETE(_req: NextRequest, ctx: Ctx) {
   const id = decodeURIComponent(noteId);
   if (!isUuid(id))
     return NextResponse.json({ error: "Invalid note id" }, { status: 400 });
+
+  const [existing] = await db
+    .select({ id: notes.id })
+    .from(notes)
+    .where(and(eq(notes.userId, session.user.id), eq(notes.id, id)))
+    .limit(1);
+
+  if (!existing)
+    return NextResponse.json({ error: "Not found" }, { status: 404 });
+
+  await removeAssetFromAllCampaigns("note", id);
 
   const deleted = await db
     .delete(notes)

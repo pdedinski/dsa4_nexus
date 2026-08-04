@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { and, eq } from "drizzle-orm";
 import { requireAllowed } from "@/lib/auth/session";
+import { removeAssetFromAllCampaigns } from "@/lib/campaigns/assets";
 import { isCloudinaryConfigured } from "@/lib/cloudinary/config";
 import { destroyImageWithThumbnail } from "@/lib/cloudinary/destroy";
 import { thumbnailSecureUrl } from "@/lib/cloudinary/thumbnail";
@@ -87,6 +88,8 @@ export async function DELETE(req: NextRequest, ctx: Ctx) {
       return NextResponse.json({ error: message }, { status: 502 });
     }
   }
+
+  await removeAssetFromAllCampaigns("image", id);
 
   const deleted = await db
     .delete(userImages)

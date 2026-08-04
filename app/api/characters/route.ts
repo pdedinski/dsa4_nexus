@@ -2,11 +2,15 @@ import { NextRequest, NextResponse } from "next/server";
 import { randomUUID } from "crypto";
 import { eq, desc, asc, and } from "drizzle-orm";
 import { requireAllowed } from "@/lib/auth/session";
+import { assignAssetToCampaign } from "@/lib/campaigns/assets";
 import { db } from "@/lib/db/client";
-import { characters } from "@/lib/db/schema";
+import { campaignAssets, characters } from "@/lib/db/schema";
 import type { CharacterSheet } from "@/lib/character/types";
 import { migrateCharacterSheet } from "@/lib/character/sheetMigration";
 import { sanitizeCharacterSheetForStorage } from "@/lib/character/sheetPersistence";
+
+const UUID_RE =
+  /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
 export async function GET(req: NextRequest) {
   const session = await requireAllowed();
@@ -14,10 +18,40 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const sort = req.nextUrl.searchParams.get("sort") ?? "created";
+  const campaignId = req.nextUrl.searchParams.get("campaignId");
   const order =
     sort === "name"
       ? asc(characters.name)
       : desc(characters.createdAt);
+
+  if (campaignId) {
+    if (!UUID_RE.test(campaignId)) {
+      return NextResponse.json(
+        { error: "Invalid campaign id" },
+        { status: 400 }
+      );
+    }
+    const rows = await db
+      .select({
+        id: characters.id,
+        characterId: characters.characterId,
+        name: characters.name,
+        createdAt: characters.createdAt,
+        updatedAt: characters.updatedAt,
+      })
+      .from(characters)
+      .innerJoin(
+        campaignAssets,
+        and(
+          eq(campaignAssets.assetId, characters.id),
+          eq(campaignAssets.assetType, "character"),
+          eq(campaignAssets.campaignId, campaignId)
+        )
+      )
+      .where(eq(characters.userId, session.user.id))
+      .orderBy(order);
+    return NextResponse.json({ characters: rows });
+  }
 
   const rows = await db
     .select({
@@ -39,7 +73,12 @@ export async function POST(req: NextRequest) {
   if (!session)
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-  let body: { characterId?: string; name?: string; sheet?: CharacterSheet };
+  let body: {
+    characterId?: string;
+    name?: string;
+    sheet?: CharacterSheet;
+    campaignId?: string | null;
+  };
   try {
     body = await req.json();
   } catch {
@@ -88,6 +127,23 @@ export async function POST(req: NextRequest) {
     name,
     sheet: sheetToStore as object,
   });
+
+  const campaignId =
+    typeof body.campaignId === "string" && body.campaignId.trim()
+      ? body.campaignId.trim()
+      : null;
+  if (campaignId) {
+    const assign = await assignAssetToCampaign({
+      campaignId,
+      assetType: "character",
+      assetId: id,
+      userId: session.user.id,
+    });
+    if (!assign.ok && assign.reason === "campaign") {
+      // Character was created; ignore invalid campaign silently for UX, or 400?
+      // Prefer not failing create — leave unassigned if campaign invalid.
+    }
+  }
 
   return NextResponse.json({ id, characterId }, { status: 201 });
 }

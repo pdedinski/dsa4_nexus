@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import ThumbnailImage from "@/components/images/ThumbnailImage";
+import { useCampaign } from "@/components/campaigns/CampaignContext";
 
 type ImageRow = {
   id: string;
@@ -15,6 +16,7 @@ type SortBy = "createdAt" | "name";
 type SortDir = "desc" | "asc";
 
 export default function MyImagesList() {
+  const { selectedCampaignId } = useCampaign();
   const [images, setImages] = useState<ImageRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [uploading, setUploading] = useState(false);
@@ -50,7 +52,10 @@ export default function MyImagesList() {
   const load = useCallback(async () => {
     setLoading(true);
     setError(null);
-    const res = await fetch("/api/images");
+    const qs = selectedCampaignId
+      ? `?campaignId=${encodeURIComponent(selectedCampaignId)}`
+      : "";
+    const res = await fetch(`/api/images${qs}`);
     const data = await res.json();
     if (!res.ok) {
       setError(data.error ?? "Failed to load images");
@@ -60,7 +65,7 @@ export default function MyImagesList() {
     setImages(data.images ?? []);
     setCloudinaryConfigured(data.cloudinaryConfigured !== false);
     setLoading(false);
-  }, []);
+  }, [selectedCampaignId]);
 
   useEffect(() => {
     void load();
@@ -80,6 +85,9 @@ export default function MyImagesList() {
     const form = new FormData();
     form.append("file", file);
     form.append("name", name.trim());
+    if (selectedCampaignId) {
+      form.append("campaignId", selectedCampaignId);
+    }
     const res = await fetch("/api/images", { method: "POST", body: form });
     const data = await res.json();
     setUploading(false);

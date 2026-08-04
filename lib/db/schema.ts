@@ -7,6 +7,8 @@ import {
   jsonb,
   index,
   unique,
+  primaryKey,
+  type AnyPgColumn,
 } from "drizzle-orm/pg-core";
 
 // ── users ─────────────────────────────────────────────────────────────────────
@@ -28,6 +30,11 @@ export const users = pgTable(
     isEditor: boolean("is_editor").notNull().default(false),
     isAdmin: boolean("is_admin").notNull().default(false),
     isSuperuser: boolean("is_superuser").notNull().default(false),
+    /** Persisted sidebar campaign selector; cleared if campaign is deleted. */
+    selectedCampaignId: uuid("selected_campaign_id").references(
+      (): AnyPgColumn => campaigns.id,
+      { onDelete: "set null" }
+    ),
   },
   (t) => [index("users_email_idx").on(t.email)]
 );
@@ -186,4 +193,52 @@ export const userImages = pgTable(
 
 export type UserImageRow = typeof userImages.$inferSelect;
 export type InsertUserImageRow = typeof userImages.$inferInsert;
+
+// ── campaigns (per-user role-playing campaign containers) ─────────────────────
+
+export const campaigns = pgTable(
+  "campaigns",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    userId: uuid("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    name: text("name").notNull(),
+    description: text("description").notNull().default(""),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (t) => [index("campaigns_user_id_idx").on(t.userId)]
+);
+
+export type CampaignRow = typeof campaigns.$inferSelect;
+export type InsertCampaignRow = typeof campaigns.$inferInsert;
+
+/** Polymorphic link: asset_type + asset_id points at characters / notes / user_images. */
+export type CampaignAssetType = "character" | "note" | "image";
+
+export const campaignAssets = pgTable(
+  "campaign_assets",
+  {
+    campaignId: uuid("campaign_id")
+      .notNull()
+      .references(() => campaigns.id, { onDelete: "cascade" }),
+    assetType: text("asset_type").notNull(),
+    assetId: uuid("asset_id").notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (t) => [
+    primaryKey({ columns: [t.campaignId, t.assetType, t.assetId] }),
+    index("campaign_assets_asset_idx").on(t.assetType, t.assetId),
+  ]
+);
+
+export type CampaignAssetRow = typeof campaignAssets.$inferSelect;
+export type InsertCampaignAssetRow = typeof campaignAssets.$inferInsert;
 

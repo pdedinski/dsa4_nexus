@@ -25,9 +25,11 @@ import {
   StickyNote,
   Image,
   Cog,
+  Flag,
 } from "lucide-react";
 import clsx from "clsx";
 import { signOut } from "next-auth/react";
+import CampaignSelector from "@/components/campaigns/CampaignSelector";
 
 export interface SidebarUser {
   id: string;
@@ -38,6 +40,7 @@ export interface SidebarUser {
   isEditor: boolean;
   isAdmin: boolean;
   isSuperuser: boolean;
+  selectedCampaignId?: string | null;
 }
 
 const CATEGORY_ICONS: Record<string, React.ElementType> = {
@@ -151,16 +154,32 @@ export default function Sidebar({
 
       {/* Nav */}
       <nav className="flex-1 overflow-y-auto py-3 px-2 space-y-1">
+        {/* Campaign selector (above Assets) */}
+        <CampaignSelector />
+
         {/* Assets */}
         <div className="mb-2">
           <p className="px-2 py-1 text-xs font-semibold uppercase tracking-wider text-ink-muted">
             Assets
           </p>
           <Link
-            href="/characters"
+            href="/campaigns"
             onClick={() => onNavigate?.()}
             className={clsx(
               "flex items-center gap-2 px-3 py-2 rounded-md text-sm transition-colors",
+              pathname === "/campaigns" || pathname.startsWith("/campaigns/")
+                ? "bg-brand-muted text-ink font-medium"
+                : "text-ink-muted hover:text-ink hover:bg-surface-card"
+            )}
+          >
+            <Flag className="w-3.5 h-3.5 shrink-0" />
+            My Campaigns
+          </Link>
+          <Link
+            href="/characters"
+            onClick={() => onNavigate?.()}
+            className={clsx(
+              "flex items-center gap-2 px-3 py-2 rounded-md text-sm transition-colors mt-0.5",
               pathname === "/characters" || pathname.startsWith("/characters/")
                 ? "bg-brand-muted text-ink font-medium"
                 : "text-ink-muted hover:text-ink hover:bg-surface-card"

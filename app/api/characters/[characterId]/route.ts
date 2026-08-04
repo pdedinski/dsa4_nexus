@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { eq, and } from "drizzle-orm";
 import { requireAllowed } from "@/lib/auth/session";
+import { removeAssetFromAllCampaigns } from "@/lib/campaigns/assets";
 import { isCloudinaryConfigured } from "@/lib/cloudinary/config";
 import { destroyImageWithThumbnail } from "@/lib/cloudinary/destroy";
 import { db } from "@/lib/db/client";
@@ -117,6 +118,7 @@ export async function DELETE(_req: NextRequest, ctx: Ctx) {
     }
   }
 
+  await removeAssetFromAllCampaigns("character", row.id);
   await db.delete(characters).where(eq(characters.id, row.id));
 
   return NextResponse.json({ ok: true });

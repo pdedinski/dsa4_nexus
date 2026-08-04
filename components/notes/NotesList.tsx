@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useCampaign } from "@/components/campaigns/CampaignContext";
 
 type NoteRow = {
   id: string;
@@ -16,6 +17,7 @@ type SortDir = "desc" | "asc";
 
 export default function NotesList() {
   const router = useRouter();
+  const { selectedCampaignId } = useCampaign();
   const [notes, setNotes] = useState<NoteRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [creating, setCreating] = useState(false);
@@ -48,11 +50,14 @@ export default function NotesList() {
 
   const load = useCallback(async () => {
     setLoading(true);
-    const res = await fetch("/api/notes");
+    const qs = selectedCampaignId
+      ? `?campaignId=${encodeURIComponent(selectedCampaignId)}`
+      : "";
+    const res = await fetch(`/api/notes${qs}`);
     const data = await res.json();
     setNotes(data.notes ?? []);
     setLoading(false);
-  }, []);
+  }, [selectedCampaignId]);
 
   useEffect(() => {
     void load();
@@ -63,7 +68,10 @@ export default function NotesList() {
     const res = await fetch("/api/notes", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ title: "New note" }),
+      body: JSON.stringify({
+        title: "New note",
+        ...(selectedCampaignId ? { campaignId: selectedCampaignId } : {}),
+      }),
     });
     const data = await res.json();
     setCreating(false);

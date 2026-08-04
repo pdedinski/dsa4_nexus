@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import type { CharacterSheet } from "@/lib/character/types";
 import BodyPortal from "@/components/ui/BodyPortal";
+import { useCampaign } from "@/components/campaigns/CampaignContext";
 
 function slugify(name: string) {
   return name
@@ -23,6 +24,7 @@ export default function SaveCharacterDialog({
   onClose: () => void;
   onSaved: (characterId: string) => void;
 }) {
+  const { selectedCampaignId } = useCampaign();
   const [characterId, setCharacterId] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
@@ -58,6 +60,9 @@ export default function SaveCharacterDialog({
           characterId: characterId.trim().toLowerCase(),
           name: sheet.header.displayName,
           sheet: persistableSheet,
+          ...(selectedCampaignId
+            ? { campaignId: selectedCampaignId }
+            : {}),
         }),
       });
       const data = await res.json().catch(() => ({}));
