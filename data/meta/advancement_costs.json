@@ -1,13 +1,53 @@
 {
   "meta": {
     "schema_version": "1.0",
-    "last_updated": "2026-05-02",
-    "description": "Talent and spell advancement cost tables for TDE4/DSA4.1. Spell SP uses the same ACT as talents (BRW p.198): activation row Akt./0; steps use talent_columns costs_by_value. Cross-tradition spells +2 columns (BRW p.204). Code: lib/character/advancement.ts, lib/character/generator.ts.",
-    "source_books": ["DSA 4.1 Basisregelwerk p. 110–112", "TDE Basic Rules p. 29–30"]
+    "last_updated": "2026-08-04",
+    "description": "Talent and spell advancement cost tables for TDE4/DSA4.1. Spell SP uses the same ACT as talents (BRW p.198 / Wege des Schwertes pp.164-170): activation row Akt./0; steps use talent_columns costs_by_value. Columns A*–H; House Spell −1 column; foreign representation +2 columns. Max SP is attribute-derived (own: highest test attr +3; foreign: lowest test attr). Code: lib/character/advancement.ts, lib/character/generator.ts.",
+    "source_books": ["DSA 4.1 Basisregelwerk p. 110–112", "Wege des Schwertes pp. 164–170", "TDE Basic Rules p. 29–30"]
   },
   "talent_columns": {
-    "description": "AP cost per advancement step for talent values. Column letter determines difficulty. Basic talents use columns A–D typically; combat talents use C–E; magic talents use A–B.",
+    "description": "AP cost per advancement step for talent values. Column letter determines difficulty. Basic talents use columns A–D typically; combat talents use C–E; magic talents use A–B. A* is reached only via column reductions (e.g. House Spell on an A-column spell), never as a base talent complexity.",
     "columns": {
+      "A_STAR": {
+        "label": "A*",
+        "activation_cost": 1,
+        "description": "Cheapest column; reached only through reductions applied to an A-column (or further left-shifted) spell. Not a normal base complexity.",
+        "costs_by_value": {
+          "-3_to_-2": 5,
+          "-2_to_-1": 5,
+          "-1_to_0": 5,
+          "0_to_1": 1,
+          "1_to_2": 1,
+          "2_to_3": 1,
+          "3_to_4": 2,
+          "4_to_5": 4,
+          "5_to_6": 5,
+          "6_to_7": 6,
+          "7_to_8": 8,
+          "8_to_9": 9,
+          "9_to_10": 11,
+          "10_to_11": 12,
+          "11_to_12": 14,
+          "12_to_13": 15,
+          "13_to_14": 17,
+          "14_to_15": 19,
+          "15_to_16": 20,
+          "16_to_17": 22,
+          "17_to_18": 24,
+          "18_to_19": 25,
+          "19_to_20": 27,
+          "20_to_21": 29,
+          "21_to_22": 31,
+          "22_to_23": 32,
+          "23_to_24": 34,
+          "24_to_25": 36,
+          "25_to_26": 38,
+          "26_to_27": 40,
+          "27_to_28": 42,
+          "28_to_29": 43,
+          "29_to_30": 45
+        }
+      },
       "A": {
         "label": "A",
         "activation_cost": 1,
@@ -322,8 +362,9 @@
     }
   },
   "spell_columns": {
-    "description": "Spell activation uses SKT row Akt./0 (BRW p.198). SP step costs use talent_columns (same SKT). Per-spell activation_cost_guild / activation_cost_elf in spells.json; cross-tradition +2 columns for tradition-exclusive spells.",
+    "description": "Spell activation uses SKT row Akt./0 (BRW p.198). SP step costs use talent_columns (same SKT, including A*). Effective column = base complexity + foreign-representation (+2) and House Spell (−1) shifts, clamped A*–H. Max SP is calculated from the spell's three test attributes (own representation: highest +3; foreign: lowest). Per-spell max_starting_sp in spells.json is legacy/unused.",
     "skt_activation_row_Akt_per_0": {
+      "A_STAR": 5,
       "A": 5,
       "B": 10,
       "C": 15,
@@ -332,12 +373,6 @@
       "F": 40,
       "G": 50,
       "H": 100
-    },
-    "max_starting_sp": {
-      "guild_magician_guild_spells": 10,
-      "guild_magician_elven_spells": 7,
-      "elf_general_spells": 10,
-      "elf_elven_heritage_spells": 10
     },
     "max_activations_at_creation": 7
   },

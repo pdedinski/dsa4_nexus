@@ -4,6 +4,7 @@ type TalentColumns = (typeof advancementCostsJson)["talent_columns"]["columns"];
 
 /** SKT row "Akt./0" (Basisregelwerk p. 198) — spell activation; same table for talents. */
 const SKT_ACTIVATION_BY_COLUMN: Partial<Record<string, number>> = {
+  A_STAR: 5,
   A: 5,
   B: 10,
   C: 15,
@@ -50,8 +51,8 @@ export function talentStepsCost(
 
 /**
  * Spell activation uses SKT row Akt./0 (p. 198). Pass the **effective** column after
- * cross-tradition shifts (+2 columns, p. 204). Step costs use `talentStepsCost` with the
- * same column (talent_columns SKT matches spell ZfW steps).
+ * foreign-representation (+2) and House Spell (−1) shifts (clamp A*–H). Step costs use
+ * `talentStepsCost` with the same column (talent_columns SKT matches spell SP steps).
  */
 export function spellActivationCost(
   _talentCols: TalentColumns,

@@ -829,9 +829,19 @@ function spellApplicable(
   return tr.includes("elven_heritage") || tr.includes("general");
 }
 
-const SKT_COL_ORDER = ["A", "B", "C", "D", "E", "F", "G", "H"] as const;
+const SKT_COL_ORDER = [
+  "A_STAR",
+  "A",
+  "B",
+  "C",
+  "D",
+  "E",
+  "F",
+  "G",
+  "H",
+] as const;
 
-/** Cross-tradition: +2 columns (Basisregelwerk p. 204). */
+/** Cross-tradition: +2 columns; House Spell: −1; clamp A*–H (Wege des Schwertes pp. 164–170). */
 function shiftSpellColumn(col: string, delta: number): string {
   const idx = SKT_COL_ORDER.indexOf(col as (typeof SKT_COL_ORDER)[number]);
   if (idx < 0) return col;
@@ -843,59 +853,52 @@ function shiftSpellColumn(col: string, delta: number): string {
 }
 
 /**
- * Effective SKT column for activation and SP steps after tradition shift.
- * Guild magician learning pure elven-heritage spells: +2 cols.
- * Elf learning pure guild-magic spells: +2 cols.
+ * Own representation for the caster role: guild magician owns guild_magic/general;
+ * elf owns elven_heritage/general. Anything else is foreign (+2 columns, lower max SP).
+ */
+function isOwnRepresentationForSpell(
+  spell: (typeof spellsData.spells)[0],
+  role: "guild_magician" | "elf"
+): boolean {
+  const tr = spell.traditions ?? [];
+  if (role === "guild_magician")
+    return tr.includes("guild_magic") || tr.includes("general");
+  return tr.includes("elven_heritage") || tr.includes("general");
+}
+
+/**
+ * Effective SKT column for activation and SP steps after all column shifts.
+ * Foreign representation +2; House Spell −1; clamp A*–H.
  */
 function effectiveSpellColumn(
   spell: (typeof spellsData.spells)[0],
   isGuildMagician: boolean
 ): string {
-  const tr = spell.traditions ?? [];
+  const role: "guild_magician" | "elf" = isGuildMagician
+    ? "guild_magician"
+    : "elf";
   const base = spell.advancement_column ?? "A";
-  if (
-    isGuildMagician &&
-    tr.includes("elven_heritage") &&
-    !tr.includes("guild_magic")
-  ) {
-    return shiftSpellColumn(base, 2);
-  }
-  if (
-    !isGuildMagician &&
-    tr.includes("guild_magic") &&
-    !tr.includes("elven_heritage")
-  ) {
-    return shiftSpellColumn(base, 2);
-  }
-  return base;
+  let shift = 0;
+  if (!isOwnRepresentationForSpell(spell, role)) shift += 2;
+  if (spell.is_house_spell) shift -= 1;
+  return shift === 0 ? base : shiftSpellColumn(base, shift);
 }
 
-function maxStartingSpForSpell(
+/**
+ * Maximum Spell Prowess from the spell's three test attributes.
+ * Own representation: highest attribute + 3.
+ * Foreign representation: lowest attribute (no bonus).
+ */
+function calculateSpellMaxSp(
   spell: (typeof spellsData.spells)[0],
+  attrsFinal: CharacterSheet["attributesFinal"],
   role: "guild_magician" | "elf"
 ): number {
-  const tr = spell.traditions ?? [];
-  if (role === "guild_magician") {
-    if (tr.includes("elven_heritage") && !tr.includes("guild_magic"))
-      return Math.min(
-        spell.max_starting_sp ?? 7,
-        advancementCosts.spell_columns.max_starting_sp
-          .guild_magician_elven_spells
-      );
-    return Math.min(
-      spell.max_starting_sp ?? 10,
-      advancementCosts.spell_columns.max_starting_sp.guild_magician_guild_spells
-    );
-  }
-  if (tr.includes("elven_heritage"))
-    return Math.min(
-      spell.max_starting_sp ?? 10,
-      advancementCosts.spell_columns.max_starting_sp.elf_elven_heritage_spells
-    );
-  return Math.min(
-    spell.max_starting_sp ?? 10,
-    advancementCosts.spell_columns.max_starting_sp.elf_general_spells
-  );
+  const testA = (spell.test_attributes ?? ["CL", "IN", "CH"]) as AttrCode[];
+  const values = testA.map((a) => attrsFinal[a] ?? 0);
+  if (values.length === 0) return 0;
+  if (isOwnRepresentationForSpell(spell, role)) return Math.max(...values) + 3;
+  return Math.min(...values);
 }
 
 /** Base weight for spell pick ordering; 0 = excluded unless fallback activates. */
@@ -1970,7 +1973,7 @@ export function generateCharacter(
       activated.push({
         s,
         col,
-        maxSp: maxStartingSpForSpell(s, spellRole),
+        maxSp: calculateSpellMaxSp(s, attrsFinal, spellRole),
         sp: 0,
       });
     }
@@ -2204,7 +2207,7 @@ export function generateCharacter(
         const row = spells[i]!;
         const spellDef = SPELL_DEF_BY_ID.get(row.id);
         if (!spellDef) continue;
-        const cap = maxStartingSpForSpell(spellDef, spellRole);
+        const cap = calculateSpellMaxSp(spellDef, attrsFinal, spellRole);
         if (row.sp >= cap) continue;
         const spellCol = effectiveSpellColumn(spellDef, isGuildMagician);
         const stepCost = spellAdvancementStepCost(
@@ -2619,7 +2622,7 @@ export function generateCharacter(
           const row = spells[i]!;
           const spellDef = SPELL_DEF_BY_ID.get(row.id);
           if (!spellDef) continue;
-          const cap = maxStartingSpForSpell(spellDef, spellRole);
+          const cap = calculateSpellMaxSp(spellDef, attrsFinal, spellRole);
           if (row.sp >= cap) continue;
           const spellCol = effectiveSpellColumn(spellDef, isGuildMagician);
           const stepCost = spellAdvancementStepCost(
