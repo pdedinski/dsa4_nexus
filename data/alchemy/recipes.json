@@ -1,0 +1,4447 @@
+{
+  "meta": {
+    "schema_version": "1.0",
+    "last_updated": "2026-08-04",
+    "description": "Core alchemical recipes from Wege der Alchimie (2012), Recipes of Aventuria chapter. Includes Witches' Flying Ointment and Metallurgical Additives which lack standard recipe blocks. Quality M references the Failed-Batch Effects table.",
+    "source_books": [
+      "Wege der Alchimie (2012), pp. 33-64, 202-203, 208-209",
+      "Zoo-Botanica Aventurica, Herbarium pp. 227-275"
+    ],
+    "quality_price_multipliers": {
+      "description": "Quality C is the base market price. Relative multipliers compound from C.",
+      "A": 0.64,
+      "B": 0.8,
+      "C": 1.0,
+      "D": 1.5,
+      "E": 2.25,
+      "F": 3.375
+    }
+  },
+  "recipes": [
+    {
+      "id": "owl_tears",
+      "number": 1,
+      "name": "Owl Tears",
+      "german_name": "Eulentränen",
+      "category_label": "Simple alchemy",
+      "ingredients": "Deadly-nightshade juice and mandrake powder, distilled together.",
+      "crafting_location": "Witch's kitchen",
+      "brewing_modifier": "+1",
+      "analysis_modifier": "+3",
+      "crafting_process": "Crush mandrake to powder, combine it with nightshade juice in a retort, and distill the mixture. The useful fraction is the resulting eye-irritating liquid.",
+      "description": "Cloudy liquid with an exciting scent. Applied as eye drops, it gives the eyes a glossy appearance and dilates the pupils.",
+      "effect": "Darkness level is reduced by 1 per 4 TP*. The increased light sensitivity follows the rules of CAT'S EYES: blinding lasts TP*/2 CR and dancing lights last TP*/4 GT. The effective TP* falls by 2 each hour until the effect ends. The nightshade poison inflicts 1 DP.",
+      "shelf_life": "2d6 weeks",
+      "important_note": "Plain nightshade juice can be used without a Brewing Test and counts as 4 TP*, but gives no benefit in complete darkness while retaining the harmful effects.",
+      "market_price_quality_c": "about 0.1D for confirmed Quality C, as published.",
+      "quality_adjusted_prices": {
+        "A": "0.06D",
+        "B": "0.08D",
+        "C": "0.10D",
+        "D": "0.15D",
+        "E": "0.23D",
+        "F": "0.34D"
+      },
+      "ingredient_cost": "0.05D",
+      "availability": 12,
+      "source": "Wege der Alchimie (2012), p. 36; price and procurement: pp. 202-203; material prices: pp. 208-209.",
+      "category": "simple_alchemy"
+    },
+    {
+      "id": "invisible_ink",
+      "number": 2,
+      "name": "Invisible Ink",
+      "german_name": "Geheimtinte",
+      "category_label": "Simple alchemy",
+      "ingredients": "Formula-dependent. Common versions use onion juice, apple juice, Peraine-apple juice, or milk. Other possible bases include filtered wood ash, saliva, or sweat. More complex versions require a separate catalyst liquid.",
+      "crafting_location": "Witch's kitchen",
+      "brewing_modifier": "+0 to +7",
+      "analysis_modifier": "+0 to +10",
+      "crafting_process": "Prepare a colorless writing fluid from one of the published organic bases. The simplest forms are revealed by heat; more advanced variants are developed with a separate catalyst liquid and may fade again after cooling.",
+      "description": "A colorless or self-vanishing writing fluid. The writing becomes visible through heat or a matching chemical catalyst. Color, odor, and exact behavior vary by formula.",
+      "effect": "Writing made with the ink cannot be read without the appropriate revealing method.",
+      "shelf_life": "2d6 months when well sealed",
+      "market_price_quality_c": "about 0.3D-1D for confirmed Quality C, as published.",
+      "quality_adjusted_prices": {
+        "A": "0.19D-0.64D",
+        "B": "0.24D-0.80D",
+        "C": "0.30D-1D",
+        "D": "0.45D-1.50D",
+        "E": "0.68D-2.25D",
+        "F": "1.01D-3.38D"
+      },
+      "ingredient_cost": "0.1-0.5D",
+      "availability": 13,
+      "source": "Wege der Alchimie (2012), p. 36; price and procurement: pp. 202-203; material prices: pp. 208-209.",
+      "category": "simple_alchemy"
+    },
+    {
+      "id": "cold_light_phosphoros",
+      "number": 3,
+      "name": "Cold Light / Phosphoros",
+      "german_name": "Kaltes Licht, auch Phosphoros genannt",
+      "category_label": "Simple alchemy",
+      "ingredients": "Several measures of stale, preferably rotten urine; alternatively phosphor mushrooms, bone ash, or egg yolk. The material is distilled, calcined without air, and stored under water.",
+      "crafting_location": "Archaic laboratory",
+      "brewing_modifier": "+2",
+      "analysis_modifier": "+6",
+      "crafting_process": "Distill several measures of stale or rotten urine, then calcine the residue in the complete absence of air. Keep the finished luminous mass submerged in water; phosphor fungi, bone ash, or egg yolk are more laborious alternatives.",
+      "description": "White to pale-yellow waxy material with a distinctive odor.",
+      "effect": "When removed from water, it glows white in darkness and becomes hand-warm. Its light is equivalent to a FLIM FLAM with 2-4 SP*. One ounce is consumed after about 3 hours.",
+      "hazard": "It ignites spontaneously at roughly 30-50 degrees Celsius. Ingestion of about one scruple is a stage 15 poison, inflicting 1d6-1 DP per GT for 2d20+5 GT; symptoms include vomiting and respiratory arrest. Burning material causes painful, poorly healing burns.",
+      "shelf_life": "Several years under water",
+      "market_price_quality_c": "about 1D for confirmed Quality C, as published.",
+      "quality_adjusted_prices": {
+        "A": "0.64D",
+        "B": "0.80D",
+        "C": "1D",
+        "D": "1.50D",
+        "E": "2.25D",
+        "F": "3.38D"
+      },
+      "ingredient_cost": "0.5D",
+      "availability": 12,
+      "source": "Wege der Alchimie (2012), p. 36; price and procurement: pp. 202-203; material prices: pp. 208-209.",
+      "category": "simple_alchemy"
+    },
+    {
+      "id": "pyrophor",
+      "number": 4,
+      "name": "Pyrophor",
+      "german_name": "Pyrophor",
+      "category_label": "Simple alchemy",
+      "ingredients": "Lead ground into very fine dust and mandrake powder in an airtight vessel. Clubmoss spores or Orcland puffball spores can replace the lead.",
+      "crafting_location": "Archaic laboratory",
+      "brewing_modifier": "+0",
+      "analysis_modifier": "+1",
+      "crafting_process": "Grind lead to the finest possible dust, mix it with mandrake powder, and seal it in an airtight vessel. Lycopodium or Orcland puffball spores may replace the lead for a similar ignition effect.",
+      "description": "Lead-colored dust.",
+      "effect": "The dust ignites spontaneously when it falls through air. It can ignite tinder or dry hay, but not substantial pieces of wood.",
+      "shelf_life": "Several years while airtight",
+      "market_price_quality_c": "about 0.1D-0.2D for confirmed Quality C, as published.",
+      "quality_adjusted_prices": {
+        "A": "0.06D-0.13D",
+        "B": "0.08D-0.16D",
+        "C": "0.10D-0.20D",
+        "D": "0.15D-0.30D",
+        "E": "0.23D-0.45D",
+        "F": "0.34D-0.68D"
+      },
+      "ingredient_cost": "0.05D",
+      "availability": 10,
+      "source": "Wege der Alchimie (2012), pp. 36-37; price and procurement: pp. 202-203; material prices: pp. 208-209.",
+      "category": "simple_alchemy"
+    },
+    {
+      "id": "shadow_chalk",
+      "number": 5,
+      "name": "Shadow Chalk",
+      "german_name": "Schattenkreide",
+      "category_label": "Simple alchemy",
+      "ingredients": "Alabaster dust, lime, and gall-apple juice, mixed and hardened.",
+      "crafting_location": "Witch's kitchen",
+      "brewing_modifier": "+2",
+      "analysis_modifier": "+2",
+      "crafting_process": "Mix alabaster dust with lime and gall-apple juice, shape the resulting paste into sticks, and allow it to harden completely before use.",
+      "description": "Pale-gray chalk, somewhat harder than ordinary chalk.",
+      "effect": "Marks fade rapidly until invisible to ordinary human, elven, or orcish sight. They remain readable through a colored filter, such as thinly polished amber lenses.",
+      "shelf_life": "Unlimited",
+      "market_price_quality_c": "about 5D for confirmed Quality C, as published.",
+      "quality_adjusted_prices": {
+        "A": "3.20D",
+        "B": "4D",
+        "C": "5D",
+        "D": "7.50D",
+        "E": "11.25D",
+        "F": "16.88D"
+      },
+      "ingredient_cost": "2.5D",
+      "availability": 9,
+      "source": "Wege der Alchimie (2012), p. 37; price and procurement: pp. 202-203; material prices: pp. 208-209.",
+      "category": "simple_alchemy"
+    },
+    {
+      "id": "smoke_pouch",
+      "number": 6,
+      "name": "Smoke Pouch",
+      "german_name": "Schwadenbeutel",
+      "category_label": "Simple alchemy",
+      "ingredients": "Ash from charred fir cones, mandrake powder, sulfurous water, and prepared animal intestine used as the pouch.",
+      "crafting_location": "Archaic laboratory",
+      "brewing_modifier": "+4",
+      "analysis_modifier": "+1",
+      "crafting_process": "Char fir cones, grind the ash, and mix it with mandrake powder. Dissolve the mixture in sulfurous water, dry it to a damp mass, pack it into prepared animal intestines, and dry the pouches again.",
+      "description": "Gray to black granular material sealed in a dried intestine.",
+      "effect": "Air contact creates dense gray smoke in a radius of about 3 paces. Treat the cloud as darkness imposing -5 AT and -5 PA. Visibility is limited to the shortest distances.",
+      "shelf_life": "1d6+3 months",
+      "important_note": "A careful user can slit the pouch to direct the smoke. This requires a DE Test; failure bursts the pouch at the wrong point and blinds the user's own position. Some tribal formulas add intoxicants.",
+      "market_price_quality_c": "about 2D for confirmed Quality C, as published.",
+      "quality_adjusted_prices": {
+        "A": "1.28D",
+        "B": "1.60D",
+        "C": "2D",
+        "D": "3D",
+        "E": "4.50D",
+        "F": "6.75D"
+      },
+      "ingredient_cost": "1D",
+      "availability": 8,
+      "source": "Wege der Alchimie (2012), p. 37; price and procurement: pp. 202-203; material prices: pp. 208-209.",
+      "category": "simple_alchemy"
+    },
+    {
+      "id": "stink_pot",
+      "number": 7,
+      "name": "Stink Pot",
+      "german_name": "Stinktöpfchen",
+      "category_label": "Simple alchemy",
+      "ingredients": "Mandrake powder dissolved in stale water, plus a powerful foul-smelling substance such as skunk secretion, ground buckthorn bark, or dragon dung. The liquid is sealed in a thin clay pot with wax.",
+      "crafting_location": "Archaic laboratory",
+      "brewing_modifier": "+0",
+      "analysis_modifier": "+1",
+      "crafting_process": "Dissolve mandrake powder in stale water and stir in a powerful stinking substance. Decant the sediment and liquid into thin clay pots and immediately dip them in wax to make the vessels airtight.",
+      "description": "Vile-smelling liquid with a disgusting consistency.",
+      "effect": "Breaking the vessel releases a nauseating stench in a 3-pace radius. Affected creatures must pass a Willpower Test penalized by TP*/2 and by Sensitive Sense of Smell, or vomit. Failure by 7 or more causes unconsciousness. Range and duration can vary with the odor source, from a few CR to several hours.",
+      "shelf_life": "1d6+2 months",
+      "market_price_quality_c": "about 0.3D for confirmed Quality C, as published.",
+      "quality_adjusted_prices": {
+        "A": "0.19D",
+        "B": "0.24D",
+        "C": "0.30D",
+        "D": "0.45D",
+        "E": "0.68D",
+        "F": "1.01D"
+      },
+      "ingredient_cost": "0.15D",
+      "availability": 9,
+      "source": "Wege der Alchimie (2012), p. 38; price and procurement: pp. 202-203; material prices: pp. 208-209.",
+      "category": "simple_alchemy"
+    },
+    {
+      "id": "tear_powder",
+      "number": 8,
+      "name": "Tear Powder",
+      "german_name": "Tränenkraut",
+      "category_label": "Simple alchemy",
+      "ingredients": "Crushed root of the Frisund rose, also called sneeze-root, mixed with chopped and dried hot-pepper or peppercorn seed and ground to powder.",
+      "crafting_location": "Archaic laboratory",
+      "brewing_modifier": "+2",
+      "analysis_modifier": "+3",
+      "crafting_process": "Crush Frisund-rose root together with a chopped, dried pepper or paprika seed and grind the mixture to an extremely fine powder.",
+      "description": "Brown powder with lighter and darker particles.",
+      "effect": "A small squeeze pouch, hollow reed, or blowpipe can project one dose. A struck target suffers violent sneezing and tearing. Suppressing the sneezing requires Willpower +3. Tests requiring sight, concentration, or speech are penalized while the effect persists, as described by the source's exposure rules.",
+      "shelf_life": "1d6+2 months",
+      "market_price_quality_c": "about 1D for confirmed Quality C, as published.",
+      "quality_adjusted_prices": {
+        "A": "0.64D",
+        "B": "0.80D",
+        "C": "1D",
+        "D": "1.50D",
+        "E": "2.25D",
+        "F": "3.38D"
+      },
+      "ingredient_cost": "0.5D",
+      "availability": 6,
+      "source": "Wege der Alchimie (2012), p. 38; price and procurement: pp. 202-203; material prices: pp. 208-209.",
+      "category": "simple_alchemy"
+    },
+    {
+      "id": "wound_powder",
+      "number": 9,
+      "name": "Wound Powder",
+      "german_name": "Wundpulver",
+      "category_label": "Simple alchemy",
+      "ingredients": "Mandrake powder; crushed healing herbs, especially bleeding-stoppers such as cliff-tooth, Tarnele, four-leaf oneberry, and Wirsel herb; plus a binder such as hematite dust, ground acorns, or onion seed.",
+      "crafting_location": "Archaic laboratory",
+      "brewing_modifier": "+0",
+      "analysis_modifier": "+2",
+      "crafting_process": "Grind mandrake and blood-staunching herbs, then blend them with a dry binder such as hematite dust, ground acorns, or onion seed until a free-flowing wound powder forms.",
+      "description": "Powder whose color and texture depend on the ingredients.",
+      "effect": "Applied to an injury of up to 3 DP, it stops bleeding within moments and heals the injury during one night. On larger injuries it at least reduces blood loss. Multiple doses do not stack.",
+      "shelf_life": "1d6 months",
+      "market_price_quality_c": "about 0.1D-0.5D for confirmed Quality C, as published.",
+      "quality_adjusted_prices": {
+        "A": "0.06D-0.32D",
+        "B": "0.08D-0.40D",
+        "C": "0.10D-0.50D",
+        "D": "0.15D-0.75D",
+        "E": "0.23D-1.13D",
+        "F": "0.34D-1.69D"
+      },
+      "ingredient_cost": "0.05-0.25D",
+      "availability": 10,
+      "source": "Wege der Alchimie (2012), p. 38; price and procurement: pp. 202-203; material prices: pp. 208-209.",
+      "category": "simple_alchemy"
+    },
+    {
+      "id": "charisma_elixir",
+      "number": 10,
+      "name": "Charisma Elixir",
+      "german_name": "Charismaelixier",
+      "category_label": "Virtutica",
+      "ingredients": "2 scruples diamond dust; 5 ounces Gratenfels sulfur-spring water; 7 ounces grated licorice; 1 Finage shoot; 2 Schönaug berries; 1 ounce valerian; 1 snake tongue.",
+      "crafting_location": "Witch's kitchen",
+      "brewing_modifier": "+5",
+      "analysis_modifier": "+4",
+      "crafting_process": "During the month of Tsa under Aves, prepare diamond in sulfur water, licorice with Finage, and Schönaug with valerian in three separate vessels. Arrange them around a trigram for seven hours, combine them over a snake tongue, leave the mixture overnight, and collect only the first twenty-seven drops of the final distillation.",
+      "description": "Clear pale-blue liquid smelling of valerian.",
+      "quality_m": {
+        "effects": [
+          1,
+          4,
+          14,
+          18,
+          23,
+          36,
+          39,
+          40
+        ],
+        "note": "split tongues and glassy snake eyes have also occurred."
+      },
+      "quality_tiers": [
+        {
+          "quality": "A",
+          "text": "CH +1 for 1 GT; CL -1 for 1 hour due to mildly lust-driven behavior."
+        },
+        {
+          "quality": "B",
+          "text": "CH +2 for 2 GT."
+        },
+        {
+          "quality": "C",
+          "text": "CH +3 for 3 GT."
+        },
+        {
+          "quality": "D",
+          "text": "CH +7 for 7 GT."
+        },
+        {
+          "quality": "E",
+          "text": "CH +2 for 1 day."
+        },
+        {
+          "quality": "F",
+          "text": "CH +5 for 1 day, but all other mental attributes are -2 during that day."
+        }
+      ],
+      "additional_rule": "At quality D or better, appearance improves by one step for the duration: Repulsive becomes Unattractive, Unattractive becomes normal, normal becomes Good-Looking, and Good-Looking becomes Exceptional Appearance. A failed batch reverses this and worsens appearance by two steps. Only one improvement step is possible.",
+      "shelf_life": "1d6+9 weeks",
+      "market_price_quality_c": "about 45D for confirmed Quality C, as published.",
+      "quality_adjusted_prices": {
+        "A": "28.80D",
+        "B": "36D",
+        "C": "45D",
+        "D": "67.50D",
+        "E": "101.25D",
+        "F": "151.88D"
+      },
+      "ingredient_cost": "23D",
+      "availability": 9,
+      "source": "Wege der Alchimie (2012), p. 39; price and procurement: pp. 202-203; material prices: pp. 208-209.",
+      "category": "virtutica"
+    },
+    {
+      "id": "dexterity_elixir",
+      "number": 11,
+      "name": "Dexterity Elixir",
+      "german_name": "Fingerfertigkeitselixier",
+      "category_label": "Virtutica",
+      "ingredients": "5 ounces pure alcohol; 1 scruple roughly broken topaz; one tuft of hair from a Mengbilla monkey; 5 ounces double distillate; the right forepaw of a Feh; 1 bundle Atmon; 1 Finage shoot.",
+      "crafting_location": "Archaic laboratory",
+      "brewing_modifier": "+6",
+      "analysis_modifier": "+5",
+      "crafting_process": "Steep coarse topaz in alcohol while monkey hair is boiled in double distillate. Stir the liquids three times to the left with the Feh paw, rest them in darkness, add a paste of Atmon and Finage, and heat strongly in a retort until the color changes from red to yellow; the amber residue is the elixir.",
+      "description": "Opaque amber liquid without odor.",
+      "quality_m": {
+        "effects": [
+          1,
+          2,
+          3,
+          4,
+          8,
+          9,
+          18,
+          23,
+          27,
+          29
+        ]
+      },
+      "quality_tiers": [
+        {
+          "quality": "A",
+          "text": "DE +1 for 1 GT; CO -1 for 1 hour due to increased jumpiness."
+        },
+        {
+          "quality": "B",
+          "text": "DE +2 for 2 GT."
+        },
+        {
+          "quality": "C",
+          "text": "DE +3 for 3 GT."
+        },
+        {
+          "quality": "D",
+          "text": "DE +7 for 7 GT."
+        },
+        {
+          "quality": "E",
+          "text": "DE +15 for 1 GT, followed by ST -7 for 3 GT."
+        },
+        {
+          "quality": "F",
+          "text": "DE +7 for 7 hours and Kleptomania 7 for the same duration."
+        }
+      ],
+      "additional_rule": "A second Atmon-based dose within 2 days has no beneficial effect and instead causes DE -1 for 1 hour.",
+      "shelf_life": "1d3+7 months",
+      "market_price_quality_c": "about 30D for confirmed Quality C, as published.",
+      "quality_adjusted_prices": {
+        "A": "19.20D",
+        "B": "24D",
+        "C": "30D",
+        "D": "45D",
+        "E": "67.50D",
+        "F": "101.25D"
+      },
+      "ingredient_cost": "15D",
+      "availability": 8,
+      "source": "Wege der Alchimie (2012), pp. 39-40; price and procurement: pp. 202-203; material prices: pp. 208-209.",
+      "category": "virtutica"
+    },
+    {
+      "id": "agility_elixir",
+      "number": 12,
+      "name": "Agility Elixir",
+      "german_name": "Gewandtheitselixier",
+      "category_label": "Virtutica",
+      "ingredients": "2 scruples emerald dust; 10 ounces double distillate; 3 stalks Mibel reed; 1 Finage shoot; 7 hairs from a unicorn's tail; 12 live flies; 1/2 ounce Yellow Fireweed; 1 ounce pure alcohol.",
+      "crafting_location": "Witch's kitchen",
+      "brewing_modifier": "+6",
+      "analysis_modifier": "+7",
+      "crafting_process": "Dissolve emerald dust in double distillate, press Mibel reed and Finage into it, and place unicorn hair, live flies, and powdered Yellow Fireweed in a retort. Heat inside an octagram until the brew boils red, cool and reheat it until clear yellow, distill thirty-seven drops, and dilute them with alcohol.",
+      "description": "Clear yellow liquid with a strong alcoholic character.",
+      "quality_m": {
+        "effects": [
+          1,
+          2,
+          3,
+          4,
+          8,
+          9,
+          15,
+          18,
+          23,
+          27,
+          30,
+          38
+        ]
+      },
+      "quality_tiers": [
+        {
+          "quality": "A",
+          "text": "AG +1 for 1 GT; DE -1 for 1 hour."
+        },
+        {
+          "quality": "B",
+          "text": "AG +2 for 2 GT."
+        },
+        {
+          "quality": "C",
+          "text": "AG +3 for 3 GT."
+        },
+        {
+          "quality": "D",
+          "text": "AG +7 for 7 GT."
+        },
+        {
+          "quality": "E",
+          "text": "AG +3 for 12 hours."
+        },
+        {
+          "quality": "F",
+          "text": "AG +12 for 3 GT, followed by 12 hours with AG -7 and DE and ST each -2."
+        }
+      ],
+      "additional_rule": "More than one use per month causes Mibel addiction on 11-20 on 1d20. An addict must take a Mibel preparation at least every second day or suffers CL, IN, AG, and DE each -3 and severe apathy.",
+      "shelf_life": "1d3+10 months",
+      "market_price_quality_c": "about 50D for confirmed Quality C, as published.",
+      "quality_adjusted_prices": {
+        "A": "32D",
+        "B": "40D",
+        "C": "50D",
+        "D": "75D",
+        "E": "112.50D",
+        "F": "168.75D"
+      },
+      "ingredient_cost": "25D",
+      "availability": 6,
+      "source": "Wege der Alchimie (2012), p. 40; price and procurement: pp. 202-203; material prices: pp. 208-209.",
+      "category": "virtutica"
+    },
+    {
+      "id": "intuition_elixir",
+      "number": 13,
+      "name": "Intuition Elixir",
+      "german_name": "Intuitionselixier",
+      "category_label": "Virtutica",
+      "ingredients": "1 Finage shoot; 1 garlic clove; the eyes of a bat; 5 scruples raven dung; 7 hairs from a blind person; 1 scruple aquamarine; 3 ounces water from a still forest pond; 6 drops of water falling from a stalactite.",
+      "crafting_location": "Witch's kitchen",
+      "brewing_modifier": "+2",
+      "analysis_modifier": "+5",
+      "crafting_process": "Grind Finage, garlic, bat eyes, raven droppings, and a blind person's hair into a paste. Add coarse aquamarine dust and warmed forest-pond water, distill the mixture, collect the first thirty pale-green drops, and finish them with stalactite water.",
+      "description": "Transparent light-green liquid with a bitter taste.",
+      "quality_m": {
+        "effects": [
+          1,
+          4,
+          11,
+          13,
+          19,
+          22,
+          24,
+          28,
+          31,
+          32
+        ]
+      },
+      "quality_tiers": [
+        {
+          "quality": "A",
+          "text": "IN +1 for 1 GT; CL -1 for 1 hour."
+        },
+        {
+          "quality": "B",
+          "text": "IN +2 for 2 GT."
+        },
+        {
+          "quality": "C",
+          "text": "IN +3 for 3 GT."
+        },
+        {
+          "quality": "D",
+          "text": "IN +7 for 7 GT."
+        },
+        {
+          "quality": "E",
+          "text": "IN +3 for 1 day, accompanied by accurate insights and premonitions."
+        },
+        {
+          "quality": "F",
+          "text": "IN +9 for 2 hours, followed by 12 hours of lethargy with all attributes -4."
+        }
+      ],
+      "shelf_life": "1d6+14 months",
+      "market_price_quality_c": "about 35D for confirmed Quality C, as published.",
+      "quality_adjusted_prices": {
+        "A": "22.40D",
+        "B": "28D",
+        "C": "35D",
+        "D": "52.50D",
+        "E": "78.75D",
+        "F": "118.13D"
+      },
+      "ingredient_cost": "18D",
+      "availability": 8,
+      "source": "Wege der Alchimie (2012), p. 40; price and procurement: pp. 202-203; material prices: pp. 208-209.",
+      "category": "virtutica"
+    },
+    {
+      "id": "cleverness_elixir",
+      "number": 14,
+      "name": "Cleverness Elixir",
+      "german_name": "Klugheitselixier",
+      "category_label": "Virtutica",
+      "ingredients": "1 scruple sapphire dust; 1 ounce Brabak vitriol; the eyes of an emerald serpent; 3 ounces Unau brine; 1 Finage shoot; 7 Ilmen leaves; 7 owl feathers; 2 ounces spring water.",
+      "crafting_location": "Witch's kitchen",
+      "brewing_modifier": "+3",
+      "analysis_modifier": "+5",
+      "crafting_process": "Dissolve sapphire dust in vitriol and separately dissolve dried snake eyes in Unau brine. Combine Finage, Ilmen leaf, owl down, spring water, brine, and vitriol in the prescribed order while cooling the vessel with ice; vent the yellow-green vapor and keep only the first forty-nine drops of the distillate.",
+      "description": "Clear lemon-yellow liquid with a slightly salty taste.",
+      "quality_m": {
+        "effects": [
+          1,
+          2,
+          3,
+          4,
+          9,
+          10,
+          11,
+          14,
+          15,
+          18,
+          19,
+          22,
+          28,
+          32,
+          37
+        ]
+      },
+      "quality_tiers": [
+        {
+          "quality": "A",
+          "text": "CL +1 for 1 GT; CO -1 for 1 hour due to hesitation."
+        },
+        {
+          "quality": "B",
+          "text": "CL +2 for 2 GT."
+        },
+        {
+          "quality": "C",
+          "text": "CL +3 for 3 GT."
+        },
+        {
+          "quality": "D",
+          "text": "CL +7 for 7 GT."
+        },
+        {
+          "quality": "E",
+          "text": "CL +2 for 1 day."
+        },
+        {
+          "quality": "F",
+          "text": "CL +5 for 1 day, but every Talent and spell that does not use CL is temporarily reduced by 3."
+        }
+      ],
+      "shelf_life": "1d3+10 months",
+      "market_price_quality_c": "about 45D for confirmed Quality C, as published.",
+      "quality_adjusted_prices": {
+        "A": "28.80D",
+        "B": "36D",
+        "C": "45D",
+        "D": "67.50D",
+        "E": "101.25D",
+        "F": "151.88D"
+      },
+      "ingredient_cost": "23D",
+      "availability": 9,
+      "source": "Wege der Alchimie (2012), p. 41; price and procurement: pp. 202-203; material prices: pp. 208-209.",
+      "category": "virtutica"
+    },
+    {
+      "id": "constitution_elixir",
+      "number": 15,
+      "name": "Constitution Elixir",
+      "german_name": "Konstitutionselixier",
+      "category_label": "Virtutica",
+      "ingredients": "1 Finage shoot; 2 different tufts of weeds from a temple wall; 6 ounces Unau brine; leather from the sole of a bear's paw; 3 ounces ox or dwarf blood; 2 scruples onyx splinters; 1 clump Olgin root; gastric juice of a Khoram burrower.",
+      "crafting_location": "Witch's kitchen",
+      "brewing_modifier": "+6",
+      "analysis_modifier": "+3",
+      "crafting_process": "At night under the proper lunar sign, dry and grind the Finage and wall weeds and steep them in brine. Pound onyx inside a blood-smeared bear sole, combine it when the brine foams red, discard the first forty-nine distillate drops, retain the next two sets of forty-nine, add Olgin-root juice inside a pentagram, heat to green smoke, and quench with Khoram burrower gastric juice.",
+      "description": "Mignonette-green, heavily streaked liquid with a strong bilious odor.",
+      "quality_m": {
+        "effects": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          13,
+          14,
+          15,
+          18,
+          19,
+          21,
+          25,
+          27,
+          33,
+          34
+        ]
+      },
+      "quality_tiers": [
+        {
+          "quality": "A",
+          "text": "CN +1 for 1 GT and 1d6 EP restored; afterward CN -1 for 1 hour."
+        },
+        {
+          "quality": "B",
+          "text": "CN +2 and EP +5 for 2 GT."
+        },
+        {
+          "quality": "C",
+          "text": "CN +3 and EP +10 for 3 GT."
+        },
+        {
+          "quality": "D",
+          "text": "CN +7 and EP +20 for 7 GT."
+        },
+        {
+          "quality": "E",
+          "text": "CN +4 and doubled maximum EP for 12 hours."
+        },
+        {
+          "quality": "F",
+          "text": "CN +9 and tripled maximum EP for 3 hours. The user cannot sense exhaustion or overexertion even at 0 EP. When the effect ends, all accumulated overexertion takes effect and inflicts 2 DP per point of overexertion."
+        }
+      ],
+      "shelf_life": "2d6+17 months",
+      "market_price_quality_c": "about 40D for confirmed Quality C, as published.",
+      "quality_adjusted_prices": {
+        "A": "25.60D",
+        "B": "32D",
+        "C": "40D",
+        "D": "60D",
+        "E": "90D",
+        "F": "135D"
+      },
+      "ingredient_cost": "20D",
+      "availability": 7,
+      "source": "Wege der Alchimie (2012), p. 41; price and procurement: pp. 202-203; material prices: pp. 208-209.",
+      "category": "virtutica"
+    },
+    {
+      "id": "strength_elixir",
+      "number": 16,
+      "name": "Strength Elixir",
+      "german_name": "Kraftelixier",
+      "category_label": "Virtutica",
+      "ingredients": "2 scruples ruby dust; 5 ounces pure alcohol; 10 ounces troll spit; 5 drops dragon blood; 1 Horush seed; 7 Quinja berries; 1 Finage shoot; 2 bull testicles.",
+      "crafting_location": "Archaic laboratory",
+      "brewing_modifier": "+7",
+      "analysis_modifier": "+3",
+      "crafting_process": "Steep ruby dust in alcohol inside a metal vessel set in a double pentagram. Add troll saliva and dragon blood in that order, skim the foam, warm the Horush seed, Quinja, and Finage in the mixture for three days, add the bull organs, then heat, filter, and continue until the liquid becomes clear.",
+      "description": "Clear, slightly oily liquid with a smoky taste.",
+      "quality_m": {
+        "effects": [
+          1,
+          2,
+          3,
+          4,
+          12,
+          13,
+          14,
+          18,
+          19,
+          21,
+          33,
+          34
+        ]
+      },
+      "quality_tiers": [
+        {
+          "quality": "A",
+          "text": "ST +1 for 1 GT; CH -1 for 1 hour due to embarrassing displays of strength."
+        },
+        {
+          "quality": "B",
+          "text": "ST +2 for 2 GT."
+        },
+        {
+          "quality": "C",
+          "text": "ST +3 for 3 GT."
+        },
+        {
+          "quality": "D",
+          "text": "ST +7 for 7 GT."
+        },
+        {
+          "quality": "E",
+          "text": "ST +3 for 1 day. In every combat there is a 20% chance, 17-20 on 1d20, of a mild Bloodlust, using 2 points rather than the normal 5."
+        },
+        {
+          "quality": "F",
+          "text": "ST +5 and CN +2 for 1 day, followed by ST -5 for the next day."
+        }
+      ],
+      "shelf_life": "1d2+5 months",
+      "market_price_quality_c": "about 50D for confirmed Quality C, as published.",
+      "quality_adjusted_prices": {
+        "A": "32D",
+        "B": "40D",
+        "C": "50D",
+        "D": "75D",
+        "E": "112.50D",
+        "F": "168.75D"
+      },
+      "ingredient_cost": "25D",
+      "availability": 7,
+      "source": "Wege der Alchimie (2012), p. 42; price and procurement: pp. 202-203; material prices: pp. 208-209.",
+      "category": "virtutica"
+    },
+    {
+      "id": "courage_elixir",
+      "number": 17,
+      "name": "Courage Elixir",
+      "german_name": "Mutelixier",
+      "category_label": "Virtutica",
+      "ingredients": "1 scruple garnet dust; 5 ounces pure alcohol; 3 ounces fresh lioness blood; 1 Finage shoot; 2 bundles basiliskum.",
+      "crafting_location": "Archaic laboratory",
+      "brewing_modifier": "+1",
+      "analysis_modifier": "+1",
+      "crafting_process": "Preserve the garnet's 'fire' while grinding it, then mix the dust with alcohol and lioness blood. Add separately ground Finage and Basiliskum, leave the red paste overnight in a pentagram open to Ucuri, and carefully skim off the separated liquid.",
+      "description": "Opaque wine-red liquid with a bloody odor and extremely sharp taste.",
+      "quality_m": {
+        "effects": [
+          1,
+          4,
+          18,
+          22,
+          36,
+          37
+        ]
+      },
+      "quality_tiers": [
+        {
+          "quality": "A",
+          "text": "CO +1 for 1 GT; IN -1 for 1 hour due to rash behavior."
+        },
+        {
+          "quality": "B",
+          "text": "CO +2 for 2 GT."
+        },
+        {
+          "quality": "C",
+          "text": "CO +3 for 3 GT."
+        },
+        {
+          "quality": "D",
+          "text": "CO +7 for 7 GT."
+        },
+        {
+          "quality": "E",
+          "text": "CO +3 for 1 day and all fear-based negative traits are halved."
+        },
+        {
+          "quality": "F",
+          "text": "CO +5 for 1 day and all fears are halved; on the following day CO is reduced by 7."
+        }
+      ],
+      "additional_rule": "Without basiliskum, swallowing requires Willpower +3 or the user vomits and gains no effect.",
+      "shelf_life": "1d6+20 months",
+      "market_price_quality_c": "about 40D for confirmed Quality C, as published.",
+      "quality_adjusted_prices": {
+        "A": "25.60D",
+        "B": "32D",
+        "C": "40D",
+        "D": "60D",
+        "E": "90D",
+        "F": "135D"
+      },
+      "ingredient_cost": "20D",
+      "availability": 8,
+      "source": "Wege der Alchimie (2012), p. 42; price and procurement: pp. 202-203; material prices: pp. 208-209.",
+      "category": "virtutica"
+    },
+    {
+      "id": "respondarum",
+      "number": 18,
+      "name": "Respondarum",
+      "german_name": "Respondarum",
+      "category_label": "Virtutica",
+      "ingredients": "1 scruple Praios-flower seed; 5 carats blue-basalt dust; one tuft of hair from a habitual fraud; 1 flux mercury; 1 liquid measure pure spring water; 1/2 flux oil pressed from Bosparan fruit grown in a temple grove.",
+      "crafting_location": "Alchemist's laboratory",
+      "brewing_modifier": "+5",
+      "analysis_modifier": "+4",
+      "crafting_process": "The brewer must first atone for the year's lies. Roast the Praios-flower seeds in the sacred oil, evaporate the blue-basalt dust with mercury on the next day, and on the third day distill both 'gifts' with spring water and the swindler's hair, collecting only the first and every twelfth golden drop while reciting the thanksgiving prayer.",
+      "description": "Oily golden liquid.",
+      "quality_m": {
+        "effects": [
+          1,
+          3,
+          4,
+          14,
+          38
+        ]
+      },
+      "quality_tiers": [
+        {
+          "quality": "A",
+          "text": "For 1 hour, intending to lie causes mild confusion; Fast Talk TP -1."
+        },
+        {
+          "quality": "B",
+          "text": "As A, but Fast Talk TP -3 for 3 hours."
+        },
+        {
+          "quality": "C",
+          "text": "As A, but Fast Talk TP -7 for 7 hours."
+        },
+        {
+          "quality": "D",
+          "text": "For 1 hour the subject must speak truthfully, but may choose silence."
+        },
+        {
+          "quality": "E",
+          "text": "As D, but the subject cannot choose silence."
+        },
+        {
+          "quality": "F",
+          "text": "As E; Human Nature TP +12 for detecting lies and a strong urge to expose them."
+        }
+      ],
+      "shelf_life": "2d6 months",
+      "market_price_quality_c": "about 60D for confirmed Quality C, as published.",
+      "quality_adjusted_prices": {
+        "A": "38.40D",
+        "B": "48D",
+        "C": "60D",
+        "D": "90D",
+        "E": "135D",
+        "F": "202.50D"
+      },
+      "ingredient_cost": "30D",
+      "availability": 7,
+      "source": "Wege der Alchimie (2012), p. 43; price and procurement: pp. 202-203; material prices: pp. 208-209.",
+      "category": "virtutica"
+    },
+    {
+      "id": "keen_senses_elixir",
+      "number": 19,
+      "name": "Keen-senses Elixir",
+      "german_name": "Scharfsinn-Elixier",
+      "category_label": "Virtutica",
+      "ingredients": "1 snake tongue; the eyes of a falcon; 1/2 liquid measure bat blood; 1 additional mandrake; 1 dragonfly-grass fruit; 1 carat opal dust; 1/2 liquid measure Gratenfels sulfur-spring water; 1 flux morning mountain mist; EAGLE EYE.",
+      "crafting_location": "Archaic laboratory",
+      "brewing_modifier": "+4",
+      "analysis_modifier": "+3",
+      "crafting_process": "Under the full moon, chill bat blood with sulfur-spring water and separately chill the captured mountain mist. Combine them, boil with dragonfly grass and mandrake until the root dissolves, then stir in snake tongue, falcon eyes, and opal dust one by one while reciting EAGLE'S EYE; keep stirring until dawn.",
+      "description": "Thick red-brown liquid with a salty taste.",
+      "quality_m": {
+        "effects": [
+          1,
+          2,
+          5,
+          9,
+          13,
+          21
+        ]
+      },
+      "quality_tiers": [
+        {
+          "quality": "A",
+          "text": "Perception TP +3 for one Test."
+        },
+        {
+          "quality": "B",
+          "text": "Perception TP +2 for 1 GT."
+        },
+        {
+          "quality": "C",
+          "text": "Perception TP +3 for 3 GT."
+        },
+        {
+          "quality": "D",
+          "text": "Perception TP +7 for 7 GT."
+        },
+        {
+          "quality": "E",
+          "text": "Perception TP +15 for 1 hour."
+        },
+        {
+          "quality": "F",
+          "text": "As E for 1 day; afterward one randomly determined sense is completely lost for 1 day."
+        }
+      ],
+      "shelf_life": "1d3+1 months",
+      "market_price_quality_c": "about 30D for confirmed Quality C, as published.",
+      "quality_adjusted_prices": {
+        "A": "19.20D",
+        "B": "24D",
+        "C": "30D",
+        "D": "45D",
+        "E": "67.50D",
+        "F": "101.25D"
+      },
+      "ingredient_cost": "15D",
+      "availability": 10,
+      "source": "Wege der Alchimie (2012), p. 43; price and procurement: pp. 202-203; material prices: pp. 208-209.",
+      "category": "virtutica"
+    },
+    {
+      "id": "draught_of_will",
+      "number": 20,
+      "name": "Draught of Will",
+      "german_name": "Willenstrunk",
+      "category_label": "Virtutica",
+      "ingredients": "1 living blue-bellied toad; 3 ounces granite; 1 mandrake; 20 ounces Unau brine; 49 hairs from a dwarf's beard; 1 bundle Thonnys; 2 ounces mercury; ABVENENUM and PSYCHOSTABILIS.",
+      "crafting_location": "Alchemist's laboratory",
+      "brewing_modifier": "+6",
+      "analysis_modifier": "+6",
+      "crafting_process": "Test the living blue-bellied toad inside a pentagram by summoning a Braggu; if it survives without failing from fear, skin it and steep the skin, granite, and mandrake in brine at sunrise. Suspend a net woven from forty-nine dwarf-beard hairs and Thonnys in the liquid, add mercury drop by drop while casting the two named spells, and complete the deliberately repellent filtration and distillation described by the formula.",
+      "description": "Transparent green liquid with a strongly bilious taste.",
+      "quality_m": {
+        "effects": [
+          1,
+          3,
+          18,
+          19,
+          22,
+          27,
+          28,
+          36,
+          37
+        ]
+      },
+      "quality_tiers": [
+        {
+          "quality": "A",
+          "text": "CO +1 and CL -1 for 1 GT."
+        },
+        {
+          "quality": "B",
+          "text": "CO +1 and CL +1 for 1 GT."
+        },
+        {
+          "quality": "C",
+          "text": "As B, plus RM +1; the user becomes incautious."
+        },
+        {
+          "quality": "D",
+          "text": "As B, plus RM +3 for 7 GT."
+        },
+        {
+          "quality": "E",
+          "text": "As B, plus RM +7 for 1 hour."
+        },
+        {
+          "quality": "F",
+          "text": "RM +21 for 1 day against spells whose checks include RM, and near-immunity to direct magical effects, beneficial or harmful. Secondary effects, such as the flames created by an IGNIFAXIUS, still function. There is a 10% chance of addiction."
+        }
+      ],
+      "additional_rule": "Addiction: Without the draught, CL is halved and all effort is directed toward obtaining another dose. A dose suppresses withdrawal for 2 days but provides none of the A-F benefits.",
+      "shelf_life": "2d6+17 months",
+      "market_price_quality_c": "about 50D for confirmed Quality C, as published.",
+      "quality_adjusted_prices": {
+        "A": "32D",
+        "B": "40D",
+        "C": "50D",
+        "D": "75D",
+        "E": "112.50D",
+        "F": "168.75D"
+      },
+      "ingredient_cost": "25D",
+      "availability": 6,
+      "source": "Wege der Alchimie (2012), pp. 43-44; price and procurement: pp. 202-203; material prices: pp. 208-209.",
+      "category": "virtutica"
+    },
+    {
+      "id": "marksmans_draught",
+      "number": 21,
+      "name": "Marksman's Draught",
+      "german_name": "Zielwasser",
+      "category_label": "Virtutica",
+      "ingredients": "5 ounces Angbar bloodstone; 1 additional mandrake; 1 Finage shoot; 3 stalks Kairan; 20 ounces Brabak vitriol; 1 mountain-eagle eye; EAGLE EYE.",
+      "crafting_location": "Archaic laboratory",
+      "brewing_modifier": "+6",
+      "analysis_modifier": "+4",
+      "crafting_process": "Powder the Angbar bloodstone and steep it in vitriol under moonlight for three days. Prepare mandrake and Finage paste, split the Kairan stalks into twenty-one rods, arrange them around the eagle eye, cast EAGLE'S EYE, then stir after the silver light has withdrawn and decant the clear fraction one day later.",
+      "description": "Clear liquid.",
+      "quality_m": {
+        "effects": [
+          1,
+          3,
+          4,
+          10,
+          12,
+          18,
+          22,
+          23,
+          29,
+          30
+        ]
+      },
+      "quality_tiers": [
+        {
+          "quality": "A",
+          "text": "RV +1 for one shot."
+        },
+        {
+          "quality": "B",
+          "text": "RV +1 for 1 GT."
+        },
+        {
+          "quality": "C",
+          "text": "RV +3 for 1 GT."
+        },
+        {
+          "quality": "D",
+          "text": "RV +7; during the effect AT and PA are -5, Initiative -3, AG -3, and Speed is halved."
+        },
+        {
+          "quality": "E",
+          "text": "RV +15 for 1 GT; the user can concentrate on nothing except shooting and barely notices the surroundings."
+        },
+        {
+          "quality": "F",
+          "text": "As E, and the user reloads as though possessing Quick Load. Afterward the relevant ranged Talent is -7 for 1 week."
+        }
+      ],
+      "shelf_life": "1d6+12 weeks",
+      "market_price_quality_c": "about 35D for confirmed Quality C, as published.",
+      "quality_adjusted_prices": {
+        "A": "22.40D",
+        "B": "28D",
+        "C": "35D",
+        "D": "52.50D",
+        "E": "78.75D",
+        "F": "118.13D"
+      },
+      "ingredient_cost": "18D",
+      "availability": 10,
+      "source": "Wege der Alchimie (2012), p. 44; price and procurement: pp. 202-203; material prices: pp. 208-209.",
+      "category": "virtutica"
+    },
+    {
+      "id": "eternal_oil",
+      "number": 22,
+      "name": "Eternal Oil",
+      "german_name": "Ewiges Öl",
+      "category_label": "Inanimatica",
+      "ingredients": "1 mandrake; 20 ounces sweat from a cyclops; juice of one snake-tongue plant; 2 ounces dragon blood; 20 ounces rock oil; 20 ounces shark oil.",
+      "crafting_location": "Witch's kitchen",
+      "brewing_modifier": "+6",
+      "analysis_modifier": "+2",
+      "crafting_note": "A successful batch also requires 17 ASP, including 2 permanent ASP.",
+      "crafting_process": "Press the mandrake completely and mix its juice with cyclops sweat and snake-tongue juice in a precisely sized round bowl. Invest Astral Power until the surface turns red, stir in dragon blood, reduce the mixture to five ounces, blend it with rock oil and shark oil, cover it with cloth, and age it for one year.",
+      "description": "Heavy iridescent-gray oil streaked with red.",
+      "quality_m": {
+        "effects": [
+          1,
+          3,
+          6,
+          7,
+          16,
+          17,
+          38,
+          40
+        ]
+      },
+      "quality_tiers": [
+        {
+          "quality": "A",
+          "text": "Burns almost like ordinary lamp oil and is exhausted after 2d6 days of continuous use."
+        },
+        {
+          "quality": "B",
+          "text": "Burns for 3d6 months."
+        },
+        {
+          "quality": "C",
+          "text": "Burns for 3d6 years."
+        },
+        {
+          "quality": "D",
+          "text": "Burns for 3d6 decades."
+        },
+        {
+          "quality": "E",
+          "text": "Burns for 3d20 decades."
+        },
+        {
+          "quality": "F",
+          "text": "As E, but until then can be extinguished only by magic such as DESTRUCTIBO or by a divine miracle. Shelf life before ignition: 1d3+1 months."
+        }
+      ],
+      "important_note": "Mixing in 7 flux of liquid mindorium reduces the astral payment to 7 ASP, including 1 permanent ASP.",
+      "market_price_quality_c": "about 50D for confirmed Quality C, as published.",
+      "quality_adjusted_prices": {
+        "A": "32D",
+        "B": "40D",
+        "C": "50D",
+        "D": "75D",
+        "E": "112.50D",
+        "F": "168.75D"
+      },
+      "ingredient_cost": "25D",
+      "availability": 6,
+      "source": "Wege der Alchimie (2012), p. 45; price and procurement: pp. 202-203; material prices: pp. 208-209.",
+      "category": "object_material_elixirs"
+    },
+    {
+      "id": "witches_flying_ointment",
+      "number": 23,
+      "name": "Witches' Flying Ointment",
+      "german_name": "Hexensalbe",
+      "category_label": "Witch alchemy; no standard recipe block is provided",
+      "ingredients": "Not disclosed by the core rules. The complete ingredient list and procedure are a secret known only to the leaders of witch circles.",
+      "crafting_process": "The ointment is brewed communally during a witches' gathering. The core rules explicitly keep both the full ingredient list and the work sequence secret, so no more detailed playable procedure is published.",
+      "description": "The ointment is brewed communally at a witches' gathering. It magically animates wooden objects so that they can serve as flying instruments.",
+      "no_standard_block": true,
+      "quality_tiers_note": "None provided.",
+      "important_note": "The source deliberately withholds the formula; no playable quantities, Brewing modifier, or substitute ingredients are given.",
+      "market_price_quality_c": "not published in the core-rule recipe table.",
+      "ingredient_price_note": "unavailable because the source does not publish a complete ingredient list.",
+      "ingredient_cost": "not published; it cannot be reconstructed without inventing prices.",
+      "source": "Wege der Alchimie (2012), p. 45; price and procurement: pp. 202-203; material prices: pp. 208-209.",
+      "category": "object_material_elixirs"
+    },
+    {
+      "id": "hylailian_fire",
+      "number": 24,
+      "name": "Hylailian Fire",
+      "german_name": "Hylailer Feuer",
+      "category_label": "Inanimatica",
+      "ingredients": "2 stone of pitch or rock oil; 5 ounces pure sulfur; 5 ounces spermaceti; 10 ounces charcoal; 1/2 ounce Orazal adhesive.",
+      "crafting_location": "Alchemist's laboratory",
+      "brewing_modifier": "+6",
+      "analysis_modifier": "+5",
+      "crafting_process": "Distill a light, pale oil from pitch or rock oil while avoiding any spark. For every twenty ounces of distillate add sulfur, then thicken it with spermaceti, fine charcoal, and Orazal adhesive in exactly that order; seal it in pitch-lined clay jars and store the jars buried in sand away from flame.",
+      "description": "Thick, sticky oil smelling of sulfur. It floats and burns on water, cannot be extinguished with water, must be smothered with sand, and adheres to objects and creatures.",
+      "quality_m": {
+        "effects": [
+          1,
+          3,
+          6,
+          7,
+          8,
+          9,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17
+        ]
+      },
+      "quality_tiers": [
+        {
+          "quality": "A",
+          "text": "A difficult-to-ignite mass that burns only in a forge fire. It can instead be used as a fire retardant."
+        },
+        {
+          "quality": "B",
+          "text": "Ignites on a 6 on 1d6 and burns for 1d6 CR."
+        },
+        {
+          "quality": "C",
+          "text": "Ignites on 4-6 on 1d6 and burns for 2d6 CR."
+        },
+        {
+          "quality": "D",
+          "text": "Ignites on 2-6 on 1d6 and burns for 1d6 GT."
+        },
+        {
+          "quality": "E",
+          "text": "Ignites automatically and burns for 2d6 GT."
+        },
+        {
+          "quality": "F",
+          "text": "Ignites automatically and burns for 1 hour, creates a 3-pace-high and 1-pace-wide jet of flame, and scatters burning oil through that area."
+        }
+      ],
+      "damage_note": "Use the normal fire-damage rules.",
+      "shelf_life": "Several years",
+      "market_price_quality_c": "about 30D for confirmed Quality C, as published.",
+      "quality_adjusted_prices": {
+        "A": "19.20D",
+        "B": "24D",
+        "C": "30D",
+        "D": "45D",
+        "E": "67.50D",
+        "F": "101.25D"
+      },
+      "ingredient_cost": "15D",
+      "availability": 8,
+      "source": "Wege der Alchimie (2012), pp. 45-46; price and procurement: pp. 202-203; material prices: pp. 208-209.",
+      "category": "object_material_elixirs"
+    },
+    {
+      "id": "metallurgical_additives",
+      "number": 25,
+      "name": "Metallurgical Additives",
+      "german_name": "Metallurgische Addenda",
+      "category_label": "Metallurgical alchemy; no standard recipe block is provided",
+      "products": "Soul Powder, used in the production of Arcanoferrite, and Wolf Powder, used in the production of Wolf Steel.",
+      "ingredients": "The source gives only partial information. The mixtures include sulfur or steam and are said to include remains from particular demons and daimonid plants. Different formulas add further substances.",
+      "crafting_process": "Soul Powder or Wolf Powder is blown through complex mechanical systems into molten ore during steel production. The source names only partial components and deliberately does not publish a complete formula or workshop sequence.",
+      "description": "These are specialized industrial mixtures rather than normal elixirs. The formulas are rare and often encoded. Quality tiers, exact quantities, Brewing modifiers, and complete effects: Not provided in the recipe chapter.",
+      "market_price_quality_c": "not published in the core-rule recipe table.",
+      "ingredient_price_note": "unavailable because the source does not publish a complete ingredient list.",
+      "ingredient_cost": "not published; it cannot be reconstructed without inventing prices.",
+      "source": "Wege der Alchimie (2012), p. 46; metal descriptions on p. 186; price and procurement: pp. 202-203; material prices: pp. 208-209.",
+      "no_standard_block": true,
+      "category": "object_material_elixirs"
+    },
+    {
+      "id": "magical_incendiary_oil",
+      "number": 26,
+      "name": "Magical Incendiary Oil",
+      "german_name": "Magisches Brandöl",
+      "category_label": "Inanimatica",
+      "ingredients": "10 ounces old dung from a plunge pelican; 5 ounces ordinary wood ash; 1 mandrake preserved in alcohol; 2 stone pitch or rock oil; 5 ounces cedar resin; 8 ounces charcoal from a blood elm or stone oak; 5 ounces pure sulfur; 1/2 ounce Orazal adhesive; MANIFESTO.",
+      "crafting_location": "Alchemist's laboratory",
+      "brewing_modifier": "+12",
+      "analysis_modifier": "+18",
+      "crafting_note": "reduced to +8 when AEROFUGO is used",
+      "crafting_process": "Prepare the organic catalyst and enchanted mandrake, distill the pitch or rock-oil base, and incorporate sulfur, selected charcoal, resin, and Orazal while invoking MANIFESTO. The finished incendiary oil must be transferred directly into a perfectly sealed vessel because exposure or damage to the seal can ignite it.",
+      "description": "Thick sticky oil smelling of sulfur. It is highly unstable and can self-ignite if unsealed or if its seal is damaged.",
+      "quality_m": {
+        "effects": [
+          1,
+          3,
+          6,
+          7,
+          8,
+          9,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17
+        ]
+      },
+      "quality_tiers": [
+        {
+          "quality": "A",
+          "text": "Produces one jet of flame inflicting 2d6 fire DP. Quality B-F: Use the corresponding quality of Hylailian Fire, but the higher temperature adds 1d6 fire DP to every damage interval."
+        }
+      ],
+      "instability": "When the vessel's seal is damaged, shaking or transporting it causes self-ignition on a 20 on 1d20.",
+      "shelf_life": "Several years when securely sealed",
+      "market_price_quality_c": "not published in the core-rule recipe table.",
+      "ingredient_cost": "50D",
+      "availability": 7,
+      "source": "Wege der Alchimie (2012), pp. 46-47; price and procurement: pp. 202-203; material prices: pp. 208-209.",
+      "category": "object_material_elixirs"
+    },
+    {
+      "id": "sunlight_elixir",
+      "number": 27,
+      "name": "Sunlight Elixir",
+      "german_name": "Sonnenlicht-Elixier",
+      "category_label": "Inanimatica; secret alchemy of the Church of Praios",
+      "ingredients": "The complete formula is a professional secret. Known components include an acid prepared from Bosparan-leaf juice, 1 scruple finely ground amber, and the first sunlight of a Praiosday. Optical apparatus is required, with an additional Mechanics +7 Test.",
+      "crafting_location": "Alchemist's laboratory",
+      "brewing_modifier": "+12",
+      "analysis_modifier": "+4",
+      "crafting_process": "The Church of Praios keeps the complete procedure as a professional secret. The published information establishes that Bosparan-leaf acid, amber dust, first sunlight on a Praiosday, and a precise optical apparatus are used to trap sunlight in a sealed amber vial; a Mechanics +7 Test is part of the work.",
+      "description": "No visible physical substance; it appears to be sunlight contained in an empty, tightly sealed amber vial.",
+      "quality_m": {
+        "effects": [
+          1,
+          2,
+          5,
+          11,
+          14
+        ]
+      },
+      "quality_tiers": [
+        {
+          "quality": "A",
+          "text": "Weak light, radius 1 pace, for 5 CR. The light counts as a twice-consecrated weapon and automatically contacts every entity in the area."
+        },
+        {
+          "quality": "B",
+          "text": "As A, radius 3 paces."
+        },
+        {
+          "quality": "C",
+          "text": "As A, radius 5 paces for 20 CR."
+        },
+        {
+          "quality": "D",
+          "text": "As A, radius 10 paces for 30 CR."
+        },
+        {
+          "quality": "E",
+          "text": "Bright light, radius 20 paces, for 2d20+30 CR; the light counts as a holy substance."
+        },
+        {
+          "quality": "F",
+          "text": "Blinding flash, radius 50 paces. The area counts as holy ground for 1 GT. Every witness is blinded for 12 GT. Possible additional effects, at the Highlord's discretion, include all spells in the area becoming +3 to +7 harder, loss of 1d6 to 1d20 ASP, and delayed activation of artefacts."
+        }
+      ],
+      "shelf_life": "Unlimited",
+      "market_price_quality_c": "about 100D for confirmed Quality C, as published.",
+      "quality_adjusted_prices": {
+        "A": "64D",
+        "B": "80D",
+        "C": "100D",
+        "D": "150D",
+        "E": "225D",
+        "F": "337.50D"
+      },
+      "ingredient_cost": "50D",
+      "availability": 5,
+      "source": "Wege der Alchimie (2012), p. 47; price and procurement: pp. 202-203; material prices: pp. 208-209.",
+      "category": "object_material_elixirs"
+    },
+    {
+      "id": "stabilisatum_restoration_paste",
+      "number": 28,
+      "name": "Stabilisatum / Restoration Paste",
+      "german_name": "Stabilisatum, auch Wiederherstellungspaste genannt",
+      "category_label": "Object elixir",
+      "ingredients": "1/2 liquid measure Theriak; 2 additional mandrakes; decoction of 10 freshly flowering Finage shoots; 1 carat ruby dust; 5 liquid measures Brabak vitriol; 1 ounce glue made from bear or sea-tiger bones.",
+      "crafting_location": "Witch's kitchen",
+      "brewing_modifier": "+9",
+      "analysis_modifier": "+4",
+      "crafting_process": "Keep the Theriak-Finage essence cool while warming the bone glue. Dissolve mandrakes and ruby in vitriol until the fibers float, skim and dry them, work Finage decoction into the glue, spread the fibers and Theriak through it, mix after twenty heartbeats, and cool the paste so sharply that water freezes.",
+      "description": "Sticky green-glowing paste. Treated material retains a slight green tint. One dose treats up to 200 ounces of organic material such as wood, hide, or leather.",
+      "quality_m": {
+        "effects": [
+          1,
+          3,
+          6,
+          10,
+          39,
+          40
+        ]
+      },
+      "quality_tiers": [
+        {
+          "quality": "A",
+          "text": "A damaged object regains all Structure Points."
+        },
+        {
+          "quality": "B",
+          "text": "As A; maximum Structure Points +20%, Hardness +1, Structure +1."
+        },
+        {
+          "quality": "C",
+          "text": "As A; maximum Structure Points +50%, Hardness +2, Structure +2."
+        },
+        {
+          "quality": "D",
+          "text": "As A; maximum Structure Points +100%, Hardness +3, Structure +3."
+        },
+        {
+          "quality": "E",
+          "text": "As D, but Structure rises by 7, equivalent to BP -7. At Structure 21 or BP -7 the object is unbreakable. Recently destroyed objects can be reassembled."
+        },
+        {
+          "quality": "F",
+          "text": "The object becomes unbreakable and magical, loses every temporary enchantment, and resists all later enchantment attempts with a +21 penalty."
+        }
+      ],
+      "shelf_life": "3d6+6 weeks in a well-sealed glass or metal vessel; only 1d6 days if the seal is damaged",
+      "market_price_quality_c": "about 120D for confirmed Quality C, as published.",
+      "quality_adjusted_prices": {
+        "A": "76.80D",
+        "B": "96D",
+        "C": "120D",
+        "D": "180D",
+        "E": "270D",
+        "F": "405D"
+      },
+      "ingredient_cost": "60D",
+      "availability": 5,
+      "source": "Wege der Alchimie (2012), pp. 47-48; price and procurement: pp. 202-203; material prices: pp. 208-209.",
+      "category": "object_material_elixirs"
+    },
+    {
+      "id": "weapon_balm",
+      "number": 29,
+      "name": "Weapon Balm",
+      "german_name": "Waffenbalsam",
+      "category_label": "Inanimatica",
+      "ingredients": "3 Horush seeds; 5 ounces Brabak vitriol; 2 cave-dragon scales; 25 ounces water from a flowing stream; 5 ounces ash from griffon feathers; 1 ounce silver dust; bear fat.",
+      "crafting_location": "Witch's kitchen",
+      "brewing_modifier": "+6",
+      "analysis_modifier": "+3",
+      "crafting_process": "Dissolve the Horush seeds in hot vitriol and steep the cave-dragon scales until they become green slime. Stop the bubbling with running water, stir in griffon-feather ash and silver dust, calcine the mixture to a dull powder, and work that powder into hot bear fat.",
+      "description": "Silver paste smelling of burning. It works only on metal weapons and tools; wooden grips become brittle. One dose treats one sword blade or axe head, two dagger blades, or five arrows or bolts.",
+      "quality_m": {
+        "effects": [
+          1,
+          3,
+          10,
+          12,
+          39,
+          40
+        ]
+      },
+      "quality_tiers": [
+        {
+          "quality": "A",
+          "text": "BP -1."
+        },
+        {
+          "quality": "B",
+          "text": "BP -3."
+        },
+        {
+          "quality": "C",
+          "text": "BP -3 and +1 HP for 1 day."
+        },
+        {
+          "quality": "D",
+          "text": "BP -3, +1 HP for 1 day, and the weapon counts as magical during that time."
+        },
+        {
+          "quality": "E",
+          "text": "BP -3; for about 1 week the weapon is effectively unbreakable except against magical damage, counts as magical, and inflicts +2 HP."
+        },
+        {
+          "quality": "F",
+          "text": "The weapon becomes magical and truly unbreakable, shines with bright white fire, and inflicts +4 HP, but after 7 GT it irretrievably crumbles to dust."
+        }
+      ],
+      "additional_rule": "Effects do not stack; a weapon can be treated with Weapon Balm only once.",
+      "shelf_life": "Nearly unlimited",
+      "market_price_quality_c": "about 35D for confirmed Quality C, as published.",
+      "quality_adjusted_prices": {
+        "A": "22.40D",
+        "B": "28D",
+        "C": "35D",
+        "D": "52.50D",
+        "E": "78.75D",
+        "F": "118.13D"
+      },
+      "ingredient_cost": "18D",
+      "availability": 8,
+      "source": "Wege der Alchimie (2012), p. 48; price and procurement: pp. 202-203; material prices: pp. 208-209.",
+      "category": "object_material_elixirs"
+    },
+    {
+      "id": "fear_poison_mengbilla_madness",
+      "number": 30,
+      "name": "Fear Poison / Mengbilla Madness",
+      "german_name": "Angstgift",
+      "category_label": "Venenik; alchemical weapon poison, stage 4",
+      "ingredients": "6 ounces vitriol; 5 shark teeth; 1 mandrake; 1 ounce saliva from a berserker; 2 hare ears; 2 bundles Hell Herb; 1 ounce dust from a crypt; bear fat; HORRIPHOBUS.",
+      "crafting_location": "Archaic laboratory",
+      "brewing_modifier": "+5",
+      "analysis_modifier": "+3",
+      "crafting_process": "Dissolve shark teeth and mandrake in vitriol to form green jelly and cast HORRIPHOBUS over it. Add berserker saliva, work in Hell Herb until the mass flows like honey, mix in crypt dust, heat it to a yellow powder, and blend the powder into bear fat.",
+      "description": "Slightly granular yellowish paste, usually rancid-smelling.",
+      "quality_m": {
+        "effects": [
+          1,
+          3,
+          8,
+          9,
+          10,
+          13,
+          14,
+          24,
+          25
+        ]
+      },
+      "quality_tiers": [
+        {
+          "quality": "A",
+          "text": "For 1d6 GT, the victim gains a Highlord-chosen fear-based negative trait at 1d3+3."
+        },
+        {
+          "quality": "B",
+          "text": "As A, but 1d6+4."
+        },
+        {
+          "quality": "C",
+          "text": "For 7 GT, all existing fears rise by 2 and CO is reduced by 2."
+        },
+        {
+          "quality": "D",
+          "text": "For 7 GT, the victim fears the first being seen after poisoning and behaves passively toward it."
+        },
+        {
+          "quality": "E",
+          "text": "As D, but the victim panics and flees."
+        },
+        {
+          "quality": "F",
+          "text": "As E and the victim also fears other beings. If escape is impossible, the victim attacks the poisoner with AT +7 and HP +7. On 19-20 on 1d20, CO and CL each fall permanently by 1. Resistance: A successful CN Test +4 reduces the effect by one quality, with A as the minimum successful quality."
+        }
+      ],
+      "shelf_life": "1d6+15 months",
+      "market_price_quality_c": "about 25D for confirmed Quality C, as published.",
+      "quality_adjusted_prices": {
+        "A": "16D",
+        "B": "20D",
+        "C": "25D",
+        "D": "37.50D",
+        "E": "56.25D",
+        "F": "84.38D"
+      },
+      "ingredient_cost": "13D",
+      "availability": 8,
+      "source": "Wege der Alchimie (2012), pp. 48-49; price and procurement: pp. 202-203; material prices: pp. 208-209.",
+      "category": "poisons"
+    },
+    {
+      "id": "ban_dust",
+      "number": 31,
+      "name": "Ban Dust",
+      "german_name": "Bannstaub",
+      "category_label": "Venenik; alchemical ingestion poison, stage 15",
+      "ingredients": "12 scruples whole unworked crystal-clear amber; 5 ounces Kosch basalt; 17 ounces nitrol; the shell of a rooster hatched on 1 Praios; 1 griffon feather; 1 ounce iron powder; 1 liquid measure rainwater distilled by sunlight; 20 scruples pure salt; 6 ounces Brabak vitriol; 1 ounce gold; 2 ounces sun-lynx urine; 12 fresh Praios-flower petals.",
+      "crafting_location": "Alchemist's laboratory",
+      "brewing_modifier": "+10",
+      "analysis_modifier": "+7",
+      "crafting_process": "Expose the amber to a full cloudless Praiosday and grind it. Prepare separate extracts of basalt in nitrol, egg shell, griffon feather and iron in sun-distilled water, salt and vitriol made into acids, gold dissolved in aqua regia, and sun-lynx urine with Praios petals; distill and combine the fractions, stir in the amber with the griffon-feather shaft, then evaporate the liquid in sunlight and grind the golden-red residue.",
+      "description": "Golden-red dust that attracts astral power and spoils rapidly at magically potent places unless stored in thick-walled iron or Kosch-basalt containers.",
+      "quality_m": {
+        "effects": [
+          1,
+          3,
+          5,
+          10,
+          18,
+          21,
+          22,
+          40
+        ],
+        "note": "Some victims instead contract Rapid Madness."
+      },
+      "quality_tiers": [
+        {
+          "quality": "A",
+          "text": "The IN Test for ASP regeneration is omitted during the next rest period."
+        },
+        {
+          "quality": "B",
+          "text": "The victim regenerates no ASP during the next night."
+        },
+        {
+          "quality": "C",
+          "text": "As B; 1 GT after ingestion the victim also loses 2d6 ASP once."
+        },
+        {
+          "quality": "D",
+          "text": "As C, but for 3d6 GT the victim loses 1d6+2 ASP per GT, starting 1 GT after ingestion."
+        },
+        {
+          "quality": "E",
+          "text": "As D and no Astral Energy regeneration for the next 1d6 nights."
+        },
+        {
+          "quality": "F",
+          "text": "As E. If Astral Energy falls below 0, every full 7 excess negative ASP cause the permanent loss of 1 ASP. Special rules: Normal antidotes do not work. At quality F, the dust may temporarily disrupt astral patterns when scattered over an object or being, at the Highlord's discretion."
+        }
+      ],
+      "shelf_life": "1d3+10 months under suitable storage",
+      "market_price_quality_c": "about 250D for confirmed Quality C, as published.",
+      "quality_adjusted_prices": {
+        "A": "160D",
+        "B": "200D",
+        "C": "250D",
+        "D": "375D",
+        "E": "562.50D",
+        "F": "843.75D"
+      },
+      "ingredient_cost": "125D",
+      "availability": 3,
+      "source": "Wege der Alchimie (2012), p. 49; price and procurement: pp. 202-203; material prices: pp. 208-209.",
+      "category": "poisons"
+    },
+    {
+      "id": "boabungaha",
+      "number": 32,
+      "name": "Boabungaha",
+      "german_name": "Boabungaha",
+      "category_label": "Inhalation poison, stage 19",
+      "ingredients": "5 scruples mucus from a yellow arrow frog; 5 scruples pollen from the Yuchak-Ni tree; 10 scruples bone meal from a desiccated corpse; 2 flux juice from the Moarana vine.",
+      "crafting_location": "Archaic laboratory",
+      "brewing_modifier": "+12",
+      "analysis_modifier": "+7",
+      "crafting_process": "Press the Moarana vine into an earthen vessel, thicken it with corpse-bone meal, call on three generations of ancestors, and spread the frog mucus over the brew without touching it. Leave the closed vessel untouched for seven days and nights, pour off the slime-water, grind the crust with the pollen, and sew the finished powder into a shrunken head.",
+      "description": "Fine gray-green powder that remains airborne for 2d3 CR. Poison onset is 5 CR.",
+      "quality_m": {
+        "effects": [
+          1,
+          11,
+          12,
+          19
+        ]
+      },
+      "quality_tiers": [
+        {
+          "quality": "A",
+          "text": "Shortness of breath; maximum Endurance is reduced by 50% for 8 hours."
+        },
+        {
+          "quality": "B",
+          "text": "Suffocation inflicts 1d6-4 DP (Endurance) per CR for 30 CR."
+        },
+        {
+          "quality": "C",
+          "text": "Suffocation inflicts 1d6-2 DP (Endurance) per CR for 1d20+30 CR."
+        },
+        {
+          "quality": "D",
+          "text": "Suffocation inflicts 1d6 DP (Endurance) per CR for 2d20+30 CR."
+        },
+        {
+          "quality": "E",
+          "text": "Suffocation inflicts 2d6 DP (Endurance) per CR until the victim dies."
+        },
+        {
+          "quality": "F",
+          "text": "Immediate cardiac arrest; all EP are lost and the victim loses 3d6 VP. Death is unavoidable after CN CR unless the victim is saved. A survivor gains Resistance to Inhalation Poisons but permanently loses 1d6 EP. Additional rules: All Talent and spell Tests are +15 harder because of respiratory distress. A successful CN Test +19 halves Endurance damage including modifiers. Half of the Endurance damage is also deducted from VP."
+        }
+      ],
+      "shelf_life": "1d6+6 months",
+      "market_price_quality_c": "about 250D for confirmed Quality C, as published.",
+      "quality_adjusted_prices": {
+        "A": "160D",
+        "B": "200D",
+        "C": "250D",
+        "D": "375D",
+        "E": "562.50D",
+        "F": "843.75D"
+      },
+      "ingredient_cost": "10D",
+      "availability": 2,
+      "source": "Wege der Alchimie (2012), p. 50; price and procurement: pp. 202-203; material prices: pp. 208-209.",
+      "category": "poisons"
+    },
+    {
+      "id": "dragon_spittle",
+      "number": 33,
+      "name": "Dragon Spittle",
+      "german_name": "Drachenspeichel",
+      "category_label": "Venenik; alchemical weapon poison, stage 7. The batch yields two weapon applications and can be mixed with water for use as an ingestion poison",
+      "ingredients": "2 ounces wolf-rat dung; 5 ounces viper blood; 5 ounces ebony ash; 3 ounces birch ash; 5 ounces Unau brine; 1 scruple ruby splinters; 1 ounce Brabak vitriol; 2 ounces mercury.",
+      "crafting_location": "Alchemist's laboratory",
+      "brewing_modifier": "+6",
+      "analysis_modifier": "+3",
+      "crafting_process": "Mix wolf-rat dung with viper blood and separately mix both ashes with brine. Heat both sealed pastes, dissolve ruby in vitriol and add it after cooling, repeat the heating with mercury, quench the vessel with cold water, discard the liquid, and scrape out the residue to mix with tallow and talc.",
+      "description": "Green paste with a mildly stupefying odor. Symptoms include severe swelling, pain, and dizziness.",
+      "quality_m": {
+        "effects": [
+          1,
+          3,
+          8,
+          12,
+          13,
+          14
+        ]
+      },
+      "quality_tiers": [
+        {
+          "quality": "A",
+          "text": "Mild nausea only; all Tests are +1 harder for 1 hour."
+        },
+        {
+          "quality": "B",
+          "text": "2d6+2 DP once."
+        },
+        {
+          "quality": "C",
+          "text": "4d6 DP over the course of 1 hour."
+        },
+        {
+          "quality": "D",
+          "text": "1d6+1 DP per GT for 1d6+1 GT."
+        },
+        {
+          "quality": "E",
+          "text": "1d6+3 DP per GT for 1d6+1 GT."
+        },
+        {
+          "quality": "F",
+          "text": "As E. Even a successful CN Test +17 only halves the damage. A survivor gains Immunity to Dragon Spittle. Resistance: A successful CN Test +7 halves the DP."
+        }
+      ],
+      "shelf_life": "1d6+9 months",
+      "market_price_quality_c": "about 60D for confirmed Quality C, as published.",
+      "quality_adjusted_prices": {
+        "A": "38.40D",
+        "B": "48D",
+        "C": "60D",
+        "D": "90D",
+        "E": "135D",
+        "F": "202.50D"
+      },
+      "ingredient_cost": "30D",
+      "availability": 7,
+      "source": "Wege der Alchimie (2012), p. 50; the complete quality-E die expression is also printed in Wege der Zauberei; price and procurement: pp. 202-203; material prices: pp. 208-209. (2011), p. 64.",
+      "category": "poisons"
+    },
+    {
+      "id": "half_poison",
+      "number": 34,
+      "name": "Half-poison",
+      "german_name": "Halbgift",
+      "category_label": "Venenik; alchemical weapon and ingestion poison, stage 8",
+      "ingredients": "10 ounces wood from a lightning-split tree; 12 ounces Brabak vitriol; 1 mandrake; 3 Red Lotus blossoms; PLUMBUMBARUM.",
+      "crafting_location": "Witch's kitchen",
+      "brewing_modifier": "+6",
+      "analysis_modifier": "+8",
+      "crafting_process": "Dry the lightning-split wood and dissolve it in vitriol while stirring for about two hours. Warm the brown slime over charcoal, add pounded mandrake, cast PLUMBUMBARUM, allow sediment and liquid to separate, then distill the liquid with fresh Red Lotus.",
+      "description": "Thick-flowing brown liquid smelling of lotus.",
+      "quality_m": {
+        "effects": [
+          1,
+          2,
+          3,
+          4,
+          10,
+          26
+        ]
+      },
+      "quality_tiers": [
+        {
+          "quality": "A",
+          "text": "For 7 CR, AT and PA each fall by 1."
+        },
+        {
+          "quality": "B",
+          "text": "For 7 CR, CO, AG, ST, AT, PA, HP, and Initiative each fall by 1."
+        },
+        {
+          "quality": "C",
+          "text": "For 1 GT, CO, AG, AT, PA, HP, and Initiative each fall by 3."
+        },
+        {
+          "quality": "D",
+          "text": "For 7 GT, CO, AG, AT, PA, HP, and Initiative are halved."
+        },
+        {
+          "quality": "E",
+          "text": "As D, but the victim appears half-sized and counts as a small opponent."
+        },
+        {
+          "quality": "F",
+          "text": "As E, but the victim actually becomes half-sized for the duration; the stated AT and PA penalties from size do not apply beyond the listed poison effect. Resistance: A successful CN Test +8 reduces the effect by one quality, with A as the minimum successful quality."
+        }
+      ],
+      "shelf_life": "1d3+10 weeks",
+      "market_price_quality_c": "about 60D for confirmed Quality C, as published.",
+      "quality_adjusted_prices": {
+        "A": "38.40D",
+        "B": "48D",
+        "C": "60D",
+        "D": "90D",
+        "E": "135D",
+        "F": "202.50D"
+      },
+      "ingredient_cost": "30D",
+      "availability": 7,
+      "source": "Wege der Alchimie (2012), p. 51; price and procurement: pp. 202-203; material prices: pp. 208-209.",
+      "category": "poisons"
+    },
+    {
+      "id": "toads_breath",
+      "number": 35,
+      "name": "Toad's Breath",
+      "german_name": "Krötenhauch",
+      "category_label": "Contact and ingestion poison, stage 6. Onset is immediate; duration is 20 CR as contact poison or 10 CR as ingestion poison",
+      "ingredients": "1 ounce sulfurous Orazal; 1 additional mandrake; 5 Morfu spines; 1 liquid measure acid from a Tuur-Amash chalice; 1 flux bile; BAN HEALING POWER.",
+      "crafting_location": "Witch's kitchen",
+      "brewing_modifier": "+4",
+      "analysis_modifier": "+6",
+      "crafting_process": "Soak mandrake and Morfu poison in sulfurous Orazal, cast BAN HEALING POWER before the root fully dissolves, and filter the now colorless liquid. Add bile and Tuur-Amash acid carefully and distill the brew three times.",
+      "description": "Thick colorless acid. It is normally diluted into sticky paste for contact use or mixed into a nonalcoholic drink. Metal and glass resist it, but wood and leather decay over time.",
+      "quality_m": {
+        "effects": [
+          1,
+          2,
+          9,
+          10,
+          14
+        ]
+      },
+      "quality_tiers": [
+        {
+          "quality": "A",
+          "text": "Reddened skin and pain; single Tests +1 and Talent Tests +3. Objects are discolored."
+        },
+        {
+          "quality": "B",
+          "text": "Mild chemical burns; 2d6 DP once; Tests +1/+3. Object Hardness -1."
+        },
+        {
+          "quality": "C",
+          "text": "Burns inflict 1d3 DP every 2 CR; Tests +2/+6. Object Hardness -3."
+        },
+        {
+          "quality": "D",
+          "text": "As C, but 1d6 DP every 2 CR and Hardness -5."
+        },
+        {
+          "quality": "E",
+          "text": "As C, but 1d6 DP per CR and Hardness -7."
+        },
+        {
+          "quality": "F",
+          "text": "As E. The acid acts like hydrochloric acid and additionally dissolves copper and bronze. Resistance and healing: Successful poison resistance halves damage. BAN HEALING POWER penalizes every healing attempt by the poison's stage, and an Antidote functions one quality lower."
+        }
+      ],
+      "shelf_life": "2d6+3 months",
+      "market_price_quality_c": "about 70D for confirmed Quality C, as published.",
+      "quality_adjusted_prices": {
+        "A": "44.80D",
+        "B": "56D",
+        "C": "70D",
+        "D": "105D",
+        "E": "157.50D",
+        "F": "236.25D"
+      },
+      "ingredient_cost": "35D",
+      "availability": 7,
+      "source": "Wege der Alchimie (2012), p. 51; price and procurement: pp. 202-203; material prices: pp. 208-209.",
+      "category": "poisons"
+    },
+    {
+      "id": "purple_lightning",
+      "number": 36,
+      "name": "Purple Lightning",
+      "german_name": "Purpurblitz",
+      "category_label": "Alchemical poison, stage 20",
+      "ingredients": "1 ounce cinnabar; 1 ounce Purple Lotus; 2 ounces salt-arele blubber; skin of a Kosch toad; stinger of a seven-year-old Maraske; 20 ounces Brabak vitriol.",
+      "crafting_location": "Alchemist's laboratory",
+      "brewing_modifier": "+8",
+      "analysis_modifier": "+4",
+      "crafting_process": "Make a paste of cinnabar, powdered Purple Lotus, and salt-arele blubber, form it into a ball, and wrap it in Kosch-toad skin with the warts inward. Leave it in a heptagram under Kor for three nights, drip the Maraske venom into hot vitriol, dissolve the wrapped ball in it, and distill the final colorless poison.",
+      "description": "Colorless, odorless powder that dissolves in water without streaks. The only visible symptom is purple mist before the victim's eyes. Onset is immediate.",
+      "quality_m": {
+        "effects": [
+          1,
+          2,
+          3,
+          8,
+          10,
+          11,
+          12,
+          13,
+          14
+        ]
+      },
+      "quality_tiers": [
+        {
+          "quality": "A",
+          "text": "For 1d6 days, the victim's CN counts as 3 lower for poison-resistance Tests."
+        },
+        {
+          "quality": "B",
+          "text": "1d20 DP once."
+        },
+        {
+          "quality": "C",
+          "text": "1 DP per CR for 2d20 CR."
+        },
+        {
+          "quality": "D",
+          "text": "1d6 DP per CR for 2d20+30 CR."
+        },
+        {
+          "quality": "E",
+          "text": "2d6 DP per CR until death."
+        },
+        {
+          "quality": "F",
+          "text": "As E. Even a successful CN Test +30 only halves damage. A survivor gains Immunity to Purple Lightning. Resistance: A successful CN Test +20 halves poison damage."
+        }
+      ],
+      "shelf_life": "1d6+9 months",
+      "market_price_quality_c": "about 300D for confirmed Quality C, as published.",
+      "quality_adjusted_prices": {
+        "A": "192D",
+        "B": "240D",
+        "C": "300D",
+        "D": "450D",
+        "E": "675D",
+        "F": "1012.50D"
+      },
+      "ingredient_cost": "50D",
+      "availability": 3,
+      "source": "Wege der Alchimie (2012), p. 52; price and procurement: pp. 202-203; material prices: pp. 208-209.",
+      "category": "poisons"
+    },
+    {
+      "id": "sleeping_poison",
+      "number": 37,
+      "name": "Sleeping Poison",
+      "german_name": "Schlafgift",
+      "category_label": "Venenik; alchemical weapon poison, stage 5. The batch yields one weapon dose or two ingestion doses",
+      "ingredients": "2 ounces Boron wine; 1 mandrake; 5 Ilmen leaves; ash from 7 black goose down-feathers; SOMNIGRAVIS.",
+      "crafting_location": "Witch's kitchen",
+      "brewing_modifier": "+5",
+      "analysis_modifier": "+4",
+      "crafting_process": "Steep the mandrake in Boron wine for twenty-one days. Roast Ilmen leaf with black goose down, grind it, add it to the wine, cast SOMNIGRAVIS at midnight, and simmer the mixture until it becomes a thick brown syrup.",
+      "description": "Brown syrup with a bitter taste.",
+      "quality_m": {
+        "effects": [
+          1,
+          3,
+          4,
+          18,
+          25
+        ]
+      },
+      "quality_tiers": [
+        {
+          "quality": "A",
+          "text": "For 3 GT the victim is dazed: CL, AG, AT, and PA each -2."
+        },
+        {
+          "quality": "B",
+          "text": "The victim is stunned and unable to move for 1 GT."
+        },
+        {
+          "quality": "C",
+          "text": "After 3 CR, the victim falls into deep sleep for 3 GT."
+        },
+        {
+          "quality": "D",
+          "text": "Immediate deep sleep for 7 GT."
+        },
+        {
+          "quality": "E",
+          "text": "Immediate deep sleep for 7 hours."
+        },
+        {
+          "quality": "F",
+          "text": "The sleeper can be awakened only by magic, such as REVERSALIS [SOMNIGRAVIS]; legendary durations of a century are possible. Resistance: A successful CN Test +5 reduces the effect by two qualities, with A as the minimum."
+        }
+      ],
+      "shelf_life": "1d3+10 months",
+      "market_price_quality_c": "about 35D for confirmed Quality C, as published.",
+      "quality_adjusted_prices": {
+        "A": "22.40D",
+        "B": "28D",
+        "C": "35D",
+        "D": "52.50D",
+        "E": "78.75D",
+        "F": "118.13D"
+      },
+      "ingredient_cost": "18D",
+      "availability": 13,
+      "source": "Wege der Alchimie (2012), p. 52; price and procurement: pp. 202-203; material prices: pp. 208-209.",
+      "category": "poisons"
+    },
+    {
+      "id": "tulmadron",
+      "number": 38,
+      "name": "Tulmadron",
+      "german_name": "Tulmadron",
+      "category_label": "Mineral poison, stage 15. Onset is 20 CR; normal duration is 3 GT",
+      "ingredients": "3 Tulma nodules; 1 liquid measure urine; 1 flux scorpion venom; 5 flux blood from an intoxicated Khoram beast.",
+      "crafting_location": "Archaic laboratory",
+      "brewing_modifier": "+9",
+      "analysis_modifier": "+10",
+      "crafting_process": "Carefully dissolve the Tulma nodules with the urine, scorpion venom, and intoxicated Khoram-beast blood. Over a long period the liquid must penetrate the stone and transform its interior; only then are the nodules broken open and the coarse silver poison recovered.",
+      "description": "Crumbly silver powder.",
+      "quality_m": {
+        "effects": [
+          1,
+          2,
+          12,
+          14,
+          26
+        ]
+      },
+      "quality_tiers": [
+        {
+          "quality": "A",
+          "text": "Disorientation; all attributes -1. A successful resistance Test negates the effect."
+        },
+        {
+          "quality": "B",
+          "text": "Hallucinations and pain; all attributes -2; 1d6-5 DP per CR."
+        },
+        {
+          "quality": "C",
+          "text": "As B, but 1d6-4 DP per CR."
+        },
+        {
+          "quality": "D",
+          "text": "All attributes -3 and 1d6-3 DP per CR."
+        },
+        {
+          "quality": "E",
+          "text": "All attributes -4 and 1d6 DP per CR."
+        },
+        {
+          "quality": "F",
+          "text": "Severe hallucinations and pain; all attributes -7; 3d20 DP once. Resistance: A successful poison-resistance Test reduces duration to 50 CR and halves all damage and attribute penalties."
+        }
+      ],
+      "shelf_life": "Nearly unlimited when protected from air and light",
+      "market_price_quality_c": "about 200D for confirmed Quality C, as published.",
+      "quality_adjusted_prices": {
+        "A": "128D",
+        "B": "160D",
+        "C": "200D",
+        "D": "300D",
+        "E": "450D",
+        "F": "675D"
+      },
+      "ingredient_cost": "20D",
+      "availability": 4,
+      "source": "Wege der Alchimie (2012), p. 53; price and procurement: pp. 202-203; material prices: pp. 208-209.",
+      "category": "poisons"
+    },
+    {
+      "id": "water_madness",
+      "number": 39,
+      "name": "Water Madness",
+      "german_name": "Wasserwahn",
+      "category_label": "Demonic and alchemical ingestion poison, stage 16; onset 2d6 GT",
+      "ingredients": "1 swarm fungus; 5 liquid measures Brabak vitriol; 5 liquid measures double distillate; the heart of a Thorwalian or goblin; 1 additional mandrake; mother-of-pearl from a violet shell; 1 flux liquid kraken-silver.",
+      "crafting_location": "Alchemist's laboratory",
+      "brewing_modifier": "+9",
+      "analysis_modifier": "+7",
+      "crafting_process": "Circulate vitriol and double distillate through a swarm fungus for three days, using the humanoid heart as a pump. Heat the recovered liquid, add kraken-silver in a thin stream until violet, then add sliced mandrake and crushed mother-of-pearl while invoking the demonic power; bottle the liquid when it becomes colorless except for iridescent 'eyes'.",
+      "description": "Colorless and tasteless liquid.",
+      "quality_m": {
+        "effects": [
+          1,
+          3,
+          5,
+          18,
+          20
+        ]
+      },
+      "quality_tiers": [
+        {
+          "quality": "A",
+          "text": "For 1d6 days the victim is mildly confused, RM -1, and feels an unexplained aversion to divinely blessed places."
+        },
+        {
+          "quality": "B",
+          "text": "For 1d6 days RM -3; the victim reacts aggressively toward Blessed Ones, holy places, and holy objects."
+        },
+        {
+          "quality": "C",
+          "text": "For 2d6 days the swarm fungus dominates the victim, who travels to the place where the alchemist hid the residue and defends it fiercely. The victim suffers 1d3 DP per day."
+        },
+        {
+          "quality": "D",
+          "text": "As C for 4d6 days, with severe hallucinations. If the victim dies from the damage, the corpse rises as a water corpse for another 1d6 months, with Resistance to mundane weapons and Vulnerability to consecrated weapons."
+        },
+        {
+          "quality": "E",
+          "text": "As D for 6d6 days, and the victim remains a water corpse for 2d6 months."
+        },
+        {
+          "quality": "F",
+          "text": "As E, and every bodily excretion contains swarm-fungus seed. After death the victim does not rise as a water corpse but is drawn into the Netherhells. Resistance: A successful poison-resistance Test halves the living-state duration."
+        }
+      ],
+      "shelf_life": "Nearly unlimited",
+      "market_price_quality_c": "about 180D for confirmed Quality C, as published.",
+      "quality_adjusted_prices": {
+        "A": "115.20D",
+        "B": "144D",
+        "C": "180D",
+        "D": "270D",
+        "E": "405D",
+        "F": "607.50D"
+      },
+      "ingredient_cost": "50D",
+      "availability": 4,
+      "source": "Wege der Alchimie (2012), p. 53; price and procurement: pp. 202-203; material prices: pp. 208-209.",
+      "category": "poisons"
+    },
+    {
+      "id": "zazamotoxin",
+      "number": 40,
+      "name": "Zazamotoxin",
+      "german_name": "Zazamotoxin",
+      "category_label": "Demonic poison, stage 12; onset immediate; duration 20 CR against demons and 10 CR against living beings",
+      "ingredients": "1 additional mandrake; 1 scruple White Lotus; 1 liquid measure Smoking Brown Oil; 7 summoning candles; 3 flux venom from a Zazamotl'gnakhyaa; various donaria; INVOCATIO MAIOR.",
+      "crafting_location": "Alchemist's laboratory",
+      "brewing_modifier": "+10",
+      "analysis_modifier": "+8",
+      "crafting_process": "Dissolve mandrake and White Lotus in Smoking Brown Oil and heat it to steaming. Summon a Zazamotl'gnakhyaa inside proper protective circles, offer the required donaria, obtain several drops of its venom, and add them immediately until the fumes turn black.",
+      "description": "Sticky dark-gold to brown liquid. Venom from a Zazamotl'gnakhyaa is indispensable and cannot be substituted.",
+      "quality_m": {
+        "effects": [
+          3,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ]
+      },
+      "quality_tiers": [
+        {
+          "quality": "A",
+          "text": "A demonic victim loses Dodge into the Limbo."
+        },
+        {
+          "quality": "B",
+          "text": "As A, plus loss of Invisibility and every Regeneration ability."
+        },
+        {
+          "quality": "C",
+          "text": "As B, plus AT and PA each -1, Speed halved, and 1d3 DP per CR."
+        },
+        {
+          "quality": "D",
+          "text": "As B, plus AT and PA each -3, Speed halved, and 1d6 DP per CR."
+        },
+        {
+          "quality": "E",
+          "text": "As B, plus AT and PA each -5, Speed reduced to one-quarter, and 2d6 DP per CR."
+        },
+        {
+          "quality": "F",
+          "text": "As E, plus 5d6 DP immediately. Living victims: They may resist. They suffer AG -2 and lose 1d6 EP per CR, both halved by successful resistance. Demons receive no resistance roll."
+        }
+      ],
+      "shelf_life": "About 1 year",
+      "market_price_quality_c": "about 250D for confirmed Quality C, as published.",
+      "quality_adjusted_prices": {
+        "A": "160D",
+        "B": "200D",
+        "C": "250D",
+        "D": "375D",
+        "E": "562.50D",
+        "F": "843.75D"
+      },
+      "ingredient_cost": "75D",
+      "availability": 1,
+      "source": "Wege der Alchimie (2012), p. 54; price and procurement: pp. 202-203; material prices: pp. 208-209.",
+      "category": "poisons"
+    },
+    {
+      "id": "two_component_poisons",
+      "number": 41,
+      "name": "Two-component Poisons",
+      "german_name": "Zwei-Komponenten-Gifte",
+      "category_label": "Specialized poisons; each formula is a professional secret",
+      "ingredients": "Formula-dependent, often based on known poison recipes. Exact ingredients are not provided.",
+      "crafting_location": "Alchemist's laboratory",
+      "brewing_modifier": "+10 or more",
+      "crafting_note": "Analysis of either isolated component is +15.",
+      "crafting_process": "Every two-component poison has its own professional-secret formula. In general the harmless preparatum is made first and introduced into the victim; the separately prepared solvatum is administered later to trigger the stored poison. No universal ingredient list or process is published.",
+      "description": "Two individually harmless substances, usually inconspicuous powders or liquids. The first component, the preparatum, is stored in the victim's body and may persist for years. Once absorbed, it is no longer recognized as a poison and cannot be removed by Antidote or CLARUM PURUM. The second, the solvatum, changes the preparatum's structure and triggers the poison effect.",
+      "effect": "Usually reliably lethal from quality B onward. The source directs the Highlord to use Boabungaha or Purple Lightning as effect models rather than providing a universal A-F table.",
+      "shelf_life": "Usually several years",
+      "market_price_quality_c": "priceless; the source provides no ordinary sale value.",
+      "ingredient_cost": "at least 100D",
+      "availability": 3,
+      "source": "Wege der Alchimie (2012), p. 54; price and procurement: pp. 202-203; material prices: pp. 208-209.",
+      "category": "poisons"
+    },
+    {
+      "id": "antidote",
+      "number": 42,
+      "name": "Antidote",
+      "german_name": "Antidot",
+      "category_label": "Spagyrik",
+      "ingredients": "1 Black Lotus blossom; 1 liter resinated wine; 1 grain Tulmadron; the venom fang of a nettle viper; white of one stork egg; 5 ounces Menchal juice; 7 Belmart leaves; 1 ounce cinnabar.",
+      "crafting_location": "Witch's kitchen",
+      "brewing_modifier": "+5",
+      "analysis_modifier": "+4",
+      "crafting_process": "Remove the Black Lotus dust and steep it with Tulmadron and the viper fang in resinated wine for seven warm, dark hours. Mix egg white with Menchal juice, grind Belmart with cinnabar into it, shake the vessel twelve times while invoking the gods, combine both preparations, and distill exactly one ounce over glowing coals.",
+      "description": "Clear liquid with an alcoholic odor.",
+      "quality_m": {
+        "effects": [
+          1,
+          3,
+          12,
+          18,
+          19,
+          24,
+          33,
+          35
+        ]
+      },
+      "quality_tiers": [
+        {
+          "quality": "A",
+          "text": "Does not stop the current poisoning. If the user survives Black Lotus poisoning, future Black Lotus exposure inflicts only 1d6+1 DP per GT for 4 GT."
+        },
+        {
+          "quality": "B",
+          "text": "Stops poisons up to stage 2."
+        },
+        {
+          "quality": "C",
+          "text": "Stops poisons up to stage 4."
+        },
+        {
+          "quality": "D",
+          "text": "Stops poisons up to stage 9."
+        },
+        {
+          "quality": "E",
+          "text": "Stops poisons up to stage 15."
+        },
+        {
+          "quality": "F",
+          "text": "Stops every poison within 1d6 CR."
+        }
+      ],
+      "important_note": "Tulmadron-based antidotes work one quality lower on dwarves and other beings resistant or immune to mineral poisons or Tulmadron; A cannot fall to M. Ordinary antidotes do not affect Ban Dust.",
+      "shelf_life": "2d6+30 months",
+      "market_price_quality_c": "about 50D for confirmed Quality C, as published.",
+      "quality_adjusted_prices": {
+        "A": "32D",
+        "B": "40D",
+        "C": "50D",
+        "D": "75D",
+        "E": "112.50D",
+        "F": "168.75D"
+      },
+      "ingredient_cost": "25D",
+      "availability": 9,
+      "source": "Wege der Alchimie (2012), p. 55; the complete quality-A die expression is also printed in Wege der Zauberei; price and procurement: pp. 202-203; material prices: pp. 208-209. (2011), p. 64.",
+      "category": "remedies"
+    },
+    {
+      "id": "fearless_drops",
+      "number": 43,
+      "name": "Fearless Drops",
+      "german_name": "Furchtlos-Tropfen",
+      "category_label": "Spagyrik",
+      "ingredients": "5 stone charcoal; 2 carats blood agate; 1 scruple sulfur; 3 liquid measures salt water; 1 ounce Ilmen-leaf resin; one tuft of wolverine fur; several drops spring water.",
+      "crafting_location": "Archaic laboratory",
+      "brewing_modifier": "+3",
+      "analysis_modifier": "+3",
+      "crafting_process": "Roast blood agate and Ilmen-leaf resin in a covered charcoal pit while sulfur is stirred into a kettle of salt water. At deepest night add the wolverine hair, let the charcoal finish burning, then add a few drops of spring water and stir the blackened lumps into the liquid.",
+      "description": "Salty red-brown liquid.",
+      "quality_m": {
+        "effects": [
+          1,
+          4,
+          17,
+          21,
+          37
+        ]
+      },
+      "quality_tiers": [
+        {
+          "quality": "A",
+          "text": "For 1 day the user feels mildly confident. One Test failed because of a negative trait may be repeated, or one upcoming Test affected by a negative trait may be rolled twice, keeping the better result."
+        },
+        {
+          "quality": "B",
+          "text": "One fear-based negative trait chosen by the user is halved for 1 GT. One recently failed Test caused by that fear may be repeated."
+        },
+        {
+          "quality": "C",
+          "text": "As B for 1 hour."
+        },
+        {
+          "quality": "D",
+          "text": "As C, but the chosen fear is completely suppressed."
+        },
+        {
+          "quality": "E",
+          "text": "As D; all other fear-based negative traits are also halved."
+        },
+        {
+          "quality": "F",
+          "text": "Every fear-based negative trait is suppressed for 1 hour; CO +3 and the user gains Impulsive."
+        }
+      ],
+      "shelf_life": "1d3+3 months",
+      "market_price_quality_c": "about 20D for confirmed Quality C, as published.",
+      "quality_adjusted_prices": {
+        "A": "12.80D",
+        "B": "16D",
+        "C": "20D",
+        "D": "30D",
+        "E": "45D",
+        "F": "67.50D"
+      },
+      "ingredient_cost": "10D",
+      "availability": 12,
+      "source": "Wege der Alchimie (2012), pp. 55-56; price and procurement: pp. 202-203; material prices: pp. 208-209.",
+      "category": "remedies"
+    },
+    {
+      "id": "healing_potion",
+      "number": 44,
+      "name": "Healing Potion",
+      "german_name": "Heiltrank",
+      "category_label": "Spagyrik",
+      "ingredients": "Tail of any lizard; 1 scruple gold; 1 Argan root or 1 bundle Wirsel herb; 10 ounces morning dew.",
+      "crafting_location": "Archaic laboratory",
+      "brewing_modifier": "+2",
+      "analysis_modifier": "+1",
+      "crafting_process": "Dry and separately grind the lizard tail, gold, and herb. Layer alternating bands of powder and thin Argan slices or a woven Wirsel net in the vessel, pour morning dew over everything, cover it with blue cloth, leave it warm and untouched for seven days, then strain and store the liquid in darkness.",
+      "description": "Clear liquid with a refreshing odor. Numerous equivalent and modified formulas exist.",
+      "quality_m": {
+        "effects": [
+          1,
+          3,
+          5,
+          18,
+          19,
+          21,
+          22,
+          24
+        ],
+        "note": "alternatively the brew causes 2d6 DP with violent vomiting."
+      },
+      "quality_tiers": [
+        {
+          "quality": "A",
+          "text": "Restores 1d6 VP immediately; CL and AG are each -1 for 1 hour."
+        },
+        {
+          "quality": "B",
+          "text": "Restores 1d6+2 VP immediately."
+        },
+        {
+          "quality": "C",
+          "text": "Restores 2d6+4 VP."
+        },
+        {
+          "quality": "D",
+          "text": "Restores 3d6+6 VP."
+        },
+        {
+          "quality": "E",
+          "text": "Restores all lost VP."
+        },
+        {
+          "quality": "F",
+          "text": "Restores 3d6+25 VP, including above the normal maximum, but for 1 week neutralizes all other artificial alchemical-magical potions, poisons, and elixirs, including further Healing Potions."
+        }
+      ],
+      "additional_rule": "Wounds: One wound is removed per full 7 VP restored.",
+      "shelf_life": "1d6+20 months",
+      "market_price_quality_c": "at least 10D for confirmed Quality C, as published.",
+      "quality_adjusted_prices": {
+        "A": "6.40D",
+        "B": "8D",
+        "C": "10D",
+        "D": "15D",
+        "E": "22.50D",
+        "F": "33.75D"
+      },
+      "ingredient_cost": "5D",
+      "availability": 14,
+      "source": "Wege der Alchimie (2012), p. 56; price and procurement: pp. 202-203; material prices: pp. 208-209.",
+      "category": "remedies"
+    },
+    {
+      "id": "exhaustion_lozenges",
+      "number": 45,
+      "name": "Exhaustion Lozenges",
+      "german_name": "Pastillen gegen Erschöpfung",
+      "category_label": "Spagyrik",
+      "ingredients": "Half a handful of afterbirth from a woman in childbed; 6 ounces horse sweat; 5 dried Gulmond leaves; several stone-oak acorns; 2 flux Yagan oil.",
+      "crafting_location": "Witch's kitchen",
+      "brewing_modifier": "+4",
+      "analysis_modifier": "+4",
+      "crafting_process": "Roast the afterbirth dry, ignite it, and mix the residue with horse sweat and crushed Gulmond. Pressure-cook until blue and fully dissolved, distill forty-nine drops after cooling, mix them with Yagan oil, and add enough ground stone-oak acorn to roll three large lozenges.",
+      "description": "Dark-blue lozenges with a bitter taste and pungent odor.",
+      "quality_m": {
+        "effects": [
+          1,
+          2,
+          3,
+          4,
+          6,
+          9,
+          13,
+          14,
+          18,
+          19,
+          21,
+          22,
+          24,
+          25,
+          33,
+          34
+        ]
+      },
+      "quality_tiers": [
+        {
+          "quality": "A",
+          "text": "Only a sense of well-being. Normal EP regeneration and Fatigue reduction occur, with reduced interference from disturbing conditions."
+        },
+        {
+          "quality": "B",
+          "text": "During the next GT, restore an additional 1d6 EP."
+        },
+        {
+          "quality": "C",
+          "text": "For 1d6 GT, restore an additional 1d6 EP and remove 1 Fatigue per GT."
+        },
+        {
+          "quality": "D",
+          "text": "As C for 1d6+2 GT."
+        },
+        {
+          "quality": "E",
+          "text": "Within the next 7 GT, all EP and all Fatigue are restored."
+        },
+        {
+          "quality": "F",
+          "text": "For 1d6+6 GT, restore an additional 1d6+2 EP and remove 3 Fatigue per GT, even beyond maximum EP. On the following day all actions cost twice the normal EP and Fatigue accumulates twice as quickly."
+        }
+      ],
+      "shelf_life": "1d3+7 months",
+      "market_price_quality_c": "about 10D for confirmed Quality C, as published.",
+      "quality_adjusted_prices": {
+        "A": "6.40D",
+        "B": "8D",
+        "C": "10D",
+        "D": "15D",
+        "E": "22.50D",
+        "F": "33.75D"
+      },
+      "ingredient_cost": "5D",
+      "availability": 11,
+      "source": "Wege der Alchimie (2012), pp. 56-57; price and procurement: pp. 202-203; material prices: pp. 208-209.",
+      "category": "remedies"
+    },
+    {
+      "id": "prophylactic_antidote_kukris_example",
+      "number": 46,
+      "name": "Prophylactic Antidote, Kukris Example",
+      "german_name": "Prophylaktika, vorbeugende Gegengifte, am Beispiel Kukris",
+      "category_label": "Spagyrik; each version is specialized against one poison",
+      "ingredients": "12 golden-chain fruits; 3 ounces Menchal juice; 1 rotten node from a Mirham silk-vine tendril; 1/2 ounce mercury; 1 liquid measure Mohaska; decoction from one clump Olgin root.",
+      "crafting_location": "Alchemist's laboratory",
+      "brewing_modifier": "+7",
+      "analysis_modifier": "+7",
+      "crafting_process": "Burn the golden-chain fruits to ash while avoiding their poisonous fumes and mix the ash with Menchal juice. Pound the rotten silk-vine node with mercury, dilute with Mohaska, reduce and distill it, then combine the two preparations, heat for three days, add Olgin decoction, and distill seven flux.",
+      "description": "Clear yellow liquid with a faint rotten odor. It must be taken before exposure.",
+      "quality_m": {
+        "effects": [
+          1,
+          2,
+          3,
+          6,
+          9,
+          13,
+          14,
+          18,
+          19
+        ],
+        "note": "The user suffers half the damage of the target poison, or quality B for a tiered alchemical poison, in addition to any actual poisoning."
+      },
+      "quality_tiers": [
+        {
+          "quality": "A",
+          "text": "A poison consumed within 6 hours has greatly weakened symptoms. Its damage begins after twice the normal delay but is not reduced."
+        },
+        {
+          "quality": "B",
+          "text": "For 3 hours, the resistance Test against the designated poison is eased by 3."
+        },
+        {
+          "quality": "C",
+          "text": "As B, but eased by 6."
+        },
+        {
+          "quality": "D",
+          "text": "As B, but eased by 12."
+        },
+        {
+          "quality": "E",
+          "text": "Resistance is eased by 17. If the designated poison is not taken within 6 hours, the prophylactic itself inflicts half that poison's damage, or quality B for a tiered poison."
+        },
+        {
+          "quality": "F",
+          "text": "Resistance is eased by 22. If no exposure occurs, the prophylactic inflicts the poison's full damage, or quality D for a tiered poison."
+        }
+      ],
+      "additional_rule": "For another poison, quality D's bonus should equal that poison's stage. Quality F adds a further +10, so an unmodified CN Test can negate the poison.",
+      "shelf_life": "1d3+4 months",
+      "market_price_quality_c": "about 35D for confirmed Quality C, as published.",
+      "quality_adjusted_prices": {
+        "A": "22.40D",
+        "B": "28D",
+        "C": "35D",
+        "D": "52.50D",
+        "E": "78.75D",
+        "F": "118.13D"
+      },
+      "ingredient_cost": "18D",
+      "availability": 4,
+      "source": "Wege der Alchimie (2012), p. 57; price and procurement: pp. 202-203; material prices: pp. 208-209.",
+      "category": "remedies"
+    },
+    {
+      "id": "powder_of_the_clear_mind_anti_narcotic",
+      "number": 47,
+      "name": "Powder of the Clear Mind / Anti-narcotic",
+      "german_name": "Pulver des klaren Geistes, ein Anti-Narkotikum",
+      "category_label": "Spagyrik",
+      "ingredients": "5 Gulmond leaves; 1 Wirsel herb; 1 additional mandrake; 1 carat amethyst; 12 dried rose petals in white, red, pink, and yellow; 5 liquid measures sugar water; RESTORE ATTRIBUTES.",
+      "crafting_location": "Archaic laboratory",
+      "brewing_modifier": "+3",
+      "analysis_modifier": "+2",
+      "crafting_process": "Boil Gulmond, Wirsel, and the four colors of rose petals in sugar water for one hundred heartbeats. Press the last liquid over a peeled mandrake, cast RESTORE ATTRIBUTES, grate the root into the kettle while watching the color change, and add amethyst at the prescribed point before drying and grinding the sweet-smelling powder.",
+      "description": "Granular powder with a sweet aroma; it dissolves in water.",
+      "quality_m": {
+        "effects": [
+          1,
+          2,
+          7,
+          18,
+          20
+        ]
+      },
+      "quality_tiers": [
+        {
+          "quality": "A",
+          "text": "Penalties caused by an intoxicant are reduced by 1."
+        },
+        {
+          "quality": "B",
+          "text": "As A, and the intoxication's duration is halved."
+        },
+        {
+          "quality": "C",
+          "text": "As B, and the intoxicant's stage is reduced by 1 before recalculating effect and duration."
+        },
+        {
+          "quality": "D",
+          "text": "As C, but stage is reduced by 2."
+        },
+        {
+          "quality": "E",
+          "text": "The intoxication ends in 1d20 CR."
+        },
+        {
+          "quality": "F",
+          "text": "Every intoxication ends immediately, but only while the user remains abstinent. Taking another intoxicant restores the previous intoxication and increases its stage by 1. For nonalchemical intoxication such as alcohol, Test penalties increase by 2 when the old state returns."
+        }
+      ],
+      "shelf_life": "1d6+3 months",
+      "market_price_quality_c": "about 15D for confirmed Quality C, as published.",
+      "quality_adjusted_prices": {
+        "A": "9.60D",
+        "B": "12D",
+        "C": "15D",
+        "D": "22.50D",
+        "E": "33.75D",
+        "F": "50.63D"
+      },
+      "ingredient_cost": "8D",
+      "availability": 14,
+      "source": "Wege der Alchimie (2012), p. 58; price and procurement: pp. 202-203; material prices: pp. 208-209.",
+      "category": "remedies"
+    },
+    {
+      "id": "restorarium",
+      "number": 48,
+      "name": "Restorarium",
+      "german_name": "Restorarium",
+      "category_label": "Spagyrik",
+      "ingredients": "1/2 liquid measure Theriak; 1 scruple gold dust; skin of a snake; 1 additional mandrake; 1 liquid measure Brabak vitriol; 1 ounce blubber; BALSAM SALABUNDE.",
+      "crafting_location": "Alchemist's laboratory",
+      "brewing_modifier": "+6",
+      "analysis_modifier": "+3",
+      "crafting_process": "Prepare the green life essence, keep both retort and alembic ice-cold, and slowly dissolve Theriak with snake-skin scales, gold, and mandrake without allowing it to steam openly. The correct heat makes the gold grains float; retain exactly the first twenty drops and work them into an ointment with the blubber.",
+      "description": "Green ointment with light-reflecting flecks.",
+      "quality_m": {
+        "effects": [
+          1,
+          2,
+          8,
+          11,
+          15,
+          29
+        ]
+      },
+      "quality_tiers": [
+        {
+          "quality": "A",
+          "text": "The next CN Test for wound healing is eased by 3. During the next rest period, 1d6 points of lost Sikaryan, life force, are restored."
+        },
+        {
+          "quality": "B",
+          "text": "Body parts with single wounds are healed; 2d6+3 VP are also restored, without further wound removal from that VP gain. Restore 1d6 Sikaryan in each of the next 2 rest periods."
+        },
+        {
+          "quality": "C",
+          "text": "Body parts with double wounds are healed; 3d6+6 VP restored; 1d6 Sikaryan in each of the next 3 rests."
+        },
+        {
+          "quality": "D",
+          "text": "Body parts with triple wounds are healed; freshly severed limbs reattach; 4d6+9 VP restored; 1d6 Sikaryan in each of the next 4 rests."
+        },
+        {
+          "quality": "E",
+          "text": "All wounds are healed, including body parts with more than 3 wounds. Freshly severed limbs reattach. Restore 5d6+12 VP; if this exceeds maximum VP, the user gains 1 permanent VP. Sikaryan is fully restored."
+        },
+        {
+          "quality": "F",
+          "text": "As E, but even older amputations can reattach."
+        }
+      ],
+      "shelf_life": "3d6+3 weeks",
+      "market_price_quality_c": "about 120D for confirmed Quality C, as published.",
+      "quality_adjusted_prices": {
+        "A": "76.80D",
+        "B": "96D",
+        "C": "120D",
+        "D": "180D",
+        "E": "270D",
+        "F": "405D"
+      },
+      "ingredient_cost": "60D",
+      "availability": 3,
+      "source": "Wege der Alchimie (2012), pp. 58-59; price and procurement: pp. 202-203; material prices: pp. 208-209.",
+      "category": "remedies"
+    },
+    {
+      "id": "sleeping_draught",
+      "number": 49,
+      "name": "Sleeping Draught",
+      "german_name": "Schlaftrunk",
+      "category_label": "Spagyrik",
+      "ingredients": "1 four-leaf oneberry; 10 ounces clear rainwater; 2 Yagan nuts; 1 bundle mint; 3 Gulmond leaves; 1 bundle chamomile; 5 raven feathers; 1 ounce white Khôm sand.",
+      "crafting_location": "Archaic laboratory",
+      "brewing_modifier": "+3",
+      "analysis_modifier": "+1",
+      "crafting_process": "Crush the berries and nuts, grind the dried herbs, and expose the herb dust to moonlight. Heat the raven feathers buried in Khom sand until black bubbles form, pound the hot mixture, combine it with the herbs, quench it with the berry-and-nut water, and leave the brew in moonlight until dawn.",
+      "description": "Dark-gray syrup intended to improve restorative sleep.",
+      "quality_m": {
+        "effects": [
+          1,
+          3,
+          9,
+          13,
+          14,
+          18,
+          21,
+          22,
+          24,
+          25,
+          33,
+          34
+        ]
+      },
+      "quality_tiers": [
+        {
+          "quality": "A",
+          "text": "Restful deep sleep; Tests against disturbances and attempts to wake the sleeper are each +3 harder."
+        },
+        {
+          "quality": "B",
+          "text": "During one sleep phase, regenerate 1 additional VP and 1 additional ASP."
+        },
+        {
+          "quality": "C",
+          "text": "As B, but 2 additional VP and ASP."
+        },
+        {
+          "quality": "D",
+          "text": "Double VP and ASP regeneration and double Fatigue reduction."
+        },
+        {
+          "quality": "E",
+          "text": "Triple VP and ASP regeneration and triple Fatigue reduction."
+        },
+        {
+          "quality": "F",
+          "text": "All lost VP are restored overnight, all Fatigue is removed, and 4d6 ASP are regenerated. For the next 1d6 nights the user cannot sleep restfully and regenerates nothing. Variant: A rarer formula replaces the VP and ordinary Fatigue benefits with greater ASP regeneration and only removes Fatigue caused by Endurance loss from spellcasting."
+        }
+      ],
+      "shelf_life": "1d3+10 months",
+      "market_price_quality_c": "about 20D for confirmed Quality C, as published.",
+      "quality_adjusted_prices": {
+        "A": "12.80D",
+        "B": "16D",
+        "C": "20D",
+        "D": "30D",
+        "E": "45D",
+        "F": "67.50D"
+      },
+      "ingredient_cost": "10D",
+      "availability": 10,
+      "source": "Wege der Alchimie (2012), p. 59; price and procurement: pp. 202-203; material prices: pp. 208-209.",
+      "category": "remedies"
+    },
+    {
+      "id": "berserker_elixir",
+      "number": 50,
+      "name": "Berserker Elixir",
+      "german_name": "Berserkerelixier",
+      "ingredients": "1 fire opal; 5 ounces fireweed; 10 ounces genuine Premer Fire; 1 whole Slimy Marsh Knotweed; 5 ounces blood from an insane murderer executed by beheading; 1 additional mandrake; KARNIFILO FRENZY.",
+      "crafting_location": "Archaic laboratory",
+      "brewing_modifier": "+6",
+      "analysis_modifier": "+3",
+      "crafting_process": "Prepare the recipe only when Kor and Marbo stand in quadrature. Crush the fire opal inside a great heptagram, dissolve Fireweed in Premer Fire, mix knotweed with the execution blood, combine everything rapidly, allow the flame to leap upward, cast KARNIFILO upon the mandrake, and finish the violent boiling preparation as prescribed.",
+      "description": "Cloudy green liquid with a sharp odor. The drinker becomes increasingly aggressive and dangerous as quality rises. Except for Called Attack (AT+) and Charge, the drinker cannot use combat special abilities during the effect.",
+      "quality_m": {
+        "effects": [
+          1,
+          2,
+          3,
+          8,
+          9,
+          12,
+          13,
+          14,
+          21,
+          23,
+          24,
+          27
+        ]
+      },
+      "quality_tiers": [
+        {
+          "quality": "A",
+          "text": "For 1 GT, the drinker is aggressive, gains Violent Temper 7, and foams at the mouth. If combat begins unexpectedly, Initiative gains +1d6."
+        },
+        {
+          "quality": "B",
+          "text": "As A, but without foaming and with AT +1."
+        },
+        {
+          "quality": "C",
+          "text": "For 7 CR the drinker attacks everything that moves; AT +2, PA -2, and HP +1."
+        },
+        {
+          "quality": "D",
+          "text": "For 1d20 CR the drinker attacks actual enemies rather than every moving creature; 5 points are shifted from PA to AT, and attacks inflict HP +2."
+        },
+        {
+          "quality": "E",
+          "text": "As D for 1 GT, but attacks inflict HP +3."
+        },
+        {
+          "quality": "F",
+          "text": "For 3 GT the drinker has AT 20, PA 0, and HP +5 and feels no pain. On a roll of 19-20 on 1d20, the drinker gains Bloodlust; after suffering the first wound, a failed Willpower Test +7 triggers it."
+        }
+      ],
+      "shelf_life": "2d6+17 months",
+      "market_price_quality_c": "about 40D for confirmed Quality C, as published.",
+      "quality_adjusted_prices": {
+        "A": "25.60D",
+        "B": "32D",
+        "C": "40D",
+        "D": "60D",
+        "E": "90D",
+        "F": "135D"
+      },
+      "ingredient_cost": "20D",
+      "availability": 8,
+      "source": "Wege der Alchimie (2012), pp. 59-60; price and procurement: pp. 202-203; material prices: pp. 208-209.",
+      "category": "mind_emotion_altered_states"
+    },
+    {
+      "id": "bestinoid",
+      "number": 51,
+      "name": "Bestinoid",
+      "german_name": "Bestinoid",
+      "ingredients": "The ingredients of Berserker Elixir, plus 1 additional mandrake, the scent glands of a beaver, 1 flux rose-blossom essence, and 2 grains lotus dust of any kind.",
+      "crafting_location": "Alchemist's laboratory",
+      "brewing_modifier": "+7",
+      "analysis_modifier": "+9",
+      "crafting_process": "Begin with the Berserker Elixir process. The additional mandrake, beaver scent glands, rose-petal essence, and lotus dust are incorporated into that preparation to redirect its rage into animal transformation.",
+      "description": "A two-component preparation devised for animals. The Furoritum is fed to the animal, while the Destinatum is a scent lure placed on a person, clothing, or another target.",
+      "effect": "Use the effect of a Berserker Elixir of the same quality, but the aggression is directed only against the bearer of the Destinatum rather than indiscriminately.",
+      "market_price_quality_c": "about 100D for confirmed Quality C, as published.",
+      "quality_adjusted_prices": {
+        "A": "64D",
+        "B": "80D",
+        "C": "100D",
+        "D": "150D",
+        "E": "225D",
+        "F": "337.50D"
+      },
+      "ingredient_cost": "50D",
+      "availability": 4,
+      "source": "Wege der Alchimie (2012), p. 60; price and procurement: pp. 202-203; material prices: pp. 208-209.",
+      "category": "mind_emotion_altered_states"
+    },
+    {
+      "id": "water_of_peace",
+      "number": 52,
+      "name": "Water of Peace",
+      "german_name": "Friedenswasser",
+      "ingredients": "8 needles from a life tree; the seeds of 1 tiger-poppy capsule; 10 ounces alcohol; 2 ounces dried Ilmen leaf; 4 vervain leaves; 1/2 liquid measure of raindrops that have fallen through a rainbow.",
+      "crafting_location": "Witch's kitchen",
+      "brewing_modifier": "+4",
+      "analysis_modifier": "+4",
+      "crafting_process": "During Travia, steep life-tree needles and tiger-poppy seed in alcohol for one night under Horas, then remove them. Distill the alcohol with Ilmen leaf and pressed vervain, keep the first sixteen clear drops, and mix them with rain that has fallen through a rainbow.",
+      "description": "Clear liquid with a metallic taste. It suppresses aggression and, at higher quality, creates an increasingly forceful aversion to violence.",
+      "quality_m": {
+        "effects": [
+          1,
+          2,
+          4,
+          5,
+          26,
+          40
+        ]
+      },
+      "quality_tiers": [
+        {
+          "quality": "A",
+          "text": "The drinker may immediately make an additional Willpower Test to calm a current rage."
+        },
+        {
+          "quality": "B",
+          "text": "For 1d6 hours the drinker is relaxed and Violent Temper is reduced by 2."
+        },
+        {
+          "quality": "C",
+          "text": "For 1d6 GT Violent Temper is reduced by 5, and the drinker cannot initiate an attack."
+        },
+        {
+          "quality": "D",
+          "text": "For 1d6+2 GT Violent Temper is completely suppressed and the drinker cannot attack."
+        },
+        {
+          "quality": "E",
+          "text": "For 1d6+4 GT the drinker cannot attack and tries to persuade every person or intelligent creature present that fighting is pointless."
+        },
+        {
+          "quality": "F",
+          "text": "As E, but the drinker also attempts, without using violence, to seize and break every weapon present. There is a 10% chance that Violent Temper is permanently reduced by 1."
+        }
+      ],
+      "shelf_life": "1d3+10 months",
+      "market_price_quality_c": "about 50D for confirmed Quality C, as published.",
+      "quality_adjusted_prices": {
+        "A": "32D",
+        "B": "40D",
+        "C": "50D",
+        "D": "75D",
+        "E": "112.50D",
+        "F": "168.75D"
+      },
+      "ingredient_cost": "25D",
+      "availability": 9,
+      "source": "Wege der Alchimie (2012), p. 60; price and procurement: pp. 202-203; material prices: pp. 208-209.",
+      "category": "mind_emotion_altered_states"
+    },
+    {
+      "id": "breath_of_prophecy",
+      "number": 53,
+      "name": "Breath of Prophecy",
+      "german_name": "Hauch der Weissagung",
+      "ingredients": "10 scruples Myridanium crystal; 1 owl pellet; 4 ounces Ilmen-leaf resin; 2 ounces Cheriacha; 2 ounces Zithabar powder; 7 tears of a wise person; 25 ounces Unau brine; 1 ounce rose quartz.",
+      "crafting_location": "Archaic laboratory",
+      "brewing_modifier": "+3",
+      "analysis_modifier": "+2",
+      "crafting_process": "Grind the Myridanium crystal and owl pellet and break the Ilmen-leaf resin into small pieces. Stir these with Cheriacha, Zithabar, and the tears in Unau brine, heat until almost all liquid has evaporated, add the finely ground rose quartz before the pan dries completely, then dry and pound the residue into seven handfuls of divination powder.",
+      "description": "Pink, sandy powder that sharpens perception and may open the mind to prophecy.",
+      "quality_m": {
+        "effects": [
+          1,
+          3,
+          9,
+          11,
+          12,
+          13,
+          16,
+          17,
+          19,
+          22,
+          23,
+          31
+        ]
+      },
+      "quality_tiers": [
+        {
+          "quality": "A",
+          "text": "Perception +2 for 1 hour, but CL -1 for the same period."
+        },
+        {
+          "quality": "B",
+          "text": "The next Prophecy Test is eased by 2."
+        },
+        {
+          "quality": "C",
+          "text": "The next Prophecy Test is eased by 3."
+        },
+        {
+          "quality": "D",
+          "text": "The next Prophecy Test is eased by 6."
+        },
+        {
+          "quality": "E",
+          "text": "The next Prophecy Test is eased by 9."
+        },
+        {
+          "quality": "F",
+          "text": "The next Prophecy Test is eased by 15. Afterwards the user is unconscious for 1d6 GT and remembers only fragments of the vision."
+        }
+      ],
+      "additional_rule": "A user without the Prophecy gift temporarily gains it for this one use at a rating equal to the listed bonus.",
+      "shelf_life": "Several years",
+      "market_price_quality_c": "about 30D for confirmed Quality C, as published.",
+      "quality_adjusted_prices": {
+        "A": "19.20D",
+        "B": "24D",
+        "C": "30D",
+        "D": "45D",
+        "E": "67.50D",
+        "F": "101.25D"
+      },
+      "ingredient_cost": "15D",
+      "availability": 6,
+      "source": "Wege der Alchimie (2012), p. 61; price and procurement: pp. 202-203; material prices: pp. 208-209.",
+      "category": "mind_emotion_altered_states"
+    },
+    {
+      "id": "love_potion",
+      "number": 54,
+      "name": "Love Potion",
+      "german_name": "Liebestrunk",
+      "ingredients": "7 beaver testicles; 3 additional mandrakes; 1 cockscomb; 7 fresh strawberries; 1 scruple pollen of Creeping Death or 1/2 scruple Velvet Breath; 1 bundle Ilmen leaf; 10 ounces Premer Fire; EAGLE EYE, BANNBALADIN, or REVERSALIS [HORRIPHOBUS].",
+      "crafting_location": "Witch's kitchen",
+      "brewing_modifier": "+6",
+      "analysis_modifier": "+4",
+      "crafting_process": "Prepare the potion when Aves and Levthan are conjunct, preferably during Rahja. Crush beaver organs and mandrakes, arrange the cockscomb and strawberries on the paste, dust them with the dangerous pollen, steep Ilmen leaf in Premer Fire for three hours, combine and boil everything, cast one of the named influence or perception spells, and distill one hundred twenty-one golden drops.",
+      "description": "Golden liquid tasting of strawberries. It creates attraction, infatuation, or obsessive love, but the rules explicitly state that it cannot create genuine love.",
+      "quality_m": {
+        "effects": [
+          1,
+          3,
+          4,
+          8,
+          9,
+          18,
+          21,
+          22,
+          24,
+          28,
+          35,
+          36,
+          38,
+          39,
+          40
+        ],
+        "note": "If Velvet Breath is used, the failed brew also causes its full damage: 2d6 DP per hour for 1d6 hours, accompanied by ecstatic dreams."
+      },
+      "quality_tiers": [
+        {
+          "quality": "A",
+          "text": "For 1 day the drinker is favorably disposed toward the first person seen. For social Talent Tests and spells directed at the drinker, that person's CH counts as 1 higher."
+        },
+        {
+          "quality": "B",
+          "text": "For 1 day the drinker develops romantic or sexual interest in that person."
+        },
+        {
+          "quality": "C",
+          "text": "As B, and the potion also has the complete effect of a potency tonic."
+        },
+        {
+          "quality": "D",
+          "text": "The drinker feels deep love for 1d6 days."
+        },
+        {
+          "quality": "E",
+          "text": "As D, with ecstatic feelings and increased sexual capability."
+        },
+        {
+          "quality": "F",
+          "text": "As E; there is a 30% chance that the effect persists beyond the normal duration."
+        }
+      ],
+      "shelf_life": "2d6+17 months",
+      "market_price_quality_c": "about 40D for confirmed Quality C, as published.",
+      "quality_adjusted_prices": {
+        "A": "25.60D",
+        "B": "32D",
+        "C": "40D",
+        "D": "60D",
+        "E": "90D",
+        "F": "135D"
+      },
+      "ingredient_cost": "20D",
+      "availability": 8,
+      "source": "Wege der Alchimie (2012), pp. 61-62; price and procurement: pp. 202-203; material prices: pp. 208-209.",
+      "category": "mind_emotion_altered_states"
+    },
+    {
+      "id": "mengbilla_banbal_oil",
+      "number": 55,
+      "name": "Mengbilla Banbal Oil",
+      "german_name": "Mengbiller Bannbalöl",
+      "ingredients": "2 liquid measures urine from the intended subject; 3 ounces olive oil; 5 Guraan flowers; 4 stinging dragonflies; 3 ounces Ilmen leaf; 1 living Ikanaria butterfly; 1 ounce vanilla; 1 scruple Velvet Breath.",
+      "crafting_location": "Alchemist's laboratory",
+      "brewing_modifier": "+8",
+      "analysis_modifier": "+6",
+      "crafting_process": "Pressure-cook urine, one ounce of olive oil, Guraan blossoms, and dragonflies for one hour, cool and strain. Repeat with Ilmen leaf and a living Ikanaria butterfly, stir in vanilla and Samthauch without inhaling the pollen, discard the first two ounces of distillate, keep the next two, and pressure-cook them with two ounces of olive oil.",
+      "description": "An influence oil normally applied to the body. If Velvet Breath is used, a failed batch also inflicts that substance's full damage.",
+      "quality_m": {
+        "effects": [
+          1,
+          2,
+          6,
+          9,
+          12,
+          13,
+          14,
+          26
+        ],
+        "note": ", plus the full damage of Velvet Breath."
+      },
+      "quality_tiers": [
+        {
+          "quality": "A",
+          "text": "Aggression and Violent Temper are suppressed for 12 hours."
+        },
+        {
+          "quality": "B",
+          "text": "For 12 hours the subject is friendly; Tests to influence the subject are eased by 1."
+        },
+        {
+          "quality": "C",
+          "text": "For 1 day the subject is favorably disposed; influence Tests are eased by 4."
+        },
+        {
+          "quality": "D",
+          "text": "For 2 days the subject tries to fulfill the user's wishes; influence Tests are eased by 7, and CO, CL, and IN are each reduced by 2. The effect resembles BANNBALADIN."
+        },
+        {
+          "quality": "E",
+          "text": "For 3 days the subject obeys every command; CO, CL, and IN are each reduced by 4. The effect resembles IMPERAVI."
+        },
+        {
+          "quality": "F",
+          "text": "For 4 days the subject's will is completely broken; CO, CL, and IN are each reduced by 7. The subject does not even eat or attend to bodily needs without an order. Duration after strong qualities: Beginning with D, the effect drops by one quality tier per day. Combining doses: Add quality points A=0, B=1, C=2, D=4, E=6, F=10; the final effect cannot exceed F. Application and resistance: Using it as a body oil requires twice the normal dose. On dwarves the result is one tier lower. The same applies to non-dwarves who succeed at a CN Test penalized by twice the quality tier, counting A as 1."
+        }
+      ],
+      "shelf_life": "1d6+5 months",
+      "market_price_quality_c": "about 140D for confirmed Quality C, as published.",
+      "quality_adjusted_prices": {
+        "A": "89.60D",
+        "B": "112D",
+        "C": "140D",
+        "D": "210D",
+        "E": "315D",
+        "F": "472.50D"
+      },
+      "ingredient_cost": "70D",
+      "availability": 4,
+      "source": "Wege der Alchimie (2012), p. 62; price and procurement: pp. 202-203; material prices: pp. 208-209.",
+      "category": "mind_emotion_altered_states"
+    },
+    {
+      "id": "rainbow_dust",
+      "number": 56,
+      "name": "Rainbow Dust",
+      "german_name": "Regenbogenstaub",
+      "ingredients": "5 ounces Brabak vitriol; 5 ounces Smoking Brown Oil; 5 ounces pure alcohol; 1 cave-dragon carbuncle; 2 additional mandrakes; 1 Vragies root; 2 intoxicating cucumbers; 1 scruple Velvet Breath; 3 scruples Black Lotus; 5 scruples spotted lotus; 1 bundle Ilmen leaf.",
+      "crafting_location": "Alchemist's laboratory",
+      "brewing_modifier": "+6",
+      "analysis_modifier": "+2",
+      "crafting_process": "Add vitriol dropwise to Smoking Brown Oil and then add that mixture dropwise to alcohol; allow the self-heating brew to dissolve the dragon carbuncle in darkness. Slice mandrakes, Vragies root, and intoxicating cucumbers, mix the pollens and lotus materials, roast Ilmen leaf, combine all components, shake the sealed vessel, cast ABVENENUM, and process the foul residue into the final dust.",
+      "description": "Shimmering powder that produces sleep, visions, dependency, and at its highest quality potentially permanent mental or spiritual consequences.",
+      "quality_m": {
+        "effects": [
+          1,
+          2,
+          3,
+          10,
+          18,
+          19,
+          24,
+          38,
+          40
+        ]
+      },
+      "quality_tiers": [
+        {
+          "quality": "A",
+          "text": "A powerful sleeping drug, but without unusual dreams."
+        },
+        {
+          "quality": "B",
+          "text": "Pleasant dreams; the drug inflicts 3d6 DP within 2 hours. A Willpower Test +5 is required. Failure causes the user to take another dose; success, or being unable to take another dose, leads to 7 hours of apathy."
+        },
+        {
+          "quality": "C",
+          "text": "More vivid dreams; 2d6 DP within 5 hours; Willpower Test +7."
+        },
+        {
+          "quality": "D",
+          "text": "Visions for 7 hours and no damage; afterwards every attribute is reduced by 3 for 1 day."
+        },
+        {
+          "quality": "E",
+          "text": "Intense visions for 2d6 hours, without the lower-quality side effects."
+        },
+        {
+          "quality": "F",
+          "text": "Divine visions for 2d6 hours, followed by a 1d20 roll: 1: CL +2. 2: Every fear-based negative trait -1. 3: IN +1. 4: +1d6 ASP. 5: +1d3 ASP. 6: Prophecy +3. 7: Willpower +2. 8-10: CH +1. 11-12: Delusions. 13: CL +1 and addiction. 14-16: Addiction. 17: CL -1 and addiction. 18: Addiction, CL -1, and Willpower -1. 19: Spirit and body become separated. 20: Death."
+        }
+      ],
+      "additional_rule": "Duration of changes: Positive attribute and Talent changes last 7 days, then revert and count as a Special Experience. Penalties persist until removed through a corresponding Special Experience.\n\nAddiction: Stage 12. Without a daily dose, the addict loses 1d6+1 VP per day and all positive attributes and Willpower TP are each reduced by 3. A dose restores these values for 24 hours but causes 12 hours of dreaming. Each further quality-F dose adds +1, then +2, and so on to the 1d20 consequence roll.",
+      "shelf_life": "Nearly unlimited",
+      "market_price_quality_c": "about 50D for confirmed Quality C, as published.",
+      "quality_adjusted_prices": {
+        "A": "32D",
+        "B": "40D",
+        "C": "50D",
+        "D": "75D",
+        "E": "112.50D",
+        "F": "168.75D"
+      },
+      "ingredient_cost": "25D",
+      "availability": 4,
+      "source": "Wege der Alchimie (2012), p. 63; price and procurement: pp. 202-203; material prices: pp. 208-209.",
+      "category": "mind_emotion_altered_states"
+    },
+    {
+      "id": "dreamwind_elixir",
+      "number": 57,
+      "name": "Dreamwind Elixir",
+      "german_name": "Traumwind-Elixier",
+      "ingredients": "1 carat carnelian; 1 stone Albruten vines; seeds from 1 gray-poppy capsule; 1/2 liquid measure tears from a person suffering from sleeping sickness; 1 liquid measure double distillate; 1 additional mandrake; DREAM SHAPE or FREE SOUL JOURNEY.",
+      "crafting_location": "Archaic laboratory",
+      "brewing_modifier": "+2",
+      "analysis_modifier": "+4",
+      "crafting_process": "Build a fumigation fire from carnelian, Albruten vine, and gray-poppy seed. Mix the sleeper's tears into double distillate and suspend the open vessel in the smoke without boiling it; seal the chamber for a full day, enchant the mandrake with DREAM SHAPE or FREE SOUL JOURNEY, and cast it into the fire halfway through.",
+      "description": "Watery liquid containing gray particles. At higher qualities it carries the user's soul into another sleeping person's dream.",
+      "quality_m": {
+        "effects": [
+          2,
+          3,
+          11,
+          12,
+          20
+        ]
+      },
+      "quality_tiers": [
+        {
+          "quality": "A",
+          "text": "The user's next rest brings colorful dreams, regeneration +1, and IN +1 for 1 hour after waking."
+        },
+        {
+          "quality": "B",
+          "text": "The user immediately becomes tired. Once asleep, the soul may enter the dreamworld of a sleeping target within 49 paces. The preparation provides 4 SP* to overcome the target's RM; remaining SP* determine the duration in GT."
+        },
+        {
+          "quality": "C",
+          "text": "As B, but with 7 SP*."
+        },
+        {
+          "quality": "D",
+          "text": "As B, but with 12 SP*."
+        },
+        {
+          "quality": "E",
+          "text": "As B, but with 20 SP*."
+        },
+        {
+          "quality": "F",
+          "text": "As E, but the soul does not return automatically when the normal duration ends. DISTURB COMMUNICATION ends the effect."
+        }
+      ],
+      "shelf_life": "3d6+3 months",
+      "market_price_quality_c": "about 60D for confirmed Quality C, as published.",
+      "quality_adjusted_prices": {
+        "A": "38.40D",
+        "B": "48D",
+        "C": "60D",
+        "D": "90D",
+        "E": "135D",
+        "F": "202.50D"
+      },
+      "ingredient_cost": "30D",
+      "availability": 8,
+      "source": "Wege der Alchimie (2012), p. 64; price and procurement: pp. 202-203; material prices: pp. 208-209.",
+      "category": "mind_emotion_altered_states"
+    },
+    {
+      "id": "waking_draught",
+      "number": 58,
+      "name": "Waking Draught",
+      "german_name": "Wachtrunk",
+      "ingredients": "5 night moths; 1 flux Yagan oil; 2 ounces fresh mine sponge; 2 ounces Moarana vine or 3 dried Gulmond leaves; 3 liquid measures double distillate; 18 drops bat blood.",
+      "crafting_location": "Archaic laboratory",
+      "brewing_modifier": "+1",
+      "analysis_modifier": "+3",
+      "crafting_process": "Pound the five moths and mix them with Yagan oil. Chop mine fungus and Moarana vine or Gulmond into one liquid measure of double distillate, combine both preparations overnight, strain and press the solids, add eighteen drops of bat blood, warm the liquid, and dilute it with two more measures of double distillate.",
+      "description": "Pale-red cloudy liquid with a sharp aftertaste. It suppresses tiredness and the need for sleep, but repeated use can create a dangerous dependency.",
+      "quality_m": {
+        "effects": [
+          1,
+          4,
+          18,
+          19,
+          21,
+          24,
+          31
+        ]
+      },
+      "quality_tiers": [
+        {
+          "quality": "A",
+          "text": "Tiredness is removed for 1d6 hours, but the lost sleep is still required later."
+        },
+        {
+          "quality": "B",
+          "text": "The user feels no tiredness and needs no sleep for 1 night, but receives no regeneration."
+        },
+        {
+          "quality": "C",
+          "text": "As B, but normal regeneration occurs if the user avoids heavy exertion for a period equal to a normal sleep."
+        },
+        {
+          "quality": "D",
+          "text": "The effect lasts for 2 nights and includes 2 rest phases."
+        },
+        {
+          "quality": "E",
+          "text": "The effect lasts for 3 nights, but grants only 2 rest phases."
+        },
+        {
+          "quality": "F",
+          "text": "The effect lasts for 4 nights; the user is hyper-alert and hectic, and there is a 10% chance of addiction."
+        }
+      ],
+      "additional_rule": "Addiction: Stage 6. During withdrawal, every positive attribute is reduced by 1d6 and Violent Temper rises by 1d6. One dose suppresses withdrawal for the normal duration; a second dose is required to gain the usual benefit. Simply stopping use carries a 30% chance of Sleeping Sickness.",
+      "shelf_life": "1d6+9 weeks",
+      "market_price_quality_c": "about 15D for confirmed Quality C, as published.",
+      "quality_adjusted_prices": {
+        "A": "9.60D",
+        "B": "12D",
+        "C": "15D",
+        "D": "22.50D",
+        "E": "33.75D",
+        "F": "50.63D"
+      },
+      "ingredient_cost": "8D",
+      "availability": 10,
+      "source": "Wege der Alchimie (2012), p. 64; price and procurement: pp. 202-203; material prices: pp. 208-209.",
+      "category": "mind_emotion_altered_states"
+    },
+    {
+      "id": "elixir_against_decay",
+      "number": 59,
+      "name": "Elixir against Decay",
+      "german_name": "Elixier gegen Verfall",
+      "ingredients": "Juice from 21 Finage shoots; 2 additional mandrakes; 12 carats opal; 1 orichalcum pearl; 1 liquid measure giant-lindworm blood; 1 liquid measure nitrol; SUMU'S ELIXIRS and BALSAM SALABUNDE.",
+      "crafting_location": "Alchemist's laboratory",
+      "brewing_modifier": "+15",
+      "analysis_modifier": "+8",
+      "crafting_process": "The published recipe names the ingredients and required spells but does not print a narrative step-by-step transcription. It is an exceptionally difficult alchemist-laboratory preparation using Finage essence, mandrakes, opal, orichalcum, giant lindworm blood, nitrol, SUMU'S ELIXIRS, and BALSAM SALABUNDE.",
+      "description": "Turquoise syrup made to arrest and reverse aging or decay caused by magic or otherworldly forces.",
+      "quality_m": {
+        "effects": [
+          1,
+          4,
+          39
+        ]
+      },
+      "effect": "Quality A or better stops magically or spherically caused aging and decay and restores a number of lost years determined by quality.\n\nPublished benchmark: Quality C restores 1d6+3 years.",
+      "important_note": "The recipe does not print a complete A-F numerical table. No values beyond the stated quality-C benchmark are supplied here.",
+      "shelf_life": "3 years",
+      "market_price_quality_c": "about 400D for confirmed Quality C, as published.",
+      "quality_adjusted_prices": {
+        "A": "256D",
+        "B": "320D",
+        "C": "400D",
+        "D": "600D",
+        "E": "900D",
+        "F": "1350D"
+      },
+      "ingredient_cost": "200D",
+      "availability": 4,
+      "source": "Wege der Alchimie (2012), p. 65; price and procurement: pp. 202-203; material prices: pp. 208-209.",
+      "category": "rare_restorative_transformative"
+    },
+    {
+      "id": "breath_of_youth",
+      "number": 60,
+      "name": "Breath of Youth",
+      "german_name": "Hauch der Jugend",
+      "ingredients": "1 snake skin; the eggshell or birth shell of an egg-born human child; 6 carats rock crystal; 1 measure water from the Gratenfels sulfur spring; 1 mandrake; 1 scruple red-rose pollen; leaves from 3 rose blossoms; 10 ASP.",
+      "crafting_location": "Witch's kitchen",
+      "brewing_modifier": "+7",
+      "analysis_modifier": "+4",
+      "crafting_process": "Prepare the elixir across a full lunar month. Charge a mandrake in sulfur water under the full moon, add rose leaves, later heat it with snake skin and the egg-born shell, invoke youth at the dark moon while adding rose pollen, and at the next full moon heat it with ground rock crystal until the crystals dissolve.",
+      "description": "A rejuvenating preparation that suppresses the physical effects of age. It works properly only on a person roughly 25 years old or older.",
+      "quality_m": {
+        "effects": [
+          1,
+          5,
+          13,
+          18,
+          21,
+          35
+        ]
+      },
+      "quality_tiers": [
+        {
+          "quality": "A",
+          "text": "For 1 GT, age-related ailments, pain, attribute penalties, and visible aging disappear."
+        },
+        {
+          "quality": "B",
+          "text": "As A for 1 hour."
+        },
+        {
+          "quality": "C",
+          "text": "As A for 2 hours."
+        },
+        {
+          "quality": "D",
+          "text": "As A for 3 hours."
+        },
+        {
+          "quality": "E",
+          "text": "As A for 7 hours. The subject is in peak physical condition but retains memories and learned knowledge."
+        },
+        {
+          "quality": "F",
+          "text": "For 1 day the subject becomes a 7-year-old child, including the child's size, skills, and knowledge."
+        }
+      ],
+      "shelf_life": "1d6 years",
+      "market_price_quality_c": "about 60D for confirmed Quality C, as published.",
+      "quality_adjusted_prices": {
+        "A": "38.40D",
+        "B": "48D",
+        "C": "60D",
+        "D": "90D",
+        "E": "135D",
+        "F": "202.50D"
+      },
+      "ingredient_cost": "30D",
+      "availability": 7,
+      "source": "Wege der Alchimie (2012), p. 65; price and procurement: pp. 202-203; material prices: pp. 208-209.",
+      "category": "rare_restorative_transformative"
+    },
+    {
+      "id": "ifirns_draught",
+      "number": 61,
+      "name": "Ifirn's Draught",
+      "german_name": "Ifirnstrunk",
+      "ingredients": "1 seal heart; 1 carat jasper; 1 liquid measure ice water from Ifirn's Ocean; 5 Gulmond leaves; 1 ounce algae.",
+      "crafting_location": "Witch's kitchen",
+      "brewing_modifier": "+4",
+      "analysis_modifier": "+4",
+      "crafting_process": "Boil the seal heart and algae into a strong broth. Chill the water from Ifirn's Ocean with jasper until ice crystals form, pour the hot broth over Gulmond leaves into that vessel, and keep the colorless drink with its settled crystal flakes, shaking them up before use.",
+      "description": "Clear, crystalline preparation that protects against cold but requires the skin to remain damp. If the skin dries, the subject suffers 1d6+2 DP per day and receives only half regeneration during the next rest.",
+      "quality_m": {
+        "effects": [
+          1,
+          2,
+          5,
+          21,
+          22,
+          28
+        ]
+      },
+      "quality_tiers": [
+        {
+          "quality": "A",
+          "text": "Protection from cold damage for 1 hour."
+        },
+        {
+          "quality": "B",
+          "text": "As A for 4 hours."
+        },
+        {
+          "quality": "C",
+          "text": "As A for 12 hours."
+        },
+        {
+          "quality": "D",
+          "text": "As A for 1 day."
+        },
+        {
+          "quality": "E",
+          "text": "As A for 3 days."
+        },
+        {
+          "quality": "F",
+          "text": "As E; webbing forms between fingers and toes, and Swim TP +3."
+        }
+      ],
+      "shelf_life": "3d20 weeks",
+      "market_price_quality_c": "about 35D for confirmed Quality C, as published.",
+      "quality_adjusted_prices": {
+        "A": "22.40D",
+        "B": "28D",
+        "C": "35D",
+        "D": "52.50D",
+        "E": "78.75D",
+        "F": "118.13D"
+      },
+      "ingredient_cost": "18D",
+      "availability": 7,
+      "source": "Wege der Alchimie (2012), p. 66; price and procurement: pp. 202-203; material prices: pp. 208-209.",
+      "category": "rare_restorative_transformative"
+    },
+    {
+      "id": "levitation_elixir",
+      "number": 62,
+      "name": "Levitation Elixir",
+      "german_name": "Levitationselixier",
+      "ingredients": "Web of a Bornish forest jumper; 8 dragonfly wings; mash from 1 bundle Atmon; 1 additional mandrake; 3 dragon scales; 1 liquid measure mist gathered on the first day of Boron; 1 measure brandy; NIHILOGRAVO.",
+      "crafting_location": "Alchemist's laboratory",
+      "brewing_modifier": "+6",
+      "analysis_modifier": "+0",
+      "crafting_process": "At dusk under the proper sign, grind mandrake and dragon scales in pumice and mix them with Atmon paste. Dissolve the paste in warm brandy, float the spiderweb and dragonfly wings on it, cool and overlay it with first-Boron mist, cast NIHILOGRAVO under the alembic, and collect the upward-falling drops in an inverted vial.",
+      "description": "Iridescent liquid smelling of wine. At quality D or better, individual drops float. It progressively reduces weight and improves movement.",
+      "quality_m": {
+        "effects": [
+          1,
+          4,
+          8,
+          13,
+          15,
+          22,
+          23,
+          33
+        ]
+      },
+      "quality_tiers": [
+        {
+          "quality": "A",
+          "text": "For 1 GT, relevant physical Talent Tests are eased by 1."
+        },
+        {
+          "quality": "B",
+          "text": "For 1 GT, body weight is reduced; relevant physical Talent Tests are eased by 3, physical attribute Tests by 1, and jumping distances increase accordingly."
+        },
+        {
+          "quality": "C",
+          "text": "As B for 2 GT, but relevant physical Talent Tests are eased by 7."
+        },
+        {
+          "quality": "D",
+          "text": "As B for 3 GT, but relevant physical Talent Tests are eased by 12."
+        },
+        {
+          "quality": "E",
+          "text": "For 5 GT the body is weightless, but clothing and equipment are not. A naked user can float; a clothed user can make enormous jumps."
+        },
+        {
+          "quality": "F",
+          "text": "As E for 1 hour. Afterwards nausea and dizziness reduce IN, CH, DE, and AG by 3 for 1 hour."
+        }
+      ],
+      "shelf_life": "1d6+9 months",
+      "market_price_quality_c": "about 70D for confirmed Quality C, as published.",
+      "quality_adjusted_prices": {
+        "A": "44.80D",
+        "B": "56D",
+        "C": "70D",
+        "D": "105D",
+        "E": "157.50D",
+        "F": "236.25D"
+      },
+      "ingredient_cost": "35D",
+      "availability": 7,
+      "source": "Wege der Alchimie (2012), p. 66; price and procurement: pp. 202-203; material prices: pp. 208-209.",
+      "category": "rare_restorative_transformative"
+    },
+    {
+      "id": "purple_water",
+      "number": 63,
+      "name": "Purple Water",
+      "german_name": "Purpurwasser",
+      "ingredients": "2 ounces purple snails without shells or purple stars without skin; 1 fish swim bladder; 1/2 liquid measure seawater from a depth of at least 100 paces; 10 scruples sulfur; 1 mandrake; 12 Neckerkraut leaves; 3 ounces whale blood; 1 liquid measure fresh water from an undersea spring.",
+      "crafting_location": "Archaic laboratory",
+      "brewing_modifier": "+6",
+      "analysis_modifier": "+6",
+      "crafting_process": "Boil the skinned purple sea creatures and fish bladder in deep seawater under full-moon light focused through an ice lens. Stir in sulfur, cool the brew, press mandrake and Neckerkraut juice into it with whale blood, and leave the covered mixture in darkness until the next Earthday before skimming and pressing out the purple liquid.",
+      "description": "Dark-purple liquid with a sulfurous, salty taste. It enables underwater breathing, but a failed batch prevents breathing either air or water for 3d20 CR.",
+      "quality_m": {
+        "effects": [
+          1,
+          3,
+          9,
+          13,
+          14,
+          15,
+          18,
+          19,
+          21
+        ],
+        "note": "in addition, the subject cannot breathe air or water for 3d20 CR."
+      },
+      "quality_tiers": [
+        {
+          "quality": "A",
+          "text": "The subject can breathe underwater for 1 GT."
+        },
+        {
+          "quality": "B",
+          "text": "Underwater breathing for 1d6 GT."
+        },
+        {
+          "quality": "C",
+          "text": "Underwater breathing and pressure equalization for 3d6 GT."
+        },
+        {
+          "quality": "D",
+          "text": "As C for 3d6 hours."
+        },
+        {
+          "quality": "E",
+          "text": "The effect continues until the subject reaches an air-filled space, regardless of elapsed time."
+        },
+        {
+          "quality": "F",
+          "text": "As E, but during the first 7 GT the subject cannot breathe air and must return to water."
+        }
+      ],
+      "shelf_life": "Nearly unlimited",
+      "market_price_quality_c": "not published in the core-rule recipe table.",
+      "ingredient_cost": "40D",
+      "availability": 1,
+      "source": "Wege der Alchimie (2012), pp. 66-67; price and procurement: pp. 202-203; material prices: pp. 208-209.",
+      "category": "rare_restorative_transformative"
+    },
+    {
+      "id": "rethonicum",
+      "number": 64,
+      "name": "Rethonicum",
+      "german_name": "Rethonikum",
+      "ingredients": "1 ounce splinters from an oak coffin; 1 scruple Aranian Crimson Lotus pollen; seeds from 1 black-poppy capsule; 1 liquid measure urine from a hibernating marmot; 1 measure double distillate; 1 additional mandrake; REST BODY.",
+      "crafting_location": "Alchemist's laboratory",
+      "brewing_modifier": "+5",
+      "analysis_modifier": "+3",
+      "crafting_process": "Cast REST BODY on the mandrake and lull it to sleep in marmot urine for seven days, singing again at every dusk if needed. Mix the resulting green liquid with double distillate in a water bath, dust oak coffin wood with crimson-lotus pollen and black-poppy seed, burn it without air in the bath, and skim the ivy-colored, honey-thick substance.",
+      "description": "Dark-green syrup that slows the body into increasingly deep deathlike stasis. It is not treated as a poison for CLARUM PURUM and can be ended with an Antidote of equal quality.",
+      "quality_m": {
+        "effects": [
+          1,
+          18,
+          21,
+          22,
+          26
+        ],
+        "note": "most often effect 24."
+      },
+      "quality_tiers": [
+        {
+          "quality": "A",
+          "text": "For 1 hour breathing and heartbeat slow. All attribute Tests are penalized by 2, all Talent Tests by 6, and air consumption is halved."
+        },
+        {
+          "quality": "B",
+          "text": "For 1d6 hours the subject is lethargic, can barely move, needs no food, and poison and disease effects are halved."
+        },
+        {
+          "quality": "C",
+          "text": "For 2d6 hours the subject appears dead. Only elven senses, Perception +7, or Treat Poison +7 detect life. Poison and disease effects are quartered. The subject restores 1d6 VP; VP below 0 count double when determining this restoration."
+        },
+        {
+          "quality": "D",
+          "text": "For 3d6 hours the subject restores 2d6 VP, and poison and disease effects are suspended. Their durations resume afterwards."
+        },
+        {
+          "quality": "E",
+          "text": "For 7d6 hours the subject restores 3d6 VP; poison and disease are suspended. If their duration would have expired during the stasis, they end."
+        },
+        {
+          "quality": "F",
+          "text": "As E, but the stasis has no automatic end."
+        }
+      ],
+      "shelf_life": "1d6+12 months",
+      "market_price_quality_c": "about 50D for confirmed Quality C, as published.",
+      "quality_adjusted_prices": {
+        "A": "32D",
+        "B": "40D",
+        "C": "50D",
+        "D": "75D",
+        "E": "112.50D",
+        "F": "168.75D"
+      },
+      "ingredient_cost": "25D",
+      "availability": 6,
+      "source": "Wege der Alchimie (2012), pp. 67-68; price and procurement: pp. 202-203; material prices: pp. 208-209.",
+      "category": "rare_restorative_transformative"
+    },
+    {
+      "id": "invisibility_elixir",
+      "number": 65,
+      "name": "Invisibility Elixir",
+      "german_name": "Unsichtbarkeitselixier",
+      "ingredients": "5 ounces blood from an invisible being; 20 ounces clear mist-dew water; 2 additional mandrakes; 3 large shavings from a failed magical staff; 1 scruple meteoric iron; 20 ounces Smoking Brown Oil; 1 spiderweb; VISIBILI.",
+      "crafting_location": "Alchemist's laboratory",
+      "brewing_modifier": "+10",
+      "analysis_modifier": "+6",
+      "crafting_process": "Under the rare prescribed conjunction, draw blood while invisible and mix it with mist-dew water. Shave the mandrakes into it, dissolve the failed staff and meteoric iron in Smoking Brown Oil, pour the blood-water through a spiderweb into the oil, cast VISIBILI three times, cool, and distill in electrum or white gold until the first three brown drops appear.",
+      "description": "Clear dark-amber liquid. A failed preparation glows and reeks for 7 hours. Successful tiers produce progressively more complete invisibility.",
+      "quality_m": {
+        "effects": [
+          1,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          18,
+          19,
+          23,
+          35
+        ],
+        "note": "the subject also glows and smells strongly for 7 hours."
+      },
+      "quality_tiers": [
+        {
+          "quality": "A",
+          "text": "Eyes, blood, nails, hair, and bodily fluids become invisible for 7 GT."
+        },
+        {
+          "quality": "B",
+          "text": "The subject becomes ghostly and translucent for 7 GT. Hide Tests are eased by 3, and witnesses must make CO Tests."
+        },
+        {
+          "quality": "C",
+          "text": "The subject is invisible for 1 GT but flickers into visibility every 1d6 CR."
+        },
+        {
+          "quality": "D",
+          "text": "Complete invisibility for 3 GT."
+        },
+        {
+          "quality": "E",
+          "text": "Complete invisibility for 7 GT."
+        },
+        {
+          "quality": "F",
+          "text": "Invisibility lasts about 3 months, then visibility returns gradually from the inside outward."
+        }
+      ],
+      "shelf_life": "3d6+72 months",
+      "market_price_quality_c": "about 60D for confirmed Quality C, as published.",
+      "quality_adjusted_prices": {
+        "A": "38.40D",
+        "B": "48D",
+        "C": "60D",
+        "D": "90D",
+        "E": "135D",
+        "F": "202.50D"
+      },
+      "ingredient_cost": "30D",
+      "availability": 6,
+      "source": "Wege der Alchimie (2012), p. 68; price and procurement: pp. 202-203; material prices: pp. 208-209.",
+      "category": "rare_restorative_transformative"
+    },
+    {
+      "id": "invulnerability_elixir",
+      "number": 66,
+      "name": "Invulnerability Elixir",
+      "german_name": "Unverwundbarkeitselixier",
+      "ingredients": "1 land-tortoise shell; 1 scruple granite; 1 liquid measure wolf blood; 3 Joruga roots; 1/2 ounce stone-oak resin.",
+      "crafting_location": "Archaic laboratory",
+      "brewing_modifier": "+5",
+      "analysis_modifier": "+2",
+      "crafting_process": "Pound turtle shell, granite, and Joruga roots continuously for a day and a night until the root juice forms a gray adhesive mass. Scrape it from the stones, mix it with warm wolf blood and stone-oak resin, and let the paste harden in the cold for three days.",
+      "description": "Sticky brown-black preparation that hardens the body. A failed batch causes Brittle Bones for 1 hour.",
+      "quality_m": {
+        "effects": [
+          1,
+          6,
+          34
+        ],
+        "note": ", plus Brittle Bones for 1 hour."
+      },
+      "quality_tiers": [
+        {
+          "quality": "A",
+          "text": "Wound threshold +1 for 1 hour."
+        },
+        {
+          "quality": "B",
+          "text": "Natural AR 1 for 1 hour."
+        },
+        {
+          "quality": "C",
+          "text": "Natural AR 2 for 1 hour."
+        },
+        {
+          "quality": "D",
+          "text": "Natural AR 2 and wound threshold +1 for 1 hour."
+        },
+        {
+          "quality": "E",
+          "text": "Natural AR 3 and wound threshold +1 for 1 hour."
+        },
+        {
+          "quality": "F",
+          "text": "For 1 day the body develops scales or fur, granting natural AR 3 and wound threshold +2."
+        }
+      ],
+      "shelf_life": "1d3+5 months",
+      "market_price_quality_c": "about 35D for confirmed Quality C, as published.",
+      "quality_adjusted_prices": {
+        "A": "22.40D",
+        "B": "28D",
+        "C": "35D",
+        "D": "52.50D",
+        "E": "78.75D",
+        "F": "118.13D"
+      },
+      "ingredient_cost": "18D",
+      "availability": 8,
+      "source": "Wege der Alchimie (2012), pp. 68-69; price and procurement: pp. 202-203; material prices: pp. 208-209.",
+      "category": "rare_restorative_transformative"
+    },
+    {
+      "id": "transformation_elixir",
+      "number": 67,
+      "name": "Transformation Elixir",
+      "german_name": "Verwandlungselixier",
+      "ingredients": "5 drops lamprey blood; 20 ounces pure alcohol; 1 black-sparrow egg; 2 additional mandrakes; 2 Kairan stalks; 1 scruple mercury; 1 grain mouse milk; SALANDER.",
+      "crafting_location": "Witch's kitchen",
+      "brewing_modifier": "+8",
+      "analysis_modifier": "+5",
+      "crafting_process": "Drip nine-eye blood into alcohol, submerge the unbroken black sparrow egg, and leave it for seven days. Add mandrake-Kairan paste on the eighth day, stir nine times until blue, heat to boiling, add mercury carefully, invoke SALANDER, and complete the cooling and separation described by the formula.",
+      "description": "Cloudy blue liquid with a metallic taste. A failed preparation emits fumes that cause confusion for 1d6 days.",
+      "quality_m": {
+        "effects": [
+          1,
+          3,
+          13,
+          14,
+          18,
+          22,
+          27,
+          38
+        ],
+        "note": "the fumes also cause confusion for 1d6 days."
+      },
+      "quality_tiers": [
+        {
+          "quality": "A",
+          "text": "For 1d6 hours the subject grows mouse fur or bird down and can imitate the corresponding animal's sounds."
+        },
+        {
+          "quality": "B",
+          "text": "For 1 hour fur or feathers grow and the subject shrinks to one-tenth normal size."
+        },
+        {
+          "quality": "C",
+          "text": "The subject becomes a small rodent or bird for 1 GT."
+        },
+        {
+          "quality": "D",
+          "text": "As C for 1d6 GT."
+        },
+        {
+          "quality": "E",
+          "text": "As C for up to 1 hour; the subject may end the effect voluntarily."
+        },
+        {
+          "quality": "F",
+          "text": "As E, but there is a 5% chance that the transformation becomes permanent (on a roll of 20 on 1d20) and requires END TRANSFORMATION."
+        }
+      ],
+      "shelf_life": "1d3+10 months",
+      "market_price_quality_c": "about 70D for confirmed Quality C, as published.",
+      "quality_adjusted_prices": {
+        "A": "44.80D",
+        "B": "56D",
+        "C": "70D",
+        "D": "105D",
+        "E": "157.50D",
+        "F": "236.25D"
+      },
+      "ingredient_cost": "35D",
+      "availability": 8,
+      "source": "Wege der Alchimie (2012), p. 69; price and procurement: pp. 202-203; material prices: pp. 208-209.",
+      "category": "rare_restorative_transformative"
+    },
+    {
+      "id": "zurbarans_tincture",
+      "number": 68,
+      "name": "Zurbaran's Tincture",
+      "german_name": "Zurbarans Tinktur",
+      "ingredients": "1 liquid measure volcanic steam; 1/2 liquid measure Theriak; 1 measure fresh snow water; 5 carats jasper grown within opal; 3 mandrakes; 5 carats obsidian; 1 measure nitrol; 1 liquid measure urine from a third-generation chimera; 4 ounces Cold Light.",
+      "crafting_location": "Alchemist's laboratory",
+      "brewing_modifier": "+10",
+      "analysis_modifier": "+7",
+      "crafting_process": "Use the source's deliberately compressed laboratory shorthand: layer Theriak in fresh snow water inside an autoclave; process jasper, obsidian, and mandrakes in nitrol with earth-vapor circulation and distillation; skim white Theriak into the distillate; vacuum the preparation for three days; mix in chimera urine; and store only in lead-glass vials for rapid use.",
+      "description": "Milk-white, bitter preparation used to prepare living beings for the creation of chimeras. It cannot be used to create daimonids.",
+      "quality_m": {
+        "effects": [
+          1,
+          4,
+          6,
+          8,
+          14,
+          40
+        ]
+      },
+      "quality_tiers": [
+        {
+          "quality": "A",
+          "text": "The subject is paralyzed for 12 hours and prepared for chimeric transformation."
+        },
+        {
+          "quality": "B",
+          "text": "As A, and the chimera's control difficulty is halved."
+        },
+        {
+          "quality": "C",
+          "text": "As B, and the ASP cost of CHIMAEROFORM is reduced by one-third."
+        },
+        {
+          "quality": "D",
+          "text": "As C, and the permanent ASP loss is reduced to one-fiftieth."
+        },
+        {
+          "quality": "E",
+          "text": "As D; the average VP of the combined creatures may be contributed freely as blood magic, and the highest CL among them may be used for the chimera's statistics."
+        },
+        {
+          "quality": "F",
+          "text": "As E, and the chimera gains 2 random services."
+        }
+      ],
+      "shelf_life": "1d6+3 months",
+      "market_price_quality_c": "about 150D for confirmed Quality C, as published.",
+      "quality_adjusted_prices": {
+        "A": "96D",
+        "B": "120D",
+        "C": "150D",
+        "D": "225D",
+        "E": "337.50D",
+        "F": "506.25D"
+      },
+      "ingredient_cost": "75D",
+      "availability": 2,
+      "source": "Wege der Alchimie (2012), p. 69; price and procurement: pp. 202-203; material prices: pp. 208-209.",
+      "category": "rare_restorative_transformative"
+    },
+    {
+      "id": "dwarfs_draught",
+      "number": 69,
+      "name": "Dwarf's Draught",
+      "german_name": "Zwergentrunk",
+      "ingredients": "1 ounce small-growing mushrooms; legs from 100 ants; 1 measure dwarf beer; 1 liquid measure Brabak vitriol; 1 additional mandrake; seeds from 1 black-poppy capsule; TRANSMUTARE.",
+      "crafting_location": "Alchemist's laboratory",
+      "brewing_modifier": "+6",
+      "analysis_modifier": "+4",
+      "crafting_process": "Work only by coal fire. Dissolve the mushrooms and ant legs in Brabak vitriol and distill the liquid completely. Enchant the mandrake with TRANSMUTARE, place it with dwarf beer, opened black-poppy capsule, and the first distillate in a second retort, then stop the second distillation at its first drop, cool immediately, strain coarsely, and seal airtight.",
+      "description": "Watery yellow-green bubbling liquid that shrinks the drinker for 1 hour. Clothing and equipment do not shrink.",
+      "quality_m": {
+        "effects": [
+          1,
+          2,
+          10,
+          15,
+          25,
+          26
+        ]
+      },
+      "quality_tiers": [
+        {
+          "quality": "A",
+          "text": "The subject becomes 90% of normal size."
+        },
+        {
+          "quality": "B",
+          "text": "80% of normal size."
+        },
+        {
+          "quality": "C",
+          "text": "60% of normal size."
+        },
+        {
+          "quality": "D",
+          "text": "40% of normal size."
+        },
+        {
+          "quality": "E",
+          "text": "20% of normal size."
+        },
+        {
+          "quality": "F",
+          "text": "The subject becomes insect-sized and has only an insect's physical resilience."
+        }
+      ],
+      "shelf_life": "2d6 months in an airtight container; 1 week after the seal is damaged",
+      "market_price_quality_c": "about 80D for confirmed Quality C, as published.",
+      "quality_adjusted_prices": {
+        "A": "51.20D",
+        "B": "64D",
+        "C": "80D",
+        "D": "120D",
+        "E": "180D",
+        "F": "270D"
+      },
+      "ingredient_cost": "40D",
+      "availability": 8,
+      "source": "Wege der Alchimie (2012), p. 70; price and procurement: pp. 202-203; material prices: pp. 208-209.",
+      "category": "rare_restorative_transformative"
+    },
+    {
+      "id": "ban_powder_against_spirits",
+      "number": 70,
+      "name": "Ban Powder against Spirits",
+      "german_name": "Bannpulver gegen Geister",
+      "ingredients": "1 portion powder made from Magic Chalk; 1 carat silver shavings; bone dust from the skull of a person buried in unconsecrated ground; dried blossoms of the Satuaria bush.",
+      "crafting_location": "Archaic laboratory",
+      "brewing_modifier": "+3",
+      "analysis_modifier": "+4",
+      "crafting_process": "Grind the unconsecrated skull bone, Satuaria blossoms, and silver. Bury the powder in consecrated earth at deepest night for thirty nights, lay it out in a Boron wheel, add crushed Magic Chalk while invoking the day rulers in the same circle, and sweep it together at dawn for dry storage.",
+      "description": "Pink chalk powder. One dose marks a boundary with a total circumference of up to 10 paces. The powder obstructs or excludes spirits according to quality.",
+      "quality_m": {
+        "effects": [
+          1,
+          38,
+          40
+        ]
+      },
+      "quality_tiers": [
+        {
+          "quality": "A",
+          "text": "A spirit entering the marked area has every Test penalized by 1."
+        },
+        {
+          "quality": "B",
+          "text": "Spirits with an exorcism difficulty of +2 or less cannot enter for 1 day."
+        },
+        {
+          "quality": "C",
+          "text": "Spirits with an exorcism difficulty of +4 or less cannot enter for 3 days."
+        },
+        {
+          "quality": "D",
+          "text": "Spirits with an exorcism difficulty of +7 or less cannot enter for 1 week."
+        },
+        {
+          "quality": "E",
+          "text": "Spirits with an exorcism difficulty of +10 or less cannot enter for 1 week."
+        },
+        {
+          "quality": "F",
+          "text": "No spirit can enter for 1 week, but affected spirits resent the person who laid the powder."
+        }
+      ],
+      "shelf_life": "Nearly unlimited if stored dry",
+      "market_price_quality_c": "about 15D for confirmed Quality C, as published.",
+      "quality_adjusted_prices": {
+        "A": "9.60D",
+        "B": "12D",
+        "C": "15D",
+        "D": "22.50D",
+        "E": "33.75D",
+        "F": "50.63D"
+      },
+      "ingredient_cost": "8D",
+      "availability": 9,
+      "source": "Wege der Alchimie (2012), p. 70; price and procurement: pp. 202-203; material prices: pp. 208-209.",
+      "category": "ban_powders_spiritual"
+    },
+    {
+      "id": "ban_powder_against_the_invisible",
+      "number": 71,
+      "name": "Ban Powder against the Invisible",
+      "german_name": "Bannpulver gegen Unsichtbares",
+      "ingredients": "5 scruples ash from owl feathers; 10 ounces nitrol; the eyes of an executed assassin; 1 scruple dried plague-spore mushroom; 2 mandrakes; 2 scruples aquamarine; REVERSALIS [VISIBILI].",
+      "crafting_location": "Alchemist's laboratory",
+      "brewing_modifier": "+6",
+      "analysis_modifier": "+7",
+      "crafting_process": "At night under Nandus, add owl-feather ash to nitrol until brown smoke rises. Clean and enchant the assassin's eyes with reversed VISIBILI, dust them with plague-spore fungus, dissolve them in the warmed nitrol, then add mandrakes and aquamarine, boil once, and retort the mixture; discard the blinding liquid and keep the pale-green residue.",
+      "description": "Pale-green powder that forces invisible beings or objects into visibility. A failed batch harms an invisible target for 1d6 DP.",
+      "quality_m": {
+        "effects": [
+          1,
+          2,
+          3,
+          11,
+          12,
+          13,
+          14,
+          39,
+          40
+        ],
+        "note": "an invisible target also suffers 1d6 DP."
+      },
+      "quality_tiers": [
+        {
+          "quality": "A",
+          "text": "The target becomes translucent for 1d6 CR; AT and PA are each penalized by 6."
+        },
+        {
+          "quality": "B",
+          "text": "The target becomes visible for 1d6 CR, except against VISIBILI or Invisible Hunter."
+        },
+        {
+          "quality": "C",
+          "text": "As B for 2d6 CR."
+        },
+        {
+          "quality": "D",
+          "text": "As B permanently."
+        },
+        {
+          "quality": "E",
+          "text": "As D and also works against VISIBILI and Invisible Hunter."
+        },
+        {
+          "quality": "F",
+          "text": "As E and also counters OBJECTO OBSCURO and every other form of invisibility."
+        }
+      ],
+      "shelf_life": "Unlimited",
+      "market_price_quality_c": "about 80D for confirmed Quality C, as published.",
+      "quality_adjusted_prices": {
+        "A": "51.20D",
+        "B": "64D",
+        "C": "80D",
+        "D": "120D",
+        "E": "180D",
+        "F": "270D"
+      },
+      "ingredient_cost": "40D",
+      "availability": 10,
+      "source": "Wege der Alchimie (2012), p. 71; price and procurement: pp. 202-203; material prices: pp. 208-209.",
+      "category": "ban_powders_spiritual"
+    },
+    {
+      "id": "summoning_candles",
+      "number": 72,
+      "name": "Summoning Candles",
+      "german_name": "Beschwörungskerzen",
+      "ingredients": "12 ounces wax made from the bones of black cattle; 1 mandrake; at least 1 scruple material of demonic origin; about 3 ounces ash from a burned black-snake skin; 1 tuft of the maker's own hair.",
+      "crafting_location": "Archaic laboratory",
+      "brewing_modifier": "+3",
+      "analysis_modifier": "+0",
+      "crafting_process": "Work at night inside protective circles. Melt the black-cattle bone wax, dissolve the mandrake until the wax turns green, inscribe a pentagram and heptagram, add the demonic substance, extinguish any ignition with snake-skin ash, make the wick from the brewer's own hair, and draw seven candles without leaving the circle.",
+      "description": "Greenish candles used in summoning circles. A failed batch produces an odor that penalizes the summoning spell by 3.",
+      "quality_m": {
+        "effects": [
+          1,
+          3,
+          4,
+          12,
+          13,
+          14,
+          16,
+          17,
+          22
+        ],
+        "note": "the summoning spell is also penalized by 3 because of the odor."
+      },
+      "quality_tiers": [
+        {
+          "quality": "A",
+          "text": "The smoke attracts minor spirits."
+        },
+        {
+          "quality": "B",
+          "text": "The Summoning Test is eased by 1."
+        },
+        {
+          "quality": "C",
+          "text": "Control Tests for demons and spirits are eased by 1."
+        },
+        {
+          "quality": "D",
+          "text": "Summoning and Control Tests are each eased by 1."
+        },
+        {
+          "quality": "E",
+          "text": "Summoning and Control Tests are each eased by 2."
+        },
+        {
+          "quality": "F",
+          "text": "Summoning and Control Tests are each eased by 3. If the summoning fails, there is a 50% chance that a demon from the next-higher group appears."
+        }
+      ],
+      "shelf_life": "Nearly unlimited",
+      "market_price_quality_c": "about 5D for confirmed Quality C, as published.",
+      "quality_adjusted_prices": {
+        "A": "3.20D",
+        "B": "4D",
+        "C": "5D",
+        "D": "7.50D",
+        "E": "11.25D",
+        "F": "16.88D"
+      },
+      "ingredient_cost": "2.5D",
+      "availability": 10,
+      "source": "Wege der Alchimie (2012), p. 71; price and procurement: pp. 202-203; material prices: pp. 208-209.",
+      "category": "ban_powders_spiritual"
+    },
+    {
+      "id": "borbarads_breath_malmars_soot_nacladors_breath",
+      "number": 73,
+      "name": "Borbarad's Breath / Malmar's Soot / Naclador's Breath",
+      "german_name": "Borbarads Hauch / Malmarsruß / Nacladors Odem",
+      "ingredients": "3 carats onyx dust; 5 scruples carnelian splinters; 2 ounces Smoking Brown Oil; 1 finger-joint-sized shard of red obsidian; 2 ounces blood-elm resin; 2 stone pitch; 1 ounce Orazal adhesive; 1 liquid measure Breath of Nun'kun'tur; MELT SOLID.",
+      "crafting_location": "Alchemist's laboratory",
+      "brewing_modifier": "+7",
+      "analysis_modifier": "+18",
+      "crafting_process": "On the first prescribed conjunction, dissolve onyx and carnelian in Smoking Brown Oil, inscribe and powder the red obsidian, melt blood-elm resin around it, and distill thirty-five drops. On the second conjunction, distill pale oil from pitch, combine both distillates, liquefy the resin with MELT SOLID, stir in Orazal, add the Breath of Nun'kun'tur, and seal the final vessel before air triggers it.",
+      "description": "Warm, odorless black-red oil. On contact with air it spreads; at higher quality it forms a heavy dark-red gas that descends from above. Fire, sulfur, magic, or a demonic presence causes it to coagulate into adhesive soot that seals its target hermetically and extinguishes ordinary fire.",
+      "quality_m": {
+        "effects": [
+          1,
+          3,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          40
+        ]
+      },
+      "quality_tiers": [
+        {
+          "quality": "A",
+          "text": "On exposure to air the substance forms slippery pools. Quality B-F: The gas and sealing effect operate with increasing strength. For affected demons and otherworldly beings, the separation lasts 1d6 CR at B, 2d6 at C, 3d6 at D, 4d6 at E, and 5d6 at F; the being suffers 1d6 DP per CR. A manifest demon is normally banished by this separation. For living beings, respiratory openings are sealed for the same quality-scaled duration, causing the normal consequences of suffocation. Coverage: One stone protects approximately 20 cubic paces at B, 40 at C, 60 at D, 80 at E, or 100 at F."
+        }
+      ],
+      "shelf_life": "Unlimited",
+      "market_price_quality_c": "about 25D for confirmed Quality C, as published.",
+      "quality_adjusted_prices": {
+        "A": "16D",
+        "B": "20D",
+        "C": "25D",
+        "D": "37.50D",
+        "E": "56.25D",
+        "F": "84.38D"
+      },
+      "ingredient_cost": "13D",
+      "availability": 3,
+      "source": "Wege der Alchimie (2012), p. 72; price and procurement: pp. 202-203; material prices: pp. 208-209.",
+      "category": "ban_powders_spiritual"
+    },
+    {
+      "id": "spirit_elixir",
+      "number": 74,
+      "name": "Spirit Elixir",
+      "german_name": "Geisterelixier",
+      "ingredients": "1 scruple mindorium ore or 1 stone Mohagoni wood; 1 liquid measure sulfur-spring water; 1 human or orc skull, or 1 shrunken head; 1 Bloodleaf.",
+      "crafting_location": "Archaic laboratory",
+      "brewing_modifier": "+3",
+      "analysis_modifier": "+4",
+      "crafting_process": "Place Bloodleaf in sulfur water and remove it when its purple color is gone. Put the skull or shrunken head into the self-warming liquid until dark purple threads appear, then add crushed mindorium ore until the color turns gray; Mohagoni is the published alternative to mindorium.",
+      "description": "Dark-gray streaked liquid that attracts spirits and weakens resistance to possession.",
+      "quality_m": {
+        "effects": [
+          1,
+          3,
+          5,
+          13,
+          19,
+          20
+        ]
+      },
+      "quality_tiers": [
+        {
+          "quality": "A",
+          "text": "Spirits are attracted and harass the user."
+        },
+        {
+          "quality": "B",
+          "text": "A summoned spirit possesses the subject; the defense Test against possession is penalized by 1 for 1 day."
+        },
+        {
+          "quality": "C",
+          "text": "The defense Test is penalized by 3."
+        },
+        {
+          "quality": "D",
+          "text": "The defense Test is penalized by 7."
+        },
+        {
+          "quality": "E",
+          "text": "The defense Test is penalized by 15."
+        },
+        {
+          "quality": "F",
+          "text": "The possession becomes permanent and requires exorcism."
+        }
+      ],
+      "shelf_life": "2d6+3 months if kept dry",
+      "market_price_quality_c": "about 30D for confirmed Quality C, as published.",
+      "quality_adjusted_prices": {
+        "A": "19.20D",
+        "B": "24D",
+        "C": "30D",
+        "D": "45D",
+        "E": "67.50D",
+        "F": "101.25D"
+      },
+      "ingredient_cost": "15D",
+      "availability": 7,
+      "source": "Wege der Alchimie (2012), p. 72; price and procurement: pp. 202-203; material prices: pp. 208-209.",
+      "category": "ban_powders_spiritual"
+    },
+    {
+      "id": "retro_elixir",
+      "number": 75,
+      "name": "Retro Elixir",
+      "german_name": "Retro-Elixier",
+      "ingredients": "2 additional mandrakes; 2 Gulmond leaves; 1 Yagan nut; 5 scruples skeleton dust; the right eye of a mummy; 2 hairs from an undead being; 1 ounce wolf blood; 2 ounces Boron wine; 1 ounce mercury; 3 ounces water from the Gratenfels sulfur spring; 1 ounce alcohol.",
+      "crafting_location": "Alchemist's laboratory",
+      "brewing_modifier": "+7",
+      "analysis_modifier": "+8",
+      "crafting_process": "Steep Gulmond and a halved Yagan nut in sulfur water for six days and nights, filter on the seventh moonless night, add wolf blood and Boron wine, and distill three times, adding undead hair, bone dust, and mummy eye in that order. Separately invoke the mandrakes with a Nephazz, distill them through alcohol, then alternate both essences dropwise into nearly vaporizing mercury until it turns dull pale gray.",
+      "description": "Milky liquid that raises a corpse as an undead servant. Every successful result requires a Control Test and grants the service Following. The control value is (CO + CO + CL + CH + Anatomy TP) / 5.",
+      "quality_m": {
+        "effects": [
+          1,
+          3,
+          6,
+          10,
+          13,
+          36,
+          38
+        ],
+        "note": "for effect 38, use spirits or restless souls instead of fairies."
+      },
+      "quality_tiers": [
+        {
+          "quality": "A",
+          "text": "The corpse rises for 1 night."
+        },
+        {
+          "quality": "B",
+          "text": "It rises for 1 week; Control -2 and AR +1."
+        },
+        {
+          "quality": "C",
+          "text": "It rises for 1 month; Control -3, CL +1, AR +2, AT +1, and PA +1."
+        },
+        {
+          "quality": "D",
+          "text": "It rises for 1d6+1 months; Control -7, CL +2, AR +3, AT +2, and PA +2."
+        },
+        {
+          "quality": "E",
+          "text": "It rises for 1 year; Control -10, CL +3, AR +4, AT +2, and PA +2."
+        },
+        {
+          "quality": "F",
+          "text": "The undead rises permanently, cannot be controlled, and acts independently."
+        }
+      ],
+      "shelf_life": "3d6+10 months",
+      "market_price_quality_c": "at least 80D for confirmed Quality C, as published.",
+      "quality_adjusted_prices": {
+        "A": "51.20D",
+        "B": "64D",
+        "C": "80D",
+        "D": "120D",
+        "E": "180D",
+        "F": "270D"
+      },
+      "ingredient_cost": "40D",
+      "availability": 2,
+      "source": "Wege der Alchimie (2012), p. 73; price and procurement: pp. 202-203; material prices: pp. 208-209.",
+      "category": "ban_powders_spiritual"
+    },
+    {
+      "id": "magic_chalk",
+      "number": 76,
+      "name": "Magic Chalk",
+      "german_name": "Zauberkreide",
+      "ingredients": "6 ounces Olport chalk powder; 1 mandrake; 1 cockscomb; 2 ounces dried ox blood.",
+      "crafting_location": "Archaic laboratory",
+      "brewing_modifier": "+2",
+      "analysis_modifier": "+1",
+      "crafting_note": "The maker must invest 7 ASP during the invocation.",
+      "crafting_process": "At night under visible Ucuri, grind the Olport chalk, press the mandrake, soak the cockscomb in its juice until it matches ox-blood red, and stir in the dried blood. Heat without foaming until the cockscomb is gone, pour the liquid over the chalk while speaking the invocation and investing 7 ASP, then press the paste into chalk forms.",
+      "description": "Red chalk used to draw magical circles for summoning, control, and exorcism. A failed batch makes all three operations harder rather than easier.",
+      "quality_m": {
+        "effects": [
+          1,
+          3,
+          4,
+          40
+        ],
+        "note": "Summoning, Control, and Exorcism Tests involving the circle are each penalized by 3."
+      },
+      "quality_tiers": [
+        {
+          "quality": "A",
+          "text": "Summoning Tests are eased by 1."
+        },
+        {
+          "quality": "B",
+          "text": "Exorcism Tests are eased by 1."
+        },
+        {
+          "quality": "C",
+          "text": "Summoning and Exorcism Tests are each eased by 1."
+        },
+        {
+          "quality": "D",
+          "text": "Summoning, Control, and Exorcism Tests are each eased by 1."
+        },
+        {
+          "quality": "E",
+          "text": "Summoning and Exorcism Tests are each eased by 2; Control Tests are eased by 1."
+        },
+        {
+          "quality": "F",
+          "text": "Summoning and Exorcism Tests are each eased by 3; Control Tests are eased by 2. If a summoning fails, there is a 50% chance that a demon from the next-higher group appears."
+        }
+      ],
+      "shelf_life": "Unlimited",
+      "market_price_quality_c": "about 5D for confirmed Quality C, as published.",
+      "quality_adjusted_prices": {
+        "A": "3.20D",
+        "B": "4D",
+        "C": "5D",
+        "D": "7.50D",
+        "E": "11.25D",
+        "F": "16.88D"
+      },
+      "ingredient_cost": "2.5D",
+      "availability": 13,
+      "source": "Wege der Alchimie (2012), pp. 73-74; price and procurement: pp. 202-203; material prices: pp. 208-209.",
+      "category": "ban_powders_spiritual"
+    },
+    {
+      "id": "magic_potion",
+      "number": 77,
+      "name": "Magic Potion",
+      "german_name": "Zaubertrank",
+      "ingredients": "1 small piece of meteoric iron; 1 scruple diamond dust; 20 ounces clear blood; 10 ounces snow gathered on the first day of Hesinde; 7 whole Kairan stalks; 3 additional mandrakes; 2 bundles Thonnys; 1 scruple dragon tears.",
+      "crafting_location": "Witch's kitchen",
+      "brewing_modifier": "+8",
+      "analysis_modifier": "+4",
+      "crafting_process": "Pound the meteoric iron and diamond, mix the intended drinker's clear blood with melted first-Hesinde snow in a gold flask, cut every Kairan stalk into seven pieces and every mandrake into three, and powder the Thonnys. Under moonlight boil in stages, adding Thonnys, mandrake, iron-diamond-Kairan, and finally dragon tears as the color changes green, blue, purple, milky white, and glowing white; cool under moonlight.",
+      "description": "Clear, odorless potion that restores ASP. A failed preparation drains magical energy and causes severe headache.",
+      "quality_m": {
+        "effects": [
+          1,
+          2,
+          3,
+          4,
+          8,
+          9,
+          13,
+          14,
+          18,
+          19,
+          20,
+          22,
+          38,
+          40
+        ],
+        "note": "The user also loses 1d6 ASP; any excess loss is deducted from VP. For 2d6 hours, headache reduces CL, IN, AG, and DE by 2."
+      },
+      "quality_tiers": [
+        {
+          "quality": "A",
+          "text": "Restores 1d6 ASP; CL -2 for 1 hour."
+        },
+        {
+          "quality": "B",
+          "text": "Restores 2d6 ASP. The restored points must be spent within 1 hour; otherwise CL, IN, AG, and DE are each reduced by 4 for 7 hours."
+        },
+        {
+          "quality": "C",
+          "text": "Restores 3d6 ASP."
+        },
+        {
+          "quality": "D",
+          "text": "Restores 3d6+6 ASP, even above the normal maximum; overflow above the maximum is deducted from VP."
+        },
+        {
+          "quality": "E",
+          "text": "Restores 5d6+6 ASP under the same overflow rule."
+        },
+        {
+          "quality": "F",
+          "text": "Restores 2d20+5 ASP above the normal maximum without VP loss."
+        }
+      ],
+      "shelf_life": "2d6+30 months",
+      "market_price_quality_c": "at least 60D for confirmed Quality C, as published.",
+      "quality_adjusted_prices": {
+        "A": "38.40D",
+        "B": "48D",
+        "C": "60D",
+        "D": "90D",
+        "E": "135D",
+        "F": "202.50D"
+      },
+      "ingredient_cost": "30D",
+      "availability": 6,
+      "source": "Wege der Alchimie (2012), p. 74; price and procurement: pp. 202-203; material prices: pp. 208-209.",
+      "category": "ban_powders_spiritual"
+    }
+  ]
+}

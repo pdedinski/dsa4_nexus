@@ -26,6 +26,7 @@ import {
   Image,
   Cog,
   Flag,
+  Beaker,
 } from "lucide-react";
 import clsx from "clsx";
 import { signOut } from "next-auth/react";
@@ -50,6 +51,7 @@ const CATEGORY_ICONS: Record<string, React.ElementType> = {
   core: Shield,
   equipment: Package,
   magic: FlaskConical,
+  alchemy: Beaker,
   meta: BookMarked,
   talents: Zap,
 };
@@ -61,6 +63,11 @@ const CATEGORIES = [
   { key: "core", label: "Core", files: ["cultures", "professions", "races"] },
   { key: "equipment", label: "Equipment", files: ["armor", "general_equipment", "weapons"] },
   { key: "magic", label: "Magic", files: ["spells"] },
+  {
+    key: "alchemy",
+    label: "Alchemy",
+    files: ["recipes", "failure_table", "ingredient_prices"],
+  },
   { key: "meta", label: "Meta", files: ["advancement_costs"] },
   {
     key: "talents",
@@ -91,6 +98,9 @@ const FILE_LABELS: Record<string, string> = {
   general_equipment: "General Equipment",
   weapons: "Weapons",
   spells: "Spells",
+  recipes: "Recipes",
+  failure_table: "Failure Table",
+  ingredient_prices: "Ingredient Prices",
   advancement_costs: "Advancement Costs",
   artisan_talents: "Artisan",
   combat_talents: "Combat",

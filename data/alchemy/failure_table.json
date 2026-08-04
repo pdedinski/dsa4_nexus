@@ -1,0 +1,174 @@
+{
+  "meta": {
+    "schema_version": "1.0",
+    "last_updated": "2026-08-04",
+    "description": "Failed-batch effects (Quality M) for alchemical recipes from Wege der Alchimie.",
+    "source_books": [
+      "Wege der Alchimie (2012), pp. 34-35"
+    ]
+  },
+  "intro_note": "An entry's M line normally lists one or more numbers from this table. The Highlord selects one or more listed effects, with worse failures producing more severe consequences.",
+  "failure_effects": [
+    {
+      "number": 1,
+      "effect": "No effect."
+    },
+    {
+      "number": 2,
+      "effect": "The mixture evaporates completely without residue."
+    },
+    {
+      "number": 3,
+      "effect": "Only a lump of nonmagical slag or ash remains."
+    },
+    {
+      "number": 4,
+      "effect": "The product has the opposite effect. Roll 1d20 for the effective quality: 1-5 A, 6-10 B, 11-14 C, 15-17 D, 18-19 E, 20 F, then reverse that effect."
+    },
+    {
+      "number": 5,
+      "effect": "Neutralizes every other artificial alchemical product currently active or consumed during the next 1d6 hours. This includes alchemical poisons, but not natural poisons."
+    },
+    {
+      "number": 6,
+      "effect": "An explosion during preparation sets the laboratory on fire: 5d6 DP, reduced by 1d6 for every 2 paces of distance; temporary deafness may result."
+    },
+    {
+      "number": 7,
+      "effect": "The finished mixture has a 1-4 on 1d6 chance to explode in storage and certainly explodes when ignited or heated: up to 5d20 DP within 3 paces, reduced by 1d20 for each further 3 paces; temporary deafness may result."
+    },
+    {
+      "number": 8,
+      "effect": "The mixture sprays in every direction during preparation, ignites, and sets the laboratory on fire."
+    },
+    {
+      "number": 9,
+      "effect": "The substance boils over and ruins nearby materials not resistant to heat and moisture."
+    },
+    {
+      "number": 10,
+      "effect": "The mixture sprays corrosive liquid in every direction and eats through materials not resistant to acid or heat; an unprotected alchemist suffers up to 3d6 DP and may be scarred."
+    },
+    {
+      "number": 11,
+      "effect": "A large gas cloud blinds all living creatures within 50 paces for 3d6 hours."
+    },
+    {
+      "number": 12,
+      "effect": "Toxic fumes inflict 3d20 DP on the alchemist."
+    },
+    {
+      "number": 13,
+      "effect": "Escaping fumes cause nightmares for several days; no regeneration is possible during that time."
+    },
+    {
+      "number": 14,
+      "effect": "Fumes cause several days of mental confusion."
+    },
+    {
+      "number": 15,
+      "effect": "A colored cloud permanently dyes hair and cloth and stains everything else for at least 1d20 days."
+    },
+    {
+      "number": 16,
+      "effect": "Smoke produced when the finished product burns is poisonous: everyone within 3 paces coughs for several minutes and suffers 2d20 DP (Endurance)."
+    },
+    {
+      "number": 17,
+      "effect": "The product burns in bright colors but otherwise has no effect."
+    },
+    {
+      "number": 18,
+      "effect": "Use inflicts 2d6 DP and severe side effects for 2d6 hours, such as vomiting, itching, blurred vision, painful rash, burning in the mouth, hair loss, stomach cramps, headaches, or warts."
+    },
+    {
+      "number": 19,
+      "effect": "The result is a stage 10 ingestion poison that inflicts 1d6+1 DP each hour for 2d6+2 hours."
+    },
+    {
+      "number": 20,
+      "effect": "The user loses 2d6 ASP. Any loss below 0 is taken from VP, including for non-spellcasters."
+    },
+    {
+      "number": 21,
+      "effect": "Complete exhaustion: EP falls to 0 and the user gains 3d6 points of Fatigue."
+    },
+    {
+      "number": 22,
+      "effect": "Severe headache for 2d6 hours: CL, IN, AG, and DE each -2."
+    },
+    {
+      "number": 23,
+      "effect": "Complete disorientation for one day: AT, PA, and RV -4; CL, DE, and AG -2."
+    },
+    {
+      "number": 24,
+      "effect": "Deep sleep for 5d6 hours without healing; regeneration is lost."
+    },
+    {
+      "number": 25,
+      "effect": "The user cannot sleep for 1d6 nights. Fatigue gained is 2 on the first night, 3 on the second, 4 on the third, and so on."
+    },
+    {
+      "number": 26,
+      "effect": "The user becomes a berserker for 1d20 CR, using quality C of the Berserker Elixir."
+    },
+    {
+      "number": 27,
+      "effect": "Uncontrolled twitching, jumping, and flailing for 1d20 minutes; EP is reduced by the d20 result times 5 percent."
+    },
+    {
+      "number": 28,
+      "effect": "One or more appropriate negative traits increase by 2d6 for 3d6 hours. On 19-20 on 1d20, one rises permanently by 1."
+    },
+    {
+      "number": 29,
+      "effect": "Gout-like paralysis of the fingers for 2d6 hours: DE is halved, to a minimum loss of 7 points."
+    },
+    {
+      "number": 30,
+      "effect": "Extreme clumsiness for 2d6 hours: AG is halved, to a minimum loss of 7 points."
+    },
+    {
+      "number": 31,
+      "effect": "Near-total loss of intuition and reactions for 3d6 hours: IN is halved, to a minimum loss of 7 points."
+    },
+    {
+      "number": 32,
+      "effect": "For 3d6 GT, CL becomes 0 and the user is effectively incapable of purposeful action."
+    },
+    {
+      "number": 33,
+      "effect": "For 1d20 hours, CN is halved, to a minimum loss of 7 points, and EP falls to 0."
+    },
+    {
+      "number": 34,
+      "effect": "Weakness for 1d6 hours: ST is halved, to a minimum loss of 7 points, and CN -3."
+    },
+    {
+      "number": 35,
+      "effect": "For 2d6 hours the user gains Bad Smell and Ugly; CH is halved, to a minimum loss of 7 points."
+    },
+    {
+      "number": 36,
+      "effect": "For 1d6 hours all fear-based negative traits double and CO is halved, to a minimum loss of 7 points."
+    },
+    {
+      "number": 37,
+      "effect": "For 3d6 hours the user slurs speech, is highly suggestible and indecisive, and has CO 6 and CL 6."
+    },
+    {
+      "number": 38,
+      "effect": "For 1d6 days the user attracts kobolds, fairies, sprites, and similar beings and is subjected to harmless but costly pranks."
+    },
+    {
+      "number": 39,
+      "effect": "The affected object or body part completely rusts, rots, decays, or withers within 1d6 days."
+    },
+    {
+      "number": 40,
+      "effect": "Everything touching the product, or any creature consuming it, glows mystically for 1d6 GT."
+    }
+  ],
+  "source": "Wege der Alchimie (2012), pp. 34-35."
+}

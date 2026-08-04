@@ -1,0 +1,775 @@
+{
+  "meta": {
+    "schema_version": "1.0",
+    "last_updated": "2026-08-04",
+    "description": "Official alchemical material price lists from Wege der Alchimie and selected plant prices from Zoo-Botanica Aventurica.",
+    "source_books": [
+      "Wege der Alchimie (2012), pp. 206, 208-209",
+      "Zoo-Botanica Aventurica, Herbarium pp. 227-275"
+    ]
+  },
+  "currency_note": "Currency: 1 ducat (D) = 10 thalers (T) = 100 farthings (F) = 1,000 kreutzers (K).",
+  "unit_default": "Unless another unit is stated, the price is per stone. These are ingredient unit prices, not recipe package totals.",
+  "price_sections": [
+    {
+      "id": "A1",
+      "title": "CLASSICAL METALS AND ALLOYS",
+      "unit_note": "alchemically pure, per stone",
+      "entries": [
+        {
+          "item": "Antimony",
+          "price": "7D"
+        },
+        {
+          "item": "Lead",
+          "price": "1D"
+        },
+        {
+          "item": "Bronze",
+          "price": "4D"
+        },
+        {
+          "item": "Iron",
+          "price": "8T"
+        },
+        {
+          "item": "Gold",
+          "price": "50D"
+        },
+        {
+          "item": "Copper",
+          "price": "3D"
+        },
+        {
+          "item": "Brass",
+          "price": "4D"
+        },
+        {
+          "item": "Moon-silver (platinum)",
+          "price": "75D"
+        },
+        {
+          "item": "Mercury",
+          "price": "75D"
+        },
+        {
+          "item": "Silver",
+          "price": "25D"
+        },
+        {
+          "item": "Bismuth",
+          "price": "8D"
+        },
+        {
+          "item": "Tin",
+          "price": "3D"
+        },
+        {
+          "item": "Dwarven gold",
+          "price": "80D"
+        },
+        {
+          "item": "Dwarven silver (Toschkril)",
+          "price": "50D"
+        }
+      ],
+      "note": "Less pure coinage and sufficiently pure utilitarian metals are available for about three-quarters of these prices",
+      "source": "Wege der Alchimie (2012), p. 208."
+    },
+    {
+      "id": "A2",
+      "title": "OTHER AND MAGICAL METALS",
+      "entries": [
+        {
+          "item": "Phosphorescent crystals:",
+          "price": "7D/stone or 15T/ounce"
+        },
+        {
+          "item": "Electrum",
+          "price": "30D/stone"
+        },
+        {
+          "item": "Güldenland metals",
+          "price": "about 20-60D/stone or more"
+        },
+        {
+          "item": "Fool's gold",
+          "price": "5T/stone"
+        },
+        {
+          "item": "Cobalt",
+          "price": "15T/stone"
+        },
+        {
+          "item": "Meteoric iron",
+          "price": "5D/stone"
+        },
+        {
+          "item": "Neck-copper",
+          "price": "1D/stone"
+        },
+        {
+          "item": "Nickel",
+          "price": "8T/stone"
+        },
+        {
+          "item": "Orichalcum",
+          "price": "30D per roughly pea-sized bead"
+        },
+        {
+          "item": "Unmetals",
+          "price": "at least 100D/stone"
+        },
+        {
+          "item": "Mindorium",
+          "price": "200D/stone"
+        },
+        {
+          "item": "Arcanium",
+          "price": "50D/ounce"
+        },
+        {
+          "item": "Endurium",
+          "price": "12,000D/stone"
+        },
+        {
+          "item": "Titanium",
+          "price": "5,000D/ounce"
+        }
+      ],
+      "note": "Eternium priceless",
+      "source": "Wege der Alchimie (2012), p. 208."
+    },
+    {
+      "id": "A3",
+      "title": "GEMSTONES",
+      "unit_note": "per carat, uncut/unpolished",
+      "entries": [
+        {
+          "item": "Agate",
+          "price": "16K"
+        },
+        {
+          "item": "Amethyst",
+          "price": "15K"
+        },
+        {
+          "item": "Aquamarine",
+          "price": "2F"
+        },
+        {
+          "item": "Aventurine",
+          "price": "25K"
+        },
+        {
+          "item": "Baryte",
+          "price": "14K"
+        },
+        {
+          "item": "Rock crystal",
+          "price": "19K"
+        },
+        {
+          "item": "Amber",
+          "price": "9T"
+        },
+        {
+          "item": "Chrysoprase",
+          "price": "23K"
+        },
+        {
+          "item": "Celestine",
+          "price": "18F"
+        },
+        {
+          "item": "Diamond",
+          "price": "15T"
+        },
+        {
+          "item": "Fire opal",
+          "price": "25F"
+        },
+        {
+          "item": "Garnet",
+          "price": "8F"
+        },
+        {
+          "item": "Green jade",
+          "price": "2T"
+        },
+        {
+          "item": "Red jade",
+          "price": "4T"
+        },
+        {
+          "item": "Carnelian",
+          "price": "17K"
+        },
+        {
+          "item": "Coral",
+          "price": "5F"
+        },
+        {
+          "item": "Lapis lazuli",
+          "price": "17F"
+        },
+        {
+          "item": "Magnetite",
+          "price": "26K"
+        },
+        {
+          "item": "Meerschaum",
+          "price": "5F"
+        },
+        {
+          "item": "Moonstone",
+          "price": "12K"
+        },
+        {
+          "item": "Obsidian",
+          "price": "1F"
+        },
+        {
+          "item": "Red obsidian",
+          "price": "5F"
+        },
+        {
+          "item": "Onyx",
+          "price": "13K"
+        },
+        {
+          "item": "Opal",
+          "price": "2F"
+        },
+        {
+          "item": "Pearl",
+          "price": "7T"
+        },
+        {
+          "item": "Smoky quartz",
+          "price": "25K"
+        },
+        {
+          "item": "Rose quartz",
+          "price": "2F"
+        },
+        {
+          "item": "Ruby",
+          "price": "14T"
+        },
+        {
+          "item": "Sapphire",
+          "price": "12T"
+        },
+        {
+          "item": "Soapstone",
+          "price": "1K"
+        },
+        {
+          "item": "Emerald",
+          "price": "11T"
+        },
+        {
+          "item": "Topaz",
+          "price": "2T"
+        },
+        {
+          "item": "Turquoise",
+          "price": "16K"
+        },
+        {
+          "item": "Tourmaline",
+          "price": "3F"
+        },
+        {
+          "item": "Zircon",
+          "price": "9T"
+        }
+      ],
+      "note": "A good round cut doubles the price a brilliant cut can increase it fivefold. No such multiplier is used in the recipe calculations unless the recipe explicitly calls for a worked gem",
+      "source": "Wege der Alchimie (2012), p. 208."
+    },
+    {
+      "id": "A4",
+      "title": "ROCKS AND MINERALS",
+      "unit_note": "per stone unless stated",
+      "entries": [
+        {
+          "item": "Alabaster",
+          "price": "1D"
+        },
+        {
+          "item": "Alum",
+          "price": "2D"
+        },
+        {
+          "item": "worked Alben crystal",
+          "price": "30D"
+        },
+        {
+          "item": "Bloodstone",
+          "price": "8T"
+        },
+        {
+          "item": "fist-sized Gwen Petryl",
+          "price": "100D"
+        },
+        {
+          "item": "coral stock",
+          "price": "2D"
+        },
+        {
+          "item": "Lignolith",
+          "price": "20D"
+        },
+        {
+          "item": "nine-eye hair",
+          "price": "4T"
+        },
+        {
+          "item": "Pitchblende",
+          "price": "3T"
+        },
+        {
+          "item": "salt",
+          "price": "8T"
+        },
+        {
+          "item": "small dripstone",
+          "price": "1T/piece"
+        },
+        {
+          "item": "fossils 2K to more than",
+          "price": "20D/piece"
+        },
+        {
+          "item": "Windkanter",
+          "price": "3T/piece"
+        },
+        {
+          "item": "Desert Star",
+          "price": "2D"
+        },
+        {
+          "item": "cinnabar",
+          "price": "12D"
+        }
+      ],
+      "note": "building and fine stone 5F-5T sand 5F-1D",
+      "source": "Wege der Alchimie (2012), p. 209."
+    },
+    {
+      "id": "A5",
+      "title": "ALCHEMICAL SUBSTANCES",
+      "unit_note": "per ounce unless stated",
+      "entries": [
+        {
+          "item": "Alicorn",
+          "price": "at least 300D/piece"
+        },
+        {
+          "item": "Alp rod",
+          "price": "3F"
+        },
+        {
+          "item": "ambergris",
+          "price": "4-15T"
+        },
+        {
+          "item": "Archen resin",
+          "price": "5T"
+        },
+        {
+          "item": "bear claw",
+          "price": "3F/flux"
+        },
+        {
+          "item": "basilisk part",
+          "price": "at least 10D"
+        },
+        {
+          "item": "ivory",
+          "price": "4T, up to 1D among Tulamydes"
+        },
+        {
+          "item": "owl pellet",
+          "price": "12F/piece"
+        },
+        {
+          "item": "fire slime",
+          "price": "1T"
+        },
+        {
+          "item": "bile",
+          "price": "5F"
+        },
+        {
+          "item": "gallstone",
+          "price": "1T/piece"
+        },
+        {
+          "item": "witch's broom",
+          "price": "2T/piece"
+        },
+        {
+          "item": "Irrhalk droppings",
+          "price": "7T"
+        },
+        {
+          "item": "Irrweed",
+          "price": "12F/piece"
+        },
+        {
+          "item": "Kekeyatonba",
+          "price": "5D/flux"
+        },
+        {
+          "item": "manna",
+          "price": "3T"
+        },
+        {
+          "item": "Myridanium",
+          "price": "200D"
+        },
+        {
+          "item": "nightshade",
+          "price": "9F/flux"
+        },
+        {
+          "item": "pearl",
+          "price": "7T/carat"
+        },
+        {
+          "item": "mother-of-pearl",
+          "price": "2T"
+        },
+        {
+          "item": "Sordul's apple",
+          "price": "3T/piece"
+        },
+        {
+          "item": "tabaschir",
+          "price": "12T"
+        },
+        {
+          "item": "Theriak",
+          "price": "at least 160D/liquid measure"
+        },
+        {
+          "item": "death nuts",
+          "price": "7F"
+        },
+        {
+          "item": "vampire blood",
+          "price": "2T/flux"
+        },
+        {
+          "item": "royal jelly",
+          "price": "15D/flux"
+        },
+        {
+          "item": "wormwood",
+          "price": "8F/flux"
+        },
+        {
+          "item": "wolf's milk",
+          "price": "4F/flux"
+        },
+        {
+          "item": "cyclops eye",
+          "price": "at least 100D/piece"
+        }
+      ],
+      "source": "Wege der Alchimie (2012), p. 209."
+    },
+    {
+      "id": "A6",
+      "title": "EXOTICA AND COMMON CONSUMABLES",
+      "unit_note": "per stone unless stated",
+      "entries": [
+        {
+          "item": "Mandrake",
+          "price": "8T/piece"
+        },
+        {
+          "item": "incendiary oil",
+          "price": "16D"
+        },
+        {
+          "item": "Brodem",
+          "price": "6D/liquid measure"
+        },
+        {
+          "item": "Chorhop ink",
+          "price": "5F/ounce"
+        },
+        {
+          "item": "earth resin/asphalt",
+          "price": "2D"
+        },
+        {
+          "item": "elastic resin",
+          "price": "15T/ounce"
+        },
+        {
+          "item": "resin products",
+          "price": "5T to 10D or more"
+        },
+        {
+          "item": "henna",
+          "price": "6D"
+        },
+        {
+          "item": "Hesindigo",
+          "price": "20D"
+        },
+        {
+          "item": "aqua regia",
+          "price": "30D"
+        },
+        {
+          "item": "linseed oil",
+          "price": "4T"
+        },
+        {
+          "item": "lotus, depending on species,",
+          "price": "1D to well over 100D/ounce"
+        },
+        {
+          "item": "malachite",
+          "price": "6T/ounce"
+        },
+        {
+          "item": "mastic",
+          "price": "2T/ounce"
+        },
+        {
+          "item": "Orazal adhesive",
+          "price": "5D/ounce"
+        },
+        {
+          "item": "pitch",
+          "price": "2D"
+        },
+        {
+          "item": "potash",
+          "price": "3D"
+        },
+        {
+          "item": "purple dye",
+          "price": "3D/ounce"
+        },
+        {
+          "item": "Smoking Brown Oil (Nitrol)",
+          "price": "12D"
+        },
+        {
+          "item": "pure alcohol",
+          "price": "5D"
+        },
+        {
+          "item": "salve fat 3D, perfumed up to",
+          "price": "8D"
+        },
+        {
+          "item": "hydrochloric acid",
+          "price": "10D"
+        },
+        {
+          "item": "pure sulfur",
+          "price": "25D"
+        },
+        {
+          "item": "sulfur-spring water",
+          "price": "5T/liquid measure"
+        },
+        {
+          "item": "sulfuric acid (vitriol)",
+          "price": "6D"
+        },
+        {
+          "item": "sulfurous Orazal",
+          "price": "8D/ounce"
+        },
+        {
+          "item": "rock oil",
+          "price": "15D"
+        },
+        {
+          "item": "fabric dyes",
+          "price": "1-5D"
+        },
+        {
+          "item": "Unau brine",
+          "price": "5D"
+        },
+        {
+          "item": "dwarven coal",
+          "price": "4T"
+        },
+        {
+          "item": "double distillate",
+          "price": "3D"
+        }
+      ],
+      "note": "charcoal 2F-10T depending on wood",
+      "source": "Wege der Alchimie (2012), p. 209."
+    },
+    {
+      "id": "A7",
+      "title": "WOODS",
+      "unit_note": "seasoned, unworked heartwood, per stone at Gareth",
+      "entries": [
+        {
+          "item": "Traveler's Tree",
+          "price": "8T"
+        },
+        {
+          "item": "Blood Elm",
+          "price": "9T"
+        },
+        {
+          "item": "Bosparan tree",
+          "price": "15F"
+        },
+        {
+          "item": "Iron Tree",
+          "price": "12T"
+        },
+        {
+          "item": "Ghost Beech",
+          "price": "5T"
+        },
+        {
+          "item": "Mammoth Tree",
+          "price": "4T"
+        },
+        {
+          "item": "Mohagoni",
+          "price": "7T"
+        },
+        {
+          "item": "Satuaria Bush",
+          "price": "4T"
+        },
+        {
+          "item": "Stone Oak",
+          "price": "3T"
+        },
+        {
+          "item": "Walnut",
+          "price": "2T"
+        },
+        {
+          "item": "Cyclops Cedar",
+          "price": "5T"
+        }
+      ],
+      "note": "Prices vary with distance from the logging region bulk timber may be substantially cheaper",
+      "source": "Wege der Alchimie (2012), p. 209."
+    },
+    {
+      "id": "A8",
+      "title": "LABORATORY EQUIPMENT",
+      "entries": [
+        {
+          "item": "Alchemist's laboratory",
+          "price": "500D or more"
+        },
+        {
+          "item": "Witch's kitchen",
+          "price": "100D or more"
+        },
+        {
+          "item": "Archaic laboratory",
+          "price": "20D"
+        },
+        {
+          "item": "Analysis kit",
+          "price": "20D"
+        },
+        {
+          "item": "associated consumables",
+          "price": "30D"
+        }
+      ],
+      "source": "Wege der Alchimie (2012), p. 206."
+    },
+    {
+      "id": "A9",
+      "title": "RECIPE PLANTS WITH DIRECTLY USABLE CORE PRICES",
+      "entries": [
+        {
+          "item": "Finage",
+          "price": "6T per 7 shoots"
+        },
+        {
+          "item": "Mibel reed",
+          "price": "5T per stalk/flowering ear"
+        },
+        {
+          "item": "Atmon",
+          "price": "2D per bundle"
+        },
+        {
+          "item": "Belmart",
+          "price": "9T per leaf"
+        },
+        {
+          "item": "Kairan",
+          "price": "15T per stalk"
+        },
+        {
+          "item": "Joruga",
+          "price": "8T per root"
+        },
+        {
+          "item": "Vragies root",
+          "price": "2T per root"
+        },
+        {
+          "item": "Wirsel herb",
+          "price": "1D per plant"
+        },
+        {
+          "item": "Neckerkraut",
+          "price": "5F per leaf"
+        },
+        {
+          "item": "Yagan nut 3D each or Yagan oil",
+          "price": "3D per 2 flux"
+        },
+        {
+          "item": "Argan root",
+          "price": "7T"
+        },
+        {
+          "item": "four-leaf oneberry",
+          "price": "2T"
+        },
+        {
+          "item": "Olgin root",
+          "price": "3D per moss ball"
+        },
+        {
+          "item": "Menchal juice",
+          "price": "5D per half liquid measure"
+        },
+        {
+          "item": "Hell Herb",
+          "price": "10T per stone"
+        },
+        {
+          "item": "raw Ilmen leaf",
+          "price": "2D per ounce"
+        },
+        {
+          "item": "dried Ilmen leaf or Ilmen resin",
+          "price": "6D per ounce"
+        }
+      ],
+      "note": "Horush seed 5T each Gulmond is 8T per shrub and Thonnys 12T per leaf, but recipe quantities stated as leaves or bundles cannot always be converted exactly because the source does not define a fixed number of leaves per shrub or bundle",
+      "source": "Zoo-Botanica Aventurica, Herbarium entries on pp. 227-275, specifically pp. 228-230, 238, 240-243, 249, 251, 255-256, 269, 271-275."
+    }
+  ]
+}

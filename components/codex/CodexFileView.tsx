@@ -156,6 +156,95 @@ function buildSummonedKindSections(
   return out;
 }
 
+const ALCHEMY_CATEGORY_LABELS: Record<string, string> = {
+  simple_alchemy: "Simple Alchemy",
+  virtutica: "Elixirs of the Virtues",
+  object_material_elixirs: "Object and Material Elixirs",
+  poisons: "Poisons",
+  remedies: "Remedies",
+  mind_emotion_altered_states: "Mind, Emotion, and Altered States",
+  rare_restorative_transformative:
+    "Rare Restorative and Transformative Elixirs",
+  ban_powders_spiritual:
+    "Ban Powders, Summoning Aids, and Spiritual Preparations",
+};
+
+const ALCHEMY_CATEGORY_ORDER = [
+  "simple_alchemy",
+  "virtutica",
+  "object_material_elixirs",
+  "poisons",
+  "remedies",
+  "mind_emotion_altered_states",
+  "rare_restorative_transformative",
+  "ban_powders_spiritual",
+];
+
+function alchemyCategoryLabel(cat: unknown): string {
+  const k = String(cat ?? "").trim();
+  if (!k) return "Other";
+  return ALCHEMY_CATEGORY_LABELS[k] ?? k.replace(/_/g, " ");
+}
+
+function alchemyListPreview(payload: Record<string, unknown>): string | null {
+  const market = String(payload.market_price_quality_c ?? "")
+    .replace(/\s+/g, " ")
+    .trim();
+  const shortMarket =
+    market.length > 60 ? `${market.slice(0, 57).trim()}…` : market;
+  const raw = String(payload.description ?? "").replace(/\s+/g, " ").trim();
+  const desc = raw.length > 110 ? `${raw.slice(0, 107).trim()}…` : raw;
+  const bits = [shortMarket, desc].filter(Boolean);
+  return bits.length ? bits.join(" · ") : null;
+}
+
+/** Group alchemy recipes by source category in book order. */
+function buildAlchemyCategorySections(
+  listing: ResolvedEntry[],
+): { sectionKey: string; label: string; entries: ResolvedEntry[] }[] {
+  const map = new Map<string, ResolvedEntry[]>();
+  for (const entry of listing) {
+    const ck = String(entry.payload.category ?? "").trim() || "_misc";
+    if (!map.has(ck)) map.set(ck, []);
+    map.get(ck)!.push(entry);
+  }
+
+  function sortInside(list: ResolvedEntry[]) {
+    return [...list].sort((a, b) => {
+      const na = Number(a.payload.number ?? 0);
+      const nb = Number(b.payload.number ?? 0);
+      if (Number.isFinite(na) && Number.isFinite(nb) && na !== nb) return na - nb;
+      return String(a.payload.name ?? a.id).localeCompare(
+        String(b.payload.name ?? b.id),
+        undefined,
+        { sensitivity: "base" },
+      );
+    });
+  }
+
+  const out = [...map.entries()].map(([sectionKey, ent]) => ({
+    sectionKey,
+    label:
+      sectionKey === "_misc" ? "Miscellaneous" : alchemyCategoryLabel(sectionKey),
+    entries: sortInside(ent),
+  }));
+
+  function orderRank(sectionKey: string): number {
+    if (sectionKey === "_misc") return 999;
+    const i = ALCHEMY_CATEGORY_ORDER.indexOf(sectionKey);
+    if (i >= 0) return i;
+    return 50;
+  }
+
+  out.sort((a, b) => {
+    const ra = orderRank(a.sectionKey);
+    const rb = orderRank(b.sectionKey);
+    if (ra !== rb) return ra - rb;
+    return a.label.localeCompare(b.label, undefined, { sensitivity: "base" });
+  });
+  return out;
+}
+
 interface CodexEntryCardProps {
   entry: ResolvedEntry;
   category: string;
@@ -197,6 +286,10 @@ function CodexEntryCard({
     category === "bestiary" && fileKey === "summoned_creatures"
       ? summonedListPreview(entry.payload as Record<string, unknown>)
       : null;
+  const alchemyPreview =
+    category === "alchemy" && fileKey === "recipes"
+      ? alchemyListPreview(entry.payload as Record<string, unknown>)
+      : null;
 
   return (
     <div className="rounded-lg border border-surface-border bg-surface-card overflow-hidden">
@@ -217,6 +310,13 @@ function CodexEntryCard({
               ({germanName})
             </span>
           )}
+          {category === "alchemy" &&
+            fileKey === "recipes" &&
+            entry.payload.number != null && (
+              <span className="text-ink-faint text-xs tabular-nums shrink-0">
+                #{String(entry.payload.number)}
+              </span>
+            )}
           {category === "bestiary" &&
             (fileKey === "beasts" || fileKey === "summoned_creatures") &&
             entry.payload.needs_data_review === true && (
@@ -274,6 +374,12 @@ function CodexEntryCard({
       {!isOpen && summonedPreview && (
         <p className="px-4 pb-3 pl-11 text-xs text-ink-muted leading-snug line-clamp-3">
           {summonedPreview}
+        </p>
+      )}
+
+      {!isOpen && alchemyPreview && (
+        <p className="px-4 pb-3 pl-11 text-xs text-ink-muted leading-snug line-clamp-3">
+          {alchemyPreview}
         </p>
       )}
 
@@ -342,6 +448,10 @@ export default function CodexFileView({
         category === "bestiary" && fileKey === "summoned_creatures"
           ? summonedKindLabel(e.payload.category).toLowerCase()
           : "";
+      const alchemyKindHint =
+        category === "alchemy" && fileKey === "recipes"
+          ? alchemyCategoryLabel(e.payload.category).toLowerCase()
+          : "";
       const talent =
         fileKey === "weapons"
           ? String(e.payload.combat_talent ?? "")
@@ -354,6 +464,7 @@ export default function CodexFileView({
         desc.includes(q) ||
         beastCategory.includes(q) ||
         summonKindHint.includes(q) ||
+        alchemyKindHint.includes(q) ||
         talent.includes(q)
       );
     });
@@ -374,6 +485,11 @@ export default function CodexFileView({
     if (category !== "bestiary" || fileKey !== "summoned_creatures")
       return null;
     return buildSummonedKindSections(filtered);
+  }, [category, fileKey, filtered]);
+
+  const alchemyCategorySections = useMemo(() => {
+    if (category !== "alchemy" || fileKey !== "recipes") return null;
+    return buildAlchemyCategorySections(filtered);
   }, [category, fileKey, filtered]);
 
   const weaponTalentGroups = useMemo(() => {
@@ -434,6 +550,19 @@ export default function CodexFileView({
     });
   }
 
+  const [alchemySectionsClosed, setAlchemySectionsClosed] = useState<
+    Set<string>
+  >(new Set());
+
+  function toggleAlchemySection(sectionKey: string) {
+    setAlchemySectionsClosed((prev) => {
+      const next = new Set(prev);
+      if (next.has(sectionKey)) next.delete(sectionKey);
+      else next.add(sectionKey);
+      return next;
+    });
+  }
+
   const [weaponSectionsClosed, setWeaponSectionsClosed] = useState<
     Set<string>
   >(new Set());
@@ -466,6 +595,24 @@ export default function CodexFileView({
     );
   }
 
+  if (fileKey === "failure_table" && category === "alchemy") {
+    return (
+      <div className="p-4 md:p-6 max-w-4xl">
+        <PageHeader label={label} search={search} onSearch={setSearch} />
+        <AlchemyFailureTableView raw={resolved.raw} search={search} />
+      </div>
+    );
+  }
+
+  if (fileKey === "ingredient_prices" && category === "alchemy") {
+    return (
+      <div className="p-4 md:p-6 max-w-4xl">
+        <PageHeader label={label} search={search} onSearch={setSearch} />
+        <AlchemyIngredientPricesView raw={resolved.raw} search={search} />
+      </div>
+    );
+  }
+
   return (
     <div className="p-4 md:p-6 max-w-4xl">
       <PageHeader label={label} search={search} onSearch={setSearch} />
@@ -475,7 +622,9 @@ export default function CodexFileView({
           ? `${filteredCreaturesOnly.length} / ${entries.length} creatures`
           : category === "bestiary" && fileKey === "summoned_creatures"
             ? `${filtered.length} / ${entries.length} summoned beings`
-            : `${filtered.length} / ${entries.length} entries`}
+            : category === "alchemy" && fileKey === "recipes"
+              ? `${filtered.length} / ${entries.length} recipes`
+              : `${filtered.length} / ${entries.length} entries`}
       </p>
 
       <div className="space-y-1">
@@ -624,6 +773,55 @@ export default function CodexFileView({
                 );
               },
             )
+          : alchemyCategorySections
+          ? alchemyCategorySections.map(
+              ({ sectionKey, label, entries: groupEntries }) => {
+                const sectionOpen = !alchemySectionsClosed.has(sectionKey);
+                return (
+                  <div
+                    key={sectionKey}
+                    className="rounded-lg border border-surface-border bg-surface-card overflow-hidden"
+                  >
+                    <button
+                      type="button"
+                      onClick={() => toggleAlchemySection(sectionKey)}
+                      className="w-full flex items-center gap-2 px-4 py-2.5 text-left bg-surface-border/40 hover:bg-surface-border/70 transition-colors"
+                    >
+                      {sectionOpen ? (
+                        <ChevronDown className="w-4 h-4 text-ink-muted shrink-0" />
+                      ) : (
+                        <ChevronRight className="w-4 h-4 text-ink-muted shrink-0" />
+                      )}
+                      <span className="text-ink font-semibold text-sm">
+                        {label}
+                      </span>
+                      <span className="text-ink-muted text-xs tabular-nums">
+                        ({groupEntries.length})
+                      </span>
+                    </button>
+                    {sectionOpen && (
+                      <div className="border-t border-surface-border space-y-1 px-2 pb-2 pt-1 bg-surface-card/80">
+                        {groupEntries.map((entry) => (
+                          <CodexEntryCard
+                            key={entry.id}
+                            entry={entry}
+                            category={category}
+                            fileKey={fileKey}
+                            expanded={expanded}
+                            onToggleEntry={toggle}
+                            isEditor={isEditor}
+                            sourceId={sourceId}
+                            onOpenVersions={setVersionEntry}
+                            onOpenEdit={setEditEntry}
+                            codexRaw={resolved.raw}
+                          />
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                );
+              },
+            )
           : filtered.map((entry) => (
               <CodexEntryCard
                 key={entry.id}
@@ -640,7 +838,9 @@ export default function CodexFileView({
               />
             ))}
 
-        {((summonedKindSections != null
+        {((alchemyCategorySections != null
+          ? filtered.length === 0
+          : summonedKindSections != null
           ? filtered.length === 0
           : bestiaryCategorySections != null
             ? filteredCreaturesOnly.length === 0
@@ -744,6 +944,198 @@ function RawDataView({ raw }: { raw: Record<string, unknown> }) {
           )}
         </div>
       ))}
+    </div>
+  );
+}
+
+function AlchemyFailureTableView({
+  raw,
+  search,
+}: {
+  raw: Record<string, unknown>;
+  search: string;
+}) {
+  const intro = String(raw.intro_note ?? "").trim();
+  const source = String(raw.source ?? "").trim();
+  const effects = Array.isArray(raw.failure_effects)
+    ? (raw.failure_effects as Array<{ number?: number; effect?: string }>)
+    : [];
+  const q = search.trim().toLowerCase();
+  const filtered = q
+    ? effects.filter((e) => {
+        const n = String(e.number ?? "");
+        const t = String(e.effect ?? "").toLowerCase();
+        return n.includes(q) || t.includes(q);
+      })
+    : effects;
+
+  return (
+    <div className="space-y-4">
+      {intro && (
+        <p className="text-ink text-sm leading-relaxed whitespace-pre-wrap">
+          {intro}
+        </p>
+      )}
+      <p className="text-ink-muted text-xs">
+        {filtered.length} / {effects.length} effects
+      </p>
+      <div className="rounded-lg border border-surface-border overflow-hidden">
+        <table className="w-full text-sm">
+          <thead>
+            <tr className="border-b border-surface-border text-left text-xs text-ink-muted bg-surface-border/50">
+              <th className="px-3 py-2 font-normal w-14">#</th>
+              <th className="px-3 py-2 font-normal">Effect</th>
+            </tr>
+          </thead>
+          <tbody>
+            {filtered.map((e) => (
+              <tr
+                key={e.number}
+                className="border-b border-surface-border last:border-0 align-top"
+              >
+                <td className="px-3 py-1.5 text-ink font-medium tabular-nums">
+                  {e.number ?? "—"}
+                </td>
+                <td className="px-3 py-1.5 text-ink whitespace-pre-wrap">
+                  {e.effect ?? "—"}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      {filtered.length === 0 && (
+        <p className="text-ink-muted text-sm py-4 text-center">
+          No effects match &ldquo;{search}&rdquo;
+        </p>
+      )}
+      {source && (
+        <p className="text-xs text-ink-faint italic">{source}</p>
+      )}
+    </div>
+  );
+}
+
+function AlchemyIngredientPricesView({
+  raw,
+  search,
+}: {
+  raw: Record<string, unknown>;
+  search: string;
+}) {
+  const currency = String(raw.currency_note ?? "").trim();
+  const unitDefault = String(raw.unit_default ?? "").trim();
+  const sections = Array.isArray(raw.price_sections)
+    ? (raw.price_sections as Array<{
+        id?: string;
+        title?: string;
+        unit_note?: string;
+        entries?: Array<{ item?: string; price?: string }>;
+        note?: string;
+        source?: string;
+      }>)
+    : [];
+  const q = search.trim().toLowerCase();
+  const [closed, setClosed] = useState<Set<string>>(new Set());
+
+  function toggle(id: string) {
+    setClosed((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  }
+
+  return (
+    <div className="space-y-4">
+      {currency && (
+        <p className="text-ink text-sm leading-relaxed">{currency}</p>
+      )}
+      {unitDefault && (
+        <p className="text-ink-muted text-xs leading-relaxed">{unitDefault}</p>
+      )}
+      <div className="space-y-2">
+        {sections.map((sec) => {
+          const id = String(sec.id ?? sec.title ?? "section");
+          const entries = Array.isArray(sec.entries) ? sec.entries : [];
+          const filtered = q
+            ? entries.filter((e) => {
+                const item = String(e.item ?? "").toLowerCase();
+                const price = String(e.price ?? "").toLowerCase();
+                return item.includes(q) || price.includes(q);
+              })
+            : entries;
+          if (q && filtered.length === 0) return null;
+          const open = !closed.has(id);
+          return (
+            <div
+              key={id}
+              className="rounded-lg border border-surface-border bg-surface-card overflow-hidden"
+            >
+              <button
+                type="button"
+                onClick={() => toggle(id)}
+                className="w-full flex items-center gap-2 px-4 py-2.5 text-left bg-surface-border/40 hover:bg-surface-border/70 transition-colors"
+              >
+                {open ? (
+                  <ChevronDown className="w-4 h-4 text-ink-muted shrink-0" />
+                ) : (
+                  <ChevronRight className="w-4 h-4 text-ink-muted shrink-0" />
+                )}
+                <span className="text-ink font-semibold text-sm">
+                  {sec.id ? `${sec.id}. ` : ""}
+                  {sec.title ?? "Section"}
+                </span>
+                <span className="text-ink-muted text-xs tabular-nums">
+                  ({filtered.length}
+                  {q ? ` / ${entries.length}` : ""})
+                </span>
+              </button>
+              {open && (
+                <div className="border-t border-surface-border px-3 py-2 space-y-2">
+                  {sec.unit_note && (
+                    <p className="text-xs text-ink-muted">{sec.unit_note}</p>
+                  )}
+                  <div className="rounded border border-surface-border overflow-hidden">
+                    <table className="w-full text-sm">
+                      <thead>
+                        <tr className="border-b border-surface-border text-left text-xs text-ink-muted bg-surface-border/40">
+                          <th className="px-3 py-2 font-normal">Item</th>
+                          <th className="px-3 py-2 font-normal w-40">Price</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {filtered.map((e, i) => (
+                          <tr
+                            key={`${e.item}-${i}`}
+                            className="border-b border-surface-border last:border-0"
+                          >
+                            <td className="px-3 py-1.5 text-ink">
+                              {e.item ?? "—"}
+                            </td>
+                            <td className="px-3 py-1.5 text-ink tabular-nums">
+                              {e.price ?? "—"}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                  {sec.note && (
+                    <p className="text-xs text-ink-muted leading-relaxed whitespace-pre-wrap">
+                      {sec.note}
+                    </p>
+                  )}
+                  {sec.source && (
+                    <p className="text-xs text-ink-faint italic">{sec.source}</p>
+                  )}
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }

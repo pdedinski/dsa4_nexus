@@ -20,8 +20,12 @@ const MULTI_ARRAY_FILES: Record<string, string[]> = {
   ],
 };
 
-/** advancement_costs has no flat item array; expose raw only */
-const RAW_ONLY_FILES = new Set(["advancement_costs"]);
+/** Reference tables with no flat item array; expose raw only */
+const RAW_ONLY_FILES = new Set([
+  "advancement_costs",
+  "failure_table",
+  "ingredient_prices",
+]);
 
 export function loadFileData(category: string, fileKey: string): FileData {
   const filePath = path.join(dataDir, category, `${fileKey}.json`);

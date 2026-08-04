@@ -228,6 +228,8 @@ export default function EntryDetail({
   fileKey,
   codexRaw,
 }: Props) {
+  if (category === "alchemy" && fileKey === "recipes")
+    return <AlchemyRecipeDetail p={payload} />;
   if (category === "bestiary" && fileKey === "summoned_creatures")
     return (
       <SummonedBeingDetail p={payload} codexRaw={codexRaw ?? null} />
@@ -1241,6 +1243,330 @@ function CombatManeuverDetail({ p }: { p: Record<string, unknown> }) {
           value={<Tags items={compatTalents} />}
         />
       )}
+      <Source src={p.source} />
+    </div>
+  );
+}
+
+// ─── Alchemy recipe ───────────────────────────────────────────────────────────
+
+const ALCHEMY_CATEGORY_LABELS: Record<string, string> = {
+  simple_alchemy: "Simple Alchemy",
+  virtutica: "Elixirs of the Virtues",
+  object_material_elixirs: "Object and Material Elixirs",
+  poisons: "Poisons",
+  remedies: "Remedies",
+  mind_emotion_altered_states: "Mind, Emotion, and Altered States",
+  rare_restorative_transformative:
+    "Rare Restorative and Transformative Elixirs",
+  ban_powders_spiritual:
+    "Ban Powders, Summoning Aids, and Spiritual Preparations",
+};
+
+function AlchemyRecipeDetail({ p }: { p: Record<string, unknown> }) {
+  const qualityM =
+    typeof p.quality_m === "object" && p.quality_m !== null
+      ? (p.quality_m as { effects?: number[]; note?: string; text?: string })
+      : null;
+  const tiers = Array.isArray(p.quality_tiers)
+    ? (p.quality_tiers as Array<{ quality?: string; text?: string }>)
+    : [];
+  const adj =
+    typeof p.quality_adjusted_prices === "object" &&
+    p.quality_adjusted_prices !== null &&
+    !Array.isArray(p.quality_adjusted_prices)
+      ? (p.quality_adjusted_prices as Record<string, unknown>)
+      : null;
+
+  const catKey = str(p.category);
+  const catLabel =
+    str(p.category_label) ||
+    ALCHEMY_CATEGORY_LABELS[catKey] ||
+    catKey.replace(/_/g, " ");
+
+  const brewAna = [
+    p.brewing_modifier != null ? `${str(p.brewing_modifier)} Brewing` : "",
+    p.analysis_modifier != null ? `${str(p.analysis_modifier)} Analysis` : "",
+  ]
+    .filter(Boolean)
+    .join(" / ");
+
+  return (
+    <div className="space-y-4">
+      {p.no_standard_block === true && (
+        <div className="rounded-md border border-amber-800/70 bg-amber-950/30 px-3 py-2 text-xs text-amber-200/95">
+          No standard recipe block is published for this entry. The source
+          withholds a complete formula or quality table.
+        </div>
+      )}
+
+      {str(p.description) && (
+        <CodexPreserveNewlinesDescription text={str(p.description)} />
+      )}
+
+      <div className="rounded-lg border border-surface-border bg-surface-sidebar/60 overflow-hidden">
+        <div className="px-3 py-2 text-xs font-medium text-ink-muted border-b border-surface-border bg-surface-border/50">
+          Crafting
+        </div>
+        <div className="px-3 py-2 space-y-0">
+          {p.number != null && <Row label="Number" value={str(p.number)} />}
+          {str(p.german_name) && str(p.german_name) !== str(p.name) && (
+            <Row label="German name" value={str(p.german_name)} />
+          )}
+          {catLabel && <Row label="Category" value={catLabel} />}
+          {str(p.ingredients) && (
+            <Row
+              label="Ingredients"
+              value={
+                <span className="whitespace-pre-wrap">{str(p.ingredients)}</span>
+              }
+            />
+          )}
+          {str(p.products) && (
+            <Row
+              label="Products"
+              value={
+                <span className="whitespace-pre-wrap">{str(p.products)}</span>
+              }
+            />
+          )}
+          {str(p.crafting_location) && (
+            <Row label="Laboratory" value={str(p.crafting_location)} />
+          )}
+          {brewAna && <Row label="Modifiers" value={brewAna} />}
+          {str(p.crafting_note) && (
+            <Row
+              label="Crafting note"
+              value={
+                <span className="whitespace-pre-wrap">
+                  {str(p.crafting_note)}
+                </span>
+              }
+            />
+          )}
+          {str(p.crafting_process) && (
+            <Row
+              label="Process"
+              value={
+                <span className="whitespace-pre-wrap">
+                  {str(p.crafting_process)}
+                </span>
+              }
+            />
+          )}
+        </div>
+      </div>
+
+      {str(p.effect) && (
+        <div>
+          <p className="text-xs uppercase tracking-wide text-ink-muted mb-1">
+            Effect
+          </p>
+          <p className="text-ink text-sm leading-relaxed whitespace-pre-wrap">
+            {str(p.effect)}
+          </p>
+        </div>
+      )}
+
+      {(qualityM || tiers.length > 0) && (
+        <div>
+          <p className="text-xs uppercase tracking-wide text-ink-muted mb-2">
+            Quality tiers
+          </p>
+          <div className="rounded-lg border border-surface-border overflow-hidden">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-surface-border text-left text-xs text-ink-muted bg-surface-border/50">
+                  <th className="px-3 py-2 font-normal w-12">Q</th>
+                  <th className="px-3 py-2 font-normal">Effect</th>
+                </tr>
+              </thead>
+              <tbody>
+                {qualityM && (
+                  <tr className="border-b border-surface-border align-top">
+                    <td className="px-3 py-1.5 text-ink font-medium">M</td>
+                    <td className="px-3 py-1.5 text-ink">
+                      {Array.isArray(qualityM.effects) &&
+                      qualityM.effects.length > 0 ? (
+                        <span>
+                          Failed-batch effects{" "}
+                          {qualityM.effects.join(", ")}
+                          {qualityM.note ? (
+                            <span className="text-ink-muted">
+                              {" "}
+                              — {qualityM.note}
+                            </span>
+                          ) : null}
+                          <span className="block text-xs text-ink-faint mt-1">
+                            See Alchemy → Failure Table
+                          </span>
+                        </span>
+                      ) : (
+                        <span className="whitespace-pre-wrap">
+                          {str(qualityM.text) || str(qualityM.note) || "—"}
+                        </span>
+                      )}
+                    </td>
+                  </tr>
+                )}
+                {tiers.map((t, i) => (
+                  <tr
+                    key={i}
+                    className="border-b border-surface-border last:border-0 align-top"
+                  >
+                    <td className="px-3 py-1.5 text-ink font-medium">
+                      {str(t.quality) || "—"}
+                    </td>
+                    <td className="px-3 py-1.5 text-ink whitespace-pre-wrap">
+                      {str(t.text) || "—"}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
+
+      {str(p.quality_tiers_note) && (
+        <Row
+          label="Quality tiers"
+          value={
+            <span className="whitespace-pre-wrap">
+              {str(p.quality_tiers_note)}
+            </span>
+          }
+        />
+      )}
+
+      {(str(p.hazard) ||
+        str(p.damage_note) ||
+        str(p.instability) ||
+        str(p.additional_rule) ||
+        str(p.important_note) ||
+        str(p.shelf_life)) && (
+        <div className="rounded-lg border border-surface-border overflow-hidden">
+          <div className="px-3 py-2 text-xs font-medium text-ink-muted border-b border-surface-border bg-surface-border/50">
+            Notes
+          </div>
+          <div className="px-3 py-2 space-y-0">
+            {str(p.hazard) && (
+              <Row
+                label="Hazard"
+                value={
+                  <span className="whitespace-pre-wrap">{str(p.hazard)}</span>
+                }
+              />
+            )}
+            {str(p.damage_note) && (
+              <Row
+                label="Damage"
+                value={
+                  <span className="whitespace-pre-wrap">
+                    {str(p.damage_note)}
+                  </span>
+                }
+              />
+            )}
+            {str(p.instability) && (
+              <Row
+                label="Instability"
+                value={
+                  <span className="whitespace-pre-wrap">
+                    {str(p.instability)}
+                  </span>
+                }
+              />
+            )}
+            {str(p.additional_rule) && (
+              <Row
+                label="Additional rule"
+                value={
+                  <span className="whitespace-pre-wrap">
+                    {str(p.additional_rule)}
+                  </span>
+                }
+              />
+            )}
+            {str(p.important_note) && (
+              <Row
+                label="Important"
+                value={
+                  <span className="whitespace-pre-wrap">
+                    {str(p.important_note)}
+                  </span>
+                }
+              />
+            )}
+            {str(p.shelf_life) && (
+              <Row label="Shelf life" value={str(p.shelf_life)} />
+            )}
+          </div>
+        </div>
+      )}
+
+      <div className="rounded-lg border border-surface-border overflow-hidden">
+        <div className="px-3 py-2 text-xs font-medium text-ink-muted border-b border-surface-border bg-surface-border/50">
+          Prices
+        </div>
+        <div className="px-3 py-2 space-y-0">
+          {str(p.market_price_quality_c) && (
+            <Row
+              label="Market (Quality C)"
+              value={str(p.market_price_quality_c)}
+            />
+          )}
+          {adj && Object.keys(adj).length > 0 && (
+            <div className="py-2">
+              <p className="text-xs text-ink-muted mb-1">
+                Quality-adjusted market guideline
+              </p>
+              <div className="overflow-x-auto rounded border border-surface-border">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="border-b border-surface-border text-left text-xs text-ink-muted">
+                      {["A", "B", "C", "D", "E", "F"].map((q) => (
+                        <th key={q} className="px-2 py-1.5 font-normal">
+                          {q}
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      {["A", "B", "C", "D", "E", "F"].map((q) => (
+                        <td
+                          key={q}
+                          className="px-2 py-1.5 text-ink tabular-nums"
+                        >
+                          {adj[q] != null ? String(adj[q]) : "—"}
+                        </td>
+                      ))}
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
+          {str(p.ingredient_cost) && (
+            <Row label="Ingredient cost" value={str(p.ingredient_cost)} />
+          )}
+          {str(p.ingredient_price_note) && (
+            <Row
+              label="Ingredient note"
+              value={
+                <span className="whitespace-pre-wrap">
+                  {str(p.ingredient_price_note)}
+                </span>
+              }
+            />
+          )}
+          {p.availability != null && p.availability !== "" && (
+            <Row label="Availability" value={str(p.availability)} />
+          )}
+        </div>
+      </div>
+
       <Source src={p.source} />
     </div>
   );
