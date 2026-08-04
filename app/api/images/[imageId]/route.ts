@@ -2,7 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { and, eq } from "drizzle-orm";
 import { requireAllowed } from "@/lib/auth/session";
 import { isCloudinaryConfigured } from "@/lib/cloudinary/config";
-import { destroyImage } from "@/lib/cloudinary/destroy";
+import { destroyImageWithThumbnail } from "@/lib/cloudinary/destroy";
+import { thumbnailSecureUrl } from "@/lib/cloudinary/thumbnail";
 import { db } from "@/lib/db/client";
 import { userImages } from "@/lib/db/schema";
 
@@ -30,6 +31,7 @@ export async function GET(_req: NextRequest, ctx: Ctx) {
       id: userImages.id,
       name: userImages.name,
       url: userImages.url,
+      publicId: userImages.publicId,
       createdAt: userImages.createdAt,
     })
     .from(userImages)
@@ -38,7 +40,15 @@ export async function GET(_req: NextRequest, ctx: Ctx) {
 
   if (!row) return NextResponse.json({ error: "Not found" }, { status: 404 });
 
-  return NextResponse.json({ image: row });
+  const { publicId, ...image } = row;
+  return NextResponse.json({
+    image: {
+      ...image,
+      thumbnailUrl: isCloudinaryConfigured()
+        ? thumbnailSecureUrl(publicId)
+        : image.url,
+    },
+  });
 }
 
 export async function DELETE(req: NextRequest, ctx: Ctx) {
@@ -70,7 +80,7 @@ export async function DELETE(req: NextRequest, ctx: Ctx) {
       );
     }
     try {
-      await destroyImage(row.publicId);
+      await destroyImageWithThumbnail(row.publicId);
     } catch (err) {
       const message =
         err instanceof Error ? err.message : "Cloudinary delete failed";

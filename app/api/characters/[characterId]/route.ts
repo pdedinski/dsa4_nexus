@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { eq, and } from "drizzle-orm";
 import { requireAllowed } from "@/lib/auth/session";
 import { isCloudinaryConfigured } from "@/lib/cloudinary/config";
-import { destroyImage } from "@/lib/cloudinary/destroy";
+import { destroyImageWithThumbnail } from "@/lib/cloudinary/destroy";
 import { db } from "@/lib/db/client";
 import { characters } from "@/lib/db/schema";
 import type { CharacterSheet } from "@/lib/character/types";
@@ -109,7 +109,7 @@ export async function DELETE(_req: NextRequest, ctx: Ctx) {
       );
     }
     try {
-      await destroyImage(row.imagePublicId);
+      await destroyImageWithThumbnail(row.imagePublicId);
     } catch (err) {
       const message =
         err instanceof Error ? err.message : "Cloudinary delete failed";

@@ -1,5 +1,6 @@
 import { v2 as cloudinary } from "cloudinary";
 import { getCloudinaryConfig } from "./config";
+import { thumbnailPublicId } from "./thumbnail";
 
 export async function destroyImage(publicId: string): Promise<void> {
   const config = getCloudinaryConfig();
@@ -18,5 +19,17 @@ export async function destroyImage(publicId: string): Promise<void> {
 
   if (result.result !== "ok" && result.result !== "not found") {
     throw new Error(`Cloudinary destroy failed: ${result.result}`);
+  }
+}
+
+/** Destroy the main image, then its paired thumbnail (best-effort if missing). */
+export async function destroyImageWithThumbnail(
+  publicId: string
+): Promise<void> {
+  await destroyImage(publicId);
+  try {
+    await destroyImage(thumbnailPublicId(publicId));
+  } catch {
+    // Thumbnail may not exist for older uploads; ignore.
   }
 }

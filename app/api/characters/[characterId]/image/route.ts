@@ -3,8 +3,8 @@ import { and, eq } from "drizzle-orm";
 import { requireAllowed } from "@/lib/auth/session";
 import { characterImagePublicId } from "@/lib/cloudinary/characterImage";
 import { isCloudinaryConfigured } from "@/lib/cloudinary/config";
-import { destroyImage } from "@/lib/cloudinary/destroy";
-import { uploadImageBuffer } from "@/lib/cloudinary/upload";
+import { destroyImageWithThumbnail } from "@/lib/cloudinary/destroy";
+import { uploadImageWithThumbnail } from "@/lib/cloudinary/upload";
 import { db } from "@/lib/db/client";
 import { characters } from "@/lib/db/schema";
 
@@ -75,7 +75,7 @@ export async function POST(req: NextRequest, ctx: Ctx) {
 
   if (row.imagePublicId && row.imagePublicId !== publicId) {
     try {
-      await destroyImage(row.imagePublicId);
+      await destroyImageWithThumbnail(row.imagePublicId);
     } catch {
       // Best effort; new upload uses canonical public id.
     }
@@ -83,7 +83,9 @@ export async function POST(req: NextRequest, ctx: Ctx) {
 
   let upload;
   try {
-    upload = await uploadImageBuffer(buffer, publicId, { overwrite: true });
+    upload = await uploadImageWithThumbnail(buffer, publicId, {
+      overwrite: true,
+    });
   } catch (err) {
     const message =
       err instanceof Error ? err.message : "Cloudinary upload failed";
@@ -133,7 +135,7 @@ export async function DELETE(_req: NextRequest, ctx: Ctx) {
   }
 
   try {
-    await destroyImage(row.imagePublicId);
+    await destroyImageWithThumbnail(row.imagePublicId);
   } catch (err) {
     const message =
       err instanceof Error ? err.message : "Cloudinary delete failed";

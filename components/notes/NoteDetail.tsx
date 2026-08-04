@@ -126,12 +126,15 @@ export default function NoteDetail({ noteId }: { noteId: string }) {
         id: string;
         name: string;
         url: string;
+        thumbnailUrl?: string;
       }>;
       setImagesForMentions(
         raw.map((img) => ({
           id: img.id,
           name: typeof img.name === "string" ? img.name : "",
           url: typeof img.url === "string" ? img.url : "",
+          thumbnailUrl:
+            typeof img.thumbnailUrl === "string" ? img.thumbnailUrl : undefined,
         }))
       );
     })();

@@ -15,6 +15,7 @@ export type ImageRowBrief = {
   id: string;
   name: string;
   url: string;
+  thumbnailUrl?: string;
 };
 
 export type ImageMentionCtx = {
@@ -88,6 +89,7 @@ export function createImageMentionExtension(ctxRef: ImageMentionCtxRef) {
               id: img.id,
               label: img.name,
               url: img.url,
+              thumbnailUrl: img.thumbnailUrl,
             }));
         },
         command: ({ editor, range, props }) => {

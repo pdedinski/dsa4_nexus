@@ -1,0 +1,559 @@
+THE DARK EYE / DAS SCHWARZE AUGE 4.x
+GERMAN-ENGLISH ABBREVIATIONS AND RULES TERMINOLOGY
+======================================================================================================================
+
+Sources used
+------------
+1. Das Schwarze Auge: Basisregelwerk, Hardcover-Ausgabe 2008 (German DSA 4.1).
+2. The Dark Eye: Basic Rules, FanPro PDF version 1.0, May 2004 (English fourth-edition rules).
+
+Scope and edition warning
+-------------------------
+The two books are closely related but are NOT exact page-for-page editions of the same text.
+The German 2008 book is a later DSA 4.1 revision; the English book is an earlier fourth-edition
+translation. Some terms, categories, and abbreviations therefore have no exact counterpart.
+
+The English column below follows the terminology actually used by the English Basic Rules.
+Where the English book has no stable abbreviation, the table says so rather than inventing one.
+Recommended modern shorthand is shown only when it is useful and clearly labelled.
+
+Most important rule for reading mixed-language material:
+  German TP = Trefferpunkte = English HP (Hit Points).
+  English TP = Talent Prowess = German TaW (Talentwert).
+  German SP = Schadenspunkte = English DP (Damage Points).
+  English SP = Spell Prowess = German ZfW (Zauberfertigkeitswert).
+
+1. CORE ATTRIBUTE QUICK REFERENCE
+======================================================================================================================
++-----------+----------------------+-----------+----------------------+------------------------------------------------+
+| German    | German term          | English   | English term         | Meaning                                        |
++-----------+----------------------+-----------+----------------------+------------------------------------------------+
+| MU        | Mut                  | CO        | Courage              | Nerve, resolve, bravery.                       |
+| KL        | Klugheit             | CL        | Cleverness           | Reasoning, intelligence, learning.             |
+| IN        | Intuition            | IN        | Intuition            | Instinct and quick judgment.                   |
+| CH        | Charisma             | CH        | Charisma             | Presence and personal magnetism.               |
+| FF        | Fingerfertigkeit     | DE        | Dexterity            | Manual precision and hand-eye coordination.    |
+| GE        | Gewandtheit          | AG        | Agility              | Coordination, reflexes, bodily mobility.       |
+| KO        | Konstitution         | CN        | Constitution         | Toughness and resistance to poison/disease.    |
+| KK        | Körperkraft          | ST        | Strength             | Muscular power.                                |
++-----------+----------------------+-----------+----------------------+------------------------------------------------+
+2. COMPLETE ABBREVIATION CROSS-REFERENCE
+======================================================================================================================
+This section includes every entry from the German abbreviation appendix, followed by common
+additional abbreviations found in the body text or used by the English rules.
+
++------------+---------------------------+------------------+---------------------------+--------------------------------+
+| DE abbr.   | German meaning            | EN abbr.         | English meaning           | Notes                          |
++------------+---------------------------+------------------+---------------------------+--------------------------------+
+| 1W20       | ein zwanzigseitiger       | 1d20             | one twenty-sided die      | German W = Würfel; English d = |
+|            | Würfel                    |                  |                           | die.                           |
+| 1W6        | ein sechsseitiger Würfel  | 1d6              | one six-sided die         |                                |
+| 2W20       | zwei zwanzigseitige       | 2d20             | two twenty-sided dice     |                                |
+|            | Würfel                    |                  |                           |                                |
+| 2W6        | zwei sechsseitige Würfel  | 2d6              | two six-sided dice        |                                |
+| W20        | zwanzigseitiger Würfel    | d20              | twenty-sided die          |                                |
+| W6         | sechsseitiger Würfel      | d6               | six-sided die             |                                |
+| (A)        | aufrechterhalten          | —                | maintained / sustained    | The English Basic Rules        |
+|            |                           |                  |                           | normally state this in prose   |
+|            |                           |                  |                           | and do not use a stable        |
+|            |                           |                  |                           | marker.                        |
+| AE         | Astralenergie             | AE               | Astral Energy             | The total derived value;       |
+|            |                           |                  |                           | points are AsP/ASP.            |
+| AP         | Abenteuerpunkte           | AP               | Adventure Points          | Used for advancement and       |
+|            |                           |                  |                           | experience.                    |
+| AsP        | Astralpunkte              | ASP              | Astral Points             | Current magical-energy points. |
+| AT         | Attackewert               | AT               | Attack Value              | The individual melee attack    |
+|            |                           |                  |                           | value.                         |
+| AU         | Ausdauer                  | ED               | Endurance                 | The total derived endurance    |
+|            |                           |                  |                           | value.                         |
+| AuP        | Ausdauerpunkte            | EP               | Endurance Points          | Current endurance points.      |
+| BE         | Behinderung               | EC               | Encumbrance               | Armor's general hindrance      |
+|            |                           |                  |                           | value.                         |
+| BF         | Bruchfaktor               | BP               | Break Point               | Lower values indicate sturdier |
+|            |                           |                  |                           | weapons/shields.               |
+| CH         | Charisma                  | CH               | Charisma                  | Attribute.                     |
+| DK         | Distanzklasse             | DC               | Distance Class            | Weapon reach category.         |
+| d.U.       | der Unabhängigkeit        | —                | of Independence           | A setting-calendar             |
+|            |                           |                  |                           | abbreviation; no fixed English |
+|            |                           |                  |                           | abbreviation in the English    |
+|            |                           |                  |                           | Basic Rules.                   |
+| eBE        | effektive Behinderung     | EEC              | Effective Encumbrance     | Encumbrance after applying the |
+|            |                           |                  |                           | Talent/weapon adjustment.      |
+| EG         | Erscheinen Golgaris       | —                | Appearance of Golgari     | Setting-calendar epoch; no     |
+|            |                           |                  |                           | fixed English abbreviation in  |
+|            |                           |                  |                           | the English Basic Rules.       |
+| FF         | Fingerfertigkeit          | DE               | Dexterity                 | Attribute.                     |
+| FK         | Fernkampfwert             | RV               | Ranged Value              | Individual ranged attack       |
+|            |                           |                  |                           | value.                         |
+| GE         | Gewandtheit               | AG               | Agility                   | Attribute.                     |
+| GP         | Generierungspunkte        | GP               | Generation Points         | Spent during hero creation.    |
+| GS         | Geschwindigkeit           | SD               | Speed                     | Movement speed, normally in    |
+|            |                           |                  |                           | paces per second.              |
+| GW         | Gefährlichkeitswert       | TH               | Threat Value              | Creature/monster danger        |
+|            |                           |                  |                           | rating.                        |
+| H          | Distanzklasse Handgemenge | C                | Close-Quarters Distance   | German H can also mean Heller  |
+|            |                           |                  | Class                     | in price tables.               |
+| IN         | Intuition                 | IN               | Intuition                 | Attribute.                     |
+| INI        | Initiative-Wert           | INI              | Initiative Value          | Turn order in combat.          |
+| JL         | Jurgas Landung            | —                | Jurga's Landing           | Setting-calendar epoch; no     |
+|            |                           |                  |                           | fixed English abbreviation in  |
+|            |                           |                  |                           | the English Basic Rules.       |
+| KR         | Kampfrunde                | CR               | Combat Round              | A combat time unit.            |
+| LE         | Lebensenergie             | VI               | Vitality                  | The total derived vitality     |
+|            |                           |                  |                           | value.                         |
+| LeP        | Lebenspunkte              | VP               | Vitality Points           | Current life/vitality points.  |
+| KK         | Körperkraft               | ST               | Strength                  | Attribute. Do not confuse      |
+|            |                           |                  |                           | English ST with German ST =    |
+|            |                           |                  |                           | Silbertaler.                   |
+| KL         | Klugheit                  | CL               | Cleverness                | Attribute.                     |
+| KO         | Konstitution              | CN               | Constitution              | Attribute.                     |
+| MR         | Magieresistenz            | RM               | Resistance to Magic       | The English abbreviation       |
+|            |                           |                  |                           | reverses the word order.       |
+| MU         | Mut                       | CO               | Courage                   | Attribute.                     |
+| N          | Distanzklasse Nahkampf    | M                | Melee Distance Class      |                                |
+| P          | Preis einer               | P / Price        | Price of a service        | The English book normally      |
+|            | Dienstleistung            |                  |                           | writes Price rather than       |
+|            |                           |                  |                           | relying on P alone.            |
+| PA         | Paradewert                | PA               | Parry Value               | The individual defensive       |
+|            |                           |                  |                           | value.                         |
+| Q          | Qualität einer            | Q / Quality      | Quality of a service      | The English book normally      |
+|            | Dienstleistung            |                  |                           | writes Quality in full.        |
+| RS         | Rüstungsschutz            | AR               | Armor Rating              | Armor subtracted from HP       |
+|            |                           |                  |                           | before DP are applied.         |
+| S          | Distanzklasse             | P                | Polearms Distance Class   | German S can also mean         |
+|            | Stangenwaffe              |                  |                           | Silbertaler or Schlafplätze in |
+|            |                           |                  |                           | tables.                        |
+| SF         | Sonderfertigkeit          | — (SA            | Special Ability           | The English Basic Rules use    |
+|            |                           | recommended)     |                           | the term but do not            |
+|            |                           |                  |                           | consistently abbreviate it.    |
+| SKT        | Steigerungskostentabelle  | ACT              | Advancement Cost Table    | The English book also calls it |
+|            |                           |                  |                           | the AC Table; ACT is used for  |
+|            |                           |                  |                           | Activation Cost in the table.  |
+| SO         | Sozialstatus              | SO               | Social Standing           | Social rank/status.            |
+| SP         | Schadenspunkte            | DP               | Damage Points             | CRITICAL COLLISION: English SP |
+|            |                           |                  |                           | means Spell Prowess, not       |
+|            |                           |                  |                           | damage.                        |
+| SP(A)      | Ausdauer-Schadenspunkte   | — / Endurance    | Damage to Endurance       | The English weapon table marks |
+|            |                           | damage           |                           | such damage as HP (ED); no     |
+|            |                           |                  |                           | single stable DP(ED)           |
+|            |                           |                  |                           | abbreviation is used.          |
+| ST         | Silbertaler               | T / silver       | Silver thaler             | CRITICAL COLLISION: English ST |
+|            |                           | thaler           |                           | means Strength.                |
+| TaP        | Talentpunkte              | points of TP     | points of Talent Prowess  | Points available/spent while   |
+|            |                           |                  |                           | resolving a Talent Test.       |
+| TaP*       | übrig gebliebene          | TP* / unspent TP | remaining Talent Prowess  | The English prose usually says |
+|            | Talentpunkte              |                  | points                    | remaining or unspent points of |
+|            |                           |                  |                           | TP.                            |
+| TaW        | Talentwert                | TP               | Talent Prowess            | CRITICAL COLLISION: German TP  |
+|            |                           |                  |                           | means Trefferpunkte (Hit       |
+|            |                           |                  |                           | Points).                       |
+| TP         | Trefferpunkte             | HP               | Hit Points                | Rolled weapon damage before    |
+|            |                           |                  |                           | armor.                         |
+| TP+        | Trefferpunkt-Zuschlag     | HP+              | Hit Point modifier by     | Used in ranged-weapon tables.  |
+|            | nach Entfernung           |                  | range                     |                                |
+| TP(A)      | Ausdauer-Trefferpunkte    | HP (ED)          | Hit Points causing        | English tables append (ED) to  |
+|            |                           |                  | Endurance damage          | the HP entry.                  |
+| TP/KK      | Trefferpunkt-Erhöhung     | HP/ST            | Hit Point increase due to | Threshold/increment notation   |
+|            | durch Körperkraft         |                  | Strength                  | for melee damage.              |
+| U          | Unze                      | oz / ounce       | ounce                     | The English book usually       |
+|            |                           |                  |                           | writes ounces in full; 1 ounce |
+|            |                           |                  |                           | = 25 g in the rules.           |
+| WM         | Waffenmodifikator         | WM               | Weapon Modifier           | Usually written as AT/PA       |
+|            |                           |                  |                           | modifiers.                     |
+| ZfP        | Zauberfertigkeitspunkte   | points of SP     | points of Spell Prowess   | Points available/spent while   |
+|            |                           |                  |                           | resolving an Arcane Test.      |
+| ZfP*       | übrig gebliebene          | SP*              | remaining Spell Prowess   | Determines many spell effects, |
+|            | Zauberfertigkeitspunkte   |                  | points                    | durations, and ranges.         |
+| ZfW        | Zauberfertigkeitswert     | SP               | Spell Prowess             | CRITICAL COLLISION: German SP  |
+|            |                           |                  |                           | means Schadenspunkte (Damage   |
+|            |                           |                  |                           | Points).                       |
++------------+---------------------------+------------------+---------------------------+--------------------------------+
+Additional common abbreviations
+----------------------------------------------------------------------------------------------------------------------
++--------------+--------------------------+------------------+--------------------------+--------------------------------+
+| DE abbr.     | German meaning           | EN abbr.         | English meaning          | Notes                          |
++--------------+--------------------------+------------------+--------------------------+--------------------------------+
+| SR           | Spielrunde               | GT               | Game Turn                | Longer time unit; commonly     |
+|              |                          |                  |                          | used although omitted from the |
+|              |                          |                  |                          | German appendix list.          |
+| AT-Basis     | Attacke-Basiswert        | BAV              | Base Attack Value        | English also uses Base Attack  |
+|              |                          |                  |                          | in prose.                      |
+| PA-Basis     | Parade-Basiswert         | BPV              | Base Parry Value         |                                |
+| FK-Basis     | Fernkampf-Basiswert      | BRV              | Base Ranged Value        |                                |
+| INI-Basis    | Initiative-Basiswert     | BIV / Base INI   | Base Initiative Value    | Both BIV and Base INI appear   |
+|              |                          |                  |                          | in the English book.           |
+| AT           | Attackewert mit einer    | AV / AT          | Attack Value             | The English combat chapter     |
+| (individual) | Waffe                    |                  |                          | sometimes uses AV, while the   |
+|              |                          |                  |                          | character sheet and most       |
+|              |                          |                  |                          | examples use AT.               |
+| PA           | Paradewert mit einer     | PV / PA          | Parry Value              | The English combat chapter     |
+| (individual) | Waffe                    |                  |                          | sometimes uses PV, while most  |
+|              |                          |                  |                          | examples use PA.               |
+| FK           | Fernkampfwert            | RV               | Ranged Value             |                                |
+| (individual) |                          |                  |                          |                                |
+| KE           | Karmalenergie            | KE               | Karmic Energy            | Mentioned briefly in the       |
+|              |                          |                  |                          | English Basic Rules; full      |
+|              |                          |                  |                          | divine rules are outside these |
+|              |                          |                  |                          | books.                         |
+| KaP          | Karmalpunkte             | KP               | Karmic Points            | Mentioned briefly in the       |
+|              |                          |                  |                          | English Basic Rules.           |
+| SE           | Spezielle Erfahrung      | —                | Special Experience       | No stable English abbreviation |
+|              |                          |                  |                          | in this Basic Rules            |
+|              |                          |                  |                          | translation.                   |
+| R1 / R2 / R3 | Regelstufe 1 / 2 / 3     | R1 / R2 / R3     | Rules Stage 1 / 2 / 3    | English combat-rules           |
+|              |                          |                  |                          | complexity stages.             |
+| ACT          | Aktivierungskosten       | ACT              | Activation Cost          | English-only table             |
+|              | (Tabellenkopf)           |                  |                          | abbreviation; do not confuse   |
+|              |                          |                  |                          | with the full Advancement Cost |
+|              |                          |                  |                          | Table.                         |
+| VI           | Lebensenergie (Wert)     | VI               | Vitality                 | English-only value             |
+|              |                          |                  |                          | abbreviation; current points   |
+|              |                          |                  |                          | are VP.                        |
+| ED           | Ausdauer (Wert)          | ED               | Endurance                | English-only value             |
+|              |                          |                  |                          | abbreviation; current points   |
+|              |                          |                  |                          | are EP.                        |
+| N/A          | nicht anwendbar /        | N/A              | not applicable           | English table abbreviation.    |
+|              | entfällt                 |                  |                          |                                |
+| —            | zweihändig               | 2H               | two-handed weapon        | English weapon-table           |
+|              |                          |                  |                          | abbreviation.                  |
+| —            | improvisierte Waffe      | I                | improvised weapon        | English weapon-table note.     |
+| —            | auch werfbar             | thr / (thr)      | throwable                | English weapon-table note;     |
+|              |                          |                  |                          | parentheses indicate           |
+|              |                          |                  |                          | improvised ranged use.         |
+| —            | privilegierte Waffe      | Pr               | privileged weapon        | English weapon-table note.     |
+| D            | Dukat                    | D                | ducat                    | English currency abbreviation. |
+| ST           | Silbertaler              | T                | thaler                   | English currency abbreviation; |
+|              |                          |                  |                          | 10 T = 1 D.                    |
+| H            | Heller                   | F                | farthing                 | English currency abbreviation; |
+|              |                          |                  |                          | 100 F = 1 D.                   |
+| K            | Kreuzer                  | K                | kreutzer                 | English currency abbreviation; |
+|              |                          |                  |                          | 1,000 K = 1 D.                 |
++--------------+--------------------------+------------------+--------------------------+--------------------------------+
+3. ABBREVIATION COLLISIONS AND TRANSLATION TRAPS
+======================================================================================================================
++------------+-------------------------------+-------------------------------+-------------------------------------------+
+| Letters    | Meaning in German rules       | Meaning in English rules      | Safe practice                             |
++------------+-------------------------------+-------------------------------+-------------------------------------------+
+| TP         | Trefferpunkte = weapon Hit    | Talent Prowess = German TaW   | Never translate German TP as English TP.  |
+|            | Points                        |                               |                                           |
+| SP         | Schadenspunkte = Damage       | Spell Prowess = German ZfW    | Never translate German SP as English SP.  |
+|            | Points                        |                               |                                           |
+| ST         | Silbertaler (currency)        | Strength = German KK          | Context is essential, especially in       |
+|            |                               |                               | equipment tables.                         |
+| AE         | Astralenergie (total value)   | Astral Energy (total value)   | Same abbreviation, but current points are |
+|            |                               |                               | AsP/ASP.                                  |
+| AT / PA    | Attacke / Parade              | Attack / Parry                | Mostly stable, though English             |
+|            |                               |                               | occasionally writes AV/PV.                |
+| MR / RM    | Magieresistenz                | Resistance to Magic           | The letters are reversed.                 |
+| RS / AR    | Rüstungsschutz                | Armor Rating                  | Use AR in English stat blocks.            |
+| BE / EC    | Behinderung                   | Encumbrance                   | Use EEC for effective encumbrance.        |
++------------+-------------------------------+-------------------------------+-------------------------------------------+
+4. COMMON GENERAL AND TEST TERMINOLOGY
+======================================================================================================================
++----------------------------------+-------------------------------------+-----------------------------------------------+
+| German original                  | Official English counterpart        | Usage note                                    |
++----------------------------------+-------------------------------------+-----------------------------------------------+
+| Das Schwarze Auge (DSA)          | The Dark Eye (TDE)                  | Game title.                                   |
+| Held                             | hero                                | Player character.                             |
+| Spielerheld                      | player hero / hero                  | A hero controlled by a player.                |
+| Meister                          | Highlord                            | The official term used by this 2003 English   |
+|                                  |                                     | translation for the game master.              |
+| Meisterperson / Meisterfigur     | Highlord character                  | Non-player character; NPC is a clear modern   |
+|                                  |                                     | alternative.                                  |
+| Charakterbogen / Heldendokument  | character sheet / character record  |                                               |
+|                                  | sheet                               |                                               |
+| Spielwert                        | game statistic / game value         |                                               |
+| Eigenschaft                      | Attribute                           | One of the eight core attributes.             |
+| Eigenschaftswert                 | Attribute Value                     |                                               |
+| positive Eigenschaften           | Attributes                          | The eight standard attributes.                |
+| negative Eigenschaft             | Negative Attribute                  | Disadvantage rated like an attribute, such as |
+|                                  |                                     | fear or greed.                                |
+| Grundwert                        | Base Value                          |                                               |
+| abgeleiteter Grundwert           | derived value / derived statistic   | Such as Vitality, Endurance, or Base Attack.  |
+| Probe                            | Test                                | Generic dice check.                           |
+| Eigenschaftsprobe                | Attribute Test                      | Usually one d20 against one Attribute.        |
+| Talentprobe                      | Talent Test                         | Usually three d20 Subtests using Talent       |
+|                                  |                                     | Prowess.                                      |
+| Zauberprobe                      | Arcane Test                         | Official English term in the Basic Rules;     |
+|                                  |                                     | 'Spell Test' is understandable but not the    |
+|                                  |                                     | book's label.                                 |
+| Teilprobe                        | Subtest                             | One of the three Attribute rolls in a Talent  |
+|                                  |                                     | or Arcane Test.                               |
+| Probenzuschlag / Erschwernis     | Difficulty Increase                 | A positive German modifier makes the Test     |
+|                                  |                                     | harder.                                       |
+| Probenerleichterung              | Difficulty Decrease                 | A negative German modifier makes the Test     |
+|                                  |                                     | easier.                                       |
+| Modifikator                      | modifier                            | Generic bonus or penalty.                     |
+| Bonus                            | bonus                               |                                               |
+| Malus                            | penalty                             |                                               |
+| gelungene Probe                  | successful Test                     |                                               |
+| misslungene Probe                | failed Test                         |                                               |
+| offene Probe                     | Open Test                           | Remaining points measure quality or degree of |
+|                                  |                                     | success.                                      |
+| vergleichende Probe              | Contested Test                      | Two participants compare their results.       |
+| übrig behaltene Punkte           | remaining / unspent points          | TaP* for Talents; ZfP* for spells.            |
+| automatischer Erfolg             | Automatic Success                   |                                               |
+| automatischer Misserfolg         | Automatic Failure                   |                                               |
+| Patzer                           | Fumble                              | Usually triggered by very poor rolls and      |
+|                                  |                                     | sometimes confirmed by another roll.          |
+| glücklicher Wurf                 | Lucky Break                         | Generic exceptional success.                  |
+| glückliche Attacke / Parade      | Lucky Attack / Lucky Parry          | Combat-specific exceptional result.           |
+| kritischer Treffer               | Critical Hit                        | A confirmed Lucky Attack with increased       |
+|                                  |                                     | effect.                                       |
+| Bestätigungswurf                 | verification check / verification   | Second roll that confirms a lucky result or   |
+|                                  | Test                                | fumble.                                       |
+| Meisterentscheid                 | Highlord's decision                 | Ruling by the game master.                    |
+| optional                         | Optional                            | Rule may be omitted.                          |
++----------------------------------+-------------------------------------+-----------------------------------------------+
+5. CHARACTER CREATION, TALENTS, AND ADVANCEMENT
+======================================================================================================================
++----------------------------------+-------------------------------------+-----------------------------------------------+
+| German original                  | Official English counterpart        | Usage note                                    |
++----------------------------------+-------------------------------------+-----------------------------------------------+
+| Charaktererschaffung /           | character generation / hero         |                                               |
+| Heldengenerierung                | creation                            |                                               |
+| Generierungspunkt                | Generation Point                    |                                               |
+| Rasse                            | race                                | Period terminology used by these rulebooks.   |
+| Kultur                           | culture                             |                                               |
+| Profession                       | profession                          |                                               |
+| Voraussetzung                    | requirement                         | Minimum Attribute, Social Standing, or other  |
+|                                  |                                     | prerequisite.                                 |
+| Startwert                        | starting value                      |                                               |
+| Vorteil                          | Advantage                           |                                               |
+| Nachteil                         | Disadvantage                        |                                               |
+| Sonderfertigkeit                 | Special Ability                     | Learned capability that usually does not      |
+|                                  |                                     | require a Test.                               |
+| Gabe                             | Gift                                | Innate talent-like Advantage.                 |
+| Sozialstatus                     | Social Standing                     |                                               |
+| Talent                           | Talent                              | Skill-like capability in the official         |
+|                                  |                                     | translation.                                  |
+| Talentwert                       | Talent Prowess                      | English TP; German TaW.                       |
+| Basistalent                      | Basic Talent                        | May normally be attempted without activation. |
+| Spezialtalent                    | Specialized Talent                  | Must normally be activated or granted.        |
+| Berufstalent                     | Professional Talent                 | Category used in the older English Basic      |
+|                                  |                                     | Rules; not a direct one-for-one category in   |
+|                                  |                                     | the later German book.                        |
+| Kampftalent                      | Combat Talent                       |                                               |
+| Körperliches Talent              | Physical Talent                     |                                               |
+| Gesellschaftliches Talent        | Social Talent                       |                                               |
+| Naturtalent                      | Nature Talent                       |                                               |
+| Wissenstalent                    | Lore Talent                         | The English book uses Lore rather than        |
+|                                  |                                     | Knowledge in category labels.                 |
+| Sprachen und Schriften           | Languages / Scripts                 |                                               |
+| Handwerkstalent                  | Artisan Talent                      |                                               |
+| Talent aktivieren                | activate a Talent                   | Pay the activation cost before                |
+|                                  |                                     | advancing/using certain Talents.              |
+| Talent steigern                  | advance a Talent                    | Increase its Prowess.                         |
+| Steigerung                       | advancement                         |                                               |
+| Steigerungsspalte / Kategorie    | Advancement Category / column       | Cost category A-H.                            |
+| Aktivierungskosten               | Activation Cost                     |                                               |
+| Steigerungskosten                | Advancement Cost                    |                                               |
+| Spezielle Erfahrung              | Special Experience                  | Favorable learning opportunity that reduces   |
+|                                  |                                     | advancement difficulty/cost in German 4.1.    |
+| Lehrmeister                      | teacher                             |                                               |
+| Selbststudium                    | self-study                          |                                               |
+| Ableiten auf verwandtes Talent   | falling back on a related Talent    | Use a related Talent with a Difficulty        |
+|                                  |                                     | Increase.                                     |
+| Abenteuerpunkte-Guthaben         | AP Balance                          | Unspent Adventure Points.                     |
++----------------------------------+-------------------------------------+-----------------------------------------------+
+6. COMBAT, ARMOR, AND DAMAGE TERMINOLOGY
+======================================================================================================================
++----------------------------------+-------------------------------------+-----------------------------------------------+
+| German original                  | Official English counterpart        | Usage note                                    |
++----------------------------------+-------------------------------------+-----------------------------------------------+
+| Kampf                            | combat                              |                                               |
+| Kampfrunde                       | Combat Round                        |                                               |
+| Initiative                       | Initiative                          | Determines action order.                      |
+| Initiative-Basiswert             | Base Initiative Value               | English BIV or Base INI.                      |
+| Aktion                           | Action                              |                                               |
+| freie Aktion                     | free action                         | Very short action.                            |
+| Angriffsaktion                   | Attack Action                       |                                               |
+| Abwehraktion                     | Defensive Action / Parry action     | The English book usually describes the        |
+|                                  |                                     | specific Parry rather than using one fixed    |
+|                                  |                                     | umbrella label.                               |
+| längerfristige Handlung          | extended action / action requiring  | No single consistently capitalized English    |
+|                                  | several actions                     | label in the Basic Rules.                     |
+| Aktion umwandeln                 | convert an action                   | Exchange an attack for a defense or vice      |
+|                                  |                                     | versa, subject to restrictions.               |
+| Überraschung                     | surprise                            |                                               |
+| Hinterhalt                       | ambush                              |                                               |
+| Überzahl                         | numerical superiority               |                                               |
+| Attacke                          | Attack                              |                                               |
+| Parade                           | Parry                               |                                               |
+| Ausweichen                       | Dodge                               |                                               |
+| Fernkampfangriff                 | Ranged Attack                       |                                               |
+| Attackewert                      | Attack Value                        | AT.                                           |
+| Paradewert                       | Parry Value                         | PA.                                           |
+| Fernkampfwert                    | Ranged Value                        | RV.                                           |
+| Ansage                           | announced Difficulty Increase /     | The English combat rule packages the common   |
+|                                  | called modifier                     | offensive use as a Called Attack (AT+).       |
+| Wuchtschlag                      | Called Attack (AT+)                 | The English Basic Rules do not use 'Powerful  |
+|                                  |                                     | Strike' here; successful AT+ adds the         |
+|                                  |                                     | announced amount to HP.                       |
+| gezielter Angriff                | Called Attack / targeted attack     | Use context; the English Basic Rules' formal  |
+|                                  |                                     | maneuver is Called Attack (AT+).              |
+| Manöver                          | maneuver / combat maneuver          |                                               |
+| Treffer                          | hit                                 | A successful Attack not stopped by a Parry.   |
+| Trefferpunkte                    | Hit Points                          | HP before armor.                              |
+| Schadenspunkte                   | Damage Points                       | DP after armor; subtracted from VP.           |
+| direkte Schadenspunkte           | direct Damage Points                | Ignore armor unless stated otherwise.         |
+| Ausdauer-Trefferpunkte           | Hit Points causing Endurance damage | Marked HP (ED) in the English weapon table.   |
+| Ausdauer-Schadenspunkte          | Endurance damage                    | Applied primarily to EP/ED, with additional   |
+|                                  |                                     | VP damage as described by the rule.           |
+| Rüstungsschutz                   | Armor Rating                        | AR.                                           |
+| Behinderung                      | Encumbrance                         | EC.                                           |
+| effektive Behinderung            | Effective Encumbrance               | EEC.                                          |
+| Rüstungsgewöhnung                | Armor Use                           | Special Ability reducing armor penalties.     |
+| Wunde                            | wound                               | Additional consequence of a sufficiently      |
+|                                  |                                     | damaging hit.                                 |
+| Wundschwelle                     | wound threshold                     | Threshold for suffering a wound.              |
+| Kampfunfähigkeit                 | incapacitation                      | Unable to continue fighting.                  |
+| niedrige Lebensenergie           | low Vitality                        |                                               |
+| niedrige Ausdauer                | low Endurance                       |                                               |
+| Bruchfaktor                      | Break Point                         | BP.                                           |
+| Waffenmodifikator                | Weapon Modifier                     | WM, normally AT/PA.                           |
+| Distanzklasse                    | Distance Class                      | DC.                                           |
+| Handgemenge                      | Close-Quarters                      | Distance Class C.                             |
+| Nahkampf                         | Melee                               | Distance Class M; also a general term for     |
+|                                  |                                     | close combat.                                 |
+| Stangenwaffe                     | Polearms                            | Distance Class P.                             |
+| Reichweite                       | range                               |                                               |
+| Entfernungskategorie             | range category                      |                                               |
+| Ladezeit                         | loading time                        |                                               |
+| Zielen                           | aiming                              |                                               |
+| Zielgröße                        | target size                         |                                               |
+| selbst auferlegter Zuschlag      | voluntary Difficulty Increase       | Used to improve effects such as ranged damage |
+|                                  |                                     | or precision.                                 |
+| waffenloser Kampf                | unarmed combat                      |                                               |
+| Raufen                           | Brawling                            |                                               |
+| Ringen                           | Wrestling                           |                                               |
+| Schildkampf                      | Shield Fighting                     |                                               |
+| Nebenhand                        | off hand                            |                                               |
+| improvisierte Waffe              | improvised weapon                   |                                               |
+| zweihändige Waffe                | two-handed weapon                   | Often marked 2H.                              |
+| beritten                         | mounted                             |                                               |
+| Kampf zu Pferd                   | mounted combat                      |                                               |
++----------------------------------+-------------------------------------+-----------------------------------------------+
+7. MAGIC TERMINOLOGY
+======================================================================================================================
++----------------------------------+-------------------------------------+-----------------------------------------------+
+| German original                  | Official English counterpart        | Usage note                                    |
++----------------------------------+-------------------------------------+-----------------------------------------------+
+| Zauberei                         | sorcery / magic                     | The English book uses both words depending on |
+|                                  |                                     | context.                                      |
+| Zauber                           | spell                               |                                               |
+| Zauberfertigkeit                 | spell                               | Rules treat each spell similarly to a Talent. |
+| Zauberfertigkeitswert            | Spell Prowess                       | English SP; German ZfW.                       |
+| Zauberfertigkeitspunkte          | points of Spell Prowess             | German ZfP.                                   |
+| übrig gebliebene                 | remaining Spell Prowess points      | English SP*.                                  |
+| Zauberfertigkeitspunkte          |                                     |                                               |
+| Zauberprobe                      | Arcane Test                         | Three Attribute Subtests, often modified by   |
+|                                  |                                     | RM.                                           |
+| Astralenergie                    | Astral Energy                       | AE total value.                               |
+| Astralpunkte                     | Astral Points                       | ASP current points.                           |
+| Magieresistenz                   | Resistance to Magic                 | RM.                                           |
+| Zauberdauer                      | Casting Time                        |                                               |
+| Wirkungsdauer                    | Duration                            |                                               |
+| Reichweite                       | Range                               |                                               |
+| Kosten                           | Cost                                | Normally ASP.                                 |
+| Technik                          | Technique                           | Actions/gestures/words required to cast.      |
+| Ursprung                         | Origin                              | Such as guild magic or elven heritage.        |
+| Zielobjekt                       | target                              | Person, object, zone, and so forth.           |
+| aufrechterhaltener Zauber        | maintained spell                    | May require continuing ASP expenditure or     |
+|                                  |                                     | concentration.                                |
+| Störung                          | disruption                          | Interruption or interference during casting.  |
+| Verbreitung                      | availability / distribution         | How widespread a spell is among traditions.   |
+| Gildenmagie                      | guild magic                         |                                               |
+| elfisches Erbe                   | elven heritage                      | Official English tradition label.             |
+| Stabzauber                       | Wand Enchantment                    |                                               |
+| Elfenlied                        | Elfsong                             |                                               |
++----------------------------------+-------------------------------------+-----------------------------------------------+
+8. TIME, MOVEMENT, UNITS, AND MONEY
+======================================================================================================================
++----------------------------------+-------------------------------------+-----------------------------------------------+
+| German original                  | Official English counterpart        | Usage note                                    |
++----------------------------------+-------------------------------------+-----------------------------------------------+
+| Schritt                          | pace                                | Approximately one meter in the English rules. |
+| Finger                           | half-finger / centimeter            | Weapon lengths are listed in half-fingers     |
+|                                  |                                     | (cm) in the English tables.                   |
+| Unze                             | ounce                               | 1 ounce = 25 grams in these rules.            |
+| Stein                            | stone                               | Aventurian weight unit; context-dependent in  |
+|                                  |                                     | supplements.                                  |
+| Kampfrunde                       | Combat Round                        | Short combat time unit.                       |
+| Spielrunde                       | Game Turn                           | Longer activity time unit; English GT.        |
+| Aktion                           | action                              | Two actions are normally available in a       |
+|                                  |                                     | Combat Round in the English Basic Rules.      |
+| Geschwindigkeit                  | Speed                               | English SD.                                   |
+| Bewegung                         | movement                            |                                               |
+| taktische Bewegung               | tactical movement                   |                                               |
+| Reisegeschwindigkeit             | traveling speed                     |                                               |
+| Tagesstrecke                     | daily travel distance               |                                               |
+| Tragkraft                        | carrying capacity                   |                                               |
+| Last                             | load                                |                                               |
+| Erschöpfung                      | exhaustion                          |                                               |
+| Regeneration                     | regeneration                        | Recovery of VP, EP, or ASP.                   |
+| Dukat                            | ducat                               | Gold currency.                                |
+| Silbertaler                      | silver thaler                       | English equipment tables often abbreviate     |
+|                                  |                                     | thalers as T.                                 |
+| Heller                           | farthing                            | Copper coin in the English translation.       |
+| Kreuzer                          | kreutzer                            | Iron coin.                                    |
++----------------------------------+-------------------------------------+-----------------------------------------------+
+9. CREATURE AND HAZARD STAT-BLOCK TERMINOLOGY
+======================================================================================================================
++----------------------------------+-------------------------------------+-----------------------------------------------+
+| German original                  | Official English counterpart        | Usage note                                    |
++----------------------------------+-------------------------------------+-----------------------------------------------+
+| Kreatur / Monster                | creature / monster                  |                                               |
+| Gefährlichkeitswert              | Threat Value                        | English TH.                                   |
+| Lebensenergie                    | Vitality                            | English VI/VP.                                |
+| Ausdauer                         | Endurance                           | English ED/EP.                                |
+| Rüstungsschutz                   | Armor Rating                        | English AR.                                   |
+| Attacke                          | Attack                              | AT.                                           |
+| Parade                           | Parry                               | PA.                                           |
+| Trefferpunkte                    | Hit Points                          | HP.                                           |
+| Geschwindigkeit                  | Speed                               | SD.                                           |
+| Magieresistenz                   | Resistance to Magic                 | RM.                                           |
+| Sonderregeln                     | special rules / notes               |                                               |
+| Giftstufe                        | poison level                        | The English book usually labels this Level.   |
+| Krankheitsstufe                  | disease level                       | The English book usually labels this Level.   |
+| Wirkung                          | effect                              |                                               |
+| Dauer                            | duration                            |                                               |
++----------------------------------+-------------------------------------+-----------------------------------------------+
+10. RECOMMENDED ENGLISH STAT-BLOCK ORDER
+======================================================================================================================
+For consistent English-language DSA/TDE 4.1 notes, use this order:
+
+  Attributes: CO, CL, IN, CH, DE, AG, CN, ST
+  Resources:  VP, EP, ASP
+  Defense:    RM, AR, EC/EEC
+  Combat:     INI, AT, PA, RV, HP, HP/ST, WM, BP, DC, SD
+  Talents:    TP (Talent Prowess); remaining points = TP*
+  Spells:     SP (Spell Prowess); remaining points = SP*
+  Damage:     HP before armor; DP after armor
+
+Example conversion
+------------------
+German:  MU 14, KL 11, IN 13, CH 10, FF 12, GE 14, KO 15, KK 16
+         LE 38, AU 36, MR 5, RS 7, BE 4, AT 17, PA 14, TP 1W6+5
+
+English: CO 14, CL 11, IN 13, CH 10, DE 12, AG 14, CN 15, ST 16
+         VP 38, EP 36, RM 5, AR 7, EC 4, AT 17, PA 14, HP 1d6+5
+
+Talent example
+--------------
+German:  Körperbeherrschung TaW 12; gelungene Probe, 5 TaP* übrig.
+English: Body Control TP 12; successful Talent Test with 5 TP* remaining.
+
+Spell example
+-------------
+German:  IGNIFAXIUS ZfW 14; 7 ZfP*; Kosten 8 AsP.
+English: IGNIFAXIUS SP 14; 7 SP*; Cost 8 ASP.
+
+11. COMPACT ONE-LINE CONVERSION KEY
+======================================================================================================================
+MU/CO  KL/CL  IN/IN  CH/CH  FF/DE  GE/AG  KO/CN  KK/ST
+LE/VI  LeP/VP  AU/ED  AuP/EP  AE/AE  AsP/ASP  MR/RM  SO/SO
+RS/AR  BE/EC  eBE/EEC  GS/SD  GW/TH  BF/BP  DK/DC  KR/CR  SR/GT
+TaW->TP  TaP*->TP*  ZfW->SP  ZfP*->SP*  TP->HP  SP->DP  TP/KK->HP/ST
+
+End of reference.

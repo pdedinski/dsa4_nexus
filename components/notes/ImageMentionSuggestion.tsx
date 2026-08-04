@@ -7,8 +7,14 @@ import {
   useState,
 } from "react";
 import type { SuggestionKeyDownProps, SuggestionProps } from "@tiptap/suggestion";
+import ThumbnailImage from "@/components/images/ThumbnailImage";
 
-export type ImageMentionItem = { id: string; label: string; url: string };
+export type ImageMentionItem = {
+  id: string;
+  label: string;
+  url: string;
+  thumbnailUrl?: string;
+};
 
 export type ImageMentionListProps = SuggestionProps<
   ImageMentionItem,
@@ -68,10 +74,9 @@ const ImageMentionSuggestionInner = forwardRef<
             onMouseEnter={() => setSelected(i)}
             onClick={() => props.command(item)}
           >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={item.url}
-              alt=""
+            <ThumbnailImage
+              thumbnailUrl={item.thumbnailUrl}
+              originalUrl={item.url}
               className="h-8 w-8 shrink-0 rounded object-cover border border-surface-border"
             />
             <span className="font-medium text-ink truncate">{item.label}</span>

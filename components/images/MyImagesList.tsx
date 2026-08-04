@@ -1,11 +1,13 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
+import ThumbnailImage from "@/components/images/ThumbnailImage";
 
 type ImageRow = {
   id: string;
   name: string;
   url: string;
+  thumbnailUrl?: string;
   createdAt: string;
 };
 
@@ -211,10 +213,9 @@ export default function MyImagesList() {
               key={img.id}
               className="flex flex-wrap items-center gap-3 rounded-lg border border-surface-border bg-surface-card px-4 py-3"
             >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={img.url}
-                alt=""
+              <ThumbnailImage
+                thumbnailUrl={img.thumbnailUrl}
+                originalUrl={img.url}
                 className="h-12 w-12 shrink-0 rounded object-cover border border-surface-border"
               />
               <div className="min-w-0 flex-1">

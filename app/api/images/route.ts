@@ -3,7 +3,8 @@ import { randomUUID } from "crypto";
 import { desc, eq } from "drizzle-orm";
 import { requireAllowed } from "@/lib/auth/session";
 import { isCloudinaryConfigured } from "@/lib/cloudinary/config";
-import { uploadImageBuffer } from "@/lib/cloudinary/upload";
+import { thumbnailSecureUrl } from "@/lib/cloudinary/thumbnail";
+import { uploadImageWithThumbnail } from "@/lib/cloudinary/upload";
 import { db } from "@/lib/db/client";
 import { userImages } from "@/lib/db/schema";
 
@@ -25,15 +26,24 @@ export async function GET() {
       id: userImages.id,
       name: userImages.name,
       url: userImages.url,
+      publicId: userImages.publicId,
       createdAt: userImages.createdAt,
     })
     .from(userImages)
     .where(eq(userImages.userId, session.user.id))
     .orderBy(desc(userImages.createdAt));
 
+  const cloudinaryConfigured = isCloudinaryConfigured();
+  const images = rows.map(({ publicId, ...row }) => ({
+    ...row,
+    thumbnailUrl: cloudinaryConfigured
+      ? thumbnailSecureUrl(publicId)
+      : row.url,
+  }));
+
   return NextResponse.json({
-    images: rows,
-    cloudinaryConfigured: isCloudinaryConfigured(),
+    images,
+    cloudinaryConfigured,
   });
 }
 
@@ -93,7 +103,7 @@ export async function POST(req: NextRequest) {
 
   let upload;
   try {
-    upload = await uploadImageBuffer(buffer, publicId);
+    upload = await uploadImageWithThumbnail(buffer, publicId);
   } catch (err) {
     const message =
       err instanceof Error ? err.message : "Cloudinary upload failed";
@@ -119,5 +129,13 @@ export async function POST(req: NextRequest) {
   if (!row)
     return NextResponse.json({ error: "Create failed" }, { status: 500 });
 
-  return NextResponse.json({ image: row }, { status: 201 });
+  return NextResponse.json(
+    {
+      image: {
+        ...row,
+        thumbnailUrl: upload.thumbnailSecureUrl,
+      },
+    },
+    { status: 201 }
+  );
 }
