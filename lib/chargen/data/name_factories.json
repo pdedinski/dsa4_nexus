@@ -1,0 +1,822 @@
+[
+  {
+    "id": "Namenformate.AlbernischeNamen",
+    "name": "Albernian Names",
+    "formats_male": [
+      "<mv> <n>"
+    ],
+    "formats_male_noble": [
+      "<mv> ui <n>"
+    ],
+    "formats_female": [
+      "<wv> <n>"
+    ],
+    "formats_female_noble": [
+      "<wv> ni <n>"
+    ],
+    "name_lists": [
+      {
+        "list_id": "Namenliste.AlbernischeMaennlicheVornamen",
+        "placeholder": "<mv>"
+      },
+      {
+        "list_id": "Namenliste.AlbernischeWeiblicheVornamen",
+        "placeholder": "<wv>"
+      },
+      {
+        "list_id": "Namenliste.AlbernischeNachnamen",
+        "placeholder": "<n>"
+      }
+    ],
+    "source": "builtin"
+  },
+  {
+    "id": "Namenformate.AlmadanischeNamen",
+    "name": "Almadanian Names",
+    "formats_male": [
+      "<mv> <n>"
+    ],
+    "formats_male_noble": [
+      "<mv> von <n>"
+    ],
+    "formats_female": [
+      "<wv> <n>"
+    ],
+    "formats_female_noble": [
+      "<wv> von <n>"
+    ],
+    "name_lists": [
+      {
+        "list_id": "Namenliste.AlmadanischeMaennlicheVornamen",
+        "placeholder": "<mv>"
+      },
+      {
+        "list_id": "Namenliste.AlmadanischeWeiblicheVornamen",
+        "placeholder": "<wv>"
+      },
+      {
+        "list_id": "Namenliste.AlmadanischeNachnamen",
+        "placeholder": "<n>"
+      }
+    ],
+    "source": "builtin"
+  },
+  {
+    "id": "Namenformate.AndergastscheNamen",
+    "name": "Andergastian Names",
+    "formats_male": [
+      "<mv> <n>"
+    ],
+    "formats_male_noble": [
+      "<mv> von <n>"
+    ],
+    "formats_female": [
+      "<wv> <n>"
+    ],
+    "formats_female_noble": [
+      "<wv> von <n>"
+    ],
+    "name_lists": [
+      {
+        "list_id": "Namenliste.AndergastscheMaennlicheVornamen",
+        "placeholder": "<mv>"
+      },
+      {
+        "list_id": "Namenliste.AndergastscheWeiblicheVornamen",
+        "placeholder": "<wv>"
+      },
+      {
+        "list_id": "Namenliste.AndergastscheNachnamen",
+        "placeholder": "<n>"
+      }
+    ],
+    "source": "builtin"
+  },
+  {
+    "id": "Namenformate.AranischeNamen",
+    "name": "Aranian Names",
+    "formats_male": [
+      "<mv> ibn <wv>",
+      "<mv> <me> ibn <wv>",
+      "<mv> ibn <wv> <me>"
+    ],
+    "formats_male_noble": [],
+    "formats_female": [
+      "<wv> saba <wv>",
+      "<wv> <we> saba <wv>",
+      "<wv> saba <wv> <we>",
+      "<wv> <wv><ws>",
+      "<wv> <we> <wv><ws>",
+      "<wv> <wv><ws> <we>"
+    ],
+    "formats_female_noble": [],
+    "name_lists": [
+      {
+        "list_id": "Namenliste.AranischeMaennlicheVornamen",
+        "placeholder": "<mv>"
+      },
+      {
+        "list_id": "Namenliste.AranischeWeiblicheVornamen",
+        "placeholder": "<wv>"
+      },
+      {
+        "list_id": "Namenliste.TulamidischeWeiblicheVornamenSuffixe",
+        "placeholder": "<ws>"
+      },
+      {
+        "list_id": "Namenliste.TulamidischeMaennlicheEhrennamen",
+        "placeholder": "<me>"
+      },
+      {
+        "list_id": "Namenliste.TulamidischeWeiblicheEhrennamen",
+        "placeholder": "<we>"
+      }
+    ],
+    "source": "builtin"
+  },
+  {
+    "id": "Namenformate.BornlaendischeNamen",
+    "name": "Fountlandian Names",
+    "formats_male": [
+      "<mv> <n>"
+    ],
+    "formats_male_noble": [
+      "<mv> von <n>"
+    ],
+    "formats_female": [
+      "<wv> <n>"
+    ],
+    "formats_female_noble": [
+      "<wv> von <n>"
+    ],
+    "name_lists": [
+      {
+        "list_id": "Namenliste.BornlaendischeMaennlicheVornamen",
+        "placeholder": "<mv>"
+      },
+      {
+        "list_id": "Namenliste.BornlaendischeWeiblicheVornamen",
+        "placeholder": "<wv>"
+      },
+      {
+        "list_id": "Namenliste.BornlaendischeNachnamen",
+        "placeholder": "<n>"
+      }
+    ],
+    "source": "builtin"
+  },
+  {
+    "id": "Namenformate.ElfischeNamen",
+    "name": "Elfish Names",
+    "formats_male": [
+      "<mv> <n><ns>"
+    ],
+    "formats_male_noble": [],
+    "formats_female": [
+      "<wv> <n><ns>"
+    ],
+    "formats_female_noble": [],
+    "name_lists": [
+      {
+        "list_id": "Namenliste.ElfischeMaennlicheVornamen",
+        "placeholder": "<mv>"
+      },
+      {
+        "list_id": "Namenliste.ElfischeNachnamenSuffixe",
+        "placeholder": "<ns>"
+      },
+      {
+        "list_id": "Namenliste.ElfischeWeiblicheVornamen",
+        "placeholder": "<wv>"
+      },
+      {
+        "list_id": "Namenliste.ElfischeNachnamen",
+        "placeholder": "<n>"
+      }
+    ],
+    "source": "builtin"
+  },
+  {
+    "id": "Namenformate.FerkinaNamen",
+    "name": "Ferkina Names",
+    "formats_male": [
+      "<mv> iban <mv>"
+    ],
+    "formats_male_noble": [],
+    "formats_female": [
+      "<wv> sabu <mv>",
+      "<wv> zwash <mv>",
+      "<wv> zwashi <mv>"
+    ],
+    "formats_female_noble": [],
+    "name_lists": [
+      {
+        "list_id": "Namenliste.FerkinischeMaennlicheVornamen",
+        "placeholder": "<mv>"
+      },
+      {
+        "list_id": "Namenliste.FerkinischeWeiblicheVornamen",
+        "placeholder": "<wv>"
+      }
+    ],
+    "source": "builtin"
+  },
+  {
+    "id": "Namenformate.FjarningerNamen",
+    "name": "Fjarningian Names",
+    "formats_male": [
+      "<mv>"
+    ],
+    "formats_male_noble": [],
+    "formats_female": [
+      "<wv>"
+    ],
+    "formats_female_noble": [],
+    "name_lists": [
+      {
+        "list_id": "Namenliste.FjarningischeMaennlicheVornamen",
+        "placeholder": "<mv>"
+      },
+      {
+        "list_id": "Namenliste.FjarningischeWeiblicheVornamen",
+        "placeholder": "<wv>"
+      }
+    ],
+    "source": "builtin"
+  },
+  {
+    "id": "Namenformate.GaretischeNamen",
+    "name": "Garetian Names",
+    "formats_male": [
+      "<mv> <n>"
+    ],
+    "formats_male_noble": [
+      "<mv> von <n>"
+    ],
+    "formats_female": [
+      "<wv> <n>"
+    ],
+    "formats_female_noble": [
+      "<wv> von <n>"
+    ],
+    "name_lists": [
+      {
+        "list_id": "Namenliste.MittellaendischeMaennlicheVornamen",
+        "placeholder": "<mv>"
+      },
+      {
+        "list_id": "Namenliste.MittellaendischeWeiblicheVornamen",
+        "placeholder": "<wv>"
+      },
+      {
+        "list_id": "Namenliste.MittellaendischeNachnamen",
+        "placeholder": "<n>"
+      }
+    ],
+    "source": "builtin"
+  },
+  {
+    "id": "Namenformate.GjalskerlaenderNamen",
+    "name": "Gjalskerländer Names",
+    "formats_male": [
+      "<mv> bre <mv>"
+    ],
+    "formats_male_noble": [],
+    "formats_female": [
+      "<wv> brai <wv>"
+    ],
+    "formats_female_noble": [],
+    "name_lists": [
+      {
+        "list_id": "Namenliste.GjalskerlaenischeMaennlicheVornamen",
+        "placeholder": "<mv>"
+      },
+      {
+        "list_id": "Namenliste.GjalskerlaendischeWeiblicheVornamen",
+        "placeholder": "<wv>"
+      }
+    ],
+    "source": "builtin"
+  },
+  {
+    "id": "Namenformate.HorasischeNamen",
+    "name": "Horasian Names",
+    "formats_male": [
+      "<mv> <n>"
+    ],
+    "formats_male_noble": [
+      "<mv> <b> <n>"
+    ],
+    "formats_female": [
+      "<wv> <n>"
+    ],
+    "formats_female_noble": [
+      "<wv> <b> <n>"
+    ],
+    "name_lists": [
+      {
+        "list_id": "Namenliste.HorasischeMaennlicheVornamen",
+        "placeholder": "<mv>"
+      },
+      {
+        "list_id": "Namenliste.HorasischeWeiblicheVornamen",
+        "placeholder": "<wv>"
+      },
+      {
+        "list_id": "Namenliste.HorasischeNachnamen",
+        "placeholder": "<n>"
+      },
+      {
+        "list_id": "Namenliste.HorasischeBindeworteAdel",
+        "placeholder": "<b>"
+      }
+    ],
+    "source": "builtin"
+  },
+  {
+    "id": "Namenformate.HuegelzwergischeNamen",
+    "name": "Hill Dwarfen Names",
+    "formats_male": [
+      "<vp><vs> <n>",
+      "<vp><vs><vs> <n>"
+    ],
+    "formats_male_noble": [],
+    "formats_female": [
+      "<vp><vs>a <n>",
+      "<vp><vs><vs>a <n>",
+      "<vp><vs>e <n>",
+      "<vp><vs><vs>e <n>"
+    ],
+    "formats_female_noble": [],
+    "name_lists": [
+      {
+        "list_id": "Namenliste.HuegelzwergischeNachnamen",
+        "placeholder": "<n>"
+      },
+      {
+        "list_id": "Namenliste.ZwergischePraefixe",
+        "placeholder": "<vp>"
+      },
+      {
+        "list_id": "Namenliste.ZwergischeSuffixe",
+        "placeholder": "<vs>"
+      }
+    ],
+    "source": "builtin"
+  },
+  {
+    "id": "Namenformate.MaraskanischeNamen",
+    "name": "Maraskanian Names",
+    "formats_male": [
+      "<mmv><mvs>",
+      "<tmv><mvs>",
+      "<mmv><mvs> <mn><ns>",
+      "<mmv><mvs> <tmv><ns>",
+      "<mmv><mvs> <twv><ns>",
+      "<tmv><mvs> <mn><ns>",
+      "<tmv><mvs> <tmv><ns>",
+      "<tmv><mvs> <twv><ns>"
+    ],
+    "formats_male_noble": [],
+    "formats_female": [
+      "<mwv><wvs>",
+      "<twv><wvs>",
+      "<mwv><wvs> <mn><ns>",
+      "<mwv><wvs> <tmv><ns>",
+      "<mwv><wvs> <twv><ns>",
+      "<twv><wvs> <mn><ns>",
+      "<twv><wvs> <tmv><ns>",
+      "<twv><wvs> <twv><ns>"
+    ],
+    "formats_female_noble": [],
+    "name_lists": [
+      {
+        "list_id": "Namenliste.MittellaendischeMaennlicheVornamen",
+        "placeholder": "<mmv>"
+      },
+      {
+        "list_id": "Namenliste.TulamidischeMaennlicheVornamen",
+        "placeholder": "<tmv>"
+      },
+      {
+        "list_id": "Namenliste.MaraskanischeMaennlicheVornamenSuffixe",
+        "placeholder": "<mvs>"
+      },
+      {
+        "list_id": "Namenliste.MittellaendischeWeiblicheVornamen",
+        "placeholder": "<mwv>"
+      },
+      {
+        "list_id": "Namenliste.TulamidischeWeiblicheVornamen",
+        "placeholder": "<twv>"
+      },
+      {
+        "list_id": "Namenliste.MaraskanischeWeiblicheVornamenSuffixe",
+        "placeholder": "<wvs>"
+      },
+      {
+        "list_id": "Namenliste.MittellaendischeNachnamen",
+        "placeholder": "<mn>"
+      },
+      {
+        "list_id": "Namenliste.MaraskanischeNachnamenSuffixe",
+        "placeholder": "<ns>"
+      }
+    ],
+    "source": "builtin"
+  },
+  {
+    "id": "Namenformate.NivesischeNamen",
+    "name": "Nivesian Names",
+    "formats_male": [
+      "<mv> von <mv>s Stamm",
+      "<mv> von <wv>s Stamm"
+    ],
+    "formats_male_noble": [],
+    "formats_female": [
+      "<wv> von <mv>s Stamm",
+      "<wv> von <wv>s Stamm"
+    ],
+    "formats_female_noble": [],
+    "name_lists": [
+      {
+        "list_id": "Namenliste.NivesischeMaennlicheVornamen",
+        "placeholder": "<mv>"
+      },
+      {
+        "list_id": "Namenliste.NivesischeWeiblicheVornamen",
+        "placeholder": "<wv>"
+      }
+    ],
+    "source": "builtin"
+  },
+  {
+    "id": "Namenformate.NorbardischeNamen",
+    "name": "Norbardian Names",
+    "formats_male": [
+      "<mv> <n>"
+    ],
+    "formats_male_noble": [],
+    "formats_female": [
+      "<wv> <n>"
+    ],
+    "formats_female_noble": [],
+    "name_lists": [
+      {
+        "list_id": "Namenliste.NorbardischeMaennlicheVornamen",
+        "placeholder": "<mv>"
+      },
+      {
+        "list_id": "Namenliste.NorbardischeWeiblicheVornamen",
+        "placeholder": "<wv>"
+      },
+      {
+        "list_id": "Namenliste.NorbardischeNachnamen",
+        "placeholder": "<n>"
+      }
+    ],
+    "source": "builtin"
+  },
+  {
+    "id": "Namenformate.NostrischeNamen",
+    "name": "Nostrian Names",
+    "formats_male": [
+      "<mv> <n>"
+    ],
+    "formats_male_noble": [
+      "<mv> von <n>"
+    ],
+    "formats_female": [
+      "<wv> <n>"
+    ],
+    "formats_female_noble": [
+      "<wv> von <n>"
+    ],
+    "name_lists": [
+      {
+        "list_id": "Namenliste.NostrischeMaennlicheVornamen",
+        "placeholder": "<mv>"
+      },
+      {
+        "list_id": "Namenliste.NostrischeWeiblicheVornamen",
+        "placeholder": "<wv>"
+      },
+      {
+        "list_id": "Namenliste.NostrischeNachnamen",
+        "placeholder": "<n>"
+      }
+    ],
+    "source": "builtin"
+  },
+  {
+    "id": "Namenformate.SuedlaendischeNamen",
+    "name": "Southern Names",
+    "formats_male": [
+      "<mv> <n>"
+    ],
+    "formats_male_noble": [
+      "<mv> von <n>"
+    ],
+    "formats_female": [
+      "<wv> <n>"
+    ],
+    "formats_female_noble": [
+      "<wv> von <n>"
+    ],
+    "name_lists": [
+      {
+        "list_id": "Namenliste.SuedlaendischeMaennlicheVornamen",
+        "placeholder": "<mv>"
+      },
+      {
+        "list_id": "Namenliste.SuedlaendischeWeiblicheVornamen",
+        "placeholder": "<wv>"
+      },
+      {
+        "list_id": "Namenliste.SuedlaendischeNachnamen",
+        "placeholder": "<n>"
+      }
+    ],
+    "source": "builtin"
+  },
+  {
+    "id": "Namenformate.ThorwalscheNamen",
+    "name": "Thorwalian Names",
+    "formats_male": [
+      "<mv> <mv>son",
+      "<mv> <wv>son"
+    ],
+    "formats_male_noble": [],
+    "formats_female": [
+      "<wv> <mv>dottir",
+      "<wv> <wv>dottir"
+    ],
+    "formats_female_noble": [
+      "<wv> von <n>"
+    ],
+    "name_lists": [
+      {
+        "list_id": "Namenliste.ThorwalscheMaennlicheVornamen",
+        "placeholder": "<mv>"
+      },
+      {
+        "list_id": "Namenliste.ThorwalscheWeiblicheVornamen",
+        "placeholder": "<wv>"
+      }
+    ],
+    "source": "builtin"
+  },
+  {
+    "id": "Namenformate.TocamuyacNamen",
+    "name": "Tocamuyac Names",
+    "formats_male": [
+      "<vn>"
+    ],
+    "formats_male_noble": [],
+    "formats_female": [
+      "<vn>"
+    ],
+    "formats_female_noble": [],
+    "name_lists": [
+      {
+        "list_id": "Namenliste.TocamuyacNamen",
+        "placeholder": "<vn>"
+      }
+    ],
+    "source": "builtin"
+  },
+  {
+    "id": "Namenformate.TrollzackerNamen",
+    "name": "Trollzacker Names",
+    "formats_male": [
+      "<mv>",
+      "<mv> <me>"
+    ],
+    "formats_male_noble": [],
+    "formats_female": [
+      "<wv>",
+      "<wv> <we>"
+    ],
+    "formats_female_noble": [],
+    "name_lists": [
+      {
+        "list_id": "Namenliste.TrollzackischeMaennlicheVornamen",
+        "placeholder": "<mv>"
+      },
+      {
+        "list_id": "Namenliste.TrollzackischeWeiblicheVornamen",
+        "placeholder": "<wv>"
+      },
+      {
+        "list_id": "Namenliste.TrollzackischeMaennlicheEhrennamen",
+        "placeholder": "<me>"
+      },
+      {
+        "list_id": "Namenliste.TrollzackischeWeiblicheEhrennamen",
+        "placeholder": "<we>"
+      }
+    ],
+    "source": "builtin"
+  },
+  {
+    "id": "Namenformate.TulamidischeNovadischeNamen",
+    "name": "Tulamidian/Novadian \\",
+    "formats_male": [
+      "<mv> ibn <mv>",
+      "<mv> <me> ibn <mv>",
+      "<mv> ibn <mv> <me>"
+    ],
+    "formats_male_noble": [],
+    "formats_female": [
+      "<wv> saba <mv>",
+      "<wv> <we> saba <mv>",
+      "<wv> saba <mv> <we>",
+      "<wv> <mv><ws>",
+      "<wv> <we> <mv><ws>",
+      "<wv> <mv><ws> <we>"
+    ],
+    "formats_female_noble": [],
+    "name_lists": [
+      {
+        "list_id": "Namenliste.TulamidischeMaennlicheVornamen",
+        "placeholder": "<mv>"
+      },
+      {
+        "list_id": "Namenliste.TulamidischeWeiblicheVornamen",
+        "placeholder": "<wv>"
+      },
+      {
+        "list_id": "Namenliste.TulamidischeWeiblicheVornamenSuffixe",
+        "placeholder": "<ws>"
+      },
+      {
+        "list_id": "Namenliste.TulamidischeMaennlicheEhrennamen",
+        "placeholder": "<me>"
+      },
+      {
+        "list_id": "Namenliste.TulamidischeWeiblicheEhrennamen",
+        "placeholder": "<we>"
+      }
+    ],
+    "source": "builtin"
+  },
+  {
+    "id": "Namenformate.UtuluNamen",
+    "name": "Utulu Names",
+    "formats_male": [
+      "<vn>"
+    ],
+    "formats_male_noble": [],
+    "formats_female": [
+      "<vn>"
+    ],
+    "formats_female_noble": [],
+    "name_lists": [
+      {
+        "list_id": "Namenliste.UtuluNamen",
+        "placeholder": "<vn>"
+      }
+    ],
+    "source": "builtin"
+  },
+  {
+    "id": "Namenformate.WaldmenschenNamen",
+    "name": "Woodsmen Names",
+    "formats_male": [
+      "<vn>"
+    ],
+    "formats_male_noble": [],
+    "formats_female": [
+      "<vn>"
+    ],
+    "formats_female_noble": [],
+    "name_lists": [
+      {
+        "list_id": "Namenliste.WaldmenschenNamen",
+        "placeholder": "<vn>"
+      }
+    ],
+    "source": "builtin"
+  },
+  {
+    "id": "Namenformate.WeidenerNamen",
+    "name": "Weidener Names",
+    "formats_male": [
+      "<mv> <n>"
+    ],
+    "formats_male_noble": [
+      "<mv> von <n>"
+    ],
+    "formats_female": [
+      "<wv> <n>"
+    ],
+    "formats_female_noble": [
+      "<wv> von <n>"
+    ],
+    "name_lists": [
+      {
+        "list_id": "Namenliste.WeidenerMaennlicheVornamen",
+        "placeholder": "<mv>"
+      },
+      {
+        "list_id": "Namenliste.WeidenerWeiblicheVornamen",
+        "placeholder": "<wv>"
+      },
+      {
+        "list_id": "Namenliste.MittellaendischeNachnamen",
+        "placeholder": "<n>"
+      }
+    ],
+    "source": "builtin"
+  },
+  {
+    "id": "Namenformate.ZahoriNamen",
+    "name": "Zahori Names",
+    "formats_male": [
+      "<mv> <n>"
+    ],
+    "formats_male_noble": [],
+    "formats_female": [
+      "<wv> <n>"
+    ],
+    "formats_female_noble": [],
+    "name_lists": [
+      {
+        "list_id": "Namenliste.ZahorischeMaennlicheVornamen",
+        "placeholder": "<mv>"
+      },
+      {
+        "list_id": "Namenliste.ZahorischeWeiblicheVornamen",
+        "placeholder": "<wv>"
+      },
+      {
+        "list_id": "Namenliste.ZahorischeNachnamen",
+        "placeholder": "<n>"
+      }
+    ],
+    "source": "builtin"
+  },
+  {
+    "id": "Namenformate.ZwergischeNamen",
+    "name": "Dwarfen Names",
+    "formats_male": [
+      "<vp><vs> groscho <vp><vs>",
+      "<vp><vs> groscho <vp><vs><vs>",
+      "<vp><vs><vs> groscho <vp><vs><vs>"
+    ],
+    "formats_male_noble": [],
+    "formats_female": [
+      "<vp><vs>a groschna <vp><vs>a",
+      "<vp><vs>a groschna <vp><vs><vs>a",
+      "<vp><vs><vs>a groschna <vp><vs><vs>a",
+      "<vp><vs>a groschna <vp><vs>e",
+      "<vp><vs>a groschna <vp><vs><vs>e",
+      "<vp><vs><vs>a groschna <vp><vs><vs>e",
+      "<vp><vs>e groschna <vp><vs>a",
+      "<vp><vs>e groschna <vp><vs><vs>a",
+      "<vp><vs><vs>e groschna <vp><vs><vs>a",
+      "<vp><vs>e groschna <vp><vs>e",
+      "<vp><vs>e groschna <vp><vs><vs>e",
+      "<vp><vs><vs>e groschna <vp><vs><vs>e"
+    ],
+    "formats_female_noble": [],
+    "name_lists": [
+      {
+        "list_id": "Namenliste.ZwergischePraefixe",
+        "placeholder": "<vp>"
+      },
+      {
+        "list_id": "Namenliste.ZwergischeSuffixe",
+        "placeholder": "<vs>"
+      }
+    ],
+    "source": "builtin"
+  },
+  {
+    "id": "Namenformate.ZyklopaeischeNamen",
+    "name": "Cyclopian Islands Names",
+    "formats_male": [
+      "<mv> <n>"
+    ],
+    "formats_male_noble": [],
+    "formats_female": [
+      "<wv> <n>"
+    ],
+    "formats_female_noble": [],
+    "name_lists": [
+      {
+        "list_id": "Namenliste.ZyklopaeischeMaennlicheVornamen",
+        "placeholder": "<mv>"
+      },
+      {
+        "list_id": "Namenliste.ZyklopaeischeWeiblicheVornamen",
+        "placeholder": "<wv>"
+      },
+      {
+        "list_id": "Namenliste.ZyklopaeischeNachnamen",
+        "placeholder": "<n>"
+      }
+    ],
+    "source": "builtin"
+  }
+]

@@ -1,0 +1,462 @@
+[
+  {
+    "id": "Waffe.Ballaester",
+    "name": "Loadster",
+    "german_name": "Balläster",
+    "talent": "Talent.Armbrust",
+    "tp": "1W+4",
+    "ranges": [
+      10,
+      20,
+      30,
+      60,
+      100
+    ],
+    "tp_plus": [
+      3,
+      1,
+      0,
+      -1,
+      -1
+    ],
+    "weight": 120,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Borndorn",
+    "name": "Fountthorn",
+    "german_name": "Borndorn",
+    "talent": "Talent.Wurfmesser",
+    "tp": "1W6+2",
+    "ranges": [
+      2,
+      4,
+      6,
+      8,
+      15
+    ],
+    "tp_plus": [
+      1,
+      0,
+      0,
+      0,
+      -1
+    ],
+    "weight": 30,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Dolch",
+    "name": "Dagger",
+    "german_name": "Dolch",
+    "talent": "Talent.Wurfmesser",
+    "tp": "1W6",
+    "ranges": [
+      1,
+      3,
+      5,
+      7,
+      10
+    ],
+    "tp_plus": [
+      0,
+      0,
+      0,
+      -1,
+      -1
+    ],
+    "weight": 20,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Dschadra",
+    "name": "Djadra",
+    "german_name": "Dschadra",
+    "talent": "Talent.Wurfspeere",
+    "tp": "1W+4",
+    "ranges": [
+      5,
+      10,
+      15,
+      25,
+      40
+    ],
+    "tp_plus": [
+      3,
+      2,
+      1,
+      0,
+      0
+    ],
+    "weight": 80,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Eisenwalder",
+    "name": "Ironwooder",
+    "german_name": "Eisenwalder",
+    "talent": "Talent.Armbrust",
+    "tp": "1W+3",
+    "ranges": [
+      5,
+      10,
+      15,
+      20,
+      40
+    ],
+    "tp_plus": [
+      1,
+      0,
+      0,
+      0,
+      -1
+    ],
+    "weight": 200,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Elfenbogen",
+    "name": "Elven bow",
+    "german_name": "Elfenbogen",
+    "talent": "Talent.Bogen",
+    "tp": "1W+5",
+    "ranges": [
+      10,
+      25,
+      50,
+      100,
+      200
+    ],
+    "tp_plus": [
+      3,
+      2,
+      1,
+      1,
+      0
+    ],
+    "weight": 25,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Holzspeer",
+    "name": "Wooden spear",
+    "german_name": "Holzspeer",
+    "talent": "Talent.Wurfspeere",
+    "tp": "1W+2",
+    "ranges": [
+      5,
+      10,
+      15,
+      25,
+      40
+    ],
+    "tp_plus": [
+      1,
+      0,
+      0,
+      -1,
+      -2
+    ],
+    "weight": 60,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Kompositbogen",
+    "name": "Composite Bow",
+    "german_name": "Kompositbogen",
+    "talent": "Talent.Bogen",
+    "tp": "1W+5",
+    "ranges": [
+      10,
+      20,
+      35,
+      50,
+      80
+    ],
+    "tp_plus": [
+      2,
+      1,
+      1,
+      0,
+      0
+    ],
+    "weight": 35,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Kriegsbogen",
+    "name": "War bow",
+    "german_name": "Kriegsbogen",
+    "talent": "Talent.Bogen",
+    "tp": "1W+7",
+    "ranges": [
+      10,
+      20,
+      40,
+      80,
+      150
+    ],
+    "tp_plus": [
+      3,
+      2,
+      1,
+      0,
+      0
+    ],
+    "weight": 45,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Kurzbogen",
+    "name": "Short bow",
+    "german_name": "Kurzbogen",
+    "talent": "Talent.Bogen",
+    "tp": "1W+4",
+    "ranges": [
+      5,
+      15,
+      25,
+      40,
+      60
+    ],
+    "tp_plus": [
+      1,
+      1,
+      0,
+      0,
+      -1
+    ],
+    "weight": 20,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Langbogen",
+    "name": "Longbow",
+    "german_name": "Langbogen",
+    "talent": "Talent.Bogen",
+    "tp": "1W+6",
+    "ranges": [
+      10,
+      25,
+      50,
+      100,
+      200
+    ],
+    "tp_plus": [
+      3,
+      2,
+      1,
+      0,
+      -1
+    ],
+    "weight": 30,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.LeichteArmbrust",
+    "name": "Light crossbow",
+    "german_name": "Leichte Armbrust",
+    "talent": "Talent.Armbrust",
+    "tp": "1W+6",
+    "ranges": [
+      10,
+      15,
+      25,
+      40,
+      60
+    ],
+    "tp_plus": [
+      1,
+      1,
+      0,
+      0,
+      -1
+    ],
+    "weight": 150,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Schneidzahn",
+    "name": "Foretooth",
+    "german_name": "Schneidzahn",
+    "talent": "Talent.Wurfbeile",
+    "tp": "1W+4",
+    "ranges": [
+      0,
+      5,
+      10,
+      15,
+      30
+    ],
+    "tp_plus": [
+      0,
+      1,
+      1,
+      0,
+      -1
+    ],
+    "weight": 50,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Speer",
+    "name": "Spear",
+    "german_name": "Speer",
+    "talent": "Talent.Wurfspeere",
+    "tp": "1W+3",
+    "ranges": [
+      5,
+      10,
+      15,
+      25,
+      40
+    ],
+    "tp_plus": [
+      1,
+      0,
+      0,
+      -1,
+      -2
+    ],
+    "weight": 80,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Windenarmbrust",
+    "name": "Heavy crossbow",
+    "german_name": "Windenarmbrust",
+    "talent": "Talent.Armbrust",
+    "tp": "2W+6",
+    "ranges": [
+      10,
+      30,
+      60,
+      100,
+      180
+    ],
+    "tp_plus": [
+      4,
+      2,
+      0,
+      -1,
+      -3
+    ],
+    "weight": 200,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Wurfbeil",
+    "name": "Throwing ax",
+    "german_name": "Wurfbeil",
+    "talent": "Talent.Wurfbeile",
+    "tp": "1W+3",
+    "ranges": [
+      0,
+      5,
+      10,
+      15,
+      25
+    ],
+    "tp_plus": [
+      0,
+      1,
+      1,
+      0,
+      -1
+    ],
+    "weight": 60,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Wurfdolch",
+    "name": "Throwing dagger",
+    "german_name": "Wurfdolch",
+    "talent": "Talent.Wurfmesser",
+    "tp": "1W+1",
+    "ranges": [
+      2,
+      4,
+      6,
+      8,
+      15
+    ],
+    "tp_plus": [
+      1,
+      0,
+      0,
+      0,
+      -1
+    ],
+    "weight": 20,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Wurfmesser",
+    "name": "Throwing knife",
+    "german_name": "Wurfmesser",
+    "talent": "Talent.Wurfmesser",
+    "tp": "1W",
+    "ranges": [
+      2,
+      4,
+      6,
+      8,
+      15
+    ],
+    "tp_plus": [
+      1,
+      0,
+      0,
+      0,
+      -1
+    ],
+    "weight": 10,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.WurfscheibeRing",
+    "name": "Throwing disk/ring",
+    "german_name": "Wurfscheibe, -ring",
+    "talent": "Talent.Wurfmesser",
+    "tp": "1W+1",
+    "ranges": [
+      2,
+      4,
+      8,
+      12,
+      20
+    ],
+    "tp_plus": [
+      1,
+      0,
+      0,
+      0,
+      0
+    ],
+    "weight": 10,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Wurfspeer",
+    "name": "Javelin",
+    "german_name": "Wurfspeer",
+    "talent": "Talent.Wurfspeere",
+    "tp": "1W+4",
+    "ranges": [
+      5,
+      10,
+      15,
+      25,
+      40
+    ],
+    "tp_plus": [
+      3,
+      1,
+      0,
+      -1,
+      -1
+    ],
+    "weight": 80,
+    "source": "builtin"
+  }
+]

@@ -1,0 +1,2168 @@
+[
+  {
+    "id": "Kulturkunde.Almada",
+    "name": "Almada",
+    "german_name": "Almada",
+    "source": "builtin"
+  },
+  {
+    "id": "Kulturkunde.Amazonen",
+    "name": "Amazons",
+    "german_name": "Amazonen",
+    "source": "builtin"
+  },
+  {
+    "id": "Kulturkunde.Ambosszwerge",
+    "name": "Anvil Dwarfs",
+    "german_name": "Ambosszwerge",
+    "source": "builtin"
+  },
+  {
+    "id": "Kulturkunde.AndergastNostria",
+    "name": "Andergast/Nostria",
+    "german_name": "Andergast/Nostria",
+    "source": "builtin"
+  },
+  {
+    "id": "Kulturkunde.Aranien",
+    "name": "Arania",
+    "german_name": "Aranien",
+    "source": "builtin"
+  },
+  {
+    "id": "Kulturkunde.ArchaischeAchaz",
+    "name": "Archaic Achaz",
+    "german_name": "Archaische Achaz",
+    "source": "builtin"
+  },
+  {
+    "id": "Kulturkunde.Auelfen",
+    "name": "Lea Elves",
+    "german_name": "Auelfen",
+    "source": "builtin"
+  },
+  {
+    "id": "Kulturkunde.Bornland",
+    "name": "Fountland",
+    "german_name": "Bornland",
+    "source": "builtin"
+  },
+  {
+    "id": "Kulturkunde.Brilliantzwerge",
+    "name": "Brilliantzwerge",
+    "german_name": "Brilliantzwerge",
+    "source": "builtin"
+  },
+  {
+    "id": "Kulturkunde.Bukanier",
+    "name": "Bukanier",
+    "german_name": "Bukanier",
+    "source": "builtin"
+  },
+  {
+    "id": "Kulturkunde.Erzzwerge",
+    "name": "Arch Dwarfs",
+    "german_name": "Erzzwerge",
+    "source": "builtin"
+  },
+  {
+    "id": "Kulturkunde.Ferkina",
+    "name": "Ferkina",
+    "german_name": "Ferkina",
+    "source": "builtin"
+  },
+  {
+    "id": "Kulturkunde.Firnelfen",
+    "name": "Ice Elves",
+    "german_name": "Firnelfen",
+    "source": "builtin"
+  },
+  {
+    "id": "Kulturkunde.Fjarninger",
+    "name": "Fjarninger",
+    "german_name": "Fjarninger",
+    "source": "builtin"
+  },
+  {
+    "id": "Kulturkunde.Gjalskerlaender",
+    "name": "Gjalskerländer",
+    "german_name": "Gjalskerländer",
+    "source": "builtin"
+  },
+  {
+    "id": "Kulturkunde.Goblins",
+    "name": "Goblins",
+    "german_name": "Goblins",
+    "source": "builtin"
+  },
+  {
+    "id": "Kulturkunde.Grolme",
+    "name": "Grolme",
+    "german_name": "Grolme",
+    "source": "builtin"
+  },
+  {
+    "id": "Kulturkunde.Horasreich",
+    "name": "Horasian Empire",
+    "german_name": "Horasreich",
+    "source": "builtin"
+  },
+  {
+    "id": "Kulturkunde.Huegelzwerge",
+    "name": "Hill Dwarfs",
+    "german_name": "Hügelzwerge",
+    "source": "builtin"
+  },
+  {
+    "id": "Kulturkunde.Maraskan",
+    "name": "Maraskan",
+    "german_name": "Maraskan",
+    "source": "builtin"
+  },
+  {
+    "id": "Kulturkunde.Mohas",
+    "name": "Mohas",
+    "german_name": "Mohas",
+    "source": "builtin"
+  },
+  {
+    "id": "Kulturkunde.Mittelreich",
+    "name": "Middenrealm",
+    "german_name": "Mittelreich",
+    "source": "builtin"
+  },
+  {
+    "id": "Kulturkunde.Nivesen",
+    "name": "Nivese",
+    "german_name": "Nivesen",
+    "source": "builtin"
+  },
+  {
+    "id": "Kulturkunde.Norbarden",
+    "name": "Norbards",
+    "german_name": "Norbarden",
+    "source": "builtin"
+  },
+  {
+    "id": "Kulturkunde.NordaventurischeStaedte",
+    "name": "North Aventurian Cities",
+    "german_name": "Nordaventurische Städte",
+    "source": "builtin"
+  },
+  {
+    "id": "Kulturkunde.Novadi",
+    "name": "Novadi",
+    "german_name": "Novadi",
+    "source": "builtin"
+  },
+  {
+    "id": "Kulturkunde.Orks",
+    "name": "Orcs",
+    "german_name": "Orks",
+    "source": "builtin"
+  },
+  {
+    "id": "Kulturkunde.SchwarzeLande",
+    "name": "Schwarze Lande",
+    "german_name": "Schwarze Lande",
+    "source": "builtin"
+  },
+  {
+    "id": "Kulturkunde.StammesAchaz",
+    "name": "Tribal Achaz",
+    "german_name": "Stammes Achaz",
+    "source": "builtin"
+  },
+  {
+    "id": "Kulturkunde.Steppenelfen",
+    "name": "Steppe Elves",
+    "german_name": "Steppenelfen",
+    "source": "builtin"
+  },
+  {
+    "id": "Kulturkunde.Suedaventurien",
+    "name": "South Aventuria",
+    "german_name": "Südaventurien",
+    "source": "builtin"
+  },
+  {
+    "id": "Kulturkunde.Svellttal",
+    "name": "Svellt Valley",
+    "german_name": "Svellttal",
+    "source": "builtin"
+  },
+  {
+    "id": "Kulturkunde.Thorwal",
+    "name": "Thorwal",
+    "german_name": "Thorwal",
+    "source": "builtin"
+  },
+  {
+    "id": "Kulturkunde.Tocamuyac",
+    "name": "Tocamuyac",
+    "german_name": "Tocamuyac",
+    "source": "builtin"
+  },
+  {
+    "id": "Kulturkunde.Trolle",
+    "name": "Trolls",
+    "german_name": "Trolle",
+    "source": "builtin"
+  },
+  {
+    "id": "Kulturkunde.Trollzacker",
+    "name": "Trollzacker",
+    "german_name": "Trollzacker",
+    "source": "builtin"
+  },
+  {
+    "id": "Kulturkunde.Tulamidenlande",
+    "name": "Tulamidyans",
+    "german_name": "Tulamidenlande",
+    "source": "builtin"
+  },
+  {
+    "id": "Kulturkunde.Waldelfen",
+    "name": "Silvan Elves",
+    "german_name": "Waldelfen",
+    "source": "builtin"
+  },
+  {
+    "id": "Kulturkunde.Zahori",
+    "name": "Zahori",
+    "german_name": "Zahori",
+    "source": "builtin"
+  },
+  {
+    "id": "Kulturkunde.Zyklopeninseln",
+    "name": "Cyclops Islands",
+    "german_name": "Zyklopeninseln",
+    "source": "builtin"
+  },
+  {
+    "id": "Repraesentation.Magier",
+    "name": "Guild Magicians",
+    "german_name": "Gildenmagier",
+    "source": "builtin"
+  },
+  {
+    "id": "Repraesentation.Elfen",
+    "name": "Elves",
+    "german_name": "Elfen",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.AlchimistischeZaubergifte",
+    "name": "alchemical/magic poisons",
+    "german_name": "alchimistische/Zaubergifte",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.AndererStand",
+    "name": "other social standing",
+    "german_name": "anderer Stand",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.AnderesGeschlecht",
+    "name": "other sex",
+    "german_name": "anderes Geschlecht",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.AndereRasse",
+    "name": "other race",
+    "german_name": "andere Rasse",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Antiquitaeten",
+    "name": "antiques",
+    "german_name": "Antiquitäten",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Architektur",
+    "name": "architecture",
+    "german_name": "Architektur",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Arithmetik",
+    "name": "arithmetic",
+    "german_name": "Arithmetik",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Armbrust",
+    "name": "crossbow",
+    "german_name": "Armbrust",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Artefaktherstellung",
+    "name": "artifact creation",
+    "german_name": "Artefaktherstellung",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Atemgifte",
+    "name": "breath poisons",
+    "german_name": "Atemgifte",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Aufwiegeln",
+    "name": "instigate",
+    "german_name": "Aufwiegeln",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Ausdruckstaenze",
+    "name": "free dance",
+    "german_name": "Ausdruckstänze",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.BackenBraten",
+    "name": "baking/roasting",
+    "german_name": "Backen/Braten",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Balancieren",
+    "name": "balance",
+    "german_name": "Balancieren",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Balladenvortrag",
+    "name": "ballad performing",
+    "german_name": "Balladenvortrag",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Bauchreden",
+    "name": "ventriloquy",
+    "german_name": "Bauchreden",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.BauKunstgeschichte",
+    "name": "building and art histroy",
+    "german_name": "Bau- und Kunstgeschichte",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Beinschnitzerei",
+    "name": "bone carving",
+    "german_name": "Beinschnitzerei",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Belagerungswaffen",
+    "name": "siege weapons",
+    "german_name": "Belagerungswaffen",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Bergsteigen",
+    "name": "mountain climbing",
+    "german_name": "Bergsteigen",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Bergwerke",
+    "name": "mines",
+    "german_name": "Bergwerke",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Beschatten",
+    "name": "shadowing",
+    "german_name": "Beschatten",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Betteln",
+    "name": "begging",
+    "german_name": "Betteln",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Blechblasinstrumente",
+    "name": "brass",
+    "german_name": "Blechblasinstrumente",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Bodenakrobatik",
+    "name": "floor acrobatics",
+    "german_name": "Bodenakrobatik",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Bogen",
+    "name": "bow",
+    "german_name": "Bogen",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.BolzenPfeile",
+    "name": "bolts/arrows",
+    "german_name": "Bolzen/Pfeile",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Brandmittel",
+    "name": "fuel",
+    "german_name": "Brandmittel",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.BruecheQuetschungen",
+    "name": "fractures/bruises",
+    "german_name": "Brüche/Quetschungen",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Buchfuehrung",
+    "name": "book-keeping",
+    "german_name": "Buchführung",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Chorgesang",
+    "name": "choir",
+    "german_name": "Chorgesang",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.DemagogiePlaedoyerPredigt",
+    "name": "demagogy/pleading/\\",
+    "german_name": "Demagogie/Plädoyer/\\",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Diplomatie",
+    "name": "diplomacy",
+    "german_name": "Diplomatie",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.DiskussionsRethorik",
+    "name": "discussion rhetoric",
+    "german_name": "Diskussions-Rethorik",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Dompteur",
+    "name": "tamer",
+    "german_name": "Dompteur",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Dachdecker",
+    "name": "roofer",
+    "german_name": "Dachdecker",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Drachen",
+    "name": "dragons",
+    "german_name": "Drachen",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.DrachenBekaempfung",
+    "name": "dragons and dragon combat",
+    "german_name": "Drachen und deren Bekämpfung",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Drahtzieher",
+    "name": "wirepuller",
+    "german_name": "Drahtzieher",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Dschungel",
+    "name": "jungle",
+    "german_name": "Dschungel",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Edelmetalle",
+    "name": "precious metal",
+    "german_name": "Edelmetalle",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Edelsteine",
+    "name": "gemstones",
+    "german_name": "Edelsteine",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Einmaster",
+    "name": "single-masted sailing boat (sailing)",
+    "german_name": "Einmaster (Segeln)",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Einschuechtern",
+    "name": "daunting",
+    "german_name": "Einschüchtern",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.EinzelgespraechVerhoer",
+    "name": "interrogation",
+    "german_name": "Einzelgespräch/\\",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.EisSchnee",
+    "name": "ice/snow",
+    "german_name": "Eis/Schnee",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Eisklettern",
+    "name": "ice climbing",
+    "german_name": "Eisklettern",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Elementarismus",
+    "name": "elementarism",
+    "german_name": "Elementarismus",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Entfesseln",
+    "name": "untie",
+    "german_name": "Entfesseln",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.EntwurfFestgewaender",
+    "name": "pearlies",
+    "german_name": "Entwurf/Festgewänder",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.ErschoepfungIgnorieren",
+    "name": "ignore exhaustion",
+    "german_name": "Erschöpfung Ignorieren",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Falkner",
+    "name": "falconer",
+    "german_name": "Falkner",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Fallen",
+    "name": "traps",
+    "german_name": "Fallen",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.FarbenLacke",
+    "name": "paint",
+    "german_name": "Farben/Lacke",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Feilschen",
+    "name": "bargaining",
+    "german_name": "Feilschen",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Fesseln",
+    "name": "tie",
+    "german_name": "Fesseln",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Festmahle",
+    "name": "feasts",
+    "german_name": "Festmahle",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Fische",
+    "name": "fish",
+    "german_name": "Fische",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Floesse",
+    "name": "raft (punting)",
+    "german_name": "Flöße (Staken)",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Floeten",
+    "name": "flutes",
+    "german_name": "Flöten",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Flugechse",
+    "name": "flying saurian",
+    "german_name": "Flugechse",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.FluesseBaeche",
+    "name": "rivers/rivulets",
+    "german_name": "Flüsse/Bäche",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Formationstaenze",
+    "name": "formation dance",
+    "german_name": "Formationstänze",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Freiklettern",
+    "name": "free climbing",
+    "german_name": "Freiklettern",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Gebaeude",
+    "name": "buildings",
+    "german_name": "Gebäude",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Gebirge",
+    "name": "mountains",
+    "german_name": "Gebirge",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Gefluegel",
+    "name": "poultry",
+    "german_name": "Geflügel",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Gerber",
+    "name": "tanner",
+    "german_name": "Gerber",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Geroell",
+    "name": "debris",
+    "german_name": "Geröll",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Geometrie",
+    "name": "geometry",
+    "german_name": "Geometrie",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Gifte",
+    "name": "poisons",
+    "german_name": "Gifte",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Gildenrecht",
+    "name": "guild law",
+    "german_name": "Gildenrecht",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.GoblinischesReitWildschwein",
+    "name": "goblinic riding boar",
+    "german_name": "goblinisches Reit-Wildschwein",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.GoldSilberschmied",
+    "name": "gold- und silversmith",
+    "german_name": "Gold- und Silberschmied",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Grasland",
+    "name": "lea",
+    "german_name": "Grasland",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Gravieren",
+    "name": "engraving",
+    "german_name": "Gravieren",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Gruben",
+    "name": "pits",
+    "german_name": "Gruben",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.GurteRiemen",
+    "name": "belts",
+    "german_name": "Gurte/Riemen",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Haltbarmachen",
+    "name": "preserve",
+    "german_name": "Haltbarmachen",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Harfen",
+    "name": "harp",
+    "german_name": "Harfen",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Haustiere",
+    "name": "pets",
+    "german_name": "Haustiere",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Hehlerei",
+    "name": "handling stolen goods",
+    "german_name": "Hehlerei",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Hippogriff",
+    "name": "hippogriff",
+    "german_name": "Hippogriff",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Hochseeangeln",
+    "name": "deep sea fishing",
+    "german_name": "Hochseeangeln",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Hochsprung",
+    "name": "high jump",
+    "german_name": "Hochsprung",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.HoefischeTaenze",
+    "name": "courtly dance",
+    "german_name": "Höfische Tänze",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.HoehlenTunnel",
+    "name": "caves/tunnels",
+    "german_name": "Höhlen/Tunnel",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Holzkonstruktionen",
+    "name": "timbers",
+    "german_name": "Holzkonstruktionen",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Holzkunde",
+    "name": "wood lore",
+    "german_name": "Holzkunde",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Holzwaffen",
+    "name": "wood weapons",
+    "german_name": "Holzwaffen",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Hoeren",
+    "name": "hearing",
+    "german_name": "Hören",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Horoskope",
+    "name": "horoscopes",
+    "german_name": "Horoskope",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Hufschmied",
+    "name": "horseshoer",
+    "german_name": "Hufschmied",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Hundefuehrer",
+    "name": "dog handler",
+    "german_name": "Hundeführer",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Intrige",
+    "name": "intrigue",
+    "german_name": "Intrige",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Jagdwild",
+    "name": "game",
+    "german_name": "Jagdwild",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Kamel",
+    "name": "camel",
+    "german_name": "Kamel",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Kanalisation",
+    "name": "sewerage",
+    "german_name": "Kanalisation",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.KanusKajaks",
+    "name": "canoes/kayaks (canoeing)",
+    "german_name": "Kanus/Kajak (Paddeln)",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Karten",
+    "name": "maps",
+    "german_name": "Karten",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Kirchenrecht",
+    "name": "church law",
+    "german_name": "Kirchenrecht",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Knotenkunde",
+    "name": "knot lore",
+    "german_name": "Knotenkunde",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Kontakte",
+    "name": "contacts",
+    "german_name": "Kontakte",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Kontaktgifte",
+    "name": "contact poison",
+    "german_name": "Kontaktgifte",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.KraeneHebewerkeMahlwerke",
+    "name": "cranes/draw work/mill work",
+    "german_name": "Kräne/Hebewerke/Mahlwerke",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.KueferWagner",
+    "name": "cooper/wainwright",
+    "german_name": "Küfer/Wagner",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Kuerschner",
+    "name": "furrier",
+    "german_name": "Kürschner",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.KuestenMeere",
+    "name": "coasts/oceans",
+    "german_name": "Küsten/Meere",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Laborpraxis",
+    "name": "laboratory practice",
+    "german_name": "Laborpraxis",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Landschaften",
+    "name": "landscapes",
+    "german_name": "Landschaften",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Langlauf",
+    "name": "langlauf",
+    "german_name": "Langlauf",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Langstreckenschwimmen",
+    "name": "long distance swimming",
+    "german_name": "Langstreckenschwimmen",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Lauten",
+    "name": "lute",
+    "german_name": "Lauten",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Lederkleidung",
+    "name": "leather clothes",
+    "german_name": "Lederkleidung",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Lederruestungen",
+    "name": "leather armor",
+    "german_name": "Lederrüstungen",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Logistik",
+    "name": "logistic",
+    "german_name": "Logistik",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Luegen",
+    "name": "lying",
+    "german_name": "Lügen",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Magiehistorie",
+    "name": "magic history",
+    "german_name": "Magiehistorie",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Magietheorie",
+    "name": "magic theorie",
+    "german_name": "Magietheorie",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.MagischeAnalyse",
+    "name": "magic analysis",
+    "german_name": "Magische Analyse",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Marschversorgung",
+    "name": "rations",
+    "german_name": "Marschversorgung",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Materialkunde",
+    "name": "material science",
+    "german_name": "Materialkunde",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Materialwert",
+    "name": "value of raw materials",
+    "german_name": "Materialwert",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Meer",
+    "name": "ocean",
+    "german_name": "Meer",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Meeresgetier",
+    "name": "marine animals",
+    "german_name": "Meeresgetier",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Meditationstaenze",
+    "name": "meditation dance",
+    "german_name": "Meditationstänze",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Mehrstimmigkeit",
+    "name": "polyphony",
+    "german_name": "Mehrstimmigkeit",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.MenschlicheStimmen",
+    "name": "human voices",
+    "german_name": "Menschliche Stimmen",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Militaergeschichte",
+    "name": "military history",
+    "german_name": "Militärgeschichte",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.MineralischeGifte",
+    "name": "mineral poisons",
+    "german_name": "mineralische Gifte",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.MoebelschreinereiTischlerei",
+    "name": "carpenter",
+    "german_name": "Möbelschreinerei/\\",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Monstren",
+    "name": "monsters",
+    "german_name": "Monstren",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.NaturalistischeDarstellung",
+    "name": "naturalistic illustration",
+    "german_name": "naturalistische Darstellung",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.NatuerlicheHoehlen",
+    "name": "natural caves",
+    "german_name": "natärliche Höhlen",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Navigation",
+    "name": "navigation",
+    "german_name": "Navigation",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.NetzeKnuepfen",
+    "name": "net knotting",
+    "german_name": "Netze Knüpfen",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Nutztiere",
+    "name": "farm animals",
+    "german_name": "Nutztiere",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Operngesang",
+    "name": "opera",
+    "german_name": "Operngesang",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Ornamente",
+    "name": "ornaments",
+    "german_name": "Ornamente",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.PferdEselMuli",
+    "name": "horse/donkey/mule",
+    "german_name": "Pferd/Esel/Muli",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.PflanzlicheGifte",
+    "name": "herbal poisons",
+    "german_name": "pflanzliche Gifte",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Plaettner",
+    "name": "armorer",
+    "german_name": "Plättner",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Portraet",
+    "name": "portrait",
+    "german_name": "Porträt",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Possenreissen",
+    "name": "buffoon",
+    "german_name": "Possenreißen",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.PumpenWasserkraft",
+    "name": "pumps and waterpower",
+    "german_name": "Pumpen und Wasserkraft",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Raubtiere",
+    "name": "carinvores",
+    "german_name": "Raubtiere",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Reitechse",
+    "name": "saurian",
+    "german_name": "Reitechse",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Reliefs",
+    "name": "reliefs",
+    "german_name": "Reliefs",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Religionsgeschichte",
+    "name": "religion histroy",
+    "german_name": "Religionsgeschichte",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Reptilien",
+    "name": "reptiles",
+    "german_name": "Reptilien",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Rhythmusinstrumente",
+    "name": "rhythm instruments",
+    "german_name": "Rhythmusinstrumente",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.RiechenSchmecken",
+    "name": "smell/taste",
+    "german_name": "Riechen/Schmecken",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Ruderboote",
+    "name": "rowboat (rowing)",
+    "german_name": "Ruderboote (Rudern)",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Sappeur",
+    "name": "sapper",
+    "german_name": "Sappeur",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Saettel",
+    "name": "saddles",
+    "german_name": "Sättel",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Saeugetiere",
+    "name": "mammals",
+    "german_name": "Sägetiere",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Schaedlinge",
+    "name": "vermin",
+    "german_name": "Schädlinge",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Schiffszimmermann",
+    "name": "shipwright",
+    "german_name": "Schiffszimmermann",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Schlingen",
+    "name": "springes",
+    "german_name": "Schlingen",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Schloesser",
+    "name": "locks",
+    "german_name": "Schlösser",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.SchmerzUnterdruecken",
+    "name": "suppressing pain",
+    "german_name": "Schmerz Unterdrücken",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Schmuck",
+    "name": "jewelry",
+    "german_name": "Schmuck",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Schnellschwimmen",
+    "name": "fast swimming",
+    "german_name": "Schnellschwimmen",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Schnitte",
+    "name": "cuttings",
+    "german_name": "Schnitte",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Schnitzen",
+    "name": "carving",
+    "german_name": "Schnitzen",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.SchriftlicheRethorik",
+    "name": "written rhetoric",
+    "german_name": "schriftliche Rethorik",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Schuhwerk",
+    "name": "footwear",
+    "german_name": "Schuhwerk",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Schwingen",
+    "name": "swinging",
+    "german_name": "Schwingen",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.SeenSumpfBrackwasser",
+    "name": "lakes/swamp/brackwater",
+    "german_name": "Seen/Sumpf/Brackwasser",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Seegefechte",
+    "name": "naval action",
+    "german_name": "Seegefechte",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Segelschiff",
+    "name": "sailing ship",
+    "german_name": "Segelschiff",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Sehen",
+    "name": "seeing",
+    "german_name": "Sehen",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Seilklettern",
+    "name": "rope climbing",
+    "german_name": "Seilklettern",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Speere",
+    "name": "spears",
+    "german_name": "Speere",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Spengler",
+    "name": "tinsmith",
+    "german_name": "Spengler",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.SprachenSchriften",
+    "name": "languages and scripts",
+    "german_name": "Sprachen und Schriften",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Sprint",
+    "name": "sprinting",
+    "german_name": "Sprint",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Spruenge",
+    "name": "leaps",
+    "german_name": "Sprünge",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Staatsrecht",
+    "name": "constitutional law",
+    "german_name": "Staatsrecht",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Stadt",
+    "name": "city",
+    "german_name": "Stadt",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Standfestigkeit",
+    "name": "steady stand",
+    "german_name": "Standfestigkeit",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Statuen",
+    "name": "statues",
+    "german_name": "Statuen",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Steppe",
+    "name": "steppe",
+    "german_name": "Steppe",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.StoerungenIgnorieren",
+    "name": "ignoring interruptions",
+    "german_name": "Störungen Ignorieren",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Strafrecht",
+    "name": "criminal law",
+    "german_name": "Strafrecht",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.StrandRiff",
+    "name": "beach/reef",
+    "german_name": "Strand/Riff",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Strassen",
+    "name": "streets",
+    "german_name": "Straßen",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Strategie",
+    "name": "strategy",
+    "german_name": "Strategie",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Strauss",
+    "name": "ostrich",
+    "german_name": "Strauß",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Streichinstrumente",
+    "name": "string instruments",
+    "german_name": "Streichinstrumente",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Streitwagen",
+    "name": "chariot",
+    "german_name": "Streitwagen",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Sumpf",
+    "name": "swamp",
+    "german_name": "Sumpf",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Taktik",
+    "name": "tactic",
+    "german_name": "Taktik",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Taschenspielereien",
+    "name": "ledgerdemain",
+    "german_name": "Taschenspielereien",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Tasten",
+    "name": "feeling",
+    "german_name": "Tasten",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Tasteninstrumente",
+    "name": "keyboard instruments",
+    "german_name": "Tasteninstrumente",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Tauchen",
+    "name": "diving",
+    "german_name": "Tauchen",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.TaueSpleissen",
+    "name": "splicing ropes",
+    "german_name": "Taue Spleißen",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.TechnischeSkizze",
+    "name": "technical sketch",
+    "german_name": "technische Skizze",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.TierischeGifte",
+    "name": "animal poisons",
+    "german_name": "tierische Gifte",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Torsionswaffen",
+    "name": "torsion weapon",
+    "german_name": "Torsionswaffen",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Traenke",
+    "name": "potions",
+    "german_name": "Tränke",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.TrickwaffenFallen",
+    "name": "trick weapons/traps",
+    "german_name": "Trickwaffen/Fallen",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Trophaeen",
+    "name": "trophies",
+    "german_name": "Trophäen",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Tuchruestungen",
+    "name": "cloth armor",
+    "german_name": "Tuchrüstungen",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Tundra",
+    "name": "tundra",
+    "german_name": "Tundra",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Uhrwerke",
+    "name": "clockwork",
+    "german_name": "Uhrwerke",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Unterirdisch",
+    "name": "underground",
+    "german_name": "Unterirdisch",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.UnterirdischeStaedte",
+    "name": "subterranean cities",
+    "german_name": "unterirdische Städte",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Unterwasserkampf",
+    "name": "under water combat",
+    "german_name": "Unterwasserkampf",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Verbrennungen",
+    "name": "burnings",
+    "german_name": "Verbrennungen",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Verwaltung",
+    "name": "administration",
+    "german_name": "Verwaltungs",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Voegel",
+    "name": "birds",
+    "german_name": "Vögel",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Vorkoster",
+    "name": "taster",
+    "german_name": "Vorkoster",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Waffengifte",
+    "name": "waepon poisons",
+    "german_name": "Waffengifte",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Waffenschmied",
+    "name": "armorer",
+    "german_name": "Waffenschmied",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Wald",
+    "name": "forest",
+    "german_name": "Wald",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.WaldDschungel",
+    "name": "forest/jungle",
+    "german_name": "Wald/Dschungel",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Weitsprung",
+    "name": "long jump",
+    "german_name": "Weitsprung",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Winden",
+    "name": "wrest",
+    "german_name": "Winden",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Windkraft",
+    "name": "wind power",
+    "german_name": "Windkraft",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Wissenschaftsgeschichte",
+    "name": "science history",
+    "german_name": "Wissenschaftsgeschichte",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.WundenIgnorieren",
+    "name": "ignoring wounds",
+    "german_name": "Wunden Ignorieren",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Wueste",
+    "name": "desert",
+    "german_name": "Wüste",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Wuerfel",
+    "name": "dice",
+    "german_name": "Würfel",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Zahnleiden",
+    "name": "dental pain",
+    "german_name": "Zahnleiden",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.ZauberElixiere",
+    "name": "magic elixirs",
+    "german_name": "Zauber-Elixiere",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Zaubertaetowierungen",
+    "name": "magic tattoos",
+    "german_name": "Zaubertätowierungen",
+    "source": "builtin"
+  },
+  {
+    "id": "Talent.Spezialisierung.Zauberwerkstatt",
+    "name": "magic workshop",
+    "german_name": "Zauberwerkstatt",
+    "source": "builtin"
+  },
+  {
+    "id": "Talentgruppe.Gaben",
+    "name": "Gifts",
+    "german_name": "Gaben",
+    "source": "builtin"
+  },
+  {
+    "id": "Talentgruppe.Gesellschaft",
+    "name": "Social Talents",
+    "german_name": "Gesellschaftliche Talente",
+    "source": "builtin"
+  },
+  {
+    "id": "Talentgruppe.Handwerk",
+    "name": "Artisan Talents",
+    "german_name": "Handwerks-Talente",
+    "source": "builtin"
+  },
+  {
+    "id": "Talentgruppe.Koerper",
+    "name": "Physical Talents",
+    "german_name": "Körperliche Talente",
+    "source": "builtin"
+  },
+  {
+    "id": "Talentgruppe.Kampf",
+    "name": "Combat Talents",
+    "german_name": "Kampftechnik-Talente",
+    "source": "builtin"
+  },
+  {
+    "id": "Talentgruppe.Natur",
+    "name": "Nature Talents",
+    "german_name": "Natur-Talente",
+    "source": "builtin"
+  },
+  {
+    "id": "Talentgruppe.Ritualkenntnis",
+    "name": "Ritual Lore",
+    "german_name": "Ritualkenntnis",
+    "source": "builtin"
+  },
+  {
+    "id": "Talentgruppe.Schriften",
+    "name": "Scripts",
+    "german_name": "Schriften",
+    "source": "builtin"
+  },
+  {
+    "id": "Talentgruppe.Sprachen",
+    "name": "Languages",
+    "german_name": "Sprachen",
+    "source": "builtin"
+  },
+  {
+    "id": "Talentgruppe.Wissen",
+    "name": "Lore Talents",
+    "german_name": "Wissens-Talente",
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Dolch",
+    "name": "Dagger",
+    "german_name": "Dolch",
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Drachenzahn",
+    "name": "Dragonstooth",
+    "german_name": "Drachenzahn",
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Jagdmesser",
+    "name": "Hunting knife",
+    "german_name": "Jagdmesser",
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Langdolch",
+    "name": "Long dagger",
+    "german_name": "Langdolch",
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Messer",
+    "name": "Knife",
+    "german_name": "Messer",
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.SchwererDolch",
+    "name": "Heavy dagger",
+    "german_name": "Schwerer Dolch",
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Wurfdolch",
+    "name": "Throwing dagger",
+    "german_name": "Wurfdolch",
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Wurfmesser",
+    "name": "Throwing knife",
+    "german_name": "Wurfmesser",
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Degen",
+    "name": "Eppe",
+    "german_name": "Degen",
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Florett",
+    "name": "Foil",
+    "german_name": "Florett",
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Rapier",
+    "name": "Rapier",
+    "german_name": "Rapier",
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Entermesser",
+    "name": "Cutlass",
+    "german_name": "Entermesser",
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Haumesser",
+    "name": "Machete",
+    "german_name": "Haumesser",
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Khunchomer",
+    "name": "Khunchomer",
+    "german_name": "Khunchomer",
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Saebel",
+    "name": "Saber",
+    "german_name": "Säbel",
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Waqqif",
+    "name": "Waqqif",
+    "german_name": "Waqqif",
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Kurzschwert",
+    "name": "Short sword",
+    "german_name": "Kurzschwert",
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.KuslikerSaebel",
+    "name": "Kuslikian Saber",
+    "german_name": "Kusliker Säbel",
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Schwert",
+    "name": "Sword",
+    "german_name": "Schwert",
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Anderthalbhaender",
+    "name": "Bastard sword",
+    "german_name": "Anderthalbhänder",
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Rondrakamm",
+    "name": "Rondracomb",
+    "german_name": "Rondrakamm",
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Tuzakmesser",
+    "name": "Tuzak knife",
+    "german_name": "Tuzakmesser",
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Andergaster",
+    "name": "Andergaster",
+    "german_name": "Andergaster",
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Boronssichel",
+    "name": "Boronssickle",
+    "german_name": "Boronssichel",
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Doppelkhunchomer",
+    "name": "Double khunchomer",
+    "german_name": "Doppelkhunchomer",
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Zweihaender",
+    "name": "Greatsword",
+    "german_name": "Zweihänder",
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Glefe",
+    "name": "Glaive",
+    "german_name": "Glefe",
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Hakenspiess",
+    "name": "Bill",
+    "german_name": "Hakenspieß",
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Hellebarde",
+    "name": "Halberd",
+    "german_name": "Hellebarde",
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Partisane",
+    "name": "Partisan",
+    "german_name": "Partisane",
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Sense",
+    "name": "Scythe",
+    "german_name": "Sense",
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Sturmsense",
+    "name": "Storm Scythe",
+    "german_name": "Sturmsense",
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Wurmspiess",
+    "name": "Wormspear",
+    "german_name": "Wurmspieß",
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Dreizack",
+    "name": "Trident",
+    "german_name": "Dreizack",
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Dschadra",
+    "name": "Djadra",
+    "german_name": "Dschadra",
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Holzspeer",
+    "name": "Wooden spear",
+    "german_name": "Holzspeer",
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Jagdspiess",
+    "name": "Hunting spear",
+    "german_name": "Jagdspieß",
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Speer",
+    "name": "Spear",
+    "german_name": "Speer",
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Stossspeer",
+    "name": "Greatspear",
+    "german_name": "Stoßspeer",
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Wurfspeer",
+    "name": "Javelin",
+    "german_name": "Wurfspeer",
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Kampfstab",
+    "name": "Quarterstaff",
+    "german_name": "Kampfstab",
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Magierstab",
+    "name": "Magician's staff",
+    "german_name": "Magierstab",
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Zweililien",
+    "name": "Two-lilies",
+    "german_name": "Zweililien",
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Beil",
+    "name": "Cleaver",
+    "german_name": "Beil",
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Brabakbengel",
+    "name": "Brabak lad",
+    "german_name": "Brabakbengel",
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Fackel",
+    "name": "Torch",
+    "german_name": "Fackel",
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Keule",
+    "name": "Club",
+    "german_name": "Keule",
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Knueppel",
+    "name": "Cudgel",
+    "german_name": "Knüppel",
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Lindwurmschlaeger",
+    "name": "Linnorm slayer",
+    "german_name": "Lindwurmschläger",
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Rabenschnabel",
+    "name": "Ravensbeak",
+    "german_name": "Rabenschnabel",
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Sichel",
+    "name": "Sickle",
+    "german_name": "Sichel",
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Skraja",
+    "name": "Skraja",
+    "german_name": "Skraja",
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Streitaxt",
+    "name": "Battle ax",
+    "german_name": "Streitaxt",
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Streitkolben",
+    "name": "Mace",
+    "german_name": "Streitkolben",
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Stuhlbein",
+    "name": "Chair leg",
+    "german_name": "Stuhlbein",
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Wurfbeil",
+    "name": "Throwing ax",
+    "german_name": "Wurfbeil",
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Barbarenstreitaxt",
+    "name": "Barbarian ax",
+    "german_name": "Barbarenstreitaxt",
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Felsspalter",
+    "name": "Rock cleaver",
+    "german_name": "Felsspalter",
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Holzfaelleraxt",
+    "name": "Woodcutter's ax",
+    "german_name": "Holzfälleraxt",
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Kriegshammer",
+    "name": "War hammer",
+    "german_name": "Kriegshammer",
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Orknase",
+    "name": "Orknose",
+    "german_name": "Orknase",
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Spitzhacke",
+    "name": "Pick",
+    "german_name": "Spitzhacke",
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Vorschlaghammer",
+    "name": "Sledge hammer",
+    "german_name": "Vorschlaghammer",
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.WarunkerHammer",
+    "name": "Warunk hammer",
+    "german_name": "Warunker Hammer",
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Zwergenschlaegel",
+    "name": "Dwarfmallet",
+    "german_name": "Zwergenschlägel",
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Morgenstern",
+    "name": "Morning star",
+    "german_name": "Morgenstern",
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Ochsenherde",
+    "name": "Oxherd",
+    "german_name": "Ochsenherde",
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Ogerschelle",
+    "name": "Ogerslap",
+    "german_name": "Ogerschelle",
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Borndorn",
+    "name": "Fountthorn",
+    "german_name": "Borndorn",
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.WurfscheibeRing",
+    "name": "Throwing disk/ring",
+    "german_name": "Wurfscheibe, -ring",
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Schneidzahn",
+    "name": "Foretooth",
+    "german_name": "Schneidzahn",
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Ballaester",
+    "name": "Loadster",
+    "german_name": "Balläster",
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Eisenwalder",
+    "name": "Ironwooder",
+    "german_name": "Eisenwalder",
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.LeichteArmbrust",
+    "name": "Light crossbow",
+    "german_name": "Leichte Armbrust",
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Windenarmbrust",
+    "name": "Heavy crossbow",
+    "german_name": "Windenarmbrust",
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Elfenbogen",
+    "name": "Elven bow",
+    "german_name": "Elfenbogen",
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Kompositbogen",
+    "name": "Composite Bow",
+    "german_name": "Kompositbogen",
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Kriegsbogen",
+    "name": "War bow",
+    "german_name": "Kriegsbogen",
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Kurzbogen",
+    "name": "Short bow",
+    "german_name": "Kurzbogen",
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Langbogen",
+    "name": "Longbow",
+    "german_name": "Langbogen",
+    "source": "builtin"
+  }
+]

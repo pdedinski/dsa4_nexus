@@ -1,0 +1,1324 @@
+[
+  {
+    "id": "Rasse.Elfen",
+    "name": "Elves",
+    "german_name": "Elfen",
+    "gp_cost": 20,
+    "attribute_modifiers": {
+      "ST": -1,
+      "AG": 2,
+      "CL": -1,
+      "IN": 1
+    },
+    "derived_modifiers": {
+      "VP": 6,
+      "EP": 12,
+      "RM": -4
+    },
+    "talent_bonuses": [
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.Koerperbeherrschung"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Schleichen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Singen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 5,
+        "bonuses": [
+          5
+        ],
+        "talents": [
+          "Talent.Sinnenschaerfe"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.Tanzen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": -2,
+        "bonuses": [
+          -2
+        ],
+        "talents": [
+          "Talent.Zechen"
+        ],
+        "open": false
+      }
+    ],
+    "advantage_bonuses": [
+      {
+        "id": "VorNachteil.Altersresistenz",
+        "variant": null,
+        "rating": null,
+        "open": false
+      },
+      {
+        "id": "VorNachteil.Daemmerungssicht",
+        "variant": null,
+        "rating": null,
+        "open": false
+      },
+      {
+        "id": "VorNachteil.GutAussehend",
+        "variant": null,
+        "rating": null,
+        "open": false
+      },
+      {
+        "id": null,
+        "choices": [
+          {
+            "id": "VorNachteil.HerausragendesGehoer",
+            "variant": null,
+            "rating": null
+          },
+          {
+            "id": "VorNachteil.HerausragenderGeruchssinn",
+            "variant": null,
+            "rating": null
+          },
+          {
+            "id": "VorNachteil.HerausragendeSicht",
+            "variant": null,
+            "rating": null
+          }
+        ],
+        "open": true
+      },
+      {
+        "id": "VorNachteil.ResistenzGegenKrankheiten",
+        "variant": null,
+        "rating": null,
+        "open": false
+      },
+      {
+        "id": "VorNachteil.Vollzauberer",
+        "variant": null,
+        "rating": null,
+        "open": false
+      },
+      {
+        "id": "VorNachteil.Wohlklang",
+        "variant": null,
+        "rating": null,
+        "open": false
+      },
+      {
+        "id": "VorNachteil.ZweistimmigerGesang",
+        "variant": null,
+        "rating": null,
+        "open": false
+      }
+    ],
+    "disadvantage_bonuses": [
+      {
+        "id": "VorNachteil.SensiblerGeruchssinn",
+        "variant": null,
+        "rating": 6,
+        "open": false
+      },
+      {
+        "id": "VorNachteil.UnfaehigkeitFuerTalent",
+        "variant": "Talent.Zechen",
+        "rating": null,
+        "open": false
+      }
+    ],
+    "recommended_advantages_disadvantages": [
+      {
+        "id": "VorNachteil.Balance"
+      },
+      {
+        "id": "VorNachteil.Feenfreund"
+      },
+      {
+        "id": "VorNachteil.Flink"
+      },
+      {
+        "id": "VorNachteil.HerausragendeBalance"
+      },
+      {
+        "id": "VorNachteil.HerausragendesAussehen"
+      },
+      {
+        "id": "VorNachteil.Nachtsicht"
+      },
+      {
+        "id": "VorNachteil.Richtungssinn"
+      },
+      {
+        "id": "VorNachteil.Schlangenmensch"
+      },
+      {
+        "id": "VorNachteil.Nahrungsrestriktion"
+      },
+      {
+        "id": "VorNachteil.Raumangst"
+      }
+    ],
+    "unsuitable_advantages_disadvantages": [
+      {
+        "id": "VorNachteil.Hitzeresistenz"
+      },
+      {
+        "id": "VorNachteil.Kampfrausch"
+      },
+      {
+        "id": "VorNachteil.SchwerZuVerzaubern"
+      },
+      {
+        "id": "VorNachteil.Zwergennase"
+      },
+      {
+        "id": "VorNachteil.Blutrausch"
+      },
+      {
+        "id": "VorNachteil.Schwerhoerig"
+      },
+      {
+        "id": "VorNachteil.Kurzsichtig"
+      },
+      {
+        "id": "VorNachteil.EingeschraenkterGeruchssinn"
+      },
+      {
+        "id": "VorNachteil.EingeschraenkterTastsinn"
+      },
+      {
+        "id": "VorNachteil.Farbenblind"
+      },
+      {
+        "id": "VorNachteil.Fettleibig"
+      },
+      {
+        "id": "VorNachteil.Krankheitsanfaellig"
+      },
+      {
+        "id": "VorNachteil.Lichtscheu"
+      },
+      {
+        "id": "VorNachteil.Nachtblind"
+      },
+      {
+        "id": "VorNachteil.UnangenehmeStimme"
+      }
+    ],
+    "source": "builtin",
+    "_file": "Elfen.ras",
+    "allowed_cultures": [
+      "Kultur.Auelfen"
+    ],
+    "age": {
+      "base": 25,
+      "dice": 20
+    },
+    "height": {
+      "base": 168,
+      "w6": 0,
+      "w20": 2
+    },
+    "weight_factor": 120,
+    "hair_colors": [
+      {
+        "from": 1,
+        "to": 1,
+        "result": "blauschwarz"
+      },
+      {
+        "from": 2,
+        "to": 3,
+        "result": "schwarz"
+      },
+      {
+        "from": 4,
+        "to": 5,
+        "result": "silbern"
+      },
+      {
+        "from": 6,
+        "to": 7,
+        "result": "weissblond"
+      },
+      {
+        "from": 8,
+        "to": 11,
+        "result": "hellblond"
+      },
+      {
+        "from": 12,
+        "to": 17,
+        "result": "mittelblond"
+      },
+      {
+        "from": 18,
+        "to": 20,
+        "result": "dunkelblond"
+      }
+    ],
+    "eye_colors": [
+      {
+        "from": 1,
+        "to": 2,
+        "result": "schwarzbraun"
+      },
+      {
+        "from": 3,
+        "to": 4,
+        "result": "graublau"
+      },
+      {
+        "from": 5,
+        "to": 8,
+        "result": "saphirblau"
+      },
+      {
+        "from": 9,
+        "to": 12,
+        "result": "smaragdgruen"
+      },
+      {
+        "from": 13,
+        "to": 16,
+        "result": "dunkelviolett"
+      },
+      {
+        "from": 17,
+        "to": 18,
+        "result": "bernsteinfarben"
+      },
+      {
+        "from": 19,
+        "to": 19,
+        "result": "goldgesprenkelt"
+      },
+      {
+        "from": 20,
+        "to": 20,
+        "result": "Amethyst"
+      }
+    ],
+    "special_ability_bonuses": [],
+    "discounted_special_abilities": []
+  },
+  {
+    "id": "Rasse.Halbelfen",
+    "name": "Half-Elves",
+    "german_name": "Halbelfen",
+    "gp_cost": 3,
+    "attribute_modifiers": {
+      "ST": -1,
+      "AG": 1
+    },
+    "derived_modifiers": {
+      "VP": 8,
+      "EP": 10,
+      "RM": -4
+    },
+    "talent_bonuses": [
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Koerperbeherrschung"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.Schleichen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.Singen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Sinnenschaerfe"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.Tanzen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": -1,
+        "bonuses": [
+          -1
+        ],
+        "talents": [
+          "Talent.Zechen"
+        ],
+        "open": false
+      }
+    ],
+    "advantage_bonuses": [
+      {
+        "id": "VorNachteil.GutAussehend",
+        "variant": null,
+        "rating": null,
+        "open": false
+      },
+      {
+        "id": "VorNachteil.Viertelzauberer",
+        "variant": null,
+        "rating": null,
+        "open": false
+      }
+    ],
+    "disadvantage_bonuses": [],
+    "recommended_advantages_disadvantages": [
+      {
+        "id": "VorNachteil.Balance"
+      },
+      {
+        "id": "VorNachteil.Daemmerungssicht"
+      },
+      {
+        "id": "VorNachteil.Feenfreund"
+      },
+      {
+        "id": "VorNachteil.Flink"
+      },
+      {
+        "id": "VorNachteil.HerausragendeSicht"
+      },
+      {
+        "id": "VorNachteil.HerausragenderGeruchssinn"
+      },
+      {
+        "id": "VorNachteil.HerausragenderTastsinn"
+      },
+      {
+        "id": "VorNachteil.HerausragendesGehoer"
+      },
+      {
+        "id": "VorNachteil.HerausragendesAussehen"
+      },
+      {
+        "id": "VorNachteil.Magiegespuer"
+      },
+      {
+        "id": "VorNachteil.Schlangenmensch"
+      },
+      {
+        "id": "VorNachteil.Wohlklang"
+      },
+      {
+        "id": "VorNachteil.ZweistimmigerGesang"
+      },
+      {
+        "id": "VorNachteil.Nahrungsrestriktion"
+      },
+      {
+        "id": "VorNachteil.SensiblerGeruchssinn"
+      }
+    ],
+    "unsuitable_advantages_disadvantages": [
+      {
+        "id": "VorNachteil.Kampfrausch"
+      },
+      {
+        "id": "VorNachteil.Zwergennase"
+      },
+      {
+        "id": "VorNachteil.Blutrausch"
+      },
+      {
+        "id": "VorNachteil.Fettleibig"
+      },
+      {
+        "id": "VorNachteil.Krankheitsanfaellig"
+      },
+      {
+        "id": "VorNachteil.Lichtscheu"
+      },
+      {
+        "id": "VorNachteil.Nachtblind"
+      },
+      {
+        "id": "VorNachteil.SchwerZuVerzaubern"
+      },
+      {
+        "id": "VorNachteil.UnangenehmeStimme"
+      }
+    ],
+    "source": "builtin",
+    "_file": "Halbelfen.ras",
+    "allowed_cultures": [
+      "Kultur.AuelfenHalbelf",
+      "Kultur.AndergastNostria",
+      "Kultur.Bornland",
+      "Kultur.MittellaendischeStaedte",
+      "Kultur.Horasreich"
+    ],
+    "age": {
+      "base": 15,
+      "dice": 3
+    },
+    "height": {
+      "base": 168,
+      "w6": 4,
+      "w20": 1
+    },
+    "weight_factor": 120,
+    "hair_colors": [
+      {
+        "from": 1,
+        "to": 3,
+        "result": "rot"
+      },
+      {
+        "from": 4,
+        "to": 6,
+        "result": "braun"
+      },
+      {
+        "from": 7,
+        "to": 10,
+        "result": "dunkelblond"
+      },
+      {
+        "from": 11,
+        "to": 15,
+        "result": "hellblond"
+      },
+      {
+        "from": 16,
+        "to": 17,
+        "result": "weissblond"
+      },
+      {
+        "from": 18,
+        "to": 19,
+        "result": "schwarz"
+      },
+      {
+        "from": 20,
+        "to": 20,
+        "result": "blauschwarz"
+      }
+    ],
+    "eye_colors": [
+      {
+        "from": 1,
+        "to": 3,
+        "result": "schwarz"
+      },
+      {
+        "from": 4,
+        "to": 6,
+        "result": "grau"
+      },
+      {
+        "from": 7,
+        "to": 10,
+        "result": "blau"
+      },
+      {
+        "from": 11,
+        "to": 14,
+        "result": "gruen"
+      },
+      {
+        "from": 15,
+        "to": 16,
+        "result": "dunkelbraun"
+      },
+      {
+        "from": 17,
+        "to": 18,
+        "result": "hellbraun"
+      },
+      {
+        "from": 19,
+        "to": 19,
+        "result": "bernsteinfarben"
+      },
+      {
+        "from": 20,
+        "to": 20,
+        "result": "goldgesprenkelt"
+      }
+    ],
+    "special_ability_bonuses": [],
+    "discounted_special_abilities": []
+  },
+  {
+    "id": "Rasse.Mittellaender",
+    "name": "Middenrealmians",
+    "german_name": "Mittelländer",
+    "gp_cost": 0,
+    "attribute_modifiers": {},
+    "derived_modifiers": {
+      "VP": 10,
+      "EP": 10,
+      "RM": -4
+    },
+    "talent_bonuses": [],
+    "advantage_bonuses": [],
+    "disadvantage_bonuses": [],
+    "recommended_advantages_disadvantages": [],
+    "unsuitable_advantages_disadvantages": [
+      {
+        "id": "VorNachteil.HerausragendeBalance"
+      },
+      {
+        "id": "VorNachteil.Nahrungsrestriktion"
+      }
+    ],
+    "source": "builtin",
+    "_file": "Mittellaender.ras",
+    "allowed_cultures": [
+      "Kultur.MittellaendischeStaedte",
+      "Kultur.AndergastNostria",
+      "Kultur.Bornland",
+      "Kultur.Horasreich",
+      "Kultur.Suedaventurien"
+    ],
+    "age": {
+      "base": 15,
+      "dice": 3
+    },
+    "height": {
+      "base": 160,
+      "w6": 0,
+      "w20": 2
+    },
+    "weight_factor": 100,
+    "hair_colors": [
+      {
+        "from": 1,
+        "to": 3,
+        "result": "schwarz"
+      },
+      {
+        "from": 4,
+        "to": 7,
+        "result": "braun"
+      },
+      {
+        "from": 8,
+        "to": 12,
+        "result": "dunkelblond"
+      },
+      {
+        "from": 13,
+        "to": 16,
+        "result": "blond"
+      },
+      {
+        "from": 17,
+        "to": 18,
+        "result": "weissblond"
+      },
+      {
+        "from": 19,
+        "to": 20,
+        "result": "rot"
+      }
+    ],
+    "eye_colors": [
+      {
+        "from": 1,
+        "to": 2,
+        "result": "dunkelbraun"
+      },
+      {
+        "from": 3,
+        "to": 9,
+        "result": "braun"
+      },
+      {
+        "from": 10,
+        "to": 11,
+        "result": "gruen"
+      },
+      {
+        "from": 12,
+        "to": 17,
+        "result": "blau"
+      },
+      {
+        "from": 18,
+        "to": 19,
+        "result": "grau"
+      },
+      {
+        "from": 20,
+        "to": 20,
+        "result": "schwarz"
+      }
+    ],
+    "special_ability_bonuses": [],
+    "discounted_special_abilities": []
+  },
+  {
+    "id": "Rasse.Thorwaler",
+    "name": "Thorwalians",
+    "german_name": "Thorwaler",
+    "gp_cost": 5,
+    "attribute_modifiers": {
+      "CO": 1,
+      "CN": 1,
+      "ST": 1
+    },
+    "derived_modifiers": {
+      "VP": 11,
+      "EP": 10,
+      "RM": -5
+    },
+    "talent_bonuses": [
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.Athletik"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.Sinnenschaerfe"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.Zechen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.Wettervorhersage"
+        ],
+        "open": false
+      }
+    ],
+    "advantage_bonuses": [],
+    "disadvantage_bonuses": [],
+    "recommended_advantages_disadvantages": [],
+    "unsuitable_advantages_disadvantages": [
+      {
+        "id": "VorNachteil.HerausragendeBalance"
+      },
+      {
+        "id": "VorNachteil.Glasknochen"
+      },
+      {
+        "id": "VorNachteil.Nahrungsrestriktion"
+      }
+    ],
+    "source": "builtin",
+    "_file": "Thorwaler.ras",
+    "allowed_cultures": [
+      "Kultur.Thorwal",
+      "Kultur.MittellaendischeStaedte",
+      "Kultur.AndergastNostria",
+      "Kultur.Suedaventurien"
+    ],
+    "age": {
+      "base": 15,
+      "dice": 3
+    },
+    "height": {
+      "base": 168,
+      "w6": 0,
+      "w20": 2
+    },
+    "weight_factor": 95,
+    "hair_colors": [
+      {
+        "from": 1,
+        "to": 8,
+        "result": "blond"
+      },
+      {
+        "from": 9,
+        "to": 13,
+        "result": "rotblond"
+      },
+      {
+        "from": 14,
+        "to": 15,
+        "result": "weissblond"
+      },
+      {
+        "from": 16,
+        "to": 17,
+        "result": "rot"
+      },
+      {
+        "from": 18,
+        "to": 18,
+        "result": "dunkelblond"
+      },
+      {
+        "from": 19,
+        "to": 19,
+        "result": "braun"
+      },
+      {
+        "from": 20,
+        "to": 20,
+        "result": "schwarz"
+      }
+    ],
+    "eye_colors": [
+      {
+        "from": 1,
+        "to": 2,
+        "result": "dunkelbraun"
+      },
+      {
+        "from": 3,
+        "to": 7,
+        "result": "braun"
+      },
+      {
+        "from": 8,
+        "to": 11,
+        "result": "gruen"
+      },
+      {
+        "from": 12,
+        "to": 18,
+        "result": "blau"
+      },
+      {
+        "from": 19,
+        "to": 20,
+        "result": "grau"
+      }
+    ],
+    "special_ability_bonuses": [],
+    "discounted_special_abilities": []
+  },
+  {
+    "id": "Rasse.Tulamiden",
+    "name": "Tulamides",
+    "german_name": "Tulamiden",
+    "gp_cost": 0,
+    "attribute_modifiers": {},
+    "derived_modifiers": {
+      "VP": 10,
+      "EP": 10,
+      "RM": -4
+    },
+    "talent_bonuses": [],
+    "advantage_bonuses": [],
+    "disadvantage_bonuses": [],
+    "recommended_advantages_disadvantages": [],
+    "unsuitable_advantages_disadvantages": [
+      {
+        "id": "VorNachteil.HerausragendeBalance"
+      },
+      {
+        "id": "VorNachteil.Nahrungsrestriktion"
+      }
+    ],
+    "source": "builtin",
+    "_file": "Tulamiden.ras",
+    "allowed_cultures": [
+      "Kultur.TulamidischeStadtstaaten",
+      "Kultur.Novadis.Maenner",
+      "Kultur.Novadis.Frauen",
+      "Kultur.Suedaventurien"
+    ],
+    "age": {
+      "base": 15,
+      "dice": 3
+    },
+    "height": {
+      "base": 155,
+      "w6": 0,
+      "w20": 2
+    },
+    "weight_factor": 105,
+    "hair_colors": [
+      {
+        "from": 1,
+        "to": 6,
+        "result": "schwarz"
+      },
+      {
+        "from": 7,
+        "to": 12,
+        "result": "dunkelbraun"
+      },
+      {
+        "from": 13,
+        "to": 14,
+        "result": "mittelbraun"
+      },
+      {
+        "from": 15,
+        "to": 17,
+        "result": "hellbraun"
+      },
+      {
+        "from": 18,
+        "to": 19,
+        "result": "blond"
+      },
+      {
+        "from": 20,
+        "to": 20,
+        "result": "rot"
+      }
+    ],
+    "eye_colors": [
+      {
+        "from": 1,
+        "to": 4,
+        "result": "schwarz"
+      },
+      {
+        "from": 5,
+        "to": 12,
+        "result": "dunkelbraun"
+      },
+      {
+        "from": 13,
+        "to": 16,
+        "result": "braun"
+      },
+      {
+        "from": 17,
+        "to": 18,
+        "result": "grau"
+      },
+      {
+        "from": 19,
+        "to": 19,
+        "result": "gruen"
+      },
+      {
+        "from": 20,
+        "to": 20,
+        "result": "blau"
+      }
+    ],
+    "special_ability_bonuses": [],
+    "discounted_special_abilities": []
+  },
+  {
+    "id": "Rasse.Zwerge",
+    "name": "Dwarfs",
+    "german_name": "Zwerge",
+    "gp_cost": 16,
+    "attribute_modifiers": {
+      "DE": 1,
+      "AG": -1,
+      "CN": 2,
+      "ST": 2
+    },
+    "derived_modifiers": {
+      "VP": 12,
+      "EP": 18,
+      "RM": -4
+    },
+    "talent_bonuses": [
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.Ringen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": -3,
+        "bonuses": [
+          -3
+        ],
+        "talents": [
+          "Talent.Akrobatik"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": -1,
+        "bonuses": [
+          -1
+        ],
+        "talents": [
+          "Talent.Reiten"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": -3,
+        "bonuses": [
+          -3
+        ],
+        "talents": [
+          "Talent.Schwimmen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Selbstbeherrschung"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.Zechen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.Orientierung"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.Gesteinskunde"
+        ],
+        "open": false
+      }
+    ],
+    "advantage_bonuses": [
+      {
+        "id": "VorNachteil.Daemmerungssicht",
+        "variant": null,
+        "rating": null,
+        "open": false
+      },
+      {
+        "id": "VorNachteil.ResistenzGegenGiftart",
+        "variant": "Giftart.mineralisch",
+        "rating": null,
+        "open": false
+      },
+      {
+        "id": "VorNachteil.ResistenzGegenKrankheiten",
+        "variant": null,
+        "rating": null,
+        "open": false
+      },
+      {
+        "id": "VorNachteil.SchwerZuVerzaubern",
+        "variant": null,
+        "rating": null,
+        "open": false
+      }
+    ],
+    "disadvantage_bonuses": [
+      {
+        "id": "VorNachteil.Goldgier",
+        "variant": null,
+        "rating": 5,
+        "open": false
+      },
+      {
+        "id": "VorNachteil.UnfaehigkeitFuerTalent",
+        "variant": "Talent.Schwimmen",
+        "rating": null,
+        "open": false
+      },
+      {
+        "id": "VorNachteil.Zwergenwuchs",
+        "variant": null,
+        "rating": null,
+        "open": false
+      }
+    ],
+    "recommended_advantages_disadvantages": [
+      {
+        "id": "VorNachteil.Ausdauernd"
+      },
+      {
+        "id": "VorNachteil.Eisern"
+      },
+      {
+        "id": "VorNachteil.GutesGedaechtnis"
+      },
+      {
+        "id": "VorNachteil.Hitzeresistenz"
+      },
+      {
+        "id": "VorNachteil.HoheLebenskraft"
+      },
+      {
+        "id": "VorNachteil.HoheMagieresistenz"
+      },
+      {
+        "id": "VorNachteil.Kampfrausch"
+      },
+      {
+        "id": "VorNachteil.Richtungssinn"
+      },
+      {
+        "id": "VorNachteil.ZaeherHund"
+      },
+      {
+        "id": "VorNachteil.Zwergennase"
+      },
+      {
+        "id": "VorNachteil.Blutrausch"
+      },
+      {
+        "id": "VorNachteil.Jaehzorn"
+      },
+      {
+        "id": "VorNachteil.Lichtscheu"
+      },
+      {
+        "id": "VorNachteil.Platzangst"
+      },
+      {
+        "id": "VorNachteil.Unansehnlich"
+      }
+    ],
+    "unsuitable_advantages_disadvantages": [
+      {
+        "id": "VorNachteil.Feenfreund"
+      },
+      {
+        "id": "VorNachteil.Flink"
+      },
+      {
+        "id": "VorNachteil.HerausragendeBalance"
+      },
+      {
+        "id": "VorNachteil.HerausragendesAussehen"
+      },
+      {
+        "id": "VorNachteil.Koboldfreund"
+      },
+      {
+        "id": "VorNachteil.Magiegespuer"
+      },
+      {
+        "id": "VorNachteil.Schlangenmensch"
+      },
+      {
+        "id": "VorNachteil.Wohlklang"
+      },
+      {
+        "id": "VorNachteil.Dunkelangst"
+      },
+      {
+        "id": "VorNachteil.Glasknochen"
+      },
+      {
+        "id": "VorNachteil.Krankheitsanfaellig"
+      },
+      {
+        "id": "VorNachteil.Nachtblind"
+      },
+      {
+        "id": "VorNachteil.Raumangst"
+      }
+    ],
+    "source": "builtin",
+    "_file": "Zwerge.ras",
+    "allowed_cultures": [
+      "Kultur.Ambosszwerge"
+    ],
+    "age": {
+      "base": 35,
+      "dice": 6
+    },
+    "height": {
+      "base": 128,
+      "w6": 2,
+      "w20": 0
+    },
+    "weight_factor": 80,
+    "hair_colors": [
+      {
+        "from": 1,
+        "to": 5,
+        "result": "blond"
+      },
+      {
+        "from": 6,
+        "to": 9,
+        "result": "schwarz"
+      },
+      {
+        "from": 10,
+        "to": 11,
+        "result": "dunkelgrau"
+      },
+      {
+        "from": 12,
+        "to": 13,
+        "result": "hellgrau"
+      },
+      {
+        "from": 14,
+        "to": 14,
+        "result": "salzweiss"
+      },
+      {
+        "from": 15,
+        "to": 15,
+        "result": "silberweiss"
+      },
+      {
+        "from": 16,
+        "to": 17,
+        "result": "feuerrot"
+      },
+      {
+        "from": 18,
+        "to": 20,
+        "result": "kupferrot"
+      }
+    ],
+    "eye_colors": [
+      {
+        "from": 1,
+        "to": 2,
+        "result": "dunkelbraun"
+      },
+      {
+        "from": 3,
+        "to": 5,
+        "result": "braun"
+      },
+      {
+        "from": 6,
+        "to": 9,
+        "result": "gruen"
+      },
+      {
+        "from": 10,
+        "to": 10,
+        "result": "blau"
+      },
+      {
+        "from": 11,
+        "to": 14,
+        "result": "grau"
+      },
+      {
+        "from": 15,
+        "to": 20,
+        "result": "schwarz"
+      }
+    ],
+    "special_ability_bonuses": [],
+    "discounted_special_abilities": []
+  }
+]

@@ -1,0 +1,52 @@
+[
+  {
+    "id": "Sprachfamilie.Garethi",
+    "name": "Garethi",
+    "german_name": "Garethi"
+  },
+  {
+    "id": "Sprachfamilie.Tulamidya",
+    "name": "Tulamidya",
+    "german_name": "Tulamidya"
+  },
+  {
+    "id": "Sprachfamilie.Nujuka",
+    "name": "Nujuka",
+    "german_name": "Nujuka"
+  },
+  {
+    "id": "Sprachfamilie.Thorwalsch",
+    "name": "Thorwalsch",
+    "german_name": "Thorwalsch"
+  },
+  {
+    "id": "Sprachfamilie.Zwergisch",
+    "name": "Zwergisch",
+    "german_name": "Zwergisch"
+  },
+  {
+    "id": "Sprachfamilie.Elfisch",
+    "name": "Elfisch",
+    "german_name": "Elfisch"
+  },
+  {
+    "id": "Sprachfamilie.Orkisch",
+    "name": "Orkisch",
+    "german_name": "Orkisch"
+  },
+  {
+    "id": "Sprachfamilie.Goblinisch",
+    "name": "Goblinisch",
+    "german_name": "Goblinisch"
+  },
+  {
+    "id": "Sprachfamilie.Achaz",
+    "name": "Achaz",
+    "german_name": "Achaz"
+  },
+  {
+    "id": "Sprachfamilie.Fuechsisch",
+    "name": "Fuechsisch",
+    "german_name": "Fuechsisch"
+  }
+]

@@ -28,6 +28,8 @@ import {
   Flag,
   Beaker,
   Wrench,
+  UserPlus,
+  Database,
 } from "lucide-react";
 import clsx from "clsx";
 import { signOut } from "next-auth/react";
@@ -358,6 +360,20 @@ export default function Sidebar({
                 <Sword className="w-3.5 h-3.5 shrink-0" />
                 Combat Tracker
               </Link>
+              <Link
+                href="/tools/player-character-generator"
+                onClick={() => onNavigate?.()}
+                className={clsx(
+                  "flex items-center gap-2 px-2 py-1.5 rounded-md text-sm transition-colors",
+                  pathname === "/tools/player-character-generator" ||
+                    pathname.startsWith("/tools/player-character-generator/")
+                    ? "bg-brand-muted text-ink font-medium"
+                    : "text-ink-muted hover:text-ink hover:bg-surface-card"
+                )}
+              >
+                <UserPlus className="w-3.5 h-3.5 shrink-0" />
+                Player Character Generator
+              </Link>
             </div>
           )}
         </div>
@@ -407,6 +423,20 @@ export default function Sidebar({
                 >
                   <Sliders className="w-3.5 h-3.5 shrink-0" />
                   AP Spending Profiles
+                </Link>
+                <Link
+                  href="/manage/chargen-data"
+                  onClick={() => onNavigate?.()}
+                  className={clsx(
+                    "flex items-center gap-2 px-2 py-1.5 rounded-md text-sm transition-colors",
+                    pathname === "/manage/chargen-data" ||
+                      pathname.startsWith("/manage/chargen-data/")
+                      ? "bg-brand-muted text-ink font-medium"
+                      : "text-ink-muted hover:text-ink hover:bg-surface-card"
+                  )}
+                >
+                  <Database className="w-3.5 h-3.5 shrink-0" />
+                  Chargen Data
                 </Link>
                 <Link
                   href="/manage/users"

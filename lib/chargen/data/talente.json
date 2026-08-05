@@ -1,0 +1,3023 @@
+[
+  {
+    "id": "Talent.Anderthalbhaender",
+    "name": "Bastard Sword",
+    "german_name": "Anderthalbhänder",
+    "group": "combat",
+    "group_raw": "KAMPF",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "combat": true,
+    "ranged": false,
+    "specializations": [
+      "Waffe.Anderthalbhaender",
+      "Waffe.Rondrakamm",
+      "Waffe.Tuzakmesser"
+    ],
+    "skt_column": 5,
+    "test_attributes": [
+      "Eigenschaft.GE",
+      "Eigenschaft.GE",
+      "Eigenschaft.KK"
+    ],
+    "prerequisites": [
+      "KAMPFTECHNIK"
+    ]
+  },
+  {
+    "id": "Talent.Armbrust",
+    "name": "Crossbow",
+    "german_name": "Armbrust",
+    "group": "combat",
+    "group_raw": "KAMPF",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "combat": true,
+    "ranged": true,
+    "specializations": [
+      "Waffe.Ballaester",
+      "Waffe.Eisenwalder",
+      "Waffe.LeichteArmbrust",
+      "Waffe.Windenarmbrust"
+    ],
+    "skt_column": 3,
+    "test_attributes": [
+      "Eigenschaft.GE",
+      "Eigenschaft.FF",
+      "Eigenschaft.KK"
+    ]
+  },
+  {
+    "id": "Talent.Bogen",
+    "name": "Bow",
+    "german_name": "Bogen",
+    "group": "combat",
+    "group_raw": "KAMPF",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "combat": true,
+    "ranged": true,
+    "specializations": [
+      "Waffe.Elfenbogen",
+      "Waffe.Kompositbogen",
+      "Waffe.Kriegsbogen",
+      "Waffe.Kurzbogen",
+      "Waffe.Langbogen"
+    ],
+    "skt_column": 5,
+    "test_attributes": [
+      "Eigenschaft.GE",
+      "Eigenschaft.FF",
+      "Eigenschaft.KK"
+    ],
+    "prerequisites": [
+      "NICHT_EINARMIG"
+    ]
+  },
+  {
+    "id": "Talent.Dolche",
+    "name": "Daggers",
+    "german_name": "Dolche",
+    "group": "combat",
+    "group_raw": "KAMPF",
+    "type": "basis",
+    "is_basic": true,
+    "source": "builtin",
+    "combat": true,
+    "ranged": false,
+    "specializations": [
+      "Waffe.Dolch",
+      "Waffe.Drachenzahn",
+      "Waffe.Jagdmesser",
+      "Waffe.Langdolch",
+      "Waffe.Messer",
+      "Waffe.SchwererDolch",
+      "Waffe.Wurfdolch",
+      "Waffe.Wurfmesser"
+    ],
+    "skt_column": 4,
+    "test_attributes": [
+      "Eigenschaft.GE",
+      "Eigenschaft.GE",
+      "Eigenschaft.KK"
+    ],
+    "prerequisites": [
+      "KAMPFTECHNIK"
+    ]
+  },
+  {
+    "id": "Talent.Fechtwaffen",
+    "name": "Fencing Weapons",
+    "german_name": "Fechtwaffen",
+    "group": "combat",
+    "group_raw": "KAMPF",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "combat": true,
+    "ranged": false,
+    "specializations": [
+      "Waffe.Degen",
+      "Waffe.Florett",
+      "Waffe.Rapier"
+    ],
+    "skt_column": 5,
+    "test_attributes": [
+      "Eigenschaft.GE",
+      "Eigenschaft.GE",
+      "Eigenschaft.KK"
+    ],
+    "prerequisites": [
+      "KAMPFTECHNIK"
+    ]
+  },
+  {
+    "id": "Talent.Hiebwaffen",
+    "name": "Axes and Maces",
+    "german_name": "Hiebwaffen",
+    "group": "combat",
+    "group_raw": "KAMPF",
+    "type": "basis",
+    "is_basic": true,
+    "source": "builtin",
+    "combat": true,
+    "ranged": false,
+    "specializations": [
+      "Waffe.Beil",
+      "Waffe.Brabakbengel",
+      "Waffe.Fackel",
+      "Waffe.Keule",
+      "Waffe.Knueppel",
+      "Waffe.Lindwurmschlaeger",
+      "Waffe.Rabenschnabel",
+      "Waffe.Sichel",
+      "Waffe.Skraja",
+      "Waffe.Streitaxt",
+      "Waffe.Streitkolben",
+      "Waffe.Stuhlbein",
+      "Waffe.Wurfbeil"
+    ],
+    "skt_column": 4,
+    "test_attributes": [
+      "Eigenschaft.GE",
+      "Eigenschaft.GE",
+      "Eigenschaft.KK"
+    ],
+    "prerequisites": [
+      "KAMPFTECHNIK"
+    ]
+  },
+  {
+    "id": "Talent.Infanteriewaffen",
+    "name": "Infantry Weapons",
+    "german_name": "Infanteriewaffen",
+    "group": "combat",
+    "group_raw": "KAMPF",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "combat": true,
+    "ranged": false,
+    "specializations": [
+      "Waffe.Glefe",
+      "Waffe.Hakenspiess",
+      "Waffe.Hellebarde",
+      "Waffe.Partisane",
+      "Waffe.Sense",
+      "Waffe.Sturmsense",
+      "Waffe.Wurmspiess"
+    ],
+    "skt_column": 4,
+    "test_attributes": [
+      "Eigenschaft.GE",
+      "Eigenschaft.GE",
+      "Eigenschaft.KK"
+    ],
+    "prerequisites": [
+      "KAMPFTECHNIK"
+    ]
+  },
+  {
+    "id": "Talent.Kettenwaffen",
+    "name": "Chain Weapons",
+    "german_name": "Kettenwaffen",
+    "group": "combat",
+    "group_raw": "KAMPF",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "combat": true,
+    "ranged": false,
+    "specializations": [
+      "Waffe.Morgenstern",
+      "Waffe.Ochsenherde",
+      "Waffe.Ogerschelle"
+    ],
+    "skt_column": 4,
+    "test_attributes": [
+      "Eigenschaft.GE",
+      "Eigenschaft.GE",
+      "Eigenschaft.KK"
+    ],
+    "prerequisites": [
+      "KAMPFTECHNIK"
+    ]
+  },
+  {
+    "id": "Talent.Lanzenreiten",
+    "name": "Jousting",
+    "german_name": "Lanzenreiten",
+    "group": "combat",
+    "group_raw": "KAMPF",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "combat": true,
+    "ranged": false,
+    "skt_column": 5,
+    "test_attributes": [
+      "Eigenschaft.GE",
+      "Eigenschaft.GE",
+      "Eigenschaft.KK"
+    ]
+  },
+  {
+    "id": "Talent.Raufen",
+    "name": "Brawling",
+    "german_name": "Raufen",
+    "group": "combat",
+    "group_raw": "KAMPF",
+    "type": "basis",
+    "is_basic": true,
+    "source": "builtin",
+    "combat": true,
+    "ranged": false,
+    "skt_column": 3,
+    "test_attributes": [
+      "Eigenschaft.GE",
+      "Eigenschaft.GE",
+      "Eigenschaft.KK"
+    ],
+    "prerequisites": [
+      "KAMPFTECHNIK"
+    ]
+  },
+  {
+    "id": "Talent.Ringen",
+    "name": "Wrestling",
+    "german_name": "Ringen",
+    "group": "combat",
+    "group_raw": "KAMPF",
+    "type": "basis",
+    "is_basic": true,
+    "source": "builtin",
+    "combat": true,
+    "ranged": false,
+    "skt_column": 4,
+    "test_attributes": [
+      "Eigenschaft.GE",
+      "Eigenschaft.GE",
+      "Eigenschaft.KK"
+    ],
+    "prerequisites": [
+      "KAMPFTECHNIK"
+    ]
+  },
+  {
+    "id": "Talent.Saebel",
+    "name": "Sabers",
+    "german_name": "Säbel",
+    "group": "combat",
+    "group_raw": "KAMPF",
+    "type": "basis",
+    "is_basic": true,
+    "source": "builtin",
+    "combat": true,
+    "ranged": false,
+    "specializations": [
+      "Waffe.Entermesser",
+      "Waffe.Haumesser",
+      "Waffe.Khunchomer",
+      "Waffe.Saebel",
+      "Waffe.Waqqif"
+    ],
+    "skt_column": 4,
+    "test_attributes": [
+      "Eigenschaft.GE",
+      "Eigenschaft.GE",
+      "Eigenschaft.KK"
+    ],
+    "prerequisites": [
+      "KAMPFTECHNIK"
+    ]
+  },
+  {
+    "id": "Talent.Schwerter",
+    "name": "Swords",
+    "german_name": "Schwerter",
+    "group": "combat",
+    "group_raw": "KAMPF",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "combat": true,
+    "ranged": false,
+    "specializations": [
+      "Waffe.Kurzschwert",
+      "Waffe.KuslikerSaebel",
+      "Waffe.Schwert"
+    ],
+    "skt_column": 5,
+    "test_attributes": [
+      "Eigenschaft.GE",
+      "Eigenschaft.GE",
+      "Eigenschaft.KK"
+    ],
+    "prerequisites": [
+      "KAMPFTECHNIK"
+    ]
+  },
+  {
+    "id": "Talent.Speere",
+    "name": "Spears",
+    "german_name": "Speere",
+    "group": "combat",
+    "group_raw": "KAMPF",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "combat": true,
+    "ranged": false,
+    "specializations": [
+      "Waffe.Dreizack",
+      "Waffe.Dschadra",
+      "Waffe.Holzspeer",
+      "Waffe.Jagdspiess",
+      "Waffe.Speer",
+      "Waffe.Stossspeer",
+      "Waffe.Wurfspeer"
+    ],
+    "skt_column": 4,
+    "test_attributes": [
+      "Eigenschaft.GE",
+      "Eigenschaft.GE",
+      "Eigenschaft.KK"
+    ],
+    "prerequisites": [
+      "KAMPFTECHNIK"
+    ]
+  },
+  {
+    "id": "Talent.Staebe",
+    "name": "Staves",
+    "german_name": "Stäbe",
+    "group": "combat",
+    "group_raw": "KAMPF",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "combat": true,
+    "ranged": false,
+    "specializations": [
+      "Waffe.Kampfstab",
+      "Waffe.Magierstab",
+      "Waffe.Zweililien"
+    ],
+    "skt_column": 4,
+    "test_attributes": [
+      "Eigenschaft.GE",
+      "Eigenschaft.GE",
+      "Eigenschaft.KK"
+    ],
+    "prerequisites": [
+      "KAMPFTECHNIK"
+    ]
+  },
+  {
+    "id": "Talent.Wurfbeile",
+    "name": "Throwing Axes",
+    "german_name": "Wurfbeile",
+    "group": "combat",
+    "group_raw": "KAMPF",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "combat": true,
+    "ranged": true,
+    "specializations": [
+      "Waffe.Schneidzahn",
+      "Waffe.Wurfbeil"
+    ],
+    "skt_column": 3,
+    "test_attributes": [
+      "Eigenschaft.GE",
+      "Eigenschaft.FF",
+      "Eigenschaft.KK"
+    ]
+  },
+  {
+    "id": "Talent.Wurfmesser",
+    "name": "Throwing Knives",
+    "german_name": "Wurfmesser",
+    "group": "combat",
+    "group_raw": "KAMPF",
+    "type": "basis",
+    "is_basic": true,
+    "source": "builtin",
+    "combat": true,
+    "ranged": true,
+    "specializations": [
+      "Waffe.Borndorn",
+      "Waffe.Dolch",
+      "Waffe.Wurfdolch",
+      "Waffe.Wurfmesser",
+      "Waffe.WurfscheibeRing"
+    ],
+    "skt_column": 3,
+    "test_attributes": [
+      "Eigenschaft.GE",
+      "Eigenschaft.FF",
+      "Eigenschaft.KK"
+    ]
+  },
+  {
+    "id": "Talent.Wurfspeere",
+    "name": "Javelins",
+    "german_name": "Wurfspeere",
+    "group": "combat",
+    "group_raw": "KAMPF",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "combat": true,
+    "ranged": true,
+    "specializations": [
+      "Waffe.Holzspeer",
+      "Waffe.Speer",
+      "Waffe.Wurfspeer",
+      "Waffe.Dschadra"
+    ],
+    "skt_column": 3,
+    "test_attributes": [
+      "Eigenschaft.GE",
+      "Eigenschaft.FF",
+      "Eigenschaft.KK"
+    ]
+  },
+  {
+    "id": "Talent.ZweihandHiebwaffen",
+    "name": "Two-Handed Blunt Weapons",
+    "german_name": "Zweihand-Hiebwaffen",
+    "group": "combat",
+    "group_raw": "KAMPF",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "combat": true,
+    "ranged": false,
+    "specializations": [
+      "Waffe.Barbarenstreitaxt",
+      "Waffe.Felsspalter",
+      "Waffe.Holzfaelleraxt",
+      "Waffe.Kriegshammer",
+      "Waffe.Orknase",
+      "Waffe.Spitzhacke",
+      "Waffe.Vorschlaghammer",
+      "Waffe.WarunkerHammer",
+      "Waffe.Zwergenschlaegel"
+    ],
+    "skt_column": 4,
+    "test_attributes": [
+      "Eigenschaft.GE",
+      "Eigenschaft.GE",
+      "Eigenschaft.KK"
+    ],
+    "prerequisites": [
+      "NICHT_EINARMIG",
+      "KAMPFTECHNIK"
+    ]
+  },
+  {
+    "id": "Talent.Zweihandschwerter",
+    "name": "Two-Handed Swords",
+    "german_name": "Zweihandschwerter und -säbel",
+    "group": "combat",
+    "group_raw": "KAMPF",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "combat": true,
+    "ranged": false,
+    "specializations": [
+      "Waffe.Andergaster",
+      "Waffe.Boronssichel",
+      "Waffe.Doppelkhunchomer",
+      "Waffe.Rondrakamm",
+      "Waffe.Zweihaender"
+    ],
+    "skt_column": 5,
+    "test_attributes": [
+      "Eigenschaft.GE",
+      "Eigenschaft.GE",
+      "Eigenschaft.KK"
+    ],
+    "prerequisites": [
+      "NICHT_EINARMIG",
+      "KAMPFTECHNIK"
+    ]
+  },
+  {
+    "id": "Talent.Alaani",
+    "name": "Alaani",
+    "german_name": "Alaani",
+    "group": "languages",
+    "group_raw": "SPRACHEN",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "language": true,
+    "skt_column": 1,
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.IN",
+      "Eigenschaft.CH"
+    ],
+    "complexity": 21
+  },
+  {
+    "id": "Talent.Asdharia",
+    "name": "Asdharia",
+    "german_name": "Asdharia",
+    "group": "languages",
+    "group_raw": "SPRACHEN",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "language": true,
+    "skt_column": 2,
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.IN",
+      "Eigenschaft.CH"
+    ],
+    "complexity": 24
+  },
+  {
+    "id": "Talent.Atak",
+    "name": "Atak",
+    "german_name": "Atak",
+    "group": "languages",
+    "group_raw": "SPRACHEN",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "language": true,
+    "skt_column": 1,
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.IN",
+      "Eigenschaft.CH"
+    ],
+    "complexity": 12
+  },
+  {
+    "id": "Talent.Bosparano",
+    "name": "Bosparano",
+    "german_name": "Bosparano",
+    "group": "languages",
+    "group_raw": "SPRACHEN",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "language": true,
+    "skt_column": 1,
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.IN",
+      "Eigenschaft.CH"
+    ],
+    "complexity": 21
+  },
+  {
+    "id": "Talent.Fuechsisch",
+    "name": "Vixish",
+    "german_name": "Füchsisch",
+    "group": "languages",
+    "group_raw": "SPRACHEN",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "language": true,
+    "skt_column": 1,
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.IN",
+      "Eigenschaft.CH"
+    ],
+    "complexity": 12
+  },
+  {
+    "id": "Talent.Garethi",
+    "name": "Garethi",
+    "german_name": "Garethi",
+    "group": "languages",
+    "group_raw": "SPRACHEN",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "language": true,
+    "skt_column": 1,
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.IN",
+      "Eigenschaft.CH"
+    ],
+    "complexity": 18
+  },
+  {
+    "id": "Talent.Goblinisch",
+    "name": "Goblinic",
+    "german_name": "Goblinisch",
+    "group": "languages",
+    "group_raw": "SPRACHEN",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "language": true,
+    "skt_column": 1,
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.IN",
+      "Eigenschaft.CH"
+    ],
+    "complexity": 12
+  },
+  {
+    "id": "Talent.Isdira",
+    "name": "Isdira",
+    "german_name": "Isdira",
+    "group": "languages",
+    "group_raw": "SPRACHEN",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "language": true,
+    "skt_column": 1,
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.IN",
+      "Eigenschaft.CH"
+    ],
+    "complexity": 21
+  },
+  {
+    "id": "Talent.Mohisch",
+    "name": "Mohic",
+    "german_name": "Mohisch",
+    "group": "languages",
+    "group_raw": "SPRACHEN",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "language": true,
+    "skt_column": 1,
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.IN",
+      "Eigenschaft.CH"
+    ],
+    "complexity": 15
+  },
+  {
+    "id": "Talent.Nujuka",
+    "name": "Nujuku",
+    "german_name": "Nujuka",
+    "group": "languages",
+    "group_raw": "SPRACHEN",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "language": true,
+    "skt_column": 1,
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.IN",
+      "Eigenschaft.CH"
+    ],
+    "complexity": 15
+  },
+  {
+    "id": "Talent.Oloarkh",
+    "name": "Oloarkh",
+    "german_name": "Oloarkh",
+    "group": "languages",
+    "group_raw": "SPRACHEN",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "language": true,
+    "skt_column": 1,
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.IN",
+      "Eigenschaft.CH"
+    ],
+    "complexity": 10
+  },
+  {
+    "id": "Talent.Ologhaijan",
+    "name": "Ologhaijan",
+    "german_name": "Ologhaijan",
+    "group": "languages",
+    "group_raw": "SPRACHEN",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "language": true,
+    "skt_column": 1,
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.IN",
+      "Eigenschaft.CH"
+    ],
+    "complexity": 15
+  },
+  {
+    "id": "Talent.Rogolan",
+    "name": "Rogolan",
+    "german_name": "Rogolan",
+    "group": "languages",
+    "group_raw": "SPRACHEN",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "language": true,
+    "skt_column": 1,
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.IN",
+      "Eigenschaft.CH"
+    ],
+    "complexity": 21
+  },
+  {
+    "id": "Talent.Rssahh",
+    "name": "Rssahh",
+    "german_name": "Rssahh",
+    "group": "languages",
+    "group_raw": "SPRACHEN",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "language": true,
+    "skt_column": 1,
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.IN",
+      "Eigenschaft.CH"
+    ],
+    "complexity": 18
+  },
+  {
+    "id": "Talent.Thorwalsch",
+    "name": "Thorwalian",
+    "german_name": "Thorwalsch",
+    "group": "languages",
+    "group_raw": "SPRACHEN",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "language": true,
+    "skt_column": 1,
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.IN",
+      "Eigenschaft.CH"
+    ],
+    "complexity": 18
+  },
+  {
+    "id": "Talent.Tulamidya",
+    "name": "Tulamidyan",
+    "german_name": "Tulamidya",
+    "group": "languages",
+    "group_raw": "SPRACHEN",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "language": true,
+    "skt_column": 1,
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.IN",
+      "Eigenschaft.CH"
+    ],
+    "complexity": 18
+  },
+  {
+    "id": "Talent.UrTulamidya",
+    "name": "Proto-Tulamidyan",
+    "german_name": "Ur-Tulamidya",
+    "group": "languages",
+    "group_raw": "SPRACHEN",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "language": true,
+    "skt_column": 1,
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.IN",
+      "Eigenschaft.CH"
+    ],
+    "complexity": 21
+  },
+  {
+    "id": "Talent.Zhayad",
+    "name": "Zhayad",
+    "german_name": "Zhayad",
+    "group": "languages",
+    "group_raw": "SPRACHEN",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "language": true,
+    "skt_column": 1,
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.IN",
+      "Eigenschaft.CH"
+    ],
+    "complexity": 15
+  },
+  {
+    "id": "Talent.AsdhariaSchrift",
+    "name": "Asdharia (Script)",
+    "german_name": "Asdharia (Schrift)",
+    "group": "scripts",
+    "group_raw": "SCHRIFTEN",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "script": true,
+    "skt_column": 1,
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.KL",
+      "Eigenschaft.FF"
+    ],
+    "complexity": 18
+  },
+  {
+    "id": "Talent.Chrmk",
+    "name": "Chrmk (Zelemja)",
+    "german_name": "Chrmk",
+    "group": "scripts",
+    "group_raw": "SCHRIFTEN",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "script": true,
+    "skt_column": 2,
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.KL",
+      "Eigenschaft.FF"
+    ],
+    "complexity": 18
+  },
+  {
+    "id": "Talent.GlyphenVonUnau",
+    "name": "Sacred Glyphs of Unau",
+    "german_name": "Geheiligte Glyphen von Unau",
+    "group": "scripts",
+    "group_raw": "SCHRIFTEN",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "script": true,
+    "skt_column": 1,
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.KL",
+      "Eigenschaft.FF"
+    ],
+    "complexity": 13
+  },
+  {
+    "id": "Talent.HjaldingscheRunen",
+    "name": "Hjalding Runes",
+    "german_name": "Hjaldingsche Runen",
+    "group": "scripts",
+    "group_raw": "SCHRIFTEN",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "script": true,
+    "skt_column": 1,
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.KL",
+      "Eigenschaft.FF"
+    ],
+    "complexity": 10
+  },
+  {
+    "id": "Talent.IsdiraSchrift",
+    "name": "Isdira (Script)",
+    "german_name": "Isdira (Schrift)",
+    "group": "scripts",
+    "group_raw": "SCHRIFTEN",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "script": true,
+    "skt_column": 1,
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.KL",
+      "Eigenschaft.FF"
+    ],
+    "complexity": 15
+  },
+  {
+    "id": "Talent.KuslikerZeichen",
+    "name": "Kuslik Signs",
+    "german_name": "Kusliker Zeichen",
+    "group": "scripts",
+    "group_raw": "SCHRIFTEN",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "script": true,
+    "skt_column": 1,
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.KL",
+      "Eigenschaft.FF"
+    ],
+    "complexity": 10
+  },
+  {
+    "id": "Talent.Nanduria",
+    "name": "Nanduria",
+    "german_name": "Nanduria",
+    "group": "scripts",
+    "group_raw": "SCHRIFTEN",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "script": true,
+    "skt_column": 1,
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.KL",
+      "Eigenschaft.FF"
+    ],
+    "complexity": 10
+  },
+  {
+    "id": "Talent.RogolanSchrift",
+    "name": "Rogolan (Script)",
+    "german_name": "Rogolan (Schrift)",
+    "group": "scripts",
+    "group_raw": "SCHRIFTEN",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "script": true,
+    "skt_column": 1,
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.KL",
+      "Eigenschaft.FF"
+    ],
+    "complexity": 11
+  },
+  {
+    "id": "Talent.TulamidyaSchrift",
+    "name": "Tulamidyan (Script)",
+    "german_name": "Tulamidya (Schrift)",
+    "group": "scripts",
+    "group_raw": "SCHRIFTEN",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "script": true,
+    "skt_column": 1,
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.KL",
+      "Eigenschaft.FF"
+    ],
+    "complexity": 14
+  },
+  {
+    "id": "Talent.UrTulamidyaSchrift",
+    "name": "Proto-Tulamidyan (Script)",
+    "german_name": "Ur-Tulamidya (Schrift)",
+    "group": "scripts",
+    "group_raw": "SCHRIFTEN",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "script": true,
+    "skt_column": 1,
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.KL",
+      "Eigenschaft.FF"
+    ],
+    "complexity": 16
+  },
+  {
+    "id": "Talent.ZhayadSchrift",
+    "name": "Zhayad (Script)",
+    "german_name": "Zhayad (Schrift)",
+    "group": "scripts",
+    "group_raw": "SCHRIFTEN",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "script": true,
+    "skt_column": 1,
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.KL",
+      "Eigenschaft.FF"
+    ],
+    "complexity": 18
+  },
+  {
+    "id": "Talent.Akrobatik",
+    "name": "Acrobatics",
+    "german_name": "Akrobatik",
+    "group": "physical",
+    "group_raw": "KOERPER",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "specializations": [
+      "Talent.Spezialisierung.Balancieren",
+      "Talent.Spezialisierung.Bodenakrobatik",
+      "Talent.Spezialisierung.Schwingen",
+      "Talent.Spezialisierung.Spruenge",
+      "Talent.Spezialisierung.Winden"
+    ],
+    "skt_column": 4,
+    "test_attributes": [
+      "Eigenschaft.MU",
+      "Eigenschaft.GE",
+      "Eigenschaft.KK"
+    ],
+    "prerequisites": [
+      "KOERPERBEHERRSCHUNG_4"
+    ]
+  },
+  {
+    "id": "Talent.Athletik",
+    "name": "Athletics",
+    "german_name": "Athletik",
+    "group": "physical",
+    "group_raw": "KOERPER",
+    "type": "basis",
+    "is_basic": true,
+    "source": "builtin",
+    "specializations": [
+      "Talent.Spezialisierung.Hochsprung",
+      "Talent.Spezialisierung.Kraftakte",
+      "Talent.Spezialisierung.Langlauf",
+      "Talent.Spezialisierung.Sprint",
+      "Talent.Spezialisierung.Weitsprung"
+    ],
+    "skt_column": 4,
+    "test_attributes": [
+      "Eigenschaft.GE",
+      "Eigenschaft.KO",
+      "Eigenschaft.KK"
+    ]
+  },
+  {
+    "id": "Talent.Gaukeleien",
+    "name": "Juggling",
+    "german_name": "Gaukeleien",
+    "group": "physical",
+    "group_raw": "KOERPER",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "specializations": [
+      "Talent.Spezialisierung.Bauchreden",
+      "Talent.Spezialisierung.Feuerkunst",
+      "Talent.Spezialisierung.Jonglieren",
+      "Talent.Spezialisierung.Possenreissen",
+      "Talent.Spezialisierung.Taschenspielereien"
+    ],
+    "skt_column": 4,
+    "test_attributes": [
+      "Eigenschaft.MU",
+      "Eigenschaft.CH",
+      "Eigenschaft.FF"
+    ]
+  },
+  {
+    "id": "Talent.Klettern",
+    "name": "Climb",
+    "german_name": "Klettern",
+    "group": "physical",
+    "group_raw": "KOERPER",
+    "type": "basis",
+    "is_basic": true,
+    "source": "builtin",
+    "specializations": [
+      "Talent.Spezialisierung.Bergsteigen",
+      "Talent.Spezialisierung.Eisklettern",
+      "Talent.Spezialisierung.Freiklettern",
+      "Talent.Spezialisierung.Seilklettern"
+    ],
+    "skt_column": 4,
+    "test_attributes": [
+      "Eigenschaft.MU",
+      "Eigenschaft.GE",
+      "Eigenschaft.KK"
+    ]
+  },
+  {
+    "id": "Talent.Koerperbeherrschung",
+    "name": "Body Control",
+    "german_name": "Körperbeherrschung",
+    "group": "physical",
+    "group_raw": "KOERPER",
+    "type": "basis",
+    "is_basic": true,
+    "source": "builtin",
+    "specializations": [
+      "Talent.Spezialisierung.Fallen",
+      "Talent.Spezialisierung.Spruenge",
+      "Talent.Spezialisierung.Standfestigkeit"
+    ],
+    "skt_column": 4,
+    "test_attributes": [
+      "Eigenschaft.MU",
+      "Eigenschaft.IN",
+      "Eigenschaft.GE"
+    ]
+  },
+  {
+    "id": "Talent.Reiten",
+    "name": "Ride",
+    "german_name": "Reiten",
+    "group": "physical",
+    "group_raw": "KOERPER",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "specializations": [
+      "Talent.Spezialisierung.PferdEselMuli",
+      "Talent.Spezialisierung.Kamel",
+      "Talent.Spezialisierung.Strauss",
+      "Talent.Spezialisierung.Reitechse",
+      "Talent.Spezialisierung.Flugechse",
+      "Talent.Spezialisierung.Hippogriff",
+      "Talent.Spezialisierung.GoblinischesReitWildschwein"
+    ],
+    "skt_column": 4,
+    "test_attributes": [
+      "Eigenschaft.CH",
+      "Eigenschaft.GE",
+      "Eigenschaft.KK"
+    ]
+  },
+  {
+    "id": "Talent.Schleichen",
+    "name": "Sneak",
+    "german_name": "Schleichen",
+    "group": "physical",
+    "group_raw": "KOERPER",
+    "type": "basis",
+    "is_basic": true,
+    "source": "builtin",
+    "specializations": [
+      "Talent.Spezialisierung.EisSchnee",
+      "Talent.Spezialisierung.Gebaeude",
+      "Talent.Spezialisierung.Geroell",
+      "Talent.Spezialisierung.Strassen",
+      "Talent.Spezialisierung.WaldDschungel"
+    ],
+    "skt_column": 4,
+    "test_attributes": [
+      "Eigenschaft.MU",
+      "Eigenschaft.IN",
+      "Eigenschaft.GE"
+    ]
+  },
+  {
+    "id": "Talent.Schwimmen",
+    "name": "Swim",
+    "german_name": "Schwimmen",
+    "group": "physical",
+    "group_raw": "KOERPER",
+    "type": "basis",
+    "is_basic": true,
+    "source": "builtin",
+    "specializations": [
+      "Talent.Spezialisierung.Langstreckenschwimmen",
+      "Talent.Spezialisierung.Schnellschwimmen",
+      "Talent.Spezialisierung.Tauchen",
+      "Talent.Spezialisierung.Unterwasserkampf"
+    ],
+    "skt_column": 4,
+    "test_attributes": [
+      "Eigenschaft.GE",
+      "Eigenschaft.KO",
+      "Eigenschaft.KK"
+    ]
+  },
+  {
+    "id": "Talent.Selbstbeherrschung",
+    "name": "Willpower",
+    "german_name": "Selbstbeherrschung",
+    "group": "physical",
+    "group_raw": "KOERPER",
+    "type": "basis",
+    "is_basic": true,
+    "source": "builtin",
+    "specializations": [
+      "Talent.Spezialisierung.ErschoepfungIgnorieren",
+      "Talent.Spezialisierung.SchmerzUnterdruecken",
+      "Talent.Spezialisierung.StoerungenIgnorieren",
+      "Talent.Spezialisierung.WundenIgnorieren"
+    ],
+    "skt_column": 4,
+    "test_attributes": [
+      "Eigenschaft.MU",
+      "Eigenschaft.KO",
+      "Eigenschaft.KK"
+    ]
+  },
+  {
+    "id": "Talent.SichVerstecken",
+    "name": "Hide",
+    "german_name": "Sich Verstecken",
+    "group": "physical",
+    "group_raw": "KOERPER",
+    "type": "basis",
+    "is_basic": true,
+    "source": "builtin",
+    "specializations": [
+      "Talent.Spezialisierung.Gebaeude",
+      "Talent.Spezialisierung.Gebirge",
+      "Talent.Spezialisierung.Grasland",
+      "Talent.Spezialisierung.EisSchnee",
+      "Talent.Spezialisierung.Stadt",
+      "Talent.Spezialisierung.WaldDschungel",
+      "Talent.Spezialisierung.Wueste"
+    ],
+    "skt_column": 4,
+    "test_attributes": [
+      "Eigenschaft.MU",
+      "Eigenschaft.IN",
+      "Eigenschaft.GE"
+    ]
+  },
+  {
+    "id": "Talent.Singen",
+    "name": "Sing",
+    "german_name": "Singen",
+    "group": "physical",
+    "group_raw": "KOERPER",
+    "type": "basis",
+    "is_basic": true,
+    "source": "builtin",
+    "specializations": [
+      "Talent.Spezialisierung.Balladenvortrag",
+      "Talent.Spezialisierung.Chorgesang",
+      "Talent.Spezialisierung.Mehrstimmigkeit",
+      "Talent.Spezialisierung.Operngesang"
+    ],
+    "skt_column": 4,
+    "test_attributes": [
+      "Eigenschaft.IN",
+      "Eigenschaft.CH",
+      "Eigenschaft.KO"
+    ]
+  },
+  {
+    "id": "Talent.Sinnenschaerfe",
+    "name": "Perception",
+    "german_name": "Sinnenschärfe",
+    "group": "physical",
+    "group_raw": "KOERPER",
+    "type": "basis",
+    "is_basic": true,
+    "source": "builtin",
+    "specializations": [
+      "Talent.Spezialisierung.Hoeren",
+      "Talent.Spezialisierung.RiechenSchmecken",
+      "Talent.Spezialisierung.Sehen",
+      "Talent.Spezialisierung.Tasten"
+    ],
+    "skt_column": 4,
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.IN",
+      "Eigenschaft.IN",
+      "Eigenschaft.FF"
+    ]
+  },
+  {
+    "id": "Talent.StimmenImitieren",
+    "name": "Voice Mimicry",
+    "german_name": "Stimmen Imitieren",
+    "group": "physical",
+    "group_raw": "KOERPER",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "specializations": [
+      "Talent.Spezialisierung.Haustiere",
+      "Talent.Spezialisierung.Jagdwild",
+      "Talent.Spezialisierung.MenschlicheStimmen",
+      "Talent.Spezialisierung.Raubtiere",
+      "Talent.Spezialisierung.Voegel"
+    ],
+    "skt_column": 4,
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.IN",
+      "Eigenschaft.CH"
+    ],
+    "prerequisites": [
+      "SINNENSCHAERFE_4"
+    ]
+  },
+  {
+    "id": "Talent.Tanzen",
+    "name": "Dance",
+    "german_name": "Tanzen",
+    "group": "physical",
+    "group_raw": "KOERPER",
+    "type": "basis",
+    "is_basic": true,
+    "source": "builtin",
+    "specializations": [
+      "Talent.Spezialisierung.Ausdruckstaenze",
+      "Talent.Spezialisierung.Formationstaenze",
+      "Talent.Spezialisierung.HoefischeTaenze",
+      "Talent.Spezialisierung.Kulttaenze",
+      "Talent.Spezialisierung.Meditationstaenze"
+    ],
+    "skt_column": 4,
+    "test_attributes": [
+      "Eigenschaft.CH",
+      "Eigenschaft.GE",
+      "Eigenschaft.GE"
+    ]
+  },
+  {
+    "id": "Talent.Taschendiebstahl",
+    "name": "Pick Pockets",
+    "german_name": "Taschendiebstahl",
+    "group": "physical",
+    "group_raw": "KOERPER",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "skt_column": 4,
+    "test_attributes": [
+      "Eigenschaft.MU",
+      "Eigenschaft.IN",
+      "Eigenschaft.FF"
+    ],
+    "prerequisites": [
+      "MENSCHENKENNTNIS_4_STEIGERN"
+    ]
+  },
+  {
+    "id": "Talent.Zechen",
+    "name": "Carouse",
+    "german_name": "Zechen",
+    "group": "physical",
+    "group_raw": "KOERPER",
+    "type": "basis",
+    "is_basic": true,
+    "source": "builtin",
+    "skt_column": 4,
+    "test_attributes": [
+      "Eigenschaft.IN",
+      "Eigenschaft.KO",
+      "Eigenschaft.KK"
+    ]
+  },
+  {
+    "id": "Talent.Betoeren",
+    "name": "Seduce",
+    "german_name": "Betören",
+    "group": "social",
+    "group_raw": "GESELLSCHAFT",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "skt_column": 2,
+    "test_attributes": [
+      "Eigenschaft.IN",
+      "Eigenschaft.CH",
+      "Eigenschaft.CH"
+    ],
+    "prerequisites": [
+      "MENSCHENKENNTNIS_4"
+    ]
+  },
+  {
+    "id": "Talent.Etikette",
+    "name": "Etiquette",
+    "german_name": "Etikette",
+    "group": "social",
+    "group_raw": "GESELLSCHAFT",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "specializations": [
+      "Kulturkunde.Almada",
+      "Kulturkunde.Amazonen",
+      "Kulturkunde.Ambosszwerge",
+      "Kulturkunde.AndergastNostria",
+      "Kulturkunde.Aranien",
+      "Kulturkunde.ArchaischeAchaz",
+      "Kulturkunde.Auelfen",
+      "Kulturkunde.Bornland",
+      "Kulturkunde.Brilliantzwerge",
+      "Kulturkunde.Bukanier",
+      "Kulturkunde.Erzzwerge",
+      "Kulturkunde.Ferkina",
+      "Kulturkunde.Firnelfen",
+      "Kulturkunde.Fjarninger",
+      "Kulturkunde.Gjalskerlaender",
+      "Kulturkunde.Goblins",
+      "Kulturkunde.Grolme",
+      "Kulturkunde.Horasreich",
+      "Kulturkunde.Huegelzwerge",
+      "Kulturkunde.Nivesen",
+      "Kulturkunde.Norbarden",
+      "Kulturkunde.NordaventurischeStaedte",
+      "Kulturkunde.Maraskan",
+      "Kulturkunde.Mohas",
+      "Kulturkunde.Mittelreich",
+      "Kulturkunde.Novadi",
+      "Kulturkunde.Orks",
+      "Kulturkunde.SchwarzeLande",
+      "Kulturkunde.StammesAchaz",
+      "Kulturkunde.Steppenelfen",
+      "Kulturkunde.Suedaventurien",
+      "Kulturkunde.Svellttal",
+      "Kulturkunde.Thorwal",
+      "Kulturkunde.Tocamuyac",
+      "Kulturkunde.Trolle",
+      "Kulturkunde.Trollzacker",
+      "Kulturkunde.Tulamidenlande",
+      "Kulturkunde.Waldelfen",
+      "Kulturkunde.Zahori",
+      "Kulturkunde.Zyklopeninseln"
+    ],
+    "skt_column": 2,
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.IN",
+      "Eigenschaft.CH"
+    ]
+  },
+  {
+    "id": "Talent.Gassenwissen",
+    "name": "Streetwise",
+    "german_name": "Gassenwissen",
+    "group": "social",
+    "group_raw": "GESELLSCHAFT",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "specializations": [
+      "Talent.Spezialisierung.Beschatten",
+      "Talent.Spezialisierung.Hehlerei",
+      "Talent.Spezialisierung.Kontakte",
+      "Talent.Spezialisierung.Ortseinschaetzung"
+    ],
+    "skt_column": 2,
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.IN",
+      "Eigenschaft.CH"
+    ]
+  },
+  {
+    "id": "Talent.Lehren",
+    "name": "Teach",
+    "german_name": "Lehren",
+    "group": "social",
+    "group_raw": "GESELLSCHAFT",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "specializations": [
+      "Talentgruppe.Kampf.Name",
+      "Talentgruppe.Koerper.Name",
+      "Talentgruppe.Gesellschaft.Name",
+      "Talentgruppe.Natur.Name",
+      "Talentgruppe.Wissen.Name",
+      "Talentgruppe.Handwerk.Name",
+      "Talent.Spezialisierung.SprachenSchriften"
+    ],
+    "skt_column": 2,
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.IN",
+      "Eigenschaft.CH"
+    ],
+    "prerequisites": [
+      "MENSCHENKENNTNIS_4_STEIGERN"
+    ]
+  },
+  {
+    "id": "Talent.Menschenkenntnis",
+    "name": "Human Nature",
+    "german_name": "Menschenkenntnis",
+    "group": "social",
+    "group_raw": "GESELLSCHAFT",
+    "type": "basis",
+    "is_basic": true,
+    "source": "builtin",
+    "specializations": [
+      "Kulturkunde.Almada",
+      "Kulturkunde.Amazonen",
+      "Kulturkunde.Ambosszwerge",
+      "Kulturkunde.AndergastNostria",
+      "Kulturkunde.Aranien",
+      "Kulturkunde.ArchaischeAchaz",
+      "Kulturkunde.Auelfen",
+      "Kulturkunde.Bornland",
+      "Kulturkunde.Brilliantzwerge",
+      "Kulturkunde.Bukanier",
+      "Kulturkunde.Erzzwerge",
+      "Kulturkunde.Ferkina",
+      "Kulturkunde.Firnelfen",
+      "Kulturkunde.Fjarninger",
+      "Kulturkunde.Gjalskerlaender",
+      "Kulturkunde.Goblins",
+      "Kulturkunde.Grolme",
+      "Kulturkunde.Horasreich",
+      "Kulturkunde.Huegelzwerge",
+      "Kulturkunde.Nivesen",
+      "Kulturkunde.Norbarden",
+      "Kulturkunde.NordaventurischeStaedte",
+      "Kulturkunde.Maraskan",
+      "Kulturkunde.Mohas",
+      "Kulturkunde.Mittelreich",
+      "Kulturkunde.Novadi",
+      "Kulturkunde.Orks",
+      "Kulturkunde.SchwarzeLande",
+      "Kulturkunde.StammesAchaz",
+      "Kulturkunde.Steppenelfen",
+      "Kulturkunde.Suedaventurien",
+      "Kulturkunde.Svellttal",
+      "Kulturkunde.Thorwal",
+      "Kulturkunde.Tocamuyac",
+      "Kulturkunde.Trolle",
+      "Kulturkunde.Trollzacker",
+      "Kulturkunde.Tulamidenlande",
+      "Kulturkunde.Waldelfen",
+      "Kulturkunde.Zahori",
+      "Kulturkunde.Zyklopeninseln"
+    ],
+    "skt_column": 2,
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.IN",
+      "Eigenschaft.CH"
+    ]
+  },
+  {
+    "id": "Talent.SichVerkleiden",
+    "name": "Masquerade",
+    "german_name": "Sich Verkleiden",
+    "group": "social",
+    "group_raw": "GESELLSCHAFT",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "specializations": [
+      "Talent.Spezialisierung.AndererStand",
+      "Talent.Spezialisierung.AnderesGeschlecht",
+      "Talent.Spezialisierung.AndereRasse"
+    ],
+    "skt_column": 2,
+    "test_attributes": [
+      "Eigenschaft.MU",
+      "Eigenschaft.CH",
+      "Eigenschaft.GE"
+    ]
+  },
+  {
+    "id": "Talent.Ueberreden",
+    "name": "Fast Talk",
+    "german_name": "Überreden",
+    "group": "social",
+    "group_raw": "GESELLSCHAFT",
+    "type": "basis",
+    "is_basic": true,
+    "source": "builtin",
+    "specializations": [
+      "Talent.Spezialisierung.Aufwiegeln",
+      "Talent.Spezialisierung.Betteln",
+      "Talent.Spezialisierung.Einschuechtern",
+      "Talent.Spezialisierung.Feilschen",
+      "Talent.Spezialisierung.Luegen"
+    ],
+    "skt_column": 2,
+    "test_attributes": [
+      "Eigenschaft.MU",
+      "Eigenschaft.IN",
+      "Eigenschaft.CH"
+    ],
+    "prerequisites": [
+      "MENSCHENKENNTNIS_4_STEIGERN"
+    ]
+  },
+  {
+    "id": "Talent.Ueberzeugen",
+    "name": "Persuade",
+    "german_name": "Überzeugen",
+    "group": "social",
+    "group_raw": "GESELLSCHAFT",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "specializations": [
+      "Talent.Spezialisierung.DemagogiePlaedoyerPredigt",
+      "Talent.Spezialisierung.EinzelgespraechVerhoer",
+      "Talent.Spezialisierung.DiskussionsRethorik",
+      "Talent.Spezialisierung.SchriftlicheRethorik"
+    ],
+    "skt_column": 2,
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.IN",
+      "Eigenschaft.CH"
+    ]
+  },
+  {
+    "id": "Talent.Faehrtensuchen",
+    "name": "Track",
+    "german_name": "Fährtensuchen",
+    "group": "nature",
+    "group_raw": "NATUR",
+    "type": "basis",
+    "is_basic": true,
+    "source": "builtin",
+    "specializations": [
+      "Talent.Spezialisierung.EisSchnee",
+      "Talent.Spezialisierung.Gebirge",
+      "Talent.Spezialisierung.Grasland",
+      "Talent.Spezialisierung.Stadt",
+      "Talent.Spezialisierung.Sumpf",
+      "Talent.Spezialisierung.Unterirdisch",
+      "Talent.Spezialisierung.WaldDschungel",
+      "Talent.Spezialisierung.Wueste"
+    ],
+    "skt_column": 2,
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.IN",
+      "Eigenschaft.KO",
+      "Eigenschaft.IN"
+    ],
+    "prerequisites": [
+      "SINNENSCHAERFE_4_STEIGERN"
+    ]
+  },
+  {
+    "id": "Talent.Fallenstellen",
+    "name": "Traps",
+    "german_name": "Fallenstellen",
+    "group": "nature",
+    "group_raw": "NATUR",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "specializations": [
+      "Talent.Spezialisierung.Gruben",
+      "Talent.Spezialisierung.Schlingen",
+      "Talent.Spezialisierung.Speere"
+    ],
+    "skt_column": 2,
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.FF",
+      "Eigenschaft.KK"
+    ],
+    "prerequisites": [
+      "WILDNISLEBEN_4_STEIGERN"
+    ]
+  },
+  {
+    "id": "Talent.FesselnEntfesseln",
+    "name": "Bind/Escape",
+    "german_name": "Fesseln/Entfesseln",
+    "group": "nature",
+    "group_raw": "NATUR",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "specializations": [
+      "Talent.Spezialisierung.Entfesseln",
+      "Talent.Spezialisierung.Fesseln",
+      "Talent.Spezialisierung.Knotenkunde",
+      "Talent.Spezialisierung.TaueSpleissen",
+      "Talent.Spezialisierung.NetzeKnuepfen"
+    ],
+    "skt_column": 2,
+    "test_attributes": [
+      "Eigenschaft.FF",
+      "Eigenschaft.GE",
+      "Eigenschaft.KK"
+    ]
+  },
+  {
+    "id": "Talent.FischenAngeln",
+    "name": "Fish",
+    "german_name": "Fischen/Angeln",
+    "group": "nature",
+    "group_raw": "NATUR",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "specializations": [
+      "Talent.Spezialisierung.FluesseBaeche",
+      "Talent.Spezialisierung.Hochseeangeln",
+      "Talent.Spezialisierung.SeenSumpfBrackwasser",
+      "Talent.Spezialisierung.StrandRiff"
+    ],
+    "skt_column": 2,
+    "test_attributes": [
+      "Eigenschaft.IN",
+      "Eigenschaft.FF",
+      "Eigenschaft.KK"
+    ]
+  },
+  {
+    "id": "Talent.Orientierung",
+    "name": "Orientation",
+    "german_name": "Orientierung",
+    "group": "nature",
+    "group_raw": "NATUR",
+    "type": "basis",
+    "is_basic": true,
+    "source": "builtin",
+    "specializations": [
+      "Talent.Spezialisierung.EisSchnee",
+      "Talent.Spezialisierung.Dschungel",
+      "Talent.Spezialisierung.Gebirge",
+      "Talent.Spezialisierung.Grasland",
+      "Talent.Spezialisierung.Meer",
+      "Talent.Spezialisierung.Stadt",
+      "Talent.Spezialisierung.Unterirdisch",
+      "Talent.Spezialisierung.Wald",
+      "Talent.Spezialisierung.Wueste"
+    ],
+    "skt_column": 2,
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.IN",
+      "Eigenschaft.IN"
+    ]
+  },
+  {
+    "id": "Talent.Wettervorhersage",
+    "name": "Weather Sense",
+    "german_name": "Wettervorhersage",
+    "group": "nature",
+    "group_raw": "NATUR",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "skt_column": 2,
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.IN",
+      "Eigenschaft.IN"
+    ]
+  },
+  {
+    "id": "Talent.Wildnisleben",
+    "name": "Survival",
+    "german_name": "Wildnisleben",
+    "group": "nature",
+    "group_raw": "NATUR",
+    "type": "basis",
+    "is_basic": true,
+    "source": "builtin",
+    "specializations": [
+      "Talent.Spezialisierung.Dschungel",
+      "Talent.Spezialisierung.EisSchnee",
+      "Talent.Spezialisierung.Gebirge",
+      "Talent.Spezialisierung.Meer",
+      "Talent.Spezialisierung.Steppe",
+      "Talent.Spezialisierung.Sumpf",
+      "Talent.Spezialisierung.Wald",
+      "Talent.Spezialisierung.Wueste"
+    ],
+    "skt_column": 2,
+    "test_attributes": [
+      "Eigenschaft.IN",
+      "Eigenschaft.GE",
+      "Eigenschaft.KO"
+    ]
+  },
+  {
+    "id": "Talent.Anatomie",
+    "name": "Anatomy",
+    "german_name": "Anatomie",
+    "group": "knowledge",
+    "group_raw": "WISSEN",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "skt_column": 2,
+    "test_attributes": [
+      "Eigenschaft.MU",
+      "Eigenschaft.KL",
+      "Eigenschaft.FF"
+    ],
+    "prerequisites": [
+      "NICHT_TOTENANGST"
+    ]
+  },
+  {
+    "id": "Talent.BrettWuerfelspiele",
+    "name": "Board Games",
+    "german_name": "Brett-/Würfelspiele",
+    "group": "knowledge",
+    "group_raw": "WISSEN",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "skt_column": 2,
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.KL",
+      "Eigenschaft.IN"
+    ]
+  },
+  {
+    "id": "Talent.Geographie",
+    "name": "Geography",
+    "german_name": "Geographie",
+    "group": "knowledge",
+    "group_raw": "WISSEN",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "skt_column": 2,
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.KL",
+      "Eigenschaft.IN"
+    ]
+  },
+  {
+    "id": "Talent.Geschichtswissen",
+    "name": "History",
+    "german_name": "Geschichtswissen",
+    "group": "knowledge",
+    "group_raw": "WISSEN",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "specializations": [
+      "Talent.Spezialisierung.BauKunstgeschichte",
+      "Talent.Spezialisierung.Militaergeschichte",
+      "Talent.Spezialisierung.Religionsgeschichte",
+      "Talent.Spezialisierung.Wissenschaftsgeschichte"
+    ],
+    "skt_column": 2,
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.KL",
+      "Eigenschaft.IN"
+    ]
+  },
+  {
+    "id": "Talent.Gesteinskunde",
+    "name": "Stone Lore",
+    "german_name": "Gesteinskunde",
+    "group": "knowledge",
+    "group_raw": "WISSEN",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "specializations": [
+      "Talent.Spezialisierung.Baugestein",
+      "Talent.Spezialisierung.Edelmetalle",
+      "Talent.Spezialisierung.Edelsteine"
+    ],
+    "skt_column": 2,
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.IN",
+      "Eigenschaft.FF"
+    ]
+  },
+  {
+    "id": "Talent.GoetterKulte",
+    "name": "Religious Lore",
+    "german_name": "Götter/Kulte",
+    "group": "knowledge",
+    "group_raw": "WISSEN",
+    "type": "basis",
+    "is_basic": true,
+    "source": "builtin",
+    "skt_column": 2,
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.KL",
+      "Eigenschaft.IN"
+    ]
+  },
+  {
+    "id": "Talent.Heraldik",
+    "name": "Heraldry",
+    "german_name": "Heraldik",
+    "group": "knowledge",
+    "group_raw": "WISSEN",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "skt_column": 2,
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.KL",
+      "Eigenschaft.FF"
+    ]
+  },
+  {
+    "id": "Talent.Kriegskunst",
+    "name": "Warcraft",
+    "german_name": "Kriegskunst",
+    "group": "knowledge",
+    "group_raw": "WISSEN",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "specializations": [
+      "Talent.Spezialisierung.Logistik",
+      "Talent.Spezialisierung.Militaergeschichte",
+      "Talent.Spezialisierung.Monstren",
+      "Talent.Spezialisierung.Seegefechte",
+      "Talent.Spezialisierung.Strategie",
+      "Talent.Spezialisierung.Taktik",
+      "Talent.Spezialisierung.DrachenBekaempfung"
+    ],
+    "skt_column": 2,
+    "test_attributes": [
+      "Eigenschaft.MU",
+      "Eigenschaft.KL",
+      "Eigenschaft.CH"
+    ]
+  },
+  {
+    "id": "Talent.Magiekunde",
+    "name": "Arcane Lore",
+    "german_name": "Magiekunde",
+    "group": "knowledge",
+    "group_raw": "WISSEN",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "specializations": [
+      "Talent.Spezialisierung.Artefaktherstellung",
+      "Talent.Spezialisierung.Daemonologie",
+      "Talent.Spezialisierung.Elementarismus",
+      "Talent.Spezialisierung.Magiehistorie",
+      "Talent.Spezialisierung.Magietheorie",
+      "Talent.Spezialisierung.MagischeAnalyse",
+      "Talent.Spezialisierung.Sphaerologie",
+      "Talent.Spezialisierung.Zauberpraxis",
+      "Talent.Spezialisierung.Zauberwerkstatt"
+    ],
+    "skt_column": 2,
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.KL",
+      "Eigenschaft.IN"
+    ],
+    "prerequisites": [
+      "KULTURSPRACHE_6_STEIGERN"
+    ]
+  },
+  {
+    "id": "Talent.Mechanik",
+    "name": "Engineering",
+    "german_name": "Mechanik",
+    "group": "knowledge",
+    "group_raw": "WISSEN",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "specializations": [
+      "Talent.Spezialisierung.Belagerungswaffen",
+      "Talent.Spezialisierung.KraeneHebewerkeMahlwerke",
+      "Talent.Spezialisierung.Materialkunde",
+      "Talent.Spezialisierung.PumpenWasserkraft",
+      "Talent.Spezialisierung.Windkraft"
+    ],
+    "skt_column": 2,
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.KL",
+      "Eigenschaft.FF"
+    ],
+    "prerequisites": [
+      "SCHRIFT_6_STEIGERN",
+      "RECHNEN_6_STEIGERN",
+      "MALEN_ZEICHNEN_6_STEIGERN"
+    ]
+  },
+  {
+    "id": "Talent.Pflanzenkunde",
+    "name": "Plant Lore",
+    "german_name": "Pflanzenkunde",
+    "group": "knowledge",
+    "group_raw": "WISSEN",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "specializations": [
+      "Talent.Spezialisierung.Dschungel",
+      "Talent.Spezialisierung.Gebirge",
+      "Talent.Spezialisierung.Grasland",
+      "Talent.Spezialisierung.Meer",
+      "Talent.Spezialisierung.Steppe",
+      "Talent.Spezialisierung.Sumpf",
+      "Talent.Spezialisierung.Tundra",
+      "Talent.Spezialisierung.Wald",
+      "Talent.Spezialisierung.Wueste"
+    ],
+    "skt_column": 2,
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.IN",
+      "Eigenschaft.FF"
+    ]
+  },
+  {
+    "id": "Talent.Rechnen",
+    "name": "Calculate",
+    "german_name": "Rechnen",
+    "group": "knowledge",
+    "group_raw": "WISSEN",
+    "type": "basis",
+    "is_basic": true,
+    "source": "builtin",
+    "specializations": [
+      "Talent.Spezialisierung.Arithmetik",
+      "Talent.Spezialisierung.Buchfuehrung",
+      "Talent.Spezialisierung.Geometrie"
+    ],
+    "skt_column": 2,
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.KL",
+      "Eigenschaft.IN"
+    ]
+  },
+  {
+    "id": "Talent.Rechtskunde",
+    "name": "Law",
+    "german_name": "Rechtskunde",
+    "group": "knowledge",
+    "group_raw": "WISSEN",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "specializations": [
+      "Talent.Spezialisierung.Gildenrecht",
+      "Talent.Spezialisierung.Kirchenrecht",
+      "Talent.Spezialisierung.Strafrecht",
+      "Talent.Spezialisierung.Staatsrecht"
+    ],
+    "skt_column": 2,
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.KL",
+      "Eigenschaft.IN"
+    ]
+  },
+  {
+    "id": "Talent.SagenLegenden",
+    "name": "Legend Lore",
+    "german_name": "Sagen/Legenden",
+    "group": "knowledge",
+    "group_raw": "WISSEN",
+    "type": "basis",
+    "is_basic": true,
+    "source": "builtin",
+    "specializations": [
+      "Kulturkunde.Almada",
+      "Kulturkunde.Amazonen",
+      "Kulturkunde.Ambosszwerge",
+      "Kulturkunde.AndergastNostria",
+      "Kulturkunde.Aranien",
+      "Kulturkunde.ArchaischeAchaz",
+      "Kulturkunde.Auelfen",
+      "Kulturkunde.Bornland",
+      "Kulturkunde.Brilliantzwerge",
+      "Kulturkunde.Bukanier",
+      "Kulturkunde.Erzzwerge",
+      "Kulturkunde.Ferkina",
+      "Kulturkunde.Firnelfen",
+      "Kulturkunde.Fjarninger",
+      "Kulturkunde.Gjalskerlaender",
+      "Kulturkunde.Goblins",
+      "Kulturkunde.Grolme",
+      "Kulturkunde.Horasreich",
+      "Kulturkunde.Huegelzwerge",
+      "Kulturkunde.Nivesen",
+      "Kulturkunde.Norbarden",
+      "Kulturkunde.NordaventurischeStaedte",
+      "Kulturkunde.Maraskan",
+      "Kulturkunde.Mohas",
+      "Kulturkunde.Mittelreich",
+      "Kulturkunde.Novadi",
+      "Kulturkunde.Orks",
+      "Kulturkunde.SchwarzeLande",
+      "Kulturkunde.StammesAchaz",
+      "Kulturkunde.Steppenelfen",
+      "Kulturkunde.Suedaventurien",
+      "Kulturkunde.Svellttal",
+      "Kulturkunde.Thorwal",
+      "Kulturkunde.Tocamuyac",
+      "Kulturkunde.Trolle",
+      "Kulturkunde.Trollzacker",
+      "Kulturkunde.Tulamidenlande",
+      "Kulturkunde.Waldelfen",
+      "Kulturkunde.Zahori",
+      "Kulturkunde.Zyklopeninseln"
+    ],
+    "skt_column": 2,
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.IN",
+      "Eigenschaft.CH"
+    ]
+  },
+  {
+    "id": "Talent.Schaetzen",
+    "name": "Appraise",
+    "german_name": "Schätzen",
+    "group": "knowledge",
+    "group_raw": "WISSEN",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "specializations": [
+      "Talent.Spezialisierung.Antiquitaeten",
+      "Talent.Spezialisierung.Materialwert",
+      "Talent.Spezialisierung.Schmuck"
+    ],
+    "skt_column": 2,
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.IN",
+      "Eigenschaft.IN"
+    ]
+  },
+  {
+    "id": "Talent.Sprachenkunde",
+    "name": "Language Lore",
+    "german_name": "Sprachenkunde",
+    "group": "knowledge",
+    "group_raw": "WISSEN",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "skt_column": 2,
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.KL",
+      "Eigenschaft.IN"
+    ]
+  },
+  {
+    "id": "Talent.Staatskunst",
+    "name": "Statecraft",
+    "german_name": "Staatskunst",
+    "group": "knowledge",
+    "group_raw": "WISSEN",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "specializations": [
+      "Talent.Spezialisierung.Diplomatie",
+      "Talent.Spezialisierung.Intrige",
+      "Talent.Spezialisierung.Verwaltung"
+    ],
+    "skt_column": 2,
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.IN",
+      "Eigenschaft.CH"
+    ]
+  },
+  {
+    "id": "Talent.Sternkunde",
+    "name": "Starcraft",
+    "german_name": "Sternkunde",
+    "group": "knowledge",
+    "group_raw": "WISSEN",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "specializations": [
+      "Talent.Spezialisierung.Himmelskartographie",
+      "Talent.Spezialisierung.Horoskope",
+      "Talent.Spezialisierung.Navigation",
+      "Talent.Spezialisierung.Zeitbestimmung"
+    ],
+    "skt_column": 2,
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.KL",
+      "Eigenschaft.IN"
+    ],
+    "prerequisites": [
+      "GARETHI_TULAMIDYA_6_STEIGERN",
+      "RECHNEN_6_STEIGERN",
+      "SINNENSCHAERFE_6_STEIGERN"
+    ]
+  },
+  {
+    "id": "Talent.Tierkunde",
+    "name": "Animal Lore",
+    "german_name": "Tierkunde",
+    "group": "knowledge",
+    "group_raw": "WISSEN",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "specializations": [
+      "Talent.Spezialisierung.Drachen",
+      "Talent.Spezialisierung.Jagdwild",
+      "Talent.Spezialisierung.Meeresgetier",
+      "Talent.Spezialisierung.Monstren",
+      "Talent.Spezialisierung.Nutztiere",
+      "Talent.Spezialisierung.Raubtiere",
+      "Talent.Spezialisierung.Schaedlinge",
+      "Talent.Spezialisierung.Vielbeiner",
+      "Talent.Spezialisierung.Voegel"
+    ],
+    "skt_column": 2,
+    "test_attributes": [
+      "Eigenschaft.MU",
+      "Eigenschaft.KL",
+      "Eigenschaft.IN"
+    ]
+  },
+  {
+    "id": "Talent.Abrichten",
+    "name": "Train Animals",
+    "german_name": "Abrichten",
+    "group": "craft",
+    "group_raw": "HANDWERK",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "specializations": [
+      "Talent.Spezialisierung.Dompteur",
+      "Talent.Spezialisierung.Falkner",
+      "Talent.Spezialisierung.Hundefuehrer",
+      "Talent.Spezialisierung.Zureiter"
+    ],
+    "skt_column": 2,
+    "test_attributes": [
+      "Eigenschaft.MU",
+      "Eigenschaft.IN",
+      "Eigenschaft.CH"
+    ],
+    "prerequisites": [
+      "TIERKUNDE_4_STEIGERN"
+    ]
+  },
+  {
+    "id": "Talent.Ackerbau",
+    "name": "Farming",
+    "german_name": "Ackerbau",
+    "group": "craft",
+    "group_raw": "HANDWERK",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "skt_column": 2,
+    "test_attributes": [
+      "Eigenschaft.IN",
+      "Eigenschaft.FF",
+      "Eigenschaft.KO"
+    ]
+  },
+  {
+    "id": "Talent.Alchimie",
+    "name": "Alchemy",
+    "german_name": "Alchimie",
+    "group": "craft",
+    "group_raw": "HANDWERK",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "specializations": [
+      "Talent.Spezialisierung.Brandmittel",
+      "Talent.Spezialisierung.Gifte",
+      "Talent.Spezialisierung.Laborpraxis",
+      "Talent.Spezialisierung.ZauberElixiere",
+      "Talent.Spezialisierung.FarbenLacke",
+      "Talent.Spezialisierung.Materialveredelung"
+    ],
+    "skt_column": 2,
+    "test_attributes": [
+      "Eigenschaft.MU",
+      "Eigenschaft.KL",
+      "Eigenschaft.FF"
+    ],
+    "prerequisites": [
+      "SCHRIFT_4",
+      "RECHNEN_4"
+    ]
+  },
+  {
+    "id": "Talent.Bergbau",
+    "name": "Mining",
+    "german_name": "Bergbau",
+    "group": "craft",
+    "group_raw": "HANDWERK",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "specializations": [
+      "Talent.Spezialisierung.Bergwerke",
+      "Talent.Spezialisierung.Kanalisation",
+      "Talent.Spezialisierung.NatuerlicheHoehlen",
+      "Talent.Spezialisierung.Sappeur",
+      "Talent.Spezialisierung.UnterirdischeStaedte"
+    ],
+    "skt_column": 2,
+    "test_attributes": [
+      "Eigenschaft.IN",
+      "Eigenschaft.KO",
+      "Eigenschaft.KK"
+    ],
+    "prerequisites": [
+      "GESTEINSKUNDE_4"
+    ]
+  },
+  {
+    "id": "Talent.Bogenbau",
+    "name": "Bowyer",
+    "german_name": "Bogenbau",
+    "group": "craft",
+    "group_raw": "HANDWERK",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "specializations": [
+      "Talent.Spezialisierung.Armbrust",
+      "Talent.Spezialisierung.Bogen",
+      "Talent.Spezialisierung.BolzenPfeile",
+      "Talent.Spezialisierung.Torsionswaffen"
+    ],
+    "skt_column": 2,
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.IN",
+      "Eigenschaft.FF"
+    ],
+    "prerequisites": [
+      "HOLZBEARBEITUNG_4"
+    ]
+  },
+  {
+    "id": "Talent.BooteFahren",
+    "name": "Boats",
+    "german_name": "Boote Fahren",
+    "group": "craft",
+    "group_raw": "HANDWERK",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "specializations": [
+      "Talent.Spezialisierung.Einmaster",
+      "Talent.Spezialisierung.Floesse",
+      "Talent.Spezialisierung.KanusKajaks",
+      "Talent.Spezialisierung.Ruderboote"
+    ],
+    "skt_column": 2,
+    "test_attributes": [
+      "Eigenschaft.GE",
+      "Eigenschaft.KO",
+      "Eigenschaft.KK"
+    ]
+  },
+  {
+    "id": "Talent.FahrzeugLenken",
+    "name": "Drive",
+    "german_name": "Fahrzeug Lenken",
+    "group": "craft",
+    "group_raw": "HANDWERK",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "specializations": [
+      "Talent.Spezialisierung.Lastkarren",
+      "Talent.Spezialisierung.Streitwagen",
+      "Talent.Spezialisierung.Zuggespanne"
+    ],
+    "skt_column": 2,
+    "test_attributes": [
+      "Eigenschaft.IN",
+      "Eigenschaft.CH",
+      "Eigenschaft.FF"
+    ]
+  },
+  {
+    "id": "Talent.Falschspiel",
+    "name": "Cheat",
+    "german_name": "Falschspiel",
+    "group": "craft",
+    "group_raw": "HANDWERK",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "specializations": [
+      "Talent.Spezialisierung.Wuerfel",
+      "Talent.Spezialisierung.Karten"
+    ],
+    "skt_column": 2,
+    "test_attributes": [
+      "Eigenschaft.MU",
+      "Eigenschaft.CH",
+      "Eigenschaft.FF"
+    ],
+    "prerequisites": [
+      "MENSCHENKENNTNIS_4"
+    ]
+  },
+  {
+    "id": "Talent.Feinmechanik",
+    "name": "Light Engineering",
+    "german_name": "Feinmechanik",
+    "group": "craft",
+    "group_raw": "HANDWERK",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "specializations": [
+      "Talent.Spezialisierung.GoldSilberschmied",
+      "Talent.Spezialisierung.Gravieren",
+      "Talent.Spezialisierung.Schloesser",
+      "Talent.Spezialisierung.Siegelstoecke",
+      "Talent.Spezialisierung.TrickwaffenFallen",
+      "Talent.Spezialisierung.Uhrwerke"
+    ],
+    "skt_column": 2,
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.FF",
+      "Eigenschaft.FF"
+    ],
+    "prerequisites": [
+      "MALEN_ZEICHNEN_4"
+    ]
+  },
+  {
+    "id": "Talent.Fleischer",
+    "name": "Butcher",
+    "german_name": "Fleischer",
+    "group": "craft",
+    "group_raw": "HANDWERK",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "specializations": [
+      "Talent.Spezialisierung.Fische",
+      "Talent.Spezialisierung.Gefluegel",
+      "Talent.Spezialisierung.Reptilien",
+      "Talent.Spezialisierung.Saeugetiere"
+    ],
+    "skt_column": 2,
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.FF",
+      "Eigenschaft.KK"
+    ]
+  },
+  {
+    "id": "Talent.GerberKuerschner",
+    "name": "Tanner/Furrier",
+    "german_name": "Gerber/Kürschner",
+    "group": "craft",
+    "group_raw": "HANDWERK",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "specializations": [
+      "Talent.Spezialisierung.Gerber",
+      "Talent.Spezialisierung.Kuerschner",
+      "Talent.Spezialisierung.Trophaeen"
+    ],
+    "skt_column": 2,
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.FF",
+      "Eigenschaft.KO"
+    ]
+  },
+  {
+    "id": "Talent.Grobschmied",
+    "name": "Blacksmith",
+    "german_name": "Grobschmied",
+    "group": "craft",
+    "group_raw": "HANDWERK",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "specializations": [
+      "Talent.Spezialisierung.Drahtzieher",
+      "Talent.Spezialisierung.Hufschmied",
+      "Talent.Spezialisierung.Plaettner",
+      "Talent.Spezialisierung.Schwarzschmied",
+      "Talent.Spezialisierung.Spengler",
+      "Talent.Spezialisierung.Waffenschmied"
+    ],
+    "skt_column": 2,
+    "test_attributes": [
+      "Eigenschaft.FF",
+      "Eigenschaft.KO",
+      "Eigenschaft.KK"
+    ]
+  },
+  {
+    "id": "Talent.HeilkundeGift",
+    "name": "Treat Poison",
+    "german_name": "Heilkunde Gift",
+    "group": "craft",
+    "group_raw": "HANDWERK",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "specializations": [
+      "Talent.Spezialisierung.AlchimistischeZaubergifte",
+      "Talent.Spezialisierung.MineralischeGifte",
+      "Talent.Spezialisierung.PflanzlicheGifte",
+      "Talent.Spezialisierung.TierischeGifte",
+      "Talent.Spezialisierung.Atemgifte",
+      "Talent.Spezialisierung.Einnahmegifte",
+      "Talent.Spezialisierung.Kontaktgifte",
+      "Talent.Spezialisierung.Waffengifte"
+    ],
+    "skt_column": 2,
+    "test_attributes": [
+      "Eigenschaft.MU",
+      "Eigenschaft.KL",
+      "Eigenschaft.IN"
+    ]
+  },
+  {
+    "id": "Talent.HeilkundeKrankheiten",
+    "name": "Treat Disease",
+    "german_name": "Heilkunde Krankheiten",
+    "group": "craft",
+    "group_raw": "HANDWERK",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "skt_column": 2,
+    "test_attributes": [
+      "Eigenschaft.MU",
+      "Eigenschaft.KL",
+      "Eigenschaft.CH"
+    ]
+  },
+  {
+    "id": "Talent.HeilkundeSeele",
+    "name": "Treat Psyche",
+    "german_name": "Heilkunde Seele",
+    "group": "craft",
+    "group_raw": "HANDWERK",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "skt_column": 2,
+    "test_attributes": [
+      "Eigenschaft.IN",
+      "Eigenschaft.CH",
+      "Eigenschaft.CH"
+    ]
+  },
+  {
+    "id": "Talent.HeilkundeWunden",
+    "name": "Treat Wounds",
+    "german_name": "Heilkunde Wunden",
+    "group": "craft",
+    "group_raw": "HANDWERK",
+    "type": "basis",
+    "is_basic": true,
+    "source": "builtin",
+    "specializations": [
+      "Talent.Spezialisierung.BruecheQuetschungen",
+      "Talent.Spezialisierung.Schnitte",
+      "Talent.Spezialisierung.Verbrennungen",
+      "Talent.Spezialisierung.Zahnleiden"
+    ],
+    "skt_column": 2,
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.CH",
+      "Eigenschaft.FF"
+    ]
+  },
+  {
+    "id": "Talent.Holzbearbeitung",
+    "name": "Woodcraft",
+    "german_name": "Holzbearbeitung",
+    "group": "craft",
+    "group_raw": "HANDWERK",
+    "type": "basis",
+    "is_basic": true,
+    "source": "builtin",
+    "specializations": [
+      "Talent.Spezialisierung.Beinschnitzerei",
+      "Talent.Spezialisierung.Holzkunde",
+      "Talent.Spezialisierung.Holzwaffen",
+      "Talent.Spezialisierung.KueferWagner",
+      "Talent.Spezialisierung.MoebelschreinereiTischlerei",
+      "Talent.Spezialisierung.Schnitzen"
+    ],
+    "skt_column": 2,
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.FF",
+      "Eigenschaft.KK"
+    ]
+  },
+  {
+    "id": "Talent.Kartographie",
+    "name": "Cartography",
+    "german_name": "Kartographie",
+    "group": "craft",
+    "group_raw": "HANDWERK",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "specializations": [
+      "Talent.Spezialisierung.Gebaeude",
+      "Talent.Spezialisierung.HoehlenTunnel",
+      "Talent.Spezialisierung.KuestenMeere",
+      "Talent.Spezialisierung.Landschaften",
+      "Talent.Spezialisierung.Stadt"
+    ],
+    "skt_column": 2,
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.KL",
+      "Eigenschaft.FF"
+    ],
+    "prerequisites": [
+      "MALEN_ZEICHNEN_4"
+    ]
+  },
+  {
+    "id": "Talent.Kochen",
+    "name": "Cook",
+    "german_name": "Kochen",
+    "group": "craft",
+    "group_raw": "HANDWERK",
+    "type": "basis",
+    "is_basic": true,
+    "source": "builtin",
+    "specializations": [
+      "Talent.Spezialisierung.BackenBraten",
+      "Talent.Spezialisierung.Festmahle",
+      "Talent.Spezialisierung.Haltbarmachen",
+      "Talent.Spezialisierung.Marschversorgung",
+      "Talent.Spezialisierung.Traenke",
+      "Talent.Spezialisierung.Vorkoster"
+    ],
+    "skt_column": 2,
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.IN",
+      "Eigenschaft.FF"
+    ]
+  },
+  {
+    "id": "Talent.Lederarbeiten",
+    "name": "Leathercraft",
+    "german_name": "Lederarbeiten",
+    "group": "craft",
+    "group_raw": "HANDWERK",
+    "type": "basis",
+    "is_basic": true,
+    "source": "builtin",
+    "specializations": [
+      "Talent.Spezialisierung.GurteRiemen",
+      "Talent.Spezialisierung.Lederkleidung",
+      "Talent.Spezialisierung.Lederruestungen",
+      "Talent.Spezialisierung.Saettel",
+      "Talent.Spezialisierung.Schuhwerk"
+    ],
+    "skt_column": 2,
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.FF",
+      "Eigenschaft.FF"
+    ]
+  },
+  {
+    "id": "Talent.MalenZeichnen",
+    "name": "Paint/Draw",
+    "german_name": "Malen/Zeichnen",
+    "group": "craft",
+    "group_raw": "HANDWERK",
+    "type": "basis",
+    "is_basic": true,
+    "source": "builtin",
+    "specializations": [
+      "Talent.Spezialisierung.Architektur",
+      "Talent.Spezialisierung.Landschaften",
+      "Talent.Spezialisierung.Portraet",
+      "Talent.Spezialisierung.TechnischeSkizze"
+    ],
+    "skt_column": 2,
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.IN",
+      "Eigenschaft.FF"
+    ]
+  },
+  {
+    "id": "Talent.Musizieren",
+    "name": "Play Instrument",
+    "german_name": "Musizieren",
+    "group": "craft",
+    "group_raw": "HANDWERK",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "specializations": [
+      "Talent.Spezialisierung.Blechblasinstrumente",
+      "Talent.Spezialisierung.Floeten",
+      "Talent.Spezialisierung.Harfen",
+      "Talent.Spezialisierung.Lauten",
+      "Talent.Spezialisierung.Rhythmusinstrumente",
+      "Talent.Spezialisierung.Streichinstrumente",
+      "Talent.Spezialisierung.Tasteninstrumente"
+    ],
+    "skt_column": 2,
+    "test_attributes": [
+      "Eigenschaft.IN",
+      "Eigenschaft.CH",
+      "Eigenschaft.FF"
+    ]
+  },
+  {
+    "id": "Talent.SchloesserKnacken",
+    "name": "Pick Locks",
+    "german_name": "Schlösser Knacken",
+    "group": "craft",
+    "group_raw": "HANDWERK",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "specializations": [
+      "Talent.Spezialisierung.Fallen",
+      "Talent.Spezialisierung.Schloesser"
+    ],
+    "skt_column": 2,
+    "test_attributes": [
+      "Eigenschaft.IN",
+      "Eigenschaft.FF",
+      "Eigenschaft.FF"
+    ]
+  },
+  {
+    "id": "Talent.Schneidern",
+    "name": "Tailor",
+    "german_name": "Schneidern",
+    "group": "craft",
+    "group_raw": "HANDWERK",
+    "type": "basis",
+    "is_basic": true,
+    "source": "builtin",
+    "specializations": [
+      "Talent.Spezialisierung.EntwurfFestgewaender",
+      "Talent.Spezialisierung.FlickGebrauchsschneiderei",
+      "Talent.Spezialisierung.Tuchruestungen"
+    ],
+    "skt_column": 2,
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.FF",
+      "Eigenschaft.FF"
+    ]
+  },
+  {
+    "id": "Talent.Seefahrt",
+    "name": "Seafaring",
+    "german_name": "Seefahrt",
+    "group": "craft",
+    "group_raw": "HANDWERK",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "specializations": [
+      "Talent.Spezialisierung.Ruderschiff",
+      "Talent.Spezialisierung.Segelschiff"
+    ],
+    "skt_column": 2,
+    "test_attributes": [
+      "Eigenschaft.FF",
+      "Eigenschaft.GE",
+      "Eigenschaft.KK"
+    ]
+  },
+  {
+    "id": "Talent.Steinmetz",
+    "name": "Stonemason",
+    "german_name": "Steinmetz",
+    "group": "craft",
+    "group_raw": "HANDWERK",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "specializations": [
+      "Talent.Spezialisierung.Baugestein",
+      "Talent.Spezialisierung.Reliefs",
+      "Talent.Spezialisierung.Statuen"
+    ],
+    "skt_column": 2,
+    "test_attributes": [
+      "Eigenschaft.FF",
+      "Eigenschaft.FF",
+      "Eigenschaft.KK"
+    ],
+    "prerequisites": [
+      "GESTEINSKUNDE_4"
+    ]
+  },
+  {
+    "id": "Talent.Steinschneider",
+    "name": "Stonecutter/Jeweler",
+    "german_name": "Steinschneider/Juwelier",
+    "group": "craft",
+    "group_raw": "HANDWERK",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "skt_column": 2,
+    "test_attributes": [
+      "Eigenschaft.IN",
+      "Eigenschaft.FF",
+      "Eigenschaft.FF"
+    ],
+    "prerequisites": [
+      "GESTEINSKUNDE_4_STEIGERN"
+    ]
+  },
+  {
+    "id": "Talent.Taetowieren",
+    "name": "Tattoo",
+    "german_name": "Tätowieren",
+    "group": "craft",
+    "group_raw": "HANDWERK",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "specializations": [
+      "Talent.Spezialisierung.NaturalistischeDarstellung",
+      "Talent.Spezialisierung.Ornamente",
+      "Talent.Spezialisierung.Zaubertaetowierungen"
+    ],
+    "skt_column": 2,
+    "test_attributes": [
+      "Eigenschaft.IN",
+      "Eigenschaft.FF",
+      "Eigenschaft.FF"
+    ],
+    "prerequisites": [
+      "MALEN_ZEICHNEN_4"
+    ]
+  },
+  {
+    "id": "Talent.Zimmermann",
+    "name": "Carpenter",
+    "german_name": "Zimmermann",
+    "group": "craft",
+    "group_raw": "HANDWERK",
+    "type": "spezial",
+    "is_basic": false,
+    "source": "builtin",
+    "specializations": [
+      "Talent.Spezialisierung.Dachdecker",
+      "Talent.Spezialisierung.Holzkonstruktionen",
+      "Talent.Spezialisierung.Schiffszimmermann"
+    ],
+    "skt_column": 2,
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.FF",
+      "Eigenschaft.KK"
+    ],
+    "prerequisites": [
+      "HOLZBEARBEITUNG_4_STEIGERN"
+    ]
+  },
+  {
+    "id": "Talent.Gefahreninstinkt",
+    "name": "Danger Sense",
+    "german_name": "Gefahreninstinkt",
+    "group": "gifts",
+    "group_raw": "GABEN",
+    "type": "gabe",
+    "is_basic": false,
+    "source": "builtin",
+    "skt_column": 6,
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.IN",
+      "Eigenschaft.IN"
+    ]
+  },
+  {
+    "id": "Talent.Magiegespuer",
+    "name": "Magic Sense",
+    "german_name": "Magiegespür",
+    "group": "gifts",
+    "group_raw": "GABEN",
+    "type": "gabe",
+    "is_basic": false,
+    "source": "builtin",
+    "skt_column": 6,
+    "test_attributes": [
+      "Eigenschaft.MU",
+      "Eigenschaft.IN",
+      "Eigenschaft.IN"
+    ]
+  },
+  {
+    "id": "Talent.Prophezeien",
+    "name": "Prophesy",
+    "german_name": "Prophezeien",
+    "group": "gifts",
+    "group_raw": "GABEN",
+    "type": "gabe",
+    "is_basic": false,
+    "source": "builtin",
+    "skt_column": 6,
+    "test_attributes": [
+      "Eigenschaft.IN",
+      "Eigenschaft.IN",
+      "Eigenschaft.CH"
+    ]
+  },
+  {
+    "id": "Talent.Zwergennase",
+    "name": "Dwarfnose",
+    "german_name": "Zwergennase",
+    "group": "gifts",
+    "group_raw": "GABEN",
+    "type": "gabe",
+    "is_basic": false,
+    "source": "builtin",
+    "skt_column": 6,
+    "test_attributes": [
+      "Eigenschaft.FF",
+      "Eigenschaft.IN",
+      "Eigenschaft.IN"
+    ]
+  },
+  {
+    "id": "Talent.Ritualkenntnis",
+    "name": "Ritual Lore",
+    "german_name": "Ritualkenntnis",
+    "group": "ritual_knowledge",
+    "group_raw": "RITUALKENNTNIS",
+    "type": "ritualkenntnis",
+    "is_basic": false,
+    "source": "builtin",
+    "skt_column": 5,
+    "test_attributes": [
+      "Eigenschaft.KL"
+    ],
+    "prerequisites": [
+      "NICHT_FREI_WAEHLBAR"
+    ]
+  }
+]

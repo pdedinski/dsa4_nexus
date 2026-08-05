@@ -1,0 +1,1353 @@
+[
+  {
+    "id": "Waffe.Andergaster",
+    "name": "Andergaster",
+    "german_name": "Andergaster",
+    "talent": "Talent.Zweihandschwerter",
+    "talents": [
+      "Talent.Zweihandschwerter"
+    ],
+    "tp": "3W+2",
+    "bf": 3,
+    "ini": -3,
+    "wm_at": 0,
+    "wm_pa": -2,
+    "dk_h": false,
+    "dk_n": false,
+    "dk_s": true,
+    "damage_threshold": 14,
+    "damage_step": 2,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Anderthalbhaender",
+    "name": "Bastard sword",
+    "german_name": "Anderthalbhänder",
+    "talent": "Talent.Anderthalbhaender",
+    "talents": [
+      "Talent.Anderthalbhaender",
+      "Talent.Zweihandschwerter"
+    ],
+    "tp": "W+5",
+    "bf": 1,
+    "ini": 1,
+    "wm_at": 0,
+    "wm_pa": 0,
+    "dk_h": false,
+    "dk_n": true,
+    "dk_s": true,
+    "damage_threshold": 11,
+    "damage_step": 4,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Barbarenstreitaxt",
+    "name": "Barbarian ax",
+    "german_name": "Barbarenstreitaxt",
+    "talent": "Talent.ZweihandHiebwaffen",
+    "talents": [
+      "Talent.ZweihandHiebwaffen"
+    ],
+    "tp": "3W+2",
+    "bf": 3,
+    "ini": -2,
+    "wm_at": -1,
+    "wm_pa": -4,
+    "dk_h": false,
+    "dk_n": true,
+    "dk_s": false,
+    "damage_threshold": 15,
+    "damage_step": 1,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Beil",
+    "name": "Cleaver",
+    "german_name": "Beil",
+    "talent": "Talent.Hiebwaffen",
+    "talents": [
+      "Talent.Hiebwaffen"
+    ],
+    "tp": "W+3",
+    "bf": 5,
+    "ini": -1,
+    "wm_at": -1,
+    "wm_pa": -2,
+    "dk_h": false,
+    "dk_n": true,
+    "dk_s": false,
+    "damage_threshold": 11,
+    "damage_step": 4,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Boronssichel",
+    "name": "Boronssickle",
+    "german_name": "Boronssichel",
+    "talent": "Talent.Zweihandschwerter",
+    "talents": [
+      "Talent.Zweihandschwerter"
+    ],
+    "tp": "2W+6",
+    "bf": 3,
+    "ini": -2,
+    "wm_at": 0,
+    "wm_pa": -3,
+    "dk_h": false,
+    "dk_n": false,
+    "dk_s": true,
+    "damage_threshold": 13,
+    "damage_step": 3,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Brabakbengel",
+    "name": "Brabak lad",
+    "german_name": "Brabakbengel",
+    "talent": "Talent.Hiebwaffen",
+    "talents": [
+      "Talent.Hiebwaffen"
+    ],
+    "tp": "W+5",
+    "bf": 1,
+    "ini": 0,
+    "wm_at": 0,
+    "wm_pa": -1,
+    "dk_h": false,
+    "dk_n": true,
+    "dk_s": false,
+    "damage_threshold": 13,
+    "damage_step": 3,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Degen",
+    "name": "Eppe",
+    "german_name": "Degen",
+    "talent": "Talent.Fechtwaffen",
+    "talents": [
+      "Talent.Fechtwaffen"
+    ],
+    "tp": "W+3",
+    "bf": 3,
+    "ini": 2,
+    "wm_at": 0,
+    "wm_pa": -1,
+    "dk_h": false,
+    "dk_n": true,
+    "dk_s": false,
+    "damage_threshold": 12,
+    "damage_step": 5,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Dolch",
+    "name": "Dagger",
+    "german_name": "Dolch",
+    "talent": "Talent.Dolche",
+    "talents": [
+      "Talent.Dolche"
+    ],
+    "tp": "W+1",
+    "bf": 3,
+    "ini": 0,
+    "wm_at": 0,
+    "wm_pa": -1,
+    "dk_h": true,
+    "dk_n": false,
+    "dk_s": false,
+    "damage_threshold": 12,
+    "damage_step": 5,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Doppelkhunchomer",
+    "name": "Double khunchomer",
+    "german_name": "Doppelkhunchomer",
+    "talent": "Talent.Zweihandschwerter",
+    "talents": [
+      "Talent.Zweihandschwerter"
+    ],
+    "tp": "W+6",
+    "bf": 2,
+    "ini": -1,
+    "wm_at": 0,
+    "wm_pa": -1,
+    "dk_h": false,
+    "dk_n": true,
+    "dk_s": true,
+    "damage_threshold": 12,
+    "damage_step": 2,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Drachenzahn",
+    "name": "Dragonstooth",
+    "german_name": "Drachenzahn",
+    "talent": "Talent.Dolche",
+    "talents": [
+      "Talent.Dolche"
+    ],
+    "tp": "W+2",
+    "bf": 0,
+    "ini": 0,
+    "wm_at": 0,
+    "wm_pa": 0,
+    "dk_h": true,
+    "dk_n": false,
+    "dk_s": false,
+    "damage_threshold": 11,
+    "damage_step": 4,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Dreizack",
+    "name": "Trident",
+    "german_name": "Dreizack",
+    "talent": "Talent.Speere",
+    "talents": [
+      "Talent.Speere"
+    ],
+    "tp": "W+4",
+    "bf": 5,
+    "ini": 0,
+    "wm_at": 0,
+    "wm_pa": -1,
+    "dk_h": false,
+    "dk_n": false,
+    "dk_s": true,
+    "damage_threshold": 13,
+    "damage_step": 3,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Dschadra",
+    "name": "Djadra",
+    "german_name": "Dschadra",
+    "talent": "Talent.Speere",
+    "talents": [
+      "Talent.Speere"
+    ],
+    "tp": "W+5",
+    "bf": 6,
+    "ini": -1,
+    "wm_at": 0,
+    "wm_pa": -3,
+    "dk_h": false,
+    "dk_n": false,
+    "dk_s": true,
+    "damage_threshold": 12,
+    "damage_step": 4,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Entermesser",
+    "name": "Cutlass",
+    "german_name": "Entermesser",
+    "talent": "Talent.Saebel",
+    "talents": [
+      "Talent.Saebel"
+    ],
+    "tp": "W+3",
+    "bf": 2,
+    "ini": 0,
+    "wm_at": 0,
+    "wm_pa": 0,
+    "dk_h": false,
+    "dk_n": true,
+    "dk_s": false,
+    "damage_threshold": 12,
+    "damage_step": 4,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Fackel",
+    "name": "Torch",
+    "german_name": "Fackel",
+    "talent": "Talent.Hiebwaffen",
+    "talents": [
+      "Talent.Hiebwaffen"
+    ],
+    "tp": "W",
+    "bf": 8,
+    "ini": -2,
+    "wm_at": -2,
+    "wm_pa": -3,
+    "dk_h": true,
+    "dk_n": true,
+    "dk_s": false,
+    "damage_threshold": 11,
+    "damage_step": 5,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Felsspalter",
+    "name": "Rock cleaver",
+    "german_name": "Felsspalter",
+    "talent": "Talent.ZweihandHiebwaffen",
+    "talents": [
+      "Talent.ZweihandHiebwaffen"
+    ],
+    "tp": "2W+2",
+    "bf": 2,
+    "ini": -1,
+    "wm_at": 0,
+    "wm_pa": -2,
+    "dk_h": false,
+    "dk_n": true,
+    "dk_s": false,
+    "damage_threshold": 14,
+    "damage_step": 2,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Florett",
+    "name": "Foil",
+    "german_name": "Florett",
+    "talent": "Talent.Fechtwaffen",
+    "talents": [
+      "Talent.Fechtwaffen"
+    ],
+    "tp": "W+3",
+    "bf": 4,
+    "ini": 3,
+    "wm_at": 1,
+    "wm_pa": -1,
+    "dk_h": false,
+    "dk_n": true,
+    "dk_s": false,
+    "damage_threshold": 13,
+    "damage_step": 5,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Glefe",
+    "name": "Glaive",
+    "german_name": "Glefe",
+    "talent": "Talent.Infanteriewaffen",
+    "talents": [
+      "Talent.Infanteriewaffen"
+    ],
+    "tp": "W+4",
+    "bf": 5,
+    "ini": -1,
+    "wm_at": 0,
+    "wm_pa": -2,
+    "dk_h": false,
+    "dk_n": false,
+    "dk_s": true,
+    "damage_threshold": 13,
+    "damage_step": 3,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Hakenspiess",
+    "name": "Bill",
+    "german_name": "Hakenspieß",
+    "talent": "Talent.Infanteriewaffen",
+    "talents": [
+      "Talent.Infanteriewaffen"
+    ],
+    "tp": "W+3",
+    "bf": 5,
+    "ini": 0,
+    "wm_at": -1,
+    "wm_pa": -1,
+    "dk_h": false,
+    "dk_n": false,
+    "dk_s": true,
+    "damage_threshold": 13,
+    "damage_step": 4,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Haumesser",
+    "name": "Machete",
+    "german_name": "Haumesser",
+    "talent": "Talent.Saebel",
+    "talents": [
+      "Talent.Saebel"
+    ],
+    "tp": "W+3",
+    "bf": 3,
+    "ini": -1,
+    "wm_at": 0,
+    "wm_pa": -2,
+    "dk_h": true,
+    "dk_n": true,
+    "dk_s": false,
+    "damage_threshold": 13,
+    "damage_step": 3,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Hellebarde",
+    "name": "Halberd",
+    "german_name": "Hellebarde",
+    "talent": "Talent.Infanteriewaffen",
+    "talents": [
+      "Talent.Infanteriewaffen"
+    ],
+    "tp": "W+5",
+    "bf": 5,
+    "ini": 0,
+    "wm_at": 0,
+    "wm_pa": -1,
+    "dk_h": false,
+    "dk_n": false,
+    "dk_s": true,
+    "damage_threshold": 12,
+    "damage_step": 3,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Holzfaelleraxt",
+    "name": "Woodcutter's ax",
+    "german_name": "Holzfälleraxt",
+    "talent": "Talent.ZweihandHiebwaffen",
+    "talents": [
+      "Talent.ZweihandHiebwaffen"
+    ],
+    "tp": "2W",
+    "bf": 5,
+    "ini": -2,
+    "wm_at": -1,
+    "wm_pa": -4,
+    "dk_h": false,
+    "dk_n": true,
+    "dk_s": false,
+    "damage_threshold": 12,
+    "damage_step": 2,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Holzspeer",
+    "name": "Wooden spear",
+    "german_name": "Holzspeer",
+    "talent": "Talent.Speere",
+    "talents": [
+      "Talent.Speere"
+    ],
+    "tp": "W+3",
+    "bf": 5,
+    "ini": 0,
+    "wm_at": -1,
+    "wm_pa": -3,
+    "dk_h": false,
+    "dk_n": false,
+    "dk_s": true,
+    "damage_threshold": 12,
+    "damage_step": 5,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Jagdmesser",
+    "name": "Hunting knife",
+    "german_name": "Jagdmesser",
+    "talent": "Talent.Dolche",
+    "talents": [
+      "Talent.Dolche"
+    ],
+    "tp": "W+2",
+    "bf": 3,
+    "ini": -1,
+    "wm_at": 0,
+    "wm_pa": -2,
+    "dk_h": true,
+    "dk_n": false,
+    "dk_s": false,
+    "damage_threshold": 12,
+    "damage_step": 5,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Jagdspiess",
+    "name": "Hunting spear",
+    "german_name": "Jagdspieß",
+    "talent": "Talent.Speere",
+    "talents": [
+      "Talent.Speere"
+    ],
+    "tp": "W+6",
+    "bf": 3,
+    "ini": -1,
+    "wm_at": 0,
+    "wm_pa": -1,
+    "dk_h": false,
+    "dk_n": false,
+    "dk_s": true,
+    "damage_threshold": 12,
+    "damage_step": 4,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Kampfstab",
+    "name": "Quarterstaff",
+    "german_name": "Kampfstab",
+    "talent": "Talent.Staebe",
+    "talents": [
+      "Talent.Staebe"
+    ],
+    "tp": "W+1",
+    "bf": 5,
+    "ini": 1,
+    "wm_at": 0,
+    "wm_pa": 0,
+    "dk_h": false,
+    "dk_n": true,
+    "dk_s": true,
+    "damage_threshold": 12,
+    "damage_step": 4,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Keule",
+    "name": "Club",
+    "german_name": "Keule",
+    "talent": "Talent.Hiebwaffen",
+    "talents": [
+      "Talent.Hiebwaffen"
+    ],
+    "tp": "W+2",
+    "bf": 3,
+    "ini": 0,
+    "wm_at": 0,
+    "wm_pa": -2,
+    "dk_h": false,
+    "dk_n": true,
+    "dk_s": false,
+    "damage_threshold": 11,
+    "damage_step": 3,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Khunchomer",
+    "name": "Khunchomer",
+    "german_name": "Khunchomer",
+    "talent": "Talent.Saebel",
+    "talents": [
+      "Talent.Saebel"
+    ],
+    "tp": "W+4",
+    "bf": 2,
+    "ini": 0,
+    "wm_at": 0,
+    "wm_pa": 0,
+    "dk_h": false,
+    "dk_n": true,
+    "dk_s": false,
+    "damage_threshold": 12,
+    "damage_step": 3,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Knueppel",
+    "name": "Cudgel",
+    "german_name": "Knüppel",
+    "talent": "Talent.Hiebwaffen",
+    "talents": [
+      "Talent.Hiebwaffen"
+    ],
+    "tp": "W+1",
+    "bf": 6,
+    "ini": 0,
+    "wm_at": 0,
+    "wm_pa": -2,
+    "dk_h": false,
+    "dk_n": true,
+    "dk_s": false,
+    "damage_threshold": 11,
+    "damage_step": 4,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Kriegshammer",
+    "name": "War hammer",
+    "german_name": "Kriegshammer",
+    "talent": "Talent.ZweihandHiebwaffen",
+    "talents": [
+      "Talent.ZweihandHiebwaffen"
+    ],
+    "tp": "2W+3",
+    "bf": 2,
+    "ini": -2,
+    "wm_at": -1,
+    "wm_pa": -3,
+    "dk_h": false,
+    "dk_n": true,
+    "dk_s": false,
+    "damage_threshold": 14,
+    "damage_step": 2,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Kurzschwert",
+    "name": "Short sword",
+    "german_name": "Kurzschwert",
+    "talent": "Talent.Schwerter",
+    "talents": [
+      "Talent.Dolche",
+      "Talent.Saebel",
+      "Talent.Schwerter"
+    ],
+    "tp": "W+2",
+    "bf": 1,
+    "ini": 0,
+    "wm_at": 0,
+    "wm_pa": -1,
+    "dk_h": true,
+    "dk_n": true,
+    "dk_s": false,
+    "damage_threshold": 11,
+    "damage_step": 4,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.KuslikerSaebel",
+    "name": "Kuslikian Saber",
+    "german_name": "Kusliker Säbel",
+    "talent": "Talent.Schwerter",
+    "talents": [
+      "Talent.Saebel",
+      "Talent.Schwerter"
+    ],
+    "tp": "W+3",
+    "bf": 1,
+    "ini": 1,
+    "wm_at": 0,
+    "wm_pa": 0,
+    "dk_h": false,
+    "dk_n": true,
+    "dk_s": false,
+    "damage_threshold": 12,
+    "damage_step": 4,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Langdolch",
+    "name": "Long dagger",
+    "german_name": "Langdolch",
+    "talent": "Talent.Dolche",
+    "talents": [
+      "Talent.Dolche",
+      "Talent.Fechtwaffen"
+    ],
+    "tp": "W+2",
+    "bf": 1,
+    "ini": 0,
+    "wm_at": 0,
+    "wm_pa": 0,
+    "dk_h": true,
+    "dk_n": false,
+    "dk_s": false,
+    "damage_threshold": 12,
+    "damage_step": 4,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Lindwurmschlaeger",
+    "name": "Linnorm slayer",
+    "german_name": "Lindwurmschläger",
+    "talent": "Talent.Hiebwaffen",
+    "talents": [
+      "Talent.Hiebwaffen"
+    ],
+    "tp": "W+4",
+    "bf": 1,
+    "ini": -1,
+    "wm_at": 0,
+    "wm_pa": -1,
+    "dk_h": true,
+    "dk_n": true,
+    "dk_s": false,
+    "damage_threshold": 11,
+    "damage_step": 3,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Magierstab",
+    "name": "Magician's staff",
+    "german_name": "Magierstab",
+    "talent": "Talent.Staebe",
+    "talents": [
+      "Talent.Staebe"
+    ],
+    "tp": "W+1",
+    "bf": 0,
+    "ini": 0,
+    "wm_at": -1,
+    "wm_pa": -1,
+    "dk_h": false,
+    "dk_n": true,
+    "dk_s": true,
+    "damage_threshold": 11,
+    "damage_step": 5,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Messer",
+    "name": "Knife",
+    "german_name": "Messer",
+    "talent": "Talent.Dolche",
+    "talents": [
+      "Talent.Dolche"
+    ],
+    "tp": "W",
+    "bf": 4,
+    "ini": -2,
+    "wm_at": -2,
+    "wm_pa": -3,
+    "dk_h": true,
+    "dk_n": false,
+    "dk_s": false,
+    "damage_threshold": 12,
+    "damage_step": 6,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Morgenstern",
+    "name": "Morning star",
+    "german_name": "Morgenstern",
+    "talent": "Talent.Kettenwaffen",
+    "talents": [
+      "Talent.Kettenwaffen"
+    ],
+    "tp": "W+5",
+    "bf": 2,
+    "ini": -1,
+    "wm_at": -1,
+    "wm_pa": -2,
+    "dk_h": false,
+    "dk_n": true,
+    "dk_s": false,
+    "damage_threshold": 14,
+    "damage_step": 2,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Ochsenherde",
+    "name": "Oxherd",
+    "german_name": "Ochsenherde",
+    "talent": "Talent.Kettenwaffen",
+    "talents": [
+      "Talent.Kettenwaffen"
+    ],
+    "tp": "3W+3",
+    "bf": 3,
+    "ini": -3,
+    "wm_at": -2,
+    "wm_pa": -4,
+    "dk_h": false,
+    "dk_n": true,
+    "dk_s": false,
+    "damage_threshold": 17,
+    "damage_step": 1,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Ogerschelle",
+    "name": "Ogerslap",
+    "german_name": "Ogerschelle",
+    "talent": "Talent.Kettenwaffen",
+    "talents": [
+      "Talent.Kettenwaffen"
+    ],
+    "tp": "2W+2",
+    "bf": 3,
+    "ini": -4,
+    "wm_at": -1,
+    "wm_pa": -3,
+    "dk_h": false,
+    "dk_n": true,
+    "dk_s": false,
+    "damage_threshold": 15,
+    "damage_step": 1,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Orknase",
+    "name": "Orknose",
+    "german_name": "Orknase",
+    "talent": "Talent.ZweihandHiebwaffen",
+    "talents": [
+      "Talent.ZweihandHiebwaffen"
+    ],
+    "tp": "W+5",
+    "bf": 4,
+    "ini": -1,
+    "wm_at": 0,
+    "wm_pa": -1,
+    "dk_h": false,
+    "dk_n": true,
+    "dk_s": false,
+    "damage_threshold": 12,
+    "damage_step": 2,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Partisane",
+    "name": "Partisan",
+    "german_name": "Partisane",
+    "talent": "Talent.Infanteriewaffen",
+    "talents": [
+      "Talent.Infanteriewaffen",
+      "Talent.Speere"
+    ],
+    "tp": "W+5",
+    "bf": 4,
+    "ini": 0,
+    "wm_at": 0,
+    "wm_pa": -2,
+    "dk_h": false,
+    "dk_n": false,
+    "dk_s": true,
+    "damage_threshold": 13,
+    "damage_step": 3,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Rabenschnabel",
+    "name": "Ravensbeak",
+    "german_name": "Rabenschnabel",
+    "talent": "Talent.Hiebwaffen",
+    "talents": [
+      "Talent.Hiebwaffen"
+    ],
+    "tp": "W+4",
+    "bf": 3,
+    "ini": 0,
+    "wm_at": 0,
+    "wm_pa": 0,
+    "dk_h": false,
+    "dk_n": true,
+    "dk_s": false,
+    "damage_threshold": 10,
+    "damage_step": 4,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Rapier",
+    "name": "Rapier",
+    "german_name": "Rapier",
+    "talent": "Talent.Fechtwaffen",
+    "talents": [
+      "Talent.Fechtwaffen",
+      "Talent.Schwerter"
+    ],
+    "tp": "W+3",
+    "bf": 2,
+    "ini": 1,
+    "wm_at": 0,
+    "wm_pa": 0,
+    "dk_h": false,
+    "dk_n": true,
+    "dk_s": false,
+    "damage_threshold": 12,
+    "damage_step": 4,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Saebel",
+    "name": "Saber",
+    "german_name": "Säbel",
+    "talent": "Talent.Saebel",
+    "talents": [
+      "Talent.Saebel",
+      "Talent.Schwerter"
+    ],
+    "tp": "W+3",
+    "bf": 2,
+    "ini": 1,
+    "wm_at": 0,
+    "wm_pa": 0,
+    "dk_h": false,
+    "dk_n": true,
+    "dk_s": false,
+    "damage_threshold": 12,
+    "damage_step": 4,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.SchwererDolch",
+    "name": "Heavy dagger",
+    "german_name": "Schwerer Dolch",
+    "talent": "Talent.Dolche",
+    "talents": [
+      "Talent.Dolche"
+    ],
+    "tp": "W+2",
+    "bf": 1,
+    "ini": 0,
+    "wm_at": 0,
+    "wm_pa": -1,
+    "dk_h": true,
+    "dk_n": false,
+    "dk_s": false,
+    "damage_threshold": 12,
+    "damage_step": 4,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Schwert",
+    "name": "Sword",
+    "german_name": "Schwert",
+    "talent": "Talent.Schwerter",
+    "talents": [
+      "Talent.Schwerter"
+    ],
+    "tp": "W+4",
+    "bf": 1,
+    "ini": 0,
+    "wm_at": 0,
+    "wm_pa": 0,
+    "dk_h": false,
+    "dk_n": true,
+    "dk_s": false,
+    "damage_threshold": 11,
+    "damage_step": 4,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Sense",
+    "name": "Scythe",
+    "german_name": "Sense",
+    "talent": "Talent.Infanteriewaffen",
+    "talents": [
+      "Talent.Infanteriewaffen"
+    ],
+    "tp": "W+3",
+    "bf": 7,
+    "ini": -2,
+    "wm_at": -2,
+    "wm_pa": -4,
+    "dk_h": false,
+    "dk_n": false,
+    "dk_s": true,
+    "damage_threshold": 13,
+    "damage_step": 4,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Sichel",
+    "name": "Sickle",
+    "german_name": "Sichel",
+    "talent": "Talent.Hiebwaffen",
+    "talents": [
+      "Talent.Hiebwaffen"
+    ],
+    "tp": "W+2",
+    "bf": 6,
+    "ini": -2,
+    "wm_at": -2,
+    "wm_pa": -2,
+    "dk_h": true,
+    "dk_n": false,
+    "dk_s": false,
+    "damage_threshold": 12,
+    "damage_step": 5,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Skraja",
+    "name": "Skraja",
+    "german_name": "Skraja",
+    "talent": "Talent.Hiebwaffen",
+    "talents": [
+      "Talent.Hiebwaffen"
+    ],
+    "tp": "W+3",
+    "bf": 4,
+    "ini": 0,
+    "wm_at": 0,
+    "wm_pa": 0,
+    "dk_h": false,
+    "dk_n": true,
+    "dk_s": false,
+    "damage_threshold": 11,
+    "damage_step": 3,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Speer",
+    "name": "Spear",
+    "german_name": "Speer",
+    "talent": "Talent.Speere",
+    "talents": [
+      "Talent.Speere"
+    ],
+    "tp": "W+5",
+    "bf": 5,
+    "ini": -1,
+    "wm_at": 0,
+    "wm_pa": -2,
+    "dk_h": false,
+    "dk_n": false,
+    "dk_s": true,
+    "damage_threshold": 12,
+    "damage_step": 4,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Spitzhacke",
+    "name": "Pick",
+    "german_name": "Spitzhacke",
+    "talent": "Talent.ZweihandHiebwaffen",
+    "talents": [
+      "Talent.ZweihandHiebwaffen"
+    ],
+    "tp": "W+6",
+    "bf": 5,
+    "ini": -3,
+    "wm_at": -2,
+    "wm_pa": -4,
+    "dk_h": false,
+    "dk_n": true,
+    "dk_s": false,
+    "damage_threshold": 13,
+    "damage_step": 2,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Stossspeer",
+    "name": "Greatspear",
+    "german_name": "Stoßspeer",
+    "talent": "Talent.Speere",
+    "talents": [
+      "Talent.Speere"
+    ],
+    "tp": "2W+2",
+    "bf": 3,
+    "ini": -1,
+    "wm_at": 0,
+    "wm_pa": -1,
+    "dk_h": false,
+    "dk_n": false,
+    "dk_s": true,
+    "damage_threshold": 11,
+    "damage_step": 4,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Streitaxt",
+    "name": "Battle ax",
+    "german_name": "Streitaxt",
+    "talent": "Talent.Hiebwaffen",
+    "talents": [
+      "Talent.Hiebwaffen"
+    ],
+    "tp": "W+4",
+    "bf": 2,
+    "ini": 0,
+    "wm_at": 0,
+    "wm_pa": -1,
+    "dk_h": false,
+    "dk_n": true,
+    "dk_s": false,
+    "damage_threshold": 13,
+    "damage_step": 2,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Streitkolben",
+    "name": "Mace",
+    "german_name": "Streitkolben",
+    "talent": "Talent.Hiebwaffen",
+    "talents": [
+      "Talent.Hiebwaffen"
+    ],
+    "tp": "W+4",
+    "bf": 1,
+    "ini": 0,
+    "wm_at": 0,
+    "wm_pa": -1,
+    "dk_h": false,
+    "dk_n": true,
+    "dk_s": false,
+    "damage_threshold": 11,
+    "damage_step": 3,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Stuhlbein",
+    "name": "Chair leg",
+    "german_name": "Stuhlbein",
+    "talent": "Talent.Hiebwaffen",
+    "talents": [
+      "Talent.Hiebwaffen"
+    ],
+    "tp": "W",
+    "bf": 8,
+    "ini": -1,
+    "wm_at": -1,
+    "wm_pa": -1,
+    "dk_h": true,
+    "dk_n": true,
+    "dk_s": false,
+    "damage_threshold": 11,
+    "damage_step": 5,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Sturmsense",
+    "name": "Storm Scythe",
+    "german_name": "Sturmsense",
+    "talent": "Talent.Infanteriewaffen",
+    "talents": [
+      "Talent.Infanteriewaffen"
+    ],
+    "tp": "W+4",
+    "bf": 5,
+    "ini": -1,
+    "wm_at": -1,
+    "wm_pa": -2,
+    "dk_h": false,
+    "dk_n": false,
+    "dk_s": true,
+    "damage_threshold": 13,
+    "damage_step": 3,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Tuzakmesser",
+    "name": "Tuzak knife",
+    "german_name": "Tuzakmesser",
+    "talent": "Talent.Anderthalbhaender",
+    "talents": [
+      "Talent.Anderthalbhaender",
+      "Talent.Zweihandschwerter"
+    ],
+    "tp": "W+6",
+    "bf": 1,
+    "ini": 1,
+    "wm_at": 0,
+    "wm_pa": 0,
+    "dk_h": false,
+    "dk_n": true,
+    "dk_s": true,
+    "damage_threshold": 12,
+    "damage_step": 4,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Vorschlaghammer",
+    "name": "Sledge hammer",
+    "german_name": "Vorschlaghammer",
+    "talent": "Talent.ZweihandHiebwaffen",
+    "talents": [
+      "Talent.ZweihandHiebwaffen"
+    ],
+    "tp": "W+5",
+    "bf": 5,
+    "ini": -3,
+    "wm_at": -2,
+    "wm_pa": -4,
+    "dk_h": false,
+    "dk_n": true,
+    "dk_s": false,
+    "damage_threshold": 13,
+    "damage_step": 2,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Waqqif",
+    "name": "Waqqif",
+    "german_name": "Waqqif",
+    "talent": "Talent.Saebel",
+    "talents": [
+      "Talent.Dolche",
+      "Talent.Saebel"
+    ],
+    "tp": "W+2",
+    "bf": 2,
+    "ini": -2,
+    "wm_at": -1,
+    "wm_pa": -3,
+    "dk_h": true,
+    "dk_n": false,
+    "dk_s": false,
+    "damage_threshold": 12,
+    "damage_step": 5,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.WarunkerHammer",
+    "name": "Warunk hammer",
+    "german_name": "Warunker Hammer",
+    "talent": "Talent.ZweihandHiebwaffen",
+    "talents": [
+      "Talent.ZweihandHiebwaffen"
+    ],
+    "tp": "W+6",
+    "bf": 2,
+    "ini": -1,
+    "wm_at": 0,
+    "wm_pa": -1,
+    "dk_h": false,
+    "dk_n": true,
+    "dk_s": true,
+    "damage_threshold": 14,
+    "damage_step": 3,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Wurfbeil",
+    "name": "Throwing ax",
+    "german_name": "Wurfbeil",
+    "talent": "Talent.Hiebwaffen",
+    "talents": [
+      "Talent.Hiebwaffen"
+    ],
+    "tp": "W+3",
+    "bf": 2,
+    "ini": -1,
+    "wm_at": 0,
+    "wm_pa": -2,
+    "dk_h": true,
+    "dk_n": false,
+    "dk_s": false,
+    "damage_threshold": 10,
+    "damage_step": 4,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Wurfdolch",
+    "name": "Throwing dagger",
+    "german_name": "Wurfdolch",
+    "talent": "Talent.Dolche",
+    "talents": [
+      "Talent.Dolche"
+    ],
+    "tp": "W+1",
+    "bf": 2,
+    "ini": -1,
+    "wm_at": -1,
+    "wm_pa": -2,
+    "dk_h": true,
+    "dk_n": false,
+    "dk_s": false,
+    "damage_threshold": 12,
+    "damage_step": 5,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Wurfmesser",
+    "name": "Throwing knife",
+    "german_name": "Wurfmesser",
+    "talent": "Talent.Dolche",
+    "talents": [
+      "Talent.Dolche"
+    ],
+    "tp": "W-1",
+    "bf": 2,
+    "ini": -1,
+    "wm_at": -2,
+    "wm_pa": -3,
+    "dk_h": true,
+    "dk_n": false,
+    "dk_s": false,
+    "damage_threshold": 12,
+    "damage_step": 6,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Wurfspeer",
+    "name": "Javelin",
+    "german_name": "Wurfspeer",
+    "talent": "Talent.Speere",
+    "talents": [
+      "Talent.Speere"
+    ],
+    "tp": "W+3",
+    "bf": 4,
+    "ini": -2,
+    "wm_at": -1,
+    "wm_pa": -3,
+    "dk_h": false,
+    "dk_n": true,
+    "dk_s": false,
+    "damage_threshold": 11,
+    "damage_step": 5,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Wurmspiess",
+    "name": "Wormspear",
+    "german_name": "Wurmspieß",
+    "talent": "Talent.Infanteriewaffen",
+    "talents": [
+      "Talent.Infanteriewaffen",
+      "Talent.Speere"
+    ],
+    "tp": "W+5",
+    "bf": 2,
+    "ini": 0,
+    "wm_at": 0,
+    "wm_pa": -2,
+    "dk_h": false,
+    "dk_n": false,
+    "dk_s": true,
+    "damage_threshold": 13,
+    "damage_step": 4,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Zweihaender",
+    "name": "Greatsword",
+    "german_name": "Zweihänder",
+    "talent": "Talent.Zweihandschwerter",
+    "talents": [
+      "Talent.Zweihandschwerter"
+    ],
+    "tp": "2W+4",
+    "bf": 2,
+    "ini": -1,
+    "wm_at": 0,
+    "wm_pa": -1,
+    "dk_h": false,
+    "dk_n": true,
+    "dk_s": true,
+    "damage_threshold": 12,
+    "damage_step": 3,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Zweililien",
+    "name": "Two-lilies",
+    "german_name": "Zweililien",
+    "talent": "Talent.Staebe",
+    "talents": [
+      "Talent.Staebe"
+    ],
+    "tp": "W+3",
+    "bf": 4,
+    "ini": 1,
+    "wm_at": 1,
+    "wm_pa": -1,
+    "dk_h": false,
+    "dk_n": true,
+    "dk_s": false,
+    "damage_threshold": 12,
+    "damage_step": 4,
+    "source": "builtin"
+  },
+  {
+    "id": "Waffe.Zwergenschlaegel",
+    "name": "Dwarfmallet",
+    "german_name": "Zwergenschlägel",
+    "talent": "Talent.ZweihandHiebwaffen",
+    "talents": [
+      "Talent.ZweihandHiebwaffen"
+    ],
+    "tp": "W+5",
+    "bf": 1,
+    "ini": -1,
+    "wm_at": 0,
+    "wm_pa": -1,
+    "dk_h": false,
+    "dk_n": true,
+    "dk_s": false,
+    "damage_threshold": 13,
+    "damage_step": 3,
+    "source": "builtin"
+  }
+]

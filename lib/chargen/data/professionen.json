@@ -1,0 +1,6000 @@
+[
+  {
+    "id": "Profession.Botenreiter",
+    "name": "Messenger",
+    "german_name": "Botenreiter",
+    "gp_cost": 0,
+    "attribute_modifiers": {},
+    "derived_modifiers": {
+      "EP": 2
+    },
+    "talent_bonuses": [
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.Armbrust",
+          "Talent.Bogen"
+        ],
+        "open": true
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.Dolche"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.Hiebwaffen",
+          "Talent.Saebel"
+        ],
+        "open": true
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.Ringen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.Athletik"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.Klettern",
+          "Talent.BooteFahren"
+        ],
+        "open": true
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.Koerperbeherrschung"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 5,
+        "bonuses": [
+          5
+        ],
+        "talents": [
+          "Talent.Reiten"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.Schwimmen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 4,
+        "bonuses": [
+          4
+        ],
+        "talents": [
+          "Talent.Selbstbeherrschung"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.Sinnenschaerfe"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 4,
+        "bonuses": [
+          4
+        ],
+        "talents": [
+          "Talent.Etikette"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.Gassenwissen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.Menschenkenntnis"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.Faehrtensuchen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 5,
+        "bonuses": [
+          5
+        ],
+        "talents": [
+          "Talent.Orientierung"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.Wettervorhersage"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Wildnisleben"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.Geographie"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.Heraldik"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Rechnen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Rechtskunde"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Tierkunde"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "SchriftenMuttersprache"
+        ],
+        "open": true
+      },
+      {
+        "type": "fixed",
+        "bonus": 4,
+        "bonuses": [
+          4,
+          4
+        ],
+        "talents": [
+          "Fremdsprachen"
+        ],
+        "open": true
+      },
+      {
+        "type": "fixed",
+        "bonus": 5,
+        "bonuses": [
+          5
+        ],
+        "talents": [
+          "Talent.Kartographie"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 4,
+        "bonuses": [
+          4
+        ],
+        "talents": [
+          "Talent.MalenZeichnen"
+        ],
+        "open": false
+      }
+    ],
+    "advantage_bonuses": [],
+    "disadvantage_bonuses": [],
+    "recommended_advantages_disadvantages": [
+      {
+        "id": "VorNachteil.Ausdauernd"
+      },
+      {
+        "id": "VorNachteil.Eisern"
+      },
+      {
+        "id": "VorNachteil.Gefahreninstinkt"
+      },
+      {
+        "id": "VorNachteil.GutesGedaechtnis"
+      },
+      {
+        "id": "VorNachteil.InnererKompass"
+      },
+      {
+        "id": "VorNachteil.ResistenzGegenKrankheiten"
+      },
+      {
+        "id": "VorNachteil.Richtungssinn"
+      },
+      {
+        "id": "VorNachteil.Verbindungen"
+      },
+      {
+        "id": "VorNachteil.ZaeherHund"
+      },
+      {
+        "id": "VorNachteil.Prinzipientreue"
+      },
+      {
+        "id": "VorNachteil.Verpflichtungen"
+      }
+    ],
+    "unsuitable_advantages_disadvantages": [
+      {
+        "id": "VorNachteil.Blutrausch"
+      },
+      {
+        "id": "VorNachteil.Dunkelangst"
+      },
+      {
+        "id": "VorNachteil.Fettleibig"
+      },
+      {
+        "id": "VorNachteil.Glasknochen"
+      },
+      {
+        "id": "VorNachteil.Goldgier"
+      },
+      {
+        "id": "VorNachteil.Krankheitsanfaellig"
+      },
+      {
+        "id": "VorNachteil.Kurzatmig"
+      },
+      {
+        "id": "VorNachteil.Neugier"
+      },
+      {
+        "id": "VorNachteil.Platzangst"
+      }
+    ],
+    "source": "builtin",
+    "_file": "Botenreiter.pro",
+    "requirements": [],
+    "special_ability_bonuses": [],
+    "discounted_special_abilities": [
+      {
+        "id": "Sonderfertigkeit.ReiterkampfPferd",
+        "variant": null
+      }
+    ],
+    "special_abilities": [],
+    "spells": []
+  },
+  {
+    "id": "Profession.Einbrecher",
+    "name": "Burglar",
+    "german_name": "Einbrecher",
+    "gp_cost": 0,
+    "attribute_modifiers": {},
+    "derived_modifiers": {},
+    "talent_bonuses": [
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.Dolche"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.Ringen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.Wurfmesser"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Akrobatik"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Athletik"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 6,
+        "bonuses": [
+          6
+        ],
+        "talents": [
+          "Talent.Klettern"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 5,
+        "bonuses": [
+          5
+        ],
+        "talents": [
+          "Talent.Koerperbeherrschung"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 5,
+        "bonuses": [
+          5
+        ],
+        "talents": [
+          "Talent.Schleichen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Selbstbeherrschung"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 5,
+        "bonuses": [
+          5
+        ],
+        "talents": [
+          "Talent.SichVerstecken"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.Sinnenschaerfe"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Taschendiebstahl"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 4,
+        "bonuses": [
+          4
+        ],
+        "talents": [
+          "Talent.Gassenwissen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.Menschenkenntnis"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.SichVerkleiden"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.Faehrtensuchen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.FesselnEntfesseln"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Orientierung"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.Mechanik"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Rechnen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.Rechtskunde"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 4,
+        "bonuses": [
+          4
+        ],
+        "talents": [
+          "Talent.Schaetzen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.MalenZeichnen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 7,
+        "bonuses": [
+          7
+        ],
+        "talents": [
+          "Talent.SchloesserKnacken"
+        ],
+        "open": false
+      }
+    ],
+    "advantage_bonuses": [],
+    "disadvantage_bonuses": [
+      {
+        "id": null,
+        "choices": [
+          {
+            "id": "VorNachteil.Goldgier",
+            "variant": null,
+            "rating": 5
+          },
+          {
+            "id": "VorNachteil.Neugier",
+            "variant": null,
+            "rating": 5
+          }
+        ],
+        "open": true
+      }
+    ],
+    "recommended_advantages_disadvantages": [
+      {
+        "id": "VorNachteil.Ausdauernd"
+      },
+      {
+        "id": "VorNachteil.Balance"
+      },
+      {
+        "id": "VorNachteil.Daemmerungssicht"
+      },
+      {
+        "id": "VorNachteil.Gefahreninstinkt"
+      },
+      {
+        "id": "VorNachteil.GutesGedaechtnis"
+      },
+      {
+        "id": "VorNachteil.HerausragendesGehoer"
+      },
+      {
+        "id": "VorNachteil.HerausragenderTastsinn"
+      },
+      {
+        "id": "VorNachteil.InnererKompass"
+      },
+      {
+        "id": "VorNachteil.Richtungssinn"
+      },
+      {
+        "id": "VorNachteil.Schlangenmensch"
+      },
+      {
+        "id": "VorNachteil.SozialeAnpassungsfaehigkeit"
+      },
+      {
+        "id": "VorNachteil.Verbindungen"
+      },
+      {
+        "id": "VorNachteil.Zwergennase"
+      },
+      {
+        "id": "VorNachteil.GesuchtI"
+      },
+      {
+        "id": "VorNachteil.GesuchtII"
+      },
+      {
+        "id": "VorNachteil.GesuchtIII"
+      },
+      {
+        "id": "VorNachteil.Goldgier"
+      },
+      {
+        "id": "VorNachteil.Neugier"
+      },
+      {
+        "id": "VorNachteil.Verpflichtungen"
+      }
+    ],
+    "unsuitable_advantages_disadvantages": [
+      {
+        "id": "VorNachteil.Dunkelangst"
+      },
+      {
+        "id": "VorNachteil.Fettleibig"
+      },
+      {
+        "id": "VorNachteil.Hoehenangst"
+      },
+      {
+        "id": "VorNachteil.Nachtblind"
+      },
+      {
+        "id": "VorNachteil.Raumangst"
+      }
+    ],
+    "source": "builtin",
+    "_file": "Einbrecher.pro",
+    "requirements": [],
+    "special_ability_bonuses": [],
+    "discounted_special_abilities": [],
+    "special_abilities": [],
+    "spells": []
+  },
+  {
+    "id": "Profession.Entdecker",
+    "name": "Explorer",
+    "german_name": "Entdecker",
+    "gp_cost": 6,
+    "attribute_modifiers": {},
+    "derived_modifiers": {},
+    "talent_bonuses": [
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.Armbrust"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Hiebwaffen",
+          "Talent.Saebel",
+          "Talent.Staebe"
+        ],
+        "open": true
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Klettern"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.Koerperbeherrschung"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.Reiten"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.Schwimmen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 4,
+        "bonuses": [
+          4
+        ],
+        "talents": [
+          "Talent.Sinnenschaerfe"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.Etikette"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.Menschenkenntnis"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Ueberreden"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Faehrtensuchen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.Orientierung"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Wettervorhersage"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Wildnisleben"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.Geographie"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 4,
+        "bonuses": [
+          4
+        ],
+        "talents": [
+          "Talent.Geschichtswissen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.GoetterKulte"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.Heraldik"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.Magiekunde"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.Mechanik"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 4,
+        "bonuses": [
+          4
+        ],
+        "talents": [
+          "Talent.Rechnen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.Rechtskunde"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.SagenLegenden"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.Schaetzen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.Sprachenkunde"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Sternkunde"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 5,
+        "bonuses": [
+          5,
+          4,
+          2
+        ],
+        "talents": [
+          "Talent.Anatomie",
+          "Talent.Alchimie",
+          "Talent.Bergbau",
+          "Talent.Feinmechanik",
+          "Talent.Geographie",
+          "Talent.Geschichtswissen",
+          "Talent.Gesteinskunde",
+          "Talent.GoetterKulte",
+          "Talent.Heraldik",
+          "Talent.Kartographie",
+          "Talent.Magiekunde",
+          "Talent.Mechanik",
+          "Talent.Pflanzenkunde",
+          "Talent.Rechtskunde",
+          "Talent.Sprachenkunde",
+          "Talent.Sternkunde",
+          "Talent.Tierkunde"
+        ],
+        "open": true
+      },
+      {
+        "type": "fixed",
+        "bonus": 6,
+        "bonuses": [
+          6,
+          6,
+          2,
+          2
+        ],
+        "talents": [
+          "Fremdsprachen"
+        ],
+        "open": true
+      },
+      {
+        "type": "fixed",
+        "bonus": 6,
+        "bonuses": [
+          6
+        ],
+        "talents": [
+          "SchriftenMuttersprache"
+        ],
+        "open": true
+      },
+      {
+        "type": "fixed",
+        "bonus": 4,
+        "bonuses": [
+          4,
+          4
+        ],
+        "talents": [
+          "Talent.KuslikerZeichen",
+          "Talent.TulamidyaSchrift",
+          "Talent.GlyphenVonUnau",
+          "Talent.IsdiraSchrift",
+          "Talent.AsdhariaSchrift",
+          "Talent.RogolanSchrift",
+          "Talent.UrTulamidyaSchrift",
+          "Talent.Nanduria",
+          "Talent.ZhayadSchrift",
+          "Talent.Chrmk",
+          "Talent.HjaldingscheRunen"
+        ],
+        "open": true
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.BooteFahren"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.Feinmechanik",
+          "Talent.SchloesserKnacken"
+        ],
+        "open": true
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.HeilkundeGift"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.HeilkundeWunden"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 5,
+        "bonuses": [
+          5
+        ],
+        "talents": [
+          "Talent.Kartographie"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 4,
+        "bonuses": [
+          4
+        ],
+        "talents": [
+          "Talent.MalenZeichnen"
+        ],
+        "open": false
+      }
+    ],
+    "advantage_bonuses": [],
+    "disadvantage_bonuses": [],
+    "recommended_advantages_disadvantages": [
+      {
+        "id": "VorNachteil.AdligeAbstammung"
+      },
+      {
+        "id": "VorNachteil.BegabungFuerTalentgruppe"
+      },
+      {
+        "id": "VorNachteil.Gefahreninstinkt"
+      },
+      {
+        "id": "VorNachteil.GutesGedaechtnis"
+      },
+      {
+        "id": "VorNachteil.InnererKompass"
+      },
+      {
+        "id": "VorNachteil.Richtungssinn"
+      },
+      {
+        "id": "VorNachteil.SozialeAnpassungsfaehigkeit"
+      },
+      {
+        "id": "VorNachteil.Verbindungen"
+      },
+      {
+        "id": "VorNachteil.Zwergennase"
+      },
+      {
+        "id": "VorNachteil.Verpflichtungen"
+      }
+    ],
+    "unsuitable_advantages_disadvantages": [
+      {
+        "id": "VorNachteil.Aberglaube"
+      },
+      {
+        "id": "VorNachteil.Dunkelangst"
+      },
+      {
+        "id": "VorNachteil.Hoehenangst"
+      },
+      {
+        "id": "VorNachteil.Raumangst"
+      }
+    ],
+    "source": "builtin",
+    "_file": "Entdecker.pro",
+    "requirements": [],
+    "special_ability_bonuses": [],
+    "discounted_special_abilities": [
+      {
+        "id": "Sonderfertigkeit.NandusgefaelligesWissen",
+        "variant": null
+      }
+    ],
+    "special_abilities": [],
+    "spells": []
+  },
+  {
+    "id": "Profession.Gaukler",
+    "name": "Mountebank",
+    "german_name": "Gaukler",
+    "gp_cost": 2,
+    "attribute_modifiers": {},
+    "derived_modifiers": {},
+    "talent_bonuses": [
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.Dolche"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.Hiebwaffen",
+          "Talent.Staebe"
+        ],
+        "open": true
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Raufen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Wurfmesser"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 5,
+        "bonuses": [
+          5,
+          3
+        ],
+        "talents": [
+          "Talent.Akrobatik",
+          "Talent.Athletik",
+          "Talent.Gaukeleien"
+        ],
+        "open": true
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2,
+          1
+        ],
+        "talents": [
+          "Talent.Klettern",
+          "Talent.Reiten"
+        ],
+        "open": true
+      },
+      {
+        "type": "fixed",
+        "bonus": 5,
+        "bonuses": [
+          5
+        ],
+        "talents": [
+          "Talent.Koerperbeherrschung"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.SichVerstecken"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.Singen",
+          "Talent.Tanzen"
+        ],
+        "open": true
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.Taschendiebstahl"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.Zechen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.Gassenwissen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 4,
+        "bonuses": [
+          4
+        ],
+        "talents": [
+          "Talent.Menschenkenntnis"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.SichVerkleiden"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.Ueberreden"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.Geographie"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.SagenLegenden"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Schaetzen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Tierkunde"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 4,
+        "bonuses": [
+          4
+        ],
+        "talents": [
+          "Fremdsprachen"
+        ],
+        "open": true
+      },
+      {
+        "type": "fixed",
+        "bonus": 4,
+        "bonuses": [
+          4,
+          2
+        ],
+        "talents": [
+          "Talent.Abrichten",
+          "Talent.Falschspiel",
+          "Talent.MalenZeichnen",
+          "Talent.Musizieren"
+        ],
+        "open": true
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.FahrzeugLenken"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.HeilkundeWunden"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.Kochen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Schneidern"
+        ],
+        "open": false
+      }
+    ],
+    "advantage_bonuses": [],
+    "disadvantage_bonuses": [],
+    "recommended_advantages_disadvantages": [
+      {
+        "id": "VorNachteil.Balance"
+      },
+      {
+        "id": "VorNachteil.Feenfreund"
+      },
+      {
+        "id": "VorNachteil.Gefahreninstinkt"
+      },
+      {
+        "id": "VorNachteil.Glueck"
+      },
+      {
+        "id": "VorNachteil.GlueckImSpiel"
+      },
+      {
+        "id": "VorNachteil.GutAussehend"
+      },
+      {
+        "id": "VorNachteil.Schlangenmensch"
+      },
+      {
+        "id": "VorNachteil.SozialeAnpassungsfaehigkeit"
+      },
+      {
+        "id": "VorNachteil.Wohlklang"
+      },
+      {
+        "id": "VorNachteil.Aberglaube"
+      },
+      {
+        "id": "VorNachteil.Eitelkeit"
+      },
+      {
+        "id": "VorNachteil.Neid"
+      },
+      {
+        "id": "VorNachteil.Neugier"
+      }
+    ],
+    "unsuitable_advantages_disadvantages": [
+      {
+        "id": "VorNachteil.AdligeAbstammung"
+      },
+      {
+        "id": "VorNachteil.Unansehnlich"
+      },
+      {
+        "id": "VorNachteil.WiderwaertigesAussehen"
+      }
+    ],
+    "source": "builtin",
+    "_file": "Gaukler.pro",
+    "requirements": [],
+    "special_ability_bonuses": [],
+    "discounted_special_abilities": [],
+    "special_abilities": [],
+    "spells": []
+  },
+  {
+    "id": "Profession.Jaeger",
+    "name": "Hunter",
+    "german_name": "Jäger",
+    "gp_cost": 11,
+    "attribute_modifiers": {},
+    "derived_modifiers": {
+      "EP": 2
+    },
+    "talent_bonuses": [
+      {
+        "type": "fixed",
+        "bonus": 5,
+        "bonuses": [
+          5
+        ],
+        "talents": [
+          "Talent.Armbrust",
+          "Talent.Bogen",
+          "Talent.Wurfspeere"
+        ],
+        "open": true
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.Dolche"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.Hiebwaffen",
+          "Talent.Saebel"
+        ],
+        "open": true
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Ringen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.Speere"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Athletik",
+          "Talent.Reiten",
+          "Talent.BooteFahren"
+        ],
+        "open": true
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Klettern"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Koerperbeherrschung"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 5,
+        "bonuses": [
+          5
+        ],
+        "talents": [
+          "Talent.Schleichen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Schwimmen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Selbstbeherrschung"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 5,
+        "bonuses": [
+          5
+        ],
+        "talents": [
+          "Talent.SichVerstecken"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 5,
+        "bonuses": [
+          5
+        ],
+        "talents": [
+          "Talent.Sinnenschaerfe"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.StimmenImitieren"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 6,
+        "bonuses": [
+          6
+        ],
+        "talents": [
+          "Talent.Faehrtensuchen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Fallenstellen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.FesselnEntfesseln"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.FischenAngeln"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.Orientierung"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.Wettervorhersage"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 5,
+        "bonuses": [
+          5
+        ],
+        "talents": [
+          "Talent.Wildnisleben"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Pflanzenkunde"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 4,
+        "bonuses": [
+          4
+        ],
+        "talents": [
+          "Talent.Tierkunde"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Abrichten",
+          "Talent.Bogenbau"
+        ],
+        "open": true
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.Fleischer",
+          "Talent.GerberKuerschner"
+        ],
+        "open": true
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.HeilkundeGift"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.HeilkundeKrankheiten"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.HeilkundeWunden"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 4,
+        "bonuses": [
+          4
+        ],
+        "talents": [
+          "Talent.Holzbearbeitung"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.Kochen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Lederarbeiten"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Schneidern"
+        ],
+        "open": false
+      }
+    ],
+    "advantage_bonuses": [],
+    "disadvantage_bonuses": [],
+    "recommended_advantages_disadvantages": [
+      {
+        "id": "VorNachteil.Ausdauernd"
+      },
+      {
+        "id": "VorNachteil.Daemmerungssicht"
+      },
+      {
+        "id": "VorNachteil.Eisern"
+      },
+      {
+        "id": "VorNachteil.Gefahreninstinkt"
+      },
+      {
+        "id": "VorNachteil.HerausragendesGehoer"
+      },
+      {
+        "id": "VorNachteil.HerausragendeSicht"
+      },
+      {
+        "id": "VorNachteil.InnererKompass"
+      },
+      {
+        "id": "VorNachteil.Richtungssinn"
+      },
+      {
+        "id": "VorNachteil.ZaeherHund"
+      },
+      {
+        "id": "VorNachteil.Raumangst"
+      }
+    ],
+    "unsuitable_advantages_disadvantages": [
+      {
+        "id": "VorNachteil.SozialeAnpassungsfaehigkeit"
+      },
+      {
+        "id": "VorNachteil.Dunkelangst"
+      },
+      {
+        "id": "VorNachteil.Nachtblind"
+      },
+      {
+        "id": "VorNachteil.Platzangst"
+      }
+    ],
+    "source": "builtin",
+    "_file": "Jaeger.pro",
+    "requirements": [],
+    "special_ability_bonuses": [
+      {
+        "id": "Sonderfertigkeit.Scharfschuetze",
+        "variant": null
+      },
+      {
+        "id": "Sonderfertigkeit.Scharfschuetze",
+        "variant": null
+      },
+      {
+        "id": "Sonderfertigkeit.Scharfschuetze",
+        "variant": null
+      }
+    ],
+    "discounted_special_abilities": [
+      {
+        "id": "Sonderfertigkeit.Ortskenntnis",
+        "variant": null
+      }
+    ],
+    "special_abilities": [
+      "Sonderfertigkeit.Scharfschuetze",
+      "Sonderfertigkeit.Scharfschuetze",
+      "Sonderfertigkeit.Scharfschuetze"
+    ],
+    "spells": []
+  },
+  {
+    "id": "Profession.Krieger",
+    "name": "Warrior",
+    "german_name": "Krieger",
+    "gp_cost": 24,
+    "attribute_modifiers": {},
+    "derived_modifiers": {
+      "EP": 3,
+      "VP": 2
+    },
+    "talent_bonuses": [
+      {
+        "type": "fixed",
+        "bonus": 6,
+        "bonuses": [
+          6
+        ],
+        "talents": [
+          "Talent.Anderthalbhaender"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 4,
+        "bonuses": [
+          4
+        ],
+        "talents": [
+          "Talent.Armbrust"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Dolche"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.Infanteriewaffen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Raufen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.Ringen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 6,
+        "bonuses": [
+          6
+        ],
+        "talents": [
+          "Talent.Schwerter"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 4,
+        "bonuses": [
+          4
+        ],
+        "talents": [
+          "Talent.Zweihandschwerter"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 4,
+        "bonuses": [
+          4
+        ],
+        "talents": [
+          "Talent.Athletik"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Klettern"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Koerperbeherrschung"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 5,
+        "bonuses": [
+          5
+        ],
+        "talents": [
+          "Talent.Reiten"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Schwimmen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 5,
+        "bonuses": [
+          5
+        ],
+        "talents": [
+          "Talent.Selbstbeherrschung"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Sinnenschaerfe"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.Zechen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.Etikette"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.FesselnEntfesseln"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.Orientierung"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Geschichtswissen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.GoetterKulte"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.Heraldik"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 4,
+        "bonuses": [
+          4
+        ],
+        "talents": [
+          "Talent.Kriegskunst"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Rechnen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Rechtskunde"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.SagenLegenden"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Tierkunde"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 4,
+        "bonuses": [
+          4
+        ],
+        "talents": [
+          "Talent.KuslikerZeichen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.HeilkundeWunden"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Lederarbeiten"
+        ],
+        "open": false
+      }
+    ],
+    "advantage_bonuses": [
+      {
+        "id": "VorNachteil.AkademischeAusbildungKrieger",
+        "variant": null,
+        "rating": null,
+        "open": false
+      },
+      {
+        "id": "VorNachteil.Prinzipientreue",
+        "variant": null,
+        "rating": 10,
+        "open": false
+      }
+    ],
+    "disadvantage_bonuses": [],
+    "recommended_advantages_disadvantages": [
+      {
+        "id": "VorNachteil.AdligeAbstammung"
+      },
+      {
+        "id": "VorNachteil.Ausdauernd"
+      },
+      {
+        "id": "VorNachteil.Eisern"
+      },
+      {
+        "id": "VorNachteil.HoheLebenskraft"
+      },
+      {
+        "id": "VorNachteil.SchnelleHeilung"
+      },
+      {
+        "id": "VorNachteil.ZaeherHund"
+      },
+      {
+        "id": "VorNachteil.Arroganz"
+      },
+      {
+        "id": "VorNachteil.Verpflichtungen"
+      }
+    ],
+    "unsuitable_advantages_disadvantages": [
+      {
+        "id": "VorNachteil.Blutrausch"
+      },
+      {
+        "id": "VorNachteil.Glasknochen"
+      },
+      {
+        "id": "VorNachteil.Einhaendig"
+      },
+      {
+        "id": "VorNachteil.Fettleibig"
+      },
+      {
+        "id": "VorNachteil.Krankheitsanfaellig"
+      },
+      {
+        "id": "VorNachteil.SchlechteRegeneration"
+      }
+    ],
+    "source": "builtin",
+    "_file": "Krieger.pro",
+    "requirements": [],
+    "special_ability_bonuses": [],
+    "discounted_special_abilities": [],
+    "special_abilities": [],
+    "spells": []
+  },
+  {
+    "id": "Profession.Kundschafter",
+    "name": "Scout",
+    "german_name": "Kundschafter",
+    "gp_cost": 7,
+    "attribute_modifiers": {},
+    "derived_modifiers": {
+      "EP": 2
+    },
+    "talent_bonuses": [
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.Armbrust",
+          "Talent.Bogen"
+        ],
+        "open": true
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Dolche"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.Hiebwaffen",
+          "Talent.Saebel"
+        ],
+        "open": true
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Ringen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.Speere",
+          "Talent.Staebe"
+        ],
+        "open": true
+      },
+      {
+        "type": "fixed",
+        "bonus": 4,
+        "bonuses": [
+          4,
+          3,
+          2
+        ],
+        "talents": [
+          "Talent.Athletik",
+          "Talent.BooteFahren",
+          "Talent.Reiten"
+        ],
+        "open": true
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.Klettern"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Koerperbeherrschung"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 4,
+        "bonuses": [
+          4
+        ],
+        "talents": [
+          "Talent.Schleichen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Schwimmen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Selbstbeherrschung"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 4,
+        "bonuses": [
+          4
+        ],
+        "talents": [
+          "Talent.SichVerstecken"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 6,
+        "bonuses": [
+          6
+        ],
+        "talents": [
+          "Talent.Sinnenschaerfe"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 5,
+        "bonuses": [
+          5
+        ],
+        "talents": [
+          "Talent.Faehrtensuchen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Fallenstellen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.FesselnEntfesseln"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.FischenAngeln"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 5,
+        "bonuses": [
+          5
+        ],
+        "talents": [
+          "Talent.Orientierung"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.Wettervorhersage"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 4,
+        "bonuses": [
+          4
+        ],
+        "talents": [
+          "Talent.Wildnisleben"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Geographie"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.Heraldik",
+          "Talent.Pflanzenkunde"
+        ],
+        "open": true
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Kriegskunst",
+          "Talent.Tierkunde"
+        ],
+        "open": true
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Fremdsprachen"
+        ],
+        "open": true
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.HeilkundeGift"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.HeilkundeKrankheiten"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.HeilkundeWunden"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Holzbearbeitung"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.Kochen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Lederarbeiten"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Schneidern"
+        ],
+        "open": false
+      }
+    ],
+    "advantage_bonuses": [],
+    "disadvantage_bonuses": [],
+    "recommended_advantages_disadvantages": [
+      {
+        "id": "VorNachteil.Ausdauernd"
+      },
+      {
+        "id": "VorNachteil.Balance"
+      },
+      {
+        "id": "VorNachteil.Daemmerungssicht"
+      },
+      {
+        "id": "VorNachteil.Eisern"
+      },
+      {
+        "id": "VorNachteil.Feenfreund"
+      },
+      {
+        "id": "VorNachteil.Gefahreninstinkt"
+      },
+      {
+        "id": "VorNachteil.HerausragendeSicht"
+      },
+      {
+        "id": "VorNachteil.HerausragendesGehoer"
+      },
+      {
+        "id": "VorNachteil.InnererKompass"
+      },
+      {
+        "id": "VorNachteil.Magiegespuer"
+      },
+      {
+        "id": "VorNachteil.Richtungssinn"
+      },
+      {
+        "id": "VorNachteil.ZaeherHund"
+      },
+      {
+        "id": "VorNachteil.Zeitgefuehl"
+      },
+      {
+        "id": "VorNachteil.Vorurteile1"
+      }
+    ],
+    "unsuitable_advantages_disadvantages": [
+      {
+        "id": "VorNachteil.Dunkelangst"
+      },
+      {
+        "id": "VorNachteil.Schwerhoerig"
+      },
+      {
+        "id": "VorNachteil.Kurzsichtig"
+      },
+      {
+        "id": "VorNachteil.Fettleibig"
+      },
+      {
+        "id": "VorNachteil.Glasknochen"
+      },
+      {
+        "id": "VorNachteil.Krankheitsanfaellig"
+      },
+      {
+        "id": "VorNachteil.Kurzatmig"
+      },
+      {
+        "id": "VorNachteil.Lahm"
+      },
+      {
+        "id": "VorNachteil.Nachtblind"
+      },
+      {
+        "id": "VorNachteil.Platzangst"
+      }
+    ],
+    "source": "builtin",
+    "_file": "Kundschafter.pro",
+    "requirements": [],
+    "special_ability_bonuses": [],
+    "discounted_special_abilities": [],
+    "special_abilities": [],
+    "spells": []
+  },
+  {
+    "id": "Profession.Legendensaenger",
+    "name": "Legend Singer",
+    "german_name": "Legendensänger",
+    "gp_cost": 4,
+    "attribute_modifiers": {},
+    "derived_modifiers": {},
+    "talent_bonuses": [
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Gaukeleien",
+          "Talent.StimmenImitieren"
+        ],
+        "open": true
+      },
+      {
+        "type": "fixed",
+        "bonus": 5,
+        "bonuses": [
+          5
+        ],
+        "talents": [
+          "Talent.Singen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Sinnenschaerfe"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 5,
+        "bonuses": [
+          5
+        ],
+        "talents": [
+          "Talent.Tanzen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.Betoeren"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 4,
+        "bonuses": [
+          4
+        ],
+        "talents": [
+          "Talent.Lehren"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 4,
+        "bonuses": [
+          4
+        ],
+        "talents": [
+          "Talent.Menschenkenntnis"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Ueberreden"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.Ueberzeugen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Geschichtswissen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.Magiekunde"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 6,
+        "bonuses": [
+          6
+        ],
+        "talents": [
+          "Talent.SagenLegenden"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.Sternkunde"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 4,
+        "bonuses": [
+          4
+        ],
+        "talents": [
+          "Talent.Isdira"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 8,
+        "bonuses": [
+          8
+        ],
+        "talents": [
+          "Talent.Asdharia"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 6,
+        "bonuses": [
+          6
+        ],
+        "talents": [
+          "Fremdsprachen"
+        ],
+        "open": true
+      },
+      {
+        "type": "fixed",
+        "bonus": 9,
+        "bonuses": [
+          9
+        ],
+        "talents": [
+          "Talent.IsdiraSchrift",
+          "Talent.AsdhariaSchrift"
+        ],
+        "open": true
+      },
+      {
+        "type": "fixed",
+        "bonus": 4,
+        "bonuses": [
+          4
+        ],
+        "talents": [
+          "Talent.MalenZeichnen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 5,
+        "bonuses": [
+          5
+        ],
+        "talents": [
+          "Talent.Musizieren"
+        ],
+        "open": false
+      }
+    ],
+    "advantage_bonuses": [],
+    "disadvantage_bonuses": [],
+    "recommended_advantages_disadvantages": [
+      {
+        "id": "VorNachteil.Astralmacht"
+      },
+      {
+        "id": "VorNachteil.GutesGedaechtnis"
+      }
+    ],
+    "unsuitable_advantages_disadvantages": [],
+    "source": "builtin",
+    "_file": "Legendensaenger.pro",
+    "requirements": [],
+    "special_ability_bonuses": [],
+    "discounted_special_abilities": [
+      {
+        "id": "Sonderfertigkeit.Sorgenlied",
+        "variant": null
+      },
+      {
+        "id": "Sonderfertigkeit.Friedenslied",
+        "variant": null
+      },
+      {
+        "id": "Sonderfertigkeit.Windgefluester",
+        "variant": null
+      },
+      {
+        "id": "Sonderfertigkeit.Zaubermelodie",
+        "variant": null
+      }
+    ],
+    "special_abilities": [],
+    "spells": []
+  },
+  {
+    "id": "Profession.Magier",
+    "name": "Magician",
+    "german_name": "Magier",
+    "gp_cost": 0,
+    "attribute_modifiers": {},
+    "derived_modifiers": {},
+    "talent_bonuses": [
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Staebe"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Selbstbeherrschung"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Sinnenschaerfe"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.Etikette"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Lehren"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Menschenkenntnis"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Ueberreden"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Ueberzeugen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.Anatomie"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.BrettWuerfelspiele"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Geographie"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.Geschichtswissen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.GoetterKulte"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 6,
+        "bonuses": [
+          6
+        ],
+        "talents": [
+          "Talent.Magiekunde"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Mechanik"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 4,
+        "bonuses": [
+          4
+        ],
+        "talents": [
+          "Talent.Pflanzenkunde"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 6,
+        "bonuses": [
+          6
+        ],
+        "talents": [
+          "Talent.Rechnen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Rechtskunde"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.SagenLegenden"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.Schaetzen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.Sprachenkunde"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 4,
+        "bonuses": [
+          4
+        ],
+        "talents": [
+          "Talent.Sternkunde"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Tierkunde"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Muttersprache"
+        ],
+        "open": true
+      },
+      {
+        "type": "fixed",
+        "bonus": 4,
+        "bonuses": [
+          4
+        ],
+        "talents": [
+          "NichtMuttersprache"
+        ],
+        "open": true
+      },
+      {
+        "type": "fixed",
+        "bonus": 7,
+        "bonuses": [
+          7
+        ],
+        "talents": [
+          "SchriftenMuttersprache"
+        ],
+        "open": true
+      },
+      {
+        "type": "fixed",
+        "bonus": 4,
+        "bonuses": [
+          4
+        ],
+        "talents": [
+          "Talent.UrTulamidyaSchrift",
+          "Talent.GlyphenVonUnau",
+          "Talent.KuslikerZeichen",
+          "Talent.Tulamidya",
+          "Talent.Zhayad"
+        ],
+        "open": true
+      },
+      {
+        "type": "fixed",
+        "bonus": 4,
+        "bonuses": [
+          4
+        ],
+        "talents": [
+          "Talent.Alchimie"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.HeilkundeGift"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.HeilkundeKrankheiten"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.HeilkundeWunden"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.Holzbearbeitung"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Kochen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.MalenZeichnen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.Ritualkenntnis"
+        ],
+        "open": false
+      }
+    ],
+    "advantage_bonuses": [
+      {
+        "id": "VorNachteil.Vollzauberer",
+        "variant": null,
+        "rating": null,
+        "open": false
+      }
+    ],
+    "disadvantage_bonuses": [
+      {
+        "id": "VorNachteil.Neugier",
+        "variant": null,
+        "rating": 5,
+        "open": false
+      },
+      {
+        "id": "VorNachteil.Verpflichtungen",
+        "variant": "Magier.Verpflichtungen",
+        "rating": null,
+        "open": false
+      }
+    ],
+    "recommended_advantages_disadvantages": [
+      {
+        "id": "VorNachteil.AstraleRegenerationI"
+      },
+      {
+        "id": "VorNachteil.AstraleRegenerationII"
+      },
+      {
+        "id": "VorNachteil.AstraleRegenerationIII"
+      },
+      {
+        "id": "VorNachteil.Astralmacht"
+      },
+      {
+        "id": "VorNachteil.Gebildet"
+      },
+      {
+        "id": "VorNachteil.GutesGedaechtnis"
+      },
+      {
+        "id": "VorNachteil.HoheMagieresistenz"
+      },
+      {
+        "id": "VorNachteil.Verbindungen"
+      },
+      {
+        "id": "VorNachteil.Zeitgefuehl"
+      },
+      {
+        "id": "VorNachteil.Arroganz"
+      },
+      {
+        "id": "VorNachteil.Eitelkeit"
+      },
+      {
+        "id": "VorNachteil.Weltfremd"
+      }
+    ],
+    "unsuitable_advantages_disadvantages": [
+      {
+        "id": "VorNachteil.Blutrausch"
+      },
+      {
+        "id": "VorNachteil.Feenfreund"
+      },
+      {
+        "id": "VorNachteil.Koboldfreund"
+      },
+      {
+        "id": "VorNachteil.Aberglaube"
+      },
+      {
+        "id": "VorNachteil.Arkanophobie"
+      },
+      {
+        "id": "VorNachteil.Einarmig"
+      },
+      {
+        "id": "VorNachteil.Einhaendig"
+      },
+      {
+        "id": "VorNachteil.NiedrigeAstralkraft"
+      },
+      {
+        "id": "VorNachteil.NiedrigeMagieresistenz"
+      }
+    ],
+    "source": "builtin",
+    "_file": "Magier.pro",
+    "requirements": [],
+    "special_ability_bonuses": [],
+    "discounted_special_abilities": [
+      {
+        "id": "Sonderfertigkeit.Aufmerksamkeit",
+        "variant": null
+      },
+      {
+        "id": "Sonderfertigkeit.RegenerationII",
+        "variant": null
+      },
+      {
+        "id": "Sonderfertigkeit.SeilDesAdepten",
+        "variant": null
+      },
+      {
+        "id": "Sonderfertigkeit.Kraftfokus",
+        "variant": null
+      }
+    ],
+    "special_abilities": [],
+    "spells": []
+  },
+  {
+    "id": "Profession.Pirat",
+    "name": "Pirate",
+    "german_name": "Pirat",
+    "gp_cost": 1,
+    "attribute_modifiers": {},
+    "derived_modifiers": {},
+    "talent_bonuses": [
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Dolche"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 4,
+        "bonuses": [
+          4,
+          2
+        ],
+        "talents": [
+          "Talent.Hiebwaffen",
+          "Talent.Saebel"
+        ],
+        "open": true
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.Raufen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3,
+          2
+        ],
+        "talents": [
+          "Talent.Wurfbeile",
+          "Talent.Wurfmesser",
+          "Talent.Wurfspeere"
+        ],
+        "open": true
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Akrobatik"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Athletik"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 4,
+        "bonuses": [
+          4
+        ],
+        "talents": [
+          "Talent.Klettern"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 4,
+        "bonuses": [
+          4
+        ],
+        "talents": [
+          "Talent.Koerperbeherrschung"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.Schwimmen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.Selbstbeherrschung"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.Zechen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.Gassenwissen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.Menschenkenntnis"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.FesselnEntfesseln"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.FischenAngeln"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Orientierung"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.Wettervorhersage"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Geographie"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Kriegskunst"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.SagenLegenden"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Schaetzen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 4,
+        "bonuses": [
+          4
+        ],
+        "talents": [
+          "Fremdsprachen"
+        ],
+        "open": true
+      },
+      {
+        "type": "fixed",
+        "bonus": 4,
+        "bonuses": [
+          4
+        ],
+        "talents": [
+          "Talent.BooteFahren"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.HeilkundeWunden"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Holzbearbeitung"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Lederarbeiten"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Kochen",
+          "Talent.Mechanik",
+          "Talent.Schneidern",
+          "Talent.Sternkunde",
+          "Talent.Zimmermann"
+        ],
+        "open": true
+      },
+      {
+        "type": "fixed",
+        "bonus": 4,
+        "bonuses": [
+          4
+        ],
+        "talents": [
+          "Talent.Seefahrt"
+        ],
+        "open": false
+      }
+    ],
+    "advantage_bonuses": [],
+    "disadvantage_bonuses": [
+      {
+        "id": null,
+        "choices": [
+          {
+            "id": "VorNachteil.Aberglaube",
+            "variant": null,
+            "rating": 5
+          },
+          {
+            "id": "VorNachteil.Goldgier",
+            "variant": null,
+            "rating": 5
+          }
+        ],
+        "open": true
+      }
+    ],
+    "recommended_advantages_disadvantages": [
+      {
+        "id": "VorNachteil.HoheLebenskraft"
+      },
+      {
+        "id": "VorNachteil.InnererKompass"
+      },
+      {
+        "id": "VorNachteil.SchnelleHeilung"
+      },
+      {
+        "id": "VorNachteil.ZaeherHund"
+      },
+      {
+        "id": "VorNachteil.Aberglaube"
+      },
+      {
+        "id": "VorNachteil.GesuchtI"
+      },
+      {
+        "id": "VorNachteil.GesuchtII"
+      },
+      {
+        "id": "VorNachteil.GesuchtIII"
+      },
+      {
+        "id": "VorNachteil.Jaehzorn"
+      }
+    ],
+    "unsuitable_advantages_disadvantages": [
+      {
+        "id": "VorNachteil.AdligeAbstammung"
+      },
+      {
+        "id": "VorNachteil.Hoehenangst"
+      },
+      {
+        "id": "VorNachteil.Meeresangst"
+      },
+      {
+        "id": "VorNachteil.Platzangst"
+      },
+      {
+        "id": "VorNachteil.SchlechteRegeneration"
+      }
+    ],
+    "source": "builtin",
+    "_file": "Pirat.pro",
+    "requirements": [],
+    "special_ability_bonuses": [],
+    "discounted_special_abilities": [
+      {
+        "id": "Sonderfertigkeit.KampfImWasser",
+        "variant": null
+      }
+    ],
+    "special_abilities": [],
+    "spells": []
+  },
+  {
+    "id": "Profession.Ritter",
+    "name": "Knight",
+    "german_name": "Ritter",
+    "gp_cost": 23,
+    "attribute_modifiers": {},
+    "derived_modifiers": {
+      "EP": 3,
+      "VP": 2
+    },
+    "talent_bonuses": [
+      {
+        "type": "fixed",
+        "bonus": 7,
+        "bonuses": [
+          7,
+          4
+        ],
+        "talents": [
+          "Talent.Anderthalbhaender",
+          "Talent.Hiebwaffen",
+          "Talent.Schwerter",
+          "Talent.Zweihandschwerter"
+        ],
+        "open": true
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.Armbrust",
+          "Talent.Bogen",
+          "Talent.Wurfspeere"
+        ],
+        "open": true
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.Dolche"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 7,
+        "bonuses": [
+          7
+        ],
+        "talents": [
+          "Talent.Lanzenreiten"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.Raufen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.Ringen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.Athletik"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.Koerperbeherrschung"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 7,
+        "bonuses": [
+          7
+        ],
+        "talents": [
+          "Talent.Reiten"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 5,
+        "bonuses": [
+          5
+        ],
+        "talents": [
+          "Talent.Selbstbeherrschung"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Sinnenschaerfe"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Tanzen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 5,
+        "bonuses": [
+          5
+        ],
+        "talents": [
+          "Talent.Etikette"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.Lehren"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 4,
+        "bonuses": [
+          4
+        ],
+        "talents": [
+          "Talent.Menschenkenntnis"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Orientierung"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.BrettWuerfelspiele"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Geschichtswissen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.GoetterKulte"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 5,
+        "bonuses": [
+          5
+        ],
+        "talents": [
+          "Talent.Heraldik"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 4,
+        "bonuses": [
+          4
+        ],
+        "talents": [
+          "Talent.Kriegskunst"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 4,
+        "bonuses": [
+          4
+        ],
+        "talents": [
+          "Talent.Rechnen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.Rechtskunde"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 4,
+        "bonuses": [
+          4
+        ],
+        "talents": [
+          "SchriftenMuttersprache"
+        ],
+        "open": true
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Abrichten"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.HeilkundeWunden"
+        ],
+        "open": false
+      }
+    ],
+    "advantage_bonuses": [
+      {
+        "id": "VorNachteil.AdligeAbstammung",
+        "variant": null,
+        "rating": null,
+        "open": false
+      },
+      {
+        "id": "VorNachteil.Prinzipientreue",
+        "variant": null,
+        "rating": 10,
+        "open": false
+      },
+      {
+        "id": "VorNachteil.Verpflichtungen",
+        "variant": "Ritter.Verpflichtungen",
+        "rating": null,
+        "open": false
+      }
+    ],
+    "disadvantage_bonuses": [],
+    "recommended_advantages_disadvantages": [
+      {
+        "id": "VorNachteil.Ausdauernd"
+      },
+      {
+        "id": "VorNachteil.Ausruestungsvorteil"
+      },
+      {
+        "id": "VorNachteil.Eisern"
+      },
+      {
+        "id": "VorNachteil.HoheLebenskraft"
+      },
+      {
+        "id": "VorNachteil.Verbindungen"
+      },
+      {
+        "id": "VorNachteil.ZaeherHund"
+      },
+      {
+        "id": "VorNachteil.Arroganz"
+      },
+      {
+        "id": "VorNachteil.Eitelkeit"
+      },
+      {
+        "id": "VorNachteil.Vorurteile1"
+      }
+    ],
+    "unsuitable_advantages_disadvantages": [
+      {
+        "id": "VorNachteil.Blutrausch"
+      },
+      {
+        "id": "VorNachteil.Einhaendig"
+      },
+      {
+        "id": "VorNachteil.SozialeAnpassungsfaehigkeit"
+      },
+      {
+        "id": "VorNachteil.Fettleibig"
+      },
+      {
+        "id": "VorNachteil.Glasknochen"
+      },
+      {
+        "id": "VorNachteil.SchlechteRegeneration"
+      }
+    ],
+    "source": "builtin",
+    "_file": "Ritter.pro",
+    "requirements": [],
+    "special_ability_bonuses": [],
+    "discounted_special_abilities": [
+      {
+        "id": "Sonderfertigkeit.RuestungsgewoehnungII",
+        "variant": null
+      }
+    ],
+    "special_abilities": [],
+    "spells": []
+  },
+  {
+    "id": "Profession.Soeldner",
+    "name": "Mercenary",
+    "german_name": "Söldner",
+    "gp_cost": 10,
+    "attribute_modifiers": {},
+    "derived_modifiers": {
+      "EP": 2,
+      "VP": 1
+    },
+    "talent_bonuses": [
+      {
+        "type": "fixed",
+        "bonus": 5,
+        "bonuses": [
+          5,
+          3
+        ],
+        "talents": [
+          "Talent.Anderthalbhaender",
+          "Talent.Hiebwaffen",
+          "Talent.Kettenwaffen",
+          "Talent.Saebel",
+          "Talent.Schwerter",
+          "Talent.Speere"
+        ],
+        "open": true
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Armbrust",
+          "Talent.Bogen",
+          "Talent.Wurfspeere",
+          "Talent.Wurfbeile",
+          "Talent.Wurfmesser"
+        ],
+        "open": true
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.Dolche"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.Infanteriewaffen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.Raufen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.Ringen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Athletik"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.Klettern"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Koerperbeherrschung"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Schleichen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.Selbstbeherrschung"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.SichVerstecken"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.Zechen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.Gassenwissen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Menschenkenntnis"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Faehrtensuchen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Fallenstellen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.FesselnEntfesseln"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.FischenAngeln"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.Orientierung"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.Wettervorhersage"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Wildnisleben"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.Heraldik"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.Kriegskunst"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.Rechtskunde"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Schaetzen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Tierkunde"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 4,
+        "bonuses": [
+          4
+        ],
+        "talents": [
+          "Fremdsprachen"
+        ],
+        "open": true
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.HeilkundeWunden"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.Holzbearbeitung"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.Kochen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Lederarbeiten"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Schneidern"
+        ],
+        "open": false
+      }
+    ],
+    "advantage_bonuses": [],
+    "disadvantage_bonuses": [],
+    "recommended_advantages_disadvantages": [
+      {
+        "id": "VorNachteil.Ausdauernd"
+      },
+      {
+        "id": "VorNachteil.Eisern"
+      },
+      {
+        "id": "VorNachteil.Gefahreninstinkt"
+      },
+      {
+        "id": "VorNachteil.Kampfrausch"
+      },
+      {
+        "id": "VorNachteil.HoheLebenskraft"
+      },
+      {
+        "id": "VorNachteil.Richtungssinn"
+      },
+      {
+        "id": "VorNachteil.SchnelleHeilung"
+      },
+      {
+        "id": "VorNachteil.SozialeAnpassungsfaehigkeit"
+      },
+      {
+        "id": "VorNachteil.ZaeherHund"
+      },
+      {
+        "id": "VorNachteil.Aberglaube"
+      },
+      {
+        "id": "VorNachteil.GesuchtI"
+      },
+      {
+        "id": "VorNachteil.GesuchtII"
+      },
+      {
+        "id": "VorNachteil.GesuchtIII"
+      },
+      {
+        "id": "VorNachteil.Goldgier"
+      },
+      {
+        "id": "VorNachteil.Vorurteile1"
+      },
+      {
+        "id": "VorNachteil.Vorurteile2"
+      }
+    ],
+    "unsuitable_advantages_disadvantages": [
+      {
+        "id": "VorNachteil.AdligeAbstammung"
+      },
+      {
+        "id": "VorNachteil.Fettleibig"
+      },
+      {
+        "id": "VorNachteil.Glasknochen"
+      },
+      {
+        "id": "VorNachteil.Kurzatmig"
+      },
+      {
+        "id": "VorNachteil.Lahm"
+      },
+      {
+        "id": "VorNachteil.SchlechteRegeneration"
+      }
+    ],
+    "source": "builtin",
+    "_file": "Soeldner.pro",
+    "requirements": [],
+    "special_ability_bonuses": [],
+    "discounted_special_abilities": [
+      {
+        "id": "Sonderfertigkeit.RuestungsgewoehnungII",
+        "variant": null
+      }
+    ],
+    "special_abilities": [],
+    "spells": []
+  },
+  {
+    "id": "Profession.Streuner",
+    "name": "Rogue",
+    "german_name": "Streuner",
+    "gp_cost": 3,
+    "attribute_modifiers": {},
+    "derived_modifiers": {},
+    "talent_bonuses": [
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.Dolche"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Fechtwaffen",
+          "Talent.Hiebwaffen",
+          "Talent.Saebel",
+          "Talent.Schwerter"
+        ],
+        "open": true
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Raufen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.Ringen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Wurfmesser"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Athletik"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.Klettern"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.Koerperbeherrschung"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.Schleichen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.Selbstbeherrschung"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.SichVerstecken"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Sinnenschaerfe"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.Tanzen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 5,
+        "bonuses": [
+          5
+        ],
+        "talents": [
+          "Talent.Taschendiebstahl"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.Zechen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Betoeren"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Etikette"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 5,
+        "bonuses": [
+          5
+        ],
+        "talents": [
+          "Talent.Gassenwissen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 5,
+        "bonuses": [
+          5
+        ],
+        "talents": [
+          "Talent.Menschenkenntnis"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.SichVerkleiden"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.Ueberreden"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Rechnen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.SagenLegenden"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.Schaetzen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 4,
+        "bonuses": [
+          4
+        ],
+        "talents": [
+          "Fremdsprachen"
+        ],
+        "open": true
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Falschspiel"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.SchloesserKnacken"
+        ],
+        "open": false
+      }
+    ],
+    "advantage_bonuses": [
+      {
+        "id": "VorNachteil.SozialeAnpassungsfaehigkeit",
+        "variant": null,
+        "rating": null,
+        "open": false
+      }
+    ],
+    "disadvantage_bonuses": [],
+    "recommended_advantages_disadvantages": [
+      {
+        "id": "VorNachteil.Gefahreninstinkt"
+      },
+      {
+        "id": "VorNachteil.Glueck"
+      },
+      {
+        "id": "VorNachteil.GlueckImSpiel"
+      },
+      {
+        "id": "VorNachteil.GutAussehend"
+      },
+      {
+        "id": "VorNachteil.Verbindungen"
+      },
+      {
+        "id": "VorNachteil.Wohlklang"
+      },
+      {
+        "id": "VorNachteil.Aberglaube"
+      },
+      {
+        "id": "VorNachteil.Eitelkeit"
+      },
+      {
+        "id": "VorNachteil.GesuchtI"
+      },
+      {
+        "id": "VorNachteil.GesuchtII"
+      },
+      {
+        "id": "VorNachteil.GesuchtIII"
+      },
+      {
+        "id": "VorNachteil.Goldgier"
+      },
+      {
+        "id": "VorNachteil.Neugier"
+      }
+    ],
+    "unsuitable_advantages_disadvantages": [
+      {
+        "id": "VorNachteil.AdligeAbstammung"
+      }
+    ],
+    "source": "builtin",
+    "_file": "Streuner.pro",
+    "connection_points": 25,
+    "requirements": [],
+    "special_ability_bonuses": [
+      {
+        "id": "Sonderfertigkeit.Aufmerksamkeit",
+        "variant": null
+      }
+    ],
+    "discounted_special_abilities": [],
+    "special_abilities": [
+      "Sonderfertigkeit.Aufmerksamkeit"
+    ],
+    "spells": []
+  },
+  {
+    "id": "Profession.Wildnislaeufer",
+    "name": "Ranger",
+    "german_name": "Wildnisläufer",
+    "gp_cost": 5,
+    "attribute_modifiers": {},
+    "derived_modifiers": {},
+    "talent_bonuses": [
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Bogen",
+          "Talent.Wurfspeere"
+        ],
+        "open": true
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Dolche"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.Fechtwaffen",
+          "Talent.Hiebwaffen",
+          "Talent.Saebel",
+          "Talent.Schwerter",
+          "Talent.Speere",
+          "Talent.Staebe"
+        ],
+        "open": true
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.Athletik"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Klettern"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.Koerperbeherrschung"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.Schleichen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Schwimmen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.SichVerstecken"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 4,
+        "bonuses": [
+          4
+        ],
+        "talents": [
+          "Talent.Sinnenschaerfe"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.StimmenImitieren"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 5,
+        "bonuses": [
+          5
+        ],
+        "talents": [
+          "Talent.Faehrtensuchen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.Fallenstellen",
+          "Talent.FischenAngeln"
+        ],
+        "open": true
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.FesselnEntfesseln"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 4,
+        "bonuses": [
+          4
+        ],
+        "talents": [
+          "Talent.Orientierung"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.Wettervorhersage"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.Wildnisleben"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.Pflanzenkunde"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.Sternkunde"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 5,
+        "bonuses": [
+          5
+        ],
+        "talents": [
+          "Talent.Tierkunde"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.Bogenbau"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.BooteFahren"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.HeilkundeWunden"
+        ],
+        "open": false
+      }
+    ],
+    "advantage_bonuses": [],
+    "disadvantage_bonuses": [],
+    "recommended_advantages_disadvantages": [
+      {
+        "id": "VorNachteil.Astralmacht"
+      },
+      {
+        "id": "VorNachteil.Ausdauernd"
+      },
+      {
+        "id": "VorNachteil.Eisern"
+      },
+      {
+        "id": "VorNachteil.Gefahreninstinkt"
+      }
+    ],
+    "unsuitable_advantages_disadvantages": [
+      {
+        "id": "VorNachteil.Kurzatmig"
+      },
+      {
+        "id": "VorNachteil.Lahm"
+      }
+    ],
+    "source": "builtin",
+    "_file": "Wildnislaeufer.pro",
+    "requirements": [],
+    "special_ability_bonuses": [],
+    "discounted_special_abilities": [
+      {
+        "id": "Sonderfertigkeit.AusweichenI",
+        "variant": null
+      },
+      {
+        "id": "Sonderfertigkeit.AusweichenII",
+        "variant": null
+      }
+    ],
+    "special_abilities": [],
+    "spells": []
+  },
+  {
+    "id": "Profession.Wundarzt",
+    "name": "Physician",
+    "german_name": "Wundarzt",
+    "gp_cost": 0,
+    "attribute_modifiers": {},
+    "derived_modifiers": {},
+    "talent_bonuses": [
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Dolche"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.Hiebwaffen",
+          "Talent.Saebel"
+        ],
+        "open": true
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.Raufen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.Ringen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Staebe"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Selbstbeherrschung"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Sinnenschaerfe"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Zechen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.Etikette"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.Gassenwissen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 5,
+        "bonuses": [
+          5
+        ],
+        "talents": [
+          "Talent.Menschenkenntnis"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 4,
+        "bonuses": [
+          4
+        ],
+        "talents": [
+          "Talent.Ueberreden"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.Ueberzeugen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.FesselnEntfesseln"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.Anatomie"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.GoetterKulte"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.Magiekunde"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 4,
+        "bonuses": [
+          4
+        ],
+        "talents": [
+          "Talent.Pflanzenkunde"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.Rechnen"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 2,
+        "bonuses": [
+          2
+        ],
+        "talents": [
+          "Talent.Rechtskunde"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 1,
+        "bonuses": [
+          1
+        ],
+        "talents": [
+          "Talent.SagenLegenden"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 4,
+        "bonuses": [
+          4
+        ],
+        "talents": [
+          "Muttersprache"
+        ],
+        "open": true
+      },
+      {
+        "type": "fixed",
+        "bonus": 4,
+        "bonuses": [
+          4
+        ],
+        "talents": [
+          "Fremdsprachen"
+        ],
+        "open": true
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.HeilkundeGift"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 3,
+        "bonuses": [
+          3
+        ],
+        "talents": [
+          "Talent.HeilkundeKrankheiten"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 6,
+        "bonuses": [
+          6
+        ],
+        "talents": [
+          "Talent.HeilkundeWunden"
+        ],
+        "open": false
+      },
+      {
+        "type": "fixed",
+        "bonus": 4,
+        "bonuses": [
+          4
+        ],
+        "talents": [
+          "Talent.Kochen"
+        ],
+        "open": false
+      }
+    ],
+    "advantage_bonuses": [
+      {
+        "id": "VorNachteil.ResistenzGegenKrankheiten",
+        "variant": null,
+        "rating": null,
+        "open": false
+      }
+    ],
+    "disadvantage_bonuses": [],
+    "recommended_advantages_disadvantages": [
+      {
+        "id": "VorNachteil.Verbindungen"
+      }
+    ],
+    "unsuitable_advantages_disadvantages": [
+      {
+        "id": "VorNachteil.AdligeAbstammung"
+      },
+      {
+        "id": "VorNachteil.Eitelkeit"
+      },
+      {
+        "id": "VorNachteil.Krankheitsanfaellig"
+      },
+      {
+        "id": "VorNachteil.Totenangst"
+      }
+    ],
+    "source": "builtin",
+    "_file": "Wundarzt.pro",
+    "requirements": [],
+    "special_ability_bonuses": [],
+    "discounted_special_abilities": [
+      {
+        "id": "Sonderfertigkeit.Betaeubungsschlag",
+        "variant": null
+      }
+    ],
+    "special_abilities": [],
+    "spells": []
+  }
+]

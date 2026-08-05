@@ -1,0 +1,1029 @@
+[
+  {
+    "id": "Sonderfertigkeit.AkklimatisierungKaelte",
+    "name": "Acclimatization (cold)",
+    "german_name": "Akklimatisierung (Kälte)",
+    "group": "general",
+    "group_raw": "ALLGEMEIN",
+    "talent": null,
+    "ap_cost": 150,
+    "kosten_key": "AP_150",
+    "prerequisites": [
+      "NICHT_BEGINN"
+    ],
+    "expand_template": null,
+    "variant_source": null,
+    "free_variant": false,
+    "source": "builtin"
+  },
+  {
+    "id": "Sonderfertigkeit.AkklimatisierungHitze",
+    "name": "Acclimatization (heat)",
+    "german_name": "Akklimatisierung (Hitze)",
+    "group": "general",
+    "group_raw": "ALLGEMEIN",
+    "talent": null,
+    "ap_cost": 150,
+    "kosten_key": "AP_150",
+    "prerequisites": [
+      "NICHT_BEGINN"
+    ],
+    "expand_template": null,
+    "variant_source": null,
+    "free_variant": false,
+    "source": "builtin"
+  },
+  {
+    "id": "Sonderfertigkeit.Aufmerksamkeit",
+    "name": "Alertness",
+    "german_name": "Aufmerksamkeit",
+    "group": "combat",
+    "group_raw": "KAMPF",
+    "talent": null,
+    "ap_cost": 200,
+    "kosten_key": "AP_200_KAMPF",
+    "prerequisites": [
+      "IN_12"
+    ],
+    "expand_template": null,
+    "variant_source": null,
+    "free_variant": false,
+    "source": "builtin"
+  },
+  {
+    "id": "Sonderfertigkeit.AusweichenI",
+    "name": "Evade I",
+    "german_name": "Ausweichen I",
+    "group": "combat",
+    "group_raw": "KAMPF",
+    "talent": null,
+    "ap_cost": 300,
+    "kosten_key": "AP_300_SCHLANGEMENSCH",
+    "prerequisites": [
+      "GE_10"
+    ],
+    "expand_template": null,
+    "variant_source": null,
+    "free_variant": false,
+    "source": "builtin"
+  },
+  {
+    "id": "Sonderfertigkeit.AusweichenII",
+    "name": "Evade II",
+    "german_name": "Ausweichen II",
+    "group": "combat",
+    "group_raw": "KAMPF",
+    "talent": null,
+    "ap_cost": 200,
+    "kosten_key": "AP_200_SCHLANGEMENSCH",
+    "prerequisites": [
+      "GE_12",
+      "AUSWEICHEN_I",
+      "AUFMERKSAMKEIT"
+    ],
+    "expand_template": null,
+    "variant_source": null,
+    "free_variant": false,
+    "source": "builtin"
+  },
+  {
+    "id": "Sonderfertigkeit.AusweichenIII",
+    "name": "Evade III",
+    "german_name": "Ausweichen III",
+    "group": "combat",
+    "group_raw": "KAMPF",
+    "talent": null,
+    "ap_cost": 200,
+    "kosten_key": "AP_200_SCHLANGEMENSCH",
+    "prerequisites": [
+      "GE_15",
+      "AUSWEICHEN_II",
+      "KAMPFREFLEXE"
+    ],
+    "expand_template": null,
+    "variant_source": null,
+    "free_variant": false,
+    "source": "builtin"
+  },
+  {
+    "id": "Sonderfertigkeit.Betaeubungsschlag",
+    "name": "Stun Blow",
+    "german_name": "Betäubungsschlag",
+    "group": "combat",
+    "group_raw": "KAMPF",
+    "talent": null,
+    "ap_cost": 200,
+    "kosten_key": "AP_200",
+    "prerequisites": [
+      "FINTE",
+      "WUCHTSCHLAG"
+    ],
+    "expand_template": null,
+    "variant_source": null,
+    "free_variant": false,
+    "source": "builtin"
+  },
+  {
+    "id": "Sonderfertigkeit.DefensiverKampfstil",
+    "name": "Defensive Fighting",
+    "german_name": "Defensiver Kampfstil",
+    "group": "combat",
+    "group_raw": "KAMPF",
+    "talent": null,
+    "ap_cost": 100,
+    "kosten_key": "AP_100",
+    "prerequisites": [
+      "GE_12",
+      "MEISTERPARADE"
+    ],
+    "expand_template": null,
+    "variant_source": null,
+    "free_variant": false,
+    "source": "builtin"
+  },
+  {
+    "id": "Sonderfertigkeit.Dschungelkundig",
+    "name": "Topography: Jungle",
+    "german_name": "Dschungelkundig",
+    "group": "general",
+    "group_raw": "ALLGEMEIN",
+    "talent": null,
+    "ap_cost": 150,
+    "kosten_key": "GELAENDEKUNDE",
+    "prerequisites": [],
+    "expand_template": null,
+    "variant_source": null,
+    "free_variant": false,
+    "source": "builtin"
+  },
+  {
+    "id": "Sonderfertigkeit.Eiskundig",
+    "name": "Topography: Ice",
+    "german_name": "Eiskundig",
+    "group": "general",
+    "group_raw": "ALLGEMEIN",
+    "talent": null,
+    "ap_cost": 150,
+    "kosten_key": "GELAENDEKUNDE",
+    "prerequisites": [],
+    "expand_template": null,
+    "variant_source": null,
+    "free_variant": false,
+    "source": "builtin"
+  },
+  {
+    "id": "Sonderfertigkeit.Finte",
+    "name": "Maneuver",
+    "german_name": "Finte",
+    "group": "combat",
+    "group_raw": "KAMPF",
+    "talent": null,
+    "ap_cost": 200,
+    "kosten_key": "AP_200_KAMPF",
+    "prerequisites": [
+      "GE_12"
+    ],
+    "expand_template": null,
+    "variant_source": null,
+    "free_variant": false,
+    "source": "builtin"
+  },
+  {
+    "id": "Sonderfertigkeit.Gebirgskundig",
+    "name": "Topography: Mountains",
+    "german_name": "Gebirgskundig",
+    "group": "general",
+    "group_raw": "ALLGEMEIN",
+    "talent": null,
+    "ap_cost": 150,
+    "kosten_key": "GELAENDEKUNDE",
+    "prerequisites": [],
+    "expand_template": null,
+    "variant_source": null,
+    "free_variant": false,
+    "source": "builtin"
+  },
+  {
+    "id": "Sonderfertigkeit.GrosseMeditation",
+    "name": "Great Meditation",
+    "german_name": "Große Meditation",
+    "group": "magical",
+    "group_raw": "MAGISCHE",
+    "talent": null,
+    "ap_cost": 0,
+    "kosten_key": "AP_0",
+    "prerequisites": [
+      "IN_12",
+      "KL_12",
+      "Z"
+    ],
+    "expand_template": null,
+    "variant_source": null,
+    "free_variant": false,
+    "source": "builtin"
+  },
+  {
+    "id": "Sonderfertigkeit.Hammerfaust",
+    "name": "Hammer Fist",
+    "german_name": "Hammerfaust",
+    "group": "combat",
+    "group_raw": "KAMPF",
+    "talent": null,
+    "ap_cost": 150,
+    "kosten_key": "AP_150_KAMPF",
+    "prerequisites": [
+      "RAUFEN_7"
+    ],
+    "expand_template": null,
+    "variant_source": null,
+    "free_variant": false,
+    "source": "builtin"
+  },
+  {
+    "id": "Sonderfertigkeit.Hoehlenkundig",
+    "name": "Topography: Caves",
+    "german_name": "Höhlenkundig",
+    "group": "general",
+    "group_raw": "ALLGEMEIN",
+    "talent": null,
+    "ap_cost": 150,
+    "kosten_key": "GELAENDEKUNDE",
+    "prerequisites": [],
+    "expand_template": null,
+    "variant_source": null,
+    "free_variant": false,
+    "source": "builtin"
+  },
+  {
+    "id": "Sonderfertigkeit.KampfImWasser",
+    "name": "Fighting in Water",
+    "german_name": "Kampf im Wasser",
+    "group": "combat",
+    "group_raw": "KAMPF",
+    "talent": null,
+    "ap_cost": 100,
+    "kosten_key": "AP_100",
+    "prerequisites": [
+      "GE_12",
+      "KOERPERBEHERRSCHUNG_7"
+    ],
+    "expand_template": null,
+    "variant_source": null,
+    "free_variant": false,
+    "source": "builtin"
+  },
+  {
+    "id": "Sonderfertigkeit.Kampfreflexe",
+    "name": "Combat Reflexes",
+    "german_name": "Kampfreflexe",
+    "group": "combat",
+    "group_raw": "KAMPF",
+    "talent": null,
+    "ap_cost": 300,
+    "kosten_key": "AP_300_KAMPF",
+    "prerequisites": [
+      "INITIATIVE_10"
+    ],
+    "expand_template": null,
+    "variant_source": null,
+    "free_variant": false,
+    "source": "builtin"
+  },
+  {
+    "id": "Sonderfertigkeit.Kulturkunde",
+    "name": "Culture Lore",
+    "german_name": "Kulturkunde",
+    "group": "general",
+    "group_raw": "ALLGEMEIN",
+    "talent": null,
+    "ap_cost": null,
+    "kosten_key": "KULTURKUNDE",
+    "prerequisites": [
+      "IN_10",
+      "KL_10",
+      "KULTURKUNDE"
+    ],
+    "expand_template": null,
+    "variant_source": "kulturkunde",
+    "free_variant": false,
+    "source": "builtin"
+  },
+  {
+    "id": "Sonderfertigkeit.Linkhand",
+    "name": "Off-Hand Fighting",
+    "german_name": "Linkhand",
+    "group": "combat",
+    "group_raw": "KAMPF",
+    "talent": null,
+    "ap_cost": 300,
+    "kosten_key": "AP_300_KAMPF",
+    "prerequisites": [
+      "KK_10",
+      "GE_10",
+      "NICHT_EINARMIG"
+    ],
+    "expand_template": null,
+    "variant_source": null,
+    "free_variant": false,
+    "source": "builtin"
+  },
+  {
+    "id": "Sonderfertigkeit.Maraskankundig",
+    "name": "Topography: Maraskan",
+    "german_name": "Maraskankundig",
+    "group": "general",
+    "group_raw": "ALLGEMEIN",
+    "talent": null,
+    "ap_cost": 150,
+    "kosten_key": "GELAENDEKUNDE",
+    "prerequisites": [],
+    "expand_template": null,
+    "variant_source": null,
+    "free_variant": false,
+    "source": "builtin"
+  },
+  {
+    "id": "Sonderfertigkeit.Meereskundig",
+    "name": "Topography: Sea",
+    "german_name": "Meereskundig",
+    "group": "general",
+    "group_raw": "ALLGEMEIN",
+    "talent": null,
+    "ap_cost": 150,
+    "kosten_key": "GELAENDEKUNDE",
+    "prerequisites": [],
+    "expand_template": null,
+    "variant_source": null,
+    "free_variant": false,
+    "source": "builtin"
+  },
+  {
+    "id": "Sonderfertigkeit.MeisterDerImprovisation",
+    "name": "Master of Improvisation",
+    "german_name": "Meister der Improvisation",
+    "group": "general",
+    "group_raw": "ALLGEMEIN",
+    "talent": null,
+    "ap_cost": 200,
+    "kosten_key": "AP_200",
+    "prerequisites": [
+      "FF_12",
+      "IN_12"
+    ],
+    "expand_template": null,
+    "variant_source": null,
+    "free_variant": false,
+    "source": "builtin"
+  },
+  {
+    "id": "Sonderfertigkeit.Meisterparade",
+    "name": "Master Paree",
+    "german_name": "Meisterparade",
+    "group": "combat",
+    "group_raw": "KAMPF",
+    "talent": null,
+    "ap_cost": 200,
+    "kosten_key": "AP_200_KAMPF",
+    "prerequisites": [
+      "PARADE_8"
+    ],
+    "expand_template": null,
+    "variant_source": null,
+    "free_variant": false,
+    "source": "builtin"
+  },
+  {
+    "id": "Sonderfertigkeit.NandusgefaelligesWissen",
+    "name": "Nandus Pleasing Knowledge",
+    "german_name": "Nandusgefälliges Wissen",
+    "group": "general",
+    "group_raw": "ALLGEMEIN",
+    "talent": null,
+    "ap_cost": null,
+    "kosten_key": "NANDUSGEFAELLIGES_WISSEN",
+    "prerequisites": [
+      "KL_12",
+      "IN_12"
+    ],
+    "expand_template": null,
+    "variant_source": null,
+    "free_variant": false,
+    "source": "builtin"
+  },
+  {
+    "id": "Sonderfertigkeit.Ortskenntnis",
+    "name": "Knowledge of a Place",
+    "german_name": "Ortskenntnis",
+    "group": "general",
+    "group_raw": "ALLGEMEIN",
+    "talent": null,
+    "ap_cost": null,
+    "kosten_key": "ORTSKENNTNIS",
+    "prerequisites": [],
+    "expand_template": null,
+    "variant_source": "free_text",
+    "free_variant": true,
+    "source": "builtin"
+  },
+  {
+    "id": "Sonderfertigkeit.RegenerationI",
+    "name": "Regeneration I",
+    "german_name": "Regeneration I",
+    "group": "magical",
+    "group_raw": "MAGISCHE",
+    "talent": null,
+    "ap_cost": 100,
+    "kosten_key": "AP_100",
+    "prerequisites": [
+      "VZ",
+      "IN_12"
+    ],
+    "expand_template": null,
+    "variant_source": null,
+    "free_variant": false,
+    "source": "builtin"
+  },
+  {
+    "id": "Sonderfertigkeit.ReiterkampfPferd",
+    "name": "Mounted Combat (horse)",
+    "german_name": "Reiterkampf (Pferd)",
+    "group": "combat",
+    "group_raw": "KAMPF",
+    "talent": null,
+    "ap_cost": 200,
+    "kosten_key": "AP_200_KAMPF",
+    "prerequisites": [
+      "REITEN_7"
+    ],
+    "expand_template": null,
+    "variant_source": null,
+    "free_variant": false,
+    "source": "builtin"
+  },
+  {
+    "id": "Sonderfertigkeit.ReiterkampfStreitwagen",
+    "name": "Mounted Combat (chariot)",
+    "german_name": "Reiterkampf (Streitwagen)",
+    "group": "combat",
+    "group_raw": "KAMPF",
+    "talent": null,
+    "ap_cost": 200,
+    "kosten_key": "AP_200_KAMPF",
+    "prerequisites": [
+      "FAHRZEUGE_LENKEN_7"
+    ],
+    "expand_template": null,
+    "variant_source": null,
+    "free_variant": false,
+    "source": "builtin"
+  },
+  {
+    "id": "Sonderfertigkeit.Repraesentation",
+    "name": "Representation",
+    "german_name": "Repräsentation",
+    "group": "magical",
+    "group_raw": "MAGISCHE",
+    "talent": null,
+    "ap_cost": 2000,
+    "kosten_key": "AP_2000",
+    "prerequisites": [
+      "NICHT_FREI_WAEHLBAR"
+    ],
+    "expand_template": null,
+    "variant_source": "representation",
+    "free_variant": false,
+    "source": "builtin"
+  },
+  {
+    "id": "Sonderfertigkeit.RuestungsgewoehnungI",
+    "name": "Armor Use I",
+    "german_name": "Rüstungsgewöhnung I",
+    "group": "combat",
+    "group_raw": "KAMPF",
+    "talent": null,
+    "ap_cost": 150,
+    "kosten_key": "AP_150_KAMPF",
+    "prerequisites": [
+      "KK_10"
+    ],
+    "expand_template": null,
+    "variant_source": "armor",
+    "free_variant": false,
+    "source": "builtin"
+  },
+  {
+    "id": "Sonderfertigkeit.RuestungsgewoehnungII",
+    "name": "Armor Use II",
+    "german_name": "Rüstungsgewöhnung II",
+    "group": "combat",
+    "group_raw": "KAMPF",
+    "talent": null,
+    "ap_cost": 300,
+    "kosten_key": "AP_300_KAMPF",
+    "prerequisites": [
+      "RUESTUNGSGEWOEHNUNG_I",
+      "KK_12"
+    ],
+    "expand_template": null,
+    "variant_source": null,
+    "free_variant": false,
+    "source": "builtin"
+  },
+  {
+    "id": "Sonderfertigkeit.SchildkampfI",
+    "name": "Shield Fighting I",
+    "german_name": "Schildkampf I",
+    "group": "combat",
+    "group_raw": "KAMPF",
+    "talent": null,
+    "ap_cost": 200,
+    "kosten_key": "AP_200_KAMPF",
+    "prerequisites": [
+      "LINKHAND",
+      "KK_12",
+      "NICHT_EINARMIG"
+    ],
+    "expand_template": null,
+    "variant_source": null,
+    "free_variant": false,
+    "source": "builtin"
+  },
+  {
+    "id": "Sonderfertigkeit.SchildkampfII",
+    "name": "Shield Fighting II",
+    "german_name": "Schildkampf II",
+    "group": "combat",
+    "group_raw": "KAMPF",
+    "talent": null,
+    "ap_cost": 200,
+    "kosten_key": "AP_200",
+    "prerequisites": [
+      "SCHILDKAMPF_I",
+      "KK_15",
+      "NICHT_EINARMIG"
+    ],
+    "expand_template": null,
+    "variant_source": null,
+    "free_variant": false,
+    "source": "builtin"
+  },
+  {
+    "id": "Sonderfertigkeit.Schnellziehen",
+    "name": "Quick Draw",
+    "german_name": "Schnellziehen",
+    "group": "combat",
+    "group_raw": "KAMPF",
+    "talent": null,
+    "ap_cost": 200,
+    "kosten_key": "AP_200_SCHLANGEMENSCH",
+    "prerequisites": [
+      "GE_12",
+      "FF_10"
+    ],
+    "expand_template": null,
+    "variant_source": null,
+    "free_variant": false,
+    "source": "builtin"
+  },
+  {
+    "id": "Sonderfertigkeit.Standfest",
+    "name": "Steady Stand",
+    "german_name": "Standfest",
+    "group": "general",
+    "group_raw": "ALLGEMEIN",
+    "talent": null,
+    "ap_cost": 200,
+    "kosten_key": "AP_200_MIT_BALANCE",
+    "prerequisites": [
+      "GE_12"
+    ],
+    "expand_template": null,
+    "variant_source": null,
+    "free_variant": false,
+    "source": "builtin"
+  },
+  {
+    "id": "Sonderfertigkeit.Steppenkundig",
+    "name": "Topography: Steppe",
+    "german_name": "Steppenkundig",
+    "group": "general",
+    "group_raw": "ALLGEMEIN",
+    "talent": null,
+    "ap_cost": 150,
+    "kosten_key": "GELAENDEKUNDE",
+    "prerequisites": [],
+    "expand_template": null,
+    "variant_source": null,
+    "free_variant": false,
+    "source": "builtin"
+  },
+  {
+    "id": "Sonderfertigkeit.Sumpfkundig",
+    "name": "Topography: Swamp",
+    "german_name": "Sumpfkundig",
+    "group": "general",
+    "group_raw": "ALLGEMEIN",
+    "talent": null,
+    "ap_cost": 150,
+    "kosten_key": "GELAENDEKUNDE",
+    "prerequisites": [],
+    "expand_template": null,
+    "variant_source": null,
+    "free_variant": false,
+    "source": "builtin"
+  },
+  {
+    "id": "Sonderfertigkeit.UnauerSchule",
+    "name": "Unau School",
+    "german_name": "Unauer Schule",
+    "group": "combat",
+    "group_raw": "KAMPF",
+    "talent": null,
+    "ap_cost": 150,
+    "kosten_key": "AP_150_KAMPF",
+    "prerequisites": [
+      "RINGEN_7"
+    ],
+    "expand_template": null,
+    "variant_source": null,
+    "free_variant": false,
+    "source": "builtin"
+  },
+  {
+    "id": "Sonderfertigkeit.Waldkundig",
+    "name": "Topography: Forest",
+    "german_name": "Waldkundig",
+    "group": "general",
+    "group_raw": "ALLGEMEIN",
+    "talent": null,
+    "ap_cost": 150,
+    "kosten_key": "GELAENDEKUNDE",
+    "prerequisites": [],
+    "expand_template": null,
+    "variant_source": null,
+    "free_variant": false,
+    "source": "builtin"
+  },
+  {
+    "id": "Sonderfertigkeit.Wuchtschlag",
+    "name": "Called Attack",
+    "german_name": "Wuchtschlag",
+    "group": "combat",
+    "group_raw": "KAMPF",
+    "talent": null,
+    "ap_cost": 200,
+    "kosten_key": "AP_200_KAMPF",
+    "prerequisites": [
+      "KK_12"
+    ],
+    "expand_template": null,
+    "variant_source": null,
+    "free_variant": false,
+    "source": "builtin"
+  },
+  {
+    "id": "Sonderfertigkeit.Wuestenkundig",
+    "name": "Topography: Desert",
+    "german_name": "Wüstenkundig",
+    "group": "general",
+    "group_raw": "ALLGEMEIN",
+    "talent": null,
+    "ap_cost": 150,
+    "kosten_key": "GELAENDEKUNDE",
+    "prerequisites": [],
+    "expand_template": null,
+    "variant_source": null,
+    "free_variant": false,
+    "source": "builtin"
+  },
+  {
+    "id": "Sonderfertigkeit.Schnellladen",
+    "name": "Quick Load",
+    "german_name": "Schnellladen",
+    "group": "combat",
+    "group_raw": "KAMPF",
+    "talent": "Talent.Armbrust",
+    "ap_cost": 200,
+    "kosten_key": "AP_200",
+    "prerequisites": [
+      "FF_12",
+      "KK_12",
+      "SPEZIALISIERUNG"
+    ],
+    "expand_template": null,
+    "variant_source": null,
+    "free_variant": false,
+    "source": "builtin"
+  },
+  {
+    "id": "Sonderfertigkeit.Schnellladen",
+    "name": "Quick Load",
+    "german_name": "Schnellladen",
+    "group": "combat",
+    "group_raw": "KAMPF",
+    "talent": "Talent.Bogen",
+    "ap_cost": 200,
+    "kosten_key": "AP_200",
+    "prerequisites": [
+      "FF_12",
+      "KK_12",
+      "SPEZIALISIERUNG"
+    ],
+    "expand_template": null,
+    "variant_source": null,
+    "free_variant": false,
+    "source": "builtin"
+  },
+  {
+    "id": "Sonderfertigkeit.AstraleMeditation",
+    "name": "Astral Meditation",
+    "german_name": "Astrale Meditation",
+    "group": "magical",
+    "group_raw": "MAGISCHE",
+    "talent": null,
+    "ap_cost": 100,
+    "kosten_key": "AP_100",
+    "prerequisites": [
+      "IN_12",
+      "Z"
+    ],
+    "expand_template": null,
+    "variant_source": null,
+    "free_variant": false,
+    "source": "builtin"
+  },
+  {
+    "id": "Sonderfertigkeit.BindungDesStabes",
+    "name": "First Wand Enchantment",
+    "german_name": "Bindung des Stabes",
+    "group": "magical",
+    "group_raw": "MAGISCHE",
+    "talent": null,
+    "ap_cost": 100,
+    "kosten_key": "AP_100",
+    "prerequisites": [
+      "RITUALKENNTNIS_3"
+    ],
+    "expand_template": null,
+    "variant_source": null,
+    "free_variant": false,
+    "source": "builtin"
+  },
+  {
+    "id": "Sonderfertigkeit.Erinnerungsmelodie",
+    "name": "The Song of Memory",
+    "german_name": "Erinnerungsmelodie",
+    "group": "magical",
+    "group_raw": "MAGISCHE",
+    "talent": null,
+    "ap_cost": 150,
+    "kosten_key": "AP_150",
+    "prerequisites": [
+      "ZWEISTIMMIGER_GESANG"
+    ],
+    "expand_template": null,
+    "variant_source": null,
+    "free_variant": false,
+    "source": "builtin"
+  },
+  {
+    "id": "Sonderfertigkeit.EwigeFlamme",
+    "name": "Second Wand Enchantment",
+    "german_name": "Ewige Flamme",
+    "group": "magical",
+    "group_raw": "MAGISCHE",
+    "talent": null,
+    "ap_cost": 75,
+    "kosten_key": "AP_75",
+    "prerequisites": [
+      "RITUALKENNTNIS_5"
+    ],
+    "expand_template": null,
+    "variant_source": null,
+    "free_variant": false,
+    "source": "builtin"
+  },
+  {
+    "id": "Sonderfertigkeit.Freundschaftslied",
+    "name": "The Song of Friendship",
+    "german_name": "Freundschaftslied",
+    "group": "magical",
+    "group_raw": "MAGISCHE",
+    "talent": null,
+    "ap_cost": 50,
+    "kosten_key": "AP_50",
+    "prerequisites": [
+      "ZWEISTIMMIGER_GESANG"
+    ],
+    "expand_template": null,
+    "variant_source": null,
+    "free_variant": false,
+    "source": "builtin"
+  },
+  {
+    "id": "Sonderfertigkeit.Friedenslied",
+    "name": "The Song of Peace",
+    "german_name": "Friedenslied",
+    "group": "magical",
+    "group_raw": "MAGISCHE",
+    "talent": null,
+    "ap_cost": 250,
+    "kosten_key": "AP_250",
+    "prerequisites": [
+      "ZWEISTIMMIGER_GESANG"
+    ],
+    "expand_template": null,
+    "variant_source": null,
+    "free_variant": false,
+    "source": "builtin"
+  },
+  {
+    "id": "Sonderfertigkeit.Kraftfokus",
+    "name": "Fourth Wand Enchantment",
+    "german_name": "Kraftfokus",
+    "group": "magical",
+    "group_raw": "MAGISCHE",
+    "talent": null,
+    "ap_cost": 150,
+    "kosten_key": "AP_150",
+    "prerequisites": [
+      "RITUALKENNTNIS_11"
+    ],
+    "expand_template": null,
+    "variant_source": null,
+    "free_variant": false,
+    "source": "builtin"
+  },
+  {
+    "id": "Sonderfertigkeit.LiedDerLieder",
+    "name": "The Song of Songs",
+    "german_name": "Lied der Lieder",
+    "group": "magical",
+    "group_raw": "MAGISCHE",
+    "talent": null,
+    "ap_cost": 150,
+    "kosten_key": "AP_150",
+    "prerequisites": [
+      "ZWEISTIMMIGER_GESANG"
+    ],
+    "expand_template": null,
+    "variant_source": null,
+    "free_variant": false,
+    "source": "builtin"
+  },
+  {
+    "id": "Sonderfertigkeit.RegenerationII",
+    "name": "Regeneration II",
+    "german_name": "Regeneration II",
+    "group": "magical",
+    "group_raw": "MAGISCHE",
+    "talent": null,
+    "ap_cost": 100,
+    "kosten_key": "AP_100",
+    "prerequisites": [
+      "Z",
+      "IN_15",
+      "REGENERATION_I"
+    ],
+    "expand_template": null,
+    "variant_source": null,
+    "free_variant": false,
+    "source": "builtin"
+  },
+  {
+    "id": "Sonderfertigkeit.Salasandra",
+    "name": "Salasandra",
+    "german_name": "Salasandra",
+    "group": "magical",
+    "group_raw": "MAGISCHE",
+    "talent": null,
+    "ap_cost": 200,
+    "kosten_key": "AP_200",
+    "prerequisites": [
+      "ZWEISTIMMIGER_GESANG"
+    ],
+    "expand_template": null,
+    "variant_source": null,
+    "free_variant": false,
+    "source": "builtin"
+  },
+  {
+    "id": "Sonderfertigkeit.SeilDesAdepten",
+    "name": "Third Wand Enchantment",
+    "german_name": "Seil des Adepten",
+    "group": "magical",
+    "group_raw": "MAGISCHE",
+    "talent": null,
+    "ap_cost": 150,
+    "kosten_key": "AP_150",
+    "prerequisites": [
+      "RITUALKENNTNIS_7"
+    ],
+    "expand_template": null,
+    "variant_source": null,
+    "free_variant": false,
+    "source": "builtin"
+  },
+  {
+    "id": "Sonderfertigkeit.Sorgenlied",
+    "name": "The Song of Caring",
+    "german_name": "Sorgenlied",
+    "group": "magical",
+    "group_raw": "MAGISCHE",
+    "talent": null,
+    "ap_cost": 75,
+    "kosten_key": "AP_75",
+    "prerequisites": [
+      "ZWEISTIMMIGER_GESANG"
+    ],
+    "expand_template": null,
+    "variant_source": null,
+    "free_variant": false,
+    "source": "builtin"
+  },
+  {
+    "id": "Sonderfertigkeit.Windgefluester",
+    "name": "Windwisper",
+    "german_name": "Windgeflüster",
+    "group": "magical",
+    "group_raw": "MAGISCHE",
+    "talent": null,
+    "ap_cost": 100,
+    "kosten_key": "AP_100",
+    "prerequisites": [
+      "ZWEISTIMMIGER_GESANG"
+    ],
+    "expand_template": null,
+    "variant_source": null,
+    "free_variant": false,
+    "source": "builtin"
+  },
+  {
+    "id": "Sonderfertigkeit.Zaubermelodie",
+    "name": "Magical Melody",
+    "german_name": "Zaubermelodie",
+    "group": "magical",
+    "group_raw": "MAGISCHE",
+    "talent": null,
+    "ap_cost": 150,
+    "kosten_key": "AP_150",
+    "prerequisites": [
+      "ZWEISTIMMIGER_GESANG"
+    ],
+    "expand_template": null,
+    "variant_source": null,
+    "free_variant": false,
+    "source": "builtin"
+  },
+  {
+    "id": "Sonderfertigkeit.Talentspezialisierung",
+    "name": "Talent Specialization",
+    "german_name": "Talentspezialisierung",
+    "group": "talent_specialization",
+    "group_raw": "TALENTSPEZIALISIERUNG",
+    "talent": null,
+    "ap_cost": null,
+    "kosten_key": "TALENTSPEZIALISIERUNG",
+    "prerequisites": [
+      "SPEZIALISIERUNG"
+    ],
+    "expand_template": "talent_specialization",
+    "variant_source": null,
+    "free_variant": true,
+    "source": "builtin"
+  },
+  {
+    "id": "Sonderfertigkeit.Waffenspezialisierung",
+    "name": "Weapon Specialization",
+    "german_name": "Waffenspezialisierung",
+    "group": "weapon_specialization",
+    "group_raw": "WAFFENSPEZIALISIERUNG",
+    "talent": null,
+    "ap_cost": null,
+    "kosten_key": "WAFFENSPEZIALISIERUNG",
+    "prerequisites": [
+      "SPEZIALISIERUNG"
+    ],
+    "expand_template": "weapon_specialization",
+    "variant_source": null,
+    "free_variant": true,
+    "source": "builtin"
+  },
+  {
+    "id": "Sonderfertigkeit.Scharfschuetze",
+    "name": "Sharpshooter",
+    "german_name": "Scharfschütze",
+    "group": "combat",
+    "group_raw": "KAMPF",
+    "talent": null,
+    "ap_cost": null,
+    "kosten_key": "AP_300",
+    "prerequisites": [
+      "SPEZIALISIERUNG"
+    ],
+    "expand_template": "sharpshooter",
+    "variant_source": null,
+    "free_variant": true,
+    "source": "builtin"
+  }
+]

@@ -1,0 +1,90 @@
+[
+  {
+    "id": "Schild.Buckler",
+    "name": "Buckler",
+    "german_name": "Buckler",
+    "type": "SchildTyp.klein",
+    "bf": 0,
+    "ini": 0,
+    "wm_at": 0,
+    "wm_pa": 1,
+    "source": "builtin"
+  },
+  {
+    "id": "Schild.EinfacherHolzschild",
+    "name": "Simple wooden shield",
+    "german_name": "Einfacher Holzschild",
+    "type": "SchildTyp.gross",
+    "bf": 3,
+    "ini": -1,
+    "wm_at": -1,
+    "wm_pa": 3,
+    "source": "builtin"
+  },
+  {
+    "id": "Schild.GrosserLederschild",
+    "name": "Great leather shield",
+    "german_name": "Großer Lederschild",
+    "type": "SchildTyp.gross",
+    "bf": 6,
+    "ini": -1,
+    "wm_at": -1,
+    "wm_pa": 4,
+    "source": "builtin"
+  },
+  {
+    "id": "Schild.Grossschild",
+    "name": "Greatshield",
+    "german_name": "Großschild",
+    "type": "SchildTyp.sehrGross",
+    "bf": 2,
+    "ini": -2,
+    "wm_at": -2,
+    "wm_pa": 5,
+    "source": "builtin"
+  },
+  {
+    "id": "Schild.Lederschild",
+    "name": "Leather shield",
+    "german_name": "Lederschild",
+    "type": "SchildTyp.gross",
+    "bf": 5,
+    "ini": 0,
+    "wm_at": -1,
+    "wm_pa": 3,
+    "source": "builtin"
+  },
+  {
+    "id": "Schild.Thorwalerschild",
+    "name": "Thorwalian shield",
+    "german_name": "Thorwalerschild",
+    "type": "SchildTyp.gross",
+    "bf": 3,
+    "ini": -1,
+    "wm_at": -2,
+    "wm_pa": 4,
+    "source": "builtin"
+  },
+  {
+    "id": "Schild.VerstaerkterHolzschild",
+    "name": "Reinforced wooden shield",
+    "german_name": "Verstärkter Holzschild",
+    "type": "SchildTyp.gross",
+    "bf": 0,
+    "ini": -1,
+    "wm_at": -2,
+    "wm_pa": 3,
+    "source": "builtin"
+  },
+  {
+    "id": "Schild.Vollmetallbuckler",
+    "name": "Metal buckler",
+    "german_name": "Vollmetallbuckler",
+    "type": "SchildTyp.klein",
+    "bf": -2,
+    "ini": 0,
+    "wm_at": 0,
+    "wm_pa": 2,
+    "source": "builtin"
+  }
+]

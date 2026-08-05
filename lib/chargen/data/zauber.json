@@ -1,0 +1,1079 @@
+[
+  {
+    "id": "Zauber.AbvenenumReineSpeise",
+    "name": "Abvenenum",
+    "german_name": "Abvenenum reine Speise",
+    "group": "spells",
+    "complexity": 3,
+    "representations": [
+      "ELFEN",
+      "MAGIER"
+    ],
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.KL",
+      "Eigenschaft.FF"
+    ],
+    "source": "builtin"
+  },
+  {
+    "id": "Zauber.AdleraugeLuchsenohr",
+    "name": "Eye of Eagle, Ear of Lynx",
+    "german_name": "Adlerauge Luchsenohr",
+    "group": "spells",
+    "complexity": 2,
+    "representations": [
+      "ELFEN",
+      "MAGIER"
+    ],
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.IN",
+      "Eigenschaft.FF"
+    ],
+    "source": "builtin"
+  },
+  {
+    "id": "Zauber.AdlerschwingeWolfsgestalt",
+    "name": "Wing of Eagle",
+    "german_name": "Adlerschwinge Wolfsgestalt",
+    "group": "spells",
+    "complexity": 4,
+    "representations": [
+      "ELFEN",
+      "MAGIER"
+    ],
+    "test_attributes": [
+      "Eigenschaft.MU",
+      "Eigenschaft.IN",
+      "Eigenschaft.GE"
+    ],
+    "source": "builtin"
+  },
+  {
+    "id": "Zauber.AnalysArcanstruktur",
+    "name": "Analytica Arcana",
+    "german_name": "Analys Arkanstruktur",
+    "group": "spells",
+    "complexity": 4,
+    "representations": [
+      "MAGIER"
+    ],
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.KL",
+      "Eigenschaft.IN"
+    ],
+    "source": "builtin"
+  },
+  {
+    "id": "Zauber.Armatrutz",
+    "name": "Fastness of Body",
+    "german_name": "Armatrutz",
+    "group": "spells",
+    "complexity": 2,
+    "representations": [
+      "ELFEN",
+      "MAGIER"
+    ],
+    "test_attributes": [
+      "Eigenschaft.IN",
+      "Eigenschaft.GE",
+      "Eigenschaft.KO"
+    ],
+    "source": "builtin"
+  },
+  {
+    "id": "Zauber.Attributo",
+    "name": "Attributio",
+    "german_name": "Attributo",
+    "group": "spells",
+    "complexity": 2,
+    "representations": [
+      "ELFEN",
+      "MAGIER"
+    ],
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.CH",
+      "Eigenschaft.MU"
+    ],
+    "source": "builtin"
+  },
+  {
+    "id": "Zauber.AurisNasusOculus",
+    "name": "Auris Nasus Oculus",
+    "german_name": "Auris Nasus Oculus",
+    "group": "spells",
+    "complexity": 4,
+    "representations": [
+      "MAGIER"
+    ],
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.CH",
+      "Eigenschaft.FF"
+    ],
+    "source": "builtin"
+  },
+  {
+    "id": "Zauber.AxxeleratusBlitzgeschwind",
+    "name": "Move as the Lightning",
+    "german_name": "Axxeleratus Blitzgeschwind",
+    "group": "spells",
+    "complexity": 3,
+    "representations": [
+      "ELFEN",
+      "MAGIER"
+    ],
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.GE",
+      "Eigenschaft.KO"
+    ],
+    "source": "builtin"
+  },
+  {
+    "id": "Zauber.BalsamSalabunde",
+    "name": "Balm of Healing",
+    "german_name": "Balsam Salabunde",
+    "group": "spells",
+    "complexity": 3,
+    "representations": [
+      "ELFEN",
+      "MAGIER"
+    ],
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.IN",
+      "Eigenschaft.CH"
+    ],
+    "source": "builtin"
+  },
+  {
+    "id": "Zauber.Bannbaladin",
+    "name": "Be My Friend",
+    "german_name": "Bannbaladin",
+    "group": "spells",
+    "complexity": 2,
+    "representations": [
+      "ELFEN",
+      "MAGIER"
+    ],
+    "test_attributes": [
+      "Eigenschaft.IN",
+      "Eigenschaft.CH",
+      "Eigenschaft.CH"
+    ],
+    "source": "builtin"
+  },
+  {
+    "id": "Zauber.BlickInDieGedanken",
+    "name": "Thought Reading",
+    "german_name": "Blick in die Gedanken",
+    "group": "spells",
+    "complexity": 4,
+    "representations": [
+      "ELFEN",
+      "MAGIER"
+    ],
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.KL",
+      "Eigenschaft.CH"
+    ],
+    "source": "builtin"
+  },
+  {
+    "id": "Zauber.BlitzDichFind",
+    "name": "Flash",
+    "german_name": "Blitz dich find",
+    "group": "spells",
+    "complexity": 2,
+    "representations": [
+      "ELFEN",
+      "MAGIER"
+    ],
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.IN",
+      "Eigenschaft.GE"
+    ],
+    "source": "builtin"
+  },
+  {
+    "id": "Zauber.ClaudibusClavistibor",
+    "name": "Claudibus Clavistibor",
+    "german_name": "Claudibus Clavistibor",
+    "group": "spells",
+    "complexity": 3,
+    "representations": [
+      "ELFEN",
+      "MAGIER"
+    ],
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.FF",
+      "Eigenschaft.KK"
+    ],
+    "source": "builtin"
+  },
+  {
+    "id": "Zauber.DuplicatusDoppelbild",
+    "name": "Duplicatus",
+    "german_name": "Duplicatus Doppelbild",
+    "group": "spells",
+    "complexity": 3,
+    "representations": [
+      "MAGIER"
+    ],
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.CH",
+      "Eigenschaft.GE"
+    ],
+    "source": "builtin"
+  },
+  {
+    "id": "Zauber.EinflussBannen",
+    "name": "Banish Influence",
+    "german_name": "Einfluss bannen",
+    "group": "spells",
+    "complexity": 2,
+    "representations": [
+      "ELFEN",
+      "MAGIER"
+    ],
+    "test_attributes": [
+      "Eigenschaft.IN",
+      "Eigenschaft.CH",
+      "Eigenschaft.CH"
+    ],
+    "source": "builtin"
+  },
+  {
+    "id": "Zauber.ElfenstimmeFloetenton",
+    "name": "Elven Voice",
+    "german_name": "Elfenstimme Flötenton",
+    "group": "spells",
+    "complexity": 4,
+    "representations": [
+      "ELFEN"
+    ],
+    "test_attributes": [
+      "Eigenschaft.IN",
+      "Eigenschaft.CH",
+      "Eigenschaft.KO"
+    ],
+    "source": "builtin"
+  },
+  {
+    "id": "Zauber.ExposamiLebenskraft",
+    "name": "Exposami",
+    "german_name": "Exposami Lebenskraft",
+    "group": "spells",
+    "complexity": 2,
+    "representations": [
+      "ELFEN",
+      "MAGIER"
+    ],
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.IN",
+      "Eigenschaft.IN"
+    ],
+    "source": "builtin"
+  },
+  {
+    "id": "Zauber.FalkenaugeMeisterschuss",
+    "name": "Eye of Falcon",
+    "german_name": "Falkenauge Meisterschuss",
+    "group": "spells",
+    "complexity": 2,
+    "representations": [
+      "ELFEN",
+      "MAGIER"
+    ],
+    "test_attributes": [
+      "Eigenschaft.IN",
+      "Eigenschaft.FF",
+      "Eigenschaft.GE"
+    ],
+    "source": "builtin"
+  },
+  {
+    "id": "Zauber.FlimFlamFunkel",
+    "name": "Light in the Darkness",
+    "german_name": "Flim Flam Funkel",
+    "group": "spells",
+    "complexity": 1,
+    "representations": [
+      "ELFEN",
+      "MAGIER"
+    ],
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.KL",
+      "Eigenschaft.FF"
+    ],
+    "source": "builtin"
+  },
+  {
+    "id": "Zauber.ForamenForaminor",
+    "name": "Foramen Foraminor",
+    "german_name": "Foramen Foraminor",
+    "group": "spells",
+    "complexity": 3,
+    "representations": [
+      "MAGIER"
+    ],
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.KL",
+      "Eigenschaft.FF"
+    ],
+    "source": "builtin"
+  },
+  {
+    "id": "Zauber.FulminictusDonnerkeil",
+    "name": "Thunderbold",
+    "german_name": "Fulminictus Donnerkeil",
+    "group": "spells",
+    "complexity": 3,
+    "representations": [
+      "ELFEN",
+      "MAGIER"
+    ],
+    "test_attributes": [
+      "Eigenschaft.IN",
+      "Eigenschaft.GE",
+      "Eigenschaft.KO"
+    ],
+    "source": "builtin"
+  },
+  {
+    "id": "Zauber.GardianumZauberschild",
+    "name": "Gardianum",
+    "german_name": "Gardianum Zauberschild",
+    "group": "spells",
+    "complexity": 4,
+    "representations": [
+      "MAGIER"
+    ],
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.IN",
+      "Eigenschaft.KO"
+    ],
+    "source": "builtin"
+  },
+  {
+    "id": "Zauber.GedankenbilderElfenruf",
+    "name": "Elven Call",
+    "german_name": "Gedankenbilder Elfenruf",
+    "group": "spells",
+    "complexity": 2,
+    "representations": [
+      "ELFEN",
+      "MAGIER"
+    ],
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.IN",
+      "Eigenschaft.CH"
+    ],
+    "source": "builtin"
+  },
+  {
+    "id": "Zauber.HorriphobusSchreckgestalt",
+    "name": "Horriphobus",
+    "german_name": "Horriphobus Schreckgestalt",
+    "group": "spells",
+    "complexity": 3,
+    "representations": [
+      "MAGIER"
+    ],
+    "test_attributes": [
+      "Eigenschaft.MU",
+      "Eigenschaft.IN",
+      "Eigenschaft.CH"
+    ],
+    "source": "builtin"
+  },
+  {
+    "id": "Zauber.IgnifaxiusFlammenstrahl",
+    "name": "Ignifaxius",
+    "german_name": "Ignifaxius Flammenstrahl",
+    "group": "spells",
+    "complexity": 3,
+    "representations": [
+      "MAGIER"
+    ],
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.FF",
+      "Eigenschaft.KO"
+    ],
+    "source": "builtin"
+  },
+  {
+    "id": "Zauber.KlarumPurum",
+    "name": "Clarum Purum",
+    "german_name": "Klarum Purum",
+    "group": "spells",
+    "complexity": 4,
+    "representations": [
+      "ELFEN",
+      "MAGIER"
+    ],
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.KL",
+      "Eigenschaft.CH"
+    ],
+    "source": "builtin"
+  },
+  {
+    "id": "Zauber.MotoricusGeisteshand",
+    "name": "Motoricus",
+    "german_name": "Motoricus Geisteshand",
+    "group": "spells",
+    "complexity": 3,
+    "representations": [
+      "ELFEN",
+      "MAGIER"
+    ],
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.FF",
+      "Eigenschaft.KK"
+    ],
+    "source": "builtin"
+  },
+  {
+    "id": "Zauber.MovimentoDauerlauf",
+    "name": "Movimento",
+    "german_name": "Movimento Dauerlauf",
+    "group": "spells",
+    "complexity": 1,
+    "representations": [
+      "ELFEN",
+      "MAGIER"
+    ],
+    "test_attributes": [
+      "Eigenschaft.IN",
+      "Eigenschaft.GE",
+      "Eigenschaft.KO"
+    ],
+    "source": "builtin"
+  },
+  {
+    "id": "Zauber.NebelwandUndMorgendunst",
+    "name": "Fog Flow Far",
+    "german_name": "Nebelwand und Morgendunst",
+    "group": "spells",
+    "complexity": 3,
+    "representations": [
+      "ELFEN",
+      "MAGIER"
+    ],
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.FF",
+      "Eigenschaft.KO"
+    ],
+    "source": "builtin"
+  },
+  {
+    "id": "Zauber.OdemArcanum",
+    "name": "Breath of Magic",
+    "german_name": "Odem Arcanum",
+    "group": "spells",
+    "complexity": 1,
+    "representations": [
+      "ELFEN",
+      "MAGIER"
+    ],
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.IN",
+      "Eigenschaft.IN"
+    ],
+    "source": "builtin"
+  },
+  {
+    "id": "Zauber.ParalysisStarrWieStein",
+    "name": "Paralyze",
+    "german_name": "Paralysis starr wie Stein",
+    "group": "spells",
+    "complexity": 3,
+    "representations": [
+      "MAGIER"
+    ],
+    "test_attributes": [
+      "Eigenschaft.IN",
+      "Eigenschaft.CH",
+      "Eigenschaft.KK"
+    ],
+    "source": "builtin"
+  },
+  {
+    "id": "Zauber.PenetrizzelTiefenblick",
+    "name": "Penetration",
+    "german_name": "Penetrizzel Tiefenblick",
+    "group": "spells",
+    "complexity": 3,
+    "representations": [
+      "ELFEN",
+      "MAGIER"
+    ],
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.KL",
+      "Eigenschaft.KO"
+    ],
+    "source": "builtin"
+  },
+  {
+    "id": "Zauber.Psychostabilis",
+    "name": "Spiritus Amoricus",
+    "german_name": "Psychostabilis",
+    "group": "spells",
+    "complexity": 3,
+    "representations": [
+      "ELFEN",
+      "MAGIER"
+    ],
+    "test_attributes": [
+      "Eigenschaft.MU",
+      "Eigenschaft.KL",
+      "Eigenschaft.KO"
+    ],
+    "source": "builtin"
+  },
+  {
+    "id": "Zauber.SalanderMutander",
+    "name": "Mutander Salother",
+    "german_name": "Salander Mutander",
+    "group": "spells",
+    "complexity": 5,
+    "representations": [
+      "MAGIER"
+    ],
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.CH",
+      "Eigenschaft.KO"
+    ],
+    "source": "builtin"
+  },
+  {
+    "id": "Zauber.Sanftmut",
+    "name": "Gentleness",
+    "german_name": "Sanftmut",
+    "group": "spells",
+    "complexity": 2,
+    "representations": [
+      "ELFEN"
+    ],
+    "test_attributes": [
+      "Eigenschaft.MU",
+      "Eigenschaft.CH",
+      "Eigenschaft.CH"
+    ],
+    "source": "builtin"
+  },
+  {
+    "id": "Zauber.SeidenzungeElfenwort",
+    "name": "Silk Tongue, Elven Word",
+    "german_name": "Seidenzunge Elfenwort",
+    "group": "spells",
+    "complexity": 2,
+    "representations": [
+      "ELFEN"
+    ],
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.IN",
+      "Eigenschaft.CH"
+    ],
+    "source": "builtin"
+  },
+  {
+    "id": "Zauber.SensibarEmpathicus",
+    "name": "See True and Pure",
+    "german_name": "Sensibar Empathicus",
+    "group": "spells",
+    "complexity": 3,
+    "representations": [
+      "ELFEN",
+      "MAGIER"
+    ],
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.IN",
+      "Eigenschaft.CH"
+    ],
+    "source": "builtin"
+  },
+  {
+    "id": "Zauber.SilentiumSchweigekreis",
+    "name": "Silence Reigns Supreme",
+    "german_name": "Silentium Schweigekreis",
+    "group": "spells",
+    "complexity": 2,
+    "representations": [
+      "ELFEN",
+      "MAGIER"
+    ],
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.IN",
+      "Eigenschaft.CH"
+    ],
+    "source": "builtin"
+  },
+  {
+    "id": "Zauber.SomnigravisTieferSchlaf",
+    "name": "Sleep of a Thousand Sheep",
+    "german_name": "Somnigravis tiefer Schlaf",
+    "group": "spells",
+    "complexity": 2,
+    "representations": [
+      "ELFEN",
+      "MAGIER"
+    ],
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.CH",
+      "Eigenschaft.CH"
+    ],
+    "source": "builtin"
+  },
+  {
+    "id": "Zauber.SpurlosTrittlos",
+    "name": "Traceless",
+    "german_name": "Spurlos Trittlos",
+    "group": "spells",
+    "complexity": 3,
+    "representations": [
+      "ELFEN",
+      "MAGIER"
+    ],
+    "test_attributes": [
+      "Eigenschaft.IN",
+      "Eigenschaft.GE",
+      "Eigenschaft.GE"
+    ],
+    "source": "builtin"
+  },
+  {
+    "id": "Zauber.Tiergedanken",
+    "name": "Animal Thoughts",
+    "german_name": "Tiergedanken",
+    "group": "spells",
+    "complexity": 3,
+    "representations": [
+      "ELFEN",
+      "MAGIER"
+    ],
+    "test_attributes": [
+      "Eigenschaft.MU",
+      "Eigenschaft.IN",
+      "Eigenschaft.CH"
+    ],
+    "source": "builtin"
+  },
+  {
+    "id": "Zauber.VisibiliVanitar",
+    "name": "Unseen",
+    "german_name": "Visibili Vanitar",
+    "group": "spells",
+    "complexity": 3,
+    "representations": [
+      "ELFEN",
+      "MAGIER"
+    ],
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.IN",
+      "Eigenschaft.CH"
+    ],
+    "source": "builtin"
+  },
+  {
+    "id": "Zauber.VocolimboHohlerKlang",
+    "name": "Vocolimbo",
+    "german_name": "Vocolimbo hohler Klang",
+    "group": "spells",
+    "complexity": 2,
+    "representations": [
+      "MAGIER"
+    ],
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.CH",
+      "Eigenschaft.FF"
+    ],
+    "source": "builtin"
+  },
+  {
+    "id": "Zauber.Wasseratem",
+    "name": "Breath in Water",
+    "german_name": "Wasseratem",
+    "group": "spells",
+    "complexity": 3,
+    "representations": [
+      "ELFEN",
+      "MAGIER"
+    ],
+    "test_attributes": [
+      "Eigenschaft.MU",
+      "Eigenschaft.KL",
+      "Eigenschaft.KO"
+    ],
+    "source": "builtin"
+  },
+  {
+    "id": "Zauber.WeisseMaehnUndGoldnerHuf",
+    "name": "White Mane, Golden Hoof",
+    "german_name": "Weisse Mähn und goldner Huf",
+    "group": "spells",
+    "complexity": 4,
+    "representations": [
+      "ELFEN"
+    ],
+    "test_attributes": [
+      "Eigenschaft.KL",
+      "Eigenschaft.IN",
+      "Eigenschaft.CH"
+    ],
+    "source": "builtin"
+  },
+  {
+    "id": "Zauber.ZaubernahrungHungerbann",
+    "name": "Magic Food, Hunger Ban",
+    "german_name": "Zaubernahrung Hungerbann",
+    "group": "spells",
+    "complexity": 3,
+    "representations": [
+      "ELFEN"
+    ],
+    "test_attributes": [
+      "Eigenschaft.MU",
+      "Eigenschaft.MU",
+      "Eigenschaft.KO"
+    ],
+    "source": "builtin"
+  },
+  {
+    "id": "Zauber.AdleraugeLuchsenohr.Begabung",
+    "name": "Eye of Eagle, Ear of Lynx",
+    "german_name": "Adlerauge Luchsenohr",
+    "group": "spells",
+    "complexity": 0,
+    "representations": [],
+    "test_attributes": [],
+    "source": "builtin"
+  },
+  {
+    "id": "Zauber.AdlerschwingeWolfsgestalt.Begabung",
+    "name": "Wing of Eagle",
+    "german_name": "Adlerschwinge Wolfsgestalt",
+    "group": "spells",
+    "complexity": 0,
+    "representations": [],
+    "test_attributes": [],
+    "source": "builtin"
+  },
+  {
+    "id": "Zauber.Armatrutz.Begabung",
+    "name": "Fastness of Body",
+    "german_name": "Armatrutz",
+    "group": "spells",
+    "complexity": 0,
+    "representations": [],
+    "test_attributes": [],
+    "source": "builtin"
+  },
+  {
+    "id": "Zauber.Attributo.Begabung",
+    "name": "Attributio",
+    "german_name": "Attributo",
+    "group": "spells",
+    "complexity": 0,
+    "representations": [],
+    "test_attributes": [],
+    "source": "builtin"
+  },
+  {
+    "id": "Zauber.AxxeleratusBlitzgeschwind.Begabung",
+    "name": "Move as the Lightning",
+    "german_name": "Axxeleratus Blitzgeschwind",
+    "group": "spells",
+    "complexity": 0,
+    "representations": [],
+    "test_attributes": [],
+    "source": "builtin"
+  },
+  {
+    "id": "Zauber.BalsamSalabunde.Begabung",
+    "name": "Balm of Healing",
+    "german_name": "Balsam Salabunde",
+    "group": "spells",
+    "complexity": 0,
+    "representations": [],
+    "test_attributes": [],
+    "source": "builtin"
+  },
+  {
+    "id": "Zauber.Bannbaladin.Begabung",
+    "name": "Be My Friend",
+    "german_name": "Bannbaladin",
+    "group": "spells",
+    "complexity": 0,
+    "representations": [],
+    "test_attributes": [],
+    "source": "builtin"
+  },
+  {
+    "id": "Zauber.BlickInDieGedanken.Begabung",
+    "name": "Thought Reading",
+    "german_name": "Blick in die Gedanken",
+    "group": "spells",
+    "complexity": 0,
+    "representations": [],
+    "test_attributes": [],
+    "source": "builtin"
+  },
+  {
+    "id": "Zauber.BlitzDichFind.Begabung",
+    "name": "Flash",
+    "german_name": "Blitz dich find",
+    "group": "spells",
+    "complexity": 0,
+    "representations": [],
+    "test_attributes": [],
+    "source": "builtin"
+  },
+  {
+    "id": "Zauber.ExposamiLebenskraft.Begabung",
+    "name": "Exposami",
+    "german_name": "Exposami Lebenskraft",
+    "group": "spells",
+    "complexity": 0,
+    "representations": [],
+    "test_attributes": [],
+    "source": "builtin"
+  },
+  {
+    "id": "Zauber.FalkenaugeMeisterschuss.Begabung",
+    "name": "Eye of Falcon",
+    "german_name": "Falkenauge Meisterschuss",
+    "group": "spells",
+    "complexity": 0,
+    "representations": [],
+    "test_attributes": [],
+    "source": "builtin"
+  },
+  {
+    "id": "Zauber.FlimFlamFunkel.Begabung",
+    "name": "Light in the Darkness",
+    "german_name": "Flim Flam Funkel",
+    "group": "spells",
+    "complexity": 0,
+    "representations": [],
+    "test_attributes": [],
+    "source": "builtin"
+  },
+  {
+    "id": "Zauber.ForamenForaminor.Begabung",
+    "name": "Foramen Foraminor",
+    "german_name": "Foramen Foraminor",
+    "group": "spells",
+    "complexity": 0,
+    "representations": [],
+    "test_attributes": [],
+    "source": "builtin"
+  },
+  {
+    "id": "Zauber.FulminictusDonnerkeil.Begabung",
+    "name": "Thunderbold",
+    "german_name": "Fulminictus Donnerkeil",
+    "group": "spells",
+    "complexity": 0,
+    "representations": [],
+    "test_attributes": [],
+    "source": "builtin"
+  },
+  {
+    "id": "Zauber.GedankenbilderElfenruf.Begabung",
+    "name": "Elven Call",
+    "german_name": "Gedankenbilder Elfenruf",
+    "group": "spells",
+    "complexity": 0,
+    "representations": [],
+    "test_attributes": [],
+    "source": "builtin"
+  },
+  {
+    "id": "Zauber.HorriphobusSchreckgestalt.Begabung",
+    "name": "Horriphobus",
+    "german_name": "Horriphobus Schreckgestalt",
+    "group": "spells",
+    "complexity": 0,
+    "representations": [],
+    "test_attributes": [],
+    "source": "builtin"
+  },
+  {
+    "id": "Zauber.KlarumPurum.Begabung",
+    "name": "Clarum Purum",
+    "german_name": "Klarum Purum",
+    "group": "spells",
+    "complexity": 0,
+    "representations": [],
+    "test_attributes": [],
+    "source": "builtin"
+  },
+  {
+    "id": "Zauber.MovimentoDauerlauf.Begabung",
+    "name": "Movimento",
+    "german_name": "Begabung",
+    "group": "spells",
+    "complexity": 0,
+    "representations": [],
+    "test_attributes": [],
+    "source": "builtin"
+  },
+  {
+    "id": "Zauber.OdemArcanum.Begabung",
+    "name": "Breath of Magic",
+    "german_name": "Odem Arcanum",
+    "group": "spells",
+    "complexity": 0,
+    "representations": [],
+    "test_attributes": [],
+    "source": "builtin"
+  },
+  {
+    "id": "Zauber.PenetrizzelTiefenblick.Begabung",
+    "name": "Penetration",
+    "german_name": "Penetrizzel Tiefenblick",
+    "group": "spells",
+    "complexity": 0,
+    "representations": [],
+    "test_attributes": [],
+    "source": "builtin"
+  },
+  {
+    "id": "Zauber.Psychostabilis.Begabung",
+    "name": "Spiritus Amoricus",
+    "german_name": "Psychostabilis",
+    "group": "spells",
+    "complexity": 0,
+    "representations": [],
+    "test_attributes": [],
+    "source": "builtin"
+  },
+  {
+    "id": "Zauber.Sanftmut.Begabung",
+    "name": "Gentleness",
+    "german_name": "Sanftmut",
+    "group": "spells",
+    "complexity": 0,
+    "representations": [],
+    "test_attributes": [],
+    "source": "builtin"
+  },
+  {
+    "id": "Zauber.SeidenzungeElfenwort.Begabung",
+    "name": "Silk Tongue, Elven Word",
+    "german_name": "Seidenzunge Elfenwort",
+    "group": "spells",
+    "complexity": 0,
+    "representations": [],
+    "test_attributes": [],
+    "source": "builtin"
+  },
+  {
+    "id": "Zauber.SensibarEmpathicus.Begabung",
+    "name": "See True and Pure",
+    "german_name": "Sensibar Empathicus",
+    "group": "spells",
+    "complexity": 0,
+    "representations": [],
+    "test_attributes": [],
+    "source": "builtin"
+  },
+  {
+    "id": "Zauber.SilentiumSchweigekreis.Begabung",
+    "name": "Silence Reigns Supreme",
+    "german_name": "Silentium Schweigekreis",
+    "group": "spells",
+    "complexity": 0,
+    "representations": [],
+    "test_attributes": [],
+    "source": "builtin"
+  },
+  {
+    "id": "Zauber.SomnigravisTieferSchlaf.Begabung",
+    "name": "Sleep of a Thousand Sheep",
+    "german_name": "Somnigravis tiefer Schlaf",
+    "group": "spells",
+    "complexity": 0,
+    "representations": [],
+    "test_attributes": [],
+    "source": "builtin"
+  },
+  {
+    "id": "Zauber.SpurlosTrittlos.Begabung",
+    "name": "Traceless",
+    "german_name": "Spurlos Trittlos",
+    "group": "spells",
+    "complexity": 0,
+    "representations": [],
+    "test_attributes": [],
+    "source": "builtin"
+  },
+  {
+    "id": "Zauber.Tiergedanken.Begabung",
+    "name": "Animal Thoughts",
+    "german_name": "Tiergedanken",
+    "group": "spells",
+    "complexity": 0,
+    "representations": [],
+    "test_attributes": [],
+    "source": "builtin"
+  },
+  {
+    "id": "Zauber.VisibiliVanitar.Begabung",
+    "name": "Unseen",
+    "german_name": "Visibili Vanitar",
+    "group": "spells",
+    "complexity": 0,
+    "representations": [],
+    "test_attributes": [],
+    "source": "builtin"
+  },
+  {
+    "id": "Zauber.Wasseratem.Begabung",
+    "name": "Breath in Water",
+    "german_name": "Wasseratem",
+    "group": "spells",
+    "complexity": 0,
+    "representations": [],
+    "test_attributes": [],
+    "source": "builtin"
+  },
+  {
+    "id": "Zauber.ZaubernahrungHungerbann.Begabung",
+    "name": "Magic Food, Hunger Ban",
+    "german_name": "Zaubernahrung Hungerbann",
+    "group": "spells",
+    "complexity": 0,
+    "representations": [],
+    "test_attributes": [],
+    "source": "builtin"
+  }
+]

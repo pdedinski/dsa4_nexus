@@ -1,6 +1,7 @@
 import { drizzle } from "drizzle-orm/node-postgres";
 import { Pool } from "pg";
 import * as schema from "./schema";
+import * as chargenSchema from "./chargenSchema";
 import { getDatabaseUrl, getPgSslOption } from "./databaseUrl";
 
 declare global {
@@ -19,4 +20,6 @@ function getPool(): Pool {
   return global._pgPool;
 }
 
-export const db = drizzle(getPool(), { schema });
+export const db = drizzle(getPool(), {
+  schema: { ...schema, ...chargenSchema },
+});
