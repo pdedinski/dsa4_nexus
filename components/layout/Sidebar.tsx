@@ -27,6 +27,7 @@ import {
   Cog,
   Flag,
   Beaker,
+  Wrench,
 } from "lucide-react";
 import clsx from "clsx";
 import { signOut } from "next-auth/react";
@@ -126,6 +127,7 @@ export default function Sidebar({
     new Set(["core"])
   );
   const [manageOpen, setManageOpen] = useState(false);
+  const [toolsOpen, setToolsOpen] = useState(false);
 
   const canManage = user.isAdmin || user.isSuperuser;
 
@@ -321,6 +323,41 @@ export default function Sidebar({
                   </div>
                 );
               })}
+            </div>
+          )}
+        </div>
+
+        {/* TOOLS section */}
+        <div className="pt-2">
+          <button
+            onClick={() => setToolsOpen((v) => !v)}
+            className="w-full flex items-center gap-2 px-2 py-2 rounded-lg text-ink-muted hover:text-ink hover:bg-surface-card transition-colors text-sm font-semibold uppercase tracking-wider"
+          >
+            <Wrench className="w-4 h-4 shrink-0" />
+            <span className="flex-1 text-left">Tools</span>
+            {toolsOpen ? (
+              <ChevronDown className="w-3.5 h-3.5" />
+            ) : (
+              <ChevronRight className="w-3.5 h-3.5" />
+            )}
+          </button>
+
+          {toolsOpen && (
+            <div className="mt-1 ml-4 border-l border-surface-border pl-3 space-y-0.5">
+              <Link
+                href="/tools/combat-tracker"
+                onClick={() => onNavigate?.()}
+                className={clsx(
+                  "flex items-center gap-2 px-2 py-1.5 rounded-md text-sm transition-colors",
+                  pathname === "/tools/combat-tracker" ||
+                    pathname.startsWith("/tools/combat-tracker/")
+                    ? "bg-brand-muted text-ink font-medium"
+                    : "text-ink-muted hover:text-ink hover:bg-surface-card"
+                )}
+              >
+                <Sword className="w-3.5 h-3.5 shrink-0" />
+                Combat Tracker
+              </Link>
             </div>
           )}
         </div>

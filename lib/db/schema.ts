@@ -5,6 +5,7 @@ import {
   boolean,
   timestamp,
   jsonb,
+  integer,
   index,
   unique,
   primaryKey,
@@ -241,4 +242,64 @@ export const campaignAssets = pgTable(
 
 export type CampaignAssetRow = typeof campaignAssets.$inferSelect;
 export type InsertCampaignAssetRow = typeof campaignAssets.$inferInsert;
+
+// ── combat tracker (one encounter per user) ───────────────────────────────────
+
+export const combatEncounters = pgTable(
+  "combat_encounters",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    userId: uuid("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    turnNumber: integer("turn_number").notNull().default(1),
+    /** Current turn holder; follows combatant across reorders. */
+    activeCombatantId: uuid("active_combatant_id").references(
+      (): AnyPgColumn => combatCombatants.id,
+      { onDelete: "set null" }
+    ),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (t) => [
+    unique("combat_encounters_user_unique").on(t.userId),
+    index("combat_encounters_user_idx").on(t.userId),
+  ]
+);
+
+export type CombatEncounterRow = typeof combatEncounters.$inferSelect;
+export type InsertCombatEncounterRow = typeof combatEncounters.$inferInsert;
+
+export const combatCombatants = pgTable(
+  "combat_combatants",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    encounterId: uuid("encounter_id")
+      .notNull()
+      .references(() => combatEncounters.id, { onDelete: "cascade" }),
+    name: text("name").notNull(),
+    ini: integer("ini").notNull().default(0),
+    vp: integer("vp").notNull().default(0),
+    asp: integer("asp").notNull().default(0),
+    ar: integer("ar").notNull().default(0),
+    sortOrder: integer("sort_order").notNull().default(0),
+    lastDamageApplied: integer("last_damage_applied"),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (t) => [
+    index("combat_combatants_encounter_idx").on(t.encounterId, t.sortOrder),
+  ]
+);
+
+export type CombatCombatantRow = typeof combatCombatants.$inferSelect;
+export type InsertCombatCombatantRow = typeof combatCombatants.$inferInsert;
 
