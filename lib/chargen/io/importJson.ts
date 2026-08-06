@@ -1,5 +1,6 @@
 import type { HeldModel } from "@/lib/chargen/types";
 import { emptyHeld } from "@/lib/chargen/types";
+import { loadAsVeteran } from "@/lib/chargen/rules/veteran";
 
 export function importHeldJson(raw: string): HeldModel {
   const data = JSON.parse(raw) as Partial<HeldModel>;
@@ -12,7 +13,7 @@ export function importHeldJson(raw: string): HeldModel {
     );
   }
   const base = emptyHeld();
-  return {
+  const merged: HeldModel = {
     ...base,
     ...data,
     schemaVersion: 1,
@@ -32,4 +33,5 @@ export function importHeldJson(raw: string): HeldModel {
     leadSpells: data.leadSpells ?? [],
     discountedSpecialAbilities: data.discountedSpecialAbilities ?? [],
   };
+  return loadAsVeteran(merged);
 }

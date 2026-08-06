@@ -41,22 +41,18 @@ export function spellRepresentationBlocked(
   if (reps.length !== 1) return false;
   const rep = reps[0];
   if (rep === "Magier" || rep === "MAGIER") {
-    return !held.specialAbilities.some(
-      (s) =>
-        s.id === REPR_MAGIER &&
-        (s.variant === "Repraesentation.Magier" ||
-          s.variant === "Magier" ||
-          !s.variant)
-    );
+    return !held.specialAbilities.some((s) => {
+      if (s.id !== REPR_MAGIER) return false;
+      const v = (s.variant || "").toUpperCase();
+      return v.includes("MAGIER");
+    });
   }
   if (rep === "Elfen" || rep === "ELFEN") {
-    return !held.specialAbilities.some(
-      (s) =>
-        s.id === REPR_ELFEN &&
-        (s.variant === "Repraesentation.Elfen" ||
-          s.variant === "Elfen" ||
-          !s.variant)
-    );
+    return !held.specialAbilities.some((s) => {
+      if (s.id !== REPR_ELFEN) return false;
+      const v = (s.variant || "").toUpperCase();
+      return v.includes("ELFEN");
+    });
   }
   return false;
 }
@@ -75,6 +71,7 @@ export function checkSpellRepresentation(
         code: `spell_repr:${sp.id}`,
         message: `${resolveName?.(sp.id) || sp.id}: cannot be selected at game start without matching Representation.`,
         severity: "error",
+        section: "spells",
       });
     }
   }
@@ -108,6 +105,7 @@ export function checkSpellcaster(
       code: `spell_no_spellcaster:${sp.id}`,
       message: `${resolveName?.(sp.id) || sp.id}: requires the Spellcaster advantage.`,
       severity: "error",
+      section: "spells",
     });
   }
   return out;

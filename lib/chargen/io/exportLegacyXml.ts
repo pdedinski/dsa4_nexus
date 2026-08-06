@@ -196,7 +196,12 @@ export function downloadLegacyHeldXml(held: HeldModel, filename?: string): void 
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
-  a.download = filename || `${held.name || "hero"}.dcg`;
+  const safe =
+    filename ||
+    `${(held.name || "hero").replace(/[^\w\-]+/g, "_")}.dcg`;
+  a.download = safe.toLowerCase().endsWith(".dcg")
+    ? safe
+    : safe.replace(/\.(xml|chargen\.json|json)$/i, "") + ".dcg";
   document.body.appendChild(a);
   a.click();
   a.remove();

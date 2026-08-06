@@ -2953,6 +2953,9 @@
       "Eigenschaft.KL",
       "Eigenschaft.IN",
       "Eigenschaft.IN"
+    ],
+    "prerequisites": [
+      "GEFAHRENINSTINKT"
     ]
   },
   {
@@ -2969,6 +2972,9 @@
       "Eigenschaft.MU",
       "Eigenschaft.IN",
       "Eigenschaft.IN"
+    ],
+    "prerequisites": [
+      "MAGIEGESPUER"
     ]
   },
   {
@@ -2985,6 +2991,9 @@
       "Eigenschaft.IN",
       "Eigenschaft.IN",
       "Eigenschaft.CH"
+    ],
+    "prerequisites": [
+      "PROPHEZEIEN"
     ]
   },
   {
@@ -3001,6 +3010,9 @@
       "Eigenschaft.FF",
       "Eigenschaft.IN",
       "Eigenschaft.IN"
+    ],
+    "prerequisites": [
+      "ZWERGENNASE"
     ]
   },
   {

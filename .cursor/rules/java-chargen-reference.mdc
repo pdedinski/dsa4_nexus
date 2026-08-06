@@ -20,4 +20,15 @@ Whenever the user or a plan refers to **"the Java Chargen"**, **"the old chargen
 - RTF sheet layout: `...\basis\heldio\HeldExportRtf.java`
 - Creation wizard controller: `...\erschaffung\Erschaffung.java`, `ErschaffungManager.java`
 
+## Compiled, runnable original (for headless simulation / ground-truth checks)
+
+A real installed copy of the original app — not just decompiled source — lives at:
+
+- Root: `D:\Work\TDE\Chargen`
+- Compiled app jar: `D:\Work\TDE\Chargen\chargen.jar` (contains the real compiled classes **and** the bundled game-data XML as classpath resources, e.g. `de/bernhardjung/dsaprogramm/daten/rassen/Elfen.ras`)
+- Runtime dependency jars: `D:\Work\TDE\Chargen\lib\*.jar` (`nanoxml-2.2.3.jar`, `forms-1.2.0.jar`, `itext-2.0.6.jar`, `jhbasic-2.0.02.jar`, `swing-layout-1.0.2.jar`)
+- Launcher: `D:\Work\TDE\Chargen\chargen.exe`
+
+This lets you get **exact ground truth by running the real bytecode** (`javac`/`java -cp chargen.jar;lib\*`) instead of re-deriving GP/AP/SKT formulas by hand from decompiled source — useful whenever a task needs to verify or simulate character creation costs against the original tool. `Erschaffung.debugSchnellerschaffung(rasseId, kulturId, professionId)` is a public headless entry point (no GUI dependency) for scripting a race/culture/profession build directly.
+
 The web Player Character Generator under Tools (`lib/chargen/`, `/tools/player-character-generator`) is the port of this tool. Prefer matching its data IDs, wizard flow, and sheet layout over inventing new ones.

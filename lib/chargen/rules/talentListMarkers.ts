@@ -21,17 +21,19 @@ export function isTalentListMarker(id: string): id is TalentListMarker {
   return MARKER_SET.has(id);
 }
 
-/** Scripts associated with each language talent (Java Sprache.getSchriften). */
+/** Scripts associated with each language talent (Java `Talent.initialisiereSprache`). */
 const LANGUAGE_SCRIPTS: Record<string, string[]> = {
-  "Talent.Garethi": ["Talent.KuslikerZeichen"],
-  "Talent.Tulamidya": ["Talent.TulamidyaSchrift"],
-  "Talent.UrTulamidya": ["Talent.UrTulamidyaSchrift"],
-  "Talent.Thorwalsch": ["Talent.HjaldingscheRunen"],
-  "Talent.Rogolan": ["Talent.RogolanSchrift"],
-  "Talent.Isdira": ["Talent.IsdiraSchrift"],
+  "Talent.Alaani": ["Talent.KuslikerZeichen"],
   "Talent.Asdharia": ["Talent.AsdhariaSchrift"],
+  "Talent.Bosparano": ["Talent.KuslikerZeichen"],
+  "Talent.Garethi": ["Talent.KuslikerZeichen"],
+  "Talent.Isdira": ["Talent.IsdiraSchrift"],
+  "Talent.Rogolan": ["Talent.RogolanSchrift"],
+  "Talent.Rssahh": ["Talent.Chrmk"],
+  "Talent.Thorwalsch": ["Talent.KuslikerZeichen"],
+  "Talent.Tulamidya": ["Talent.GlyphenVonUnau", "Talent.TulamidyaSchrift"],
+  "Talent.UrTulamidya": ["Talent.UrTulamidyaSchrift"],
   "Talent.Zhayad": ["Talent.ZhayadSchrift"],
-  "Talent.Bosparano": ["Talent.UrTulamidyaSchrift"],
 };
 
 export function expandTalentListMarker(

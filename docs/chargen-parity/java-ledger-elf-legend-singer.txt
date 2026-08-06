@@ -1,0 +1,206 @@
+﻿=== JAVA CHARGEN PARITY SIM ===
+Build: Elves / Lea Elf / Legend Singer
+
+--- RESOLVE OPEN BONUSES ---
+OPEN: a foreign language +4
+OPEN: Boats or Bowyer +2 (L)
+OPEN: Juggling or Voice Mimicry +2
+OPEN: a foreign language +6
+OPEN: Asdharia (Script) or Isdira (Script) +9
+OPEN: Outstanding Hearing, Outstanding Scent or Outstanding Sight
+OPEN: 3 additional Lead Spells.
+OPEN_FEST options=[Alaani, Asdharia, Atak, Bosparano, Garethi, Goblinic, Mohic, Nujuku, Oloarkh, Ologhaijan, Proto-Tulamidyan, Rogolan, Rssahh, Thorwalian, Tulamidyan, Vixish, Zhayad] boni=[4] lead=false
+PICK_FEST +4 -> Talent.Tulamidya (race/kul)
+OPEN_FEST options=[Boats, Bowyer] boni=[2] lead=true
+PICK_FEST +2 -> Talent.Bogenbau (race/kul)
+OPEN_FEST options=[Juggling, Voice Mimicry] boni=[2] lead=false
+PICK_FEST +2 -> Talent.StimmenImitieren (prof)
+OPEN_FEST options=[Alaani, Asdharia, Atak, Bosparano, Garethi, Goblinic, Mohic, Nujuku, Oloarkh, Ologhaijan, Proto-Tulamidyan, Rogolan, Rssahh, Thorwalian, Tulamidyan, Vixish, Zhayad] boni=[6] lead=false
+PICK_FEST +6 -> Talent.Garethi (prof)
+OPEN_FEST options=[Asdharia (Script), Isdira (Script)] boni=[9] lead=false
+PICK_FEST +9 -> Talent.IsdiraSchrift (prof)
+PICK_TRAIT VorNachteil.HerausragendesGehoer
+LEAD_SPELL_SLOTS=3
+PICK_LEAD_SPELL Zauber.Attributo
+PICK_LEAD_SPELL Zauber.BalsamSalabunde
+PICK_LEAD_SPELL Zauber.FlimFlamFunkel
+
+--- SET ATTRIBUTE BASES ---
+ATTR_BASE Eigenschaft.Mut base=8 final=8
+ATTR_BASE Eigenschaft.Klugheit base=11 final=10
+ATTR_BASE Eigenschaft.Intuition base=12 final=13
+ATTR_BASE Eigenschaft.Charisma base=13 final=13
+ATTR_BASE Eigenschaft.Fingerfertigkeit base=8 final=8
+ATTR_BASE Eigenschaft.Gewandtheit base=8 final=10
+ATTR_BASE Eigenschaft.Konstitution base=8 final=8
+ATTR_BASE Eigenschaft.Koerperkraft base=8 final=7
+ATTR_BASE Eigenschaft.Sozialstatus base=3 final=3
+ATTR Eigenschaft.Mut base=8 zukauf=0 final=8
+ATTR Eigenschaft.Klugheit base=11 zukauf=0 final=10
+ATTR Eigenschaft.Intuition base=12 zukauf=0 final=13
+ATTR Eigenschaft.Charisma base=13 zukauf=0 final=13
+ATTR Eigenschaft.Fingerfertigkeit base=8 zukauf=0 final=8
+ATTR Eigenschaft.Gewandtheit base=8 zukauf=0 final=10
+ATTR Eigenschaft.Konstitution base=8 zukauf=0 final=8
+ATTR Eigenschaft.Koerperkraft base=8 zukauf=0 final=7
+ATTR Eigenschaft.Sozialstatus base=3 zukauf=0 final=3
+
+--- SNAPSHOT AFTER_SEED ---
+GP=6 AP=460
+TALENT Talent.SagenLegenden tp=8 lead=true
+TALENT Talent.Singen tp=9 lead=true
+TALENT Talent.Ueberzeugen tp=3 lead=true
+TALENT Talent.Musizieren tp=8 lead=true
+TALENT Talent.Menschenkenntnis tp=4 lead=true
+TALENT Talent.Tanzen tp=8 lead=true
+TALENT Talent.Tulamidya tp=4 lead=false
+TALENT Talent.Garethi tp=6 lead=false
+TALENT Talent.Isdira tp=12 lead=true
+TALENT Talent.Lehren tp=4 lead=false
+TALENT Talent.Geschichtswissen tp=2 lead=true
+TALENT Talent.Bogenbau tp=2 lead=true
+TALENT Talent.StimmenImitieren tp=2 lead=false
+TALENT Talent.IsdiraSchrift tp=9 lead=true
+TALENT Talent.Etikette tp=MISSING
+TALENT Talent.Reiten tp=MISSING
+SPELL Zauber.BalsamSalabunde sp=9 lead=true
+SPELL Zauber.Bannbaladin sp=9 lead=true
+SPELL Zauber.SensibarEmpathicus sp=8 lead=true
+SPELL_COUNT=13
+SF_COUNT=8
+SF_SEEDED Sonderfertigkeit.Repraesentation var=Elves
+SF_SEEDED Sonderfertigkeit.Freundschaftslied var=
+SF_SEEDED Sonderfertigkeit.Erinnerungsmelodie var=
+SF_SEEDED Sonderfertigkeit.LiedDerLieder var=
+SF_SEEDED Sonderfertigkeit.Kulturkunde var=Lea Elves
+SF_SEEDED Sonderfertigkeit.Sumpfkundig var=
+SF_SEEDED Sonderfertigkeit.GrosseMeditation var=
+SF_SEEDED Sonderfertigkeit.Salasandra var=
+SPELL_SEEDED Zauber.Attributo zfw=7
+SPELL_SEEDED Zauber.BalsamSalabunde zfw=9
+SPELL_SEEDED Zauber.EinflussBannen zfw=7
+SPELL_SEEDED Zauber.Bannbaladin zfw=9
+SPELL_SEEDED Zauber.OdemArcanum zfw=5
+SPELL_SEEDED Zauber.GedankenbilderElfenruf zfw=6
+SPELL_SEEDED Zauber.ElfenstimmeFloetenton zfw=8
+SPELL_SEEDED Zauber.Sanftmut zfw=7
+SPELL_SEEDED Zauber.FlimFlamFunkel zfw=7
+SPELL_SEEDED Zauber.SensibarEmpathicus zfw=8
+SPELL_SEEDED Zauber.SeidenzungeElfenwort zfw=8
+SPELL_SEEDED Zauber.BlickInDieGedanken zfw=6
+SPELL_SEEDED Zauber.FulminictusDonnerkeil zfw=8
+
+--- GP OPTIONAL ADVANTAGES ---
+GP_BEFORE_OPTIONAL=6
+COST_GUTES_GEDAECHTNIS=12
+SKIP_TRAIT VorNachteil.GutesGedaechtnis need=12 have=6
+BUY_TRAIT VorNachteil.Astralmacht stufe=6 gpCost=6 gpAfter=0
+GP_AFTER_OPTIONAL=0
+
+--- CREATION AP SPEND ---
+COST_ZAUBERMELODIE=75 have=460 verbilligt=true
+BUY_SF Sonderfertigkeit.Zaubermelodie apCost=75 apAfter=385
+RAISE_TALENT Talent.SagenLegenden 8->9 apCost=22 apAfter=363
+RAISE_TALENT Talent.SagenLegenden 9->10 apCost=25 apAfter=338
+RAISE_TALENT Talent.SagenLegenden 10->11 apCost=28 apAfter=310
+RAISE_TALENT Talent.SagenLegenden 11->12 apCost=32 apAfter=278
+RAISE_TALENT Talent.SagenLegenden 12->13 apCost=35 apAfter=243
+RAISE_TALENT Talent.SagenLegenden 13->14 apCost=38 apAfter=205
+RAISE_TALENT Talent.SagenLegenden 14->15 apCost=41 apAfter=164
+RAISE_TALENT Talent.SagenLegenden 15->16 apCost=45 apAfter=119
+RAISE_TALENT Talent.SagenLegenden 16->17 apCost=48 apAfter=71
+RAISE_TALENT Talent.SagenLegenden 17->18 apCost=51 apAfter=20
+RAISE_TALENT Talent.Ueberzeugen 3->4 apCost=8 apAfter=12
+RAISE_TALENT Talent.Ueberzeugen 4->5 apCost=11 apAfter=1
+
+CREATION_FINAL gpRemaining=0 apRemaining=1
+CREATION_FINAL apStartApprox=460
+ATTR Eigenschaft.Mut base=8 zukauf=0 final=8
+ATTR Eigenschaft.Klugheit base=11 zukauf=0 final=10
+ATTR Eigenschaft.Intuition base=12 zukauf=0 final=13
+ATTR Eigenschaft.Charisma base=13 zukauf=0 final=13
+ATTR Eigenschaft.Fingerfertigkeit base=8 zukauf=0 final=8
+ATTR Eigenschaft.Gewandtheit base=8 zukauf=0 final=10
+ATTR Eigenschaft.Konstitution base=8 zukauf=0 final=8
+ATTR Eigenschaft.Koerperkraft base=8 zukauf=0 final=7
+ATTR Eigenschaft.Sozialstatus base=3 zukauf=0 final=3
+TALENT Talent.SagenLegenden tp=18 lead=true
+TALENT Talent.Singen tp=9 lead=true
+TALENT Talent.Ueberzeugen tp=5 lead=true
+TALENT Talent.Musizieren tp=8 lead=true
+TALENT Talent.Menschenkenntnis tp=4 lead=true
+TALENT Talent.Tanzen tp=8 lead=true
+TALENT Talent.Tulamidya tp=4 lead=false
+TALENT Talent.Garethi tp=6 lead=false
+TALENT Talent.Isdira tp=12 lead=true
+TALENT Talent.Lehren tp=4 lead=false
+TALENT Talent.Geschichtswissen tp=2 lead=true
+TALENT Talent.Bogenbau tp=2 lead=true
+TALENT Talent.StimmenImitieren tp=2 lead=false
+TALENT Talent.IsdiraSchrift tp=9 lead=true
+TALENT Talent.Etikette tp=MISSING
+TALENT Talent.Reiten tp=MISSING
+SPELL Zauber.BalsamSalabunde sp=9 lead=true
+SPELL Zauber.Bannbaladin sp=9 lead=true
+SPELL Zauber.SensibarEmpathicus sp=8 lead=true
+
+--- VETERAN PHASE ---
+VETERAN_START apGesamt=460 apEingesetzt=459 apGuthaben=1
+VETERAN_ADD_AP amount=1000 apGuthaben=1001
+
+--- VETERAN SPEND ---
+VET_ACTIVATE_TALENT Talent.Etikette apCost=15 apAfter=986 stufe=0
+VET_ACTIVATE_TALENT Talent.Reiten apCost=25 apAfter=961 stufe=0
+VET_RAISE_TALENT Talent.SagenLegenden 18->19 apCost=55 apAfter=906
+VET_RAISE_TALENT Talent.SagenLegenden 19->20 apCost=58 apAfter=848
+VET_RAISE_TALENT Talent.SagenLegenden 20->21 apCost=62 apAfter=786
+VET_RAISE_TALENT Talent.SagenLegenden 21->22 apCost=65 apAfter=721
+VET_RAISE_TALENT Talent.SagenLegenden 22->23 apCost=69 apAfter=652
+VET_RAISE_TALENT Talent.SagenLegenden 23->24 apCost=73 apAfter=579
+VET_RAISE_TALENT Talent.SagenLegenden 24->25 apCost=76 apAfter=503
+VET_RAISE_TALENT Talent.SagenLegenden 25->26 apCost=80 apAfter=423
+VET_RAISE_TALENT Talent.SagenLegenden 26->27 apCost=84 apAfter=339
+VET_RAISE_TALENT Talent.SagenLegenden 27->28 apCost=87 apAfter=252
+VET_RAISE_TALENT Talent.SagenLegenden 28->29 apCost=91 apAfter=161
+VET_RAISE_TALENT Talent.SagenLegenden 29->30 apCost=95 apAfter=66
+VET_RAISE_TALENT Talent.Singen 9->10 apCost=50 apAfter=16
+VET_RAISE_TALENT Talent.Ueberzeugen 5->6 apCost=14 apAfter=2
+
+VETERAN_FINAL apGesamt=1460 apEingesetzt=1458 apGuthaben=2
+ATTR Eigenschaft.Mut base=8 zukauf=0 final=8
+ATTR Eigenschaft.Klugheit base=11 zukauf=0 final=10
+ATTR Eigenschaft.Intuition base=12 zukauf=0 final=13
+ATTR Eigenschaft.Charisma base=13 zukauf=0 final=13
+ATTR Eigenschaft.Fingerfertigkeit base=8 zukauf=0 final=8
+ATTR Eigenschaft.Gewandtheit base=8 zukauf=0 final=10
+ATTR Eigenschaft.Konstitution base=8 zukauf=0 final=8
+ATTR Eigenschaft.Koerperkraft base=8 zukauf=0 final=7
+ATTR Eigenschaft.Sozialstatus base=3 zukauf=0 final=3
+TALENT Talent.SagenLegenden tp=30 lead=true
+TALENT Talent.Singen tp=10 lead=true
+TALENT Talent.Ueberzeugen tp=6 lead=true
+TALENT Talent.Musizieren tp=8 lead=true
+TALENT Talent.Menschenkenntnis tp=4 lead=true
+TALENT Talent.Tanzen tp=8 lead=true
+TALENT Talent.Tulamidya tp=4 lead=false
+TALENT Talent.Garethi tp=6 lead=false
+TALENT Talent.Isdira tp=12 lead=true
+TALENT Talent.Lehren tp=4 lead=false
+TALENT Talent.Geschichtswissen tp=2 lead=true
+TALENT Talent.Bogenbau tp=2 lead=true
+TALENT Talent.StimmenImitieren tp=2 lead=false
+TALENT Talent.IsdiraSchrift tp=9 lead=true
+TALENT Talent.Etikette tp=0 lead=false
+TALENT Talent.Reiten tp=0 lead=false
+SPELL Zauber.BalsamSalabunde sp=9 lead=true
+SPELL Zauber.Bannbaladin sp=9 lead=true
+SPELL Zauber.SensibarEmpathicus sp=8 lead=true
+HAS_ETIKETTE=true stufe=0
+HAS_REITEN=true stufe=0
+HAS_ZAUBERMELODIE=true
+HAS_GUTES_GEDAECHTNIS=false
+HAS_ASTRALMACHT=true stufe=6
+HAS_HERAUSRAGENDES_GEHOER=true
+LEAD_SPELLS=[Light in the Darkness, Balm of Healing, Be My Friend, Breath of Magic, Elven Voice, See True and Pure, Silk Tongue, Elven Word, Banish Influence, Elven Call, Thought Reading, Attributio, Thunderbold, Gentleness]
+LEAD_TALENTS_COUNT=27
+=== END JAVA ===

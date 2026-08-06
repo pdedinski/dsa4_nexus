@@ -25,7 +25,8 @@
         "talents": [
           "Talent.Koerperbeherrschung"
         ],
-        "open": false
+        "open": false,
+        "lead": true
       },
       {
         "type": "fixed",
@@ -36,7 +37,8 @@
         "talents": [
           "Talent.Schleichen"
         ],
-        "open": false
+        "open": false,
+        "lead": true
       },
       {
         "type": "fixed",
@@ -47,7 +49,8 @@
         "talents": [
           "Talent.Singen"
         ],
-        "open": false
+        "open": false,
+        "lead": true
       },
       {
         "type": "fixed",
@@ -58,7 +61,8 @@
         "talents": [
           "Talent.Sinnenschaerfe"
         ],
-        "open": false
+        "open": false,
+        "lead": true
       },
       {
         "type": "fixed",
@@ -69,7 +73,8 @@
         "talents": [
           "Talent.Tanzen"
         ],
-        "open": false
+        "open": false,
+        "lead": true
       },
       {
         "type": "fixed",
@@ -80,8 +85,16 @@
         "talents": [
           "Talent.Zechen"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       }
+    ],
+    "lead_talents": [
+      "Talent.Athletik",
+      "Talent.MalenZeichnen",
+      "Talent.Musizieren",
+      "Talent.Orientierung",
+      "Talent.Wettervorhersage"
     ],
     "advantage_bonuses": [
       {
@@ -362,7 +375,8 @@
         "talents": [
           "Talent.Koerperbeherrschung"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -373,7 +387,8 @@
         "talents": [
           "Talent.Schleichen"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -384,7 +399,8 @@
         "talents": [
           "Talent.Singen"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -395,7 +411,8 @@
         "talents": [
           "Talent.Sinnenschaerfe"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -406,7 +423,8 @@
         "talents": [
           "Talent.Tanzen"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -417,9 +435,11 @@
         "talents": [
           "Talent.Zechen"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       }
     ],
+    "lead_talents": [],
     "advantage_bonuses": [
       {
         "id": "VorNachteil.GutAussehend",
@@ -624,6 +644,7 @@
       "RM": -4
     },
     "talent_bonuses": [],
+    "lead_talents": [],
     "advantage_bonuses": [],
     "disadvantage_bonuses": [],
     "recommended_advantages_disadvantages": [],
@@ -746,7 +767,8 @@
         "talents": [
           "Talent.Athletik"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -757,7 +779,8 @@
         "talents": [
           "Talent.Sinnenschaerfe"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -768,7 +791,8 @@
         "talents": [
           "Talent.Zechen"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -779,9 +803,11 @@
         "talents": [
           "Talent.Wettervorhersage"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       }
     ],
+    "lead_talents": [],
     "advantage_bonuses": [],
     "disadvantage_bonuses": [],
     "recommended_advantages_disadvantages": [],
@@ -893,6 +919,7 @@
       "RM": -4
     },
     "talent_bonuses": [],
+    "lead_talents": [],
     "advantage_bonuses": [],
     "disadvantage_bonuses": [],
     "recommended_advantages_disadvantages": [],
@@ -1015,7 +1042,8 @@
         "talents": [
           "Talent.Ringen"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -1026,7 +1054,8 @@
         "talents": [
           "Talent.Akrobatik"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -1037,7 +1066,8 @@
         "talents": [
           "Talent.Reiten"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -1048,7 +1078,8 @@
         "talents": [
           "Talent.Schwimmen"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -1059,7 +1090,8 @@
         "talents": [
           "Talent.Selbstbeherrschung"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -1070,7 +1102,8 @@
         "talents": [
           "Talent.Zechen"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -1081,7 +1114,8 @@
         "talents": [
           "Talent.Orientierung"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -1092,9 +1126,11 @@
         "talents": [
           "Talent.Gesteinskunde"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       }
     ],
+    "lead_talents": [],
     "advantage_bonuses": [
       {
         "id": "VorNachteil.Daemmerungssicht",

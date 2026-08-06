@@ -1,0 +1,207 @@
+﻿=== PORT CHARGEN PARITY SIM ===
+Build: Middenrealmians / Horasian Empire / Magician
+
+LEAD_SPELL_SLOTS_FROM_DATA=0
+OPEN_TALENT_CHOICES:
+  culture-fixed-0 ranks=[5] talents=["Talent.Tulamidya","Talent.Rogolan"]
+  profession-fixed-0 ranks=[2] talents=["Muttersprache"]
+  profession-fixed-1 ranks=[4] talents=["NichtMuttersprache"]
+  profession-fixed-2 ranks=[7] talents=["SchriftenMuttersprache"]
+  profession-fixed-3 ranks=[4] talents=["Talent.UrTulamidyaSchrift","Talent.GlyphenVonUnau","Talent.KuslikerZeichen","Talent.Tulamidya","Talent.Zhayad"]
+
+--- SET ATTRIBUTE BASES ---
+ATTR_BASE Eigenschaft.Mut base=11 final=11
+ATTR_BASE Eigenschaft.Klugheit base=13 final=13
+ATTR_BASE Eigenschaft.Intuition base=11 final=11
+ATTR_BASE Eigenschaft.Charisma base=12 final=12
+ATTR_BASE Eigenschaft.Fingerfertigkeit base=8 final=8
+ATTR_BASE Eigenschaft.Gewandtheit base=8 final=8
+ATTR_BASE Eigenschaft.Konstitution base=8 final=8
+ATTR_BASE Eigenschaft.Koerperkraft base=8 final=8
+ATTR_BASE Eigenschaft.Sozialstatus base=7 final=7
+
+--- SNAPSHOT AFTER_SEED ---
+GP=10 AP=480 apStart=480 apSpent=0
+TALENT Talent.Ritualkenntnis tp=3 lead=false
+TALENT Talent.Magiekunde tp=6 lead=false
+TALENT Talent.Alchimie tp=4 lead=false
+TALENT Talent.Sprachenkunde tp=1 lead=false
+TALENT Talent.Sternkunde tp=4 lead=false
+TALENT Talent.Pflanzenkunde tp=4 lead=false
+TALENT Talent.Geschichtswissen tp=4 lead=false
+TALENT Talent.Etikette tp=5 lead=false
+TALENT Talent.Ueberreden tp=3 lead=false
+TALENT Talent.Garethi tp=2 lead=false
+TALENT Talent.Tulamidya tp=9 lead=false
+TALENT Talent.UrTulamidya tp=4 lead=false
+TALENT Talent.KuslikerZeichen tp=9 lead=false
+TALENT Talent.UrTulamidyaSchrift tp=4 lead=false
+TALENT Talent.HeilkundeSeele tp=MISSING
+TALENT Talent.Reiten tp=MISSING
+TALENT Talent.Betoeren tp=1 lead=false
+SPELL Zauber.AnalysArcanstruktur sp=7 lead=false
+SPELL Zauber.FulminictusDonnerkeil sp=8 lead=false
+SPELL Zauber.ParalysisStarrWieStein sp=7 lead=false
+SPELL Zauber.SilentiumSchweigekreis sp=5 lead=false
+SPELL Zauber.OdemArcanum sp=6 lead=false
+SPELL Zauber.SomnigravisTieferSchlaf sp=7 lead=false
+SPELL_COUNT=13
+SF_COUNT=7
+SF_SEEDED Sonderfertigkeit.Kulturkunde var=Kulturkunde.Horasreich
+SF_SEEDED Sonderfertigkeit.Repraesentation var=Repraesentation.Magier
+SF_SEEDED Sonderfertigkeit.GrosseMeditation
+SF_SEEDED Sonderfertigkeit.BindungDesStabes
+SF_SEEDED Sonderfertigkeit.EwigeFlamme
+SF_SEEDED Sonderfertigkeit.AstraleMeditation
+SF_SEEDED Sonderfertigkeit.RegenerationI
+SPELL_SEEDED Zauber.AnalysArcanstruktur zfw=7
+SPELL_SEEDED Zauber.Armatrutz zfw=6
+SPELL_SEEDED Zauber.AurisNasusOculus zfw=5
+SPELL_SEEDED Zauber.BalsamSalabunde zfw=8
+SPELL_SEEDED Zauber.BlitzDichFind zfw=6
+SPELL_SEEDED Zauber.ClaudibusClavistibor zfw=4
+SPELL_SEEDED Zauber.ForamenForaminor zfw=4
+SPELL_SEEDED Zauber.FulminictusDonnerkeil zfw=8
+SPELL_SEEDED Zauber.GardianumZauberschild zfw=6
+SPELL_SEEDED Zauber.OdemArcanum zfw=6
+SPELL_SEEDED Zauber.ParalysisStarrWieStein zfw=7
+SPELL_SEEDED Zauber.SilentiumSchweigekreis zfw=5
+SPELL_SEEDED Zauber.SomnigravisTieferSchlaf zfw=7
+LEAD_TALENTS=[]
+LEAD_SPELLS=[]
+HAS_BOSPARANO_SEED=true tp=6
+HAS_UR_TULAMIDYA_SEED=true tp=4
+
+--- GP OPTIONAL ADVANTAGES ---
+GP_BEFORE_OPTIONAL=10
+BUY_TRAIT VorNachteil.Arroganz stufe=5 gpCost=-5 gpAfter=15
+COST_GUTES_GEDAECHTNIS=12
+BUY_TRAIT VorNachteil.GutesGedaechtnis gpCost=12 gpAfter=3
+BUY_TRAIT VorNachteil.Zeitgefuehl gpCost=3 gpAfter=0
+GP_AFTER_OPTIONAL=0
+
+--- CREATION AP SPEND ---
+RAISE_TALENT Talent.Ritualkenntnis 3->4 apCost=21 apAfter=459
+RAISE_TALENT Talent.Ritualkenntnis 4->5 apCost=28 apAfter=431
+RAISE_TALENT Talent.Ritualkenntnis 5->6 apCost=34 apAfter=397
+RAISE_TALENT Talent.Ritualkenntnis 6->7 apCost=41 apAfter=356
+RAISE_TALENT Talent.Ritualkenntnis 7->8 apCost=48 apAfter=308
+RAISE_TALENT Talent.Ritualkenntnis 8->9 apCost=55 apAfter=253
+RAISE_TALENT Talent.Ritualkenntnis 9->10 apCost=65 apAfter=188
+RAISE_TALENT Talent.Ritualkenntnis 10->11 apCost=70 apAfter=118
+COST_Sonderfertigkeit.Kraftfokus=75 have=118 verbilligt=true
+BUY_SF Sonderfertigkeit.Kraftfokus apCost=75 apAfter=43
+COST_Sonderfertigkeit.Aufmerksamkeit=100 have=43 verbilligt=true
+SKIP_SF Sonderfertigkeit.Aufmerksamkeit
+RAISE_TALENT Talent.Magiekunde 6->7 apCost=17 apAfter=26
+RAISE_TALENT Talent.Magiekunde 7->8 apCost=19 apAfter=7
+RAISE_TALENT Talent.Sprachenkunde 1->2 apCost=4 apAfter=3
+
+CREATION_FINAL gpRemaining=0 apRemaining=3
+CREATION_FINAL apStartApprox=480 apSpent=477
+ATTR Eigenschaft.Mut base=11 zukauf=0 final=11
+ATTR Eigenschaft.Klugheit base=13 zukauf=0 final=13
+ATTR Eigenschaft.Intuition base=11 zukauf=0 final=11
+ATTR Eigenschaft.Charisma base=12 zukauf=0 final=12
+ATTR Eigenschaft.Fingerfertigkeit base=8 zukauf=0 final=8
+ATTR Eigenschaft.Gewandtheit base=8 zukauf=0 final=8
+ATTR Eigenschaft.Konstitution base=8 zukauf=0 final=8
+ATTR Eigenschaft.Koerperkraft base=8 zukauf=0 final=8
+ATTR Eigenschaft.Sozialstatus base=7 zukauf=0 final=7
+TALENT Talent.Ritualkenntnis tp=11 lead=false
+TALENT Talent.Magiekunde tp=8 lead=false
+TALENT Talent.Alchimie tp=4 lead=false
+TALENT Talent.Sprachenkunde tp=2 lead=false
+TALENT Talent.Sternkunde tp=4 lead=false
+TALENT Talent.Pflanzenkunde tp=4 lead=false
+TALENT Talent.Geschichtswissen tp=4 lead=false
+TALENT Talent.Etikette tp=5 lead=false
+TALENT Talent.Ueberreden tp=3 lead=false
+TALENT Talent.Garethi tp=2 lead=false
+TALENT Talent.Tulamidya tp=9 lead=false
+TALENT Talent.UrTulamidya tp=4 lead=false
+TALENT Talent.KuslikerZeichen tp=9 lead=false
+TALENT Talent.UrTulamidyaSchrift tp=4 lead=false
+TALENT Talent.HeilkundeSeele tp=MISSING
+TALENT Talent.Reiten tp=MISSING
+TALENT Talent.Betoeren tp=1 lead=false
+SPELL Zauber.AnalysArcanstruktur sp=7 lead=false
+SPELL Zauber.FulminictusDonnerkeil sp=8 lead=false
+SPELL Zauber.ParalysisStarrWieStein sp=7 lead=false
+SPELL Zauber.SilentiumSchweigekreis sp=5 lead=false
+SPELL Zauber.OdemArcanum sp=6 lead=false
+SPELL Zauber.SomnigravisTieferSchlaf sp=7 lead=false
+
+--- VETERAN PHASE ---
+VETERAN_START apTotal=480 apSpent=477 apGuthaben=3
+VETERAN_ADD_AP amount=2000 apGuthaben=2003
+
+--- VETERAN SPEND ---
+VET_ACTIVATE_TALENT Talent.HeilkundeSeele apCost=10 apAfter=1993 stufe=0
+VET_ACTIVATE_TALENT Talent.Reiten apCost=20 apAfter=1973 stufe=0
+VET_ACTIVATE_TALENT Talent.Betoeren apCost=0 apAfter=1973 stufe=1
+VET_RAISE_TALENT Talent.Ritualkenntnis 11->12 apCost=80 apAfter=1893
+VET_RAISE_TALENT Talent.Ritualkenntnis 12->13 apCost=85 apAfter=1808
+VET_RAISE_TALENT Talent.Ritualkenntnis 13->14 apCost=95 apAfter=1713
+VET_RAISE_TALENT Talent.Ritualkenntnis 14->15 apCost=105 apAfter=1608
+VET_RAISE_TALENT Talent.Ritualkenntnis 15->16 apCost=110 apAfter=1498
+VET_RAISE_TALENT Talent.Ritualkenntnis 16->17 apCost=120 apAfter=1378
+VET_RAISE_TALENT Talent.Ritualkenntnis 17->18 apCost=130 apAfter=1248
+VET_RAISE_TALENT Talent.Ritualkenntnis 18->19 apCost=135 apAfter=1113
+VET_RAISE_TALENT Talent.Ritualkenntnis 19->20 apCost=145 apAfter=968
+VET_RAISE_TALENT Talent.Ritualkenntnis 20->21 apCost=155 apAfter=813
+VET_RAISE_TALENT Talent.Ritualkenntnis 21->22 apCost=165 apAfter=648
+VET_RAISE_TALENT Talent.Ritualkenntnis 22->23 apCost=170 apAfter=478
+VET_RAISE_TALENT Talent.Ritualkenntnis 23->24 apCost=180 apAfter=298
+VET_RAISE_TALENT Talent.Ritualkenntnis 24->25 apCost=190 apAfter=108
+VET_RAISE_TALENT Talent.Magiekunde 8->9 apCost=22 apAfter=86
+VET_RAISE_TALENT Talent.Magiekunde 9->10 apCost=25 apAfter=61
+VET_RAISE_TALENT Talent.Magiekunde 10->11 apCost=28 apAfter=33
+VET_RAISE_TALENT Talent.Magiekunde 11->12 apCost=32 apAfter=1
+
+VETERAN_FINAL apTotal=2480 apSpent=2479 apGuthaben=1
+ATTR Eigenschaft.Mut base=11 zukauf=0 final=11
+ATTR Eigenschaft.Klugheit base=13 zukauf=0 final=13
+ATTR Eigenschaft.Intuition base=11 zukauf=0 final=11
+ATTR Eigenschaft.Charisma base=12 zukauf=0 final=12
+ATTR Eigenschaft.Fingerfertigkeit base=8 zukauf=0 final=8
+ATTR Eigenschaft.Gewandtheit base=8 zukauf=0 final=8
+ATTR Eigenschaft.Konstitution base=8 zukauf=0 final=8
+ATTR Eigenschaft.Koerperkraft base=8 zukauf=0 final=8
+ATTR Eigenschaft.Sozialstatus base=7 zukauf=0 final=7
+TALENT Talent.Ritualkenntnis tp=25 lead=false
+TALENT Talent.Magiekunde tp=12 lead=false
+TALENT Talent.Alchimie tp=4 lead=false
+TALENT Talent.Sprachenkunde tp=2 lead=false
+TALENT Talent.Sternkunde tp=4 lead=false
+TALENT Talent.Pflanzenkunde tp=4 lead=false
+TALENT Talent.Geschichtswissen tp=4 lead=false
+TALENT Talent.Etikette tp=5 lead=false
+TALENT Talent.Ueberreden tp=3 lead=false
+TALENT Talent.Garethi tp=2 lead=false
+TALENT Talent.Tulamidya tp=9 lead=false
+TALENT Talent.UrTulamidya tp=4 lead=false
+TALENT Talent.KuslikerZeichen tp=9 lead=false
+TALENT Talent.UrTulamidyaSchrift tp=4 lead=false
+TALENT Talent.HeilkundeSeele tp=0 lead=false
+TALENT Talent.Reiten tp=0 lead=false
+TALENT Talent.Betoeren tp=1 lead=false
+SPELL Zauber.AnalysArcanstruktur sp=7 lead=false
+SPELL Zauber.FulminictusDonnerkeil sp=8 lead=false
+SPELL Zauber.ParalysisStarrWieStein sp=7 lead=false
+SPELL Zauber.SilentiumSchweigekreis sp=5 lead=false
+SPELL Zauber.OdemArcanum sp=6 lead=false
+SPELL Zauber.SomnigravisTieferSchlaf sp=7 lead=false
+HAS_HEILKUNDE_SEELE=true stufe=0
+HAS_REITEN=true stufe=0
+HAS_BETOEREN=true stufe=1
+HAS_KRAFTFOKUS=true
+HAS_AUFMERKSAMKEIT=false
+HAS_GUTES_GEDAECHTNIS=true
+HAS_ARROGANZ=true stufe=5
+HAS_ZEITGEFUEHL=true
+HAS_BOSPARANO=true tp=6
+HAS_UR_TULAMIDYA=true tp=4
+LEAD_SPELLS=[]
+LEAD_TALENTS_COUNT=0
+=== END PORT ===

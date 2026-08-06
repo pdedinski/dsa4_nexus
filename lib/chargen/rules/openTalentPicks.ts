@@ -3,6 +3,18 @@
  * Mirrors Java `PanelTalentBonusFest` radio-column groups.
  */
 
+/** Java `initialisiereRadioButtons`: select talent[i] for bonus column[i]. */
+export function defaultOpenPicks(
+  talentIds: string[],
+  rankCount: number
+): string[] {
+  const picks: string[] = [];
+  for (let i = 0; i < rankCount; i++) {
+    picks.push(talentIds[i] || "");
+  }
+  return picks;
+}
+
 export function normalizeOpenPicks(
   picks: string[] | undefined,
   rankCount: number

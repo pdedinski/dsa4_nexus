@@ -15,6 +15,7 @@ import {
   sfVoraussetzungKeyToId,
   TALENT_KEY_ALIASES,
   TRAIT_KEY_TO_ID,
+  TRAIT_OR_PREREQ_KEYS,
 } from "@/lib/chargen/rules/prerequisiteKeys";
 import type { Konflikt } from "@/lib/chargen/rules/voraussetzungen";
 import { effectiveTalentTp } from "@/lib/chargen/rules/applyBausteine";
@@ -63,17 +64,18 @@ export function unmetSpecialAbilityPrerequisites(
     specializationIndex?: number;
   } = {}
 ): PrerequisiteFail[] {
-  if (opts.granted) return [];
   const keys = (ability.prerequisites as string[]) || [];
   if (!keys.length) return [];
 
   const fails: PrerequisiteFail[] = [];
+  const granted = Boolean(opts.granted);
 
   for (const key of keys) {
     const label = formatPrerequisite(key, opts.resolveName);
 
+    // Acquisition blocks: only relevant when freely selecting (not package-granted)
     if (key === "NICHT_BEGINN" || key === "NICHT_FREI_WAEHLBAR") {
-      fails.push({ key, message: label });
+      if (!granted) fails.push({ key, message: label });
       continue;
     }
 
@@ -103,9 +105,10 @@ export function unmetSpecialAbilityPrerequisites(
     if (attr) {
       const have = attrWithBausteinMods(held, attr.code, opts.attributeMods);
       if (have < attr.need) {
+        // Match Java PanelProbleme: "IN ≥ 10" / "CL ≥ 10"
         fails.push({
           key,
-          message: `${label} (have ${have})`,
+          message: `${attr.code} ≥ ${attr.need}`,
         });
       }
       continue;
@@ -135,8 +138,9 @@ export function unmetSpecialAbilityPrerequisites(
 
     if (key.startsWith("NICHT_")) {
       const rest = key.slice("NICHT_".length);
-      if (rest === "EINARMIG") {
-        if (hasTrait(held, TRAIT_KEY_TO_ID.EINARMIG)) {
+      const traitId = TRAIT_KEY_TO_ID[rest];
+      if (traitId) {
+        if (hasTrait(held, traitId)) {
           fails.push({ key, message: label });
         }
         continue;
@@ -146,6 +150,21 @@ export function unmetSpecialAbilityPrerequisites(
         fails.push({
           key,
           message: `Cannot combine with ${opts.resolveName?.(sfId) || sfId}`,
+        });
+      }
+      continue;
+    }
+
+    // Advantage/trait requirements (Java VoraussetzungVorteil) — before SF fallthrough
+    const traitOr = TRAIT_OR_PREREQ_KEYS[key];
+    if (traitOr) {
+      if (!traitOr.some((id) => hasTrait(held, id))) {
+        const names = traitOr
+          .map((id) => opts.resolveName?.(id) || id.replace(/^VorNachteil\./, ""))
+          .join(" or ");
+        fails.push({
+          key,
+          message: `Requires ${names}`,
         });
       }
       continue;
@@ -228,10 +247,15 @@ export function checkSpecialAbilityPrerequisites(
       const talentBit = owned.talent
         ? ` (${opts.resolveName?.(owned.talent) || owned.talent})`
         : "";
+      const variantBit = owned.variant
+        ? ` (${opts.resolveName?.(owned.variant) || owned.variant.replace(/^Kulturkunde\./, "")})`
+        : "";
       out.push({
         code: `sf_prereq:${owned.id}:${owned.talent || ""}:${owned.variant || ""}:${f.key}`,
-        message: `${abilityName}${talentBit}: ${f.message}`,
-        severity: "error",
+        message: `${abilityName}${talentBit}${variantBit}: ${f.message}`,
+        // Java: SF prereqs need not be met to select — only to use in play
+        severity: "warning",
+        section: "special_abilities",
       });
     }
   }

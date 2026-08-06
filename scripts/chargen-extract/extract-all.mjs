@@ -145,11 +145,15 @@ function parseXmlFile(filePath) {
         "Talent",
         "Fest",
         "Frei",
+        "AlteSpracheBosparanoUrTulamidya",
+        "Gelaendekunde",
         "Bonus",
         "BasiswertModifikation",
         "EigenschaftModifikation",
         "Sonderfertigkeit",
         "Zauber",
+        "ZauberBonus",
+        "Werte",
         "Waffe",
         "Fernwaffe",
         "Ruestung",
@@ -167,15 +171,41 @@ function parseXmlFile(filePath) {
   return parser.parse(fs.readFileSync(filePath, "utf8"));
 }
 
+const TALENT_LIST_MARKER_TAGS = [
+  "Fremdsprachen",
+  "Muttersprache",
+  "NichtMuttersprache",
+  "SchriftenMuttersprache",
+];
+
+/** Parse TalentListe: <Talent>…</Talent> and markers like <Fremdsprachen/>. */
+function extractTalentListeIds(festOrFrei) {
+  const talents = [];
+  for (const tl of asArray(festOrFrei.TalentListe)) {
+    if (tl == null) continue;
+    if (typeof tl === "string") {
+      if (tl) talents.push(tl);
+      continue;
+    }
+    for (const t of asArray(tl.Talent)) {
+      const id = textOf(t);
+      if (id) talents.push(id);
+    }
+    for (const marker of TALENT_LIST_MARKER_TAGS) {
+      if (Object.prototype.hasOwnProperty.call(tl, marker)) {
+        talents.push(marker);
+      }
+    }
+  }
+  const direct = asArray(festOrFrei.Talent).map(textOf).filter(Boolean);
+  return talents.length ? talents : direct;
+}
+
 function extractTalentBoni(node) {
   if (!node) return [];
   const out = [];
   for (const fest of asArray(node.Fest)) {
-    const talents = asArray(fest.TalentListe)
-      .flatMap((tl) => asArray(tl?.Talent ?? tl))
-      .map(textOf)
-      .filter(Boolean);
-    const direct = asArray(fest.Talent).map(textOf).filter(Boolean);
+    const list = extractTalentListeIds(fest);
     // Multiple <Bonus> children = multiple ranks to assign among the talent list
     let bonuses = asArray(fest.Bonus)
       .map((b) => Number(textOf(b) ?? b))
@@ -183,25 +213,51 @@ function extractTalentBoni(node) {
     if (!bonuses.length && fest.Bonus != null) {
       bonuses = [Number(fest.Bonus)];
     }
+    const isMarker =
+      list.length === 1 && TALENT_LIST_MARKER_TAGS.includes(list[0]);
     out.push({
       type: "fixed",
       bonus: bonuses[0] ?? 0,
       bonuses,
-      talents: talents.length ? talents : direct,
-      open: (talents.length ? talents : direct).length > 1,
+      talents: list,
+      open: list.length > 1 || isMarker,
+      // Java FactoryTalentBoniIn: presence of Leittalent attr → true
+      lead:
+        fest["@_Leittalent"] != null &&
+        String(fest["@_Leittalent"]).toLowerCase() !== "false",
+      // Java TalentbonusTyp.ENTDECKER when Fest Typ="Entdecker"
+      typ: fest["@_Typ"] ? String(fest["@_Typ"]) : undefined,
     });
   }
   for (const frei of asArray(node.Frei)) {
-    const talents = asArray(frei.TalentListe)
-      .flatMap((tl) => asArray(tl?.Talent ?? tl))
-      .map(textOf)
-      .filter(Boolean);
-    const direct = asArray(frei.Talent).map(textOf).filter(Boolean);
+    const list = extractTalentListeIds(frei);
+    // Java uses attribute Bonus="N" on <Frei>, not a child element
+    const points = Number(
+      frei["@_Bonus"] ?? frei.Bonus ?? frei.Punkte ?? 0
+    );
     out.push({
       type: "free",
-      points: Number(frei.Bonus ?? frei.Punkte ?? 0),
-      talents: talents.length ? talents : direct,
+      points,
+      bonus: points,
+      talents: list,
       open: true,
+    });
+  }
+  // Java TalentbonusFestAlteSprache — auto Bosparano/UrTulamidya by mother tongue
+  for (const alte of asArray(node.AlteSpracheBosparanoUrTulamidya)) {
+    let bonuses = asArray(alte.Bonus)
+      .map((b) => Number(textOf(b) ?? b))
+      .filter((n) => Number.isFinite(n));
+    if (!bonuses.length && alte.Bonus != null) {
+      bonuses = [Number(alte.Bonus)];
+    }
+    out.push({
+      type: "ancient_language",
+      bonus: bonuses[0] ?? 0,
+      bonuses,
+      talents: ["Talent.Bosparano", "Talent.UrTulamidya"],
+      open: false,
+      lead: false,
     });
   }
   return out;
@@ -209,29 +265,144 @@ function extractTalentBoni(node) {
 
 function extractSfBoni(node) {
   if (!node) return [];
-  const werte = asArray(node.Werte?.Wert ?? node.Wert);
-  return werte
-    .map((w) => {
-      if (typeof w === "string") return { id: w };
+  const out = [];
+  // Preserve sibling order: each <Werte> is one bonus (auto if 1 option, open if many);
+  // <Gelaendekunde/> is an open pick among all topography SFs (Java SonderfertigkeitBonus.GELAENDEKUNDE).
+  const TERRAIN_SF_IDS = [
+    "Sonderfertigkeit.Dschungelkundig",
+    "Sonderfertigkeit.Eiskundig",
+    "Sonderfertigkeit.Gebirgskundig",
+    "Sonderfertigkeit.Hoehlenkundig",
+    "Sonderfertigkeit.Maraskankundig",
+    "Sonderfertigkeit.Meereskundig",
+    "Sonderfertigkeit.Steppenkundig",
+    "Sonderfertigkeit.Sumpfkundig",
+    "Sonderfertigkeit.Waldkundig",
+    "Sonderfertigkeit.Wuestenkundig",
+  ];
+
+  const parseWert = (w) => {
+    if (!w) return null;
+    if (typeof w === "string") return { id: w, variant: null, talent: undefined };
+    const id = w["@_Sonderfertigkeit"] || textOf(w);
+    if (!id) return null;
+    return {
+      id,
+      variant: w["@_Variante"] || null,
+      talent: w["@_Talent"] || undefined,
+    };
+  };
+
+  const blocks = asArray(node.Werte);
+  for (const block of blocks) {
+    const werte = asArray(block?.Wert ?? block)
+      .map(parseWert)
+      .filter(Boolean);
+    if (!werte.length) continue;
+    if (werte.length === 1) {
+      out.push({ ...werte[0], open: false });
+    } else {
+      out.push({
+        open: true,
+        choices: werte,
+      });
+    }
+  }
+
+  // Flat <Wert> without <Werte> wrapper (legacy)
+  if (!blocks.length) {
+    for (const w of asArray(node.Wert).map(parseWert).filter(Boolean)) {
+      out.push({ ...w, open: false });
+    }
+  }
+
+  if (
+    Object.prototype.hasOwnProperty.call(node, "Gelaendekunde") ||
+    asArray(node.Gelaendekunde).length
+  ) {
+    out.push({
+      open: true,
+      kind: "terrain_knowledge",
+      choices: TERRAIN_SF_IDS.map((id) => ({ id, variant: null })),
+    });
+  }
+
+  return out;
+}
+
+/** Culture/profession <ZauberBoni><ZauberBonus Zauber=… Bonus=… Hauszauber=…/> */
+function extractSpellBoni(node) {
+  if (!node) return [];
+  return asArray(node.ZauberBonus ?? node)
+    .map((z) => {
+      if (typeof z === "string") {
+        return { id: z, bonus: 0, house: false, variant: null };
+      }
+      const id = z["@_Zauber"] || textOf(z);
+      if (!id) return null;
       return {
-        id: w["@_Sonderfertigkeit"] || textOf(w),
-        variant: w["@_Variante"] || null,
+        id,
+        bonus: Number(z["@_Bonus"] ?? textOf(z.Bonus) ?? 0) || 0,
+        house:
+          String(z["@_Hauszauber"] ?? "false").toLowerCase() === "true",
+        variant: z["@_Variante"] || null,
       };
     })
-    .filter((x) => x.id);
+    .filter(Boolean);
 }
 
 function extractVerbilligteSf(node) {
   if (!node) return [];
-  return asArray(node.Sonderfertigkeit)
-    .map((s) => {
-      if (typeof s === "string") return { id: s };
+  const TERRAIN_SF_IDS = [
+    "Sonderfertigkeit.Dschungelkundig",
+    "Sonderfertigkeit.Eiskundig",
+    "Sonderfertigkeit.Gebirgskundig",
+    "Sonderfertigkeit.Hoehlenkundig",
+    "Sonderfertigkeit.Maraskankundig",
+    "Sonderfertigkeit.Meereskundig",
+    "Sonderfertigkeit.Steppenkundig",
+    "Sonderfertigkeit.Sumpfkundig",
+    "Sonderfertigkeit.Waldkundig",
+    "Sonderfertigkeit.Wuestenkundig",
+  ];
+  const out = [];
+  for (const s of asArray(node.Sonderfertigkeit)) {
+    if (typeof s === "string") {
+      out.push({ id: s });
+      continue;
+    }
+    const id = s["@_Sonderfertigkeit"] || textOf(s);
+    if (id) out.push({ id, variant: s["@_Variante"] || null });
+  }
+  // Java VerbilligteSonderfertigkeit.GELAENDEKUNDE — open discounted pick
+  if (
+    Object.prototype.hasOwnProperty.call(node, "Gelaendekunde") ||
+    asArray(node.Gelaendekunde).length
+  ) {
+    out.push({
+      open: true,
+      kind: "terrain_knowledge",
+      choices: TERRAIN_SF_IDS.map((id) => ({ id, variant: null })),
+    });
+  }
+  return out;
+}
+
+/** Java <VerbilligteVarianten><Variante Sonderfertigkeit=… Variante=…/> */
+function extractVerbilligteVarianten(node) {
+  if (!node) return [];
+  return asArray(node.Variante)
+    .map((v) => {
+      if (!v || typeof v === "string") return null;
+      const id = v["@_Sonderfertigkeit"] || textOf(v);
+      if (!id) return null;
       return {
-        id: s["@_Sonderfertigkeit"] || textOf(s),
-        variant: s["@_Variante"] || null,
+        id,
+        variant: v["@_Variante"] || null,
+        description: v["@_Beschreibung"] || null,
       };
     })
-    .filter((x) => x.id);
+    .filter(Boolean);
 }
 
 function extractMods(node) {
@@ -351,19 +522,35 @@ function extractBausteine(dir, rootTag, en, de) {
       continue;
     }
     const kosten = root.Kosten;
-    const gp =
-      kosten?.Fest != null
-        ? Number(kosten.Fest)
-        : kosten?.["#text"] != null
-          ? Number(kosten["#text"])
-          : 0;
+    let gp = 0;
+    let gp_cost_by_race = undefined;
+    if (kosten?.Fest != null) {
+      gp = Number(kosten.Fest);
+    } else if (kosten?.KostenRasse) {
+      const kr = kosten.KostenRasse;
+      if (kr.Normal != null) gp = Number(textOf(kr.Normal) ?? kr.Normal) || 0;
+      const byRace = {};
+      for (const r of asArray(kr.Rasse)) {
+        const raceId = r["@_Rasse"] || textOf(r);
+        const cost = Number(r["@_Kosten"] ?? textOf(r.Kosten) ?? 0);
+        if (raceId && Number.isFinite(cost)) byRace[raceId] = cost;
+      }
+      if (Object.keys(byRace).length) gp_cost_by_race = byRace;
+    } else if (kosten?.["#text"] != null) {
+      gp = Number(kosten["#text"]);
+    }
     const mods = extractMods(root.Modifikationen);
     const item = {
       id,
       ...namesFor(id, en, de),
       gp_cost: gp,
+      ...(gp_cost_by_race ? { gp_cost_by_race } : {}),
       ...mods,
       talent_bonuses: extractTalentBoni(root.TalentBoni),
+      // Java FactoryLeittalenteIn — race/culture (profession usually empty)
+      lead_talents: asArray(root.Leittalente?.Talent)
+        .map(textOf)
+        .filter(Boolean),
       advantage_bonuses: extractVnBoni(root.VorteilBoni),
       disadvantage_bonuses: extractVnBoni(root.NachteilBoni),
       recommended_advantages_disadvantages: extractVnList(
@@ -419,9 +606,16 @@ function extractBausteine(dir, rootTag, en, de) {
       item.discounted_special_abilities = extractVerbilligteSf(
         root.VerbilligteSonderfertigkeiten
       );
+      item.discounted_special_ability_variants = extractVerbilligteVarianten(
+        root.VerbilligteVarianten
+      );
       item.special_abilities = item.special_ability_bonuses
-        .map((s) => s.id)
-        .filter(Boolean);
+        .filter((s) => s.id && !s.open)
+        .map((s) => s.id);
+      item.spell_bonuses = extractSpellBoni(root.ZauberBoni);
+      item.spells = item.spell_bonuses.map((s) => s.id);
+      item.lead_spell_count =
+        root.Leitzauber != null ? Number(textOf(root.Leitzauber) ?? root.Leitzauber) || 0 : 0;
     }
     if (rootTag === "Profession") {
       item.requirements = [];
@@ -429,12 +623,36 @@ function extractBausteine(dir, rootTag, en, de) {
       item.discounted_special_abilities = extractVerbilligteSf(
         root.VerbilligteSonderfertigkeiten
       );
+      item.discounted_special_ability_variants = extractVerbilligteVarianten(
+        root.VerbilligteVarianten
+      );
       item.special_abilities = item.special_ability_bonuses
-        .map((s) => s.id)
-        .filter(Boolean);
-      item.spells = asArray(root.Zauber?.Zauber ?? root.ZauberBoni)
-        .map((z) => (typeof z === "string" ? z : textOf(z)))
-        .filter(Boolean);
+        .filter((s) => s.id && !s.open)
+        .map((s) => s.id);
+      item.spell_bonuses = extractSpellBoni(root.ZauberBoni);
+      item.spells = item.spell_bonuses.map((s) => s.id);
+      // <So …/> and <Mindeststufe> live under <Voraussetzungen>
+      const vors = root.Voraussetzungen || {};
+      const so = root.So || vors.So;
+      if (so) {
+        item.so_min =
+          so["@_Mindeststufe"] != null ? Number(so["@_Mindeststufe"]) : 0;
+        item.so_max =
+          so["@_Hoechststufe"] != null ? Number(so["@_Hoechststufe"]) : 13;
+      } else {
+        item.so_min = 0;
+        item.so_max = 13;
+      }
+      const attrMins = {};
+      for (const m of asArray(vors.Mindeststufe ?? root.Mindeststufe)) {
+        const level = Number(m["@_Mindeststufe"] ?? 0);
+        for (const e of asArray(m.Eigenschaft)) {
+          const raw = textOf(e);
+          const code = ATTR_MAP[raw];
+          if (code) attrMins[code] = Math.max(attrMins[code] || 0, level);
+        }
+      }
+      item.attribute_minimums = attrMins;
     }
     if (rootTag === "Rasse") {
       item.special_ability_bonuses = extractSfBoni(root.SonderfertigkeitBoni);
@@ -1241,6 +1459,8 @@ function main() {
     : path.join(RES, "i18n/Lokalisierung.properties");
   const de = parseProperties(dePath);
 
+  const bausteineOnly = process.argv.includes("--bausteine-only");
+
   console.log("Extracting races/cultures/professions…");
   writeJson(
     "rassen.json",
@@ -1254,6 +1474,11 @@ function main() {
     "professionen.json",
     extractBausteine(path.join(RES, "daten/professionen"), "Profession", en, de)
   );
+
+  if (bausteineOnly) {
+    console.log("Done (--bausteine-only).");
+    return;
+  }
 
   console.log("Extracting equipment…");
   writeJson("waffen_nahkampf.json", extractMelee(en, de));

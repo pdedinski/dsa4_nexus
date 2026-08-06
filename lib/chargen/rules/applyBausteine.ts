@@ -4,21 +4,33 @@
  */
 
 import type { CatalogItem } from "@/lib/chargen/data/loadCatalog";
-import type { HeldModel, TalentWert, TraitWert } from "@/lib/chargen/types";
+import type {
+  HeldModel,
+  SpellWert,
+  TalentWert,
+  TraitWert,
+} from "@/lib/chargen/types";
 import { currentAttrValue, type AttributeMods } from "@/lib/chargen/types";
-import { estimateTraitGp, type TraitCatalogFields } from "@/lib/chargen/rules/traitLabels";
+import { estimateTraitGp, traitGpDelta, type TraitCatalogFields } from "@/lib/chargen/rules/traitLabels";
 import {
   expandOpenTalentIds,
   isExpandableOpenTalentBonus,
 } from "@/lib/chargen/rules/talentListMarkers";
 
+const ELFISCHE_WELTSICHT = "VorNachteil.ElfischeWeltsicht";
+
 export interface TalentBonusEntry {
-  type: "fixed" | "free";
+  /** `ancient_language` = Java `TalentbonusFestAlteSprache` (Bosparano/Proto-Tulamidyan). */
+  type: "fixed" | "free" | "ancient_language";
   bonus?: number;
   bonuses?: number[];
   points?: number;
   talents?: string[];
   open?: boolean;
+  /** Fest Leittalent="true" — Java TalentbonusFest.istLeittalent() */
+  lead?: boolean;
+  /** Fest Typ="Entdecker" — Java TalentbonusTyp.ENTDECKER */
+  typ?: string;
 }
 
 export interface TraitBonusEntry {
@@ -38,6 +50,8 @@ export interface SpecialAbilityBonusEntry {
   variant?: string | null;
   talent?: string;
   open?: boolean;
+  /** Java `<Gelaendekunde/>` open topography pick */
+  kind?: string;
   choices?: Array<{
     id: string;
     variant?: string | null;
@@ -55,6 +69,14 @@ export interface DiscountedSpecialEntry {
   }>;
 }
 
+/** Culture/profession ZauberBonus (Java `Zauberbonus`). */
+export interface SpellBonusEntry {
+  id: string;
+  bonus?: number;
+  house?: boolean;
+  variant?: string | null;
+}
+
 export interface OpenTalentChoice {
   key: string;
   source: "race" | "culture" | "profession";
@@ -62,6 +84,8 @@ export interface OpenTalentChoice {
   ranks: number[];
   points: number;
   talents: string[];
+  /** Propagated from Fest Leittalent="true" */
+  lead?: boolean;
 }
 
 export interface OpenTraitChoice {
@@ -106,6 +130,36 @@ function applyFixedSingle(
   }
 }
 
+/**
+ * Java `TalentbonusFestAlteSprache`: if mother tongue is Garethi → Bosparano
+ * gets the higher bonus and Proto-Tulamidyan the lower; reversed for Tulamidyan.
+ */
+function applyAncientLanguageBonuses(
+  talents: TalentWert[],
+  bonuses: TalentBonusEntry[] | undefined,
+  motherTongue: string | undefined
+) {
+  for (const b of bonuses || []) {
+    if (b.type !== "ancient_language") continue;
+    const ranks = (b.bonuses && b.bonuses.length
+      ? [...b.bonuses]
+      : [b.bonus ?? 0]
+    )
+      .filter((n) => Number.isFinite(n))
+      .sort((a, c) => c - a);
+    if (!ranks.length) continue;
+    const higher = ranks[0];
+    const lower = ranks[1] ?? 0;
+    if (motherTongue === "Talent.Garethi") {
+      addTalentTp(talents, "Talent.Bosparano", higher);
+      addTalentTp(talents, "Talent.UrTulamidya", lower);
+    } else if (motherTongue === "Talent.Tulamidya") {
+      addTalentTp(talents, "Talent.Bosparano", lower);
+      addTalentTp(talents, "Talent.UrTulamidya", higher);
+    }
+  }
+}
+
 function collectOpenBonuses(
   source: OpenTalentChoice["source"],
   bonuses: TalentBonusEntry[] | undefined
@@ -122,6 +176,7 @@ function collectOpenBonuses(
         ranks: [],
         points: Number(b.points ?? b.bonus ?? 0),
         talents,
+        lead: Boolean(b.lead),
       });
       continue;
     }
@@ -135,6 +190,7 @@ function collectOpenBonuses(
         ranks,
         points: 0,
         talents,
+        lead: Boolean(b.lead),
       });
     }
   }
@@ -152,16 +208,24 @@ function applyTraitBonuses(
       id: b.id,
       variant: b.variant || undefined,
       rating: b.rating ?? undefined,
+      granted: true,
+      grantedRating: b.rating ?? undefined,
     });
   }
 }
 
 function applySpecialBonuses(
   held: HeldModel,
-  bonuses: Array<{ id?: string; variant?: string | null; talent?: string }> | undefined
+  bonuses: Array<{
+    id?: string;
+    variant?: string | null;
+    talent?: string;
+    open?: boolean;
+  }> | undefined
 ) {
   for (const b of bonuses || []) {
-    if (!b.id) continue;
+    // Open multi-choice / terrain-knowledge Fest — resolved via openSpecialPicks
+    if (b.open || !b.id) continue;
     if (
       held.specialAbilities.some(
         (s) =>
@@ -190,9 +254,10 @@ function applySpecialAbilityStrings(held: HeldModel, list: string[] | undefined)
 
 function applyDiscounted(
   held: HeldModel,
-  list: Array<{ id?: string }> | string[] | undefined
+  list: Array<{ id?: string; open?: boolean }> | string[] | undefined
 ) {
   for (const item of list || []) {
+    if (typeof item !== "string" && item.open) continue; // cheap terrain pick via openCheapSpecialPick
     const id = typeof item === "string" ? item : item.id;
     if (!id) continue;
     if (!held.discountedSpecialAbilities.includes(id)) {
@@ -250,6 +315,23 @@ function computeSeededTalents(
     second = "";
   }
   if (second) ensureTalent(talents, second);
+
+  // After mother tongue is known — mirrors Java istDirektAnwendbar AlteSprache
+  applyAncientLanguageBonuses(
+    talents,
+    race?.talent_bonuses as TalentBonusEntry[],
+    mother
+  );
+  applyAncientLanguageBonuses(
+    talents,
+    culture?.talent_bonuses as TalentBonusEntry[],
+    mother
+  );
+  applyAncientLanguageBonuses(
+    talents,
+    profession?.talent_bonuses as TalentBonusEntry[],
+    mother
+  );
 
   const open = listOpenTalentBonuses(race, culture, profession);
   applyOpenTalentAssignments(
@@ -436,6 +518,134 @@ export function leadSpellPickCount(
   return Number(n ?? 0) || 0;
 }
 
+/**
+ * Union of race/culture/profession `<Leittalente>` lists and Fest
+ * `Leittalent="true"` bonuses (including the talent chosen for open Fest).
+ * Mirrors Java `einfuegenLeittalente` + `TalentbonusFest.istLeittalent`.
+ * Open Fest with lead=true marks the chosen pick as lead (rules-correct;
+ * Java UI path may omit this for multi-choice Fest).
+ */
+export function computeLeadTalents(
+  race: CatalogItem | null | undefined,
+  culture: CatalogItem | null | undefined,
+  profession: CatalogItem | null | undefined,
+  openAssignments: Record<string, string[]> = {}
+): string[] {
+  const leads = new Set<string>();
+
+  for (const src of [race, culture, profession]) {
+    for (const id of (src?.lead_talents as string[] | undefined) || []) {
+      if (id) leads.add(id);
+    }
+  }
+
+  const addFestLeads = (bonuses: TalentBonusEntry[] | undefined) => {
+    for (const b of bonuses || []) {
+      if (!b.lead || b.type !== "fixed") continue;
+      if (b.open || isExpandableOpenTalentBonus(b)) continue;
+      const talents = b.talents || [];
+      if (talents.length === 1) leads.add(talents[0]);
+    }
+  };
+  addFestLeads(race?.talent_bonuses as TalentBonusEntry[] | undefined);
+  addFestLeads(culture?.talent_bonuses as TalentBonusEntry[] | undefined);
+  addFestLeads(profession?.talent_bonuses as TalentBonusEntry[] | undefined);
+
+  for (const choice of listOpenTalentBonuses(race, culture, profession)) {
+    if (!choice.lead) continue;
+    for (const id of openAssignments[choice.key] || []) {
+      if (id) leads.add(id);
+    }
+  }
+
+  return [...leads];
+}
+
+/** Flatten culture + profession spell bonuses (max SP, house OR). */
+export function collectSpellBonuses(
+  culture: CatalogItem | null | undefined,
+  profession: CatalogItem | null | undefined
+): SpellBonusEntry[] {
+  const map = new Map<string, SpellBonusEntry>();
+  for (const src of [culture, profession]) {
+    if (!src) continue;
+    const list = (src.spell_bonuses as SpellBonusEntry[] | undefined) || [];
+    if (list.length) {
+      for (const b of list) {
+        if (!b?.id) continue;
+        const prev = map.get(b.id);
+        if (!prev) {
+          map.set(b.id, {
+            id: b.id,
+            bonus: Number(b.bonus ?? 0) || 0,
+            house: Boolean(b.house),
+            variant: b.variant ?? null,
+          });
+        } else {
+          prev.bonus = Math.max(prev.bonus ?? 0, Number(b.bonus ?? 0) || 0);
+          prev.house = Boolean(prev.house || b.house);
+          if (!prev.variant && b.variant) prev.variant = b.variant;
+        }
+      }
+      continue;
+    }
+    for (const id of (src.spells as string[]) || []) {
+      if (!id || map.has(id)) continue;
+      map.set(id, { id, bonus: 0, house: false, variant: null });
+    }
+  }
+  return [...map.values()];
+}
+
+/** Package spells auto-marked lead when hero has Elven Worldview (Java anwendenZauber). */
+export function packageAutoLeadSpellIds(
+  culture: CatalogItem | null | undefined,
+  profession: CatalogItem | null | undefined,
+  traits: TraitWert[]
+): string[] {
+  if (!traits.some((t) => t.id === ELFISCHE_WELTSICHT)) return [];
+  return collectSpellBonuses(culture, profession).map((b) => b.id);
+}
+
+export function packageHouseSpellIds(
+  culture: CatalogItem | null | undefined,
+  profession: CatalogItem | null | undefined
+): string[] {
+  return collectSpellBonuses(culture, profession)
+    .filter((b) => b.house)
+    .map((b) => b.id);
+}
+
+function computeSeededSpells(
+  culture: CatalogItem | null | undefined,
+  profession: CatalogItem | null | undefined
+): SpellWert[] {
+  return collectSpellBonuses(culture, profession).map((b) => ({
+    id: b.id,
+    sp: Number(b.bonus ?? 0) || 0,
+    baselineSp: Number(b.bonus ?? 0) || 0,
+    variant: b.variant || undefined,
+  }));
+}
+
+function mergeSpells(seeded: SpellWert[], existing: SpellWert[]): SpellWert[] {
+  const seedMap = new Map(seeded.map((s) => [s.id, s]));
+  const merged = seeded.map((s) => ({ ...s }));
+  for (const s of existing) {
+    const seed = seedMap.get(s.id);
+    const row = merged.find((x) => x.id === s.id);
+    if (row) {
+      if (s.sp > row.sp) row.sp = s.sp;
+      if (s.variant) row.variant = s.variant;
+      if (s.activated != null) row.activated = s.activated;
+      if (s.specialExperience != null) row.specialExperience = s.specialExperience;
+      continue;
+    }
+    if (!seed) merged.push({ ...s });
+  }
+  return merged;
+}
+
 export function connectionPointsGranted(
   profession: CatalogItem | null | undefined
 ): number {
@@ -475,6 +685,7 @@ function computeSeededTraits(
       id: picked.id,
       variant: picked.variant || undefined,
       rating: picked.rating ?? undefined,
+      granted: true,
     });
   }
   return traits;
@@ -555,6 +766,12 @@ export function reapplyOpenTalentBonuses(
       : undefined,
     secondLanguage: opts.secondLanguage || held.secondLanguage,
     talents: mergeTalents(seeded, held.talents),
+    leadTalents: computeLeadTalents(
+      race,
+      culture,
+      profession,
+      opts.openAssignments || {}
+    ),
   };
 }
 
@@ -588,15 +805,30 @@ export function applyFixedBausteine(
     profession,
     opts.openTraitPicks || {}
   );
+  const seededSpells = computeSeededSpells(culture, profession);
+  const autoLead = packageAutoLeadSpellIds(culture, profession, seededTraits);
+  const house = packageHouseSpellIds(culture, profession);
+  const pickLeads = (opts.leadSpellPicks || []).filter(
+    (id) => !autoLead.includes(id)
+  );
+  const leadSpells = [...new Set([...autoLead, ...pickLeads])];
+  const leadTalents = computeLeadTalents(
+    race,
+    culture,
+    profession,
+    opts.openAssignments || {}
+  );
 
   const seededHeld: HeldModel = {
     ...emptyHeldSlice(held),
     talents: [...seededTalents],
+    spells: [...seededSpells],
     advantagesDisadvantages: [...seededTraits],
     specialAbilities: [],
     discountedSpecialAbilities: [],
-    leadTalents: [],
-    leadSpells: opts.leadSpellPicks || [],
+    leadTalents,
+    leadSpells,
+    houseSpells: house,
   };
 
   applySpecialBonuses(
@@ -683,6 +915,7 @@ export function applyFixedBausteine(
     motherTongue: mother,
     secondLanguage: second || undefined,
     talents: mergeTalents(seededTalents, held.talents),
+    spells: mergeSpells(seededSpells, held.spells),
     advantagesDisadvantages: mergeTraits(
       seededTraits,
       held.advantagesDisadvantages
@@ -700,7 +933,9 @@ export function applyFixedBausteine(
         ),
       ]),
     ],
-    leadSpells: opts.leadSpellPicks ?? held.leadSpells,
+    leadTalents,
+    leadSpells,
+    houseSpells: house,
   };
 }
 
@@ -710,13 +945,36 @@ function emptyHeldSlice(held: HeldModel): HeldModel {
 
 export function traitGpNet(
   held: HeldModel,
-  catalog: CatalogItem[]
+  catalog: CatalogItem[],
+  talents: CatalogItem[] = []
 ): number {
   let sum = 0;
   for (const t of held.advantagesDisadvantages) {
     const meta = catalog.find((x) => x.id === t.id);
     if (!meta) continue;
-    sum += estimateTraitGp(meta as TraitCatalogFields, t.rating);
+    const ctx = {
+      held,
+      talents,
+      variant: t.variant,
+    };
+    // Fully granted with no raisable levels above baseline → 0 GP
+    if (t.granted && t.grantedRating == null && t.rating == null) {
+      continue;
+    }
+    if (t.granted && t.grantedRating == null && t.rating != null) {
+      // Legacy granted rows without grantedRating: treat current as free baseline
+      continue;
+    }
+    if (t.grantedRating != null || t.granted) {
+      sum += traitGpDelta(
+        meta as TraitCatalogFields,
+        t.rating,
+        t.grantedRating ?? t.rating ?? 0,
+        ctx
+      );
+      continue;
+    }
+    sum += estimateTraitGp(meta as TraitCatalogFields, t.rating, ctx);
   }
   return sum;
 }

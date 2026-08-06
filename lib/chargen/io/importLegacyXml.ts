@@ -15,6 +15,7 @@ import {
   DERIVED_FROM_GERMAN,
   emptyHeld,
 } from "@/lib/chargen/types";
+import { loadAsVeteran } from "@/lib/chargen/rules/veteran";
 
 function asArray<T>(v: T | T[] | null | undefined): T[] {
   if (v == null) return [];
@@ -240,5 +241,5 @@ export function importLegacyHeldXml(raw: string): HeldModel {
     };
   });
 
-  return held;
+  return loadAsVeteran(held);
 }

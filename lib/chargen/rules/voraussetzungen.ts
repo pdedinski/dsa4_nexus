@@ -2,15 +2,33 @@
  * Prerequisite / conflict checks — mirrors Java `Voraussetzung` packages (simplified).
  */
 
-import type { HeldModel } from "@/lib/chargen/types";
-import { currentAttrValue, talentTp } from "@/lib/chargen/types";
-import { hasSpecialAbility, hasTrait } from "@/lib/chargen/rules/kosten";
+import type { AttrCodeWithSo, AttributeMods, HeldModel } from "@/lib/chargen/types";
+import {
+  ATTR_LABELS,
+  currentAttrValue,
+  talentTp,
+} from "@/lib/chargen/types";
+import { hasTrait } from "@/lib/chargen/rules/kosten";
 import { countNonSeededActivations } from "@/lib/chargen/rules/talentActivation";
+
+export type KonfliktSection =
+  | "general"
+  | "race"
+  | "culture"
+  | "profession"
+  | "attributes"
+  | "talents"
+  | "spells"
+  | "special_abilities"
+  | "traits"
+  | "budget";
 
 export interface Konflikt {
   code: string;
   message: string;
   severity: "error" | "warning";
+  /** Java PanelProbleme section grouping. */
+  section?: KonfliktSection;
 }
 
 const BEGABUNG_TALENT = "VorNachteil.BegabungFuerTalent";
@@ -31,6 +49,7 @@ export function checkBegabungUnfaehigkeit(held: HeldModel): Konflikt[] {
       message:
         "Gifted (Talent) and Ineptitude (Talent) cannot both be active.",
       severity: "error",
+      section: "traits",
     });
   }
   if (hasBegGruppe && hasUnfGruppe) {
@@ -39,6 +58,7 @@ export function checkBegabungUnfaehigkeit(held: HeldModel): Konflikt[] {
       message:
         "Gifted (Talent Group) and Ineptitude (Talent Group) cannot both be active.",
       severity: "error",
+      section: "traits",
     });
   }
   return out;
@@ -57,11 +77,58 @@ export function checkMaxFiveVariantTraits(held: HeldModel): Konflikt[] {
         code: "max_5_variants",
         message: `${id} has more than 5 variants activated (${n}).`,
         severity: "error",
+        section: "traits",
       });
     }
   }
   return out;
 }
+
+/** Kulturkunde variant → related language talent ids (Java `Kulturkunde.java`). */
+const KULTURKUNDE_LANGUAGES: Record<string, string[]> = {
+  "Kulturkunde.Almada": ["Talent.Garethi"],
+  "Kulturkunde.Amazonen": ["Talent.Garethi"],
+  "Kulturkunde.Ambosszwerge": ["Talent.Rogolan"],
+  "Kulturkunde.AndergastNostria": ["Talent.Garethi"],
+  "Kulturkunde.Aranien": ["Talent.Garethi", "Talent.Tulamidya"],
+  "Kulturkunde.ArchaischeAchaz": ["Talent.Rssahh"],
+  "Kulturkunde.Auelfen": ["Talent.Isdira"],
+  "Kulturkunde.Bornland": ["Talent.Garethi"],
+  "Kulturkunde.Brilliantzwerge": ["Talent.Rogolan"],
+  "Kulturkunde.Bukanier": ["Talent.Garethi"],
+  "Kulturkunde.Erzzwerge": ["Talent.Rogolan"],
+  "Kulturkunde.Ferkina": ["Talent.Tulamidya"],
+  "Kulturkunde.Firnelfen": ["Talent.Isdira"],
+  "Kulturkunde.Fjarninger": ["Talent.Thorwalsch"],
+  "Kulturkunde.Gjalskerlaender": ["Talent.Thorwalsch"],
+  "Kulturkunde.Goblins": ["Talent.Goblinisch"],
+  "Kulturkunde.Grolme": ["Talent.Garethi"],
+  "Kulturkunde.Horasreich": ["Talent.Garethi"],
+  "Kulturkunde.Huegelzwerge": ["Talent.Rogolan"],
+  "Kulturkunde.Nivesen": ["Talent.Nujuka"],
+  "Kulturkunde.Norbarden": ["Talent.Nujuka", "Talent.Garethi"],
+  "Kulturkunde.NordaventurischeStaedte": ["Talent.Garethi"],
+  "Kulturkunde.Maraskan": ["Talent.Garethi"],
+  "Kulturkunde.Mohas": ["Talent.Mohisch"],
+  "Kulturkunde.Mittelreich": ["Talent.Garethi"],
+  "Kulturkunde.Novadi": ["Talent.Tulamidya"],
+  "Kulturkunde.Orks": ["Talent.Oloarkh", "Talent.Ologhaijan"],
+  "Kulturkunde.SchwarzeLande": ["Talent.Garethi"],
+  "Kulturkunde.StammesAchaz": ["Talent.Rssahh"],
+  "Kulturkunde.Steppenelfen": ["Talent.Isdira"],
+  "Kulturkunde.Suedaventurien": ["Talent.Garethi"],
+  "Kulturkunde.Svellttal": ["Talent.Garethi"],
+  "Kulturkunde.Thorwal": ["Talent.Thorwalsch"],
+  "Kulturkunde.Tocamuyac": ["Talent.Mohisch"],
+  "Kulturkunde.Trolle": ["Talent.Garethi"],
+  "Kulturkunde.Trollzacker": ["Talent.Garethi"],
+  "Kulturkunde.Tulamidenlande": ["Talent.Tulamidya"],
+  "Kulturkunde.Waldelfen": ["Talent.Isdira"],
+  "Kulturkunde.Zahori": ["Talent.Tulamidya"],
+  "Kulturkunde.Zyklopeninseln": ["Talent.Garethi"],
+};
+
+const KULTURKUNDE_LANG_MIN = 5;
 
 /** Kulturkunde: related language talent TP ≥ 5 for the chosen culture variant. */
 export function checkKulturkunde(
@@ -76,30 +143,32 @@ export function checkKulturkunde(
   const out: Konflikt[] = [];
   for (const sa of kk) {
     const variant = sa.variant || "";
-    const cultureKey = variant.replace(/^Kulturkunde\./, "").replace(
-      /^Kultur\./,
-      ""
+    const variantKey = variant.startsWith("Kulturkunde.")
+      ? variant
+      : variant
+        ? `Kulturkunde.${variant.replace(/^Kultur\./, "")}`
+        : "";
+    const relatedLangs = variantKey
+      ? KULTURKUNDE_LANGUAGES[variantKey] || []
+      : [];
+    const ok = relatedLangs.some(
+      (langId) => talentTp(held, langId) >= KULTURKUNDE_LANG_MIN
     );
-    let relatedLang: string | undefined;
-    if (cultureKey) {
-      relatedLang = `Talent.${cultureKey.split(".").pop() || ""}`;
-    }
-    const langs = held.talents.filter(
-      (t) =>
-        t.id.startsWith("Talent.") &&
-        !t.id.includes("Schrift") &&
-        (relatedLang ? t.id === relatedLang : true)
-    );
-    const ok = langs.some((t) => talentTp(held, t.id) >= 5);
     if (!ok) {
       const variantLabel =
         resolveName?.(variant) ||
         variant.replace(/^Kulturkunde\./, "") ||
         "variant";
+      const langNames = relatedLangs
+        .map((id) => resolveName?.(id) || id.replace(/^Talent\./, ""))
+        .join(" or ");
       out.push({
         code: "kulturkunde_language",
-        message: `Culture Lore (${variantLabel}) requires a related language at TP ≥ 5.`,
+        message: langNames
+          ? `Culture Lore (${variantLabel}) requires ${langNames} at TP ≥ ${KULTURKUNDE_LANG_MIN}.`
+          : `Culture Lore (${variantLabel}) requires a related language at TP ≥ ${KULTURKUNDE_LANG_MIN}.`,
         severity: "warning",
+        section: "special_abilities",
       });
     }
   }
@@ -123,6 +192,7 @@ export function checkGpCaps(
       code: "gp_disadvantages_cap",
       message: `More than ${MAX_GP_DISADVANTAGES} GP from disadvantages (${disGp}).`,
       severity: "warning",
+      section: "traits",
     });
   }
   if (negGp > MAX_GP_NEGATIVE_ATTRS) {
@@ -130,6 +200,7 @@ export function checkGpCaps(
       code: "gp_negative_attrs_cap",
       message: `More than ${MAX_GP_NEGATIVE_ATTRS} GP from negative attributes (${negGp}).`,
       severity: "warning",
+      section: "traits",
     });
   }
   return out;
@@ -179,6 +250,7 @@ export function checkActivationLimits(
       code: "max_talent_activations",
       message: `More than ${MAX_TALENT_ACTIVATIONS} non-base talents activated (${activations}).`,
       severity: "warning",
+      section: "talents",
     });
   }
   const spellActs = held.spells.filter(
@@ -189,6 +261,7 @@ export function checkActivationLimits(
       code: "max_spell_activations",
       message: `More than ${MAX_SPELL_ACTIVATIONS} spells activated (${spellActs}).`,
       severity: "warning",
+      section: "spells",
     });
   }
   return out;
@@ -204,6 +277,7 @@ export function checkAttributeBounds(held: HeldModel): Konflikt[] {
           code: "so_bounds",
           message: `Social Standing must be between 1 and 13 (currently ${total}).`,
           severity: "error",
+          section: "attributes",
         });
       }
       continue;
@@ -213,6 +287,7 @@ export function checkAttributeBounds(held: HeldModel): Konflikt[] {
         code: "attr_base_bounds",
         message: `${a.code} creation base must be between 8 and 14 (currently ${a.base}).`,
         severity: "error",
+        section: "attributes",
       });
     }
     if (total > 20) {
@@ -220,6 +295,108 @@ export function checkAttributeBounds(held: HeldModel): Konflikt[] {
         code: "attr_max",
         message: `${a.code} exceeds maximum 20 (currently ${total}).`,
         severity: "warning",
+        section: "attributes",
+      });
+    }
+  }
+  return out;
+}
+
+export type BausteinAttrSource = {
+  id?: string;
+  name?: string;
+  attribute_minimums?: Record<string, number>;
+  so_min?: number;
+  so_max?: number;
+};
+
+/**
+ * Race / culture / profession attribute & SO mins/maxes — mirrors Java
+ * `VoraussetzungMindeststufe` + `Eigenschaft.pruefeBausteinMindesstufe`.
+ * Reports under both the baustein section and Attributes (like PanelProbleme).
+ */
+export function checkBausteinAttributeRequirements(
+  held: HeldModel,
+  sources: {
+    race?: BausteinAttrSource | null;
+    culture?: BausteinAttrSource | null;
+    profession?: BausteinAttrSource | null;
+  },
+  attributeMods?: AttributeMods
+): Konflikt[] {
+  const out: Konflikt[] = [];
+  const entries: {
+    key: "race" | "culture" | "profession";
+    section: KonfliktSection;
+    source: BausteinAttrSource | null | undefined;
+  }[] = [
+    { key: "race", section: "race", source: sources.race },
+    { key: "culture", section: "culture", source: sources.culture },
+    { key: "profession", section: "profession", source: sources.profession },
+  ];
+
+  for (const { section, source } of entries) {
+    if (!source) continue;
+    const label =
+      (source.name as string) ||
+      String(source.id || "").replace(/^.*\./, "") ||
+      section;
+    const mins = source.attribute_minimums || {};
+    for (const [code, need] of Object.entries(mins)) {
+      const have = currentAttrValue(
+        held,
+        code as AttrCodeWithSo,
+        attributeMods
+      );
+      if (have < Number(need)) {
+        const attrLabel =
+          ATTR_LABELS[code as AttrCodeWithSo] || code;
+        // Profession / Race / Culture section (short form)
+        out.push({
+          code: `baustein_min:${section}:${code}`,
+          message: `${label}: ${code} ≥ ${need}`,
+          severity: "error",
+          section,
+        });
+        // Attributes section (named baustein form — Java HeldenbausteinMindeststufe)
+        out.push({
+          code: `attr_baustein_min:${section}:${code}`,
+          message: `${attrLabel}: ${label} requires ${code} ≥ ${need}`,
+          severity: "error",
+          section: "attributes",
+        });
+      }
+    }
+
+    const so = currentAttrValue(held, "SO", attributeMods);
+    const soMin = Number(source.so_min ?? 0);
+    const soMax = source.so_max != null ? Number(source.so_max) : null;
+    if (soMin > 0 && so < soMin) {
+      out.push({
+        code: `baustein_so_min:${section}`,
+        message: `${label}: SO ≥ ${soMin}`,
+        severity: "error",
+        section,
+      });
+      out.push({
+        code: `attr_baustein_so_min:${section}`,
+        message: `Social Standing: ${label} requires SO ≥ ${soMin}`,
+        severity: "error",
+        section: "attributes",
+      });
+    }
+    if (soMax != null && so > soMax) {
+      out.push({
+        code: `baustein_so_max:${section}`,
+        message: `${label}: SO ≤ ${soMax}`,
+        severity: "error",
+        section,
+      });
+      out.push({
+        code: `attr_baustein_so_max:${section}`,
+        message: `Social Standing: ${label} requires SO ≤ ${soMax}`,
+        severity: "error",
+        section: "attributes",
       });
     }
   }
@@ -243,6 +420,7 @@ export function checkRaceCultureProfession(
       code: "missing_race",
       message: "No race selected.",
       severity: "error",
+      section: "race",
     });
   }
   if (!held.cultureId) {
@@ -250,6 +428,7 @@ export function checkRaceCultureProfession(
       code: "missing_culture",
       message: "No culture selected.",
       severity: "error",
+      section: "culture",
     });
   }
   if (!held.professionId) {
@@ -257,6 +436,7 @@ export function checkRaceCultureProfession(
       code: "missing_profession",
       message: "No profession selected.",
       severity: "error",
+      section: "profession",
     });
   }
   if (
@@ -268,6 +448,7 @@ export function checkRaceCultureProfession(
       code: "culture_not_allowed",
       message: "Selected culture is not allowed for this race.",
       severity: "error",
+      section: "culture",
     });
   }
   if (culture?.professions && held.professionId) {
@@ -277,6 +458,7 @@ export function checkRaceCultureProfession(
         code: "profession_excluded",
         message: "Selected profession is excluded by this culture.",
         severity: "error",
+        section: "profession",
       });
     }
     if (
@@ -288,6 +470,7 @@ export function checkRaceCultureProfession(
         code: "profession_not_allowed",
         message: "Selected profession is not allowed for this culture.",
         severity: "error",
+        section: "profession",
       });
     }
   }

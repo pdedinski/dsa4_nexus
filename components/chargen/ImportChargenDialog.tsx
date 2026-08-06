@@ -9,6 +9,11 @@ import {
 } from "@/lib/chargen/io/importLegacyXml";
 import type { HeldModel } from "@/lib/chargen/types";
 
+function isLegacyChargenFile(name: string): boolean {
+  const lower = name.toLowerCase();
+  return lower.endsWith(".dcg") || lower.endsWith(".xml");
+}
+
 export default function ImportChargenDialog({
   open,
   onClose,
@@ -28,7 +33,7 @@ export default function ImportChargenDialog({
     try {
       const text = await file.text();
       let held: HeldModel;
-      if (isLegacyHeldXml(text) || file.name.toLowerCase().endsWith(".xml")) {
+      if (isLegacyHeldXml(text) || isLegacyChargenFile(file.name)) {
         held = importLegacyHeldXml(text);
       } else {
         held = importHeldJson(text);
@@ -46,13 +51,14 @@ export default function ImportChargenDialog({
         <div className="w-full max-w-md rounded-xl border border-surface-border bg-[#1a1410] p-4 shadow-2xl">
           <h2 className="text-lg font-bold text-ink mb-2">Import character</h2>
           <p className="text-sm text-ink-muted mb-4">
-            Upload a DSA Nexus Chargen JSON file or a legacy Java Chargen{" "}
-            <code className="text-xs">&lt;Held&gt;</code> XML file.
+            Upload a Java Chargen{" "}
+            <code className="text-xs">.dcg</code> file (default), or a{" "}
+            <code className="text-xs">.xml</code> / Nexus JSON export.
           </p>
           <input
             ref={inputRef}
             type="file"
-            accept=".json,.xml,application/json,text/xml"
+            accept=".dcg,.xml,.json,application/xml,text/xml,application/json"
             className="block w-full text-sm text-ink"
             onChange={(e) => {
               const f = e.target.files?.[0];

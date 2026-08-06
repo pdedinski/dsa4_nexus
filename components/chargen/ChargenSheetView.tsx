@@ -63,6 +63,13 @@ export default function ChargenSheetView({
         <button
           type="button"
           className="px-3 py-2 rounded-lg text-sm bg-brand text-white font-medium"
+          onClick={() => downloadLegacyHeldXml(held, `${baseName}.dcg`)}
+        >
+          Download .dcg
+        </button>
+        <button
+          type="button"
+          className="px-3 py-2 rounded-lg text-sm border border-surface-border text-ink hover:bg-surface-sidebar"
           onClick={() => downloadHeldJson(held)}
         >
           Download JSON
@@ -87,13 +94,6 @@ export default function ChargenSheetView({
           onClick={() => void downloadDocx(makeDoc(), `${baseName}.docx`)}
         >
           Download DOCX
-        </button>
-        <button
-          type="button"
-          className="px-3 py-2 rounded-lg text-sm border border-surface-border text-ink hover:bg-surface-sidebar"
-          onClick={() => downloadLegacyHeldXml(held, `${baseName}.dcg`)}
-        >
-          Download XML (.dcg)
         </button>
       </div>
 

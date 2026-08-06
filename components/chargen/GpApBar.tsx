@@ -22,7 +22,8 @@ export default function GpApBar({
           budget.gpRemaining < 0 ? "text-red-400 font-medium" : "text-ink"
         }
       >
-        GP: {budget.gpRemaining} / {budget.gpStart}
+        GP: {budget.gpRemaining} to spend
+        <span className="text-ink-faint"> / {budget.gpStart}</span>
         {budget.gpSpecialAbilities > 0
           ? ` (SF ${budget.gpSpecialAbilities})`
           : ""}

@@ -137,6 +137,9 @@ export function checkTalentLevelCaps(
   for (const row of held.talents) {
     const meta = talents.find((t) => t.id === row.id);
     if (!meta) continue;
+    const attrs = (meta.test_attributes as string[]) || [];
+    // Without probe attributes Höchststufe collapses to 0+3 — skip until enriched
+    if (!attrs.length) continue;
     const tp = effectiveTalentTp(held, row.id, row.tp);
     const cap = talentHoechststufe(held, meta, opts.attributeMods);
     if (tp > cap) {
@@ -145,6 +148,7 @@ export function checkTalentLevelCaps(
         code: `talent_cap:${row.id}`,
         message: `${name}: TP ${tp} exceeds maximum level ${cap}.`,
         severity: "warning",
+        section: "talents",
       });
     }
   }
@@ -170,6 +174,7 @@ export function checkSpellLevelCaps(
         code: `spell_cap:${row.id}`,
         message: `${name}: SP ${row.sp} exceeds maximum level ${cap}.`,
         severity: "warning",
+        section: "spells",
       });
     }
   }
@@ -203,12 +208,14 @@ export function checkCombatAtPaSpread(
         code: `combat_at_over:${row.id}`,
         message: `${name}: AT ${attack} exceeds TP ${tp}.`,
         severity: "warning",
+        section: "talents",
       });
     } else if (Math.abs(attack - parade) > MAX_AT_PA_DIFF) {
       out.push({
         code: `combat_at_pa_spread:${row.id}`,
         message: `${name}: |AT − PA| = ${Math.abs(attack - parade)} (max ${MAX_AT_PA_DIFF}).`,
         severity: "warning",
+        section: "talents",
       });
     }
   }

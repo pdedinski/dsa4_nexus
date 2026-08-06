@@ -16,7 +16,8 @@
         "talents": [
           "Talent.Armbrust"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -27,7 +28,8 @@
         "talents": [
           "Talent.Hiebwaffen"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -38,7 +40,8 @@
         "talents": [
           "Talent.Raufen"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -49,7 +52,8 @@
         "talents": [
           "Talent.Ringen"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -60,7 +64,8 @@
         "talents": [
           "Talent.ZweihandHiebwaffen"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -71,7 +76,8 @@
         "talents": [
           "Talent.Athletik"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -82,7 +88,8 @@
         "talents": [
           "Talent.Klettern"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -93,7 +100,8 @@
         "talents": [
           "Talent.Zechen"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -104,7 +112,8 @@
         "talents": [
           "Talent.Gassenwissen"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -115,7 +124,8 @@
         "talents": [
           "Talent.Wettervorhersage"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -126,7 +136,8 @@
         "talents": [
           "Talent.Gesteinskunde"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -137,7 +148,8 @@
         "talents": [
           "Talent.GoetterKulte"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -148,7 +160,8 @@
         "talents": [
           "Talent.Mechanik"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -159,7 +172,8 @@
         "talents": [
           "Talent.Rechnen"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -170,7 +184,8 @@
         "talents": [
           "Talent.SagenLegenden"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -181,7 +196,8 @@
         "talents": [
           "Talent.Schaetzen"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -192,7 +208,8 @@
         "talents": [
           "Talent.Bergbau"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -203,9 +220,11 @@
         "talents": [
           "Talent.Grobschmied"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       }
     ],
+    "lead_talents": [],
     "advantage_bonuses": [],
     "disadvantage_bonuses": [
       {
@@ -274,9 +293,33 @@
       "include": []
     },
     "name_factory": "Namenformate.ZwergischeNamen",
-    "special_ability_bonuses": [],
+    "special_ability_bonuses": [
+      {
+        "id": "Sonderfertigkeit.Kulturkunde",
+        "variant": "Kulturkunde.Ambosszwerge",
+        "open": false
+      },
+      {
+        "id": "Sonderfertigkeit.Hoehlenkundig",
+        "variant": null,
+        "open": false
+      },
+      {
+        "id": "Sonderfertigkeit.RuestungsgewoehnungI",
+        "variant": "Ruestung.Kettenhemd",
+        "open": false
+      }
+    ],
     "discounted_special_abilities": [],
-    "special_abilities": []
+    "discounted_special_ability_variants": [],
+    "special_abilities": [
+      "Sonderfertigkeit.Kulturkunde",
+      "Sonderfertigkeit.Hoehlenkundig",
+      "Sonderfertigkeit.RuestungsgewoehnungI"
+    ],
+    "spell_bonuses": [],
+    "spells": [],
+    "lead_spell_count": 0
   },
   {
     "id": "Kultur.AndergastNostria",
@@ -298,7 +341,8 @@
         "talents": [
           "Talent.Dolche"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -309,7 +353,8 @@
         "talents": [
           "Talent.Hiebwaffen"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -320,7 +365,8 @@
         "talents": [
           "Talent.Raufen"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -331,7 +377,8 @@
         "talents": [
           "Talent.Ringen"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -342,7 +389,8 @@
         "talents": [
           "Talent.Speere"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -353,7 +401,8 @@
         "talents": [
           "Talent.Wurfspeere"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -364,7 +413,8 @@
         "talents": [
           "Talent.Athletik"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -375,7 +425,8 @@
         "talents": [
           "Talent.Schleichen"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -386,7 +437,8 @@
         "talents": [
           "Talent.Selbstbeherrschung"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -397,7 +449,8 @@
         "talents": [
           "Talent.SichVerstecken"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -408,7 +461,8 @@
         "talents": [
           "Talent.Zechen"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -419,7 +473,8 @@
         "talents": [
           "Talent.Faehrtensuchen"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -430,7 +485,8 @@
         "talents": [
           "Talent.Fallenstellen"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -441,7 +497,8 @@
         "talents": [
           "Talent.Orientierung"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -452,7 +509,8 @@
         "talents": [
           "Talent.Wildnisleben"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -463,7 +521,8 @@
         "talents": [
           "Talent.GoetterKulte"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -474,7 +533,8 @@
         "talents": [
           "Talent.SagenLegenden"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -485,7 +545,8 @@
         "talents": [
           "Talent.Ackerbau"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -496,7 +557,8 @@
         "talents": [
           "Talent.HeilkundeWunden"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -507,7 +569,8 @@
         "talents": [
           "Talent.Holzbearbeitung"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -518,7 +581,8 @@
         "talents": [
           "Talent.Lederarbeiten"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -529,7 +593,8 @@
         "talents": [
           "Talent.Schneidern"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -545,11 +610,13 @@
           "Talent.Kochen",
           "Talent.Zimmermann"
         ],
-        "open": true
+        "open": true,
+        "lead": false
       },
       {
         "type": "free",
-        "points": 0,
+        "points": 4,
+        "bonus": 4,
         "talents": [
           "Talent.Oloarkh",
           "Talent.Ologhaijan",
@@ -558,6 +625,7 @@
         "open": true
       }
     ],
+    "lead_talents": [],
     "advantage_bonuses": [],
     "disadvantage_bonuses": [],
     "recommended_advantages_disadvantages": [
@@ -620,14 +688,32 @@
       "include": []
     },
     "name_factory": "Namenformate.AndergastscheNamen",
-    "special_ability_bonuses": [],
+    "special_ability_bonuses": [
+      {
+        "id": "Sonderfertigkeit.MeisterDerImprovisation",
+        "variant": null,
+        "open": false
+      },
+      {
+        "id": "Sonderfertigkeit.Kulturkunde",
+        "variant": "Kulturkunde.AndergastNostria",
+        "open": false
+      }
+    ],
     "discounted_special_abilities": [
       {
         "id": "Sonderfertigkeit.Waldkundig",
         "variant": null
       }
     ],
-    "special_abilities": []
+    "discounted_special_ability_variants": [],
+    "special_abilities": [
+      "Sonderfertigkeit.MeisterDerImprovisation",
+      "Sonderfertigkeit.Kulturkunde"
+    ],
+    "spell_bonuses": [],
+    "spells": [],
+    "lead_spell_count": 0
   },
   {
     "id": "Kultur.Auelfen",
@@ -646,7 +732,8 @@
         "talents": [
           "Talent.Bogen"
         ],
-        "open": false
+        "open": false,
+        "lead": true
       },
       {
         "type": "fixed",
@@ -657,7 +744,8 @@
         "talents": [
           "Talent.Dolche"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -668,7 +756,8 @@
         "talents": [
           "Talent.Athletik"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -679,7 +768,8 @@
         "talents": [
           "Talent.Klettern"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -690,7 +780,8 @@
         "talents": [
           "Talent.Koerperbeherrschung"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -701,7 +792,8 @@
         "talents": [
           "Talent.Schleichen"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -712,7 +804,8 @@
         "talents": [
           "Talent.Schwimmen"
         ],
-        "open": false
+        "open": false,
+        "lead": true
       },
       {
         "type": "fixed",
@@ -723,7 +816,8 @@
         "talents": [
           "Talent.SichVerstecken"
         ],
-        "open": false
+        "open": false,
+        "lead": true
       },
       {
         "type": "fixed",
@@ -734,7 +828,8 @@
         "talents": [
           "Talent.Singen"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -745,7 +840,8 @@
         "talents": [
           "Talent.Sinnenschaerfe"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -756,7 +852,8 @@
         "talents": [
           "Talent.Tanzen"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -767,7 +864,8 @@
         "talents": [
           "Talent.Betoeren"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -778,7 +876,8 @@
         "talents": [
           "Talent.Gassenwissen"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -789,7 +888,8 @@
         "talents": [
           "Talent.Faehrtensuchen"
         ],
-        "open": false
+        "open": false,
+        "lead": true
       },
       {
         "type": "fixed",
@@ -800,7 +900,8 @@
         "talents": [
           "Talent.FischenAngeln"
         ],
-        "open": false
+        "open": false,
+        "lead": true
       },
       {
         "type": "fixed",
@@ -811,7 +912,8 @@
         "talents": [
           "Talent.Orientierung"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -822,7 +924,8 @@
         "talents": [
           "Talent.Wildnisleben"
         ],
-        "open": false
+        "open": false,
+        "lead": true
       },
       {
         "type": "fixed",
@@ -833,7 +936,8 @@
         "talents": [
           "Talent.Magiekunde"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -844,7 +948,8 @@
         "talents": [
           "Talent.Pflanzenkunde"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -855,7 +960,8 @@
         "talents": [
           "Talent.Rechtskunde"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -866,7 +972,8 @@
         "talents": [
           "Talent.SagenLegenden"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -877,7 +984,8 @@
         "talents": [
           "Talent.Tierkunde"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -885,8 +993,11 @@
         "bonuses": [
           4
         ],
-        "talents": [],
-        "open": false
+        "talents": [
+          "Fremdsprachen"
+        ],
+        "open": true,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -898,7 +1009,8 @@
           "Talent.Bogenbau",
           "Talent.BooteFahren"
         ],
-        "open": true
+        "open": true,
+        "lead": true
       },
       {
         "type": "fixed",
@@ -909,7 +1021,8 @@
         "talents": [
           "Talent.HeilkundeGift"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -920,7 +1033,8 @@
         "talents": [
           "Talent.HeilkundeWunden"
         ],
-        "open": false
+        "open": false,
+        "lead": true
       },
       {
         "type": "fixed",
@@ -931,7 +1045,8 @@
         "talents": [
           "Talent.Holzbearbeitung"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -942,7 +1057,8 @@
         "talents": [
           "Talent.Lederarbeiten"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -953,7 +1069,8 @@
         "talents": [
           "Talent.Musizieren"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -964,8 +1081,15 @@
         "talents": [
           "Talent.Schneidern"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       }
+    ],
+    "lead_talents": [
+      "Talent.Isdira",
+      "Talent.Asdharia",
+      "Talent.IsdiraSchrift",
+      "Talent.AsdhariaSchrift"
     ],
     "advantage_bonuses": [],
     "disadvantage_bonuses": [
@@ -1035,8 +1159,38 @@
       "include": []
     },
     "name_factory": "Namenformate.ElfischeNamen",
-    "lead_spell_count": 3,
-    "special_ability_bonuses": [],
+    "special_ability_bonuses": [
+      {
+        "id": "Sonderfertigkeit.GrosseMeditation",
+        "variant": null,
+        "open": false
+      },
+      {
+        "id": "Sonderfertigkeit.Kulturkunde",
+        "variant": "Kulturkunde.Auelfen",
+        "open": false
+      },
+      {
+        "id": "Sonderfertigkeit.Repraesentation",
+        "variant": "Repraesentation.Elfen",
+        "open": false
+      },
+      {
+        "id": "Sonderfertigkeit.Salasandra",
+        "variant": null,
+        "open": false
+      },
+      {
+        "id": "Sonderfertigkeit.Sumpfkundig",
+        "variant": null,
+        "open": false
+      },
+      {
+        "id": "Sonderfertigkeit.Freundschaftslied",
+        "variant": null,
+        "open": false
+      }
+    ],
     "discounted_special_abilities": [
       {
         "id": "Sonderfertigkeit.Aufmerksamkeit",
@@ -1051,7 +1205,62 @@
         "variant": null
       }
     ],
-    "special_abilities": []
+    "discounted_special_ability_variants": [],
+    "special_abilities": [
+      "Sonderfertigkeit.GrosseMeditation",
+      "Sonderfertigkeit.Kulturkunde",
+      "Sonderfertigkeit.Repraesentation",
+      "Sonderfertigkeit.Salasandra",
+      "Sonderfertigkeit.Sumpfkundig",
+      "Sonderfertigkeit.Freundschaftslied"
+    ],
+    "spell_bonuses": [
+      {
+        "id": "Zauber.Attributo",
+        "bonus": 7,
+        "house": false,
+        "variant": null
+      },
+      {
+        "id": "Zauber.BalsamSalabunde",
+        "bonus": 9,
+        "house": false,
+        "variant": null
+      },
+      {
+        "id": "Zauber.Bannbaladin",
+        "bonus": 9,
+        "house": true,
+        "variant": null
+      },
+      {
+        "id": "Zauber.FlimFlamFunkel",
+        "bonus": 7,
+        "house": false,
+        "variant": null
+      },
+      {
+        "id": "Zauber.FulminictusDonnerkeil",
+        "bonus": 8,
+        "house": true,
+        "variant": null
+      },
+      {
+        "id": "Zauber.SensibarEmpathicus",
+        "bonus": 8,
+        "house": true,
+        "variant": null
+      }
+    ],
+    "spells": [
+      "Zauber.Attributo",
+      "Zauber.BalsamSalabunde",
+      "Zauber.Bannbaladin",
+      "Zauber.FlimFlamFunkel",
+      "Zauber.FulminictusDonnerkeil",
+      "Zauber.SensibarEmpathicus"
+    ],
+    "lead_spell_count": 3
   },
   {
     "id": "Kultur.AuelfenHalbelf",
@@ -1070,7 +1279,8 @@
         "talents": [
           "Talent.Bogen"
         ],
-        "open": false
+        "open": false,
+        "lead": true
       },
       {
         "type": "fixed",
@@ -1081,7 +1291,8 @@
         "talents": [
           "Talent.Dolche"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -1092,7 +1303,8 @@
         "talents": [
           "Talent.Athletik"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -1103,7 +1315,8 @@
         "talents": [
           "Talent.Klettern"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -1114,7 +1327,8 @@
         "talents": [
           "Talent.Koerperbeherrschung"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -1125,7 +1339,8 @@
         "talents": [
           "Talent.Schleichen"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -1136,7 +1351,8 @@
         "talents": [
           "Talent.Schwimmen"
         ],
-        "open": false
+        "open": false,
+        "lead": true
       },
       {
         "type": "fixed",
@@ -1147,7 +1363,8 @@
         "talents": [
           "Talent.SichVerstecken"
         ],
-        "open": false
+        "open": false,
+        "lead": true
       },
       {
         "type": "fixed",
@@ -1158,7 +1375,8 @@
         "talents": [
           "Talent.Singen"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -1169,7 +1387,8 @@
         "talents": [
           "Talent.Sinnenschaerfe"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -1180,7 +1399,8 @@
         "talents": [
           "Talent.Tanzen"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -1191,7 +1411,8 @@
         "talents": [
           "Talent.Betoeren"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -1202,7 +1423,8 @@
         "talents": [
           "Talent.Gassenwissen"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -1213,7 +1435,8 @@
         "talents": [
           "Talent.Faehrtensuchen"
         ],
-        "open": false
+        "open": false,
+        "lead": true
       },
       {
         "type": "fixed",
@@ -1224,7 +1447,8 @@
         "talents": [
           "Talent.FischenAngeln"
         ],
-        "open": false
+        "open": false,
+        "lead": true
       },
       {
         "type": "fixed",
@@ -1235,7 +1459,8 @@
         "talents": [
           "Talent.Orientierung"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -1246,7 +1471,8 @@
         "talents": [
           "Talent.Wildnisleben"
         ],
-        "open": false
+        "open": false,
+        "lead": true
       },
       {
         "type": "fixed",
@@ -1257,7 +1483,8 @@
         "talents": [
           "Talent.Magiekunde"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -1268,7 +1495,8 @@
         "talents": [
           "Talent.Pflanzenkunde"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -1279,7 +1507,8 @@
         "talents": [
           "Talent.Rechtskunde"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -1290,7 +1519,8 @@
         "talents": [
           "Talent.SagenLegenden"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -1301,7 +1531,8 @@
         "talents": [
           "Talent.Tierkunde"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -1309,8 +1540,11 @@
         "bonuses": [
           4
         ],
-        "talents": [],
-        "open": false
+        "talents": [
+          "Fremdsprachen"
+        ],
+        "open": true,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -1322,7 +1556,8 @@
           "Talent.Bogenbau",
           "Talent.BooteFahren"
         ],
-        "open": true
+        "open": true,
+        "lead": true
       },
       {
         "type": "fixed",
@@ -1333,7 +1568,8 @@
         "talents": [
           "Talent.HeilkundeGift"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -1344,7 +1580,8 @@
         "talents": [
           "Talent.HeilkundeWunden"
         ],
-        "open": false
+        "open": false,
+        "lead": true
       },
       {
         "type": "fixed",
@@ -1355,7 +1592,8 @@
         "talents": [
           "Talent.Holzbearbeitung"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -1366,7 +1604,8 @@
         "talents": [
           "Talent.Lederarbeiten"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -1377,7 +1616,8 @@
         "talents": [
           "Talent.Musizieren"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -1388,8 +1628,15 @@
         "talents": [
           "Talent.Schneidern"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       }
+    ],
+    "lead_talents": [
+      "Talent.Isdira",
+      "Talent.Asdharia",
+      "Talent.IsdiraSchrift",
+      "Talent.AsdhariaSchrift"
     ],
     "advantage_bonuses": [
       {
@@ -1472,8 +1719,38 @@
       "include": []
     },
     "name_factory": "Namenformate.ElfischeNamen",
-    "lead_spell_count": 3,
-    "special_ability_bonuses": [],
+    "special_ability_bonuses": [
+      {
+        "id": "Sonderfertigkeit.GrosseMeditation",
+        "variant": null,
+        "open": false
+      },
+      {
+        "id": "Sonderfertigkeit.Kulturkunde",
+        "variant": "Kulturkunde.Auelfen",
+        "open": false
+      },
+      {
+        "id": "Sonderfertigkeit.Repraesentation",
+        "variant": "Repraesentation.Elfen",
+        "open": false
+      },
+      {
+        "id": "Sonderfertigkeit.Salasandra",
+        "variant": null,
+        "open": false
+      },
+      {
+        "id": "Sonderfertigkeit.Sumpfkundig",
+        "variant": null,
+        "open": false
+      },
+      {
+        "id": "Sonderfertigkeit.Freundschaftslied",
+        "variant": null,
+        "open": false
+      }
+    ],
     "discounted_special_abilities": [
       {
         "id": "Sonderfertigkeit.Aufmerksamkeit",
@@ -1488,7 +1765,62 @@
         "variant": null
       }
     ],
-    "special_abilities": []
+    "discounted_special_ability_variants": [],
+    "special_abilities": [
+      "Sonderfertigkeit.GrosseMeditation",
+      "Sonderfertigkeit.Kulturkunde",
+      "Sonderfertigkeit.Repraesentation",
+      "Sonderfertigkeit.Salasandra",
+      "Sonderfertigkeit.Sumpfkundig",
+      "Sonderfertigkeit.Freundschaftslied"
+    ],
+    "spell_bonuses": [
+      {
+        "id": "Zauber.Attributo",
+        "bonus": 7,
+        "house": false,
+        "variant": null
+      },
+      {
+        "id": "Zauber.BalsamSalabunde",
+        "bonus": 9,
+        "house": false,
+        "variant": null
+      },
+      {
+        "id": "Zauber.Bannbaladin",
+        "bonus": 9,
+        "house": true,
+        "variant": null
+      },
+      {
+        "id": "Zauber.FlimFlamFunkel",
+        "bonus": 7,
+        "house": false,
+        "variant": null
+      },
+      {
+        "id": "Zauber.FulminictusDonnerkeil",
+        "bonus": 8,
+        "house": true,
+        "variant": null
+      },
+      {
+        "id": "Zauber.SensibarEmpathicus",
+        "bonus": 8,
+        "house": true,
+        "variant": null
+      }
+    ],
+    "spells": [
+      "Zauber.Attributo",
+      "Zauber.BalsamSalabunde",
+      "Zauber.Bannbaladin",
+      "Zauber.FlimFlamFunkel",
+      "Zauber.FulminictusDonnerkeil",
+      "Zauber.SensibarEmpathicus"
+    ],
+    "lead_spell_count": 3
   },
   {
     "id": "Kultur.Bornland",
@@ -1507,7 +1839,8 @@
         "talents": [
           "Talent.Dolche"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -1518,7 +1851,8 @@
         "talents": [
           "Talent.Raufen"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -1529,7 +1863,8 @@
         "talents": [
           "Talent.Wurfmesser"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -1540,7 +1875,8 @@
         "talents": [
           "Talent.Tanzen"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -1551,7 +1887,8 @@
         "talents": [
           "Talent.Zechen"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -1562,7 +1899,8 @@
         "talents": [
           "Talent.Etikette"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -1573,7 +1911,8 @@
         "talents": [
           "Talent.Menschenkenntnis"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -1584,7 +1923,8 @@
         "talents": [
           "Talent.Orientierung"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -1595,7 +1935,8 @@
         "talents": [
           "Talent.Wildnisleben"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -1606,7 +1947,8 @@
         "talents": [
           "Talent.GoetterKulte"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -1617,7 +1959,8 @@
         "talents": [
           "Talent.SagenLegenden"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -1630,7 +1973,8 @@
           "Talent.Alaani",
           "Talent.Nujuka"
         ],
-        "open": true
+        "open": true,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -1641,7 +1985,8 @@
         "talents": [
           "Talent.Ackerbau"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -1652,7 +1997,8 @@
         "talents": [
           "Talent.Holzbearbeitung"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -1663,7 +2009,8 @@
         "talents": [
           "Talent.Kochen"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -1674,7 +2021,8 @@
         "talents": [
           "Talent.Lederarbeiten"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -1685,9 +2033,11 @@
         "talents": [
           "Talent.Schneidern"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       }
     ],
+    "lead_talents": [],
     "advantage_bonuses": [],
     "disadvantage_bonuses": [],
     "recommended_advantages_disadvantages": [
@@ -1756,7 +2106,8 @@
     "special_ability_bonuses": [
       {
         "id": "Sonderfertigkeit.Kulturkunde",
-        "variant": "Kulturkunde.Bornland"
+        "variant": "Kulturkunde.Bornland",
+        "open": false
       }
     ],
     "discounted_special_abilities": [
@@ -1769,9 +2120,13 @@
         "variant": null
       }
     ],
+    "discounted_special_ability_variants": [],
     "special_abilities": [
       "Sonderfertigkeit.Kulturkunde"
-    ]
+    ],
+    "spell_bonuses": [],
+    "spells": [],
+    "lead_spell_count": 0
   },
   {
     "id": "Kultur.Horasreich",
@@ -1790,7 +2145,8 @@
         "talents": [
           "Talent.Armbrust"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -1801,7 +2157,8 @@
         "talents": [
           "Talent.Dolche"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -1812,7 +2169,8 @@
         "talents": [
           "Talent.Fechtwaffen"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -1823,7 +2181,8 @@
         "talents": [
           "Talent.Infanteriewaffen"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -1834,7 +2193,8 @@
         "talents": [
           "Talent.Raufen"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -1845,7 +2205,8 @@
         "talents": [
           "Talent.Schwimmen"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -1856,7 +2217,8 @@
         "talents": [
           "Talent.Tanzen"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -1867,7 +2229,8 @@
         "talents": [
           "Talent.Betoeren"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -1878,7 +2241,8 @@
         "talents": [
           "Talent.Etikette"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -1889,7 +2253,8 @@
         "talents": [
           "Talent.Gassenwissen"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -1900,7 +2265,8 @@
         "talents": [
           "Talent.Menschenkenntnis"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -1911,7 +2277,8 @@
         "talents": [
           "Talent.Ueberreden"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -1922,7 +2289,8 @@
         "talents": [
           "Talent.Geschichtswissen"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -1933,7 +2301,8 @@
         "talents": [
           "Talent.GoetterKulte"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -1944,7 +2313,8 @@
         "talents": [
           "Talent.Mechanik"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -1955,7 +2325,8 @@
         "talents": [
           "Talent.Rechnen"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -1966,7 +2337,8 @@
         "talents": [
           "Talent.Rechtskunde"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -1977,7 +2349,8 @@
         "talents": [
           "Talent.SagenLegenden"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -1989,7 +2362,8 @@
           "Talent.Tulamidya",
           "Talent.Rogolan"
         ],
-        "open": true
+        "open": true,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -2000,7 +2374,8 @@
         "talents": [
           "Talent.KuslikerZeichen"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -2011,9 +2386,11 @@
         "talents": [
           "Talent.Ackerbau"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       }
     ],
+    "lead_talents": [],
     "advantage_bonuses": [],
     "disadvantage_bonuses": [],
     "recommended_advantages_disadvantages": [
@@ -2080,7 +2457,8 @@
     "special_ability_bonuses": [
       {
         "id": "Sonderfertigkeit.Kulturkunde",
-        "variant": "Kulturkunde.Horasreich"
+        "variant": "Kulturkunde.Horasreich",
+        "open": false
       }
     ],
     "discounted_special_abilities": [
@@ -2089,9 +2467,13 @@
         "variant": null
       }
     ],
+    "discounted_special_ability_variants": [],
     "special_abilities": [
       "Sonderfertigkeit.Kulturkunde"
-    ]
+    ],
+    "spell_bonuses": [],
+    "spells": [],
+    "lead_spell_count": 0
   },
   {
     "id": "Kultur.MittellaendischeStaedte",
@@ -2112,7 +2494,8 @@
           "Talent.Bogen",
           "Talent.Wurfmesser"
         ],
-        "open": true
+        "open": true,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -2123,7 +2506,8 @@
         "talents": [
           "Talent.Dolche"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -2134,7 +2518,8 @@
         "talents": [
           "Talent.Infanteriewaffen"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -2145,7 +2530,8 @@
         "talents": [
           "Talent.Raufen"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -2156,7 +2542,8 @@
         "talents": [
           "Talent.Zechen"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -2167,7 +2554,8 @@
         "talents": [
           "Talent.Etikette"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -2178,7 +2566,8 @@
         "talents": [
           "Talent.Gassenwissen"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -2189,7 +2578,8 @@
         "talents": [
           "Talent.Menschenkenntnis"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -2200,7 +2590,8 @@
         "talents": [
           "Talent.Ueberreden"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -2211,7 +2602,8 @@
         "talents": [
           "Talent.GoetterKulte"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -2222,7 +2614,8 @@
         "talents": [
           "Talent.Heraldik"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -2233,7 +2626,8 @@
         "talents": [
           "Talent.Rechnen"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -2244,7 +2638,8 @@
         "talents": [
           "Talent.Rechtskunde"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -2255,7 +2650,8 @@
         "talents": [
           "Talent.SagenLegenden"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -2268,7 +2664,8 @@
           "Talent.Rogolan",
           "Talent.Thorwalsch"
         ],
-        "open": true
+        "open": true,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -2279,9 +2676,11 @@
         "talents": [
           "Talent.Ackerbau"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       }
     ],
+    "lead_talents": [],
     "advantage_bonuses": [],
     "disadvantage_bonuses": [],
     "recommended_advantages_disadvantages": [
@@ -2328,9 +2727,42 @@
       "include": []
     },
     "name_factory": "Namenformate.GaretischeNamen",
-    "special_ability_bonuses": [],
+    "special_ability_bonuses": [
+      {
+        "id": "Sonderfertigkeit.Ortskenntnis",
+        "variant": "MittellaendischeStaedte.Stadtteil",
+        "open": false
+      },
+      {
+        "open": true,
+        "choices": [
+          {
+            "id": "Sonderfertigkeit.Kulturkunde",
+            "variant": "Kulturkunde.NordaventurischeStaedte"
+          },
+          {
+            "id": "Sonderfertigkeit.Kulturkunde",
+            "variant": "Kulturkunde.Bornland"
+          },
+          {
+            "id": "Sonderfertigkeit.Kulturkunde",
+            "variant": "Kulturkunde.Mittelreich"
+          },
+          {
+            "id": "Sonderfertigkeit.Kulturkunde",
+            "variant": "Kulturkunde.Svellttal"
+          }
+        ]
+      }
+    ],
     "discounted_special_abilities": [],
-    "special_abilities": []
+    "discounted_special_ability_variants": [],
+    "special_abilities": [
+      "Sonderfertigkeit.Ortskenntnis"
+    ],
+    "spell_bonuses": [],
+    "spells": [],
+    "lead_spell_count": 0
   },
   {
     "id": "Kultur.Novadis.Frauen",
@@ -2351,7 +2783,8 @@
         "talents": [
           "Talent.Dolche"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -2362,7 +2795,8 @@
         "talents": [
           "Talent.Raufen"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -2373,7 +2807,8 @@
         "talents": [
           "Talent.Athletik"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -2384,7 +2819,8 @@
         "talents": [
           "Talent.Koerperbeherrschung"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -2395,7 +2831,8 @@
         "talents": [
           "Talent.Reiten"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -2406,7 +2843,8 @@
         "talents": [
           "Talent.Schleichen"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -2417,7 +2855,8 @@
         "talents": [
           "Talent.Schwimmen"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -2428,7 +2867,8 @@
         "talents": [
           "Talent.Selbstbeherrschung"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -2439,7 +2879,8 @@
         "talents": [
           "Talent.SichVerstecken"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -2450,7 +2891,8 @@
         "talents": [
           "Talent.Sinnenschaerfe"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -2461,7 +2903,8 @@
         "talents": [
           "Talent.Tanzen"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -2472,7 +2915,8 @@
         "talents": [
           "Talent.Betoeren"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -2483,7 +2927,8 @@
         "talents": [
           "Talent.Lehren"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -2494,7 +2939,8 @@
         "talents": [
           "Talent.Ueberreden"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -2505,7 +2951,8 @@
         "talents": [
           "Talent.Orientierung"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -2516,7 +2963,8 @@
         "talents": [
           "Talent.Wildnisleben"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -2527,7 +2975,8 @@
         "talents": [
           "Talent.BrettWuerfelspiele"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -2538,7 +2987,8 @@
         "talents": [
           "Talent.GoetterKulte"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -2549,7 +2999,8 @@
         "talents": [
           "Talent.Rechnen"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -2560,7 +3011,8 @@
         "talents": [
           "Talent.Rechtskunde"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -2571,7 +3023,8 @@
         "talents": [
           "Talent.SagenLegenden"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -2582,7 +3035,8 @@
         "talents": [
           "Talent.Schaetzen"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -2593,7 +3047,8 @@
         "talents": [
           "Talent.Sternkunde"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -2604,7 +3059,8 @@
         "talents": [
           "Talent.BooteFahren"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -2615,7 +3071,8 @@
         "talents": [
           "Talent.HeilkundeGift"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -2626,7 +3083,8 @@
         "talents": [
           "Talent.HeilkundeKrankheiten"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -2637,7 +3095,8 @@
         "talents": [
           "Talent.HeilkundeWunden"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -2648,7 +3107,8 @@
         "talents": [
           "Talent.Holzbearbeitung"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -2659,7 +3119,8 @@
         "talents": [
           "Talent.Kochen"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -2670,7 +3131,8 @@
         "talents": [
           "Talent.Lederarbeiten"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -2681,9 +3143,11 @@
         "talents": [
           "Talent.Schneidern"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       }
     ],
+    "lead_talents": [],
     "advantage_bonuses": [
       {
         "id": "VorNachteil.Hitzeresistenz",
@@ -2808,9 +3272,27 @@
       "include": []
     },
     "name_factory": "Namenformate.TulamidischeNovadischeNamen",
-    "special_ability_bonuses": [],
+    "special_ability_bonuses": [
+      {
+        "id": "Sonderfertigkeit.Kulturkunde",
+        "variant": "Kulturkunde.Novadi",
+        "open": false
+      },
+      {
+        "id": "Sonderfertigkeit.Wuestenkundig",
+        "variant": null,
+        "open": false
+      }
+    ],
     "discounted_special_abilities": [],
-    "special_abilities": []
+    "discounted_special_ability_variants": [],
+    "special_abilities": [
+      "Sonderfertigkeit.Kulturkunde",
+      "Sonderfertigkeit.Wuestenkundig"
+    ],
+    "spell_bonuses": [],
+    "spells": [],
+    "lead_spell_count": 0
   },
   {
     "id": "Kultur.Novadis.Maenner",
@@ -2833,7 +3315,8 @@
         "talents": [
           "Talent.Bogen"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -2844,7 +3327,8 @@
         "talents": [
           "Talent.Dolche"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -2855,7 +3339,8 @@
         "talents": [
           "Talent.Lanzenreiten"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -2866,7 +3351,8 @@
         "talents": [
           "Talent.Raufen"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -2877,7 +3363,8 @@
         "talents": [
           "Talent.Ringen"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -2888,7 +3375,8 @@
         "talents": [
           "Talent.Saebel"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -2899,7 +3387,8 @@
         "talents": [
           "Talent.Speere"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -2910,7 +3399,8 @@
         "talents": [
           "Talent.Wurfspeere"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -2921,7 +3411,8 @@
         "talents": [
           "Talent.Athletik"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -2932,7 +3423,8 @@
         "talents": [
           "Talent.Koerperbeherrschung"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -2943,7 +3435,8 @@
         "talents": [
           "Talent.Reiten"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -2954,7 +3447,8 @@
         "talents": [
           "Talent.Schwimmen"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -2965,7 +3459,8 @@
         "talents": [
           "Talent.Sinnenschaerfe"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -2976,7 +3471,8 @@
         "talents": [
           "Talent.Tanzen"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -2987,7 +3483,8 @@
         "talents": [
           "Talent.Orientierung"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -2998,7 +3495,8 @@
         "talents": [
           "Talent.Wildnisleben"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -3009,7 +3507,8 @@
         "talents": [
           "Talent.BrettWuerfelspiele"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -3020,7 +3519,8 @@
         "talents": [
           "Talent.GoetterKulte"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -3031,7 +3531,8 @@
         "talents": [
           "Talent.Rechnen"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -3042,7 +3543,8 @@
         "talents": [
           "Talent.Rechtskunde"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -3053,7 +3555,8 @@
         "talents": [
           "Talent.SagenLegenden"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -3064,7 +3567,8 @@
         "talents": [
           "Talent.Schaetzen"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -3075,7 +3579,8 @@
         "talents": [
           "Talent.Sternkunde"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -3086,9 +3591,11 @@
         "talents": [
           "Talent.BooteFahren"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       }
     ],
+    "lead_talents": [],
     "advantage_bonuses": [
       {
         "id": "VorNachteil.Hitzeresistenz",
@@ -3216,14 +3723,32 @@
       "include": []
     },
     "name_factory": "Namenformate.TulamidischeNovadischeNamen",
-    "special_ability_bonuses": [],
+    "special_ability_bonuses": [
+      {
+        "id": "Sonderfertigkeit.Kulturkunde",
+        "variant": "Kulturkunde.Novadi",
+        "open": false
+      },
+      {
+        "id": "Sonderfertigkeit.Wuestenkundig",
+        "variant": null,
+        "open": false
+      }
+    ],
     "discounted_special_abilities": [
       {
         "id": "Sonderfertigkeit.UnauerSchule",
         "variant": null
       }
     ],
-    "special_abilities": []
+    "discounted_special_ability_variants": [],
+    "special_abilities": [
+      "Sonderfertigkeit.Kulturkunde",
+      "Sonderfertigkeit.Wuestenkundig"
+    ],
+    "spell_bonuses": [],
+    "spells": [],
+    "lead_spell_count": 0
   },
   {
     "id": "Kultur.Suedaventurien",
@@ -3243,7 +3768,8 @@
           "Talent.Bogen",
           "Talent.Armbrust"
         ],
-        "open": true
+        "open": true,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -3254,7 +3780,8 @@
         "talents": [
           "Talent.Dolche"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -3265,7 +3792,8 @@
         "talents": [
           "Talent.Raufen"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -3276,7 +3804,8 @@
         "talents": [
           "Talent.Ringen"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -3287,7 +3816,8 @@
         "talents": [
           "Talent.Saebel"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -3298,7 +3828,8 @@
         "talents": [
           "Talent.Schwimmen"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -3309,7 +3840,8 @@
         "talents": [
           "Talent.SichVerstecken"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -3320,7 +3852,8 @@
         "talents": [
           "Talent.Gassenwissen"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -3331,7 +3864,8 @@
         "talents": [
           "Talent.Menschenkenntnis"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -3342,7 +3876,8 @@
         "talents": [
           "Talent.SichVerkleiden"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -3353,7 +3888,8 @@
         "talents": [
           "Talent.Ueberreden"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -3364,7 +3900,8 @@
         "talents": [
           "Talent.GoetterKulte"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -3375,7 +3912,8 @@
         "talents": [
           "Talent.Rechnen"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -3386,7 +3924,8 @@
         "talents": [
           "Talent.SagenLegenden"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -3397,7 +3936,8 @@
         "talents": [
           "Talent.Schaetzen"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -3408,7 +3948,8 @@
         "talents": [
           "Talent.Tulamidya"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -3419,7 +3960,8 @@
         "talents": [
           "Talent.Mohisch"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -3430,7 +3972,8 @@
         "talents": [
           "Talent.Thorwalsch"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -3441,7 +3984,8 @@
         "talents": [
           "Talent.BooteFahren"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -3452,7 +3996,8 @@
         "talents": [
           "Talent.Holzbearbeitung"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -3463,7 +4008,8 @@
         "talents": [
           "Talent.Lederarbeiten"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -3474,9 +4020,11 @@
         "talents": [
           "Talent.Seefahrt"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       }
     ],
+    "lead_talents": [],
     "advantage_bonuses": [
       {
         "id": "VorNachteil.Hitzeresistenz",
@@ -3561,13 +4109,18 @@
     "special_ability_bonuses": [
       {
         "id": "Sonderfertigkeit.Kulturkunde",
-        "variant": "Kulturkunde.Suedaventurien"
+        "variant": "Kulturkunde.Suedaventurien",
+        "open": false
       }
     ],
     "discounted_special_abilities": [],
+    "discounted_special_ability_variants": [],
     "special_abilities": [
       "Sonderfertigkeit.Kulturkunde"
-    ]
+    ],
+    "spell_bonuses": [],
+    "spells": [],
+    "lead_spell_count": 0
   },
   {
     "id": "Kultur.Thorwal",
@@ -3588,7 +4141,8 @@
         "talents": [
           "Talent.Hiebwaffen"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -3599,7 +4153,8 @@
         "talents": [
           "Talent.Raufen"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -3610,7 +4165,8 @@
         "talents": [
           "Talent.Wurfbeile"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -3621,7 +4177,8 @@
         "talents": [
           "Talent.Athletik"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -3632,7 +4189,8 @@
         "talents": [
           "Talent.Koerperbeherrschung"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -3643,7 +4201,8 @@
         "talents": [
           "Talent.Schwimmen"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -3654,7 +4213,8 @@
         "talents": [
           "Talent.Zechen"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -3665,7 +4225,8 @@
         "talents": [
           "Talent.FesselnEntfesseln"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -3676,7 +4237,8 @@
         "talents": [
           "Talent.FischenAngeln"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -3687,7 +4249,8 @@
         "talents": [
           "Talent.Orientierung"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -3698,7 +4261,8 @@
         "talents": [
           "Talent.GoetterKulte"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -3709,7 +4273,8 @@
         "talents": [
           "Talent.SagenLegenden"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -3720,7 +4285,8 @@
         "talents": [
           "Talent.Sternkunde"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -3731,7 +4297,8 @@
         "talents": [
           "Talent.BooteFahren"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -3742,7 +4309,8 @@
         "talents": [
           "Talent.Holzbearbeitung"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -3753,9 +4321,11 @@
         "talents": [
           "Talent.Seefahrt"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       }
     ],
+    "lead_talents": [],
     "advantage_bonuses": [],
     "disadvantage_bonuses": [
       {
@@ -3855,7 +4425,8 @@
     "special_ability_bonuses": [
       {
         "id": "Sonderfertigkeit.Kulturkunde",
-        "variant": "Kulturkunde.Thorwal"
+        "variant": "Kulturkunde.Thorwal",
+        "open": false
       }
     ],
     "discounted_special_abilities": [
@@ -3868,9 +4439,13 @@
         "variant": null
       }
     ],
+    "discounted_special_ability_variants": [],
     "special_abilities": [
       "Sonderfertigkeit.Kulturkunde"
-    ]
+    ],
+    "spell_bonuses": [],
+    "spells": [],
+    "lead_spell_count": 0
   },
   {
     "id": "Kultur.TulamidischeStadtstaaten",
@@ -3891,7 +4466,8 @@
         "talents": [
           "Talent.Dolche"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -3902,7 +4478,8 @@
         "talents": [
           "Talent.Raufen"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -3913,7 +4490,8 @@
         "talents": [
           "Talent.Ringen"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -3924,7 +4502,8 @@
         "talents": [
           "Talent.Saebel"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -3935,7 +4514,8 @@
         "talents": [
           "Talent.Schleichen"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -3946,7 +4526,8 @@
         "talents": [
           "Talent.SichVerstecken"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -3957,7 +4538,8 @@
         "talents": [
           "Talent.Tanzen"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -3969,7 +4551,8 @@
           "Talent.Taschendiebstahl",
           "Talent.Gaukeleien"
         ],
-        "open": true
+        "open": true,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -3980,7 +4563,8 @@
         "talents": [
           "Talent.Etikette"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -3991,7 +4575,8 @@
         "talents": [
           "Talent.Gassenwissen"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -4002,7 +4587,8 @@
         "talents": [
           "Talent.Menschenkenntnis"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -4013,7 +4599,8 @@
         "talents": [
           "Talent.SichVerkleiden"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -4024,7 +4611,8 @@
         "talents": [
           "Talent.Ueberreden"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -4035,7 +4623,8 @@
         "talents": [
           "Talent.BrettWuerfelspiele"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -4046,7 +4635,8 @@
         "talents": [
           "Talent.Geschichtswissen"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -4057,7 +4647,8 @@
         "talents": [
           "Talent.GoetterKulte"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -4068,7 +4659,8 @@
         "talents": [
           "Talent.Rechnen"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -4079,7 +4671,8 @@
         "talents": [
           "Talent.Rechtskunde"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -4090,7 +4683,8 @@
         "talents": [
           "Talent.SagenLegenden"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       },
       {
         "type": "fixed",
@@ -4101,9 +4695,11 @@
         "talents": [
           "Talent.Schaetzen"
         ],
-        "open": false
+        "open": false,
+        "lead": false
       }
     ],
+    "lead_talents": [],
     "advantage_bonuses": [],
     "disadvantage_bonuses": [],
     "recommended_advantages_disadvantages": [
@@ -4194,12 +4790,17 @@
     "special_ability_bonuses": [
       {
         "id": "Sonderfertigkeit.Kulturkunde",
-        "variant": "Kulturkunde.Tulamidenlande"
+        "variant": "Kulturkunde.Tulamidenlande",
+        "open": false
       }
     ],
     "discounted_special_abilities": [],
+    "discounted_special_ability_variants": [],
     "special_abilities": [
       "Sonderfertigkeit.Kulturkunde"
-    ]
+    ],
+    "spell_bonuses": [],
+    "spells": [],
+    "lead_spell_count": 0
   }
 ]

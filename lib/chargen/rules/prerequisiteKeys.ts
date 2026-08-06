@@ -46,6 +46,26 @@ export const TRAIT_KEY_TO_ID: Record<string, string> = {
   VIERTELZAUBERER: "VorNachteil.Viertelzauberer",
   VOLLZAUBERER: "VorNachteil.Vollzauberer",
   ZWEISTIMMIGER_GESANG: "VorNachteil.ZweistimmigerGesang",
+  GEFAHRENINSTINKT: "VorNachteil.Gefahreninstinkt",
+  MAGIEGESPUER: "VorNachteil.Magiegespuer",
+  PROPHEZEIEN: "VorNachteil.Prophezeien",
+  ZWERGENNASE: "VorNachteil.Zwergennase",
+};
+
+/**
+ * Trait Voraussetzung keys that accept any of several advantages (OR).
+ * Mirrors Java `VoraussetzungVorteil` / SF keys Z, VZ, etc.
+ */
+export const TRAIT_OR_PREREQ_KEYS: Record<string, string[]> = {
+  Z: ["VorNachteil.Vollzauberer"],
+  VZ: ["VorNachteil.Viertelzauberer", "VorNachteil.Vollzauberer"],
+  ZWEISTIMMIGER_GESANG: ["VorNachteil.ZweistimmigerGesang"],
+  GEFAHRENINSTINKT: ["VorNachteil.Gefahreninstinkt"],
+  MAGIEGESPUER: ["VorNachteil.Magiegespuer"],
+  PROPHEZEIEN: ["VorNachteil.Prophezeien"],
+  ZWERGENNASE: ["VorNachteil.Zwergennase"],
+  VOLLZAUBERER: ["VorNachteil.Vollzauberer"],
+  VIERTELZAUBERER: ["VorNachteil.Viertelzauberer"],
 };
 
 /** AUSWEICHEN_II → Sonderfertigkeit.AusweichenII */

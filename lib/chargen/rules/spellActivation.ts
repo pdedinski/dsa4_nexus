@@ -3,8 +3,14 @@
  */
 
 import type { CatalogItem } from "@/lib/chargen/data/loadCatalog";
-import type { HeldModel, SpellWert } from "@/lib/chargen/types";
-import { apToRaise, sktActivationCost } from "@/lib/chargen/rules/kosten";
+import type { HeldModel, LearningMethod, SpellWert } from "@/lib/chargen/types";
+import { isVeteranPhase, LEARNING_METHOD_COLUMN_SHIFT } from "@/lib/chargen/types";
+import {
+  activationCost,
+  apToRaise,
+  shiftColumn,
+  sktCost,
+} from "@/lib/chargen/rules/kosten";
 import { resolveSpellSktColumn } from "@/lib/chargen/rules/sktColumn";
 import { isSpellSelectable } from "@/lib/chargen/rules/spellPrereqs";
 
@@ -25,6 +31,36 @@ export function countSpellActivations(held: HeldModel): number {
   return held.spells.length;
 }
 
+function resolvedColumn(
+  held: HeldModel,
+  spell: CatalogItem,
+  learningMethod: LearningMethod
+): string {
+  const base = resolveSpellSktColumn(held, spell);
+  if (!isVeteranPhase(held)) return base;
+  return shiftColumn(base, LEARNING_METHOD_COLUMN_SHIFT[learningMethod]);
+}
+
+export function spellDisplayApCost(
+  held: HeldModel,
+  spell: CatalogItem,
+  learningMethod: LearningMethod = "none"
+): number {
+  const id = String(spell.id);
+  const row = spellRow(held, id);
+  const col = resolvedColumn(held, spell, learningMethod);
+  if (!row) {
+    return activationCost(held.phase, col);
+  }
+  const to = row.sp + 1;
+  const baseline = row.baselineSp ?? 0;
+  if (isVeteranPhase(held) && to <= baseline) return 0;
+  if (isVeteranPhase(held)) {
+    return sktCost(col, to);
+  }
+  return apToRaise(col, row.sp, to);
+}
+
 export function spellRowApSpent(
   row: SpellWert,
   held: HeldModel,
@@ -33,24 +69,32 @@ export function spellRowApSpent(
   const col = resolveSpellSktColumn(held, spell);
   let sum = apToRaise(col, 0, row.sp);
   if (row.activated !== false) {
-    sum += sktActivationCost(col);
+    sum += activationCost(held.phase, col);
   }
   return sum;
 }
 
 export function activateSpell(
   held: HeldModel,
-  spell: CatalogItem
+  spell: CatalogItem,
+  learningMethod: LearningMethod = "none"
 ): HeldModel {
   const id = String(spell.id);
   if (!isSpellSelectable(held, spell)) return held;
   if (isSpellOnHeld(held, id)) return held;
-  const col = resolveSpellSktColumn(held, spell);
-  const activationCost = sktActivationCost(col);
+  const col = resolvedColumn(held, spell, learningMethod);
+  const activationCostAp = activationCost(held.phase, col);
   return {
     ...held,
-    spells: [...held.spells, { id, sp: 0 }],
-    apSpent: held.apSpent + activationCost,
+    spells: [
+      ...held.spells,
+      {
+        id,
+        sp: 0,
+        baselineSp: isVeteranPhase(held) ? 0 : undefined,
+      },
+    ],
+    apSpent: held.apSpent + activationCostAp,
   };
 }
 
@@ -69,23 +113,38 @@ export function deactivateSpell(
   };
 }
 
-export function raiseSpellSp(held: HeldModel, spell: CatalogItem): HeldModel {
+export function raiseSpellSp(
+  held: HeldModel,
+  spell: CatalogItem,
+  learningMethod: LearningMethod = "none"
+): HeldModel {
   const id = String(spell.id);
   const row = spellRow(held, id);
   if (!row) return held;
-  const col = resolveSpellSktColumn(held, spell);
+  const col = resolvedColumn(held, spell, learningMethod);
   const from = row.sp;
-  const cost = apToRaise(col, from, from + 1);
+  const to = from + 1;
+  const baseline = row.baselineSp ?? 0;
+  let cost = 0;
+  if (isVeteranPhase(held)) {
+    if (to > baseline) cost = sktCost(col, to);
+  } else {
+    cost = apToRaise(col, from, to);
+  }
   return {
     ...held,
     spells: held.spells.map((s) =>
-      s.id === id ? { ...s, sp: from + 1 } : s
+      s.id === id ? { ...s, sp: to } : s
     ),
     apSpent: held.apSpent + cost,
   };
 }
 
-export function lowerSpellSp(held: HeldModel, spell: CatalogItem): HeldModel {
+export function lowerSpellSp(
+  held: HeldModel,
+  spell: CatalogItem,
+  learningMethod: LearningMethod = "none"
+): HeldModel {
   const id = String(spell.id);
   const row = spellRow(held, id);
   if (!row) return held;
@@ -95,34 +154,47 @@ export function lowerSpellSp(held: HeldModel, spell: CatalogItem): HeldModel {
       spells: held.spells.filter((s) => s.id !== id),
     };
   }
-  const col = resolveSpellSktColumn(held, spell);
+  const col = resolvedColumn(held, spell, learningMethod);
   const from = row.sp;
-  const cost = apToRaise(col, from - 1, from);
+  const baseline = row.baselineSp ?? 0;
+  let refund = 0;
+  if (isVeteranPhase(held)) {
+    if (from > baseline) refund = sktCost(col, from);
+  } else {
+    refund = apToRaise(col, from - 1, from);
+  }
   return {
     ...held,
     spells: held.spells.map((s) =>
       s.id === id ? { ...s, sp: from - 1 } : s
     ),
-    apSpent: Math.max(0, held.apSpent - cost),
+    apSpent: Math.max(0, held.apSpent - refund),
   };
 }
 
 /** Add spell or raise SP — matches wizard + button behavior. */
 export function addOrRaiseSpell(
   held: HeldModel,
-  spell: CatalogItem
+  spell: CatalogItem,
+  learningMethod: LearningMethod = "none"
 ): HeldModel {
   const id = String(spell.id);
   if (!isSpellOnHeld(held, id)) {
-    return activateSpell(held, spell);
+    return activateSpell(held, spell, learningMethod);
   }
-  return raiseSpellSp(held, spell);
+  return raiseSpellSp(held, spell, learningMethod);
 }
 
 /** Lower SP or remove spell when SP would drop below 0. */
 export function lowerOrRemoveSpell(
   held: HeldModel,
-  spell: CatalogItem
+  spell: CatalogItem,
+  learningMethod: LearningMethod = "none"
 ): HeldModel {
-  return lowerSpellSp(held, spell);
+  return lowerSpellSp(held, spell, learningMethod);
+}
+
+export function canActivateMoreSpells(held: HeldModel): boolean {
+  if (isVeteranPhase(held)) return true;
+  return countSpellActivations(held) < MAX_SPELL_ACTIVATIONS;
 }

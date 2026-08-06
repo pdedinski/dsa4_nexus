@@ -2,14 +2,16 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import type { CatalogItem } from "@/lib/chargen/data/loadCatalog";
-import type { ChargenCatalogCategory, HeldModel } from "@/lib/chargen/types";
+import type { ChargenCatalogCategory, HeldModel, LearningMethod } from "@/lib/chargen/types";
 import {
   ATTR_LABELS,
   emptyHeld,
+  isVeteranPhase,
 } from "@/lib/chargen/types";
-import { computeBudget } from "@/lib/chargen/rules/budget";
+import { computeBudget, applyCreationAttributeMinimums, resolveProfessionGpCost } from "@/lib/chargen/rules/budget";
 import {
   computeMagicApSpent,
+  educatedApApplied,
   educatedApSavings,
   specialAbilityGpSpent,
 } from "@/lib/chargen/rules/budgetExtras";
@@ -19,7 +21,9 @@ import { recomputeDerived } from "@/lib/chargen/rules/derived";
 import {
   addOrRaiseSpell,
   lowerOrRemoveSpell,
+  spellDisplayApCost,
 } from "@/lib/chargen/rules/spellActivation";
+import { finishCreation, learnSpecialAbilityVeteran, veteranSpecialAbilityCost } from "@/lib/chargen/rules/veteran";
 import {
   applyFixedBausteine,
   connectionPointsGranted,
@@ -29,6 +33,7 @@ import {
   listOpenSpecialAbilityBonuses,
   listOpenTalentBonuses,
   listOpenTraitBonuses,
+  packageAutoLeadSpellIds,
   professionSpecialItems,
   resolveOpenTalentChoiceOptions,
   seededTalentIds,
@@ -55,6 +60,7 @@ import {
   groupExpandedSpecialAbilities,
   findOwnedForInstance,
   specializationApCost,
+  specialAbilityGpCost,
   specializationIndex,
 } from "@/lib/chargen/rules/expandSpecialAbilities";
 import { formatTraitMeta } from "@/lib/chargen/rules/traitLabels";
@@ -77,10 +83,17 @@ import ImportChargenDialog from "@/components/chargen/ImportChargenDialog";
 import ChargenSheetView from "@/components/chargen/ChargenSheetView";
 import TalentsStepTable from "@/components/chargen/TalentsStepTable";
 import OpenTalentBonusGrid from "@/components/chargen/OpenTalentBonusGrid";
+import LearningMethodSelect from "@/components/chargen/LearningMethodSelect";
+import VeteranApBar from "@/components/chargen/VeteranApBar";
+import VeteranApPanel from "@/components/chargen/VeteranApPanel";
+import BaseValuesStepPanel from "@/components/chargen/BaseValuesStepPanel";
+import VeteranAttributesPanel from "@/components/chargen/VeteranAttributesPanel";
+import VeteranTraitsPanel from "@/components/chargen/VeteranTraitsPanel";
 import { isTalentListMarker } from "@/lib/chargen/rules/talentListMarkers";
 import {
   assignOpenPick,
   availableForRank,
+  defaultOpenPicks,
   normalizeOpenPicks,
 } from "@/lib/chargen/rules/openTalentPicks";
 
@@ -98,9 +111,12 @@ type StepId =
   | "spells"
   | "equipment"
   | "problems"
-  | "finish";
+  | "finish"
+  | "ap"
+  | "baseValues"
+  | "sheet";
 
-const STEPS: { id: StepId; label: string }[] = [
+const CREATION_STEPS: { id: StepId; label: string }[] = [
   { id: "start", label: "Start" },
   { id: "race", label: "Race" },
   { id: "culture", label: "Culture" },
@@ -117,6 +133,22 @@ const STEPS: { id: StepId; label: string }[] = [
   { id: "finish", label: "Finished" },
 ];
 
+/** Java PanelRasKulProf — only these exist until Weiter locks the foundation. */
+const FOUNDATION_STEP_IDS: StepId[] = ["race", "culture", "profession"];
+
+const VETERAN_STEPS: { id: StepId; label: string }[] = [
+  { id: "hero", label: "Hero data" },
+  { id: "ap", label: "Adventure Points" },
+  { id: "attributes", label: "Attributes" },
+  { id: "baseValues", label: "Base values" },
+  { id: "talents", label: "Talents" },
+  { id: "spells", label: "Spells" },
+  { id: "special", label: "Special abilities" },
+  { id: "traits", label: "Disadvantages" },
+  { id: "equipment", label: "Equipment" },
+  { id: "sheet", label: "Sheet / Export" },
+];
+
 function CustomBadge({ source }: { source?: string }) {
   if (source !== "custom") return null;
   return (
@@ -129,6 +161,8 @@ function CustomBadge({ source }: { source?: string }) {
 /** Display order and labels for talent groups (DSA / Java Chargen Talentgruppe). */
 const TALENT_GROUP_ORDER: { id: string; label: string }[] = [
   { id: "combat", label: "Combat" },
+  { id: "nahkampf", label: "Melee combat" },
+  { id: "fernkampf", label: "Ranged combat" },
   { id: "physical", label: "Physical" },
   { id: "social", label: "Social" },
   { id: "nature", label: "Nature" },
@@ -184,6 +218,34 @@ export default function ChargenWizard() {
   >({});
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [finishMode, setFinishMode] = useState<ChargenFinishMode>("strict");
+  const [talentLearningMethod, setTalentLearningMethod] =
+    useState<LearningMethod>("none");
+  const [attributeLearningMethod, setAttributeLearningMethod] =
+    useState<LearningMethod>("none");
+  const [spellLearningMethod, setSpellLearningMethod] =
+    useState<LearningMethod>("none");
+  const [sfLearningMethod, setSfLearningMethod] =
+    useState<LearningMethod>("teacher");
+  const [traitLearningMethod, setTraitLearningMethod] =
+    useState<LearningMethod>("teacher");
+  /** After Race+Culture+Profession confirmed (Java Weiter from PanelRasKulProf). */
+  const [foundationLocked, setFoundationLocked] = useState(false);
+
+  const veteran = isVeteranPhase(held);
+  const foundationComplete = Boolean(
+    held.raceId && held.cultureId && held.professionId
+  );
+  const activeSteps = useMemo(() => {
+    if (veteran) return VETERAN_STEPS;
+    if (!foundationLocked) {
+      return CREATION_STEPS.filter((s) =>
+        FOUNDATION_STEP_IDS.includes(s.id)
+      );
+    }
+    return CREATION_STEPS.filter(
+      (s) => s.id !== "start" && !FOUNDATION_STEP_IDS.includes(s.id)
+    );
+  }, [veteran, foundationLocked]);
 
   useEffect(() => {
     setFinishMode(loadChargenSettings().finishMode);
@@ -338,6 +400,26 @@ export default function ChargenWizard() {
     [culture]
   );
 
+  const autoLeadSpellIds = useMemo(
+    () =>
+      packageAutoLeadSpellIds(
+        culture,
+        profession,
+        held.advantagesDisadvantages
+      ),
+    [culture, profession, held.advantagesDisadvantages]
+  );
+
+  const leadSpellCandidates = useMemo(() => {
+    const auto = new Set(autoLeadSpellIds);
+    return spells
+      .filter((s) => !auto.has(String(s.id)))
+      .slice()
+      .sort((a, b) =>
+        String(a.name || a.id).localeCompare(String(b.name || b.id))
+      );
+  }, [spells, autoLeadSpellIds]);
+
   const connectionPoints = useMemo(
     () => connectionPointsGranted(profession),
     [profession]
@@ -413,33 +495,60 @@ export default function ChargenWizard() {
     return [...known, ...extras];
   }, [talents]);
 
+  const professionGp = resolveProfessionGpCost(profession, held.raceId || race?.id);
   const budget = computeBudget(held, {
     raceGp: Number(race?.gp_cost ?? 0),
     cultureGp: Number(culture?.gp_cost ?? 0),
-    professionGp: Number(profession?.gp_cost ?? 0),
-    traitGpNet: traitGpNet(held, traits),
-    specialAbilityGp: specialAbilityGpSpent(held),
+    professionGp,
+    traitGpNet: traitGpNet(held, traits, talents),
+    specialAbilityGp: specialAbilityGpSpent(held, expandedSpecials),
     attributeMods,
     educatedApSaved: educatedApSavings(held),
+    educatedApApplied: educatedApApplied(
+      held,
+      talents,
+      expandedSpecials,
+      spells,
+      seedTalentIdSet
+    ),
     magicApSpent: computeMagicApSpent(held, spells, expandedSpecials),
+    profession,
   });
 
   const problems = collectProblems(held, {
     race: race
       ? {
+          id: String(race.id),
+          name: race.name as string | undefined,
           gp_cost: Number(race.gp_cost ?? 0),
           allowed_cultures: race.allowed_cultures as string[] | undefined,
           attribute_modifiers: race.attribute_modifiers as
             | Record<string, number>
             | undefined,
+          attribute_minimums: race.attribute_minimums as
+            | Record<string, number>
+            | undefined,
+          so_min:
+            race.so_min != null ? Number(race.so_min) : undefined,
+          so_max:
+            race.so_max != null ? Number(race.so_max) : undefined,
         }
       : null,
     culture: culture
       ? {
+          id: String(culture.id),
+          name: culture.name as string | undefined,
           gp_cost: Number(culture.gp_cost ?? 0),
           attribute_modifiers: culture.attribute_modifiers as
             | Record<string, number>
             | undefined,
+          attribute_minimums: culture.attribute_minimums as
+            | Record<string, number>
+            | undefined,
+          so_min:
+            culture.so_min != null ? Number(culture.so_min) : undefined,
+          so_max:
+            culture.so_max != null ? Number(culture.so_max) : undefined,
           professions: culture.professions as
             | {
                 mode?: string;
@@ -451,10 +560,23 @@ export default function ChargenWizard() {
       : null,
     profession: profession
       ? {
-          gp_cost: Number(profession.gp_cost ?? 0),
+          id: String(profession.id),
+          name: profession.name as string | undefined,
+          gp_cost: professionGp,
           attribute_modifiers: profession.attribute_modifiers as
             | Record<string, number>
             | undefined,
+          attribute_minimums: profession.attribute_minimums as
+            | Record<string, number>
+            | undefined,
+          so_min:
+            profession.so_min != null
+              ? Number(profession.so_min)
+              : undefined,
+          so_max:
+            profession.so_max != null
+              ? Number(profession.so_max)
+              : undefined,
         }
       : null,
     specialAbilities: expandedSpecials,
@@ -474,7 +596,7 @@ export default function ChargenWizard() {
       .map((x) => (typeof x === "string" ? x : x.id))
       .filter((id): id is string => Boolean(id)),
     resolveName: (id) => labelMap[id],
-    traitGpNet: traitGpNet(held, traits),
+    traitGpNet: traitGpNet(held, traits, talents),
     attributeMods,
     finishMode,
   });
@@ -484,18 +606,57 @@ export default function ChargenWizard() {
   }
 
   function stepIndex(id: StepId) {
-    return STEPS.findIndex((s) => s.id === id);
+    return activeSteps.findIndex((s) => s.id === id);
+  }
+
+  function isFoundationStepAccessible(id: StepId): boolean {
+    if (id === "race") return true;
+    if (id === "culture") return Boolean(held.raceId);
+    if (id === "profession") return Boolean(held.cultureId);
+    return false;
+  }
+
+  function confirmFoundationAndContinue() {
+    if (!foundationComplete || foundationLocked) return;
+    setFoundationLocked(true);
+    updateHeld((h) =>
+      applyCreationAttributeMinimums(h, race, profession, culture)
+    );
+    setStep("bonuses");
   }
 
   function goNext() {
+    if (!veteran && !foundationLocked) {
+      if (step === "profession") {
+        confirmFoundationAndContinue();
+        return;
+      }
+      if (step === "race" && !held.raceId) return;
+      if (step === "culture" && !held.cultureId) return;
+    }
     const i = stepIndex(step);
-    if (i < STEPS.length - 1) setStep(STEPS[i + 1].id);
+    if (i < activeSteps.length - 1) setStep(activeSteps[i + 1].id);
   }
 
   function goBack() {
+    if (!veteran && foundationLocked && step === "bonuses") {
+      // Java: after leaving PanelRasKulProf there is no return.
+      return;
+    }
     const i = stepIndex(step);
-    if (i > 0) setStep(STEPS[i - 1].id);
+    if (i > 0) setStep(activeSteps[i - 1].id);
   }
+
+  const nextDisabled =
+    !veteran &&
+    !foundationLocked &&
+    ((step === "race" && !held.raceId) ||
+      (step === "culture" && !held.cultureId) ||
+      (step === "profession" && !foundationComplete));
+
+  const backDisabled =
+    stepIndex(step) <= 0 ||
+    (!veteran && foundationLocked && step === "bonuses");
 
   function reseedBausteine(
     secondLanguage: string,
@@ -546,13 +707,34 @@ export default function ChargenWizard() {
     else if (bonusLang && !secondOptions.includes(bonusLang)) {
       setBonusLang("");
     }
-    setOpenAssignments({});
+    // Java PanelTalentBonusFest: preselect talent[i] for bonus column[i]
+    const defaults: Record<string, string[]> = {};
+    for (const choice of listOpenTalentBonuses(race, culture, profession)) {
+      if (choice.type !== "fixed" || !choice.ranks.length) continue;
+      const options = resolveOpenTalentChoiceOptions(choice, talents, {
+        motherTongue: culture?.mother_tongue
+          ? String(culture.mother_tongue)
+          : undefined,
+        secondLanguage: autoSecond || undefined,
+      });
+      defaults[choice.key] = defaultOpenPicks(options, choice.ranks.length);
+    }
+    setOpenAssignments(defaults);
     setOpenTraitPicks({});
     setOpenSpecialPicks({});
     setOpenCheapSpecialPick("");
     setLeadSpellPicks([]);
     setBausteineKey(key);
-    applyFullBausteine(autoSecond, {});
+    updateHeld((h) =>
+      applyFixedBausteine(h, race, culture, profession, {
+        secondLanguage: autoSecond,
+        openAssignments: defaults,
+        openTraitPicks: {},
+        openSpecialPicks: {},
+        openCheapSpecialPick: undefined,
+        leadSpellPicks: [],
+      })
+    );
     // eslint-disable-next-line react-hooks/exhaustive-deps -- intentional seed on foundation change
   }, [step, held.raceId, held.cultureId, held.professionId, bausteineKey]);
 
@@ -588,33 +770,61 @@ export default function ChargenWizard() {
         </div>
       )}
 
-      {step !== "start" && step !== "finish" && (
+      {step !== "start" && !veteran && step !== "finish" && (
         <GpApBar
           budget={budget}
           onOpenSettings={() => setSettingsOpen(true)}
         />
       )}
+      {veteran && step !== "sheet" && <VeteranApBar held={held} />}
 
       <div className="flex flex-1 min-h-0">
+        {step !== "start" && (
         <nav className="w-48 shrink-0 border-r border-surface-border p-3 overflow-y-auto hidden md:block">
           <ol className="space-y-1 text-sm">
-            {STEPS.map((s) => (
-              <li key={s.id}>
-                <button
-                  type="button"
-                  className={`w-full text-left px-2 py-1.5 rounded-md ${
-                    step === s.id
-                      ? "bg-brand-muted text-ink font-medium"
-                      : "text-ink-muted hover:bg-surface-card"
-                  }`}
-                  onClick={() => setStep(s.id)}
-                >
-                  {s.label}
-                </button>
-              </li>
-            ))}
+            {activeSteps.map((s) => {
+              const foundationGate =
+                !veteran &&
+                !foundationLocked &&
+                FOUNDATION_STEP_IDS.includes(s.id) &&
+                !isFoundationStepAccessible(s.id);
+              const disabled = foundationGate;
+              return (
+                <li key={s.id}>
+                  <button
+                    type="button"
+                    disabled={disabled}
+                    className={`w-full text-left px-2 py-1.5 rounded-md ${
+                      step === s.id
+                        ? "bg-brand-muted text-ink font-medium"
+                        : disabled
+                          ? "text-ink-faint cursor-not-allowed opacity-50"
+                          : "text-ink-muted hover:bg-surface-card"
+                    }`}
+                    onClick={() => {
+                      if (disabled) return;
+                      setStep(s.id);
+                    }}
+                  >
+                    {s.label}
+                  </button>
+                </li>
+              );
+            })}
           </ol>
+          {!veteran && foundationLocked && (
+            <div className="mt-4 pt-3 border-t border-surface-border text-xs text-ink-muted space-y-1">
+              <div className="font-medium text-ink">Foundation</div>
+              <div>{race?.name || held.raceId || "—"}</div>
+              <div>{culture?.name || held.cultureId || "—"}</div>
+              <div>{profession?.name || held.professionId || "—"}</div>
+              <p className="text-ink-faint pt-1">
+                Locked (as in Java Chargen)
+              </p>
+            </div>
+          )}
         </nav>
+        )}
 
         <div className="flex-1 overflow-y-auto p-4 md:p-6">
           {step === "start" && (
@@ -624,8 +834,10 @@ export default function ChargenWizard() {
               </h2>
               <p className="text-sm text-ink-muted">
                 Manual DSA 4.1 point-buy creation, based on the classic Java
-                Chargen. Characters are not saved to the server — export when
-                done, or import an existing file to continue.
+                Chargen. Characters are not saved to the server — export a{" "}
+                <code className="text-xs">.dcg</code> file when done, or import
+                an existing <code className="text-xs">.dcg</code> /{" "}
+                <code className="text-xs">.xml</code> to continue.
               </p>
               <div className="flex flex-wrap gap-2">
                 <button
@@ -637,6 +849,7 @@ export default function ChargenWizard() {
                     setOpenAssignments({});
                     setBausteineKey("");
                     setNameFactoryId("");
+                    setFoundationLocked(false);
                     setStep("race");
                   }}
                 >
@@ -656,10 +869,16 @@ export default function ChargenWizard() {
           {step === "race" && (
             <div className="max-w-xl space-y-3">
               <h2 className="text-lg font-bold">Race</h2>
+              <p className="text-sm text-ink-muted">
+                Choose race, culture, and profession first. After you continue
+                from Profession they are locked, like the Java Chargen.
+              </p>
               <select
                 className={selectClass}
                 value={held.raceId}
+                disabled={foundationLocked}
                 onChange={(e) => {
+                  if (foundationLocked) return;
                   setBausteineKey("");
                   updateHeld((h) => ({
                     ...h,
@@ -689,10 +908,15 @@ export default function ChargenWizard() {
           {step === "culture" && (
             <div className="max-w-xl space-y-3">
               <h2 className="text-lg font-bold">Culture</h2>
+              {!held.raceId ? (
+                <p className="text-sm text-ink-muted">Select a race first.</p>
+              ) : (
               <select
                 className={selectClass}
                 value={held.cultureId}
+                disabled={foundationLocked}
                 onChange={(e) => {
+                  if (foundationLocked) return;
                   setBausteineKey("");
                   updateHeld((h) => ({
                     ...h,
@@ -709,28 +933,52 @@ export default function ChargenWizard() {
                   </option>
                 ))}
               </select>
+              )}
             </div>
           )}
 
           {step === "profession" && (
             <div className="max-w-xl space-y-3">
               <h2 className="text-lg font-bold">Profession</h2>
-              <select
-                className={selectClass}
-                value={held.professionId}
-                onChange={(e) => {
-                  setBausteineKey("");
-                  updateHeld((h) => ({ ...h, professionId: e.target.value }));
-                }}
-              >
-                <option value="">Select…</option>
-                {filteredProfessions.map((p) => (
-                  <option key={p.id} value={p.id}>
-                    {(p.name as string) || p.id}
-                    {p.source === "custom" ? " (Custom)" : ""}
-                  </option>
-                ))}
-              </select>
+              {!held.cultureId ? (
+                <p className="text-sm text-ink-muted">
+                  Select a culture first.
+                </p>
+              ) : (
+                <>
+                  <p className="text-sm text-ink-muted">
+                    Continuing locks race, culture, and profession and opens the
+                    rest of creation (Java Chargen Weiter).
+                  </p>
+                  <select
+                    className={selectClass}
+                    value={held.professionId}
+                    disabled={foundationLocked}
+                    onChange={(e) => {
+                      if (foundationLocked) return;
+                      setBausteineKey("");
+                      updateHeld((h) => ({
+                        ...h,
+                        professionId: e.target.value,
+                      }));
+                    }}
+                  >
+                    <option value="">Select…</option>
+                    {filteredProfessions.map((p) => (
+                      <option key={p.id} value={p.id}>
+                        {(p.name as string) || p.id}
+                        {p.source === "custom" ? " (Custom)" : ""}
+                      </option>
+                    ))}
+                  </select>
+                  {profession && (
+                    <p className="text-sm text-ink-muted">
+                      GP cost: {resolveProfessionGpCost(profession, held.raceId)}
+                      <CustomBadge source={profession.source as string} />
+                    </p>
+                  )}
+                </>
+              )}
             </div>
           )}
 
@@ -842,7 +1090,14 @@ export default function ChargenWizard() {
                             choiceKey={choice.key}
                             ranks={choice.ranks}
                             talentIds={choiceTalents}
-                            picks={openAssignments[choice.key] || []}
+                            picks={
+                              openAssignments[choice.key]?.length
+                                ? openAssignments[choice.key]
+                                : defaultOpenPicks(
+                                    choiceTalents,
+                                    choice.ranks.length
+                                  )
+                            }
                             labelMap={labelMap}
                             onChange={(nextPicks) => {
                               setOpenAssignments({
@@ -1099,16 +1354,24 @@ export default function ChargenWizard() {
               {extraLeadSpellCount > 0 && (
                 <div className="rounded-lg border border-surface-border p-3 space-y-2">
                   <h3 className="text-sm font-semibold">
-                    Lead spells (choose {extraLeadSpellCount})
+                    Please select {extraLeadSpellCount} lead spells.
                   </h3>
-                  <div className="max-h-48 overflow-y-auto space-y-1">
-                    {spells.map((s) => {
-                      const checked = leadSpellPicks.includes(s.id);
+                  {autoLeadSpellIds.length > 0 && (
+                    <p className="text-xs text-ink-muted">
+                      Package spells are already lead spells (
+                      {autoLeadSpellIds.length}); choose {extraLeadSpellCount}{" "}
+                      additional ones below.
+                    </p>
+                  )}
+                  <div className="max-h-64 overflow-y-auto space-y-1">
+                    {leadSpellCandidates.map((s) => {
+                      const id = String(s.id);
+                      const checked = leadSpellPicks.includes(id);
                       const atCap =
                         leadSpellPicks.length >= extraLeadSpellCount;
                       return (
                         <label
-                          key={s.id}
+                          key={id}
                           className={`flex items-center gap-2 text-sm ${!checked && atCap ? "opacity-50" : ""}`}
                         >
                           <input
@@ -1117,20 +1380,30 @@ export default function ChargenWizard() {
                             disabled={!checked && atCap}
                             onChange={(e) => {
                               const next = e.target.checked
-                                ? [...leadSpellPicks, s.id]
-                                : leadSpellPicks.filter((x) => x !== s.id);
+                                ? [...leadSpellPicks, id]
+                                : leadSpellPicks.filter((x) => x !== id);
                               setLeadSpellPicks(next);
-                              updateHeld((h) => ({
-                                ...h,
-                                leadSpells: next,
-                              }));
+                              updateHeld((h) =>
+                                applyFixedBausteine(h, race, culture, profession, {
+                                  secondLanguage: bonusLang,
+                                  openAssignments,
+                                  openTraitPicks,
+                                  openSpecialPicks,
+                                  openCheapSpecialPick:
+                                    openCheapSpecialPick || undefined,
+                                  leadSpellPicks: next,
+                                })
+                              );
                             }}
                           />
-                          <span>{(s.name as string) || s.id}</span>
+                          <span>{(s.name as string) || id}</span>
                         </label>
                       );
                     })}
                   </div>
+                  <p className="text-xs text-ink-muted">
+                    Selected {leadSpellPicks.length} / {extraLeadSpellCount}
+                  </p>
                 </div>
               )}
 
@@ -1170,9 +1443,27 @@ export default function ChargenWizard() {
           {step === "hero" && (
             <div className="max-w-xl space-y-3">
               <h2 className="text-lg font-bold">Hero data</h2>
+              {veteran && (
+                <div className="rounded-lg border border-surface-border bg-surface-sidebar/30 px-3 py-2 text-sm">
+                  <p className="text-ink-muted">
+                    <span className="text-ink font-medium">Race:</span>{" "}
+                    {race?.name || held.raceId || "—"}
+                    {" · "}
+                    <span className="text-ink font-medium">Culture:</span>{" "}
+                    {culture?.name || held.cultureId || "—"}
+                    {" · "}
+                    <span className="text-ink font-medium">Profession:</span>{" "}
+                    {profession?.name || held.professionId || "—"}
+                  </p>
+                  <p className="text-xs text-ink-faint mt-1">
+                    Race, culture, and profession are locked after creation.
+                  </p>
+                </div>
+              )}
               <p className="text-sm text-ink-muted">
-                Roll dice for name and appearance using race tables and culture
-                name formats (same as the Java Chargen).
+                {veteran
+                  ? "Edit personal details. Appearance and background remain editable."
+                  : "Roll dice for name and appearance using race tables and culture name formats (same as the Java Chargen)."}
               </p>
 
               <label className="block text-sm">
@@ -1454,7 +1745,29 @@ export default function ChargenWizard() {
             </div>
           )}
 
-          {step === "attributes" && (
+          {step === "ap" && (
+            <VeteranApPanel held={held} updateHeld={updateHeld} />
+          )}
+
+          {step === "baseValues" && (
+            <BaseValuesStepPanel
+              held={held}
+              updateHeld={updateHeld}
+              attributeMods={attributeMods}
+            />
+          )}
+
+          {step === "attributes" && veteran && (
+            <VeteranAttributesPanel
+              held={held}
+              updateHeld={updateHeld}
+              attributeMods={attributeMods}
+              learningMethod={attributeLearningMethod}
+              onLearningMethodChange={setAttributeLearningMethod}
+            />
+          )}
+
+          {step === "attributes" && !veteran && (
             <div className="max-w-2xl space-y-3">
               <h2 className="text-lg font-bold">Attributes</h2>
               {(() => {
@@ -1541,33 +1854,6 @@ export default function ChargenWizard() {
                                 </td>
                                 <td className="px-2 py-2">
                                   <div className="flex items-center justify-center gap-1">
-                                    <span className="text-ink-faint">+</span>
-                                    <button
-                                      type="button"
-                                      className="px-2 py-0.5 rounded border border-surface-border"
-                                      disabled={a.base >= baseMax}
-                                      onClick={() =>
-                                        updateHeld((h) => ({
-                                          ...h,
-                                          attributes: h.attributes.map((x) =>
-                                            x.code === a.code
-                                              ? {
-                                                  ...x,
-                                                  base: Math.min(
-                                                    baseMax,
-                                                    x.base + 1
-                                                  ),
-                                                }
-                                              : x
-                                          ),
-                                        }))
-                                      }
-                                    >
-                                      +
-                                    </button>
-                                    <span className="w-8 text-center font-mono tabular-nums">
-                                      {a.base}
-                                    </span>
                                     <button
                                       type="button"
                                       className="px-2 py-0.5 rounded border border-surface-border"
@@ -1590,6 +1876,32 @@ export default function ChargenWizard() {
                                       }
                                     >
                                       −
+                                    </button>
+                                    <span className="w-8 text-center font-mono tabular-nums">
+                                      {a.base}
+                                    </span>
+                                    <button
+                                      type="button"
+                                      className="px-2 py-0.5 rounded border border-surface-border"
+                                      disabled={a.base >= baseMax}
+                                      onClick={() =>
+                                        updateHeld((h) => ({
+                                          ...h,
+                                          attributes: h.attributes.map((x) =>
+                                            x.code === a.code
+                                              ? {
+                                                  ...x,
+                                                  base: Math.min(
+                                                    baseMax,
+                                                    x.base + 1
+                                                  ),
+                                                }
+                                              : x
+                                          ),
+                                        }))
+                                      }
+                                    >
+                                      +
                                     </button>
                                   </div>
                                 </td>
@@ -1618,17 +1930,26 @@ export default function ChargenWizard() {
               seededTpMap={seededTpMap}
               attributeMods={attributeMods}
               talentGroupLabel={talentGroupLabel}
+              learningMethod={talentLearningMethod}
+              onLearningMethodChange={
+                veteran ? setTalentLearningMethod : undefined
+              }
             />
           )}
 
           {step === "special" && (
             <div className="max-w-3xl space-y-3">
               <h2 className="text-lg font-bold">Special abilities</h2>
+              {veteran && (
+                <LearningMethodSelect
+                  value={sfLearningMethod}
+                  onChange={setSfLearningMethod}
+                />
+              )}
               <p className="text-sm text-ink-muted">
-                Grouped like the Java Chargen. Talent and weapon specializations
-                are listed per skill — pick a variant, then tick the box.
-                Culture Lore, Area Knowledge, and similar abilities also need a
-                variant.
+                {veteran
+                  ? "Learn special abilities with AP. Teacher or Special Experience cost less for specializations."
+                  : "Grouped like the Java Chargen. Talent and weapon specializations are listed per skill — pick a variant, then tick the box. Culture Lore, Area Knowledge, and similar abilities also need a variant."}
               </p>
               <div className="max-h-[32rem] overflow-y-auto space-y-4">
                 {specialGroups.map((group) => (
@@ -1671,7 +1992,19 @@ export default function ChargenWizard() {
                           s.talent,
                           draftVariant ?? null
                         );
-                        const ap = specializationApCost(
+                        const ap = veteran
+                          ? veteranSpecialAbilityCost(
+                              held,
+                              s,
+                              draftVariant ?? null,
+                              sfLearningMethod
+                            )
+                          : specializationApCost(
+                              held,
+                              s,
+                              draftVariant ?? null
+                            );
+                        const gpCost = specialAbilityGpCost(
                           held,
                           s,
                           draftVariant ?? null
@@ -1756,12 +2089,42 @@ export default function ChargenWizard() {
                                   ) {
                                     return h;
                                   }
+                                  if (veteran) {
+                                    if (e.target.checked) {
+                                      return learnSpecialAbilityVeteran(
+                                        h,
+                                        s,
+                                        draftVariant ?? null,
+                                        sfLearningMethod
+                                      );
+                                    }
+                                    const refund = veteranSpecialAbilityCost(
+                                      h,
+                                      s,
+                                      draftVariant ?? null,
+                                      sfLearningMethod
+                                    );
+                                    return {
+                                      ...h,
+                                      specialAbilities: h.specialAbilities.filter(
+                                        (x) =>
+                                          !(
+                                            x.id === s.id &&
+                                            (x.talent || "") ===
+                                              (s.talent || "") &&
+                                            (x.variant || "") ===
+                                              (draftVariant || "")
+                                          )
+                                      ),
+                                      apSpent: Math.max(0, h.apSpent - refund),
+                                    };
+                                  }
                                   const payment = saPayment[s.instanceKey] || "ap";
                                   const cost =
                                     granted || !ap
                                       ? 0
-                                      : discounted
-                                        ? Math.floor(ap / 2)
+                                      : payment === "gp"
+                                        ? 0
                                         : ap;
                                   const entry = {
                                     id: s.id,
@@ -1906,7 +2269,7 @@ export default function ChargenWizard() {
                                   {prereqFails.map((f) => f.message).join("; ")}
                                 </div>
                               )}
-                              {!granted && ap > 0 && (
+                              {!veteran && !granted && ap > 0 && (
                                 <div className="flex flex-wrap items-center gap-3 text-xs text-ink-muted">
                                   <span>Pay with:</span>
                                   <label className="inline-flex items-center gap-1">
@@ -1924,7 +2287,8 @@ export default function ChargenWizard() {
                                         }))
                                       }
                                     />
-                                    AP ({discounted ? Math.floor(ap / 2) : ap})
+                                    AP ({ap}
+                                    {discounted ? " · discounted" : ""})
                                   </label>
                                   <label className="inline-flex items-center gap-1">
                                     <input
@@ -1938,7 +2302,7 @@ export default function ChargenWizard() {
                                         }))
                                       }
                                     />
-                                    GP (1)
+                                    GP ({gpCost})
                                   </label>
                                 </div>
                               )}
@@ -1965,7 +2329,18 @@ export default function ChargenWizard() {
             </div>
           )}
 
-          {step === "traits" && (
+          {step === "traits" && veteran && (
+            <VeteranTraitsPanel
+              held={held}
+              updateHeld={updateHeld}
+              traits={traits}
+              learningMethod={traitLearningMethod}
+              onLearningMethodChange={setTraitLearningMethod}
+              labelMap={labelMap}
+            />
+          )}
+
+          {step === "traits" && !veteran && (
             <div className="max-w-2xl space-y-3">
               <h2 className="text-lg font-bold">
                 Advantages / Disadvantages
@@ -1979,15 +2354,15 @@ export default function ChargenWizard() {
                 <div className="rounded-lg border border-surface-border p-3 space-y-2">
                   <h3 className="text-sm font-semibold">Connections</h3>
                   <p className="text-xs text-ink-muted">
-                    Distribute {connectionPoints} free connection points (from
-                    your profession).
+                    {connectionPoints} free connection points from your
+                    profession. Levels above the free pool cost GP (1 GP per 3
+                    levels, or per 5 with Social Adaptability).
                   </p>
                   <label className="block text-sm">
                     <span className="text-ink-muted">Connections level</span>
                     <input
                       type="number"
                       min={0}
-                      max={connectionPoints}
                       className="mt-1 w-24 rounded border border-surface-border bg-[#2c251f] px-2 py-1"
                       value={
                         connectionLevels["VorNachteil.Verbindungen"] ??
@@ -1997,10 +2372,7 @@ export default function ChargenWizard() {
                         0
                       }
                       onChange={(e) => {
-                        const level = Math.min(
-                          connectionPoints,
-                          Math.max(0, Number(e.target.value) || 0)
-                        );
+                        const level = Math.max(0, Number(e.target.value) || 0);
                         setConnectionLevels((prev) => ({
                           ...prev,
                           "VorNachteil.Verbindungen": level,
@@ -2019,12 +2391,17 @@ export default function ChargenWizard() {
                               {
                                 id: "VorNachteil.Verbindungen",
                                 rating: level,
+                                granted: connectionPoints > 0,
+                                grantedRating: connectionPoints,
                               },
                             ],
                           };
                         });
                       }}
                     />
+                    <span className="ml-2 text-xs text-ink-faint">
+                      ({connectionPoints} free)
+                    </span>
                   </label>
                 </div>
               )}
@@ -2036,6 +2413,7 @@ export default function ChargenWizard() {
                   const ownedRow = held.advantagesDisadvantages.find(
                     (x) => x.id === t.id
                   );
+                  const granted = Boolean(ownedRow?.granted);
                   const unsuitable = unsuitableTraits.has(t.id);
                   const ratingMin =
                     t.rating_min != null ? Number(t.rating_min) : null;
@@ -2079,23 +2457,28 @@ export default function ChargenWizard() {
                         type="checkbox"
                         className="mt-1"
                         checked={owned}
-                        disabled={unsuitable && !owned}
+                        disabled={(unsuitable && !owned) || granted}
                         onChange={(e) =>
-                          updateHeld((h) => ({
-                            ...h,
-                            advantagesDisadvantages: e.target.checked
-                              ? [
-                                  ...h.advantagesDisadvantages,
-                                  {
-                                    id: t.id,
-                                    rating:
-                                      ratingMin != null ? ratingMin : undefined,
-                                  },
-                                ]
-                              : h.advantagesDisadvantages.filter(
-                                  (x) => x.id !== t.id
-                                ),
-                          }))
+                          updateHeld((h) => {
+                            if (granted) return h;
+                            return {
+                              ...h,
+                              advantagesDisadvantages: e.target.checked
+                                ? [
+                                    ...h.advantagesDisadvantages,
+                                    {
+                                      id: t.id,
+                                      rating:
+                                        ratingMin != null
+                                          ? ratingMin
+                                          : undefined,
+                                    },
+                                  ]
+                                : h.advantagesDisadvantages.filter(
+                                    (x) => x.id !== t.id
+                                  ),
+                            };
+                          })
                         }
                       />
                       <div className="min-w-0 flex-1">
@@ -2103,6 +2486,11 @@ export default function ChargenWizard() {
                           <span className="font-medium">
                             {(t.name as string) || t.id}
                           </span>
+                          {granted ? (
+                            <span className="ml-1 text-xs text-ink-muted">
+                              (granted · 0 GP)
+                            </span>
+                          ) : null}
                           <CustomBadge source={t.source as string} />
                         </div>
                         {metaLine ? (
@@ -2113,7 +2501,11 @@ export default function ChargenWizard() {
                             Level
                             <input
                               type="number"
-                              min={ratingMin ?? 1}
+                              min={
+                                ownedRow?.grantedRating != null
+                                  ? ownedRow.grantedRating
+                                  : (ratingMin ?? 1)
+                              }
                               max={openEnded ? undefined : ratingMax ?? undefined}
                               className="w-16 rounded border border-surface-border bg-[#2c251f] px-1 py-0.5"
                               value={ownedRow?.rating ?? ratingMin ?? 1}
@@ -2121,26 +2513,29 @@ export default function ChargenWizard() {
                                 updateHeld((h) => ({
                                   ...h,
                                   advantagesDisadvantages:
-                                    h.advantagesDisadvantages.map((x) =>
-                                      x.id === t.id
-                                        ? {
-                                            ...x,
-                                            rating:
-                                              Number(e.target.value) ||
-                                              ratingMin ||
-                                              1,
-                                          }
-                                        : x
-                                    ),
+                                    h.advantagesDisadvantages.map((x) => {
+                                      if (x.id !== t.id) return x;
+                                      const floor =
+                                        x.grantedRating != null
+                                          ? x.grantedRating
+                                          : ratingMin ?? 1;
+                                      const next = Math.max(
+                                        floor,
+                                        Number(e.target.value) || floor
+                                      );
+                                      return { ...x, rating: next };
+                                    }),
                                 }))
                               }
                             />
                             <span className="text-ink-faint">
-                              {openEnded
-                                ? `(${ratingMin ?? 1}+)`
-                                : ratingMin != null && ratingMax != null
-                                  ? `(${ratingMin}–${ratingMax})`
-                                  : null}
+                              {ownedRow?.grantedRating != null
+                                ? `(${ownedRow.grantedRating}+ free; GP for levels above)`
+                                : openEnded
+                                  ? `(${ratingMin ?? 1}+)`
+                                  : ratingMin != null && ratingMax != null
+                                    ? `(${ratingMin}–${ratingMax})`
+                                    : null}
                             </span>
                           </label>
                         )}
@@ -2236,7 +2631,13 @@ export default function ChargenWizard() {
           {step === "spells" && (
             <div className="max-w-3xl space-y-3">
               <h2 className="text-lg font-bold">Spells (AP)</h2>
-              {spellcasterBlocked(held) && (
+              {veteran && (
+                <LearningMethodSelect
+                  value={spellLearningMethod}
+                  onChange={setSpellLearningMethod}
+                />
+              )}
+              {!veteran && spellcasterBlocked(held) && (
                 <p className="text-sm text-amber-400/90">
                   Spells require the Spellcaster advantage (20 GP). Without it,
                   no spell points can be allocated during creation.
@@ -2247,7 +2648,12 @@ export default function ChargenWizard() {
                   const row = held.spells.find((x) => x.id === s.id);
                   const sp = row?.sp ?? 0;
                   const blockReason = spellBlockReason(held, s);
-                  const blocked = !row && blockReason !== null;
+                  const blocked = !veteran && !row && blockReason !== null;
+                  const nextCost = spellDisplayApCost(
+                    held,
+                    s,
+                    spellLearningMethod
+                  );
                   return (
                     <div
                       key={s.id}
@@ -2266,12 +2672,17 @@ export default function ChargenWizard() {
                         {(s.name as string) || s.id}
                         <CustomBadge source={s.source as string} />
                       </span>
+                      <span className="text-xs font-mono text-ink-muted w-14 text-right">
+                        {nextCost} AP
+                      </span>
                       <button
                         type="button"
                         className="px-2 py-0.5 rounded border border-surface-border disabled:opacity-40"
                         disabled={blocked && !row}
                         onClick={() =>
-                          updateHeld((h) => addOrRaiseSpell(h, s))
+                          updateHeld((h) =>
+                            addOrRaiseSpell(h, s, spellLearningMethod)
+                          )
                         }
                       >
                         +
@@ -2282,7 +2693,9 @@ export default function ChargenWizard() {
                         className="px-2 py-0.5 rounded border border-surface-border"
                         disabled={!row}
                         onClick={() =>
-                          updateHeld((h) => lowerOrRemoveSpell(h, s))
+                          updateHeld((h) =>
+                            lowerOrRemoveSpell(h, s, spellLearningMethod)
+                          )
                         }
                       >
                         −
@@ -2392,18 +2805,20 @@ export default function ChargenWizard() {
                 conflicts={problems.conflicts}
                 canFinish={problems.canFinish}
                 advisoryMode={finishMode === "advisory"}
+                hasSpecialAbilityPrereqIssues={
+                  problems.hasSpecialAbilityPrereqIssues
+                }
               />
               <button
                 type="button"
                 disabled={!problems.canFinish}
                 className="px-4 py-2 rounded-lg bg-brand text-white text-sm font-medium disabled:opacity-40"
                 onClick={() => {
-                  updateHeld((h) => ({
-                    ...h,
-                    apTotal: Math.max(h.apTotal, budget.apStart),
-                    gpRemaining: budget.gpRemaining,
-                  }));
-                  setStep("finish");
+                  updateHeld((h) =>
+                    finishCreation(h, attributeMods, budget.gpRemaining)
+                  );
+                  setFoundationLocked(true);
+                  setStep("ap");
                 }}
               >
                 Finish hero
@@ -2411,7 +2826,7 @@ export default function ChargenWizard() {
             </div>
           )}
 
-          {step === "finish" && (
+          {(step === "finish" || step === "sheet") && (
             <ChargenSheetView
               held={held}
               labels={{
@@ -2423,21 +2838,27 @@ export default function ChargenWizard() {
             />
           )}
 
-          {step !== "start" && step !== "finish" && (
+          {step !== "start" &&
+            step !== "finish" &&
+            step !== "sheet" && (
             <div className="mt-8 flex gap-2 border-t border-surface-border pt-4">
               <button
                 type="button"
-                className="px-3 py-2 rounded-lg text-sm text-ink-muted hover:bg-surface-sidebar"
+                disabled={backDisabled}
+                className="px-3 py-2 rounded-lg text-sm text-ink-muted hover:bg-surface-sidebar disabled:opacity-40 disabled:pointer-events-none"
                 onClick={goBack}
               >
                 Back
               </button>
               <button
                 type="button"
-                className="px-3 py-2 rounded-lg text-sm bg-brand text-white font-medium"
+                disabled={nextDisabled}
+                className="px-3 py-2 rounded-lg text-sm bg-brand text-white font-medium disabled:opacity-40 disabled:pointer-events-none"
                 onClick={goNext}
               >
-                Next
+                {!veteran && !foundationLocked && step === "profession"
+                  ? "Continue"
+                  : "Next"}
               </button>
             </div>
           )}
@@ -2449,7 +2870,8 @@ export default function ChargenWizard() {
         onClose={() => setImportOpen(false)}
         onImport={(h) => {
           setHeld(refreshDerived(h));
-          setStep("finish");
+          setFoundationLocked(true);
+          setStep("ap");
         }}
       />
 

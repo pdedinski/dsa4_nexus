@@ -6,8 +6,21 @@
 
 import type { CatalogItem } from "@/lib/chargen/data/loadCatalog";
 import variantLabels from "@/lib/chargen/data/variant_labels.json";
-import { sktFactor } from "@/lib/chargen/rules/kosten";
+import { columnIndex, hasSpecialAbility, hasTrait, sktFactor } from "@/lib/chargen/rules/kosten";
 import type { HeldModel, SpecialAbilityWert } from "@/lib/chargen/types";
+
+const ELFISCHE_WELTSICHT = "VorNachteil.ElfischeWeltsicht";
+const SOZIALE_ANPASSUNG = "VorNachteil.SozialeAnpassungsfaehigkeit";
+const GELEHRTER = "VorNachteil.AkademischeAusbildungGelehrter";
+const BALANCE = "VorNachteil.Balance";
+const OUTSTANDING_BALANCE = "VorNachteil.HerausragendeBalance";
+const NANDUS_ID = "Sonderfertigkeit.NandusgefaelligesWissen";
+const KULTURKUNDE_ID = "Sonderfertigkeit.Kulturkunde";
+const ORTSKENNTNIS_ID = "Sonderfertigkeit.Ortskenntnis";
+const STANDFEST_ID = "Sonderfertigkeit.Standfest";
+
+/** Java KostenTalentspezialisierung.GP_KOSTEN for columns A*…E. */
+const SPECIALIZATION_GP_BY_COLUMN = [0, 1, 1, 1, 2, 2];
 
 const LABEL_BY_ID: Record<string, string> = Object.fromEntries(
   (variantLabels as Array<{ id: string; name?: string }>).map((v) => [
@@ -271,22 +284,88 @@ export function specializationIndex(
   return siblings.length + 1;
 }
 
+function isSpecializationInstance(instance: ExpandedSpecialAbility): boolean {
+  const key = String(instance.kosten_key || "");
+  return (
+    key === "TALENTSPEZIALISIERUNG" ||
+    key === "WAFFENSPEZIALISIERUNG" ||
+    instance.group === "talent_specialization" ||
+    instance.group === "weapon_specialization"
+  );
+}
+
+/**
+ * Discount ×0.5 / Elfische Weltsicht ×1.5 / else ×1 — mirrors Java
+ * `KostenFest.getFaktor` / `KostenTalentspezialisierung`.
+ * Lead-SF exemption for Weltsicht is not modeled yet (no Leitsonderfertigkeit on Held).
+ */
+export function specialAbilityCostFactor(
+  held: HeldModel,
+  instance: { id: string }
+): number {
+  if (held.discountedSpecialAbilities.includes(instance.id)) return 0.5;
+  if (hasTrait(held, ELFISCHE_WELTSICHT)) return 1.5;
+  return 1.0;
+}
+
+/**
+ * Culture Lore: base 150, then discount/Weltsicht, then ×0.5 with Nandus or
+ * Social Adaptability (Java `KostenKulturkunde`).
+ */
+function kulturkundeApCost(held: HeldModel, instance: { id: string }): number {
+  let f = specialAbilityCostFactor(held, instance);
+  if (
+    f !== 0.5 &&
+    (hasTrait(held, SOZIALE_ANPASSUNG) || hasSpecialAbility(held, NANDUS_ID))
+  ) {
+    f *= 0.5;
+  }
+  return Math.round(f * 150);
+}
+
+function nandusApCost(held: HeldModel, instance: { id: string }): number {
+  if (hasTrait(held, GELEHRTER)) return 0;
+  return Math.round(specialAbilityCostFactor(held, instance) * 200);
+}
+
+/** First Knowledge of a Place 150 AP, further ones 100 (Java `KostenOrtskenntnis`). */
+function ortskenntnisApCost(
+  held: HeldModel,
+  instance: { id: string },
+  variant?: string | null
+): number {
+  const all = held.specialAbilities.filter((s) => s.id === ORTSKENNTNIS_ID);
+  const matchingIdx = all.findIndex(
+    (s) => (s.variant || "") === (variant || "")
+  );
+  const isFirst =
+    matchingIdx === 0 || (matchingIdx < 0 && all.length === 0);
+  const base = isFirst ? 150 : 100;
+  return Math.round(specialAbilityCostFactor(held, instance) * base);
+}
+
+function standfestApCost(held: HeldModel, instance: { id: string }): number {
+  if (hasTrait(held, BALANCE) || hasTrait(held, OUTSTANDING_BALANCE)) return 0;
+  return Math.round(specialAbilityCostFactor(held, instance) * 200);
+}
+
+function specializationColumnIndex(instance: ExpandedSpecialAbility): number {
+  if (typeof instance.skt_column === "number") {
+    return Math.max(0, Math.min(8, instance.skt_column as number));
+  }
+  if (typeof instance.skt_column === "string") {
+    return columnIndex(instance.skt_column);
+  }
+  return 2;
+}
+
 export function specializationApCost(
   held: HeldModel,
   instance: ExpandedSpecialAbility,
   variant?: string | null
 ): number {
-  const key = String(instance.kosten_key || "");
-  if (
-    key === "TALENTSPEZIALISIERUNG" ||
-    key === "WAFFENSPEZIALISIERUNG" ||
-    instance.group === "talent_specialization" ||
-    instance.group === "weapon_specialization"
-  ) {
-    const col =
-      typeof instance.skt_column === "number"
-        ? (instance.skt_column as number)
-        : 2;
+  if (isSpecializationInstance(instance)) {
+    const col = specializationColumnIndex(instance);
     const factor = sktFactor(col);
     const index = specializationIndex(
       held,
@@ -294,10 +373,62 @@ export function specializationApCost(
       instance.talent,
       variant
     );
-    return Math.round(factor * 20 * index);
+    const f = specialAbilityCostFactor(held, instance);
+    return Math.round(f * factor * 20 * index);
   }
+
+  const key = String(instance.kosten_key || "");
+  if (key === "KULTURKUNDE" || instance.id === KULTURKUNDE_ID) {
+    return kulturkundeApCost(held, instance);
+  }
+  if (key === "NANDUSGEFAELLIGES_WISSEN" || instance.id === NANDUS_ID) {
+    return nandusApCost(held, instance);
+  }
+  if (key === "ORTSKENNTNIS" || instance.id === ORTSKENNTNIS_ID) {
+    return ortskenntnisApCost(held, instance, variant);
+  }
+  if (key === "AP_200_MIT_BALANCE" || instance.id === STANDFEST_ID) {
+    return standfestApCost(held, instance);
+  }
+
   const ap = instance.ap_cost != null ? Number(instance.ap_cost) : 0;
-  return Number.isFinite(ap) ? ap : 0;
+  if (!Number.isFinite(ap) || ap <= 0) return 0;
+  return Math.round(specialAbilityCostFactor(held, instance) * ap);
+}
+
+/**
+ * Java KostenTalentspezialisierung.getGpKosten — column table, not AP/50.
+ */
+export function specializationGpCost(
+  held: HeldModel,
+  instance: ExpandedSpecialAbility,
+  variant?: string | null
+): number {
+  if (!isSpecializationInstance(instance)) {
+    return Math.round(specializationApCost(held, instance, variant) / 50);
+  }
+  const col = Math.min(5, specializationColumnIndex(instance));
+  const baseGp = SPECIALIZATION_GP_BY_COLUMN[col] ?? 2;
+  const index = specializationIndex(
+    held,
+    instance.id,
+    instance.talent,
+    variant
+  );
+  const f = specialAbilityCostFactor(held, instance);
+  return Math.round(f * index * baseGp);
+}
+
+/** Creation-time SF GP cost for any special ability (payment = gp). */
+export function specialAbilityGpCost(
+  held: HeldModel,
+  instance: ExpandedSpecialAbility,
+  variant?: string | null
+): number {
+  if (isSpecializationInstance(instance)) {
+    return specializationGpCost(held, instance, variant);
+  }
+  return Math.round(specializationApCost(held, instance, variant) / 50);
 }
 
 export function formatSpecialAbilityLabel(

@@ -1,7 +1,8 @@
 import type { HeldModel } from "@/lib/chargen/types";
+import { stripSessionBaselines } from "@/lib/chargen/rules/veteran";
 
 export function exportHeldJson(held: HeldModel): string {
-  return JSON.stringify(held, null, 2);
+  return JSON.stringify(stripSessionBaselines(held), null, 2);
 }
 
 export function downloadHeldJson(held: HeldModel, filename?: string): void {

@@ -4,7 +4,7 @@
  */
 
 import sktData from "@/lib/chargen/data/skt.json";
-import type { AttrCode, HeldModel } from "@/lib/chargen/types";
+import type { AttrCode, HeldModel, HeldPhase } from "@/lib/chargen/types";
 import { attrValue } from "@/lib/chargen/types";
 
 const COL_INDEX: Record<string, number> = {
@@ -38,6 +38,23 @@ export function sktActivationCost(column: string | number): number {
 }
 
 const SKT_COLUMN_LETTERS = ["A*", "A", "B", "C", "D", "E", "F", "G", "H"];
+
+/** Creation uses factor table; veteran uses SKT row 0 — mirrors `Kosten.getAktivierungskosten`. */
+export function activationCost(
+  phase: HeldPhase | undefined,
+  column: string | number
+): number {
+  return phase === "veteran" ? sktActivationCost(column) : sktFactor(column);
+}
+
+/** Clamp column index after Lernmethode / trait shifts. */
+export function shiftColumn(column: string | number, delta: number): string {
+  const idx = Math.max(
+    0,
+    Math.min(8, (typeof column === "number" ? column : columnIndex(column)) + delta)
+  );
+  return SKT_COLUMN_LETTERS[idx];
+}
 
 /** Display label for an SKT column, e.g. `(D)`. */
 export function sktColumnLabel(column: string | number): string {

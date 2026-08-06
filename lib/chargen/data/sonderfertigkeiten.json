@@ -296,7 +296,7 @@
     "group": "general",
     "group_raw": "ALLGEMEIN",
     "talent": null,
-    "ap_cost": null,
+    "ap_cost": 150,
     "kosten_key": "KULTURKUNDE",
     "prerequisites": [
       "IN_10",
@@ -399,7 +399,7 @@
     "group": "general",
     "group_raw": "ALLGEMEIN",
     "talent": null,
-    "ap_cost": null,
+    "ap_cost": 200,
     "kosten_key": "NANDUSGEFAELLIGES_WISSEN",
     "prerequisites": [
       "KL_12",
@@ -417,7 +417,7 @@
     "group": "general",
     "group_raw": "ALLGEMEIN",
     "talent": null,
-    "ap_cost": null,
+    "ap_cost": 150,
     "kosten_key": "ORTSKENNTNIS",
     "prerequisites": [],
     "expand_template": null,

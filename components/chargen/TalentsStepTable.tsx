@@ -1,10 +1,12 @@
 "use client";
 
 import type { CatalogItem } from "@/lib/chargen/data/loadCatalog";
-import type { AttributeMods, HeldModel } from "@/lib/chargen/types";
+import type { AttributeMods, HeldModel, LearningMethod } from "@/lib/chargen/types";
+import { isVeteranPhase } from "@/lib/chargen/types";
 import { effectiveTalentTp } from "@/lib/chargen/rules/applyBausteine";
 import {
   activateTalent,
+  canActivateMoreTalents,
   canEditTalentValues,
   countNonSeededActivations,
   deactivateTalent,
@@ -18,6 +20,7 @@ import {
   talentDisplayApCost,
   talentParade,
 } from "@/lib/chargen/rules/talentActivation";
+import LearningMethodSelect from "@/components/chargen/LearningMethodSelect";
 
 function CustomBadge({ source }: { source?: string }) {
   if (!source || source === "builtin") return null;
@@ -30,15 +33,18 @@ function StepButton({
   disabled,
   onClick,
   children,
+  title,
 }: {
   disabled?: boolean;
   onClick: () => void;
   children: React.ReactNode;
+  title?: string;
 }) {
   return (
     <button
       type="button"
       disabled={disabled}
+      title={title}
       className="px-1.5 py-0.5 rounded border border-surface-border disabled:opacity-40 disabled:cursor-not-allowed"
       onClick={onClick}
     >
@@ -55,6 +61,8 @@ export default function TalentsStepTable({
   seededTpMap,
   attributeMods,
   talentGroupLabel,
+  learningMethod = "none",
+  onLearningMethodChange,
 }: {
   held: HeldModel;
   updateHeld: (fn: (h: HeldModel) => HeldModel) => void;
@@ -63,24 +71,36 @@ export default function TalentsStepTable({
   seededTpMap: Map<string, number>;
   attributeMods?: AttributeMods;
   talentGroupLabel: (group: string) => string;
+  learningMethod?: LearningMethod;
+  onLearningMethodChange?: (m: LearningMethod) => void;
 }) {
+  const veteran = isVeteranPhase(held);
   const activationCount = countNonSeededActivations(held, seedTalentIdSet);
-  const atCap = activationCount >= MAX_TALENT_ACTIVATIONS;
+  const atCap =
+    !veteran && activationCount >= MAX_TALENT_ACTIVATIONS;
 
   return (
     <div className="max-w-5xl space-y-3">
       <div className="flex flex-wrap items-baseline justify-between gap-2">
         <h2 className="text-lg font-bold">Talents (AP)</h2>
-        <p
-          className={`text-sm ${atCap ? "text-amber-400" : "text-ink-muted"}`}
-        >
-          {activationCount} / {MAX_TALENT_ACTIVATIONS} talents activated
-        </p>
+        {!veteran && (
+          <p
+            className={`text-sm ${atCap ? "text-amber-400" : "text-ink-muted"}`}
+          >
+            {activationCount} / {MAX_TALENT_ACTIVATIONS} talents activated
+          </p>
+        )}
       </div>
+      {veteran && onLearningMethodChange ? (
+        <LearningMethodSelect
+          value={learningMethod}
+          onChange={onLearningMethodChange}
+        />
+      ) : null}
       <p className="text-sm text-ink-muted">
-        Seeded talents from race, culture, and profession can be raised at 0 TP
-        without activation. Other talents must be activated first (checkbox).
-        Mother tongue / second language show CL creation modifiers (CL−2 / CL−4).
+        {veteran
+          ? "Spend AP to activate and raise talents. Raises up to your loaded baseline are free until you save and reload."
+          : "Seeded talents from race, culture, and profession can be raised at 0 TP without activation. Other talents must be activated first (checkbox). Mother tongue / second language show CL creation modifiers (CL−2 / CL−4)."}
       </p>
       <div className="max-h-[28rem] overflow-y-auto space-y-4">
         {talentsByGroup.map(({ id: groupId, items }) => {
@@ -139,15 +159,24 @@ export default function TalentsStepTable({
                       t,
                       seedTalentIdSet
                     );
-                    const minTp = seededTpMap.get(id) ?? 0;
+                    const minTp = veteran
+                      ? 0
+                      : (seededTpMap.get(id) ?? 0);
                     const attack = row?.attack ?? 0;
                     const pa =
                       showCombatCols && !isRangedCombatTalent(t)
                         ? talentParade(held, id, baseTp, attack, attributeMods)
                         : null;
-                    const cost = talentDisplayApCost(held, t, seedTalentIdSet);
+                    const cost = talentDisplayApCost(
+                      held,
+                      t,
+                      seedTalentIdSet,
+                      learningMethod
+                    );
+                    const canActivate =
+                      veteran || canActivateMoreTalents(held, seedTalentIdSet);
                     const checkboxDisabled =
-                      seeded || (!checked && atCap);
+                      seeded || (!checked && !canActivate);
 
                     return (
                       <tr
@@ -170,7 +199,12 @@ export default function TalentsStepTable({
                             onChange={(e) =>
                               updateHeld((h) =>
                                 e.target.checked
-                                  ? activateTalent(h, t, seedTalentIdSet)
+                                  ? activateTalent(
+                                      h,
+                                      t,
+                                      seedTalentIdSet,
+                                      learningMethod
+                                    )
                                   : deactivateTalent(h, t, seedTalentIdSet)
                               )
                             }
@@ -247,12 +281,18 @@ export default function TalentsStepTable({
                           <div className="flex items-center justify-center gap-0.5">
                             <StepButton
                               disabled={!editable || baseTp <= minTp}
+                              title={
+                                veteran && row && baseTp <= (row.baselineTp ?? 0)
+                                  ? "Lowering below baseline refunds 0 AP after reload"
+                                  : undefined
+                              }
                               onClick={() =>
                                 updateHeld((h) =>
                                   lowerTalentTp(
                                     h,
                                     t,
                                     seedTalentIdSet,
+                                    learningMethod,
                                     minTp
                                   )
                                 )
@@ -271,7 +311,12 @@ export default function TalentsStepTable({
                               disabled={!editable}
                               onClick={() =>
                                 updateHeld((h) =>
-                                  raiseTalentTp(h, t, seedTalentIdSet)
+                                  raiseTalentTp(
+                                    h,
+                                    t,
+                                    seedTalentIdSet,
+                                    learningMethod
+                                  )
                                 )
                               }
                             >

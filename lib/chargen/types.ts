@@ -102,12 +102,44 @@ export const DERIVED_TO_GERMAN: Record<DerivedCode, string> = {
 
 export type Gender = "male" | "female";
 
+/** Creation vs post-creation (Steigern) — mirrors Java `Held.wirdErschaffen`. */
+export type HeldPhase = "creation" | "veteran";
+
+/**
+ * Method of Learning — mirrors Java `Lernmethode` (session UI only, not persisted).
+ */
+export type LearningMethod =
+  | "none"
+  | "mutual"
+  | "teacher"
+  | "self_study"
+  | "special_experience";
+
+/** Column shift per learning method — port of `Lernmethode.bestimmeSteigerungsfaktor`. */
+export const LEARNING_METHOD_COLUMN_SHIFT: Record<LearningMethod, number> = {
+  special_experience: -1,
+  teacher: -1,
+  mutual: 0,
+  none: 0,
+  self_study: 1,
+};
+
+export const LEARNING_METHOD_LABELS: Record<LearningMethod, string> = {
+  none: "None",
+  mutual: "Mutual Teaching and Learning",
+  teacher: "Teacher",
+  self_study: "Teaching Yourself",
+  special_experience: "Special Experience",
+};
+
 export interface AttributeWert {
   code: AttrCodeWithSo;
   /** Creation base (basisstufe). */
   base: number;
   /** Purchased raises (zukauf). */
   purchased: number;
+  /** Session-local vorgegeben floor for zukauf (not exported). */
+  purchasedBaseline?: number;
   specialExperience?: boolean;
 }
 
@@ -117,6 +149,8 @@ export interface DerivedWert {
   base: number;
   purchased: number;
   maxPurchased?: number;
+  /** Session-local vorgegeben floor for zukauf (not exported). */
+  purchasedBaseline?: number;
   specialExperience?: boolean;
 }
 
@@ -124,6 +158,8 @@ export interface TalentWert {
   id: string;
   /** Unmodified TP (unmodifizierte Stufe). */
   tp: number;
+  /** Session-local vorgegeben floor (not exported). */
+  baselineTp?: number;
   /** Attack allocation for combat techniques. */
   attack?: number;
   specialExperience?: boolean;
@@ -133,6 +169,8 @@ export interface TalentWert {
 export interface SpellWert {
   id: string;
   sp: number;
+  /** Session-local vorgegeben floor (not exported). */
+  baselineSp?: number;
   variant?: string;
   specialExperience?: boolean;
   activated?: boolean;
@@ -142,6 +180,13 @@ export interface TraitWert {
   id: string;
   rating?: number;
   variant?: string;
+  /** From race/culture/profession (Java vorgegeben) — does not affect GP. */
+  granted?: boolean;
+  /**
+   * Rating granted free by a package (Java vorgegebene Stufe).
+   * GP is charged only for levels above this baseline.
+   */
+  grantedRating?: number;
 }
 
 export type SpecialAbilityPayment = "ap" | "gp";
@@ -199,6 +244,8 @@ export interface ShieldWert {
 export interface HeldModel {
   schemaVersion: 1;
   format: "dsa-nexus-chargen";
+  /** Creation wizard vs post-creation Steigern (veteran AP spending). */
+  phase?: HeldPhase;
   name: string;
   title: string;
   status: string;
@@ -243,6 +290,7 @@ export function emptyHeld(): HeldModel {
   return {
     schemaVersion: 1,
     format: "dsa-nexus-chargen",
+    phase: "creation",
     name: "",
     title: "",
     status: "",
@@ -260,7 +308,8 @@ export function emptyHeld(): HeldModel {
     professionId: "",
     attributes: ATTR_CODES_WITH_SO.map((code) => ({
       code,
-      base: code === "SO" ? 1 : 8,
+      // Java EigenschaftWert starts at 0; mins applied after foundation (Weiter).
+      base: 0,
       purchased: 0,
     })),
     derived: (
@@ -339,6 +388,10 @@ export function derivedValue(held: HeldModel, code: DerivedCode): number {
 
 export function talentTp(held: HeldModel, id: string): number {
   return held.talents.find((t) => t.id === id)?.tp ?? 0;
+}
+
+export function isVeteranPhase(held: HeldModel): boolean {
+  return held.phase === "veteran";
 }
 
 export type CatalogSource = "builtin" | "custom";

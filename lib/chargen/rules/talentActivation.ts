@@ -4,10 +4,21 @@
  */
 
 import type { CatalogItem } from "@/lib/chargen/data/loadCatalog";
-import type { AttributeMods, HeldModel, TalentWert } from "@/lib/chargen/types";
+import type {
+  AttributeMods,
+  HeldModel,
+  LearningMethod,
+  TalentWert,
+} from "@/lib/chargen/types";
+import { isVeteranPhase, LEARNING_METHOD_COLUMN_SHIFT } from "@/lib/chargen/types";
 import { effectiveTalentTp } from "@/lib/chargen/rules/applyBausteine";
-import { resolveTalentSktColumn } from "@/lib/chargen/rules/sktColumn";
-import { apToRaise, sktActivationCost, sktColumnLabel } from "@/lib/chargen/rules/kosten";
+import { resolveTalentSktColumn, languageRaiseApMultiplier } from "@/lib/chargen/rules/sktColumn";
+import {
+  activationCost,
+  shiftColumn,
+  sktColumnLabel,
+  sktCost,
+} from "@/lib/chargen/rules/kosten";
 
 export const MAX_TALENT_ACTIVATIONS = 5;
 
@@ -93,25 +104,68 @@ export function talentParade(
   return eff - attack;
 }
 
+function resolvedColumn(
+  held: HeldModel,
+  talent: CatalogItem,
+  learningMethod: LearningMethod,
+  currentTp?: number
+): string {
+  const base = resolveTalentSktColumn(held, talent, { currentTp });
+  if (!isVeteranPhase(held)) return base;
+  return shiftColumn(base, LEARNING_METHOD_COLUMN_SHIFT[learningMethod]);
+}
+
+function raiseCostAt(
+  held: HeldModel,
+  talent: CatalogItem,
+  fromTp: number,
+  learningMethod: LearningMethod = "none"
+): number {
+  const col = resolvedColumn(held, talent, learningMethod, fromTp);
+  const raw = sktCost(col, fromTp + 1);
+  return Math.round(raw * languageRaiseApMultiplier(held, talent));
+}
+
+/** Sum of raise costs from `from` to `to`, re-resolving column at each step. */
+function apToRaiseWithModifiers(
+  held: HeldModel,
+  talent: CatalogItem,
+  from: number,
+  to: number,
+  learningMethod: LearningMethod = "none"
+): number {
+  if (to <= from) return 0;
+  let sum = 0;
+  for (let lvl = from; lvl < to; lvl++) {
+    sum += raiseCostAt(held, talent, lvl, learningMethod);
+  }
+  return sum;
+}
+
 export function talentDisplayApCost(
   held: HeldModel,
   talent: CatalogItem,
-  seededIds: Set<string>
+  seededIds: Set<string>,
+  learningMethod: LearningMethod = "none"
 ): number {
   const id = String(talent.id);
   const row = talentRow(held, id);
-  const col = resolveTalentSktColumn(held, talent);
+  const col = resolvedColumn(held, talent, learningMethod, row?.tp ?? 0);
   if (!row || !isTalentActivated(held, talent, seededIds)) {
-    return sktActivationCost(col);
+    return activationCost(held.phase, col);
   }
-  return apToRaise(col, row.tp, row.tp + 1);
+  const to = row.tp + 1;
+  const baseline = row.baselineTp ?? 0;
+  if (isVeteranPhase(held) && to <= baseline) return 0;
+  return raiseCostAt(held, talent, row.tp, learningMethod);
 }
 
 export function talentAdvancementLabel(
   held: HeldModel,
   talent: CatalogItem
 ): string {
-  return sktColumnLabel(resolveTalentSktColumn(held, talent));
+  const tp = talentRow(held, String(talent.id))?.tp ?? 0;
+  return sktColumnLabel(resolveTalentSktColumn(held, talent, { currentTp: tp }));
 }
 
 /** Total AP spent on a talent row (activation + raises). */
@@ -121,14 +175,14 @@ export function talentRowApSpent(
   talent: CatalogItem,
   seededIds: Set<string>
 ): number {
-  const col = resolveTalentSktColumn(held, talent);
-  let sum = apToRaise(col, 0, row.tp);
+  const actCol = resolveTalentSktColumn(held, talent, { currentTp: 0 });
+  let sum = apToRaiseWithModifiers(held, talent, 0, row.tp);
   if (
     !isBasicTalent(talent) &&
     !seededIds.has(row.id) &&
     row.activated !== false
   ) {
-    sum += sktActivationCost(col);
+    sum += activationCost(held.phase, actCol);
   }
   return sum;
 }
@@ -136,7 +190,8 @@ export function talentRowApSpent(
 export function activateTalent(
   held: HeldModel,
   talent: CatalogItem,
-  seededIds: Set<string>
+  seededIds: Set<string>,
+  learningMethod: LearningMethod = "none"
 ): HeldModel {
   const id = String(talent.id);
   if (isTalentOnHeld(held, id)) {
@@ -149,9 +204,11 @@ export function activateTalent(
       ),
     };
   }
-  const col = resolveTalentSktColumn(held, talent);
-  const activationCost =
-    seededIds.has(id) || isBasicTalent(talent) ? 0 : sktActivationCost(col);
+  const col = resolvedColumn(held, talent, learningMethod);
+  const activationCostAp =
+    seededIds.has(id) || isBasicTalent(talent)
+      ? 0
+      : activationCost(held.phase, col);
   return {
     ...held,
     talents: [
@@ -159,10 +216,11 @@ export function activateTalent(
       {
         id,
         tp: 0,
+        baselineTp: isVeteranPhase(held) ? 0 : undefined,
         activated: isBasicTalent(talent) ? undefined : true,
       },
     ],
-    apSpent: held.apSpent + activationCost,
+    apSpent: held.apSpent + activationCostAp,
   };
 }
 
@@ -186,19 +244,26 @@ export function deactivateTalent(
 export function raiseTalentTp(
   held: HeldModel,
   talent: CatalogItem,
-  seededIds: Set<string>
+  seededIds: Set<string>,
+  learningMethod: LearningMethod = "none"
 ): HeldModel {
   const id = String(talent.id);
   if (!canEditTalentValues(held, talent, seededIds)) return held;
   const row = talentRow(held, id);
   if (!row) return held;
-  const col = resolveTalentSktColumn(held, talent);
   const from = row.tp;
-  const cost = apToRaise(col, from, from + 1);
+  const to = from + 1;
+  const baseline = row.baselineTp ?? 0;
+  let cost = 0;
+  if (isVeteranPhase(held)) {
+    if (to > baseline) cost = raiseCostAt(held, talent, from, learningMethod);
+  } else {
+    cost = raiseCostAt(held, talent, from, learningMethod);
+  }
   return {
     ...held,
     talents: held.talents.map((t) =>
-      t.id === id ? { ...t, tp: from + 1 } : t
+      t.id === id ? { ...t, tp: to } : t
     ),
     apSpent: held.apSpent + cost,
   };
@@ -208,21 +273,27 @@ export function lowerTalentTp(
   held: HeldModel,
   talent: CatalogItem,
   seededIds: Set<string>,
+  learningMethod: LearningMethod = "none",
   minTp = 0
 ): HeldModel {
   const id = String(talent.id);
   const row = talentRow(held, id);
   if (!row || row.tp <= minTp) return held;
-  const col = resolveTalentSktColumn(held, talent);
   const from = row.tp;
-  const cost = apToRaise(col, from - 1, from);
+  const baseline = row.baselineTp ?? 0;
+  let refund = 0;
+  if (isVeteranPhase(held)) {
+    if (from > baseline) refund = raiseCostAt(held, talent, from - 1, learningMethod);
+  } else {
+    refund = raiseCostAt(held, talent, from - 1, learningMethod);
+  }
   const nextAttack = Math.min(row.attack ?? 0, from - 1);
   return {
     ...held,
     talents: held.talents.map((t) =>
       t.id === id ? { ...t, tp: from - 1, attack: nextAttack } : t
     ),
-    apSpent: Math.max(0, held.apSpent - cost),
+    apSpent: Math.max(0, held.apSpent - refund),
   };
 }
 
@@ -243,4 +314,12 @@ export function setTalentAttack(
       t.id === id ? { ...t, attack: clamped } : t
     ),
   };
+}
+
+export function canActivateMoreTalents(
+  held: HeldModel,
+  seededIds: Set<string>
+): boolean {
+  if (isVeteranPhase(held)) return true;
+  return countNonSeededActivations(held, seededIds) < MAX_TALENT_ACTIVATIONS;
 }

@@ -12,6 +12,7 @@ import {
   sfVoraussetzungKeyToId,
   talentVoraussetzungKeyToId,
   TRAIT_KEY_TO_ID,
+  TRAIT_OR_PREREQ_KEYS,
 } from "@/lib/chargen/rules/prerequisiteKeys";
 import {
   isTalentActivated,
@@ -135,6 +136,18 @@ export function unmetTalentPrerequisites(
       continue;
     }
 
+    // Advantage required to take gift talents (Java VoraussetzungVorteil)
+    const traitOr = TRAIT_OR_PREREQ_KEYS[key];
+    if (traitOr) {
+      if ((!onHeld || activated) && !traitOr.some((id) => hasTrait(held, id))) {
+        const names = traitOr
+          .map((id) => opts.resolveName?.(id) || id.replace(/^VorNachteil\./, ""))
+          .join(" or ");
+        fails.push({ key, message: `Requires ${names}` });
+      }
+      continue;
+    }
+
     const parsed = parseTalentLevelPrerequisite(key);
     if (parsed) {
       const relatedTp = talentTp(held, parsed.talentId);
@@ -181,6 +194,7 @@ export function checkTalentPrerequisites(
         code: `talent_prereq:${meta.id}:${f.key}`,
         message: `${name}: ${f.message}`,
         severity: "warning",
+        section: "talents",
       });
     }
   }
