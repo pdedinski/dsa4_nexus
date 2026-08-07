@@ -12,6 +12,7 @@ import {
   deactivateTalent,
   isRangedCombatTalent,
   isTalentCheckboxChecked,
+  isValidCombatAtPa,
   lowerTalentTp,
   MAX_TALENT_ACTIVATIONS,
   raiseTalentTp,
@@ -123,10 +124,10 @@ export default function TalentsStepTable({
                     </th>
                     {showCombatCols && (
                       <>
-                        <th className="py-1 px-1 text-center font-medium w-14">
+                        <th className="py-1 px-1 text-center font-medium w-20">
                           AT
                         </th>
-                        <th className="py-1 px-1 text-center font-medium w-14">
+                        <th className="py-1 px-1 text-center font-medium w-20">
                           PA
                         </th>
                       </>
@@ -167,6 +168,14 @@ export default function TalentsStepTable({
                       showCombatCols && !isRangedCombatTalent(t)
                         ? talentParade(held, id, baseTp, attack, attributeMods)
                         : null;
+                    const canAtMinus =
+                      editable &&
+                      attack > 0 &&
+                      isValidCombatAtPa(attack - 1, tp);
+                    const canAtPlus =
+                      editable &&
+                      attack < baseTp &&
+                      isValidCombatAtPa(attack + 1, tp);
                     const cost = talentDisplayApCost(
                       held,
                       t,
@@ -229,14 +238,16 @@ export default function TalentsStepTable({
                               ) : (
                                 <div className="flex items-center justify-center gap-0.5">
                                   <StepButton
-                                    disabled={!editable || attack <= 0}
+                                    disabled={!canAtMinus}
+                                    title="|AT − PA| cannot exceed 5"
                                     onClick={() =>
                                       updateHeld((h) =>
                                         setTalentAttack(
                                           h,
                                           t,
                                           seedTalentIdSet,
-                                          attack - 1
+                                          attack - 1,
+                                          attributeMods
                                         )
                                       )
                                     }
@@ -247,16 +258,16 @@ export default function TalentsStepTable({
                                     {editable ? attack : "—"}
                                   </span>
                                   <StepButton
-                                    disabled={
-                                      !editable || attack >= baseTp
-                                    }
+                                    disabled={!canAtPlus}
+                                    title="|AT − PA| cannot exceed 5"
                                     onClick={() =>
                                       updateHeld((h) =>
                                         setTalentAttack(
                                           h,
                                           t,
                                           seedTalentIdSet,
-                                          attack + 1
+                                          attack + 1,
+                                          attributeMods
                                         )
                                       )
                                     }
@@ -266,13 +277,49 @@ export default function TalentsStepTable({
                                 </div>
                               )}
                             </td>
-                            <td className="py-1 px-1 text-center align-middle font-mono">
+                            <td className="py-1 px-1 text-center align-middle">
                               {isRangedCombatTalent(t) ? (
                                 <span className="text-ink-faint">—</span>
-                              ) : editable ? (
-                                pa
                               ) : (
-                                "—"
+                                <div className="flex items-center justify-center gap-0.5">
+                                  <StepButton
+                                    disabled={!canAtPlus}
+                                    title="|AT − PA| cannot exceed 5"
+                                    onClick={() =>
+                                      updateHeld((h) =>
+                                        setTalentAttack(
+                                          h,
+                                          t,
+                                          seedTalentIdSet,
+                                          attack + 1,
+                                          attributeMods
+                                        )
+                                      )
+                                    }
+                                  >
+                                    −
+                                  </StepButton>
+                                  <span className="w-6 text-center font-mono">
+                                    {editable ? pa : "—"}
+                                  </span>
+                                  <StepButton
+                                    disabled={!canAtMinus}
+                                    title="|AT − PA| cannot exceed 5"
+                                    onClick={() =>
+                                      updateHeld((h) =>
+                                        setTalentAttack(
+                                          h,
+                                          t,
+                                          seedTalentIdSet,
+                                          attack - 1,
+                                          attributeMods
+                                        )
+                                      )
+                                    }
+                                  >
+                                    +
+                                  </StepButton>
+                                </div>
                               )}
                             </td>
                           </>

@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useCallback, useState, type MouseEvent } from "react";
+import { useUnsavedChangesOptional } from "@/components/layout/UnsavedChangesContext";
 import {
   BookOpen,
   ChevronDown,
@@ -30,6 +31,7 @@ import {
   Wrench,
   UserPlus,
   Database,
+  UsersRound,
 } from "lucide-react";
 import clsx from "clsx";
 import { signOut } from "next-auth/react";
@@ -123,6 +125,7 @@ export default function Sidebar({
   onNavigate?: () => void;
 }) {
   const pathname = usePathname();
+  const unsaved = useUnsavedChangesOptional();
   const [codexOpen, setCodexOpen] = useState(true);
   const [rulesOpen, setRulesOpen] = useState(false);
   const [expandedCategories, setExpandedCategories] = useState<Set<string>>(
@@ -132,6 +135,17 @@ export default function Sidebar({
   const [toolsOpen, setToolsOpen] = useState(false);
 
   const canManage = user.isAdmin || user.isSuperuser;
+
+  const handleNavClick = useCallback(
+    (href: string, e: MouseEvent<HTMLAnchorElement>) => {
+      if (unsaved && !unsaved.requestLeave(href)) {
+        e.preventDefault();
+        return;
+      }
+      onNavigate?.();
+    },
+    [unsaved, onNavigate]
+  );
 
   function toggleCategory(key: string) {
     setExpandedCategories((prev) => {
@@ -178,7 +192,7 @@ export default function Sidebar({
           </p>
           <Link
             href="/campaigns"
-            onClick={() => onNavigate?.()}
+            onClick={(e) => handleNavClick("/campaigns", e)}
             className={clsx(
               "flex items-center gap-2 px-3 py-2 rounded-md text-sm transition-colors",
               pathname === "/campaigns" || pathname.startsWith("/campaigns/")
@@ -191,7 +205,7 @@ export default function Sidebar({
           </Link>
           <Link
             href="/characters"
-            onClick={() => onNavigate?.()}
+            onClick={(e) => handleNavClick("/characters", e)}
             className={clsx(
               "flex items-center gap-2 px-3 py-2 rounded-md text-sm transition-colors mt-0.5",
               pathname === "/characters" || pathname.startsWith("/characters/")
@@ -204,7 +218,7 @@ export default function Sidebar({
           </Link>
           <Link
             href="/notes"
-            onClick={() => onNavigate?.()}
+            onClick={(e) => handleNavClick("/notes", e)}
             className={clsx(
               "flex items-center gap-2 px-3 py-2 rounded-md text-sm transition-colors mt-0.5",
               pathname === "/notes" || pathname.startsWith("/notes/")
@@ -217,7 +231,7 @@ export default function Sidebar({
           </Link>
           <Link
             href="/images"
-            onClick={() => onNavigate?.()}
+            onClick={(e) => handleNavClick("/images", e)}
             className={clsx(
               "flex items-center gap-2 px-3 py-2 rounded-md text-sm transition-colors mt-0.5",
               pathname === "/images" || pathname.startsWith("/images/")
@@ -248,7 +262,7 @@ export default function Sidebar({
             <div className="mt-1 ml-4 border-l border-surface-border pl-3 space-y-0.5">
               <Link
                 href="/rules/combat"
-                onClick={() => onNavigate?.()}
+                onClick={(e) => handleNavClick("/rules/combat", e)}
                 className={clsx(
                   "flex items-center gap-2 px-2 py-1.5 rounded-md text-sm transition-colors",
                   pathname === "/rules/combat"
@@ -308,7 +322,7 @@ export default function Sidebar({
                             <Link
                               key={fileKey}
                               href={href}
-                              onClick={() => onNavigate?.()}
+                              onClick={(e) => handleNavClick(href, e)}
                               className={clsx(
                                 "block px-2 py-1.5 rounded-md text-sm transition-colors",
                                 active
@@ -348,7 +362,7 @@ export default function Sidebar({
             <div className="mt-1 ml-4 border-l border-surface-border pl-3 space-y-0.5">
               <Link
                 href="/tools/combat-tracker"
-                onClick={() => onNavigate?.()}
+                onClick={(e) => handleNavClick("/tools/combat-tracker", e)}
                 className={clsx(
                   "flex items-center gap-2 px-2 py-1.5 rounded-md text-sm transition-colors",
                   pathname === "/tools/combat-tracker" ||
@@ -362,7 +376,9 @@ export default function Sidebar({
               </Link>
               <Link
                 href="/tools/player-character-generator"
-                onClick={() => onNavigate?.()}
+                onClick={(e) =>
+                  handleNavClick("/tools/player-character-generator", e)
+                }
                 className={clsx(
                   "flex items-center gap-2 px-2 py-1.5 rounded-md text-sm transition-colors",
                   pathname === "/tools/player-character-generator" ||
@@ -374,6 +390,22 @@ export default function Sidebar({
                 <UserPlus className="w-3.5 h-3.5 shrink-0" />
                 Player Character Generator
               </Link>
+              {canManage && (
+                <Link
+                  href="/tools/chargen-data"
+                  onClick={(e) => handleNavClick("/tools/chargen-data", e)}
+                  className={clsx(
+                    "flex items-center gap-2 px-2 py-1.5 rounded-md text-sm transition-colors",
+                    pathname === "/tools/chargen-data" ||
+                      pathname.startsWith("/tools/chargen-data/")
+                      ? "bg-brand-muted text-ink font-medium"
+                      : "text-ink-muted hover:text-ink hover:bg-surface-card"
+                  )}
+                >
+                  <Database className="w-3.5 h-3.5 shrink-0" />
+                  Chargen Data
+                </Link>
+              )}
             </div>
           )}
         </div>
@@ -399,7 +431,7 @@ export default function Sidebar({
                 {user.isSuperuser && (
                   <Link
                     href="/manage/settings"
-                    onClick={() => onNavigate?.()}
+                    onClick={(e) => handleNavClick("/manage/settings", e)}
                     className={clsx(
                       "flex items-center gap-2 px-2 py-1.5 rounded-md text-sm transition-colors",
                       pathname === "/manage/settings"
@@ -413,7 +445,7 @@ export default function Sidebar({
                 )}
                 <Link
                   href="/manage/ap-profiles"
-                  onClick={() => onNavigate?.()}
+                  onClick={(e) => handleNavClick("/manage/ap-profiles", e)}
                   className={clsx(
                     "flex items-center gap-2 px-2 py-1.5 rounded-md text-sm transition-colors",
                     pathname === "/manage/ap-profiles"
@@ -425,22 +457,21 @@ export default function Sidebar({
                   AP Spending Profiles
                 </Link>
                 <Link
-                  href="/manage/chargen-data"
-                  onClick={() => onNavigate?.()}
+                  href="/manage/saved-players"
+                  onClick={(e) => handleNavClick("/manage/saved-players", e)}
                   className={clsx(
                     "flex items-center gap-2 px-2 py-1.5 rounded-md text-sm transition-colors",
-                    pathname === "/manage/chargen-data" ||
-                      pathname.startsWith("/manage/chargen-data/")
+                    pathname === "/manage/saved-players"
                       ? "bg-brand-muted text-ink font-medium"
                       : "text-ink-muted hover:text-ink hover:bg-surface-card"
                   )}
                 >
-                  <Database className="w-3.5 h-3.5 shrink-0" />
-                  Chargen Data
+                  <UsersRound className="w-3.5 h-3.5 shrink-0" />
+                  Saved Players
                 </Link>
                 <Link
                   href="/manage/users"
-                  onClick={() => onNavigate?.()}
+                  onClick={(e) => handleNavClick("/manage/users", e)}
                   className={clsx(
                     "flex items-center gap-2 px-2 py-1.5 rounded-md text-sm transition-colors",
                     pathname === "/manage/users"

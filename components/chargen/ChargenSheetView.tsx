@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import type { HeldModel } from "@/lib/chargen/types";
 import {
   ATTR_LABELS,
@@ -33,6 +34,10 @@ function Section({
 export default function ChargenSheetView({
   held,
   labels,
+  dbHeroId = null,
+  onPersisted,
+  modificationActive = false,
+  onFinishCreation,
 }: {
   held: HeldModel;
   labels: {
@@ -41,9 +46,19 @@ export default function ChargenSheetView({
     profession?: string;
     byId: Record<string, string>;
   };
+  /** When set and the user may update, Persist uses PUT; otherwise POST. */
+  dbHeroId?: string | null;
+  /** When provided, shows Persist to Database. */
+  onPersisted?: (id: string) => void;
+  /** When true, shows Finish Character Creation to end the leave-guard session. */
+  modificationActive?: boolean;
+  onFinishCreation?: () => void;
 }) {
   const nameOf = (id: string) => labels.byId[id] || id;
   const baseName = (held.name || "hero").replace(/[^\w\-]+/g, "_");
+  const [persistStatus, setPersistStatus] = useState<string | null>(null);
+  const [persisting, setPersisting] = useState(false);
+  const [finishStatus, setFinishStatus] = useState<string | null>(null);
 
   function makeDoc() {
     return buildSheetDocument(held, {
@@ -57,9 +72,62 @@ export default function ChargenSheetView({
     });
   }
 
+  async function persistToDatabase() {
+    if (!onPersisted) return;
+    setPersisting(true);
+    setPersistStatus(null);
+    try {
+      if (dbHeroId) {
+        const putRes = await fetch(`/api/chargen/heroes/${dbHeroId}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ data: held }),
+        });
+        if (putRes.ok) {
+          const body = (await putRes.json()) as { id: string };
+          onPersisted(body.id);
+          setPersistStatus("Saved to database.");
+          return;
+        }
+        if (putRes.status !== 403) {
+          const body = (await putRes.json().catch(() => ({}))) as {
+            error?: string;
+          };
+          setPersistStatus(body.error || "Failed to update hero.");
+          return;
+        }
+        // Not owner/admin — create a new shared entry
+      }
+
+      const postRes = await fetch("/api/chargen/heroes", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ data: held }),
+      });
+      if (!postRes.ok) {
+        const body = (await postRes.json().catch(() => ({}))) as {
+          error?: string;
+        };
+        setPersistStatus(body.error || "Failed to persist hero.");
+        return;
+      }
+      const body = (await postRes.json()) as { id: string };
+      onPersisted(body.id);
+      setPersistStatus(
+        dbHeroId
+          ? "Saved as a new database entry (original was not yours to overwrite)."
+          : "Saved to database."
+      );
+    } catch {
+      setPersistStatus("Failed to persist hero.");
+    } finally {
+      setPersisting(false);
+    }
+  }
+
   return (
     <div className="space-y-4">
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-wrap gap-2 items-center">
         <button
           type="button"
           className="px-3 py-2 rounded-lg text-sm bg-brand text-white font-medium"
@@ -95,7 +163,37 @@ export default function ChargenSheetView({
         >
           Download DOCX
         </button>
+        {onPersisted && (
+          <button
+            type="button"
+            disabled={persisting}
+            className="px-3 py-2 rounded-lg text-sm border border-brand text-brand hover:bg-brand-muted font-medium disabled:opacity-50"
+            onClick={() => void persistToDatabase()}
+          >
+            {persisting ? "Saving…" : "Persist to Database"}
+          </button>
+        )}
+        {modificationActive && onFinishCreation ? (
+          <button
+            type="button"
+            className="px-3 py-2 rounded-lg text-sm bg-brand text-white font-medium"
+            onClick={() => {
+              onFinishCreation();
+              setFinishStatus(
+                "Character creation finished — you can leave freely."
+              );
+            }}
+          >
+            Finish Character Creation
+          </button>
+        ) : null}
       </div>
+      {finishStatus && (
+        <p className="text-sm text-brand">{finishStatus}</p>
+      )}
+      {persistStatus && (
+        <p className="text-sm text-ink-muted">{persistStatus}</p>
+      )}
 
       <div className="rounded-xl border border-surface-border bg-[#1a1410] p-5 shadow-xl">
         <h2 className="text-2xl font-bold text-ink mb-1">
@@ -105,6 +203,7 @@ export default function ChargenSheetView({
           {labels.race || held.raceId} · {labels.culture || held.cultureId} ·{" "}
           {labels.profession || held.professionId}
         </p>
+
 
         <Section title="Personal">
           <dl className="grid grid-cols-2 md:grid-cols-3 gap-2 text-sm">

@@ -9,6 +9,7 @@ import { ATTR_FROM_GERMAN, currentAttrValue } from "@/lib/chargen/types";
 import { effectiveTalentTp } from "@/lib/chargen/rules/applyBausteine";
 import {
   isCombatTalent,
+  MAX_AT_PA_DIFF,
   talentParade,
 } from "@/lib/chargen/rules/talentActivation";
 import { hasSpellRepresentation } from "@/lib/chargen/rules/sktColumn";
@@ -16,8 +17,6 @@ import type { Konflikt } from "@/lib/chargen/rules/voraussetzungen";
 
 const BEGABUNG_TALENT = "VorNachteil.BegabungFuerTalent";
 const BEGABUNG_GRUPPE = "VorNachteil.BegabungFuerTalentgruppe";
-
-const MAX_AT_PA_DIFF = 5;
 
 function attrCodeFromProbeToken(token: string): string {
   if (token.startsWith("Eigenschaft.")) {

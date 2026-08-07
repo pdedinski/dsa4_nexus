@@ -488,24 +488,16 @@ export function listOpenCheapSpecialChoices(
       | DiscountedSpecialEntry[]
       | undefined;
     if (!list?.length) continue;
-    const openEntry = list.find((x) => x.open && x.choices?.length);
-    if (openEntry?.choices) {
-      out.push({
-        key: `${source}-cheap-sf`,
-        source,
-        choices: openEntry.choices,
-      });
-      continue;
-    }
-    if (list.length > 1 && list.every((x) => x.id && !x.open)) {
-      out.push({
-        key: `${source}-cheap-sf-pick`,
-        source,
-        choices: list.map((x) => ({
-          id: x.id!,
-          variant: x.variant,
-        })),
-      });
+    // Only true open packs (e.g. Java <Gelaendekunde/>). Multiple fixed
+    // <Sonderfertigkeit/> entries are all granted — never a pick-one UI.
+    for (const entry of list) {
+      if (entry.open && entry.choices?.length) {
+        out.push({
+          key: `${source}-cheap-sf`,
+          source,
+          choices: entry.choices,
+        });
+      }
     }
   }
   return out;

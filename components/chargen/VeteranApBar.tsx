@@ -3,7 +3,13 @@
 import type { HeldModel } from "@/lib/chargen/types";
 import { apCredit } from "@/lib/chargen/rules/veteran";
 
-export default function VeteranApBar({ held }: { held: HeldModel }) {
+export default function VeteranApBar({
+  held,
+  onReset,
+}: {
+  held: HeldModel;
+  onReset?: () => void;
+}) {
   const credit = apCredit(held);
   const over = credit < 0;
   return (
@@ -26,6 +32,16 @@ export default function VeteranApBar({ held }: { held: HeldModel }) {
           {Math.abs(credit)} AP to spend (overspent)
         </span>
       )}
+      {onReset ? (
+        <button
+          type="button"
+          className="ml-auto rounded border border-surface-border px-2 py-0.5 text-xs text-ink hover:bg-surface-sidebar/60"
+          onClick={onReset}
+          title="Reset character generator"
+        >
+          Reset
+        </button>
+      ) : null}
     </div>
   );
 }

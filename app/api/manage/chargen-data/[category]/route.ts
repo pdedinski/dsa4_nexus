@@ -85,3 +85,29 @@ export async function POST(
     );
   }
 }
+
+/** Wipe all custom rows for this category (built-in JSON catalogs are untouched). */
+export async function DELETE(
+  _req: NextRequest,
+  ctx: { params: Promise<{ category: string }> }
+) {
+  const session = await requireAdmin();
+  if (!session) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+  const { category } = await ctx.params;
+  const table = tableFor(category);
+  if (!table) {
+    return NextResponse.json({ error: "Unknown category" }, { status: 400 });
+  }
+  try {
+    const rows = await db.delete(table).returning();
+    return NextResponse.json({ deleted: rows.length });
+  } catch (err) {
+    console.error("[chargen-data] delete-all failed", err);
+    return NextResponse.json(
+      { error: "Failed to delete entries" },
+      { status: 500 }
+    );
+  }
+}

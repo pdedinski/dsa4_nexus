@@ -5,9 +5,11 @@ import type { BudgetSnapshot } from "@/lib/chargen/rules/budget";
 export default function GpApBar({
   budget,
   onOpenSettings,
+  onReset,
 }: {
   budget: BudgetSnapshot;
   onOpenSettings?: () => void;
+  onReset?: () => void;
 }) {
   const hasEducated =
     (budget.educatedApSaved ?? 0) > 0 || (budget.educatedApRemaining ?? 0) > 0;
@@ -53,6 +55,16 @@ export default function GpApBar({
           {budget.gpProfession} · Attributes {budget.gpAttributes}
           {budget.gpTraits !== 0 ? ` · Traits ${budget.gpTraits}` : ""}
         </span>
+        {onReset ? (
+          <button
+            type="button"
+            className="rounded border border-surface-border px-2 py-0.5 text-xs text-ink hover:bg-surface-sidebar/60"
+            onClick={onReset}
+            title="Reset character generator"
+          >
+            Reset
+          </button>
+        ) : null}
         {onOpenSettings ? (
           <button
             type="button"

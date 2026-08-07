@@ -1,11 +1,30 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
   CHARGEN_CATALOG_CATEGORIES,
   type ChargenCatalogCategory,
 } from "@/lib/chargen/types";
 import BodyPortal from "@/components/ui/BodyPortal";
+import {
+  CHARBUILDER_XML_CATEGORIES,
+  detectCharbuilderXmlCategory,
+  downloadCharbuilderXml,
+  parseCharbuilderXml,
+  type CharbuilderXmlCategory,
+} from "@/lib/chargen/io/charbuilderXml";
+import {
+  CHARBUILDER_BAUSTEIN_CATEGORIES,
+  charbuilderBausteinAccept,
+  charbuilderBausteinFilename,
+  detectCharbuilderBausteinCategory,
+  downloadBausteinXml,
+  parseCharbuilderBausteinXml,
+  serializeCharbuilderBausteinXml,
+  type CharbuilderBausteinCategory,
+} from "@/lib/chargen/io/charbuilderBausteineXml";
+import type { CatalogItem } from "@/lib/chargen/data/loadCatalog";
+import { zipSync, strToU8 } from "fflate";
 
 type DbRow = {
   id: string;
@@ -41,6 +60,11 @@ export default function ManageChargenDataClient() {
   const [notes, setNotes] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [confirmDelete, setConfirmDelete] = useState<DbRow | null>(null);
+  const [confirmDeleteAll, setConfirmDeleteAll] = useState(false);
+  const [deleteAllBusy, setDeleteAllBusy] = useState(false);
+  const xmlInputRef = useRef<HTMLInputElement>(null);
+  const [xmlBusy, setXmlBusy] = useState(false);
+  const [xmlMessage, setXmlMessage] = useState<string | null>(null);
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -125,6 +149,212 @@ export default function ManageChargenDataClient() {
     await load();
   }
 
+  async function doDeleteAll() {
+    setDeleteAllBusy(true);
+    try {
+      const res = await fetch(`/api/manage/chargen-data/${category}`, {
+        method: "DELETE",
+      });
+      const body = (await res.json().catch(() => ({}))) as {
+        deleted?: number;
+        error?: string;
+      };
+      if (!res.ok) {
+        setXmlMessage(body.error || "Failed to delete all entries.");
+        return;
+      }
+      setXmlMessage(
+        `Removed ${body.deleted ?? 0} custom ${CATEGORY_LABELS[category].toLowerCase()} entries.`
+      );
+      setConfirmDeleteAll(false);
+      await load();
+    } finally {
+      setDeleteAllBusy(false);
+    }
+  }
+
+  const isXmlCategory = CHARBUILDER_XML_CATEGORIES.includes(
+    category as CharbuilderXmlCategory
+  );
+  const isBausteinCategory = CHARBUILDER_BAUSTEIN_CATEGORIES.includes(
+    category as CharbuilderBausteinCategory
+  );
+  const supportsXmlIo = isXmlCategory || isBausteinCategory;
+
+  async function handleXmlImport(files: FileList | File[]) {
+    setXmlMessage(null);
+    setXmlBusy(true);
+    try {
+      const fileList = Array.from(files);
+      if (!fileList.length) return;
+
+      if (isBausteinCategory) {
+        const cat = category as CharbuilderBausteinCategory;
+        const parsedItems: CatalogItem[] = [];
+        const fileErrors: string[] = [];
+        for (const file of fileList) {
+          try {
+            const text = await file.text();
+            const detected = detectCharbuilderBausteinCategory(text);
+            if (!detected) {
+              fileErrors.push(
+                `${file.name}: unrecognized XML — expected <Rasse>/<Kultur>/<Profession>.`
+              );
+              continue;
+            }
+            if (detected !== cat) {
+              fileErrors.push(
+                `${file.name}: looks like ${CATEGORY_LABELS[detected]} data.`
+              );
+              continue;
+            }
+            const item = parseCharbuilderBausteinXml(detected, text);
+            if (!item.id) {
+              fileErrors.push(`${file.name}: missing Id.`);
+              continue;
+            }
+            parsedItems.push(item);
+          } catch (e) {
+            fileErrors.push(
+              `${file.name}: ${e instanceof Error ? e.message : "parse failed"}`
+            );
+          }
+        }
+        if (!parsedItems.length) {
+          throw new Error(
+            fileErrors.length
+              ? fileErrors.join(" ")
+              : "No entries found in selected files."
+          );
+        }
+        const res = await fetch(`/api/manage/chargen-data/${category}/bulk`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            items: parsedItems.map((item) => ({
+              entityId: item.id,
+              data: item,
+            })),
+          }),
+        });
+        const body = (await res.json().catch(() => ({}))) as {
+          imported?: number;
+          total?: number;
+          errors?: string[];
+          error?: string;
+        };
+        if (!res.ok) throw new Error(body.error || "Import failed");
+        const parts = [
+          `Imported ${body.imported ?? 0} of ${body.total ?? parsedItems.length} entries from ${fileList.length} file(s).`,
+        ];
+        if (fileErrors.length) parts.push(`${fileErrors.length} file(s) skipped.`);
+        if (body.errors?.length) parts.push(`${body.errors.length} row(s) failed.`);
+        if (fileErrors.length) parts.push(fileErrors.slice(0, 3).join(" "));
+        setXmlMessage(parts.join(" "));
+        await load();
+        return;
+      }
+
+      // Equipment: single multi-entry XML file (existing behavior)
+      const file = fileList[0];
+      const text = await file.text();
+      const detected = detectCharbuilderXmlCategory(text);
+      if (!detected) {
+        throw new Error(
+          "Unrecognized XML — expected a Charbuilder <Waffen>/<Fernwaffen>/<Ruestungen>/<Schilde> file."
+        );
+      }
+      if (detected !== category) {
+        throw new Error(
+          `This file looks like ${CATEGORY_LABELS[detected]} data. Switch to that category and retry.`
+        );
+      }
+      const parsed = parseCharbuilderXml(detected, text);
+      if (!parsed.length) {
+        throw new Error("No entries found in file.");
+      }
+      const res = await fetch(`/api/manage/chargen-data/${category}/bulk`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          items: parsed.map((item) => ({ entityId: item.id, data: item })),
+        }),
+      });
+      const body = (await res.json().catch(() => ({}))) as {
+        imported?: number;
+        total?: number;
+        errors?: string[];
+        error?: string;
+      };
+      if (!res.ok) throw new Error(body.error || "Import failed");
+      setXmlMessage(
+        `Imported ${body.imported ?? 0} of ${body.total ?? parsed.length} entries.` +
+          (body.errors?.length ? ` ${body.errors.length} skipped.` : "")
+      );
+      await load();
+    } catch (e) {
+      setXmlMessage(e instanceof Error ? e.message : "Import failed");
+    } finally {
+      setXmlBusy(false);
+    }
+  }
+
+  function handleXmlExport() {
+    const cat = category as CharbuilderXmlCategory;
+    const catalogItems: CatalogItem[] = items.map((row) => ({
+      ...(row.data as CatalogItem),
+      id: row.entityId,
+    }));
+    downloadCharbuilderXml(cat, catalogItems, `${cat}_custom.xml`);
+  }
+
+  function handleBausteinExportOne(row: DbRow) {
+    const cat = category as CharbuilderBausteinCategory;
+    const item: CatalogItem = {
+      ...(row.data as CatalogItem),
+      id: row.entityId,
+    };
+    downloadBausteinXml(cat, item);
+  }
+
+  function handleBausteinExportAll() {
+    const cat = category as CharbuilderBausteinCategory;
+    const files: Record<string, Uint8Array> = {};
+    const usedNames = new Set<string>();
+    for (const row of items) {
+      const item: CatalogItem = {
+        ...(row.data as CatalogItem),
+        id: row.entityId,
+      };
+      let name = charbuilderBausteinFilename(cat, item);
+      if (usedNames.has(name)) {
+        const base = name.replace(/\.[^.]+$/, "");
+        const ext = name.slice(base.length);
+        let i = 2;
+        while (usedNames.has(`${base}_${i}${ext}`)) i++;
+        name = `${base}_${i}${ext}`;
+      }
+      usedNames.add(name);
+      files[name] = strToU8(serializeCharbuilderBausteinXml(cat, item));
+    }
+    const zipped = zipSync(files);
+    const blob = new Blob([new Uint8Array(zipped)], {
+      type: "application/zip",
+    });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `${cat}_custom.zip`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  }
+
+  const fileAccept = isBausteinCategory
+    ? charbuilderBausteinAccept(category as CharbuilderBausteinCategory)
+    : ".xml,application/xml,text/xml";
+
   return (
     <div>
       <div className="flex flex-wrap gap-1 mb-4">
@@ -150,16 +380,84 @@ export default function ManageChargenDataClient() {
         </div>
       )}
 
-      <div className="flex justify-between items-center mb-3">
+      <div className="flex justify-between items-center mb-3 gap-2">
         <h2 className="font-semibold text-ink">{CATEGORY_LABELS[category]}</h2>
-        <button
-          type="button"
-          className="px-3 py-1.5 rounded-lg bg-brand text-white text-sm"
-          onClick={openCreate}
-        >
-          Add entry
-        </button>
+        <div className="flex gap-2">
+          {supportsXmlIo && (
+            <>
+              <input
+                ref={xmlInputRef}
+                type="file"
+                accept={fileAccept}
+                multiple={isBausteinCategory}
+                className="hidden"
+                onChange={(e) => {
+                  const list = e.target.files;
+                  if (list?.length) void handleXmlImport(list);
+                  e.target.value = "";
+                }}
+              />
+              <button
+                type="button"
+                disabled={xmlBusy}
+                className="px-3 py-1.5 rounded-lg border border-surface-border text-ink-muted hover:text-ink text-sm disabled:opacity-50"
+                onClick={() => xmlInputRef.current?.click()}
+                title={
+                  isBausteinCategory
+                    ? "Import Charbuilder race/culture/profession files (.ras/.kul/.pro or .xml) — one entry per file"
+                    : "Import a Charbuilder-format XML file (same attributes as the original tool)"
+                }
+              >
+                {xmlBusy ? "Importing…" : "Import XML"}
+              </button>
+              {isXmlCategory && (
+                <button
+                  type="button"
+                  className="px-3 py-1.5 rounded-lg border border-surface-border text-ink-muted hover:text-ink text-sm disabled:opacity-50"
+                  disabled={!items.length}
+                  onClick={handleXmlExport}
+                  title="Export custom entries in this category to Charbuilder-format XML"
+                >
+                  Export XML
+                </button>
+              )}
+              {isBausteinCategory && (
+                <button
+                  type="button"
+                  className="px-3 py-1.5 rounded-lg border border-surface-border text-ink-muted hover:text-ink text-sm disabled:opacity-50"
+                  disabled={!items.length}
+                  onClick={handleBausteinExportAll}
+                  title="Export all custom entries as a .zip (one .ras/.kul/.pro file per entry)"
+                >
+                  Export all (.zip)
+                </button>
+              )}
+            </>
+          )}
+          <button
+            type="button"
+            className="px-3 py-1.5 rounded-lg border border-red-900/60 text-red-300 hover:text-red-200 text-sm disabled:opacity-50"
+            disabled={!items.length || deleteAllBusy}
+            onClick={() => setConfirmDeleteAll(true)}
+            title="Delete all custom entries in this category"
+          >
+            Remove all
+          </button>
+          <button
+            type="button"
+            className="px-3 py-1.5 rounded-lg bg-brand text-white text-sm"
+            onClick={openCreate}
+          >
+            Add entry
+          </button>
+        </div>
       </div>
+
+      {xmlMessage && (
+        <div className="mb-3 rounded-lg border border-surface-border bg-[#1a1410] px-3 py-2 text-sm text-ink-muted">
+          {xmlMessage}
+        </div>
+      )}
 
       {loading ? (
         <p className="text-sm text-ink-muted">Loading…</p>
@@ -187,6 +485,16 @@ export default function ManageChargenDataClient() {
               >
                 Edit
               </button>
+              {isBausteinCategory && (
+                <button
+                  type="button"
+                  className="text-sm text-ink-muted hover:text-ink"
+                  onClick={() => handleBausteinExportOne(row)}
+                  title="Export this entry as a single Charbuilder .ras/.kul/.pro file"
+                >
+                  Export
+                </button>
+              )}
               <button
                 type="button"
                 className="text-sm text-red-300 hover:text-red-200"
@@ -285,6 +593,40 @@ export default function ManageChargenDataClient() {
                   onClick={() => void doDelete(confirmDelete)}
                 >
                   Delete
+                </button>
+              </div>
+            </div>
+          </div>
+        </BodyPortal>
+      )}
+
+      {confirmDeleteAll && (
+        <BodyPortal>
+          <div className="fixed inset-0 z-[230] flex items-center justify-center bg-black/80 p-4">
+            <div className="w-full max-w-sm rounded-xl border border-surface-border bg-[#1a1410] p-4 shadow-2xl">
+              <p className="text-sm text-ink mb-4">
+                Delete all{" "}
+                <strong>
+                  {items.length} custom {CATEGORY_LABELS[category]}
+                </strong>{" "}
+                entries? Built-in catalog data is not affected.
+              </p>
+              <div className="flex justify-end gap-2">
+                <button
+                  type="button"
+                  className="px-3 py-2 rounded-lg text-sm text-ink-muted"
+                  disabled={deleteAllBusy}
+                  onClick={() => setConfirmDeleteAll(false)}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  className="px-3 py-2 rounded-lg text-sm bg-red-800 text-white disabled:opacity-50"
+                  disabled={deleteAllBusy}
+                  onClick={() => void doDeleteAll()}
+                >
+                  {deleteAllBusy ? "Deleting…" : "Delete"}
                 </button>
               </div>
             </div>

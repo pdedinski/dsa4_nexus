@@ -80,7 +80,10 @@ import GpApBar from "@/components/chargen/GpApBar";
 import ChargenSettingsDialog from "@/components/chargen/ChargenSettingsDialog";
 import ProblemsPanel from "@/components/chargen/ProblemsPanel";
 import ImportChargenDialog from "@/components/chargen/ImportChargenDialog";
+import LoadChargenFromDb from "@/components/chargen/LoadChargenFromDb";
 import ChargenSheetView from "@/components/chargen/ChargenSheetView";
+import { importHeldJson } from "@/lib/chargen/io/importJson";
+import { useSearchParams } from "next/navigation";
 import TalentsStepTable from "@/components/chargen/TalentsStepTable";
 import OpenTalentBonusGrid from "@/components/chargen/OpenTalentBonusGrid";
 import LearningMethodSelect from "@/components/chargen/LearningMethodSelect";
@@ -89,6 +92,8 @@ import VeteranApPanel from "@/components/chargen/VeteranApPanel";
 import BaseValuesStepPanel from "@/components/chargen/BaseValuesStepPanel";
 import VeteranAttributesPanel from "@/components/chargen/VeteranAttributesPanel";
 import VeteranTraitsPanel from "@/components/chargen/VeteranTraitsPanel";
+import ConfirmDialog from "@/components/ui/ConfirmDialog";
+import { useUnsavedChanges } from "@/components/layout/UnsavedChangesContext";
 import { isTalentListMarker } from "@/lib/chargen/rules/talentListMarkers";
 import {
   assignOpenPick,
@@ -182,6 +187,8 @@ function talentGroupLabel(group: string): string {
 }
 
 export default function ChargenWizard() {
+  const searchParams = useSearchParams();
+  const { setBlocked } = useUnsavedChanges();
   const [held, setHeld] = useState<HeldModel>(() => emptyHeld());
   const [step, setStep] = useState<StepId>("start");
   const [catalogs, setCatalogs] = useState<
@@ -191,6 +198,11 @@ export default function ChargenWizard() {
   const [warnDismissed, setWarnDismissed] = useState(false);
   const [importOpen, setImportOpen] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [dbHeroId, setDbHeroId] = useState<string | null>(null);
+  const [, setDbHeroCreatedBy] = useState<string | null>(null);
+  const [deepLinkHandled, setDeepLinkHandled] = useState(false);
+  const [modificationActive, setModificationActive] = useState(false);
+  const [resetConfirmOpen, setResetConfirmOpen] = useState(false);
   const [bonusLang, setBonusLang] = useState("");
   const [openAssignments, setOpenAssignments] = useState<
     Record<string, string[]>
@@ -374,6 +386,88 @@ export default function ChargenWizard() {
     });
     return next;
   }, [race, culture, profession, attributeMods]);
+
+  const applyDbHero = useCallback(
+    (payload: { id: string; data: unknown; createdBy: string | null }) => {
+      const h = importHeldJson(JSON.stringify(payload.data));
+      setHeld(refreshDerived(h));
+      setDbHeroId(payload.id);
+      setDbHeroCreatedBy(payload.createdBy);
+      setFoundationLocked(true);
+      setModificationActive(true);
+      setStep("ap");
+    },
+    [refreshDerived]
+  );
+
+  const beginModification = useCallback(() => {
+    setModificationActive(true);
+  }, []);
+
+  const performReset = useCallback(() => {
+    setHeld(emptyHeld());
+    setBonusLang("");
+    setOpenAssignments({});
+    setBausteineKey("");
+    setNameFactoryId("");
+    setSaVariants({});
+    setSaCustomVariant({});
+    setSaPayment({});
+    setOpenTraitPicks({});
+    setOpenSpecialPicks({});
+    setOpenCheapSpecialPick("");
+    setLeadSpellPicks([]);
+    setConnectionLevels({});
+    setTalentLearningMethod("none");
+    setAttributeLearningMethod("none");
+    setSpellLearningMethod("none");
+    setSfLearningMethod("teacher");
+    setTraitLearningMethod("teacher");
+    setFoundationLocked(false);
+    setDbHeroId(null);
+    setDbHeroCreatedBy(null);
+    setModificationActive(false);
+    setResetConfirmOpen(false);
+    setStep("start");
+  }, []);
+
+  useEffect(() => {
+    setBlocked(modificationActive);
+    return () => setBlocked(false);
+  }, [modificationActive, setBlocked]);
+
+  useEffect(() => {
+    if (loading || deepLinkHandled) return;
+    const heroId = searchParams.get("heroId");
+    if (!heroId) {
+      setDeepLinkHandled(true);
+      return;
+    }
+    let cancelled = false;
+    void (async () => {
+      try {
+        const res = await fetch(`/api/chargen/heroes/${heroId}`);
+        const data = (await res.json()) as {
+          id?: string;
+          data?: unknown;
+          createdBy?: string | null;
+        };
+        if (cancelled || !res.ok || !data.id || !data.data) {
+          return;
+        }
+        applyDbHero({
+          id: data.id,
+          data: data.data,
+          createdBy: data.createdBy ?? null,
+        });
+      } finally {
+        if (!cancelled) setDeepLinkHandled(true);
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [loading, deepLinkHandled, searchParams, applyDbHero]);
 
   const openTalentChoices = useMemo(
     () => listOpenTalentBonuses(race, culture, profession),
@@ -774,9 +868,27 @@ export default function ChargenWizard() {
         <GpApBar
           budget={budget}
           onOpenSettings={() => setSettingsOpen(true)}
+          onReset={() => setResetConfirmOpen(true)}
         />
       )}
-      {veteran && step !== "sheet" && <VeteranApBar held={held} />}
+      {veteran && step !== "sheet" && (
+        <VeteranApBar
+          held={held}
+          onReset={() => setResetConfirmOpen(true)}
+        />
+      )}
+      {(step === "sheet" || step === "finish") && (
+        <div className="sticky top-0 z-20 flex flex-wrap items-center justify-end gap-2 border-b border-surface-border bg-[#1a1410] px-4 py-2 text-sm shadow-md">
+          <button
+            type="button"
+            className="rounded border border-surface-border px-2 py-0.5 text-xs text-ink hover:bg-surface-sidebar/60"
+            onClick={() => setResetConfirmOpen(true)}
+            title="Reset character generator"
+          >
+            Reset
+          </button>
+        </div>
+      )}
 
       <div className="flex flex-1 min-h-0">
         {step !== "start" && (
@@ -834,10 +946,11 @@ export default function ChargenWizard() {
               </h2>
               <p className="text-sm text-ink-muted">
                 Manual DSA 4.1 point-buy creation, based on the classic Java
-                Chargen. Characters are not saved to the server — export a{" "}
-                <code className="text-xs">.dcg</code> file when done, or import
-                an existing <code className="text-xs">.dcg</code> /{" "}
-                <code className="text-xs">.xml</code> to continue.
+                Chargen. Persist a finished hero to the shared database, or load
+                one saved by any user. You can also export a{" "}
+                <code className="text-xs">.dcg</code> file, or import an existing{" "}
+                <code className="text-xs">.dcg</code> /{" "}
+                <code className="text-xs">.xml</code> / JSON file.
               </p>
               <div className="flex flex-wrap gap-2">
                 <button
@@ -850,6 +963,9 @@ export default function ChargenWizard() {
                     setBausteineKey("");
                     setNameFactoryId("");
                     setFoundationLocked(false);
+                    setDbHeroId(null);
+                    setDbHeroCreatedBy(null);
+                    beginModification();
                     setStep("race");
                   }}
                 >
@@ -862,6 +978,16 @@ export default function ChargenWizard() {
                 >
                   Import file…
                 </button>
+              </div>
+              <div className="pt-2 space-y-2">
+                <p className="text-xs font-semibold uppercase tracking-wider text-ink-faint">
+                  Load from database
+                </p>
+                <LoadChargenFromDb
+                  onLoad={(payload) => {
+                    applyDbHero(payload);
+                  }}
+                />
               </div>
             </div>
           )}
@@ -2829,6 +2955,12 @@ export default function ChargenWizard() {
           {(step === "finish" || step === "sheet") && (
             <ChargenSheetView
               held={held}
+              dbHeroId={dbHeroId}
+              modificationActive={modificationActive}
+              onFinishCreation={() => setModificationActive(false)}
+              onPersisted={(id) => {
+                setDbHeroId(id);
+              }}
               labels={{
                 race: race?.name as string | undefined,
                 culture: culture?.name as string | undefined,
@@ -2870,7 +3002,10 @@ export default function ChargenWizard() {
         onClose={() => setImportOpen(false)}
         onImport={(h) => {
           setHeld(refreshDerived(h));
+          setDbHeroId(null);
+          setDbHeroCreatedBy(null);
           setFoundationLocked(true);
+          beginModification();
           setStep("ap");
         }}
       />
@@ -2883,6 +3018,17 @@ export default function ChargenWizard() {
           saveChargenSettings({ finishMode: mode });
         }}
         onClose={() => setSettingsOpen(false)}
+      />
+
+      <ConfirmDialog
+        open={resetConfirmOpen}
+        title="Reset character generator?"
+        message="This discards the current hero and returns to the start page. Unsaved changes will be lost."
+        confirmLabel="Reset"
+        cancelLabel="Cancel"
+        danger
+        onConfirm={performReset}
+        onCancel={() => setResetConfirmOpen(false)}
       />
     </div>
   );

@@ -50,6 +50,7 @@
     "express": "^4.21.1",
     "express-session": "^1.18.1",
     "fast-xml-parser": "^5.10.1",
+    "fflate": "^0.8.3",
     "jspdf": "^4.2.1",
     "jspdf-autotable": "^5.0.8",
     "lucide-react": "^1.14.0",

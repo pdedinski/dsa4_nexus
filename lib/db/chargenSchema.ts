@@ -11,6 +11,7 @@ import {
   jsonb,
   timestamp,
   uniqueIndex,
+  index,
 } from "drizzle-orm/pg-core";
 import { users } from "@/lib/db/schema";
 
@@ -67,3 +68,26 @@ export const chargenCatalogTables = {
 } as const;
 
 export type ChargenCatalogTableName = keyof typeof chargenCatalogTables;
+
+/** Persisted Player Character Generator heroes (HeldModel JSON). */
+export const chargenHeroes = chargenDataSchema.table(
+  "heroes",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    name: text("name").notNull(),
+    data: jsonb("data").notNull(),
+    createdBy: uuid("created_by").references(() => users.id, {
+      onDelete: "set null",
+    }),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (t) => [index("heroes_name_idx").on(t.name)]
+);
+
+export type ChargenHero = typeof chargenHeroes.$inferSelect;
+export type InsertChargenHero = typeof chargenHeroes.$inferInsert;
