@@ -18,11 +18,7 @@ import {
 import { buildAttributeMods } from "@/lib/chargen/rules/attributeMods";
 import { collectProblems } from "@/lib/chargen/rules/problems";
 import { recomputeDerived } from "@/lib/chargen/rules/derived";
-import {
-  addOrRaiseSpell,
-  lowerOrRemoveSpell,
-  spellDisplayApCost,
-} from "@/lib/chargen/rules/spellActivation";
+import { isCastableSpell } from "@/lib/chargen/rules/spellActivation";
 import { finishCreation, learnSpecialAbilityVeteran, veteranSpecialAbilityCost } from "@/lib/chargen/rules/veteran";
 import {
   applyFixedBausteine,
@@ -41,7 +37,6 @@ import {
   traitGpNet,
   unsuitableTraitIds,
 } from "@/lib/chargen/rules/applyBausteine";
-import { isSpellSelectable, spellBlockReason, spellcasterBlocked } from "@/lib/chargen/rules/spellPrereqs";
 import {
   loadChargenSettings,
   saveChargenSettings,
@@ -85,6 +80,8 @@ import ChargenSheetView from "@/components/chargen/ChargenSheetView";
 import { importHeldJson } from "@/lib/chargen/io/importJson";
 import { useSearchParams } from "next/navigation";
 import TalentsStepTable from "@/components/chargen/TalentsStepTable";
+import SpellsStepTable from "@/components/chargen/SpellsStepTable";
+import EquipmentStepPanel from "@/components/chargen/EquipmentStepPanel";
 import OpenTalentBonusGrid from "@/components/chargen/OpenTalentBonusGrid";
 import LearningMethodSelect from "@/components/chargen/LearningMethodSelect";
 import VeteranApBar from "@/components/chargen/VeteranApBar";
@@ -190,6 +187,8 @@ export default function ChargenWizard() {
   const searchParams = useSearchParams();
   const { setBlocked } = useUnsavedChanges();
   const [held, setHeld] = useState<HeldModel>(() => emptyHeld());
+  /** Bumps on every held edit so Sheet / Export always remounts with fresh data. */
+  const [heldEpoch, setHeldEpoch] = useState(0);
   const [step, setStep] = useState<StepId>("start");
   const [catalogs, setCatalogs] = useState<
     Partial<Record<ChargenCatalogCategory, CatalogItem[]>>
@@ -387,10 +386,17 @@ export default function ChargenWizard() {
     return next;
   }, [race, culture, profession, attributeMods]);
 
+  // When race/culture/profession mods change, refresh derived bases on the current held.
+  useEffect(() => {
+    setHeld((prev) => refreshDerived({ ...prev }));
+    setHeldEpoch((n) => n + 1);
+  }, [refreshDerived]);
+
   const applyDbHero = useCallback(
     (payload: { id: string; data: unknown; createdBy: string | null }) => {
       const h = importHeldJson(JSON.stringify(payload.data));
       setHeld(refreshDerived(h));
+      setHeldEpoch((n) => n + 1);
       setDbHeroId(payload.id);
       setDbHeroCreatedBy(payload.createdBy);
       setFoundationLocked(true);
@@ -406,6 +412,7 @@ export default function ChargenWizard() {
 
   const performReset = useCallback(() => {
     setHeld(emptyHeld());
+    setHeldEpoch((n) => n + 1);
     setBonusLang("");
     setOpenAssignments({});
     setBausteineKey("");
@@ -507,7 +514,7 @@ export default function ChargenWizard() {
   const leadSpellCandidates = useMemo(() => {
     const auto = new Set(autoLeadSpellIds);
     return spells
-      .filter((s) => !auto.has(String(s.id)))
+      .filter((s) => isCastableSpell(s) && !auto.has(String(s.id)))
       .slice()
       .sort((a, b) =>
         String(a.name || a.id).localeCompare(String(b.name || b.id))
@@ -697,7 +704,36 @@ export default function ChargenWizard() {
 
   function updateHeld(mutator: (h: HeldModel) => HeldModel) {
     setHeld((prev) => refreshDerived(mutator({ ...prev })));
+    setHeldEpoch((n) => n + 1);
   }
+
+  // Mid-session recovery: older helds may lack Java Basis-talent seeds (TP 0).
+  useEffect(() => {
+    if (veteran) return;
+    if (!foundationComplete) return;
+    const missing = [...seedTalentIdSet].filter(
+      (id) => !held.talents.some((t) => t.id === id)
+    );
+    if (!missing.length) return;
+    updateHeld((h) => {
+      const have = new Set(h.talents.map((t) => t.id));
+      const add = missing.filter((id) => !have.has(id));
+      if (!add.length) return h;
+      return {
+        ...h,
+        talents: [
+          ...h.talents,
+          ...add.map((id) => ({ id, tp: seededTpMap.get(id) ?? 0 })),
+        ],
+      };
+    });
+  }, [
+    veteran,
+    foundationComplete,
+    seedTalentIdSet,
+    seededTpMap,
+    held.talents,
+  ]);
 
   function stepIndex(id: StepId) {
     return activeSteps.findIndex((s) => s.id === id);
@@ -958,6 +994,7 @@ export default function ChargenWizard() {
                   className="px-4 py-2 rounded-lg bg-brand text-white text-sm font-medium"
                   onClick={() => {
                     setHeld(emptyHeld());
+                    setHeldEpoch((n) => n + 1);
                     setBonusLang("");
                     setOpenAssignments({});
                     setBausteineKey("");
@@ -2755,173 +2792,30 @@ export default function ChargenWizard() {
           )}
 
           {step === "spells" && (
-            <div className="max-w-3xl space-y-3">
-              <h2 className="text-lg font-bold">Spells (AP)</h2>
-              {veteran && (
-                <LearningMethodSelect
-                  value={spellLearningMethod}
-                  onChange={setSpellLearningMethod}
-                />
-              )}
-              {!veteran && spellcasterBlocked(held) && (
-                <p className="text-sm text-amber-400/90">
-                  Spells require the Spellcaster advantage (20 GP). Without it,
-                  no spell points can be allocated during creation.
-                </p>
-              )}
-              <div className="max-h-[28rem] overflow-y-auto space-y-1">
-                {spells.map((s) => {
-                  const row = held.spells.find((x) => x.id === s.id);
-                  const sp = row?.sp ?? 0;
-                  const blockReason = spellBlockReason(held, s);
-                  const blocked = !veteran && !row && blockReason !== null;
-                  const nextCost = spellDisplayApCost(
-                    held,
-                    s,
-                    spellLearningMethod
-                  );
-                  return (
-                    <div
-                      key={s.id}
-                      className={`flex items-center gap-2 text-sm px-2 py-1 rounded ${
-                        blocked
-                          ? "opacity-50"
-                          : "hover:bg-surface-sidebar/50"
-                      }`}
-                      title={blockReason ?? undefined}
-                    >
-                      <span
-                        className={`flex-1 truncate ${
-                          blocked ? "text-red-400" : ""
-                        }`}
-                      >
-                        {(s.name as string) || s.id}
-                        <CustomBadge source={s.source as string} />
-                      </span>
-                      <span className="text-xs font-mono text-ink-muted w-14 text-right">
-                        {nextCost} AP
-                      </span>
-                      <button
-                        type="button"
-                        className="px-2 py-0.5 rounded border border-surface-border disabled:opacity-40"
-                        disabled={blocked && !row}
-                        onClick={() =>
-                          updateHeld((h) =>
-                            addOrRaiseSpell(h, s, spellLearningMethod)
-                          )
-                        }
-                      >
-                        +
-                      </button>
-                      <span className="w-8 text-center font-mono">{sp}</span>
-                      <button
-                        type="button"
-                        className="px-2 py-0.5 rounded border border-surface-border"
-                        disabled={!row}
-                        onClick={() =>
-                          updateHeld((h) =>
-                            lowerOrRemoveSpell(h, s, spellLearningMethod)
-                          )
-                        }
-                      >
-                        −
-                      </button>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
+            <SpellsStepTable
+              held={held}
+              updateHeld={updateHeld}
+              spells={spells}
+              learningMethod={spellLearningMethod}
+              onLearningMethodChange={
+                veteran ? setSpellLearningMethod : undefined
+              }
+            />
           )}
 
           {step === "equipment" && (
-            <div className="max-w-3xl space-y-6">
-              <h2 className="text-lg font-bold">Equipment</h2>
-              {(
-                [
-                  ["Melee weapons (max 5)", melee, "meleeWeapons", 5],
-                  ["Ranged weapons (max 3)", ranged, "rangedWeapons", 3],
-                  ["Armor (max 5)", armors, "armors", 5],
-                  ["Shields (max 3)", shields, "shields", 3],
-                ] as const
-              ).map(([title, list, field, max]) => (
-                <div key={field}>
-                  <h3 className="text-sm font-semibold text-ink mb-2">
-                    {title}
-                  </h3>
-                  <div className="max-h-40 overflow-y-auto space-y-1 border border-surface-border rounded-lg p-2">
-                    {list.map((item) => {
-                      const current = held[field] as { id: string }[];
-                      const owned = current.some((x) => x.id === item.id);
-                      return (
-                        <label
-                          key={item.id}
-                          className="flex items-center gap-2 text-sm cursor-pointer"
-                        >
-                          <input
-                            type="checkbox"
-                            checked={owned}
-                            onChange={(e) =>
-                              updateHeld((h) => {
-                                const arr = [
-                                  ...(h[field] as { id: string; name?: string }[]),
-                                ];
-                                if (e.target.checked) {
-                                  if (arr.length >= max) return h;
-                                  arr.push({
-                                    id: item.id,
-                                    name: item.name as string,
-                                    ...(field === "meleeWeapons"
-                                      ? {
-                                          tp: item.tp as string,
-                                          bf: item.bf as number,
-                                          ini: item.ini as number,
-                                          wmAt: item.wm_at as number,
-                                          wmPa: item.wm_pa as number,
-                                        }
-                                      : {}),
-                                    ...(field === "armors"
-                                      ? {
-                                          rs: item.rs as number,
-                                          be: item.be as number,
-                                        }
-                                      : {}),
-                                    ...(field === "shields"
-                                      ? {
-                                          type: item.type as string,
-                                          bf: item.bf as number,
-                                          ini: item.ini as number,
-                                          wmAt: item.wm_at as number,
-                                          wmPa: item.wm_pa as number,
-                                        }
-                                      : {}),
-                                    ...(field === "rangedWeapons"
-                                      ? {
-                                          tp: item.tp as string,
-                                          ranges: item.ranges as number[],
-                                        }
-                                      : {}),
-                                  });
-                                } else {
-                                  return {
-                                    ...h,
-                                    [field]: arr.filter((x) => x.id !== item.id),
-                                  };
-                                }
-                                return { ...h, [field]: arr };
-                              })
-                            }
-                          />
-                          <span>
-                            {(item.name as string) || item.id}
-                            <CustomBadge source={item.source as string} />
-                          </span>
-                        </label>
-                      );
-                    })}
-                  </div>
-                </div>
-              ))}
-            </div>
+            <EquipmentStepPanel
+              held={held}
+              updateHeld={updateHeld}
+              meleeCatalog={melee}
+              rangedCatalog={ranged}
+              armorCatalog={armors}
+              shieldCatalog={shields}
+              talentName={(id) => {
+                const t = talents.find((x) => x.id === id);
+                return (t?.name as string) || id;
+              }}
+            />
           )}
 
           {step === "problems" && (
@@ -2954,7 +2848,9 @@ export default function ChargenWizard() {
 
           {(step === "finish" || step === "sheet") && (
             <ChargenSheetView
+              key={heldEpoch}
               held={held}
+              attributeMods={attributeMods}
               dbHeroId={dbHeroId}
               modificationActive={modificationActive}
               onFinishCreation={() => setModificationActive(false)}
@@ -3002,6 +2898,7 @@ export default function ChargenWizard() {
         onClose={() => setImportOpen(false)}
         onImport={(h) => {
           setHeld(refreshDerived(h));
+          setHeldEpoch((n) => n + 1);
           setDbHeroId(null);
           setDbHeroCreatedBy(null);
           setFoundationLocked(true);

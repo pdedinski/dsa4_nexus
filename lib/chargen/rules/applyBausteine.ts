@@ -4,6 +4,7 @@
  */
 
 import type { CatalogItem } from "@/lib/chargen/data/loadCatalog";
+import talenteCatalog from "@/lib/chargen/data/talente.json";
 import type {
   HeldModel,
   SpellWert,
@@ -18,6 +19,16 @@ import {
 } from "@/lib/chargen/rules/talentListMarkers";
 
 const ELFISCHE_WELTSICHT = "VorNachteil.ElfischeWeltsicht";
+
+/**
+ * Java `Held` constructor: `Talent.getBasisTalente()` → `einfuegenVorgegeben(…, 0)`.
+ * Basic talents are always vorgegeben at TP 0 (free; do not count as activations).
+ */
+const BASIC_TALENT_IDS: string[] = (
+  talenteCatalog as Array<{ id: string; is_basic?: boolean }>
+)
+  .filter((t) => t.is_basic === true)
+  .map((t) => t.id);
 
 export interface TalentBonusEntry {
   /** `ancient_language` = Java `TalentbonusFestAlteSprache` (Bosparano/Proto-Tulamidyan). */
@@ -299,6 +310,10 @@ function computeSeededTalents(
   }
 ): TalentWert[] {
   const talents: TalentWert[] = [];
+  // Mirror Java Held ctor — seed all Basis talents at TP 0 before package bonuses.
+  for (const id of BASIC_TALENT_IDS) {
+    ensureTalent(talents, id);
+  }
   applyFixedSingle(talents, race?.talent_bonuses as TalentBonusEntry[]);
   applyFixedSingle(talents, culture?.talent_bonuses as TalentBonusEntry[]);
   applyFixedSingle(talents, profession?.talent_bonuses as TalentBonusEntry[]);
@@ -696,6 +711,7 @@ function mergeTalents(
       if (t.tp > seedTp) row.tp = t.tp;
       if (t.attack != null) row.attack = t.attack;
       if (t.activated != null) row.activated = t.activated;
+      if (t.specialExperience != null) row.specialExperience = t.specialExperience;
       continue;
     }
     if (

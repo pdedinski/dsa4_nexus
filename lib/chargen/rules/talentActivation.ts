@@ -123,6 +123,14 @@ export function talentParade(
   return eff - attack;
 }
 
+/** Row SE replaces session method (no stack if session is already special_experience). */
+export function effectiveLearningMethod(
+  rowSpecialExperience: boolean | undefined,
+  session: LearningMethod
+): LearningMethod {
+  return rowSpecialExperience ? "special_experience" : session;
+}
+
 function resolvedColumn(
   held: HeldModel,
   talent: CatalogItem,
@@ -169,14 +177,25 @@ export function talentDisplayApCost(
 ): number {
   const id = String(talent.id);
   const row = talentRow(held, id);
-  const col = resolvedColumn(held, talent, learningMethod, row?.tp ?? 0);
+  const raiseMethod = effectiveLearningMethod(
+    row?.specialExperience,
+    learningMethod
+  );
+  const col = resolvedColumn(
+    held,
+    talent,
+    row && isTalentActivated(held, talent, seededIds)
+      ? raiseMethod
+      : learningMethod,
+    row?.tp ?? 0
+  );
   if (!row || !isTalentActivated(held, talent, seededIds)) {
     return activationCost(held.phase, col);
   }
   const to = row.tp + 1;
   const baseline = row.baselineTp ?? 0;
   if (isVeteranPhase(held) && to <= baseline) return 0;
-  return raiseCostAt(held, talent, row.tp, learningMethod);
+  return raiseCostAt(held, talent, row.tp, raiseMethod);
 }
 
 export function talentAdvancementLabel(
@@ -273,16 +292,21 @@ export function raiseTalentTp(
   const from = row.tp;
   const to = from + 1;
   const baseline = row.baselineTp ?? 0;
+  const raiseMethod = effectiveLearningMethod(
+    row.specialExperience,
+    learningMethod
+  );
   let cost = 0;
   if (isVeteranPhase(held)) {
-    if (to > baseline) cost = raiseCostAt(held, talent, from, learningMethod);
+    if (to > baseline) cost = raiseCostAt(held, talent, from, raiseMethod);
   } else {
-    cost = raiseCostAt(held, talent, from, learningMethod);
+    cost = raiseCostAt(held, talent, from, raiseMethod);
   }
   const nextAttack =
     isCombatTalent(talent) && !isRangedCombatTalent(talent)
       ? clampCombatAttack(row.attack ?? 0, to)
       : undefined;
+  const clearSe = !!row.specialExperience;
   return {
     ...held,
     talents: held.talents.map((t) =>
@@ -291,6 +315,7 @@ export function raiseTalentTp(
             ...t,
             tp: to,
             ...(nextAttack !== undefined ? { attack: nextAttack } : {}),
+            ...(clearSe ? { specialExperience: false } : {}),
           }
         : t
     ),

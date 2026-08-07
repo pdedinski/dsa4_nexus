@@ -9,12 +9,24 @@ import {
   activationCost,
   apToRaise,
   shiftColumn,
+  sktColumnLabel,
   sktCost,
 } from "@/lib/chargen/rules/kosten";
 import { resolveSpellSktColumn } from "@/lib/chargen/rules/sktColumn";
 import { isSpellSelectable } from "@/lib/chargen/rules/spellPrereqs";
 
 export const MAX_SPELL_ACTIVATIONS = 7;
+
+/**
+ * Java `Zaubergruppe.BEGABUNG` aptitude stubs share English names with real
+ * spells but are not castable entries for the Spells AP step.
+ */
+export function isCastableSpell(spell: CatalogItem): boolean {
+  const id = String(spell.id);
+  if (id.endsWith(".Begabung")) return false;
+  const group = String(spell.group || "spells");
+  return group === "spells" || group === "";
+}
 
 export function spellRow(
   held: HeldModel,
@@ -29,6 +41,21 @@ export function isSpellOnHeld(held: HeldModel, spellId: string): boolean {
 
 export function countSpellActivations(held: HeldModel): number {
   return held.spells.length;
+}
+
+export function spellAdvancementLabel(
+  held: HeldModel,
+  spell: CatalogItem
+): string {
+  return sktColumnLabel(resolveSpellSktColumn(held, spell));
+}
+
+/** Row SE replaces session method (no stack if session is already special_experience). */
+export function effectiveSpellLearningMethod(
+  rowSpecialExperience: boolean | undefined,
+  session: LearningMethod
+): LearningMethod {
+  return rowSpecialExperience ? "special_experience" : session;
 }
 
 function resolvedColumn(
@@ -48,7 +75,15 @@ export function spellDisplayApCost(
 ): number {
   const id = String(spell.id);
   const row = spellRow(held, id);
-  const col = resolvedColumn(held, spell, learningMethod);
+  const raiseMethod = effectiveSpellLearningMethod(
+    row?.specialExperience,
+    learningMethod
+  );
+  const col = resolvedColumn(
+    held,
+    spell,
+    row ? raiseMethod : learningMethod
+  );
   if (!row) {
     return activationCost(held.phase, col);
   }
@@ -121,7 +156,11 @@ export function raiseSpellSp(
   const id = String(spell.id);
   const row = spellRow(held, id);
   if (!row) return held;
-  const col = resolvedColumn(held, spell, learningMethod);
+  const raiseMethod = effectiveSpellLearningMethod(
+    row.specialExperience,
+    learningMethod
+  );
+  const col = resolvedColumn(held, spell, raiseMethod);
   const from = row.sp;
   const to = from + 1;
   const baseline = row.baselineSp ?? 0;
@@ -131,10 +170,17 @@ export function raiseSpellSp(
   } else {
     cost = apToRaise(col, from, to);
   }
+  const clearSe = !!row.specialExperience;
   return {
     ...held,
     spells: held.spells.map((s) =>
-      s.id === id ? { ...s, sp: to } : s
+      s.id === id
+        ? {
+            ...s,
+            sp: to,
+            ...(clearSe ? { specialExperience: false } : {}),
+          }
+        : s
     ),
     apSpent: held.apSpent + cost,
   };

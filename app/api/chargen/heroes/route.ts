@@ -5,6 +5,11 @@ import { db } from "@/lib/db/client";
 import { chargenHeroes } from "@/lib/db/chargenSchema";
 import { users } from "@/lib/db/schema";
 import { sanitizeHeldForStorage } from "@/lib/chargen/heroesPersistence";
+import {
+  canViewChargenHero,
+  getChargenHeroesSharedVisibility,
+  isAdminOrSuperuser,
+} from "@/lib/appSettings";
 
 export async function GET() {
   const session = await requireAllowed();
@@ -13,7 +18,10 @@ export async function GET() {
   }
 
   try {
-    const rows = await db
+    const shared = await getChargenHeroesSharedVisibility();
+    const restrictToOwn = !shared && !isAdminOrSuperuser(session);
+
+    const base = db
       .select({
         id: chargenHeroes.id,
         name: chargenHeroes.name,
@@ -22,17 +30,24 @@ export async function GET() {
         ownerName: users.displayName,
       })
       .from(chargenHeroes)
-      .leftJoin(users, eq(chargenHeroes.createdBy, users.id))
-      .orderBy(asc(chargenHeroes.name));
+      .leftJoin(users, eq(chargenHeroes.createdBy, users.id));
+
+    const rows = restrictToOwn
+      ? await base
+          .where(eq(chargenHeroes.createdBy, session.user.id))
+          .orderBy(asc(chargenHeroes.name))
+      : await base.orderBy(asc(chargenHeroes.name));
 
     return NextResponse.json({
-      heroes: rows.map((r) => ({
-        id: r.id,
-        name: r.name,
-        updatedAt: r.updatedAt,
-        createdBy: r.createdBy,
-        ownerName: r.ownerName ?? null,
-      })),
+      heroes: rows
+        .filter((r) => canViewChargenHero(session, r.createdBy, shared))
+        .map((r) => ({
+          id: r.id,
+          name: r.name,
+          updatedAt: r.updatedAt,
+          createdBy: r.createdBy,
+          ownerName: r.ownerName ?? null,
+        })),
     });
   } catch (err) {
     console.warn("[chargen/heroes] list failed", err);

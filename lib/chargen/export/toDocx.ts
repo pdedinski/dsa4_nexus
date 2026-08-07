@@ -12,7 +12,12 @@ import {
   PageBreak,
   BorderStyle,
 } from "docx";
-import type { SheetDocument } from "@/lib/chargen/export/sheetDocument";
+import type {
+  DocBlock,
+  DocTable,
+  SheetDocument,
+} from "@/lib/chargen/export/sheetDocument";
+import { effectiveBorderStyle } from "@/lib/chargen/export/sheetDocument";
 
 const noBorder = {
   top: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
@@ -28,10 +33,62 @@ const thinBorder = {
   right: { style: BorderStyle.SINGLE, size: 4, color: "000000" },
 };
 
-export async function toDocxBlob(doc: SheetDocument): Promise<Blob> {
-  const children: (Paragraph | Table)[] = [];
+function bordersFor(block: DocTable) {
+  const style = effectiveBorderStyle(block);
+  if (style === "none") return noBorder;
+  return thinBorder;
+}
 
-  for (const block of doc.blocks) {
+function buildTableWithWidths(block: DocTable, widthPct = 100): Table {
+  const total = block.widths.reduce((a, b) => a + b, 0) || 100;
+  const borders = bordersFor(block);
+  return new Table({
+    width: { size: widthPct, type: WidthType.PERCENTAGE },
+    rows: block.rows.map((row) => {
+      let col = 0;
+      return new TableRow({
+        children: row.map((c) => {
+          const span = c.colspan ?? 1;
+          let w = 0;
+          for (let s = 0; s < span; s++) {
+            w += block.widths[col + s] ?? 10;
+          }
+          col += span;
+          return new TableCell({
+            borders,
+            width: {
+              size: Math.round((w / total) * 100),
+              type: WidthType.PERCENTAGE,
+            },
+            columnSpan: span > 1 ? span : undefined,
+            children: [
+              new Paragraph({
+                alignment:
+                  c.align === "center"
+                    ? AlignmentType.CENTER
+                    : c.align === "right"
+                      ? AlignmentType.RIGHT
+                      : AlignmentType.LEFT,
+                children: [
+                  new TextRun({
+                    text: c.text,
+                    bold: c.bold,
+                    font: "Times New Roman",
+                    size: (c.fontSize ?? 12) * 2,
+                  }),
+                ],
+              }),
+            ],
+          });
+        }),
+      });
+    }),
+  });
+}
+
+function blocksToElements(blocks: DocBlock[]): (Paragraph | Table)[] {
+  const children: (Paragraph | Table)[] = [];
+  for (const block of blocks) {
     if (block.kind === "pageBreak") {
       children.push(
         new Paragraph({
@@ -47,7 +104,7 @@ export async function toDocxBlob(doc: SheetDocument): Promise<Blob> {
             block.align === "center"
               ? AlignmentType.CENTER
               : AlignmentType.LEFT,
-          spacing: { after: 200 },
+          spacing: { after: 80, before: 60 },
           children: [
             new TextRun({
               text: block.text,
@@ -65,53 +122,78 @@ export async function toDocxBlob(doc: SheetDocument): Promise<Blob> {
       continue;
     }
     if (block.kind === "table") {
-      const total = block.widths.reduce((a, b) => a + b, 0) || 100;
-      const borders = block.bordered ? thinBorder : noBorder;
+      children.push(buildTableWithWidths(block));
+      children.push(new Paragraph({ children: [], spacing: { after: 80 } }));
+      continue;
+    }
+    if (block.kind === "columns") {
+      const total = block.columns.reduce((a, c) => a + c.width, 0) || 100;
       children.push(
         new Table({
           width: { size: 100, type: WidthType.PERCENTAGE },
-          rows: block.rows.map(
-            (row) =>
-              new TableRow({
-                children: row.map((c, i) => {
-                  const w = block.widths[i] ?? 10;
-                  return new TableCell({
-                    borders,
-                    width: {
-                      size: Math.round((w / total) * 100),
-                      type: WidthType.PERCENTAGE,
-                    },
-                    columnSpan: c.colspan,
-                    children: [
+          rows: [
+            new TableRow({
+              children: block.columns.map((col) => {
+                const inner: (Paragraph | Table)[] = [];
+                for (const b of col.blocks) {
+                  if (b.kind === "heading") {
+                    inner.push(
                       new Paragraph({
-                        alignment:
-                          c.align === "center"
-                            ? AlignmentType.CENTER
-                            : c.align === "right"
-                              ? AlignmentType.RIGHT
-                              : AlignmentType.LEFT,
+                        alignment: AlignmentType.CENTER,
                         children: [
                           new TextRun({
-                            text: c.text,
-                            bold: c.bold,
+                            text: b.text,
+                            bold: true,
                             font: "Times New Roman",
-                            size: (c.fontSize ?? 12) * 2,
+                            size: b.fontSize * 2,
                           }),
                         ],
-                      }),
-                    ],
-                  });
-                }),
-              })
-          ),
+                      })
+                    );
+                  } else if (b.kind === "table") {
+                    inner.push(buildTableWithWidths(b, 100));
+                    inner.push(new Paragraph({ children: [] }));
+                  }
+                }
+                if (!inner.length) {
+                  inner.push(new Paragraph({ children: [] }));
+                }
+                return new TableCell({
+                  borders: noBorder,
+                  width: {
+                    size: Math.round((col.width / total) * 100),
+                    type: WidthType.PERCENTAGE,
+                  },
+                  children: inner,
+                });
+              }),
+            }),
+          ],
         })
       );
-      children.push(new Paragraph({ children: [] }));
+      children.push(new Paragraph({ children: [], spacing: { after: 80 } }));
     }
   }
+  return children;
+}
 
+export async function toDocxBlob(doc: SheetDocument): Promise<Blob> {
   const document = new Document({
-    sections: [{ children }],
+    sections: [
+      {
+        properties: {
+          page: {
+            margin: {
+              top: 560,
+              right: 560,
+              bottom: 560,
+              left: 560,
+            },
+          },
+        },
+        children: blocksToElements(doc.blocks),
+      },
+    ],
   });
   return Packer.toBlob(document);
 }

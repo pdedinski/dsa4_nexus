@@ -14,6 +14,7 @@
     { "idx": 9, "version": "7", "when": 1700000000010, "tag": "0010_codex_alchemy", "breakpoints": true },
     { "idx": 10, "version": "7", "when": 1700000000011, "tag": "0011_combat_tracker", "breakpoints": true },
     { "idx": 11, "version": "7", "when": 1700000000012, "tag": "0012_chargen_data", "breakpoints": true },
-    { "idx": 12, "version": "7", "when": 1700000000013, "tag": "0013_chargen_heroes", "breakpoints": true }
+    { "idx": 12, "version": "7", "when": 1700000000013, "tag": "0013_chargen_heroes", "breakpoints": true },
+    { "idx": 13, "version": "7", "when": 1700000000014, "tag": "0014_app_settings", "breakpoints": true }
   ]
 }

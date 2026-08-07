@@ -18,7 +18,7 @@ import type { Konflikt } from "@/lib/chargen/rules/voraussetzungen";
 const BEGABUNG_TALENT = "VorNachteil.BegabungFuerTalent";
 const BEGABUNG_GRUPPE = "VorNachteil.BegabungFuerTalentgruppe";
 
-function attrCodeFromProbeToken(token: string): string {
+export function attrCodeFromProbeToken(token: string): string {
   if (token.startsWith("Eigenschaft.")) {
     const code = ATTR_FROM_GERMAN[token];
     if (code) return code;
@@ -35,6 +35,18 @@ function attrCodeFromProbeToken(token: string): string {
     KK: "ST",
   };
   return map[short] || "CL";
+}
+
+/** Java `Eigenschaftsprobe.toString()` — e.g. `(CO/AG/ST)`. */
+export function formatTalentProbe(talent: CatalogItem): string {
+  const attrs = (talent.test_attributes as string[] | undefined) ?? [];
+  if (!attrs.length) return "";
+  const codes = attrs.map((t) => {
+    if (!t || t === "*" || t === "Eigenschaft.*") return "*";
+    return attrCodeFromProbeToken(t);
+  });
+  while (codes.length < 3) codes.push("*");
+  return `(${codes.slice(0, 3).join("/")})`;
 }
 
 function maxProbeAttribute(

@@ -1,39 +1,158 @@
 "use client";
 
-import { useState } from "react";
+/* Sheet must always re-render from the live HeldModel after edits. */
+"use no memo";
+
+import { useMemo, useState, type ReactNode } from "react";
 import type { HeldModel } from "@/lib/chargen/types";
 import {
   ATTR_LABELS,
-  attrValue,
+  attributeModsSum,
+  currentAttrValue,
   derivedValue,
+  type AttributeMods,
 } from "@/lib/chargen/types";
+import talenteCatalog from "@/lib/chargen/data/talente.json";
+import type { CatalogItem } from "@/lib/chargen/data/loadCatalog";
+import { formatTalentProbe } from "@/lib/chargen/rules/talentCaps";
+import { sktColumnLabel } from "@/lib/chargen/rules/kosten";
+import { resolveTalentSktColumn } from "@/lib/chargen/rules/sktColumn";
+import {
+  formatHpSt,
+  formatWm,
+  shieldTypeLabel,
+} from "@/lib/chargen/rules/equipmentWert";
+import {
+  formatDcEnglish,
+  formatHpDice,
+  formatTypeEec,
+  meleeAdjustedHp,
+  meleeAttackValue,
+  meleeParryValue,
+  rangedAttackValue,
+  totalArmorEc,
+  unarmedAttack,
+  unarmedHp,
+  unarmedParry,
+} from "@/lib/chargen/export/sheetCombat";
+import {
+  SHEET_GROUP_LABELS,
+  SHEET_TALENT_GROUP_ORDER,
+  buildSheetDocument,
+} from "@/lib/chargen/export/sheetDocument";
 import { downloadHeldJson } from "@/lib/chargen/io/exportJson";
 import { downloadLegacyHeldXml } from "@/lib/chargen/io/exportLegacyXml";
-import { buildSheetDocument } from "@/lib/chargen/export/sheetDocument";
 import { downloadRtf } from "@/lib/chargen/export/toRtf";
 import { downloadPdf } from "@/lib/chargen/export/toPdf";
 import { downloadDocx } from "@/lib/chargen/export/toDocx";
+import waffenNahkampf from "@/lib/chargen/data/waffen_nahkampf.json";
+import waffenFernkampf from "@/lib/chargen/data/waffen_fernkampf.json";
+
+const TALENT_BY_ID = new Map(
+  (talenteCatalog as CatalogItem[]).map((t) => [String(t.id), t])
+);
+const MELEE_CATALOG = new Map(
+  (waffenNahkampf as CatalogItem[]).map((w) => [String(w.id), w])
+);
+const RANGED_CATALOG = new Map(
+  (waffenFernkampf as CatalogItem[]).map((w) => [String(w.id), w])
+);
+
+const DERIVED_LABELS: Record<string, string> = {
+  VP: "Vitality",
+  EP: "Endurance",
+  RM: "Magic Resistance",
+  ASP: "Astral Energy",
+  WT: "Wound Threshold",
+  baseAT: "Base Attack",
+  basePA: "Base Parry",
+  baseBRV: "Base Ranged",
+  baseINI: "Base Initiative",
+  GS: "Speed",
+};
 
 function Section({
   title,
   children,
 }: {
   title: string;
-  children: React.ReactNode;
+  children: ReactNode;
 }) {
   return (
-    <section className="mb-6">
-      <h3 className="text-base font-bold text-ink border-b border-surface-border pb-1 mb-2">
+    <section className="mb-4 border border-surface-border rounded-lg overflow-hidden bg-surface-card">
+      <h3 className="text-sm font-bold uppercase tracking-wide bg-brand-muted px-3 py-2 text-ink border-b border-surface-border">
         {title}
       </h3>
-      {children}
+      <div className="p-3 text-sm text-ink">{children}</div>
     </section>
+  );
+}
+
+function StatChip({
+  label,
+  value,
+  sub,
+}: {
+  label: string;
+  value: ReactNode;
+  sub?: ReactNode;
+}) {
+  return (
+    <div className="rounded border border-surface-border bg-[#1a1410] px-2 py-1.5 min-w-0">
+      <div className="text-ink-faint text-[10px] uppercase tracking-wide truncate">
+        {label}
+      </div>
+      <div className="font-semibold text-base tabular-nums leading-tight">
+        {value}
+      </div>
+      {sub != null ? (
+        <div className="text-[10px] text-ink-faint mt-0.5">{sub}</div>
+      ) : null}
+    </div>
+  );
+}
+
+function meleeMains(weaponId: string): string[] {
+  const cat = MELEE_CATALOG.get(weaponId);
+  if (!cat) return [];
+  const talents = cat.talents;
+  if (Array.isArray(talents) && talents.length) return talents.map(String);
+  if (cat.talent) return [String(cat.talent)];
+  return [];
+}
+
+function ScrollTable({ children }: { children: ReactNode }) {
+  return (
+    <div className="overflow-x-auto -mx-1 px-1">
+      <table className="w-full min-w-[28rem] text-left text-xs border-collapse">
+        {children}
+      </table>
+    </div>
+  );
+}
+
+function Th({ children, className = "" }: { children: ReactNode; className?: string }) {
+  return (
+    <th
+      className={`border-b border-surface-border px-1.5 py-1 font-semibold text-ink-muted whitespace-nowrap ${className}`}
+    >
+      {children}
+    </th>
+  );
+}
+
+function Td({ children, className = "" }: { children: ReactNode; className?: string }) {
+  return (
+    <td className={`border-b border-surface-border/60 px-1.5 py-1 ${className}`}>
+      {children}
+    </td>
   );
 }
 
 export default function ChargenSheetView({
   held,
   labels,
+  attributeMods,
   dbHeroId = null,
   onPersisted,
   modificationActive = false,
@@ -46,11 +165,10 @@ export default function ChargenSheetView({
     profession?: string;
     byId: Record<string, string>;
   };
-  /** When set and the user may update, Persist uses PUT; otherwise POST. */
+  /** Race/culture/profession attribute modifiers — required for correct Current values. */
+  attributeMods?: AttributeMods;
   dbHeroId?: string | null;
-  /** When provided, shows Persist to Database. */
   onPersisted?: (id: string) => void;
-  /** When true, shows Finish Character Creation to end the leave-guard session. */
   modificationActive?: boolean;
   onFinishCreation?: () => void;
 }) {
@@ -60,6 +178,7 @@ export default function ChargenSheetView({
   const [persisting, setPersisting] = useState(false);
   const [finishStatus, setFinishStatus] = useState<string | null>(null);
 
+  /** Always build from the live held — never cache across edits. */
   function makeDoc() {
     return buildSheetDocument(held, {
       race: labels.race,
@@ -69,8 +188,26 @@ export default function ChargenSheetView({
       spellName: nameOf,
       traitName: nameOf,
       saName: nameOf,
+      attributeMods,
     });
   }
+
+  const talentsByGroup = useMemo(() => {
+    const map = new Map<string, typeof held.talents>();
+    for (const tw of held.talents) {
+      const group = String(TALENT_BY_ID.get(tw.id)?.group || "other");
+      const list = map.get(group) ?? [];
+      list.push(tw);
+      map.set(group, list);
+    }
+    return map;
+  }, [held]);
+
+  const sumEc = totalArmorEc(held);
+  const sumAr = held.armors.reduce((s, a) => s + (a.rs ?? 0), 0);
+  const bpv = derivedValue(held, "basePA");
+  const biv = derivedValue(held, "baseINI");
+  const apCredit = Math.max(0, (held.apTotal || 0) - (held.apSpent || 0));
 
   async function persistToDatabase() {
     if (!onPersisted) return;
@@ -96,7 +233,6 @@ export default function ChargenSheetView({
           setPersistStatus(body.error || "Failed to update hero.");
           return;
         }
-        // Not owner/admin — create a new shared entry
       }
 
       const postRes = await fetch("/api/chargen/heroes", {
@@ -122,6 +258,21 @@ export default function ChargenSheetView({
       setPersistStatus("Failed to persist hero.");
     } finally {
       setPersisting(false);
+    }
+  }
+
+  function sktFor(talentId: string): string {
+    const meta = TALENT_BY_ID.get(talentId);
+    if (!meta) return "";
+    try {
+      return sktColumnLabel(resolveTalentSktColumn(held, meta)).replace(
+        /[()]/g,
+        ""
+      );
+    } catch {
+      return meta.skt_column != null
+        ? sktColumnLabel(meta.skt_column as string | number).replace(/[()]/g, "")
+        : "";
     }
   }
 
@@ -195,115 +346,188 @@ export default function ChargenSheetView({
         <p className="text-sm text-ink-muted">{persistStatus}</p>
       )}
 
-      <div className="rounded-xl border border-surface-border bg-[#1a1410] p-5 shadow-xl">
-        <h2 className="text-2xl font-bold text-ink mb-1">
-          {held.name || "Unnamed Hero"}
-        </h2>
-        <p className="text-sm text-ink-muted mb-4">
-          {labels.race || held.raceId} · {labels.culture || held.cultureId} ·{" "}
-          {labels.profession || held.professionId}
-        </p>
-
+      <div className="rounded-xl border border-surface-border bg-[#1a1410] p-4 sm:p-5 shadow-xl space-y-4">
+        <header>
+          <h2 className="text-xl sm:text-2xl font-bold text-ink">
+            {held.name || "Unnamed Hero"}
+          </h2>
+          <p className="text-sm text-ink-muted mt-0.5">
+            {labels.race || held.raceId} · {labels.culture || held.cultureId} ·{" "}
+            {labels.profession || held.professionId}
+          </p>
+        </header>
 
         <Section title="Personal">
-          <dl className="grid grid-cols-2 md:grid-cols-3 gap-2 text-sm">
-            <div>
-              <dt className="text-ink-faint">Gender</dt>
-              <dd>{held.gender}</dd>
-            </div>
-            <div>
-              <dt className="text-ink-faint">Age</dt>
-              <dd>{held.age}</dd>
-            </div>
-            <div>
-              <dt className="text-ink-faint">Height / Weight</dt>
-              <dd>
-                {held.heightCm} cm / {held.weightKg} kg
-              </dd>
-            </div>
-            <div>
-              <dt className="text-ink-faint">Hair / Eyes</dt>
-              <dd>
-                {held.hairColor || "—"} / {held.eyeColor || "—"}
-              </dd>
-            </div>
-            <div className="col-span-2">
-              <dt className="text-ink-faint">Appearance</dt>
+          <dl className="grid grid-cols-2 sm:grid-cols-3 gap-x-3 gap-y-2 text-sm">
+            {(
+              [
+                ["Sex", held.gender],
+                ["Birthday / Age", `${held.birthday || "—"} / ${held.age}`],
+                ["Height", `${held.heightCm} cm`],
+                ["Weight", `${held.weightKg} kg`],
+                ["Hair", held.hairColor || "—"],
+                ["Eyes", held.eyeColor || "—"],
+                ["Standing", held.status || "—"],
+                ["Rank", held.title || "—"],
+                ["Social Standing", String(currentAttrValue(held, "SO", attributeMods))],
+                ["Adventure Points", String(held.apTotal || 0)],
+                ["Spent AP", String(held.apSpent || 0)],
+                ["AP Credit", String(apCredit)],
+              ] as [string, string][]
+            ).map(([k, v]) => (
+              <div key={k}>
+                <dt className="text-ink-faint text-xs">{k}</dt>
+                <dd>{v}</dd>
+              </div>
+            ))}
+            <div className="col-span-2 sm:col-span-3">
+              <dt className="text-ink-faint text-xs">Appearance</dt>
               <dd>{held.appearance || "—"}</dd>
+            </div>
+            <div className="col-span-2 sm:col-span-3">
+              <dt className="text-ink-faint text-xs">Background</dt>
+              <dd>{held.background || "—"}</dd>
             </div>
           </dl>
         </Section>
 
         <Section title="Attributes">
-          <div className="grid grid-cols-3 sm:grid-cols-5 gap-2 text-sm">
-            {held.attributes.map((a) => (
-              <div
-                key={a.code}
-                className="rounded border border-surface-border px-2 py-1.5"
-              >
-                <div className="text-ink-faint text-xs">
-                  {a.code} · {ATTR_LABELS[a.code]}
-                </div>
-                <div className="font-semibold text-lg">
-                  {attrValue(held, a.code)}
-                </div>
-                <div className="text-xs text-ink-faint">
-                  base {a.base} + {a.purchased}
-                </div>
-              </div>
-            ))}
+          <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-2">
+            {held.attributes.map((a) => {
+              const mod = attributeModsSum(attributeMods, a.code);
+              const current = currentAttrValue(held, a.code, attributeMods);
+              return (
+                <StatChip
+                  key={a.code}
+                  label={`${a.code} · ${ATTR_LABELS[a.code]}`}
+                  value={current}
+                  sub={`start ${a.base} · mod ${mod} · bought ${a.purchased}`}
+                />
+              );
+            })}
+            <StatChip label="GS · Speed" value={derivedValue(held, "GS")} />
           </div>
         </Section>
 
-        <Section title="Derived values">
-          <div className="grid grid-cols-3 sm:grid-cols-5 gap-2 text-sm">
-            {held.derived.map((d) => (
-              <div
-                key={d.code}
-                className="rounded border border-surface-border px-2 py-1.5"
-              >
-                <div className="text-ink-faint text-xs">{d.code}</div>
-                <div className="font-semibold">
-                  {derivedValue(held, d.code)}
-                </div>
-              </div>
-            ))}
+        <Section title="Base Values">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
+            {held.derived
+              .filter((d) => d.code !== "GS")
+              .map((d) => (
+                <StatChip
+                  key={d.code}
+                  label={DERIVED_LABELS[d.code] || d.code}
+                  value={derivedValue(held, d.code)}
+                  sub={`mod ${d.modification} · base ${d.base} · bought ${d.purchased}${
+                    d.maxPurchased != null ? ` · max ${d.maxPurchased}` : ""
+                  }`}
+                />
+              ))}
           </div>
         </Section>
 
-        <Section title="Talents">
-          {held.talents.length === 0 ? (
-            <p className="text-sm text-ink-faint">None</p>
-          ) : (
-            <ul className="text-sm columns-2 gap-4">
-              {held.talents.map((t) => {
-                const lead = held.leadTalents.includes(t.id) ? "* " : "";
-                const at = t.attack;
-                const pa =
-                  at != null ? Math.max(0, t.tp - at) : null;
+        {held.specialAbilities.length > 0 && (
+          <Section title="Special Abilities">
+            <ul className="flex flex-wrap gap-1.5">
+              {held.specialAbilities.map((s, i) => {
+                const parts = [
+                  nameOf(s.id),
+                  s.talent ? `(${nameOf(s.talent)})` : "",
+                  s.variant ? `— ${nameOf(s.variant)}` : "",
+                ].filter(Boolean);
                 return (
-                  <li key={t.id} className="flex justify-between gap-2">
-                    <span>
-                      {lead}
-                      {nameOf(t.id)}
-                    </span>
-                    <span className="font-mono shrink-0">
-                      {at != null ? `AT ${at} ` : ""}
-                      {pa != null ? `PA ${pa} ` : ""}
-                      TP {t.tp}
-                    </span>
+                  <li
+                    key={`${s.id}-${i}`}
+                    className="rounded border border-surface-border px-2 py-0.5 text-xs"
+                  >
+                    {parts.join(" ")}
                   </li>
                 );
               })}
             </ul>
+          </Section>
+        )}
+
+        {held.advantagesDisadvantages.length > 0 && (
+          <Section title="Advantages & Disadvantages">
+            <ul className="flex flex-wrap gap-1.5">
+              {held.advantagesDisadvantages.map((t, i) => (
+                <li
+                  key={`${t.id}-${i}`}
+                  className="rounded border border-surface-border px-2 py-0.5 text-xs"
+                >
+                  {nameOf(t.id)}
+                  {t.rating != null ? ` ${t.rating}` : ""}
+                  {t.variant ? ` (${nameOf(t.variant)})` : ""}
+                </li>
+              ))}
+            </ul>
+          </Section>
+        )}
+
+        <Section title="Talents">
+          {held.talents.length === 0 ? (
+            <p className="text-ink-faint">None</p>
+          ) : (
+            <div className="space-y-4">
+              {SHEET_TALENT_GROUP_ORDER.map((groupId) => {
+                const rows = talentsByGroup.get(groupId);
+                if (!rows?.length) return null;
+                const isCombat = groupId === "combat";
+                return (
+                  <div key={groupId}>
+                    <h4 className="text-xs font-semibold uppercase tracking-wide text-ink-muted mb-1.5">
+                      {SHEET_GROUP_LABELS[groupId] || groupId}
+                    </h4>
+                    <ul className="space-y-0.5">
+                      {rows.map((t) => {
+                        const meta = TALENT_BY_ID.get(t.id);
+                        const lead = held.leadTalents.includes(t.id) ? "* " : "";
+                        const probe =
+                          !isCombat && meta ? formatTalentProbe(meta) : "";
+                        const skt = sktFor(t.id);
+                        const at = t.attack;
+                        const pa =
+                          at != null ? Math.max(0, t.tp - at) : null;
+                        return (
+                          <li
+                            key={t.id}
+                            className="flex justify-between gap-2 text-sm border-b border-surface-border/40 py-1 last:border-0"
+                          >
+                            <span className="min-w-0">
+                              {lead}
+                              {nameOf(t.id)}
+                              {probe ? (
+                                <span className="text-ink-faint text-xs ml-1">
+                                  {probe}
+                                </span>
+                              ) : null}
+                              {skt ? (
+                                <span className="text-ink-faint text-xs ml-1">
+                                  ({skt})
+                                </span>
+                              ) : null}
+                            </span>
+                            <span className="font-mono text-xs shrink-0 text-ink-muted">
+                              {isCombat && at != null
+                                ? `AT ${at}  PA ${pa}  `
+                                : ""}
+                              TP {t.tp}
+                            </span>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </div>
+                );
+              })}
+            </div>
           )}
         </Section>
 
-        <Section title="Spells">
-          {held.spells.length === 0 ? (
-            <p className="text-sm text-ink-faint">None</p>
-          ) : (
-            <ul className="text-sm columns-2 gap-4">
+        {held.spells.length > 0 && (
+          <Section title="Spells">
+            <ul className="space-y-0.5">
               {held.spells.map((s) => {
                 const markers = [
                   held.houseSpells.includes(s.id) ? "**" : "",
@@ -312,51 +536,226 @@ export default function ChargenSheetView({
                   .filter(Boolean)
                   .join("");
                 return (
-                  <li key={s.id} className="flex justify-between gap-2">
+                  <li
+                    key={s.id}
+                    className="flex justify-between gap-2 border-b border-surface-border/40 py-1 last:border-0"
+                  >
                     <span>
                       {markers ? `${markers} ` : ""}
                       {nameOf(s.id)}
                     </span>
-                    <span className="font-mono">{s.sp}</span>
+                    <span className="font-mono text-xs text-ink-muted">
+                      SP {s.sp}
+                    </span>
                   </li>
                 );
               })}
             </ul>
+          </Section>
+        )}
+
+        <Section title="Combat">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-3">
+            <StatChip label="BAV" value={derivedValue(held, "baseAT")} />
+            <StatChip label="BPV" value={bpv} />
+            <StatChip label="BRV" value={derivedValue(held, "baseBRV")} />
+            <StatChip label="BIV" value={biv} />
+          </div>
+
+          <h4 className="text-xs font-semibold uppercase tracking-wide text-ink-muted mb-1.5">
+            Melee weapons
+          </h4>
+          {held.meleeWeapons.length === 0 ? (
+            <p className="text-ink-faint text-xs mb-3">None</p>
+          ) : (
+            <ScrollTable>
+              <thead>
+                <tr>
+                  <Th>Weapon</Th>
+                  <Th>EEC</Th>
+                  <Th>DC</Th>
+                  <Th>HP</Th>
+                  <Th>HP/ST</Th>
+                  <Th>INI</Th>
+                  <Th>WM</Th>
+                  <Th>AV</Th>
+                  <Th>PV</Th>
+                  <Th>HP*</Th>
+                  <Th>BP</Th>
+                </tr>
+              </thead>
+              <tbody>
+                {held.meleeWeapons.map((w) => {
+                  const mains = meleeMains(w.id);
+                  return (
+                    <tr key={w.id}>
+                      <Td>{w.name || nameOf(w.id)}</Td>
+                      <Td className="tabular-nums">{formatTypeEec(w.talent)}</Td>
+                      <Td>{formatDcEnglish(w)}</Td>
+                      <Td className="tabular-nums">{formatHpDice(w.tp)}</Td>
+                      <Td className="tabular-nums">{formatHpSt(w)}</Td>
+                      <Td className="tabular-nums">{w.ini ?? ""}</Td>
+                      <Td className="tabular-nums">{formatWm(w)}</Td>
+                      <Td className="tabular-nums font-semibold">
+                        {meleeAttackValue(held, w, mains)}
+                      </Td>
+                      <Td className="tabular-nums font-semibold">
+                        {meleeParryValue(held, w, mains)}
+                      </Td>
+                      <Td className="tabular-nums">{meleeAdjustedHp(held, w)}</Td>
+                      <Td className="tabular-nums">{w.bf ?? ""}</Td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </ScrollTable>
           )}
-        </Section>
 
-        <Section title="Advantages / Disadvantages">
-          <p className="text-sm">
-            {held.advantagesDisadvantages.map((t) => nameOf(t.id)).join(", ") ||
-              "—"}
-          </p>
-        </Section>
+          <h4 className="text-xs font-semibold uppercase tracking-wide text-ink-muted mb-1.5 mt-3">
+            Ranged weapons
+          </h4>
+          {held.rangedWeapons.length === 0 ? (
+            <p className="text-ink-faint text-xs mb-3">None</p>
+          ) : (
+            <ScrollTable>
+              <thead>
+                <tr>
+                  <Th>Weapon</Th>
+                  <Th>EEC</Th>
+                  <Th>Ranges</Th>
+                  <Th>HP/Range</Th>
+                  <Th>AV</Th>
+                  <Th>HP</Th>
+                </tr>
+              </thead>
+              <tbody>
+                {held.rangedWeapons.map((w) => (
+                  <tr key={w.id}>
+                    <Td>{w.name || nameOf(w.id)}</Td>
+                    <Td className="tabular-nums">{formatTypeEec(w.talent)}</Td>
+                    <Td className="tabular-nums">
+                      {(w.ranges ?? []).join("/")}
+                    </Td>
+                    <Td className="tabular-nums">
+                      {(w.tpPlus ?? []).join("/")}
+                    </Td>
+                    <Td className="tabular-nums font-semibold">
+                      {rangedAttackValue(
+                        held,
+                        w,
+                        RANGED_CATALOG.get(w.id)?.talent
+                          ? String(RANGED_CATALOG.get(w.id)!.talent)
+                          : undefined
+                      )}
+                    </Td>
+                    <Td className="tabular-nums">{formatHpDice(w.tp)}</Td>
+                  </tr>
+                ))}
+              </tbody>
+            </ScrollTable>
+          )}
 
-        <Section title="Special Abilities">
-          <p className="text-sm">
-            {held.specialAbilities.map((s) => nameOf(s.id)).join(", ") || "—"}
-          </p>
-        </Section>
+          <h4 className="text-xs font-semibold uppercase tracking-wide text-ink-muted mb-1.5 mt-3">
+            Unarmed
+          </h4>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-3">
+            {(
+              [
+                ["Brawling", "Talent.Raufen"],
+                ["Wrestling", "Talent.Ringen"],
+              ] as const
+            ).map(([label, tid]) => (
+              <div
+                key={tid}
+                className="rounded border border-surface-border px-2 py-1.5 text-xs"
+              >
+                <div className="font-medium">{label}</div>
+                <div className="text-ink-muted mt-0.5 tabular-nums">
+                  {formatTypeEec(tid, { unarmed: true })} · HP/ST 10/3 · AV{" "}
+                  {unarmedAttack(held, tid)} · PV {unarmedParry(held, tid)} ·{" "}
+                  {unarmedHp(held)}
+                </div>
+              </div>
+            ))}
+          </div>
 
-        <Section title="Equipment">
-          <p className="text-sm text-ink-muted mb-1">Melee</p>
-          <p className="text-sm mb-2">
-            {held.meleeWeapons.map((w) => w.name || nameOf(w.id)).join(", ") ||
-              "—"}
-          </p>
-          <p className="text-sm text-ink-muted mb-1">Ranged</p>
-          <p className="text-sm mb-2">
-            {held.rangedWeapons.map((w) => w.name || nameOf(w.id)).join(", ") ||
-              "—"}
-          </p>
-          <p className="text-sm text-ink-muted mb-1">Armor</p>
-          <p className="text-sm mb-2">
-            {held.armors.map((a) => a.name || nameOf(a.id)).join(", ") || "—"}
-          </p>
-          <p className="text-sm text-ink-muted mb-1">Shields</p>
-          <p className="text-sm">
-            {held.shields.map((s) => s.name || nameOf(s.id)).join(", ") || "—"}
-          </p>
+          {(held.shields.length > 0 || held.armors.length > 0) && (
+            <>
+              {held.shields.length > 0 && (
+                <>
+                  <h4 className="text-xs font-semibold uppercase tracking-wide text-ink-muted mb-1.5">
+                    Shields
+                  </h4>
+                  <ul className="space-y-1 mb-3 text-xs">
+                    {held.shields.map((s) => (
+                      <li
+                        key={s.id}
+                        className="flex flex-wrap justify-between gap-2 border-b border-surface-border/40 py-1"
+                      >
+                        <span>
+                          {s.name || nameOf(s.id)}
+                          {s.type ? (
+                            <span className="text-ink-faint">
+                              {" "}
+                              ({shieldTypeLabel(s.type)})
+                            </span>
+                          ) : null}
+                        </span>
+                        <span className="tabular-nums text-ink-muted">
+                          INI {s.ini ?? 0} · WM {formatWm(s)} · PV{" "}
+                          {bpv + (s.wmPa ?? 0)} · BP {s.bf ?? "—"}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              )}
+
+              {held.armors.length > 0 && (
+                <>
+                  <h4 className="text-xs font-semibold uppercase tracking-wide text-ink-muted mb-1.5">
+                    Armor
+                  </h4>
+                  <ul className="space-y-1 mb-2 text-xs">
+                    {held.armors.map((a) => (
+                      <li
+                        key={a.id}
+                        className="flex justify-between gap-2 border-b border-surface-border/40 py-1"
+                      >
+                        <span>{a.name || nameOf(a.id)}</span>
+                        <span className="tabular-nums text-ink-muted">
+                          AR {a.rs ?? 0} · EC {a.be ?? 0}
+                        </span>
+                      </li>
+                    ))}
+                    <li className="flex justify-between gap-2 font-semibold pt-1">
+                      <span>Total</span>
+                      <span className="tabular-nums">
+                        AR {sumAr} · EC {sumEc}
+                      </span>
+                    </li>
+                  </ul>
+                </>
+              )}
+            </>
+          )}
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2 text-xs">
+            <div className="rounded border border-surface-border px-2 py-1.5">
+              <span className="text-ink-faint">Evade</span>
+              <div className="tabular-nums mt-0.5">
+                BPV {bpv} − EC {sumEc} ={" "}
+                <strong>{bpv - sumEc}</strong>
+              </div>
+            </div>
+            <div className="rounded border border-surface-border px-2 py-1.5">
+              <span className="text-ink-faint">Initiative</span>
+              <div className="tabular-nums mt-0.5">
+                BIV {biv} − EC {sumEc} ={" "}
+                <strong>{biv - sumEc}</strong>
+              </div>
+            </div>
+          </div>
         </Section>
       </div>
     </div>

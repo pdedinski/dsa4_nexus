@@ -210,11 +210,24 @@ export function importLegacyHeldXml(raw: string): HeldModel {
     heldNode.FernkampfwaffeWerte?.FernkampfwaffeWert
   ).map((n) => {
     const node = n as Record<string, unknown>;
+    const rangesRaw = node["@_Reichweiten"]
+      ? String(node["@_Reichweiten"])
+      : "";
+    const tpPlusRaw = node["@_TpPlus"] ? String(node["@_TpPlus"]) : "";
+    const parseList = (raw: string) =>
+      raw
+        .split(/[,;\s]+/)
+        .map((s) => s.trim())
+        .filter(Boolean)
+        .map((s) => Number(s))
+        .filter((x) => Number.isFinite(x));
     return {
       id: String(node["@_Fernkampfwaffe"] ?? node["@_Nahkampfwaffe"] ?? ""),
       name: node["@_Name"] ? String(node["@_Name"]) : undefined,
       talent: node["@_Talent"] ? String(node["@_Talent"]) : undefined,
       tp: node["@_Tp"] ? String(node["@_Tp"]) : undefined,
+      ranges: rangesRaw ? parseList(rangesRaw) : undefined,
+      tpPlus: tpPlusRaw ? parseList(tpPlusRaw) : undefined,
     };
   });
 

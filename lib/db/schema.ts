@@ -303,3 +303,19 @@ export const combatCombatants = pgTable(
 export type CombatCombatantRow = typeof combatCombatants.$inferSelect;
 export type InsertCombatCombatantRow = typeof combatCombatants.$inferInsert;
 
+// ── app_settings (site-wide key/value config) ────────────────────────────────
+
+export const appSettings = pgTable("app_settings", {
+  key: text("key").primaryKey(),
+  value: jsonb("value").notNull(),
+  updatedAt: timestamp("updated_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+  updatedBy: uuid("updated_by").references(() => users.id, {
+    onDelete: "set null",
+  }),
+});
+
+export type AppSettingRow = typeof appSettings.$inferSelect;
+export type InsertAppSettingRow = typeof appSettings.$inferInsert;
+

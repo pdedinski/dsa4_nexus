@@ -4,6 +4,10 @@ import { requireAllowed } from "@/lib/auth/session";
 import { db } from "@/lib/db/client";
 import { chargenHeroes } from "@/lib/db/chargenSchema";
 import { sanitizeHeldForStorage } from "@/lib/chargen/heroesPersistence";
+import {
+  canViewChargenHero,
+  getChargenHeroesSharedVisibility,
+} from "@/lib/appSettings";
 
 function canUpdateHero(
   session: { user: { id: string; isAdmin?: boolean; isSuperuser?: boolean } },
@@ -37,6 +41,11 @@ export async function GET(
 
     if (!row) {
       return NextResponse.json({ error: "Not found" }, { status: 404 });
+    }
+
+    const shared = await getChargenHeroesSharedVisibility();
+    if (!canViewChargenHero(session, row.createdBy, shared)) {
+      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
     return NextResponse.json(row);

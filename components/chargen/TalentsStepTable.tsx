@@ -12,6 +12,7 @@ import {
   deactivateTalent,
   isRangedCombatTalent,
   isTalentCheckboxChecked,
+  isTalentOnHeld,
   isValidCombatAtPa,
   lowerTalentTp,
   MAX_TALENT_ACTIVATIONS,
@@ -21,6 +22,7 @@ import {
   talentDisplayApCost,
   talentParade,
 } from "@/lib/chargen/rules/talentActivation";
+import { formatTalentProbe } from "@/lib/chargen/rules/talentCaps";
 import LearningMethodSelect from "@/components/chargen/LearningMethodSelect";
 
 function CustomBadge({ source }: { source?: string }) {
@@ -101,7 +103,7 @@ export default function TalentsStepTable({
       <p className="text-sm text-ink-muted">
         {veteran
           ? "Spend AP to activate and raise talents. Raises up to your loaded baseline are free until you save and reload."
-          : "Seeded talents from race, culture, and profession can be raised at 0 TP without activation. Other talents must be activated first (checkbox). Mother tongue / second language show CL creation modifiers (CL−2 / CL−4)."}
+          : "Basic talents and seeded talents from race, culture, and profession start known (checkbox locked) and can be raised without activation. Other talents must be activated first. Mother tongue / second language show CL creation modifiers (CL−2 / CL−4)."}
       </p>
       <div className="max-h-[28rem] overflow-y-auto space-y-4">
         {talentsByGroup.map(({ id: groupId, items }) => {
@@ -122,6 +124,9 @@ export default function TalentsStepTable({
                     <th className="py-1 px-1 text-center font-medium w-12">
                       Adv.
                     </th>
+                    <th className="py-1 px-1 text-center font-medium w-24">
+                      Test
+                    </th>
                     {showCombatCols && (
                       <>
                         <th className="py-1 px-1 text-center font-medium w-20">
@@ -136,6 +141,14 @@ export default function TalentsStepTable({
                     <th className="py-1 pl-2 text-right font-medium w-20">
                       Costs
                     </th>
+                    {veteran && (
+                      <th
+                        className="py-1 pl-2 text-center font-medium w-10"
+                        title="Special Experience"
+                      >
+                        SE
+                      </th>
+                    )}
                   </tr>
                 </thead>
                 <tbody>
@@ -200,7 +213,7 @@ export default function TalentsStepTable({
                             disabled={checkboxDisabled}
                             title={
                               seeded
-                                ? "Granted by race, culture, or profession"
+                                ? "Basic talent or granted by race, culture, or profession"
                                 : atCap && !checked
                                   ? `Maximum ${MAX_TALENT_ACTIVATIONS} activations`
                                   : undefined
@@ -229,6 +242,9 @@ export default function TalentsStepTable({
                         </td>
                         <td className="py-1 px-1 text-center align-middle text-ink-muted font-mono text-xs">
                           {talentAdvancementLabel(held, t)}
+                        </td>
+                        <td className="py-1 px-1 text-center align-middle text-ink-muted font-mono text-xs whitespace-nowrap">
+                          {formatTalentProbe(t)}
                         </td>
                         {showCombatCols && (
                           <>
@@ -374,6 +390,31 @@ export default function TalentsStepTable({
                         <td className="py-1 pl-2 text-right align-middle font-mono text-xs whitespace-nowrap">
                           {cost} AP
                         </td>
+                        {veteran && (
+                          <td className="py-1 pl-2 text-center align-middle">
+                            <input
+                              type="checkbox"
+                              className="rounded"
+                              title="Special Experience"
+                              checked={row?.specialExperience === true}
+                              disabled={!isTalentOnHeld(held, id)}
+                              onChange={(e) => {
+                                const on = e.target.checked;
+                                updateHeld((h) => {
+                                  if (!isTalentOnHeld(h, id)) return h;
+                                  return {
+                                    ...h,
+                                    talents: h.talents.map((x) =>
+                                      x.id === id
+                                        ? { ...x, specialExperience: on }
+                                        : x
+                                    ),
+                                  };
+                                });
+                              }}
+                            />
+                          </td>
+                        )}
                       </tr>
                     );
                   })}
