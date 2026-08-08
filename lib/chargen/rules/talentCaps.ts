@@ -8,9 +8,9 @@ import type { AttributeMods, HeldModel } from "@/lib/chargen/types";
 import { ATTR_FROM_GERMAN, currentAttrValue } from "@/lib/chargen/types";
 import { effectiveTalentTp } from "@/lib/chargen/rules/applyBausteine";
 import {
-  isCombatTalent,
-  MAX_AT_PA_DIFF,
-  talentParade,
+  COMBAT_AT_OVER_TP_MSG,
+  combatAtPaConflictMessage,
+  usesAtPaDistribution,
 } from "@/lib/chargen/rules/talentActivation";
 import { hasSpellRepresentation } from "@/lib/chargen/rules/sktColumn";
 import type { Konflikt } from "@/lib/chargen/rules/voraussetzungen";
@@ -37,16 +37,25 @@ export function attrCodeFromProbeToken(token: string): string {
   return map[short] || "CL";
 }
 
-/** Java `Eigenschaftsprobe.toString()` — e.g. `(CO/AG/ST)`. */
+/**
+ * Java `Eigenschaftsprobe.toString()` — e.g. `(CO/AG/ST)` or `(CL/IN/*)`.
+ * A trailing `*` means the third check uses the better of the remaining
+ * listed attributes (constructor varargs length ≠ 1).
+ */
 export function formatTalentProbe(talent: CatalogItem): string {
   const attrs = (talent.test_attributes as string[] | undefined) ?? [];
   if (!attrs.length) return "";
-  const codes = attrs.map((t) => {
+  const code = (t: string) => {
     if (!t || t === "*" || t === "Eigenschaft.*") return "*";
     return attrCodeFromProbeToken(t);
-  });
-  while (codes.length < 3) codes.push("*");
-  return `(${codes.slice(0, 3).join("/")})`;
+  };
+  // One fixed attribute → first slot only (Ritual Lore → `(CL/*/*)`).
+  if (attrs.length === 1) return `(${code(attrs[0])}/*/*)`;
+  const a = code(attrs[0]);
+  const b = code(attrs[1]);
+  // Exactly three → fixed probe; two or 4+ → third slot is "better of".
+  if (attrs.length === 3) return `(${a}/${b}/${code(attrs[2])})`;
+  return `(${a}/${b}/*)`;
 }
 
 function maxProbeAttribute(
@@ -203,32 +212,21 @@ export function checkCombatAtPaSpread(
   const out: Konflikt[] = [];
   for (const row of held.talents) {
     const meta = talents.find((t) => t.id === row.id);
-    if (!meta || !isCombatTalent(meta)) continue;
+    if (!meta || !usesAtPaDistribution(meta)) continue;
     const tp = effectiveTalentTp(held, row.id, row.tp, opts.attributeMods);
     const attack = row.attack ?? 0;
-    const parade = talentParade(
-      held,
-      row.id,
-      row.tp,
-      attack,
-      opts.attributeMods
-    );
+    const conflict = combatAtPaConflictMessage(attack, tp);
+    if (!conflict) continue;
     const name = opts.resolveName?.(row.id) || (meta.name as string) || row.id;
-    if (attack > tp) {
-      out.push({
-        code: `combat_at_over:${row.id}`,
-        message: `${name}: AT ${attack} exceeds TP ${tp}.`,
-        severity: "warning",
-        section: "talents",
-      });
-    } else if (Math.abs(attack - parade) > MAX_AT_PA_DIFF) {
-      out.push({
-        code: `combat_at_pa_spread:${row.id}`,
-        message: `${name}: |AT − PA| = ${Math.abs(attack - parade)} (max ${MAX_AT_PA_DIFF}).`,
-        severity: "warning",
-        section: "talents",
-      });
-    }
+    out.push({
+      code:
+        conflict === COMBAT_AT_OVER_TP_MSG
+          ? `combat_at_over:${row.id}`
+          : `combat_at_pa_spread:${row.id}`,
+      message: `${name}: ${conflict}`,
+      severity: "warning",
+      section: "talents",
+    });
   }
   return out;
 }

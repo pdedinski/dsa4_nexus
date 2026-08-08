@@ -6,7 +6,10 @@ import type {
   DocTable,
   SheetDocument,
 } from "@/lib/chargen/export/sheetDocument";
-import { effectiveBorderStyle } from "@/lib/chargen/export/sheetDocument";
+import {
+  effectiveBorderStyle,
+  zipDocColumns,
+} from "@/lib/chargen/export/sheetDocument";
 
 /** A4 height in pt — keep page chrome tight so content uses more of the page. */
 const PAGE_HEIGHT = 842;
@@ -148,34 +151,26 @@ function renderBlocks(ctx: PdfCtx, blocks: DocBlock[]) {
       continue;
     }
     if (block.kind === "columns") {
-      ensureSpace(ctx, 40);
-      const startY = ctx.y;
-      const gap = 8;
-      const totalW = block.columns.reduce((a, c) => a + c.width, 0) || 100;
-      let maxY = startY;
-      let x = ctx.marginLeft;
-      for (const col of block.columns) {
-        const colWidth =
-          ((ctx.contentWidth - gap * (block.columns.length - 1)) * col.width) /
-          totalW;
-        const colCtx: PdfCtx = {
-          pdf: ctx.pdf,
-          y: startY,
-          pageWidth: ctx.pageWidth,
-          marginLeft: x,
-          contentWidth: colWidth,
-        };
-        for (const b of col.blocks) {
-          if (b.kind === "heading") {
-            renderHeading(colCtx, b.text, b.fontSize, b.align === "center");
-          } else if (b.kind === "table") {
-            renderTable(colCtx, b, colWidth);
+      const zipped = zipDocColumns(block);
+      if (zipped) {
+        renderTable(ctx, zipped);
+      } else {
+        for (const col of block.columns) {
+          for (const b of col.blocks) {
+            if (b.kind === "heading") {
+              renderHeading(
+                ctx,
+                b.text,
+                b.fontSize,
+                b.align === "center"
+              );
+            } else if (b.kind === "table") {
+              renderTable(ctx, b);
+            }
           }
         }
-        maxY = Math.max(maxY, colCtx.y);
-        x += colWidth + gap;
       }
-      ctx.y = maxY + 2;
+      continue;
     }
   }
 }

@@ -90,6 +90,11 @@ import BaseValuesStepPanel from "@/components/chargen/BaseValuesStepPanel";
 import VeteranAttributesPanel from "@/components/chargen/VeteranAttributesPanel";
 import VeteranTraitsPanel from "@/components/chargen/VeteranTraitsPanel";
 import ConfirmDialog from "@/components/ui/ConfirmDialog";
+import FoundationChoiceList from "@/components/chargen/FoundationChoiceList";
+import {
+  isCultureAllowedForRace,
+  isProfessionAllowedForCulture,
+} from "@/lib/chargen/rules/availability";
 import { useUnsavedChanges } from "@/components/layout/UnsavedChangesContext";
 import { isTalentListMarker } from "@/lib/chargen/rules/talentListMarkers";
 import {
@@ -113,7 +118,6 @@ type StepId =
   | "spells"
   | "equipment"
   | "problems"
-  | "finish"
   | "ap"
   | "baseValues"
   | "sheet";
@@ -132,7 +136,6 @@ const CREATION_STEPS: { id: StepId; label: string }[] = [
   { id: "spells", label: "Spells" },
   { id: "equipment", label: "Equipment" },
   { id: "problems", label: "Problems" },
-  { id: "finish", label: "Finished" },
 ];
 
 /** Java PanelRasKulProf — only these exist until Weiter locks the foundation. */
@@ -303,27 +306,25 @@ export default function ChargenWizard() {
   const culture = cultures.find((c) => c.id === held.cultureId);
   const profession = professions.find((p) => p.id === held.professionId);
 
-  const filteredCultures = useMemo(() => {
-    if (!race?.allowed_cultures) return cultures;
-    const allowed = race.allowed_cultures as string[];
-    return cultures.filter((c) => allowed.includes(c.id));
-  }, [race, cultures]);
+  const cultureChoices = useMemo(() => {
+    return [...cultures]
+      .map((c) => ({
+        id: c.id,
+        label: (c.name as string) || c.id,
+        custom: c.source === "custom",
+      }))
+      .sort((a, b) => a.label.localeCompare(b.label));
+  }, [cultures]);
 
-  const filteredProfessions = useMemo(() => {
-    if (!culture?.professions) return professions;
-    const p = culture.professions as {
-      mode?: string;
-      exclude?: string[];
-      include?: string[];
-    };
-    if (p.mode === "all_except") {
-      return professions.filter((x) => !p.exclude?.includes(x.id));
-    }
-    if ((p.mode === "list" || p.mode === "none_except") && p.include?.length) {
-      return professions.filter((x) => p.include!.includes(x.id));
-    }
-    return professions;
-  }, [culture, professions]);
+  const professionChoices = useMemo(() => {
+    return [...professions]
+      .map((p) => ({
+        id: p.id,
+        label: (p.name as string) || p.id,
+        custom: p.source === "custom",
+      }))
+      .sort((a, b) => a.label.localeCompare(b.label));
+  }, [professions]);
 
   const labelMap = useMemo(() => {
     const m: Record<string, string> = {};
@@ -900,7 +901,7 @@ export default function ChargenWizard() {
         </div>
       )}
 
-      {step !== "start" && !veteran && step !== "finish" && (
+      {step !== "start" && !veteran && (
         <GpApBar
           budget={budget}
           onOpenSettings={() => setSettingsOpen(true)}
@@ -913,7 +914,7 @@ export default function ChargenWizard() {
           onReset={() => setResetConfirmOpen(true)}
         />
       )}
-      {(step === "sheet" || step === "finish") && (
+      {step === "sheet" && (
         <div className="sticky top-0 z-20 flex flex-wrap items-center justify-end gap-2 border-b border-surface-border bg-[#1a1410] px-4 py-2 text-sm shadow-md">
           <button
             type="button"
@@ -1074,28 +1075,39 @@ export default function ChargenWizard() {
               {!held.raceId ? (
                 <p className="text-sm text-ink-muted">Select a race first.</p>
               ) : (
-              <select
-                className={selectClass}
-                value={held.cultureId}
-                disabled={foundationLocked}
-                onChange={(e) => {
-                  if (foundationLocked) return;
-                  setBausteineKey("");
-                  updateHeld((h) => ({
-                    ...h,
-                    cultureId: e.target.value,
-                    professionId: "",
-                  }));
-                }}
-              >
-                <option value="">Select…</option>
-                {filteredCultures.map((c) => (
-                  <option key={c.id} value={c.id}>
-                    {(c.name as string) || c.id}
-                    {c.source === "custom" ? " (Custom)" : ""}
-                  </option>
-                ))}
-              </select>
+                <>
+                  <p className="text-sm text-ink-muted">
+                    Entries in red are not combinable with the selected race
+                    according to the rules (still selectable).
+                  </p>
+                  <FoundationChoiceList
+                    items={cultureChoices}
+                    value={held.cultureId}
+                    disabled={foundationLocked}
+                    isAllowed={(id) =>
+                      isCultureAllowedForRace(
+                        race as { allowed_cultures?: string[] } | undefined,
+                        id
+                      )
+                    }
+                    unavailableTitle="According to the rules this culture cannot be combined with the selected race."
+                    onChange={(id) => {
+                      if (foundationLocked) return;
+                      setBausteineKey("");
+                      updateHeld((h) => ({
+                        ...h,
+                        cultureId: id,
+                        professionId: "",
+                      }));
+                    }}
+                  />
+                  {culture && (
+                    <p className="text-sm text-ink-muted">
+                      GP cost: {String(culture.gp_cost ?? 0)}
+                      <CustomBadge source={culture.source as string} />
+                    </p>
+                  )}
+                </>
               )}
             </div>
           )}
@@ -1110,30 +1122,38 @@ export default function ChargenWizard() {
               ) : (
                 <>
                   <p className="text-sm text-ink-muted">
-                    Continuing locks race, culture, and profession and opens the
-                    rest of creation (Java Chargen Weiter).
+                    Entries in red are not combinable with the selected culture
+                    according to the rules. Continuing locks race, culture, and
+                    profession (Java Chargen Weiter).
                   </p>
-                  <select
-                    className={selectClass}
+                  <FoundationChoiceList
+                    items={professionChoices}
                     value={held.professionId}
                     disabled={foundationLocked}
-                    onChange={(e) => {
+                    isAllowed={(id) =>
+                      isProfessionAllowedForCulture(
+                        culture as
+                          | {
+                              professions?: {
+                                mode?: string;
+                                exclude?: string[];
+                                include?: string[];
+                              };
+                            }
+                          | undefined,
+                        id
+                      )
+                    }
+                    unavailableTitle="According to the rules this profession cannot be combined with the selected culture."
+                    onChange={(id) => {
                       if (foundationLocked) return;
                       setBausteineKey("");
                       updateHeld((h) => ({
                         ...h,
-                        professionId: e.target.value,
+                        professionId: id,
                       }));
                     }}
-                  >
-                    <option value="">Select…</option>
-                    {filteredProfessions.map((p) => (
-                      <option key={p.id} value={p.id}>
-                        {(p.name as string) || p.id}
-                        {p.source === "custom" ? " (Custom)" : ""}
-                      </option>
-                    ))}
-                  </select>
+                  />
                   {profession && (
                     <p className="text-sm text-ink-muted">
                       GP cost: {resolveProfessionGpCost(profession, held.raceId)}
@@ -2829,24 +2849,10 @@ export default function ChargenWizard() {
                   problems.hasSpecialAbilityPrereqIssues
                 }
               />
-              <button
-                type="button"
-                disabled={!problems.canFinish}
-                className="px-4 py-2 rounded-lg bg-brand text-white text-sm font-medium disabled:opacity-40"
-                onClick={() => {
-                  updateHeld((h) =>
-                    finishCreation(h, attributeMods, budget.gpRemaining)
-                  );
-                  setFoundationLocked(true);
-                  setStep("ap");
-                }}
-              >
-                Finish hero
-              </button>
             </div>
           )}
 
-          {(step === "finish" || step === "sheet") && (
+          {step === "sheet" && (
             <ChargenSheetView
               key={heldEpoch}
               held={held}
@@ -2866,9 +2872,7 @@ export default function ChargenWizard() {
             />
           )}
 
-          {step !== "start" &&
-            step !== "finish" &&
-            step !== "sheet" && (
+          {step !== "start" && step !== "sheet" && (
             <div className="mt-8 flex gap-2 border-t border-surface-border pt-4">
               <button
                 type="button"
@@ -2878,16 +2882,33 @@ export default function ChargenWizard() {
               >
                 Back
               </button>
-              <button
-                type="button"
-                disabled={nextDisabled}
-                className="px-3 py-2 rounded-lg text-sm bg-brand text-white font-medium disabled:opacity-40 disabled:pointer-events-none"
-                onClick={goNext}
-              >
-                {!veteran && !foundationLocked && step === "profession"
-                  ? "Continue"
-                  : "Next"}
-              </button>
+              {!veteran && step === "problems" ? (
+                <button
+                  type="button"
+                  disabled={!problems.canFinish}
+                  className="px-3 py-2 rounded-lg text-sm bg-brand text-white font-medium disabled:opacity-40 disabled:pointer-events-none"
+                  onClick={() => {
+                    updateHeld((h) =>
+                      finishCreation(h, attributeMods, budget.gpRemaining)
+                    );
+                    setFoundationLocked(true);
+                    setStep("ap");
+                  }}
+                >
+                  Finish
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  disabled={nextDisabled}
+                  className="px-3 py-2 rounded-lg text-sm bg-brand text-white font-medium disabled:opacity-40 disabled:pointer-events-none"
+                  onClick={goNext}
+                >
+                  {!veteran && !foundationLocked && step === "profession"
+                    ? "Continue"
+                    : "Next"}
+                </button>
+              )}
             </div>
           )}
         </div>

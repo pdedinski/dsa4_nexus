@@ -17,7 +17,7 @@ import type {
   DocTable,
   SheetDocument,
 } from "@/lib/chargen/export/sheetDocument";
-import { effectiveBorderStyle } from "@/lib/chargen/export/sheetDocument";
+import { effectiveBorderStyle, zipDocColumns } from "@/lib/chargen/export/sheetDocument";
 
 const noBorder = {
   top: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
@@ -127,51 +127,36 @@ function blocksToElements(blocks: DocBlock[]): (Paragraph | Table)[] {
       continue;
     }
     if (block.kind === "columns") {
-      const total = block.columns.reduce((a, c) => a + c.width, 0) || 100;
-      children.push(
-        new Table({
-          width: { size: 100, type: WidthType.PERCENTAGE },
-          rows: [
-            new TableRow({
-              children: block.columns.map((col) => {
-                const inner: (Paragraph | Table)[] = [];
-                for (const b of col.blocks) {
-                  if (b.kind === "heading") {
-                    inner.push(
-                      new Paragraph({
-                        alignment: AlignmentType.CENTER,
-                        children: [
-                          new TextRun({
-                            text: b.text,
-                            bold: true,
-                            font: "Times New Roman",
-                            size: b.fontSize * 2,
-                          }),
-                        ],
-                      })
-                    );
-                  } else if (b.kind === "table") {
-                    inner.push(buildTableWithWidths(b, 100));
-                    inner.push(new Paragraph({ children: [] }));
-                  }
-                }
-                if (!inner.length) {
-                  inner.push(new Paragraph({ children: [] }));
-                }
-                return new TableCell({
-                  borders: noBorder,
-                  width: {
-                    size: Math.round((col.width / total) * 100),
-                    type: WidthType.PERCENTAGE,
-                  },
-                  children: inner,
-                });
-              }),
-            }),
-          ],
-        })
-      );
-      children.push(new Paragraph({ children: [], spacing: { after: 80 } }));
+      const zipped = zipDocColumns(block);
+      if (zipped) {
+        children.push(buildTableWithWidths(zipped));
+        children.push(new Paragraph({ children: [], spacing: { after: 80 } }));
+      } else {
+        for (const col of block.columns) {
+          for (const b of col.blocks) {
+            if (b.kind === "heading") {
+              children.push(
+                new Paragraph({
+                  alignment: AlignmentType.CENTER,
+                  children: [
+                    new TextRun({
+                      text: b.text,
+                      bold: true,
+                      font: "Times New Roman",
+                      size: b.fontSize * 2,
+                    }),
+                  ],
+                })
+              );
+            } else if (b.kind === "table") {
+              children.push(buildTableWithWidths(b));
+              children.push(
+                new Paragraph({ children: [], spacing: { after: 80 } })
+              );
+            }
+          }
+        }
+      }
     }
   }
   return children;

@@ -15,6 +15,10 @@ import {
 import talenteCatalog from "@/lib/chargen/data/talente.json";
 import type { CatalogItem } from "@/lib/chargen/data/loadCatalog";
 import { formatTalentProbe } from "@/lib/chargen/rules/talentCaps";
+import {
+  sheetSpellNamePrefix,
+  sheetTalentLeadPrefix,
+} from "@/lib/chargen/export/sheetDocument";
 import { sktColumnLabel } from "@/lib/chargen/rules/kosten";
 import { resolveTalentSktColumn } from "@/lib/chargen/rules/sktColumn";
 import {
@@ -482,7 +486,7 @@ export default function ChargenSheetView({
                     <ul className="space-y-0.5">
                       {rows.map((t) => {
                         const meta = TALENT_BY_ID.get(t.id);
-                        const lead = held.leadTalents.includes(t.id) ? "* " : "";
+                        const lead = sheetTalentLeadPrefix(held, t.id);
                         const probe =
                           !isCombat && meta ? formatTalentProbe(meta) : "";
                         const skt = sktFor(t.id);
@@ -529,19 +533,14 @@ export default function ChargenSheetView({
           <Section title="Spells">
             <ul className="space-y-0.5">
               {held.spells.map((s) => {
-                const markers = [
-                  held.houseSpells.includes(s.id) ? "**" : "",
-                  held.leadSpells.includes(s.id) ? "*" : "",
-                ]
-                  .filter(Boolean)
-                  .join("");
+                const markers = sheetSpellNamePrefix(held, s.id);
                 return (
                   <li
                     key={s.id}
                     className="flex justify-between gap-2 border-b border-surface-border/40 py-1 last:border-0"
                   >
                     <span>
-                      {markers ? `${markers} ` : ""}
+                      {markers}
                       {nameOf(s.id)}
                     </span>
                     <span className="font-mono text-xs text-ink-muted">

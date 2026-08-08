@@ -87,7 +87,8 @@ export const DERIVED_FROM_GERMAN: Record<string, DerivedCode> = {
   "Basiswert.Initiative": "baseINI",
 };
 
-export const DERIVED_TO_GERMAN: Record<DerivedCode, string> = {
+/** Java `Basiswert` IDs only — GS (Speed) is computed, not a persisted Basiswert. */
+export const DERIVED_TO_GERMAN: Record<Exclude<DerivedCode, "GS">, string> = {
   VP: "Basiswert.Lebensenergie",
   EP: "Basiswert.Ausdauer",
   RM: "Basiswert.Magieresistenz",
@@ -97,7 +98,6 @@ export const DERIVED_TO_GERMAN: Record<DerivedCode, string> = {
   basePA: "Basiswert.Parade",
   baseBRV: "Basiswert.Fernkampf",
   baseINI: "Basiswert.Initiative",
-  GS: "Geschwindigkeit",
 };
 
 export type Gender = "male" | "female";
@@ -187,6 +187,15 @@ export interface TraitWert {
    * GP is charged only for levels above this baseline.
    */
   grantedRating?: number;
+  /** Java VorNachteilWert SpezielleErfahrung. */
+  specialExperience?: boolean;
+}
+
+/** Cheap SF variant (Java VerbilligteVarianten / SonderfertigkeitWert). */
+export interface DiscountedSpecialAbilityVariant {
+  id: string;
+  variant?: string;
+  talent?: string;
 }
 
 export type SpecialAbilityPayment = "ap" | "gp";
@@ -273,6 +282,8 @@ export interface HeldModel {
   advantagesDisadvantages: TraitWert[];
   specialAbilities: SpecialAbilityWert[];
   discountedSpecialAbilities: string[];
+  /** Java VerbilligteVarianten — cheap SF+variant pairs from packages. */
+  discountedSpecialAbilityVariants: DiscountedSpecialAbilityVariant[];
   meleeWeapons: MeleeWeaponWert[];
   rangedWeapons: RangedWeaponWert[];
   armors: ArmorWert[];
@@ -339,6 +350,7 @@ export function emptyHeld(): HeldModel {
     advantagesDisadvantages: [],
     specialAbilities: [],
     discountedSpecialAbilities: [],
+    discountedSpecialAbilityVariants: [],
     meleeWeapons: [],
     rangedWeapons: [],
     armors: [],

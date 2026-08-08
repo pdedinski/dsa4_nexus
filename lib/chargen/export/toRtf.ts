@@ -1,11 +1,13 @@
 import type {
   DocBlock,
   DocCell,
-  DocColumns,
   DocTable,
   SheetDocument,
 } from "@/lib/chargen/export/sheetDocument";
-import { effectiveBorderStyle } from "@/lib/chargen/export/sheetDocument";
+import {
+  effectiveBorderStyle,
+  zipDocColumns,
+} from "@/lib/chargen/export/sheetDocument";
 
 /** A4 content width in twips (11906 paper − 2×720 margins). */
 const PAGE_TWIPS = 10466;
@@ -47,113 +49,6 @@ function cellText(c: DocCell): string {
   const b = c.bold ? "\\b " : "";
   const b0 = c.bold ? "\\b0 " : "";
   return `${cellAlign(c)}${b}\\fs${fs} ${rtfUnicode(c.text)}${b0}`;
-}
-
-function emptyCell(): DocCell {
-  return { text: "" };
-}
-
-function emptySide(sideCols: number): DocCell[] {
-  return Array.from({ length: sideCols }, () => emptyCell());
-}
-
-/** Pad / expand a row so its colspan sum equals sideCols (Java-style pane). */
-function normalizeToSide(row: DocCell[], sideCols: number): DocCell[] {
-  const spanSum = row.reduce((a, c) => a + (c.colspan ?? 1), 0);
-  if (row.length === 1) {
-    return [{ ...row[0], colspan: sideCols }];
-  }
-  const out = row.map((c) => ({ ...c }));
-  let sum = spanSum;
-  while (sum < sideCols) {
-    out.push(emptyCell());
-    sum += 1;
-  }
-  return out;
-}
-
-function maxNativeCols(blocks: DocBlock[]): number {
-  let max = 1;
-  for (const b of blocks) {
-    if (b.kind === "table") {
-      max = Math.max(max, b.widths.length);
-    }
-  }
-  return max;
-}
-
-/** Flatten a column stack of tables into sequential side-pane rows. */
-function blocksToSideRows(blocks: DocBlock[], sideCols: number): DocCell[][] {
-  const rows: DocCell[][] = [];
-  for (const b of blocks) {
-    if (b.kind === "heading") {
-      rows.push([
-        {
-          text: b.text,
-          bold: true,
-          align: "center",
-          colspan: sideCols,
-          fontSize: b.fontSize,
-        },
-      ]);
-      continue;
-    }
-    if (b.kind !== "table") continue;
-    for (const row of b.rows) {
-      rows.push(normalizeToSide(row, sideCols));
-    }
-  }
-  return rows;
-}
-
-function sideWidthShares(sideCols: number, halfPct: number): number[] {
-  if (sideCols <= 0) return [halfPct];
-  // Name column gets the bulk; trailing value columns share the rest.
-  if (sideCols === 1) return [halfPct];
-  const trail = sideCols - 1;
-  const trailEach = Math.max(1, Math.floor((halfPct * 0.35) / trail));
-  const trailTotal = trailEach * trail;
-  const name = halfPct - trailTotal;
-  return [name, ...Array.from({ length: trail }, () => trailEach)];
-}
-
-/**
- * Word does not reliably render nested RTF tables. Mirror the Java chargen:
- * one flat wide table with left pane | gutter | right pane.
- */
-function renderColumnsZipped(block: DocColumns, parts: string[]) {
-  const leftBlocks = block.columns[0]?.blocks ?? [];
-  const rightBlocks = block.columns[1]?.blocks ?? [];
-  const sideCols = Math.max(
-    maxNativeCols(leftBlocks),
-    maxNativeCols(rightBlocks),
-    3
-  );
-  const leftRows = blocksToSideRows(leftBlocks, sideCols);
-  const rightRows = blocksToSideRows(rightBlocks, sideCols);
-  const n = Math.max(leftRows.length, rightRows.length);
-  if (n === 0) return;
-
-  const leftW = sideWidthShares(sideCols, 49);
-  const rightW = sideWidthShares(sideCols, 49);
-  const widths = [...leftW, 2, ...rightW];
-  const rows: DocCell[][] = [];
-  for (let i = 0; i < n; i++) {
-    const L = leftRows[i] ?? emptySide(sideCols);
-    const R = rightRows[i] ?? emptySide(sideCols);
-    rows.push([...L, emptyCell(), ...R]);
-  }
-
-  renderTable(
-    {
-      kind: "table",
-      widths,
-      rows,
-      bordered: true,
-      borderStyle: "solid",
-    },
-    parts
-  );
 }
 
 function renderTable(block: DocTable, parts: string[]) {
@@ -211,20 +106,6 @@ function renderPageBreak(parts: string[]) {
   parts.push("\\pard\\plain\\page\\fs0\\par\\fs20\\pard ");
 }
 
-function renderColumns(block: DocColumns, parts: string[]) {
-  if (block.columns.length === 1) {
-    renderBlocks(block.columns[0].blocks, parts);
-    return;
-  }
-  if (block.columns.length === 2) {
-    renderColumnsZipped(block, parts);
-    return;
-  }
-  for (const col of block.columns) {
-    renderBlocks(col.blocks, parts);
-  }
-}
-
 function renderBlocks(blocks: DocBlock[], parts: string[]) {
   for (const block of blocks) {
     if (block.kind === "pageBreak") {
@@ -240,7 +121,14 @@ function renderBlocks(blocks: DocBlock[], parts: string[]) {
       continue;
     }
     if (block.kind === "columns") {
-      renderColumns(block, parts);
+      const zipped = zipDocColumns(block);
+      if (zipped) {
+        renderTable(zipped, parts);
+      } else {
+        for (const col of block.columns) {
+          renderBlocks(col.blocks, parts);
+        }
+      }
     }
   }
 }

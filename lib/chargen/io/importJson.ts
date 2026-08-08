@@ -32,6 +32,8 @@ export function importHeldJson(raw: string): HeldModel {
     houseSpells: data.houseSpells ?? [],
     leadSpells: data.leadSpells ?? [],
     discountedSpecialAbilities: data.discountedSpecialAbilities ?? [],
+    discountedSpecialAbilityVariants:
+      data.discountedSpecialAbilityVariants ?? [],
   };
   return loadAsVeteran(merged);
 }

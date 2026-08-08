@@ -60,10 +60,12 @@ export function importLegacyHeldXml(raw: string): HeldModel {
         "Zauber",
         "VorNachteilWert",
         "SonderfertigkeitWert",
+        "Sonderfertigkeit",
         "NahkampfwaffeWert",
         "FernkampfwaffeWert",
         "RuestungWert",
         "SchildWert",
+        "Variante",
       ].includes(name),
   });
   const parsed = parser.parse(raw);
@@ -131,12 +133,15 @@ export function importLegacyHeldXml(raw: string): HeldModel {
 
   held.talents = asArray(heldNode.TalentWerte?.TalentWert).map((n) => {
     const node = n as Record<string, unknown>;
+    const activatedRaw = node["@_Aktiviert"];
     return {
       id: String(node["@_Talent"] ?? ""),
       tp: numAttr(node, "UnmodifizierteStufe", 0),
       attack:
         node["@_Attacke"] != null ? numAttr(node, "Attacke") : undefined,
       specialExperience: boolAttr(node, "SpezielleErfahrung"),
+      activated:
+        activatedRaw != null ? String(activatedRaw) === "true" : undefined,
     };
   });
 
@@ -173,6 +178,34 @@ export function importLegacyHeldXml(raw: string): HeldModel {
     };
   });
 
+  held.discountedSpecialAbilities = asArray(
+    heldNode.VerbilligteSonderfertigkeiten?.Sonderfertigkeit
+  )
+    .map((n) => {
+      if (typeof n === "string") return n;
+      const node = n as Record<string, unknown>;
+      return String(node["@_Sonderfertigkeit"] ?? textOf(n) ?? "");
+    })
+    .filter(Boolean);
+
+  // Held XML: SonderfertigkeitWert children; some baustein dumps use Variante.
+  const verbilligteVarianten = [
+    ...asArray(heldNode.VerbilligteVarianten?.SonderfertigkeitWert),
+    ...asArray(heldNode.VerbilligteVarianten?.Variante),
+  ];
+  held.discountedSpecialAbilityVariants = verbilligteVarianten
+    .map((n) => {
+      const node = n as Record<string, unknown>;
+      const id = String(node["@_Sonderfertigkeit"] ?? "");
+      if (!id) return null;
+      return {
+        id,
+        talent: node["@_Talent"] ? String(node["@_Talent"]) : undefined,
+        variant: node["@_Variante"] ? String(node["@_Variante"]) : undefined,
+      };
+    })
+    .filter((x): x is NonNullable<typeof x> => x != null);
+
   held.advantagesDisadvantages = asArray(
     heldNode.VorNachteilWerte?.VorNachteilWert
   ).map((n) => {
@@ -182,6 +215,7 @@ export function importLegacyHeldXml(raw: string): HeldModel {
       rating:
         node["@_Stufe"] != null ? numAttr(node, "Stufe") : undefined,
       variant: node["@_Variante"] ? String(node["@_Variante"]) : undefined,
+      specialExperience: boolAttr(node, "SpezielleErfahrung") || undefined,
     };
   });
 

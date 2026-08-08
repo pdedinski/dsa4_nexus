@@ -347,7 +347,10 @@ function extractVerbilligteVarianten(
       if (!id) return null;
       return {
         id,
-        variant: (vo["@_Variante"] as string) || null,
+        variant:
+          (vo["@_Variante"] as string) ||
+          (vo["@_Beschreibung"] as string) ||
+          null,
         description: (vo["@_Beschreibung"] as string) || null,
       };
     })
@@ -458,12 +461,13 @@ function extractProfessions(node: Record<string, unknown> | undefined) {
       include: [],
     };
   }
-  if (node.KeineAusser) {
-    const ka = node.KeineAusser as Record<string, unknown>;
+  // Java: AlleVon = allow-list. Legacy KeineAusser treated the same.
+  if (node.AlleVon || node.KeineAusser) {
+    const allow = (node.AlleVon || node.KeineAusser) as Record<string, unknown>;
     return {
-      mode: "none_except",
+      mode: "list",
       exclude: [],
-      include: asArray(ka.Profession).map(textOf).filter(Boolean),
+      include: asArray(allow.Profession).map(textOf).filter(Boolean),
     };
   }
   return {
@@ -753,8 +757,10 @@ function serializeMods(item: CatalogItem, level: number): string[] {
     );
   }
   for (const [code, mod] of derEntries) {
+    // GS is not a Java Basiswert (Held.getGeschwindigkeit); skip invalid ids.
+    if (code === "GS") continue;
     const ger =
-      DERIVED_TO_GERMAN[code as DerivedCode] ||
+      DERIVED_TO_GERMAN[code as Exclude<DerivedCode, "GS">] ||
       (code.startsWith("Basiswert.") ? code : `Basiswert.${code}`);
     lines.push(
       `${indent(level + 1)}<BasiswertModifikation Basiswert="${esc(ger)}" Modifikation="${mod}"/>`
@@ -1011,12 +1017,12 @@ function serializeProfessions(
       lines.push(`${indent(level + 2)}<Profession>${esc(p)}</Profession>`);
     }
     lines.push(`${indent(level + 1)}</AlleAusser>`);
-  } else if (mode === "none_except") {
-    lines.push(`${indent(level + 1)}<KeineAusser>`);
+  } else if (mode === "list" || mode === "none_except") {
+    lines.push(`${indent(level + 1)}<AlleVon>`);
     for (const p of include) {
       lines.push(`${indent(level + 2)}<Profession>${esc(p)}</Profession>`);
     }
-    lines.push(`${indent(level + 1)}</KeineAusser>`);
+    lines.push(`${indent(level + 1)}</AlleVon>`);
   } else {
     for (const p of include) {
       lines.push(`${indent(level + 1)}<Profession>${esc(p)}</Profession>`);

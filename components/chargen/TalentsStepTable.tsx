@@ -8,19 +8,20 @@ import {
   activateTalent,
   canActivateMoreTalents,
   canEditTalentValues,
+  combatAtPaConflictMessage,
   countNonSeededActivations,
   deactivateTalent,
-  isRangedCombatTalent,
-  isTalentCheckboxChecked,
-  isTalentOnHeld,
-  isValidCombatAtPa,
   lowerTalentTp,
+  MAX_COMBAT_ATTACK,
   MAX_TALENT_ACTIVATIONS,
   raiseTalentTp,
   setTalentAttack,
+  isTalentCheckboxChecked,
+  isTalentOnHeld,
   talentAdvancementLabel,
   talentDisplayApCost,
   talentParade,
+  usesAtPaDistribution,
 } from "@/lib/chargen/rules/talentActivation";
 import { formatTalentProbe } from "@/lib/chargen/rules/talentCaps";
 import LearningMethodSelect from "@/components/chargen/LearningMethodSelect";
@@ -177,18 +178,17 @@ export default function TalentsStepTable({
                       ? 0
                       : (seededTpMap.get(id) ?? 0);
                     const attack = row?.attack ?? 0;
-                    const pa =
-                      showCombatCols && !isRangedCombatTalent(t)
-                        ? talentParade(held, id, baseTp, attack, attributeMods)
+                    const showAtPa = showCombatCols && usesAtPaDistribution(t);
+                    const pa = showAtPa
+                      ? talentParade(held, id, baseTp, attack, attributeMods)
+                      : null;
+                    const atPaConflict =
+                      showAtPa && editable
+                        ? combatAtPaConflictMessage(attack, tp)
                         : null;
-                    const canAtMinus =
-                      editable &&
-                      attack > 0 &&
-                      isValidCombatAtPa(attack - 1, tp);
+                    const canAtMinus = editable && attack > 0;
                     const canAtPlus =
-                      editable &&
-                      attack < baseTp &&
-                      isValidCombatAtPa(attack + 1, tp);
+                      editable && attack < MAX_COMBAT_ATTACK;
                     const cost = talentDisplayApCost(
                       held,
                       t,
@@ -199,6 +199,13 @@ export default function TalentsStepTable({
                       veteran || canActivateMoreTalents(held, seedTalentIdSet);
                     const checkboxDisabled =
                       seeded || (!checked && !canActivate);
+                    const checkboxTitle = atPaConflict
+                      ? atPaConflict
+                      : seeded
+                        ? "Basic talent or granted by race, culture, or profession"
+                        : atCap && !checked
+                          ? `Maximum ${MAX_TALENT_ACTIVATIONS} activations`
+                          : undefined;
 
                     return (
                       <tr
@@ -208,16 +215,12 @@ export default function TalentsStepTable({
                         <td className="py-1 pr-2 align-middle">
                           <input
                             type="checkbox"
-                            className="rounded"
+                            className={`rounded ${
+                              atPaConflict ? "accent-red-500" : ""
+                            }`}
                             checked={checked}
                             disabled={checkboxDisabled}
-                            title={
-                              seeded
-                                ? "Basic talent or granted by race, culture, or profession"
-                                : atCap && !checked
-                                  ? `Maximum ${MAX_TALENT_ACTIVATIONS} activations`
-                                  : undefined
-                            }
+                            title={checkboxTitle}
                             onChange={(e) =>
                               updateHeld((h) =>
                                 e.target.checked
@@ -234,8 +237,13 @@ export default function TalentsStepTable({
                         </td>
                         <td
                           className={`py-1 pr-2 align-middle truncate max-w-[12rem] ${
-                            seeded ? "font-semibold" : ""
+                            atPaConflict
+                              ? "text-red-400 font-semibold"
+                              : seeded
+                                ? "font-semibold"
+                                : ""
                           }`}
+                          title={atPaConflict ?? undefined}
                         >
                           {(t.name as string) || id}
                           <CustomBadge source={t.source as string} />
@@ -249,13 +257,12 @@ export default function TalentsStepTable({
                         {showCombatCols && (
                           <>
                             <td className="py-1 px-1 text-center align-middle">
-                              {isRangedCombatTalent(t) ? (
+                              {!showAtPa ? (
                                 <span className="text-ink-faint">—</span>
                               ) : (
                                 <div className="flex items-center justify-center gap-0.5">
                                   <StepButton
                                     disabled={!canAtMinus}
-                                    title="|AT − PA| cannot exceed 5"
                                     onClick={() =>
                                       updateHeld((h) =>
                                         setTalentAttack(
@@ -275,7 +282,6 @@ export default function TalentsStepTable({
                                   </span>
                                   <StepButton
                                     disabled={!canAtPlus}
-                                    title="|AT − PA| cannot exceed 5"
                                     onClick={() =>
                                       updateHeld((h) =>
                                         setTalentAttack(
@@ -293,49 +299,13 @@ export default function TalentsStepTable({
                                 </div>
                               )}
                             </td>
-                            <td className="py-1 px-1 text-center align-middle">
-                              {isRangedCombatTalent(t) ? (
+                            <td className="py-1 px-1 text-center align-middle font-mono">
+                              {!showAtPa ? (
                                 <span className="text-ink-faint">—</span>
+                              ) : editable ? (
+                                pa
                               ) : (
-                                <div className="flex items-center justify-center gap-0.5">
-                                  <StepButton
-                                    disabled={!canAtPlus}
-                                    title="|AT − PA| cannot exceed 5"
-                                    onClick={() =>
-                                      updateHeld((h) =>
-                                        setTalentAttack(
-                                          h,
-                                          t,
-                                          seedTalentIdSet,
-                                          attack + 1,
-                                          attributeMods
-                                        )
-                                      )
-                                    }
-                                  >
-                                    −
-                                  </StepButton>
-                                  <span className="w-6 text-center font-mono">
-                                    {editable ? pa : "—"}
-                                  </span>
-                                  <StepButton
-                                    disabled={!canAtMinus}
-                                    title="|AT − PA| cannot exceed 5"
-                                    onClick={() =>
-                                      updateHeld((h) =>
-                                        setTalentAttack(
-                                          h,
-                                          t,
-                                          seedTalentIdSet,
-                                          attack - 1,
-                                          attributeMods
-                                        )
-                                      )
-                                    }
-                                  >
-                                    +
-                                  </StepButton>
-                                </div>
+                                <span className="text-ink-faint">—</span>
                               )}
                             </td>
                           </>

@@ -16,6 +16,7 @@ import {
 } from "@/lib/chargen/types";
 import { formatTalentProbe } from "@/lib/chargen/rules/talentCaps";
 import { sktColumnLabel } from "@/lib/chargen/rules/kosten";
+import { hasTrait } from "@/lib/chargen/rules/kosten";
 import { resolveTalentSktColumn } from "@/lib/chargen/rules/sktColumn";
 import {
   formatHpSt,
@@ -183,8 +184,110 @@ const DERIVED_SHEET_LABELS: Record<string, string> = {
   baseINI: "Base Initiative Value",
 };
 
+const ELFISCHE_WELTSICHT = "VorNachteil.ElfischeWeltsicht";
+
+/**
+ * Java HeldExportRtf: `*` / `**` markers only when the hero has Elven Worldview
+ * (lead talent / house spell / lead spell).
+ */
+export function sheetTalentLeadPrefix(held: HeldModel, talentId: string): string {
+  if (!hasTrait(held, ELFISCHE_WELTSICHT)) return "";
+  return held.leadTalents.includes(talentId) ? "* " : "";
+}
+
+export function sheetSpellNamePrefix(held: HeldModel, spellId: string): string {
+  if (!hasTrait(held, ELFISCHE_WELTSICHT)) return "";
+  if (held.houseSpells.includes(spellId)) return "** ";
+  if (held.leadSpells.includes(spellId)) return "* ";
+  return "";
+}
+
 function emptyCells(n: number): DocCell[] {
   return Array.from({ length: n }, () => cell(""));
+}
+
+function normalizeToSide(row: DocCell[], sideCols: number): DocCell[] {
+  const spanSum = row.reduce((a, c) => a + (c.colspan ?? 1), 0);
+  if (row.length === 1) {
+    return [{ ...row[0], colspan: sideCols }];
+  }
+  const out = row.map((c) => ({ ...c }));
+  let sum = spanSum;
+  while (sum < sideCols) {
+    out.push(cell(""));
+    sum += 1;
+  }
+  return out;
+}
+
+function maxNativeCols(blocks: DocBlock[]): number {
+  let max = 1;
+  for (const b of blocks) {
+    if (b.kind === "table") max = Math.max(max, b.widths.length);
+  }
+  return max;
+}
+
+function blocksToSideRows(blocks: DocBlock[], sideCols: number): DocCell[][] {
+  const rows: DocCell[][] = [];
+  for (const b of blocks) {
+    if (b.kind === "heading") {
+      rows.push([
+        cell(b.text, {
+          bold: true,
+          align: "center",
+          colspan: sideCols,
+          fontSize: b.fontSize,
+        }),
+      ]);
+      continue;
+    }
+    if (b.kind !== "table") continue;
+    for (const row of b.rows) {
+      rows.push(normalizeToSide(row, sideCols));
+    }
+  }
+  return rows;
+}
+
+function sideWidthShares(sideCols: number, halfPct: number): number[] {
+  if (sideCols <= 1) return [halfPct];
+  const trail = sideCols - 1;
+  const trailEach = Math.max(1, Math.floor((halfPct * 0.35) / trail));
+  const trailTotal = trailEach * trail;
+  return [halfPct - trailTotal, ...Array.from({ length: trail }, () => trailEach)];
+}
+
+/**
+ * Flatten a two-column block into one wide table (Java chargen style).
+ * Used by PDF/RTF so panes stay aligned across page breaks.
+ */
+export function zipDocColumns(block: DocColumns): DocTable | null {
+  if (block.columns.length !== 2) return null;
+  const leftBlocks = block.columns[0]?.blocks ?? [];
+  const rightBlocks = block.columns[1]?.blocks ?? [];
+  const sideCols = Math.max(
+    maxNativeCols(leftBlocks),
+    maxNativeCols(rightBlocks),
+    3
+  );
+  const leftRows = blocksToSideRows(leftBlocks, sideCols);
+  const rightRows = blocksToSideRows(rightBlocks, sideCols);
+  const n = Math.max(leftRows.length, rightRows.length);
+  if (n === 0) return null;
+
+  const widths = [
+    ...sideWidthShares(sideCols, 49),
+    2,
+    ...sideWidthShares(sideCols, 49),
+  ];
+  const rows: DocCell[][] = [];
+  for (let i = 0; i < n; i++) {
+    const L = leftRows[i] ?? emptyCells(sideCols);
+    const R = rightRows[i] ?? emptyCells(sideCols);
+    rows.push([...L, cell(""), ...R]);
+  }
+  return table(widths, rows);
 }
 
 function attributeStrip(held: HeldModel, mods?: AttributeMods): DocTable {
@@ -246,11 +349,10 @@ function buildCombatTalentTable(
     const meta = TALENT_BY_ID.get(tw.id);
     if (String(meta?.group || "") !== groupId) continue;
     count += 1;
-    const isLead = held.leadTalents.includes(tw.id);
     const skt = talentSktLabel(held, meta);
     const at = tw.attack ?? 0;
     const pa = Math.max(0, tw.tp - at);
-    const label = `${isLead ? "* " : ""}${tName(tw.id)}${skt ? ` ${skt}` : ""}`;
+    const label = `${sheetTalentLeadPrefix(held, tw.id)}${tName(tw.id)}${skt ? ` ${skt}` : ""}`;
     rows.push([
       cell(label, { fontSize: FS_BODY }),
       cell(String(at), { align: "center", fontSize: FS_BODY }),
@@ -288,10 +390,9 @@ function buildSkillTalentTable(
     const meta = TALENT_BY_ID.get(tw.id);
     if (String(meta?.group || "") !== groupId) continue;
     count += 1;
-    const isLead = held.leadTalents.includes(tw.id);
     const probe = meta ? formatTalentProbe(meta) : "";
     const skt = talentSktLabel(held, meta);
-    const label = `${isLead ? "* " : ""}${tName(tw.id)}${probe ? ` ${probe}` : ""}`;
+    const label = `${sheetTalentLeadPrefix(held, tw.id)}${tName(tw.id)}${probe ? ` ${probe}` : ""}`;
     rows.push([
       cell(label, { fontSize: FS_BODY }),
       cell(skt.replace(/[()]/g, "") || "", {
@@ -327,12 +428,7 @@ function buildSpellsTable(
   ];
   for (const sw of held.spells) {
     const meta = SPELL_BY_ID.get(sw.id);
-    const markers = [
-      held.houseSpells.includes(sw.id) ? "**" : "",
-      held.leadSpells.includes(sw.id) ? "*" : "",
-    ]
-      .filter(Boolean)
-      .join("");
+    const markers = sheetSpellNamePrefix(held, sw.id);
     const probe = meta ? formatTalentProbe(meta) : "";
     let skt = "";
     if (meta?.skt_column != null) {
@@ -341,7 +437,7 @@ function buildSpellsTable(
         ""
       );
     }
-    const label = `${markers ? `${markers} ` : ""}${sName(sw.id)}${probe ? ` ${probe}` : ""}`;
+    const label = `${markers}${sName(sw.id)}${probe ? ` ${probe}` : ""}`;
     rows.push([
       cell(label, { fontSize: FS_BODY }),
       cell(skt, { align: "center", fontSize: FS_BODY }),

@@ -25,6 +25,17 @@ export const MAX_TALENT_ACTIVATIONS = 5;
 /** Java `VoraussetzungKampftechnik.MAX_DIFFERENZ` — |AT − PA| must not exceed this. */
 export const MAX_AT_PA_DIFF = 5;
 
+/** Java AT spinner max in `PanelKampftechnikenListe`. */
+export const MAX_COMBAT_ATTACK = 99;
+
+/** Java `Lokalisierung_en` `VoraussetzungKampftechnik.Differenz` (plain text). */
+export const COMBAT_AT_PA_DIFF_MSG =
+  "The difference between AT and PA must not be greater than 5.";
+
+/** Java `Lokalisierung_en` `VoraussetzungKampftechnik.ueberStufe` (exact wording). */
+export const COMBAT_AT_OVER_TP_MSG =
+  "You mustn't spent more points on AT than you have TP.";
+
 export function isBasicTalent(talent: CatalogItem): boolean {
   return talent.is_basic === true || talent.type === "basis";
 }
@@ -37,20 +48,40 @@ export function isRangedCombatTalent(talent: CatalogItem): boolean {
   return isCombatTalent(talent) && talent.ranged === true;
 }
 
+/**
+ * Melee techniques that distribute AT/PA (Java hides AT/PA for ranged and
+ * `Talent.Lanzenreiten`).
+ */
+export function usesAtPaDistribution(talent: CatalogItem): boolean {
+  return (
+    isCombatTalent(talent) &&
+    !isRangedCombatTalent(talent) &&
+    String(talent.id) !== "Talent.Lanzenreiten"
+  );
+}
+
 /** Whether AT/PA split is legal for a given TP (PA = tp − attack). */
 export function isValidCombatAtPa(attack: number, tp: number): boolean {
-  return Math.abs(2 * attack - tp) <= MAX_AT_PA_DIFF;
+  return attack <= tp && Math.abs(2 * attack - tp) <= MAX_AT_PA_DIFF;
 }
 
 /**
- * Clamp AT into [0, tp] and |AT − PA| ≤ {@link MAX_AT_PA_DIFF} (PA = tp − AT).
- * Mirrors Java `VoraussetzungKampftechnik`.
+ * Java `VoraussetzungKampftechnik.pruefen` — conflict tooltip text, or null if OK.
+ * AT &gt; TP takes priority over the |AT − PA| &gt; 5 check.
  */
-export function clampCombatAttack(attack: number, tp: number): number {
-  const lo = Math.max(0, Math.ceil((tp - MAX_AT_PA_DIFF) / 2));
-  const hi = Math.min(Math.max(0, tp), Math.floor((tp + MAX_AT_PA_DIFF) / 2));
-  if (lo > hi) return Math.max(0, Math.min(tp, attack));
-  return Math.max(lo, Math.min(hi, attack));
+export function combatAtPaConflictMessage(
+  attack: number,
+  tp: number
+): string | null {
+  if (attack > tp) return COMBAT_AT_OVER_TP_MSG;
+  if (Math.abs(2 * attack - tp) > MAX_AT_PA_DIFF) return COMBAT_AT_PA_DIFF_MSG;
+  return null;
+}
+
+/** Clamp AT into the Java spinner range [0, 99]. Spread is not enforced. */
+export function clampCombatAttack(attack: number, _tp?: number): number {
+  if (!Number.isFinite(attack)) return 0;
+  return Math.max(0, Math.min(MAX_COMBAT_ATTACK, Math.trunc(attack)));
 }
 
 export function talentRow(
@@ -302,10 +333,6 @@ export function raiseTalentTp(
   } else {
     cost = raiseCostAt(held, talent, from, raiseMethod);
   }
-  const nextAttack =
-    isCombatTalent(talent) && !isRangedCombatTalent(talent)
-      ? clampCombatAttack(row.attack ?? 0, to)
-      : undefined;
   const clearSe = !!row.specialExperience;
   return {
     ...held,
@@ -314,7 +341,6 @@ export function raiseTalentTp(
         ? {
             ...t,
             tp: to,
-            ...(nextAttack !== undefined ? { attack: nextAttack } : {}),
             ...(clearSe ? { specialExperience: false } : {}),
           }
         : t
@@ -342,14 +368,10 @@ export function lowerTalentTp(
     refund = raiseCostAt(held, talent, from - 1, learningMethod);
   }
   const nextTp = from - 1;
-  const nextAttack =
-    isCombatTalent(talent) && !isRangedCombatTalent(talent)
-      ? clampCombatAttack(row.attack ?? 0, nextTp)
-      : Math.min(row.attack ?? 0, nextTp);
   return {
     ...held,
     talents: held.talents.map((t) =>
-      t.id === id ? { ...t, tp: nextTp, attack: nextAttack } : t
+      t.id === id ? { ...t, tp: nextTp } : t
     ),
     apSpent: Math.max(0, held.apSpent - refund),
   };
@@ -360,14 +382,13 @@ export function setTalentAttack(
   talent: CatalogItem,
   seededIds: Set<string>,
   attack: number,
-  attributeMods?: AttributeMods
+  _attributeMods?: AttributeMods
 ): HeldModel {
   const id = String(talent.id);
   if (!canEditTalentValues(held, talent, seededIds)) return held;
   const row = talentRow(held, id);
   if (!row) return held;
-  const tp = effectiveTalentTp(held, id, row.tp, attributeMods);
-  const clamped = clampCombatAttack(attack, tp);
+  const clamped = clampCombatAttack(attack);
   return {
     ...held,
     talents: held.talents.map((t) =>

@@ -27,6 +27,7 @@ const kk = {
   displayName: "Culture Lore",
   variantMode: "list",
   variantOptions: [],
+  freeVariant: false,
 } as ExpandedSpecialAbility;
 check("Kulturkunde AP", specializationApCost(held, kk), 150);
 held.specialAbilities.push({ id: "Sonderfertigkeit.NandusgefaelligesWissen" });
@@ -41,6 +42,7 @@ const sf = {
   displayName: "Standfest",
   variantMode: "none",
   variantOptions: [],
+  freeVariant: false,
 } as ExpandedSpecialAbility;
 check("Standfest+Balance", specializationApCost(held, sf), 0);
 
@@ -75,6 +77,7 @@ const ort = {
   displayName: "O",
   variantMode: "free_text",
   variantOptions: [],
+  freeVariant: false,
 } as ExpandedSpecialAbility;
 const h3 = emptyHeld();
 check("Orts first", specializationApCost(h3, ort, "Town A"), 150);

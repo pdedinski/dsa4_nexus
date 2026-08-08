@@ -290,7 +290,13 @@
     "professions": {
       "mode": "list",
       "exclude": [],
-      "include": []
+      "include": [
+        "Profession.Botenreiter",
+        "Profession.Entdecker",
+        "Profession.Kundschafter",
+        "Profession.Soeldner",
+        "Profession.Wundarzt"
+      ]
     },
     "name_factory": "Namenformate.ZwergischeNamen",
     "special_ability_bonuses": [
@@ -1156,7 +1162,10 @@
     "professions": {
       "mode": "list",
       "exclude": [],
-      "include": []
+      "include": [
+        "Profession.Legendensaenger",
+        "Profession.Wildnislaeufer"
+      ]
     },
     "name_factory": "Namenformate.ElfischeNamen",
     "special_ability_bonuses": [
@@ -1716,7 +1725,10 @@
     "professions": {
       "mode": "list",
       "exclude": [],
-      "include": []
+      "include": [
+        "Profession.Legendensaenger",
+        "Profession.Wildnislaeufer"
+      ]
     },
     "name_factory": "Namenformate.ElfischeNamen",
     "special_ability_bonuses": [
@@ -3269,7 +3281,13 @@
     "professions": {
       "mode": "list",
       "exclude": [],
-      "include": []
+      "include": [
+        "Profession.Entdecker",
+        "Profession.Gaukler",
+        "Profession.Kundschafter",
+        "Profession.Streuner",
+        "Profession.Wundarzt"
+      ]
     },
     "name_factory": "Namenformate.TulamidischeNovadischeNamen",
     "special_ability_bonuses": [
@@ -3720,7 +3738,16 @@
     "professions": {
       "mode": "list",
       "exclude": [],
-      "include": []
+      "include": [
+        "Profession.Botenreiter",
+        "Profession.Gaukler",
+        "Profession.Krieger",
+        "Profession.Kundschafter",
+        "Profession.Magier",
+        "Profession.Soeldner",
+        "Profession.Streuner",
+        "Profession.Wundarzt"
+      ]
     },
     "name_factory": "Namenformate.TulamidischeNovadischeNamen",
     "special_ability_bonuses": [

@@ -53,6 +53,8 @@ export function sanitizeHeldForStorage(raw: unknown): {
     houseSpells: data.houseSpells ?? [],
     leadSpells: data.leadSpells ?? [],
     discountedSpecialAbilities: data.discountedSpecialAbilities ?? [],
+    discountedSpecialAbilityVariants:
+      data.discountedSpecialAbilityVariants ?? [],
   };
   const held = stripSessionBaselines(merged);
   return { ok: true, held, name: heroDisplayName(held) };

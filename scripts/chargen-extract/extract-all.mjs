@@ -491,11 +491,13 @@ function extractProfessions(node) {
       include: [],
     };
   }
-  if (node.KeineAusser) {
+  // Java: AlleVon = allow-list. Legacy KeineAusser treated the same.
+  if (node.AlleVon || node.KeineAusser) {
+    const allow = node.AlleVon || node.KeineAusser;
     return {
-      mode: "none_except",
+      mode: "list",
       exclude: [],
-      include: asArray(node.KeineAusser.Profession).map(textOf).filter(Boolean),
+      include: asArray(allow.Profession).map(textOf).filter(Boolean),
     };
   }
   return {

@@ -301,9 +301,19 @@ function isSpecializationInstance(instance: ExpandedSpecialAbility): boolean {
  */
 export function specialAbilityCostFactor(
   held: HeldModel,
-  instance: { id: string }
+  instance: { id: string; variant?: string | null; talent?: string }
 ): number {
   if (held.discountedSpecialAbilities.includes(instance.id)) return 0.5;
+  if (
+    held.discountedSpecialAbilityVariants?.some(
+      (v) =>
+        v.id === instance.id &&
+        (v.variant || "") === (instance.variant || "") &&
+        (v.talent || "") === (instance.talent || "")
+    )
+  ) {
+    return 0.5;
+  }
   if (hasTrait(held, ELFISCHE_WELTSICHT)) return 1.5;
   return 1.0;
 }

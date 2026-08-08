@@ -277,6 +277,34 @@ function applyDiscounted(
   }
 }
 
+function applyDiscountedVariants(
+  held: HeldModel,
+  list:
+    | Array<{
+        id?: string;
+        variant?: string | null;
+        talent?: string | null;
+        description?: string | null;
+      }>
+    | undefined
+) {
+  for (const item of list || []) {
+    if (!item?.id) continue;
+    // Baustein VerbilligteVarianten often store free-text in Beschreibung, not Variante.
+    const variant = item.variant || item.description || undefined;
+    const talent = item.talent || undefined;
+    const already = held.discountedSpecialAbilityVariants.some(
+      (v) => v.id === item.id && v.variant === variant && v.talent === talent
+    );
+    if (already) continue;
+    held.discountedSpecialAbilityVariants.push({
+      id: item.id,
+      variant,
+      talent,
+    });
+  }
+}
+
 function applyOpenTalentAssignments(
   talents: TalentWert[],
   open: OpenTalentChoice[],
@@ -834,6 +862,7 @@ export function applyFixedBausteine(
     advantagesDisadvantages: [...seededTraits],
     specialAbilities: [],
     discountedSpecialAbilities: [],
+    discountedSpecialAbilityVariants: [],
     leadTalents,
     leadSpells,
     houseSpells: house,
@@ -893,6 +922,20 @@ export function applyFixedBausteine(
     seededHeld,
     profession?.discounted_special_abilities as Array<{ id?: string }>
   );
+  applyDiscountedVariants(
+    seededHeld,
+    culture?.discounted_special_ability_variants as Array<{
+      id?: string;
+      variant?: string | null;
+    }>
+  );
+  applyDiscountedVariants(
+    seededHeld,
+    profession?.discounted_special_ability_variants as Array<{
+      id?: string;
+      variant?: string | null;
+    }>
+  );
 
   if (opts.openCheapSpecialPick) {
     if (
@@ -940,6 +983,18 @@ export function applyFixedBausteine(
           (id) => !seededHeld.discountedSpecialAbilities.includes(id)
         ),
       ]),
+    ],
+    discountedSpecialAbilityVariants: [
+      ...seededHeld.discountedSpecialAbilityVariants,
+      ...held.discountedSpecialAbilityVariants.filter(
+        (v) =>
+          !seededHeld.discountedSpecialAbilityVariants.some(
+            (s) =>
+              s.id === v.id &&
+              s.variant === v.variant &&
+              s.talent === v.talent
+          )
+      ),
     ],
     leadTalents,
     leadSpells,

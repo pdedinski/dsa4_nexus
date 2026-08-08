@@ -8,6 +8,10 @@ import {
   currentAttrValue,
   talentTp,
 } from "@/lib/chargen/types";
+import {
+  isCultureAllowedForRace,
+  isProfessionAllowedForCulture,
+} from "@/lib/chargen/rules/availability";
 import { hasTrait } from "@/lib/chargen/rules/kosten";
 import { countNonSeededActivations } from "@/lib/chargen/rules/talentActivation";
 
@@ -440,39 +444,33 @@ export function checkRaceCultureProfession(
     });
   }
   if (
-    race?.allowed_cultures?.length &&
     held.cultureId &&
-    !race.allowed_cultures.includes(held.cultureId)
+    !isCultureAllowedForRace(race, held.cultureId)
   ) {
     out.push({
       code: "culture_not_allowed",
-      message: "Selected culture is not allowed for this race.",
+      message:
+        "According to the rules this culture cannot be combined with the selected race.",
       severity: "error",
       section: "culture",
     });
   }
-  if (culture?.professions && held.professionId) {
+  if (
+    held.professionId &&
+    culture?.professions &&
+    !isProfessionAllowedForCulture(culture, held.professionId)
+  ) {
     const p = culture.professions;
-    if (p.mode === "all_except" && p.exclude?.includes(held.professionId)) {
-      out.push({
-        code: "profession_excluded",
-        message: "Selected profession is excluded by this culture.",
-        severity: "error",
-        section: "profession",
-      });
-    }
-    if (
-      (p.mode === "list" || p.mode === "none_except") &&
-      p.include?.length &&
-      !p.include.includes(held.professionId)
-    ) {
-      out.push({
-        code: "profession_not_allowed",
-        message: "Selected profession is not allowed for this culture.",
-        severity: "error",
-        section: "profession",
-      });
-    }
+    out.push({
+      code:
+        p.mode === "all_except"
+          ? "profession_excluded"
+          : "profession_not_allowed",
+      message:
+        "According to the rules this profession cannot be combined with the selected culture.",
+      severity: "error",
+      section: "profession",
+    });
   }
   return out;
 }
