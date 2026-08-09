@@ -5,7 +5,7 @@ import { db } from "@/lib/db/client";
 import { chargenHeroes } from "@/lib/db/chargenSchema";
 
 export async function DELETE(
-  _req: NextRequest,
+  req: NextRequest,
   ctx: { params: Promise<{ id: string }> }
 ) {
   const session = await requireAdmin();
@@ -14,17 +14,38 @@ export async function DELETE(
   }
 
   const { id } = await ctx.params;
-  try {
-    const deleted = await db
-      .delete(chargenHeroes)
-      .where(eq(chargenHeroes.id, id))
-      .returning({ id: chargenHeroes.id });
+  const allVersions =
+    req.nextUrl.searchParams.get("allVersions") === "1" ||
+    req.nextUrl.searchParams.get("allVersions") === "true";
 
-    if (deleted.length === 0) {
+  try {
+    const [existing] = await db
+      .select({
+        id: chargenHeroes.id,
+        characterId: chargenHeroes.characterId,
+      })
+      .from(chargenHeroes)
+      .where(eq(chargenHeroes.id, id))
+      .limit(1);
+
+    if (!existing) {
       return NextResponse.json({ error: "Not found" }, { status: 404 });
     }
 
-    return NextResponse.json({ ok: true });
+    if (allVersions) {
+      const deleted = await db
+        .delete(chargenHeroes)
+        .where(eq(chargenHeroes.characterId, existing.characterId))
+        .returning({ id: chargenHeroes.id });
+      return NextResponse.json({
+        ok: true,
+        deletedCount: deleted.length,
+        characterId: existing.characterId,
+      });
+    }
+
+    await db.delete(chargenHeroes).where(eq(chargenHeroes.id, id));
+    return NextResponse.json({ ok: true, deletedCount: 1 });
   } catch (err) {
     console.error("[manage/chargen-heroes] delete failed", err);
     return NextResponse.json(

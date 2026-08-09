@@ -2,28 +2,44 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import clsx from "clsx";
+import type { GroupedChargenCharacter } from "@/lib/chargen/heroesVersioning";
 
-export interface DbHeroListItem {
+export type DbHeroLoadPayload = {
   id: string;
-  name: string;
-  updatedAt?: string;
-  createdBy?: string | null;
-  ownerName?: string | null;
+  characterId: string;
+  version: number;
+  updatedAt: string | null;
+  data: unknown;
+  createdBy: string | null;
+};
+
+function formatVersionLabel(
+  version: number,
+  updatedAt?: string | Date | null
+): string {
+  const when = updatedAt
+    ? new Date(updatedAt).toLocaleString(undefined, {
+        dateStyle: "medium",
+        timeStyle: "short",
+      })
+    : null;
+  return when ? `v${version} — ${when}` : `v${version}`;
 }
 
 export default function LoadChargenFromDb({
   onLoad,
 }: {
-  onLoad: (hero: {
-    id: string;
-    data: unknown;
-    createdBy: string | null;
-  }) => void;
+  onLoad: (hero: DbHeroLoadPayload) => void;
 }) {
-  const [heroes, setHeroes] = useState<DbHeroListItem[]>([]);
+  const [heroes, setHeroes] = useState<GroupedChargenCharacter[]>([]);
   const [loading, setLoading] = useState(true);
   const [query, setQuery] = useState("");
-  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [selectedCharacterId, setSelectedCharacterId] = useState<string | null>(
+    null
+  );
+  const [selectedVersionId, setSelectedVersionId] = useState<string | null>(
+    null
+  );
   const [open, setOpen] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -34,7 +50,7 @@ export default function LoadChargenFromDb({
     try {
       const res = await fetch("/api/chargen/heroes");
       const data = (await res.json()) as {
-        heroes?: DbHeroListItem[];
+        heroes?: GroupedChargenCharacter[];
         error?: string;
       };
       if (!res.ok) {
@@ -65,16 +81,28 @@ export default function LoadChargenFromDb({
     );
   }, [heroes, query]);
 
-  const selected = heroes.find((h) => h.id === selectedId) ?? null;
+  const selected = heroes.find((h) => h.characterId === selectedCharacterId) ?? null;
+
+  useEffect(() => {
+    if (!selected) {
+      setSelectedVersionId(null);
+      return;
+    }
+    const latest = selected.versions[selected.versions.length - 1];
+    setSelectedVersionId(latest?.id ?? selected.id);
+  }, [selected]);
 
   async function handleLoad() {
-    if (!selectedId) return;
+    if (!selectedVersionId) return;
     setBusy(true);
     setError(null);
     try {
-      const res = await fetch(`/api/chargen/heroes/${selectedId}`);
+      const res = await fetch(`/api/chargen/heroes/${selectedVersionId}`);
       const data = (await res.json()) as {
         id?: string;
+        characterId?: string;
+        version?: number;
+        updatedAt?: string;
         data?: unknown;
         createdBy?: string | null;
         error?: string;
@@ -85,6 +113,9 @@ export default function LoadChargenFromDb({
       }
       onLoad({
         id: data.id,
+        characterId: data.characterId ?? selected?.characterId ?? data.id,
+        version: data.version ?? 1,
+        updatedAt: data.updatedAt ?? null,
         data: data.data,
         createdBy: data.createdBy ?? null,
       });
@@ -129,24 +160,23 @@ export default function LoadChargenFromDb({
                 </li>
               )}
               {filtered.map((h) => (
-                <li key={h.id}>
+                <li key={h.characterId}>
                   <button
                     type="button"
                     className={clsx(
                       "w-full px-3 py-2 text-left text-sm hover:bg-surface-sidebar",
-                      selectedId === h.id && "bg-brand-muted"
+                      selectedCharacterId === h.characterId && "bg-brand-muted"
                     )}
                     onClick={() => {
-                      setSelectedId(h.id);
+                      setSelectedCharacterId(h.characterId);
                       setOpen(false);
                     }}
                   >
                     <span className="text-ink block truncate">{h.name}</span>
-                    {h.ownerName && (
-                      <span className="text-ink-faint text-xs">
-                        {h.ownerName}
-                      </span>
-                    )}
+                    <span className="text-ink-faint text-xs">
+                      {h.ownerName ? `${h.ownerName} · ` : ""}
+                      {formatVersionLabel(h.version, h.updatedAt)}
+                    </span>
                   </button>
                 </li>
               ))}
@@ -154,9 +184,23 @@ export default function LoadChargenFromDb({
           </div>
         )}
       </div>
+      {selected && (
+        <select
+          className="px-3 py-2 rounded-lg border border-surface-border bg-[#2c251f] text-sm text-ink scheme-dark min-w-[12rem]"
+          value={selectedVersionId ?? ""}
+          onChange={(e) => setSelectedVersionId(e.target.value || null)}
+          aria-label="Character version"
+        >
+          {[...selected.versions].reverse().map((v) => (
+            <option key={v.id} value={v.id}>
+              {formatVersionLabel(v.version, v.updatedAt)}
+            </option>
+          ))}
+        </select>
+      )}
       <button
         type="button"
-        disabled={!selectedId || busy}
+        disabled={!selectedVersionId || busy}
         className="px-4 py-2 rounded-lg border border-surface-border text-sm text-ink disabled:opacity-40"
         onClick={() => void handleLoad()}
       >

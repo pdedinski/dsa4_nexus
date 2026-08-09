@@ -51,6 +51,19 @@ import { downloadPdf } from "@/lib/chargen/export/toPdf";
 import { downloadDocx } from "@/lib/chargen/export/toDocx";
 import waffenNahkampf from "@/lib/chargen/data/waffen_nahkampf.json";
 import waffenFernkampf from "@/lib/chargen/data/waffen_fernkampf.json";
+import SaveNameConflictDialog from "@/components/chargen/SaveNameConflictDialog";
+import {
+  findCharacterByName,
+  latestVersionOf,
+  type GroupedChargenCharacter,
+} from "@/lib/chargen/heroesVersioning";
+
+export type PersistMeta = {
+  id: string;
+  characterId: string;
+  version: number;
+  updatedAt: string | null;
+};
 
 const TALENT_BY_ID = new Map(
   (talenteCatalog as CatalogItem[]).map((t) => [String(t.id), t])
@@ -158,7 +171,11 @@ export default function ChargenSheetView({
   labels,
   attributeMods,
   dbHeroId = null,
+  dbCharacterId = null,
+  dbVersion = null,
+  dbUpdatedAt = null,
   onPersisted,
+  onHeldNameChange,
   modificationActive = false,
   onFinishCreation,
 }: {
@@ -172,7 +189,11 @@ export default function ChargenSheetView({
   /** Race/culture/profession attribute modifiers — required for correct Current values. */
   attributeMods?: AttributeMods;
   dbHeroId?: string | null;
-  onPersisted?: (id: string) => void;
+  dbCharacterId?: string | null;
+  dbVersion?: number | null;
+  dbUpdatedAt?: string | null;
+  onPersisted?: (meta: PersistMeta) => void;
+  onHeldNameChange?: (name: string) => void;
   modificationActive?: boolean;
   onFinishCreation?: () => void;
 }) {
@@ -181,6 +202,11 @@ export default function ChargenSheetView({
   const [persistStatus, setPersistStatus] = useState<string | null>(null);
   const [persisting, setPersisting] = useState(false);
   const [finishStatus, setFinishStatus] = useState<string | null>(null);
+  const [conflictOpen, setConflictOpen] = useState(false);
+  const [conflictError, setConflictError] = useState<string | null>(null);
+  const [conflictMatch, setConflictMatch] =
+    useState<GroupedChargenCharacter | null>(null);
+  const [renameSuggested, setRenameSuggested] = useState(held.name || "");
 
   /** Always build from the live held — never cache across edits. */
   function makeDoc() {
@@ -213,53 +239,211 @@ export default function ChargenSheetView({
   const biv = derivedValue(held, "baseINI");
   const apCredit = Math.max(0, (held.apTotal || 0) - (held.apSpent || 0));
 
+  async function fetchHeroList(): Promise<GroupedChargenCharacter[]> {
+    const res = await fetch("/api/chargen/heroes");
+    const data = (await res.json()) as {
+      heroes?: GroupedChargenCharacter[];
+      error?: string;
+    };
+    if (!res.ok) {
+      throw new Error(data.error || "Failed to load heroes");
+    }
+    return data.heroes ?? [];
+  }
+
+  function metaFromResponse(body: {
+    id: string;
+    characterId?: string;
+    version?: number;
+    updatedAt?: string;
+  }): PersistMeta {
+    return {
+      id: body.id,
+      characterId: body.characterId ?? body.id,
+      version: body.version ?? 1,
+      updatedAt: body.updatedAt ?? null,
+    };
+  }
+
+  async function putVersion(
+    heroId: string,
+    data: HeldModel
+  ): Promise<{ ok: true; meta: PersistMeta } | { ok: false; error: string; status: number }> {
+    const putRes = await fetch(`/api/chargen/heroes/${heroId}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ data }),
+    });
+    if (putRes.ok) {
+      const body = (await putRes.json()) as {
+        id: string;
+        characterId?: string;
+        version?: number;
+        updatedAt?: string;
+      };
+      return { ok: true, meta: metaFromResponse(body) };
+    }
+    const body = (await putRes.json().catch(() => ({}))) as { error?: string };
+    return {
+      ok: false,
+      error: body.error || "Failed to update hero.",
+      status: putRes.status,
+    };
+  }
+
+  async function postHero(
+    data: HeldModel,
+    characterId?: string
+  ): Promise<{ ok: true; meta: PersistMeta } | { ok: false; error: string; status: number }> {
+    const postRes = await fetch("/api/chargen/heroes", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(
+        characterId ? { data, characterId } : { data }
+      ),
+    });
+    if (postRes.ok) {
+      const body = (await postRes.json()) as {
+        id: string;
+        characterId?: string;
+        version?: number;
+        updatedAt?: string;
+      };
+      return { ok: true, meta: metaFromResponse(body) };
+    }
+    const body = (await postRes.json().catch(() => ({}))) as { error?: string };
+    return {
+      ok: false,
+      error: body.error || "Failed to save hero.",
+      status: postRes.status,
+    };
+  }
+
+  async function saveUnlinkedWithNameCheck(data: HeldModel): Promise<void> {
+    const list = await fetchHeroList();
+    const match = findCharacterByName(list, data.name || "");
+    if (!match) {
+      const created = await postHero(data);
+      if (!created.ok) {
+        setPersistStatus(created.error);
+        return;
+      }
+      onPersisted?.(created.meta);
+      setPersistStatus("Saved to database.");
+      return;
+    }
+    setConflictMatch(match);
+    setRenameSuggested(data.name || "");
+    setConflictError(null);
+    setConflictOpen(true);
+  }
+
   async function persistToDatabase() {
     if (!onPersisted) return;
     setPersisting(true);
     setPersistStatus(null);
     try {
       if (dbHeroId) {
-        const putRes = await fetch(`/api/chargen/heroes/${dbHeroId}`, {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ data: held }),
-        });
-        if (putRes.ok) {
-          const body = (await putRes.json()) as { id: string };
-          onPersisted(body.id);
+        const put = await putVersion(dbHeroId, held);
+        if (put.ok) {
+          onPersisted(put.meta);
           setPersistStatus("Saved to database.");
           return;
         }
-        if (putRes.status !== 403) {
-          const body = (await putRes.json().catch(() => ({}))) as {
-            error?: string;
-          };
-          setPersistStatus(body.error || "Failed to update hero.");
+        if (put.status !== 403) {
+          setPersistStatus(put.error);
           return;
         }
-      }
-
-      const postRes = await fetch("/api/chargen/heroes", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ data: held }),
-      });
-      if (!postRes.ok) {
-        const body = (await postRes.json().catch(() => ({}))) as {
-          error?: string;
-        };
-        setPersistStatus(body.error || "Failed to persist hero.");
+        await saveUnlinkedWithNameCheck(held);
         return;
       }
-      const body = (await postRes.json()) as { id: string };
-      onPersisted(body.id);
-      setPersistStatus(
-        dbHeroId
-          ? "Saved as a new database entry (original was not yours to overwrite)."
-          : "Saved to database."
-      );
+
+      await saveUnlinkedWithNameCheck(held);
     } catch {
-      setPersistStatus("Failed to persist hero.");
+      setPersistStatus("Failed to save hero.");
+    } finally {
+      setPersisting(false);
+    }
+  }
+
+  async function persistNewVersion() {
+    if (!onPersisted || !dbCharacterId) return;
+    setPersisting(true);
+    setPersistStatus(null);
+    try {
+      const created = await postHero(held, dbCharacterId);
+      if (!created.ok) {
+        setPersistStatus(created.error);
+        return;
+      }
+      onPersisted(created.meta);
+      setPersistStatus(`Saved as version ${created.meta.version}.`);
+    } catch {
+      setPersistStatus("Failed to save new version.");
+    } finally {
+      setPersisting(false);
+    }
+  }
+
+  async function handleConflictChoice(
+    choice:
+      | { action: "overwrite" }
+      | { action: "newVersion" }
+      | { action: "newCharacter"; name: string }
+  ) {
+    if (!onPersisted || !conflictMatch) return;
+    setPersisting(true);
+    setConflictError(null);
+    try {
+      if (choice.action === "overwrite") {
+        const latest = latestVersionOf(conflictMatch);
+        const put = await putVersion(latest.id, held);
+        if (!put.ok) {
+          setConflictError(put.error);
+          return;
+        }
+        onPersisted(put.meta);
+        setConflictOpen(false);
+        setConflictMatch(null);
+        setPersistStatus("Overwrote latest version.");
+        return;
+      }
+      if (choice.action === "newVersion") {
+        const created = await postHero(held, conflictMatch.characterId);
+        if (!created.ok) {
+          setConflictError(created.error);
+          return;
+        }
+        onPersisted(created.meta);
+        setConflictOpen(false);
+        setConflictMatch(null);
+        setPersistStatus(`Saved as version ${created.meta.version}.`);
+        return;
+      }
+
+      const renamedHeld = { ...held, name: choice.name };
+      onHeldNameChange?.(choice.name);
+      const list = await fetchHeroList();
+      const again = findCharacterByName(list, choice.name);
+      if (again) {
+        setConflictMatch(again);
+        setRenameSuggested(choice.name);
+        setConflictError(
+          `A character named “${again.name}” already exists. Choose another option or name.`
+        );
+        return;
+      }
+      const created = await postHero(renamedHeld);
+      if (!created.ok) {
+        setConflictError(created.error);
+        return;
+      }
+      onPersisted(created.meta);
+      setConflictOpen(false);
+      setConflictMatch(null);
+      setPersistStatus("Saved as a new character.");
+    } catch {
+      setConflictError("Failed to save hero.");
     } finally {
       setPersisting(false);
     }
@@ -279,6 +463,18 @@ export default function ChargenSheetView({
         : "";
     }
   }
+
+  const versionLabel =
+    dbVersion != null
+      ? `Version ${dbVersion}${
+          dbUpdatedAt
+            ? ` · Updated ${new Date(dbUpdatedAt).toLocaleString(undefined, {
+                dateStyle: "medium",
+                timeStyle: "short",
+              })}`
+            : ""
+        }`
+      : null;
 
   return (
     <div className="space-y-4">
@@ -319,14 +515,29 @@ export default function ChargenSheetView({
           Download DOCX
         </button>
         {onPersisted && (
-          <button
-            type="button"
-            disabled={persisting}
-            className="px-3 py-2 rounded-lg text-sm border border-brand text-brand hover:bg-brand-muted font-medium disabled:opacity-50"
-            onClick={() => void persistToDatabase()}
-          >
-            {persisting ? "Saving…" : "Persist to Database"}
-          </button>
+          <>
+            <button
+              type="button"
+              disabled={persisting}
+              className="px-3 py-2 rounded-lg text-sm border border-brand text-brand hover:bg-brand-muted font-medium disabled:opacity-50"
+              onClick={() => void persistToDatabase()}
+            >
+              {persisting ? "Saving…" : "Save to DB"}
+            </button>
+            <button
+              type="button"
+              disabled={persisting || !dbHeroId || !dbCharacterId}
+              className="px-3 py-2 rounded-lg text-sm border border-surface-border text-ink hover:bg-surface-sidebar font-medium disabled:opacity-50"
+              onClick={() => void persistNewVersion()}
+              title={
+                !dbCharacterId
+                  ? "Save to DB first to create version history"
+                  : "Save a new version of this character"
+              }
+            >
+              {persisting ? "Saving…" : "Save to DB (New Version)"}
+            </button>
+          </>
         )}
         {modificationActive && onFinishCreation ? (
           <button
@@ -343,12 +554,30 @@ export default function ChargenSheetView({
           </button>
         ) : null}
       </div>
+      {versionLabel && (
+        <p className="text-sm text-ink-muted">{versionLabel}</p>
+      )}
       {finishStatus && (
         <p className="text-sm text-brand">{finishStatus}</p>
       )}
       {persistStatus && (
         <p className="text-sm text-ink-muted">{persistStatus}</p>
       )}
+
+      <SaveNameConflictDialog
+        key={conflictMatch?.characterId ?? "conflict"}
+        open={conflictOpen}
+        existingName={conflictMatch?.name || held.name || "Unnamed Hero"}
+        suggestedName={renameSuggested}
+        busy={persisting}
+        error={conflictError}
+        onCancel={() => {
+          setConflictOpen(false);
+          setConflictMatch(null);
+          setConflictError(null);
+        }}
+        onChoose={(choice) => void handleConflictChoice(choice)}
+      />
 
       <div className="rounded-xl border border-surface-border bg-[#1a1410] p-4 sm:p-5 shadow-xl space-y-4">
         <header>

@@ -31,9 +31,12 @@ export async function GET(
     const [row] = await db
       .select({
         id: chargenHeroes.id,
+        characterId: chargenHeroes.characterId,
+        version: chargenHeroes.version,
         name: chargenHeroes.name,
         data: chargenHeroes.data,
         createdBy: chargenHeroes.createdBy,
+        updatedAt: chargenHeroes.updatedAt,
       })
       .from(chargenHeroes)
       .where(eq(chargenHeroes.id, id))
@@ -106,7 +109,10 @@ export async function PUT(
       .where(eq(chargenHeroes.id, id))
       .returning({
         id: chargenHeroes.id,
+        characterId: chargenHeroes.characterId,
+        version: chargenHeroes.version,
         name: chargenHeroes.name,
+        updatedAt: chargenHeroes.updatedAt,
       });
 
     return NextResponse.json(row);

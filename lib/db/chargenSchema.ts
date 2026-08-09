@@ -12,6 +12,7 @@ import {
   timestamp,
   uniqueIndex,
   index,
+  integer,
 } from "drizzle-orm/pg-core";
 import { users } from "@/lib/db/schema";
 
@@ -74,6 +75,8 @@ export const chargenHeroes = chargenDataSchema.table(
   "heroes",
   {
     id: uuid("id").primaryKey().defaultRandom(),
+    characterId: uuid("character_id").notNull(),
+    version: integer("version").notNull().default(1),
     name: text("name").notNull(),
     data: jsonb("data").notNull(),
     createdBy: uuid("created_by").references(() => users.id, {
@@ -86,7 +89,11 @@ export const chargenHeroes = chargenDataSchema.table(
       .notNull()
       .defaultNow(),
   },
-  (t) => [index("heroes_name_idx").on(t.name)]
+  (t) => [
+    index("heroes_name_idx").on(t.name),
+    index("heroes_character_id_idx").on(t.characterId),
+    uniqueIndex("heroes_character_version_uidx").on(t.characterId, t.version),
+  ]
 );
 
 export type ChargenHero = typeof chargenHeroes.$inferSelect;

@@ -149,7 +149,7 @@ const VETERAN_STEPS: { id: StepId; label: string }[] = [
   { id: "talents", label: "Talents" },
   { id: "spells", label: "Spells" },
   { id: "special", label: "Special abilities" },
-  { id: "traits", label: "Disadvantages" },
+  { id: "traits", label: "(Dis)Advantages" },
   { id: "equipment", label: "Equipment" },
   { id: "sheet", label: "Sheet / Export" },
 ];
@@ -201,6 +201,9 @@ export default function ChargenWizard() {
   const [importOpen, setImportOpen] = useState(false);
   const [loading, setLoading] = useState(true);
   const [dbHeroId, setDbHeroId] = useState<string | null>(null);
+  const [dbCharacterId, setDbCharacterId] = useState<string | null>(null);
+  const [dbVersion, setDbVersion] = useState<number | null>(null);
+  const [dbUpdatedAt, setDbUpdatedAt] = useState<string | null>(null);
   const [, setDbHeroCreatedBy] = useState<string | null>(null);
   const [deepLinkHandled, setDeepLinkHandled] = useState(false);
   const [modificationActive, setModificationActive] = useState(false);
@@ -394,11 +397,21 @@ export default function ChargenWizard() {
   }, [refreshDerived]);
 
   const applyDbHero = useCallback(
-    (payload: { id: string; data: unknown; createdBy: string | null }) => {
+    (payload: {
+      id: string;
+      characterId?: string;
+      version?: number;
+      updatedAt?: string | null;
+      data: unknown;
+      createdBy: string | null;
+    }) => {
       const h = importHeldJson(JSON.stringify(payload.data));
       setHeld(refreshDerived(h));
       setHeldEpoch((n) => n + 1);
       setDbHeroId(payload.id);
+      setDbCharacterId(payload.characterId ?? payload.id);
+      setDbVersion(payload.version ?? 1);
+      setDbUpdatedAt(payload.updatedAt ?? null);
       setDbHeroCreatedBy(payload.createdBy);
       setFoundationLocked(true);
       setModificationActive(true);
@@ -433,6 +446,9 @@ export default function ChargenWizard() {
     setTraitLearningMethod("teacher");
     setFoundationLocked(false);
     setDbHeroId(null);
+    setDbCharacterId(null);
+    setDbVersion(null);
+    setDbUpdatedAt(null);
     setDbHeroCreatedBy(null);
     setModificationActive(false);
     setResetConfirmOpen(false);
@@ -457,6 +473,9 @@ export default function ChargenWizard() {
         const res = await fetch(`/api/chargen/heroes/${heroId}`);
         const data = (await res.json()) as {
           id?: string;
+          characterId?: string;
+          version?: number;
+          updatedAt?: string;
           data?: unknown;
           createdBy?: string | null;
         };
@@ -465,6 +484,9 @@ export default function ChargenWizard() {
         }
         applyDbHero({
           id: data.id,
+          characterId: data.characterId,
+          version: data.version,
+          updatedAt: data.updatedAt ?? null,
           data: data.data,
           createdBy: data.createdBy ?? null,
         });
@@ -983,7 +1005,7 @@ export default function ChargenWizard() {
               </h2>
               <p className="text-sm text-ink-muted">
                 Manual DSA 4.1 point-buy creation, based on the classic Java
-                Chargen. Persist a finished hero to the shared database, or load
+                Chargen. Save a finished hero to the shared database, or load
                 one saved by any user. You can also export a{" "}
                 <code className="text-xs">.dcg</code> file, or import an existing{" "}
                 <code className="text-xs">.dcg</code> /{" "}
@@ -1002,6 +1024,9 @@ export default function ChargenWizard() {
                     setNameFactoryId("");
                     setFoundationLocked(false);
                     setDbHeroId(null);
+                    setDbCharacterId(null);
+                    setDbVersion(null);
+                    setDbUpdatedAt(null);
                     setDbHeroCreatedBy(null);
                     beginModification();
                     setStep("race");
@@ -2858,10 +2883,19 @@ export default function ChargenWizard() {
               held={held}
               attributeMods={attributeMods}
               dbHeroId={dbHeroId}
+              dbCharacterId={dbCharacterId}
+              dbVersion={dbVersion}
+              dbUpdatedAt={dbUpdatedAt}
               modificationActive={modificationActive}
               onFinishCreation={() => setModificationActive(false)}
-              onPersisted={(id) => {
-                setDbHeroId(id);
+              onHeldNameChange={(name) => {
+                setHeld((h) => ({ ...h, name }));
+              }}
+              onPersisted={(meta) => {
+                setDbHeroId(meta.id);
+                setDbCharacterId(meta.characterId);
+                setDbVersion(meta.version);
+                setDbUpdatedAt(meta.updatedAt);
               }}
               labels={{
                 race: race?.name as string | undefined,
@@ -2921,6 +2955,9 @@ export default function ChargenWizard() {
           setHeld(refreshDerived(h));
           setHeldEpoch((n) => n + 1);
           setDbHeroId(null);
+          setDbCharacterId(null);
+          setDbVersion(null);
+          setDbUpdatedAt(null);
           setDbHeroCreatedBy(null);
           setFoundationLocked(true);
           beginModification();
