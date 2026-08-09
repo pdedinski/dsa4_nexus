@@ -204,33 +204,39 @@ export default function ManageSavedPlayersClient() {
     }
   }
 
+  type ActionRow = {
+    id: string;
+    name: string;
+    version: number;
+    characterName: string;
+    characterId: string;
+    isLatestRow: boolean;
+    versionCount: number;
+  };
+
   function ActionButtons({
     row,
+    className,
   }: {
-    row: {
-      id: string;
-      name: string;
-      version: number;
-      characterName: string;
-      characterId: string;
-      isLatestRow: boolean;
-      versionCount: number;
-    };
+    row: ActionRow;
+    className?: string;
   }) {
     return (
-      <div className="flex items-center justify-end gap-1">
+      <div className={clsx("flex items-center gap-1", className)}>
         <Link
           href={`/tools/player-character-generator?heroId=${row.id}`}
           title="Edit in generator"
-          className="p-1.5 rounded-md text-ink-muted hover:text-ink hover:bg-surface-sidebar"
+          aria-label="Edit in generator"
+          className="p-2 rounded-md text-ink-muted hover:text-ink hover:bg-surface-sidebar"
         >
           <Pencil className="w-4 h-4" />
         </Link>
         <button
           type="button"
           title="Export .dcg"
+          aria-label="Export .dcg"
           disabled={exportBusyId === row.id}
-          className="p-1.5 rounded-md text-ink-muted hover:text-ink hover:bg-surface-sidebar disabled:opacity-40"
+          className="p-2 rounded-md text-ink-muted hover:text-ink hover:bg-surface-sidebar disabled:opacity-40"
           onClick={() => void exportDcg(row)}
         >
           <Download className="w-4 h-4" />
@@ -238,7 +244,8 @@ export default function ManageSavedPlayersClient() {
         <button
           type="button"
           title="Delete"
-          className="p-1.5 rounded-md text-ink-muted hover:text-red-400 hover:bg-surface-sidebar"
+          aria-label="Delete"
+          className="p-2 rounded-md text-ink-muted hover:text-red-400 hover:bg-surface-sidebar"
           onClick={() =>
             setConfirmDelete({
               id: row.id,
@@ -256,6 +263,108 @@ export default function ManageSavedPlayersClient() {
         >
           <Trash2 className="w-4 h-4" />
         </button>
+      </div>
+    );
+  }
+
+  function HeroCard({
+    id,
+    name,
+    version,
+    ownerName,
+    updatedAt,
+    characterId,
+    characterName,
+    isLatestRow,
+    versionCount,
+    hasOlder,
+    isOpen,
+    nested,
+  }: {
+    id: string;
+    name: string;
+    version: number;
+    ownerName: string | null | undefined;
+    updatedAt: string | Date | null | undefined;
+    characterId: string;
+    characterName: string;
+    isLatestRow: boolean;
+    versionCount: number;
+    hasOlder?: boolean;
+    isOpen?: boolean;
+    nested?: boolean;
+  }) {
+    const actionRow: ActionRow = {
+      id,
+      name,
+      version,
+      characterName,
+      characterId,
+      isLatestRow,
+      versionCount,
+    };
+    return (
+      <div
+        className={clsx(
+          "border-b border-surface-border px-3 py-3 last:border-b-0",
+          nested && "bg-surface-card/30 pl-5"
+        )}
+      >
+        <div className="flex items-start gap-2">
+          {hasOlder ? (
+            <button
+              type="button"
+              title={isOpen ? "Hide older versions" : "Show older versions"}
+              aria-label={isOpen ? "Hide older versions" : "Show older versions"}
+              className="mt-0.5 p-1.5 rounded-md text-ink-muted hover:text-ink hover:bg-surface-sidebar shrink-0"
+              onClick={() =>
+                setExpanded((prev) => ({
+                  ...prev,
+                  [characterId]: !prev[characterId],
+                }))
+              }
+            >
+              {isOpen ? (
+                <ChevronDown className="w-4 h-4" />
+              ) : (
+                <ChevronRight className="w-4 h-4" />
+              )}
+            </button>
+          ) : (
+            <span className="w-7 shrink-0" aria-hidden />
+          )}
+          <div className="min-w-0 flex-1">
+            <div
+              className={clsx(
+                "font-medium truncate",
+                nested ? "text-ink-muted" : "text-ink"
+              )}
+            >
+              {name}
+              <span className="ml-1.5 text-xs font-normal text-ink-faint">
+                v{version}
+              </span>
+            </div>
+            <div className="mt-0.5 text-xs text-ink-muted truncate">
+              {ownerName || "—"}
+              <span className="text-ink-faint"> · </span>
+              {formatUpdated(updatedAt)}
+            </div>
+          </div>
+        </div>
+        <div className="mt-2 flex items-center justify-end gap-0.5">
+          <button
+            type="button"
+            title="View character sheet"
+            aria-label="View character sheet"
+            disabled={viewBusyId === id}
+            className="p-2 rounded-md text-ink-muted hover:text-ink hover:bg-surface-sidebar disabled:opacity-40"
+            onClick={() => void viewSheet({ id })}
+          >
+            <Eye className="w-4 h-4" />
+          </button>
+          <ActionButtons row={actionRow} />
+        </div>
       </div>
     );
   }
@@ -292,8 +401,59 @@ export default function ManageSavedPlayersClient() {
         </div>
       )}
 
-      <div className="rounded-xl border border-surface-border overflow-hidden">
-        <table className="w-full text-sm">
+      <div className="rounded-xl border border-surface-border overflow-hidden md:hidden">
+        {loading && (
+          <p className="text-center text-ink-muted py-8 px-4 text-sm">
+            Loading…
+          </p>
+        )}
+        {!loading && filtered.length === 0 && (
+          <p className="text-center text-ink-muted py-8 px-4 text-sm">
+            No saved players yet.
+          </p>
+        )}
+        {filtered.map((h) => {
+          const hasOlder = h.versions.length > 1;
+          const isOpen = !!expanded[h.characterId];
+          const older = [...h.versions].slice(0, -1).reverse();
+          return (
+            <Fragment key={h.characterId}>
+              <HeroCard
+                id={h.id}
+                name={h.name}
+                version={h.version}
+                ownerName={h.ownerName}
+                updatedAt={h.updatedAt}
+                characterId={h.characterId}
+                characterName={h.name}
+                isLatestRow
+                versionCount={h.versions.length}
+                hasOlder={hasOlder}
+                isOpen={isOpen}
+              />
+              {isOpen &&
+                older.map((v) => (
+                  <HeroCard
+                    key={v.id}
+                    id={v.id}
+                    name={v.name}
+                    version={v.version}
+                    ownerName={v.ownerName || h.ownerName}
+                    updatedAt={v.updatedAt}
+                    characterId={h.characterId}
+                    characterName={h.name}
+                    isLatestRow={false}
+                    versionCount={h.versions.length}
+                    nested
+                  />
+                ))}
+            </Fragment>
+          );
+        })}
+      </div>
+
+      <div className="hidden md:block rounded-xl border border-surface-border overflow-x-auto">
+        <table className="w-full text-sm min-w-[40rem]">
           <thead>
             <tr className="bg-surface-card border-b border-surface-border">
               <th className="w-10 px-2 py-3" />
@@ -389,6 +549,7 @@ export default function ManageSavedPlayersClient() {
                     </td>
                     <td className="px-3 py-3">
                       <ActionButtons
+                        className="justify-end"
                         row={{
                           id: h.id,
                           name: h.name,
@@ -432,6 +593,7 @@ export default function ManageSavedPlayersClient() {
                         </td>
                         <td className="px-3 py-2">
                           <ActionButtons
+                            className="justify-end"
                             row={{
                               id: v.id,
                               name: v.name,
