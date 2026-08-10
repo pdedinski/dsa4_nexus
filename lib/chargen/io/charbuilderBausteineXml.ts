@@ -13,7 +13,8 @@ import {
   getBuiltinCatalog,
   type CatalogItem,
 } from "@/lib/chargen/data/builtinCatalog";
-import { applyBuiltinLocalization } from "@/lib/chargen/data/builtinLocalization";
+import { mergeCustomCatalogItem } from "@/lib/chargen/data/mergeCatalogItem";
+import { decodeXmlEntities } from "@/lib/chargen/io/xmlEntities";
 import {
   ATTR_FROM_GERMAN,
   ATTR_TO_GERMAN,
@@ -73,9 +74,11 @@ function asArray<T>(v: T | T[] | null | undefined): T[] {
 
 function textOf(v: unknown): string | null {
   if (v == null) return null;
-  if (typeof v === "string" || typeof v === "number") return String(v);
+  if (typeof v === "string" || typeof v === "number") {
+    return decodeXmlEntities(String(v));
+  }
   if (typeof v === "object" && v && "#text" in (v as object)) {
-    return String((v as { "#text": unknown })["#text"]);
+    return decodeXmlEntities(String((v as { "#text": unknown })["#text"]));
   }
   return null;
 }
@@ -711,7 +714,7 @@ export function parseCharbuilderBausteinXml(
   }
 
   const builtin = getBuiltinCatalog(category).find((b) => b.id === id);
-  return applyBuiltinLocalization(item, builtin);
+  return mergeCustomCatalogItem(item, builtin, category);
 }
 
 // ── Serialization ──────────────────────────────────────────────────────────

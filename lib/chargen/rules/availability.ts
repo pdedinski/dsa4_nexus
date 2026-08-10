@@ -19,6 +19,30 @@ export function isCultureAllowedForRace(
   return allowed.includes(cultureId);
 }
 
+/**
+ * Older XML imports treated AlleVon as `mode: "list"` with an empty `include`,
+ * which blocks every profession. Prefer the builtin allow-list when that happens.
+ */
+export function resolveCultureProfessionFilter(
+  custom: CultureProfessionFilter | null | undefined,
+  builtin: CultureProfessionFilter | null | undefined
+): CultureProfessionFilter | undefined {
+  if (!custom) return builtin ?? undefined;
+  if (!builtin) return custom;
+  const mode = custom.mode;
+  if (
+    (mode === "list" || mode === "none_except") &&
+    !(custom.include?.length) &&
+    ((builtin.include?.length ?? 0) > 0 ||
+      builtin.mode === "all" ||
+      builtin.mode === "all_except" ||
+      !builtin.mode)
+  ) {
+    return builtin;
+  }
+  return custom;
+}
+
 export function isProfessionAllowedForCulture(
   culture: { professions?: CultureProfessionFilter } | null | undefined,
   professionId: string

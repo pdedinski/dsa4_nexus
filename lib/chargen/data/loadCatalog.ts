@@ -6,12 +6,12 @@
  * from `@/lib/chargen/data/builtinCatalog` instead.
  */
 
-import { applyBuiltinLocalization } from "@/lib/chargen/data/builtinLocalization";
 import {
   getBuiltinCatalog,
   getBuiltinCatalogCategories,
   type CatalogItem,
 } from "@/lib/chargen/data/builtinCatalog";
+import { mergeCustomCatalogItem } from "@/lib/chargen/data/mergeCatalogItem";
 import type { ChargenCatalogCategory } from "@/lib/chargen/types";
 
 export type { CatalogItem } from "@/lib/chargen/data/builtinCatalog";
@@ -60,7 +60,7 @@ export async function loadCatalog(
         existing?.source === "builtin" || existing?.source == null
           ? existing
           : undefined;
-      byId.set(c.id, applyBuiltinLocalization(c, priorBuiltin));
+      byId.set(c.id, mergeCustomCatalogItem(c, priorBuiltin, category));
     }
     return {
       items: Array.from(byId.values()),

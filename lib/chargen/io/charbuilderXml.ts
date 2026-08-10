@@ -19,7 +19,8 @@ import {
   getBuiltinCatalog,
   type CatalogItem,
 } from "@/lib/chargen/data/builtinCatalog";
-import { applyBuiltinLocalization } from "@/lib/chargen/data/builtinLocalization";
+import { mergeCustomCatalogItem } from "@/lib/chargen/data/mergeCatalogItem";
+import { decodeXmlEntities } from "@/lib/chargen/io/xmlEntities";
 
 export type CharbuilderXmlCategory =
   | "melee_weapons"
@@ -53,13 +54,22 @@ function asArray<T>(v: T | T[] | null | undefined): T[] {
   return Array.isArray(v) ? v : [v];
 }
 
+import { decodeXmlEntities } from "@/lib/chargen/io/xmlEntities";
+
 function textOf(v: unknown): string {
   if (v == null) return "";
-  if (typeof v === "string" || typeof v === "number") return String(v);
+  if (typeof v === "string" || typeof v === "number") {
+    return decodeXmlEntities(String(v));
+  }
   if (typeof v === "object" && v && "#text" in (v as object)) {
-    return String((v as { "#text": unknown })["#text"]);
+    return decodeXmlEntities(String((v as { "#text": unknown })["#text"]));
   }
   return "";
+}
+
+function attr(w: Record<string, unknown>, key: string): string {
+  const v = w[`@_${key}`];
+  return v != null ? decodeXmlEntities(String(v)) : "";
 }
 
 function esc(s: string): string {
@@ -99,10 +109,10 @@ export function detectCharbuilderXmlCategory(
 function parseMelee(root: Record<string, unknown>): CatalogItem[] {
   return asArray(root[ITEM_TAG.melee_weapons] as unknown[]).map((raw) => {
     const w = raw as Record<string, unknown>;
-    const id = String(w["@_Id"] ?? "");
-    const nameAttr = w["@_Name"] ? String(w["@_Name"]) : "";
+    const id = attr(w, "Id");
+    const nameAttr = attr(w, "Name");
     const fallback = humanizeId(id);
-    const talent = w["@_Talent"] ? String(w["@_Talent"]) : undefined;
+    const talent = attr(w, "Talent") || undefined;
     const talents = asArray(w.Talent as unknown[]).map(textOf).filter(Boolean);
     return {
       id,
@@ -110,7 +120,7 @@ function parseMelee(root: Record<string, unknown>): CatalogItem[] {
       german_name: fallback,
       talent,
       talents: talents.length ? talents : talent ? [talent] : [],
-      tp: w["@_Tp"] != null ? String(w["@_Tp"]) : undefined,
+      tp: attr(w, "Tp") || undefined,
       bf: Number(w["@_Bf"] ?? 0),
       ini: Number(w["@_Ini"] ?? 0),
       wm_at: Number(w["@_WmAt"] ?? 0),
@@ -128,15 +138,16 @@ function parseMelee(root: Record<string, unknown>): CatalogItem[] {
 function parseRanged(root: Record<string, unknown>): CatalogItem[] {
   return asArray(root[ITEM_TAG.ranged_weapons] as unknown[]).map((raw) => {
     const w = raw as Record<string, unknown>;
-    const id = String(w["@_Id"] ?? "");
-    const nameAttr = w["@_Name"] ? String(w["@_Name"]) : "";
+    const id = attr(w, "Id");
+    const nameAttr = attr(w, "Name");
     const fallback = humanizeId(id);
+    const weightRaw = w["@_Gewicht"];
     return {
       id,
       name: nameAttr || fallback,
       german_name: fallback,
-      talent: w["@_Talent"] ? String(w["@_Talent"]) : undefined,
-      tp: w["@_Tp"] != null ? String(w["@_Tp"]) : undefined,
+      talent: attr(w, "Talent") || undefined,
+      tp: attr(w, "Tp") || undefined,
       ranges: String(w["@_Reichtweiten"] ?? w["@_Reichweiten"] ?? "")
         .split(",")
         .map((x) => Number(x.trim()))
@@ -145,6 +156,7 @@ function parseRanged(root: Record<string, unknown>): CatalogItem[] {
         .split(",")
         .map((x) => Number(x.trim()))
         .filter((n) => !Number.isNaN(n)),
+      ...(weightRaw != null ? { weight: Number(weightRaw) } : {}),
       source: "custom",
     } as CatalogItem;
   });
@@ -153,9 +165,11 @@ function parseRanged(root: Record<string, unknown>): CatalogItem[] {
 function parseArmor(root: Record<string, unknown>): CatalogItem[] {
   return asArray(root[ITEM_TAG.armor] as unknown[]).map((raw) => {
     const r = raw as Record<string, unknown>;
-    const id = String(r["@_Id"] ?? "");
-    const nameAttr = r["@_Name"] ? String(r["@_Name"]) : "";
+    const id = attr(r, "Id");
+    const nameAttr = attr(r, "Name");
     const fallback = humanizeId(id);
+    const priceRaw = r["@_Preis"];
+    const weightRaw = r["@_Gewicht"];
     return {
       id,
       name: nameAttr || fallback,
@@ -165,6 +179,8 @@ function parseArmor(root: Record<string, unknown>): CatalogItem[] {
       additional: String(r["@_Zusatzruestung"]) === "true",
       min_torso_rs:
         r["@_MindestTorsoRs"] != null ? Number(r["@_MindestTorsoRs"]) : null,
+      ...(priceRaw != null ? { price: Number(priceRaw) } : {}),
+      ...(weightRaw != null ? { weight: Number(weightRaw) } : {}),
       source: "custom",
     } as CatalogItem;
   });
@@ -173,14 +189,14 @@ function parseArmor(root: Record<string, unknown>): CatalogItem[] {
 function parseShields(root: Record<string, unknown>): CatalogItem[] {
   return asArray(root[ITEM_TAG.shields] as unknown[]).map((raw) => {
     const s = raw as Record<string, unknown>;
-    const id = String(s["@_Id"] ?? "");
-    const nameAttr = s["@_Name"] ? String(s["@_Name"]) : "";
+    const id = attr(s, "Id");
+    const nameAttr = attr(s, "Name");
     const fallback = humanizeId(id);
     return {
       id,
       name: nameAttr || fallback,
       german_name: fallback,
-      type: s["@_Typ"] ? String(s["@_Typ"]) : undefined,
+      type: attr(s, "Typ") || undefined,
       bf: Number(s["@_Bf"] ?? 0),
       ini: Number(s["@_Ini"] ?? 0),
       wm_at: Number(s["@_WmAt"] ?? 0),
@@ -225,7 +241,7 @@ export function parseCharbuilderXml(
     getBuiltinCatalog(category).map((b) => [b.id, b])
   );
   return items.map((item) =>
-    applyBuiltinLocalization(item, builtinById.get(item.id))
+    mergeCustomCatalogItem(item, builtinById.get(item.id), category)
   );
 }
 
@@ -274,6 +290,7 @@ function serializeRanged(items: CatalogItem[]): string {
     const ranges = (it.ranges as number[] | undefined) ?? [];
     const tpPlus = (it.tp_plus as number[] | undefined) ?? [];
     const body = attrs([
+      ["Gewicht", it.weight as number | undefined],
       ["Id", it.id],
       ["Name", it.name && it.name !== it.german_name ? it.name : null],
       ["Reichtweiten", ranges.length ? ranges.join(",") : null],
@@ -292,9 +309,11 @@ function serializeArmor(items: CatalogItem[]): string {
   for (const it of items) {
     const body = attrs([
       ["BE", (it.be as number) ?? 0],
+      ["Gewicht", it.weight as number | undefined],
       ["Id", it.id],
       ["MindestTorsoRs", it.min_torso_rs as number | null | undefined],
       ["Name", it.name && it.name !== it.german_name ? it.name : null],
+      ["Preis", it.price as number | undefined],
       ["RS", (it.rs as number) ?? 0],
       ["Zusatzruestung", it.additional ? "true" : "false"],
     ]);
