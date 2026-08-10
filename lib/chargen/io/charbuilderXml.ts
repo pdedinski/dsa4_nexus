@@ -54,8 +54,6 @@ function asArray<T>(v: T | T[] | null | undefined): T[] {
   return Array.isArray(v) ? v : [v];
 }
 
-import { decodeXmlEntities } from "@/lib/chargen/io/xmlEntities";
-
 function textOf(v: unknown): string {
   if (v == null) return "";
   if (typeof v === "string" || typeof v === "number") {
