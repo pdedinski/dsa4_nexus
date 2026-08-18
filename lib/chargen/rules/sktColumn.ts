@@ -12,6 +12,7 @@ import {
   defaultSpellColumn,
   hasTrait,
 } from "@/lib/chargen/rules/kosten";
+import { canonicalTalentGroupVariant } from "@/lib/chargen/rules/talentGroupVariants";
 
 const SKT_COLUMN_LETTERS = ["A*", "A", "B", "C", "D", "E", "F", "G", "H"];
 
@@ -82,7 +83,9 @@ function hasTraitForTalent(held: HeldModel, traitId: string, talentId: string): 
 
 function hasTraitForGroup(held: HeldModel, traitId: string, group: string): boolean {
   return held.advantagesDisadvantages.some(
-    (t) => t.id === traitId && t.variant === group
+    (t) =>
+      t.id === traitId &&
+      canonicalTalentGroupVariant(t.variant) === group
   );
 }
 

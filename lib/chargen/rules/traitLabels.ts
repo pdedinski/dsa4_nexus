@@ -7,6 +7,10 @@ import type { CatalogItem } from "@/lib/chargen/data/loadCatalog";
 import type { HeldModel } from "@/lib/chargen/types";
 import { attrValue } from "@/lib/chargen/types";
 import { hasTrait } from "@/lib/chargen/rules/kosten";
+import {
+  canonicalTalentGroupVariant,
+  talentGroupVariantLabel,
+} from "@/lib/chargen/rules/talentGroupVariants";
 
 export type TraitCatalogFields = {
   id?: string;
@@ -41,6 +45,25 @@ const PHYSICAL_CHEAP_TALENTS = new Set([
   "Talent.Tanzen",
   "Talent.Zechen",
 ]);
+
+/**
+ * Java VorNachteil.getPraefix() — used when a variant is selected so the
+ * sheet reads "Inaptitude for Nature Talents" rather than the generic catalog
+ * name plus a parenthetical.
+ */
+const TRAIT_VARIANT_PREFIX: Record<string, string> = {
+  "VorNachteil.BegabungFuerTalent": "Aptitude for",
+  "VorNachteil.BegabungFuerTalentgruppe": "Aptitude for",
+  "VorNachteil.UnfaehigkeitFuerTalent": "Inaptitude for",
+  "VorNachteil.UnfaehigkeitFuerTalentgruppe": "Inaptitude for",
+  "VorNachteil.ImmunitaetGegenGift": "Immunity to",
+  "VorNachteil.ImmunitaetGegenGiftart": "Immunity to",
+  "VorNachteil.ImmunitaetGegenKrankheit": "Immunity to",
+  "VorNachteil.ResistenzGegenGift": "Resistance to",
+  "VorNachteil.ResistenzGegenGiftart": "Resistance to",
+  "VorNachteil.Vorurteile1": "Prejudice against",
+  "VorNachteil.Vorurteile2": "Prejudice against",
+};
 
 /** Special Kosten strategies that are not a flat GP_* token. */
 const SPECIAL_COST_LABELS: Record<string, string> = {
@@ -121,6 +144,30 @@ export function formatTraitRating(
     return `up to level ${max}`;
   }
   return null;
+}
+
+export function formatOwnedTraitName(
+  row: {
+    id: string;
+    rating?: number | null;
+    variant?: string | null;
+  },
+  resolveName: (id: string) => string
+): string {
+  const variant = (row.variant || "").trim();
+  const variantLabel = variant
+    ? talentGroupVariantLabel(variant) || resolveName(variant) || variant
+    : "";
+  const prefix = TRAIT_VARIANT_PREFIX[row.id];
+  const base = resolveName(row.id) || row.id;
+  const rating = row.rating != null ? ` ${row.rating}` : "";
+  if (variantLabel && prefix) {
+    return `${prefix} ${variantLabel}${rating}`;
+  }
+  if (variantLabel) {
+    return `${base}${rating} (${variantLabel})`;
+  }
+  return `${base}${rating}`;
 }
 
 export function formatTraitMeta(
@@ -212,7 +259,7 @@ export function estimateTraitGp(
     case "BEGABUNG_TALENT":
       return isKampfKoerperExpensiveTalent(ctx.talents, variant) ? 6 : 4;
     case "BEGABUNG_TALENTGRUPPE": {
-      const g = String(variant || "");
+      const g = canonicalTalentGroupVariant(variant);
       if (g === "combat") return 30;
       if (g === "fernkampf") return 15;
       if (g === "nahkampf") return 20;
@@ -229,7 +276,7 @@ export function estimateTraitGp(
     case "UNFAEHIGKEIT_TALENT":
       return isKampfKoerperExpensiveTalent(ctx.talents, variant) ? -2 : -1;
     case "UNFAEHIGKEIT_TALENTGRUPPE": {
-      const g = String(variant || "");
+      const g = canonicalTalentGroupVariant(variant);
       if (g === "combat" || g === "physical") return -15;
       if (g === "fernkampf") return -5;
       if (g === "languages" || g === "scripts") return -7;

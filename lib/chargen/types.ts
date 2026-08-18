@@ -292,6 +292,8 @@ export interface HeldModel {
   apSpent: number;
   /** Creation-time GP remaining snapshot (optional). */
   gpRemaining?: number;
+  /** Java `<Kapital>` — starting funds in silver pieces (ST). */
+  kapital?: number;
   notes?: string[];
 }
 

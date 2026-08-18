@@ -16,6 +16,10 @@ import {
   emptyHeld,
 } from "@/lib/chargen/types";
 import { loadAsVeteran } from "@/lib/chargen/rules/veteran";
+import {
+  canonicalTalentGroupVariant,
+  isTalentGroupTrait,
+} from "@/lib/chargen/rules/talentGroupVariants";
 
 function asArray<T>(v: T | T[] | null | undefined): T[] {
   if (v == null) return [];
@@ -39,6 +43,63 @@ function numAttr(node: Record<string, unknown>, key: string, fallback = 0): numb
 
 function boolAttr(node: Record<string, unknown>, key: string): boolean {
   return String(node[`@_${key}`] ?? "") === "true";
+}
+
+/** Java 0.8.7 .dcg files store variants as `<Variante Name="…"/>` children. */
+function variantFromChild(child: unknown): string {
+  if (child == null) return "";
+  if (Array.isArray(child)) {
+    for (const item of child) {
+      const v = variantFromChild(item);
+      if (v) return v;
+    }
+    return "";
+  }
+  if (typeof child === "string" || typeof child === "number") {
+    return String(child).trim();
+  }
+  if (typeof child === "object") {
+    const o = child as Record<string, unknown>;
+    const name = o["@_Name"] ?? o["@_Variante"] ?? o["#text"];
+    if (name != null && String(name).trim()) return String(name).trim();
+  }
+  return "";
+}
+
+function readVariant(node: Record<string, unknown>): string | undefined {
+  const attr = node["@_Variante"];
+  if (attr != null && String(attr).trim()) return String(attr).trim();
+  const fromChild = variantFromChild(node.Variante);
+  if (fromChild) return fromChild;
+  const selfName = node["@_Name"];
+  if (selfName != null && String(selfName).trim()) return String(selfName).trim();
+  return undefined;
+}
+
+function xmlAttr(attrs: string, name: string): string {
+  const dq = attrs.match(new RegExp(`\\b${name}\\s*=\\s*"([^"]*)"`, "i"));
+  if (dq) return dq[1];
+  const sq = attrs.match(new RegExp(`\\b${name}\\s*=\\s*'([^']*)'`, "i"));
+  return sq?.[1] ?? "";
+}
+
+function childVarianteName(body: string): string {
+  const dq = body.match(/<Variante\b[^>]*\bName\s*=\s*"([^"]*)"/i);
+  if (dq) return dq[1];
+  const sq = body.match(/<Variante\b[^>]*\bName\s*=\s*'([^']*)'/i);
+  return sq?.[1] ?? "";
+}
+
+/** Recover Variante from raw XML (attribute or `<Variante Name>` child). */
+function traitVariantsFromRawXml(raw: string): string[] {
+  const out: string[] = [];
+  const re =
+    /<VorNachteilWert\b([^>/]*)(?:\/>|>([\s\S]*?)<\/VorNachteilWert>)/gi;
+  let m: RegExpExecArray | null;
+  while ((m = re.exec(raw))) {
+    out.push(xmlAttr(m[1] || "", "Variante") || childVarianteName(m[2] || ""));
+  }
+  return out;
 }
 
 export function isLegacyHeldXml(raw: string): boolean {
@@ -93,6 +154,11 @@ export function importLegacyHeldXml(raw: string): HeldModel {
   held.background = textOf(heldNode.Hintergrund);
   held.apTotal = Number(textOf(heldNode.GesamtAp)) || 0;
   held.apSpent = Number(textOf(heldNode.EingesetzteAp)) || 0;
+  const kapitalRaw = textOf(heldNode.Kapital);
+  if (kapitalRaw !== "") {
+    const n = Number(kapitalRaw);
+    if (Number.isFinite(n)) held.kapital = n;
+  }
   held.motherTongue = textOf(heldNode.Muttersprache) || undefined;
   held.secondLanguage = textOf(heldNode.Zweitsprache) || undefined;
 
@@ -154,9 +220,7 @@ export function importLegacyHeldXml(raw: string): HeldModel {
     return {
       id: String(node["@_Zauber"] ?? ""),
       sp: numAttr(node, "Stufe", 0),
-      variant: node["@_Variante"]
-        ? String(node["@_Variante"])
-        : undefined,
+      variant: readVariant(node),
       specialExperience: boolAttr(node, "SpezielleErfahrung"),
     };
   });
@@ -174,7 +238,7 @@ export function importLegacyHeldXml(raw: string): HeldModel {
     return {
       id: String(node["@_Sonderfertigkeit"] ?? ""),
       talent: node["@_Talent"] ? String(node["@_Talent"]) : undefined,
-      variant: node["@_Variante"] ? String(node["@_Variante"]) : undefined,
+      variant: readVariant(node),
     };
   });
 
@@ -201,20 +265,26 @@ export function importLegacyHeldXml(raw: string): HeldModel {
       return {
         id,
         talent: node["@_Talent"] ? String(node["@_Talent"]) : undefined,
-        variant: node["@_Variante"] ? String(node["@_Variante"]) : undefined,
+        variant: readVariant(node),
       };
     })
     .filter((x): x is NonNullable<typeof x> => x != null);
 
+  const rawTraitVariants = traitVariantsFromRawXml(raw);
   held.advantagesDisadvantages = asArray(
     heldNode.VorNachteilWerte?.VorNachteilWert
-  ).map((n) => {
+  ).map((n, i) => {
     const node = n as Record<string, unknown>;
+    const id = String(node["@_VorNachteil"] ?? "");
+    let variant = readVariant(node) || rawTraitVariants[i] || undefined;
+    if (variant && isTalentGroupTrait(id)) {
+      variant = canonicalTalentGroupVariant(variant) || variant;
+    }
     return {
-      id: String(node["@_VorNachteil"] ?? ""),
+      id,
       rating:
         node["@_Stufe"] != null ? numAttr(node, "Stufe") : undefined,
-      variant: node["@_Variante"] ? String(node["@_Variante"]) : undefined,
+      variant: variant || undefined,
       specialExperience: boolAttr(node, "SpezielleErfahrung") || undefined,
     };
   });

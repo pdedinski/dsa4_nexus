@@ -15,6 +15,7 @@ import {
 import talenteCatalog from "@/lib/chargen/data/talente.json";
 import type { CatalogItem } from "@/lib/chargen/data/loadCatalog";
 import { formatTalentProbe } from "@/lib/chargen/rules/talentCaps";
+import { formatOwnedTraitName } from "@/lib/chargen/rules/traitLabels";
 import {
   sheetSpellNamePrefix,
   sheetTalentLeadPrefix,
@@ -689,9 +690,7 @@ export default function ChargenSheetView({
                   key={`${t.id}-${i}`}
                   className="rounded border border-surface-border px-2 py-0.5 text-xs"
                 >
-                  {nameOf(t.id)}
-                  {t.rating != null ? ` ${t.rating}` : ""}
-                  {t.variant ? ` (${nameOf(t.variant)})` : ""}
+                  {formatOwnedTraitName(t, nameOf)}
                 </li>
               ))}
             </ul>

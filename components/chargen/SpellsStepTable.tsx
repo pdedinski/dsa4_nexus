@@ -15,6 +15,7 @@ import {
 import { spellBlockReason, spellcasterBlocked } from "@/lib/chargen/rules/spellPrereqs";
 import { formatTalentProbe } from "@/lib/chargen/rules/talentCaps";
 import LearningMethodSelect from "@/components/chargen/LearningMethodSelect";
+import { chargenNestedListClass } from "@/components/chargen/ChargenScrollList";
 
 function CustomBadge({ source }: { source?: string }) {
   if (!source || source === "builtin") return null;
@@ -83,18 +84,28 @@ export default function SpellsStepTable({
           ? "Spend AP to activate and raise spells. Raises up to your loaded baseline are free until you save and reload."
           : "Activate spells and raise Spell Prowess (SP). Adv. is the SKT column; Test shows the three attributes for the spell check."}
       </p>
-      <div className="max-h-[28rem] overflow-y-auto">
-        <table className="w-full text-sm border-collapse">
+      <div className={chargenNestedListClass}>
+        <table className="w-full min-w-[22rem] text-sm border-collapse">
           <thead>
-            <tr className="text-xs text-ink-muted border-b border-surface-border sticky top-0 bg-[#1a1410] z-10">
-              <th className="py-1 pr-2 text-left font-medium">Spell</th>
-              <th className="py-1 px-1 text-center font-medium w-12">Adv.</th>
-              <th className="py-1 px-1 text-center font-medium w-24">Test</th>
-              <th className="py-1 px-1 text-center font-medium w-14">SP</th>
-              <th className="py-1 pl-2 text-right font-medium w-20">Costs</th>
+            <tr className="text-xs text-ink-muted">
+              <th className="sticky top-0 z-20 bg-[#1a1410] py-2 pr-2 text-left font-medium shadow-[0_12px_10px_0_#1a1410] border-b border-surface-border">
+                Spell
+              </th>
+              <th className="sticky top-0 z-20 bg-[#1a1410] py-2 px-1 text-center font-medium w-12 shadow-[0_12px_10px_0_#1a1410] border-b border-surface-border">
+                Adv.
+              </th>
+              <th className="sticky top-0 z-20 bg-[#1a1410] py-2 px-1 text-center font-medium w-24 shadow-[0_12px_10px_0_#1a1410] border-b border-surface-border">
+                Test
+              </th>
+              <th className="sticky top-0 z-20 bg-[#1a1410] py-2 px-1 text-center font-medium w-14 shadow-[0_12px_10px_0_#1a1410] border-b border-surface-border">
+                SP
+              </th>
+              <th className="sticky top-0 z-20 bg-[#1a1410] py-2 pl-2 text-right font-medium w-20 shadow-[0_12px_10px_0_#1a1410] border-b border-surface-border">
+                Costs
+              </th>
               {veteran && (
                 <th
-                  className="py-1 pl-2 text-center font-medium w-10"
+                  className="sticky top-0 z-20 bg-[#1a1410] py-2 pl-2 text-center font-medium w-10 shadow-[0_12px_10px_0_#1a1410] border-b border-surface-border"
                   title="Special Experience"
                 >
                   SE

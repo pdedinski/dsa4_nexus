@@ -17,6 +17,7 @@ import {
 import { formatTalentProbe } from "@/lib/chargen/rules/talentCaps";
 import { sktColumnLabel } from "@/lib/chargen/rules/kosten";
 import { hasTrait } from "@/lib/chargen/rules/kosten";
+import { formatOwnedTraitName } from "@/lib/chargen/rules/traitLabels";
 import { resolveTalentSktColumn } from "@/lib/chargen/rules/sktColumn";
 import {
   formatHpSt,
@@ -696,7 +697,9 @@ export function buildSheetDocument(
       [
         [
           cell(
-            held.advantagesDisadvantages.map((t) => trName(t.id)).join(", ") ||
+            held.advantagesDisadvantages
+              .map((t) => formatOwnedTraitName(t, trName))
+              .join(", ") ||
               "—"
           ),
         ],

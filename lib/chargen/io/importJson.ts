@@ -1,6 +1,7 @@
 import type { HeldModel } from "@/lib/chargen/types";
 import { emptyHeld } from "@/lib/chargen/types";
 import { loadAsVeteran } from "@/lib/chargen/rules/veteran";
+import { canonicalizeHeldTraitVariants } from "@/lib/chargen/rules/talentGroupVariants";
 
 export function importHeldJson(raw: string): HeldModel {
   const data = JSON.parse(raw) as Partial<HeldModel>;
@@ -35,5 +36,5 @@ export function importHeldJson(raw: string): HeldModel {
     discountedSpecialAbilityVariants:
       data.discountedSpecialAbilityVariants ?? [],
   };
-  return loadAsVeteran(merged);
+  return loadAsVeteran(canonicalizeHeldTraitVariants(merged));
 }

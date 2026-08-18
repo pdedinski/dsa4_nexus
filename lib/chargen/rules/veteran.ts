@@ -3,6 +3,7 @@
  */
 
 import type { CatalogItem } from "@/lib/chargen/data/loadCatalog";
+import { estimateTraitGp } from "@/lib/chargen/rules/traitLabels";
 import {
   specializationApCost,
   type ExpandedSpecialAbility,
@@ -369,22 +370,29 @@ export function learnSpecialAbilityVeteran(
   };
 }
 
-export function traitGpMagnitude(meta: CatalogItem, rating?: number): number {
-  const gp = Number(meta.gp_cost ?? 0);
+export function traitGpMagnitude(
+  meta: CatalogItem,
+  rating?: number,
+  ctx?: { held?: HeldModel; variant?: string | null; talents?: CatalogItem[] }
+): number {
+  const gp = estimateTraitGp(meta, rating, ctx);
   if (gp < 0) return -gp;
   const per = meta.gp_per_level;
   if (per != null && Number(per) < 0) {
     return -Number(per) * (rating ?? 1);
   }
+  const flat = Number(meta.gp_cost ?? 0);
+  if (flat < 0) return -flat;
   return 0;
 }
 
 export function disadvantageBuyOffCost(
   meta: CatalogItem,
-  rating?: number
+  rating?: number,
+  ctx?: { held?: HeldModel; variant?: string | null; talents?: CatalogItem[] }
 ): number {
   if (meta.kind !== "disadvantage") return 0;
-  const mag = traitGpMagnitude(meta, rating);
+  const mag = traitGpMagnitude(meta, rating, ctx);
   return mag * 100;
 }
 
@@ -415,7 +423,10 @@ export function buyOffDisadvantage(
 ): HeldModel {
   const row = held.advantagesDisadvantages.find((t) => t.id === traitId);
   if (!row || meta.kind !== "disadvantage") return held;
-  const cost = disadvantageBuyOffCost(meta, row.rating);
+  const cost = disadvantageBuyOffCost(meta, row.rating, {
+    held,
+    variant: row.variant,
+  });
   return {
     ...held,
     advantagesDisadvantages: held.advantagesDisadvantages.filter(

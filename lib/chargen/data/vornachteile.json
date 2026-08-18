@@ -16,8 +16,8 @@
   },
   {
     "id": "VorNachteil.AkademischeAusbildungGelehrter",
-    "name": "Academic Training \\",
-    "german_name": "Akademische Ausbildung \\",
+    "name": "Academic Training (Scholar)",
+    "german_name": "Akademische Ausbildung (Gelehrter)",
     "kind": "advantage",
     "gp_cost": 7,
     "gp_per_level": null,
@@ -1411,8 +1411,8 @@
   },
   {
     "id": "VorNachteil.UnfaehigkeitFuerTalentgruppe",
-    "name": "Inaptitude for \\",
-    "german_name": "Unfähigkeit für \\",
+    "name": "Inaptitude for Talent Group",
+    "german_name": "Unfähigkeit für Talentgruppe",
     "kind": "disadvantage",
     "gp_cost": -5,
     "gp_per_level": null,

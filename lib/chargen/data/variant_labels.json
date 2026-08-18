@@ -2164,5 +2164,29 @@
     "name": "Longbow",
     "german_name": "Langbogen",
     "source": "builtin"
+  },
+  {
+    "id": "Auelfen.Ortskenntnis",
+    "name": "territory of the own culture",
+    "german_name": "Territorium der eigenen Kultur",
+    "source": "builtin"
+  },
+  {
+    "id": "Botenreiter.Ortskenntnis",
+    "name": "a usually used route",
+    "german_name": "eine üblicherweise benutzte Strecke",
+    "source": "builtin"
+  },
+  {
+    "id": "Einbrecher.Ortskenntnis",
+    "name": "the preferred area for burglaries",
+    "german_name": "entweder das bevorzugte Gebiet für Fischzüge",
+    "source": "builtin"
+  },
+  {
+    "id": "Kundschafter.Ortskenntnis",
+    "name": "(first) Knowledge of a Place",
+    "german_name": "(erste) Ortskenntnis",
+    "source": "builtin"
   }
 ]

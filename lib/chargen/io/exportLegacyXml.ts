@@ -14,6 +14,10 @@ import {
   rangedWertFromCatalog,
   shieldWertFromCatalog,
 } from "@/lib/chargen/rules/equipmentWert";
+import {
+  isTalentGroupTrait,
+  javaTalentGroupVariant,
+} from "@/lib/chargen/rules/talentGroupVariants";
 
 function esc(s: string): string {
   return s
@@ -24,7 +28,26 @@ function esc(s: string): string {
 }
 
 function tag(name: string, value: string | number): string {
-  return `<${name}>${esc(String(value))}</${name}>`;
+  const s = esc(String(value));
+  if (!s) return `<${name}/>`;
+  return `<${name}>${s}</${name}>`;
+}
+
+/**
+ * Real Java 0.8.7 .dcg files store variants as a child `<Variante Name="…"/>`.
+ * FactoryHeldXmlIn also reads the Variante attribute — emit both so re-import
+ * works in Java Chargen and matches files like Wulfgrimm's.
+ */
+function elementWithOptionalVariante(
+  tagName: string,
+  attrs: string,
+  variant?: string
+): string {
+  if (!variant) return `<${tagName} ${attrs}/>`;
+  const withAttr = /\bVariante=/.test(attrs)
+    ? attrs
+    : `${attrs} Variante="${esc(variant)}"`;
+  return `<${tagName} ${withAttr}>\n        <Variante Name="${esc(variant)}"/>\n    </${tagName}>`;
 }
 
 function csvInts(vals: number[] | undefined, fallback: number[]): string {
@@ -143,8 +166,26 @@ function specializationNeedsTalent(sfId: string): boolean {
   );
 }
 
+/** Race/culture/profession derived mods are applied from the package, not XML Bonus. */
+function packageDerivedBonus(held: HeldModel, code: string): number {
+  let n = 0;
+  for (const cat of ["races", "cultures", "professions"] as const) {
+    const id =
+      cat === "races"
+        ? held.raceId
+        : cat === "cultures"
+          ? held.cultureId
+          : held.professionId;
+    if (!id) continue;
+    const item = getBuiltinCatalog(cat).find((c) => c.id === id);
+    const mods = item?.derived_modifiers as Record<string, number> | undefined;
+    n += mods?.[code] ?? 0;
+  }
+  return n;
+}
+
 export function exportLegacyHeldXml(held: HeldModel): string {
-  const lines: string[] = ['<?xml version="1.0" encoding="UTF-8"?>', "<Held>"];
+  const lines: string[] = ["<Held>"];
 
   lines.push(tag("Name", held.name));
   lines.push(tag("Rasse", held.raceId));
@@ -174,7 +215,12 @@ export function exportLegacyHeldXml(held: HeldModel): string {
     const german = ATTR_TO_GERMAN[a.code];
     if (!german) continue;
     lines.push(
-      `<EigenschaftWert Eigenschaft="${esc(german)}" Basisstufe="${a.base}" Zukauf="${a.purchased}" SpezielleErfahrung="${a.specialExperience ? "true" : "false"}"/>`
+      [
+        `<EigenschaftWert Eigenschaft="${esc(german)}" Basisstufe="${a.base}"`,
+        a.purchased ? ` Zukauf="${a.purchased}"` : "",
+        a.specialExperience ? ' SpezielleErfahrung="true"' : "",
+        "/>",
+      ].join("")
     );
   }
   lines.push("</EigenschaftWerte>");
@@ -186,8 +232,15 @@ export function exportLegacyHeldXml(held: HeldModel): string {
     if (d.code === "GS") continue;
     const german = DERIVED_TO_GERMAN[d.code as Exclude<typeof d.code, "GS">];
     if (!german) continue;
+    const xmlBonus = d.modification - packageDerivedBonus(held, d.code);
     lines.push(
-      `<BasiswertWert Basiswert="${esc(german)}" Bonus="${d.modification}" Zukauf="${d.purchased}" SpezielleErfahrung="${d.specialExperience ? "true" : "false"}"/>`
+      [
+        `<BasiswertWert Basiswert="${esc(german)}"`,
+        xmlBonus ? ` Bonus="${xmlBonus}"` : "",
+        d.purchased ? ` Zukauf="${d.purchased}"` : "",
+        d.specialExperience ? ' SpezielleErfahrung="true"' : "",
+        "/>",
+      ].join("")
     );
   }
   lines.push("</BasiswertWerte>");
@@ -201,8 +254,8 @@ export function exportLegacyHeldXml(held: HeldModel): string {
   for (const t of held.talents) {
     const attrs = [
       `Talent="${esc(t.id)}"`,
-      `UnmodifizierteStufe="${t.tp}"`,
-      `SpezielleErfahrung="${t.specialExperience ? "true" : "false"}"`,
+      t.tp ? `UnmodifizierteStufe="${t.tp}"` : "",
+      t.specialExperience ? 'SpezielleErfahrung="true"' : "",
       t.attack != null ? `Attacke="${t.attack}"` : "",
       t.activated === false ? 'Aktiviert="false"' : "",
     ]
@@ -226,12 +279,11 @@ export function exportLegacyHeldXml(held: HeldModel): string {
       const attrs = [
         `Zauber="${esc(s.id)}"`,
         `Stufe="${s.sp}"`,
-        `SpezielleErfahrung="${s.specialExperience ? "true" : "false"}"`,
-        s.variant ? `Variante="${esc(s.variant)}"` : "",
+        s.specialExperience ? 'SpezielleErfahrung="true"' : "",
       ]
         .filter(Boolean)
         .join(" ");
-      lines.push(`<ZauberWert ${attrs}/>`);
+      lines.push(elementWithOptionalVariante("ZauberWert", attrs, s.variant));
     }
     lines.push("</ZauberWerte>");
   }
@@ -266,11 +318,10 @@ export function exportLegacyHeldXml(held: HeldModel): string {
       const attrs = [
         `Sonderfertigkeit="${esc(s.id)}"`,
         s.talent ? `Talent="${esc(s.talent)}"` : "",
-        variant ? `Variante="${esc(variant)}"` : "",
       ]
         .filter(Boolean)
         .join(" ");
-      sfLines.push(`<SonderfertigkeitWert ${attrs}/>`);
+      sfLines.push(elementWithOptionalVariante("SonderfertigkeitWert", attrs, variant));
     }
     if (sfLines.length) {
       lines.push("<SonderfertigkeitWerte>");
@@ -305,12 +356,11 @@ export function exportLegacyHeldXml(held: HeldModel): string {
       const attrs = [
         `Sonderfertigkeit="${esc(v.id)}"`,
         v.talent ? `Talent="${esc(v.talent)}"` : "",
-        variant ? `Variante="${esc(variant)}"` : "",
       ]
         .filter(Boolean)
         .join(" ");
       // Held XML uses SonderfertigkeitWert children (FactoryHeldXmlOut), not baustein <Variante>.
-      vvLines.push(`<SonderfertigkeitWert ${attrs}/>`);
+      vvLines.push(elementWithOptionalVariante("SonderfertigkeitWert", attrs, variant));
     }
     if (vvLines.length) {
       lines.push("<VerbilligteVarianten>");
@@ -399,6 +449,9 @@ export function exportLegacyHeldXml(held: HeldModel): string {
       if ((needsFixed || needsFree) && !variant) {
         variant = packageTraitVariantHint(t.id);
       }
+      if (variant && isTalentGroupTrait(t.id)) {
+        variant = javaTalentGroupVariant(variant) || variant;
+      }
       // FactoryHeldXmlIn.erzeugeVorNachteilWert → new Variante(null) NPE when hatVarianten.
       if (needsFixed && !variant) continue;
       if (needsFree && !variant) variant = "?";
@@ -406,11 +459,10 @@ export function exportLegacyHeldXml(held: HeldModel): string {
         `VorNachteil="${esc(t.id)}"`,
         t.specialExperience ? 'SpezielleErfahrung="true"' : "",
         t.rating != null ? `Stufe="${t.rating}"` : "",
-        variant ? `Variante="${esc(variant)}"` : "",
       ]
         .filter(Boolean)
         .join(" ");
-      vnLines.push(`<VorNachteilWert ${attrs}/>`);
+      vnLines.push(elementWithOptionalVariante("VorNachteilWert", attrs, variant));
     }
     if (vnLines.length) {
       lines.push("<VorNachteilWerte>");
@@ -429,9 +481,30 @@ export function exportLegacyHeldXml(held: HeldModel): string {
       const dkH = w.dkH ?? seeded?.dkH ?? false;
       const dkN = w.dkN ?? seeded?.dkN ?? false;
       const dkS = w.dkS ?? seeded?.dkS ?? false;
-      lines.push(
-        `<NahkampfwaffeWert Nahkampfwaffe="${esc(w.id)}" Name="${esc(w.name || seeded?.name || w.id)}" Talent="${esc(talent)}" Tp="${esc(tp)}" Bf="${w.bf ?? seeded?.bf ?? 0}" Ini="${w.ini ?? seeded?.ini ?? 0}" WmAt="${w.wmAt ?? seeded?.wmAt ?? 0}" WmPa="${w.wmPa ?? seeded?.wmPa ?? 0}" DkH="${dkH ? "true" : "false"}" DkN="${dkN ? "true" : "false"}" DkS="${dkS ? "true" : "false"}" Schadensschritt="${w.damageStep ?? seeded?.damageStep ?? 0}" Schwellenwert="${w.damageThreshold ?? seeded?.damageThreshold ?? 0}"/>`
-      );
+      const bf = w.bf ?? seeded?.bf ?? 0;
+      const ini = w.ini ?? seeded?.ini ?? 0;
+      const wmAt = w.wmAt ?? seeded?.wmAt ?? 0;
+      const wmPa = w.wmPa ?? seeded?.wmPa ?? 0;
+      const step = w.damageStep ?? seeded?.damageStep ?? 0;
+      const thr = w.damageThreshold ?? seeded?.damageThreshold ?? 0;
+      const attrs = [
+        `Nahkampfwaffe="${esc(w.id)}"`,
+        `Name="${esc(w.name || seeded?.name || w.id)}"`,
+        `Talent="${esc(talent)}"`,
+        `Tp="${esc(tp)}"`,
+        `Bf="${bf}"`,
+        ini ? `Ini="${ini}"` : "",
+        wmAt ? `WmAt="${wmAt}"` : "",
+        wmPa ? `WmPa="${wmPa}"` : "",
+        dkH ? `DkH="true"` : "",
+        dkN ? `DkN="true"` : "",
+        dkS ? `DkS="true"` : "",
+        `Schadensschritt="${step}"`,
+        `Schwellenwert="${thr}"`,
+      ]
+        .filter(Boolean)
+        .join(" ");
+      lines.push(`<NahkampfwaffeWert ${attrs}/>`);
     }
     lines.push("</NahkampfwaffeWerte>");
   }
@@ -481,6 +554,10 @@ export function exportLegacyHeldXml(held: HeldModel): string {
       );
     }
     lines.push("</SchildWerte>");
+  }
+
+  if (held.kapital != null && Number.isFinite(held.kapital)) {
+    lines.push(tag("Kapital", held.kapital));
   }
 
   lines.push("</Held>");

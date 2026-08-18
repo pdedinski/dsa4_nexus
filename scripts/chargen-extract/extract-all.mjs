@@ -94,16 +94,39 @@ function writeJson(name, data) {
 function parseProperties(filePath) {
   const text = fs.readFileSync(filePath, "utf8");
   const map = new Map();
-  for (const line of text.split(/\r?\n/)) {
-    if (!line || line.startsWith("#") || !line.includes("=")) continue;
-    const eq = line.indexOf("=");
-    const key = line.slice(0, eq).trim();
-    let val = line.slice(eq + 1);
-    // unescape unicode
+  const rawLines = text.split(/\r?\n/);
+  let logical = "";
+  let accumulating = false;
+  for (const rawLine of rawLines) {
+    let line = rawLine;
+    if (accumulating) {
+      line = line.replace(/^[ \t\f]+/, "");
+      logical += line;
+    } else {
+      const trimmed = line.replace(/^[ \t\f]+/, "");
+      if (!trimmed || trimmed.startsWith("#") || trimmed.startsWith("!")) {
+        continue;
+      }
+      logical = line;
+    }
+    if (logical.endsWith("\\")) {
+      logical = logical.slice(0, -1);
+      accumulating = true;
+      continue;
+    }
+    accumulating = false;
+    const eq = logical.indexOf("=");
+    if (eq < 0) {
+      logical = "";
+      continue;
+    }
+    const key = logical.slice(0, eq).trim();
+    let val = logical.slice(eq + 1);
     val = val.replace(/\\u([0-9a-fA-F]{4})/g, (_, h) =>
       String.fromCharCode(parseInt(h, 16))
     );
     map.set(key, val);
+    logical = "";
   }
   return map;
 }
@@ -1098,6 +1121,7 @@ function extractAdvantages(en, de) {
     items.push({
       id,
       ...namesFor(id, en, de),
+      name_prefix: en.get(`${id}.Praefix`) || null,
       kind: meta.kind || "unknown",
       gp_cost: meta.gp_cost ?? null,
       gp_per_level: meta.gp_per_level ?? null,
@@ -1375,12 +1399,13 @@ function extractVariantLabels(en, de) {
   ];
   const byId = new Map();
   for (const [key, val] of en) {
-    if (!prefixes.some((p) => key.startsWith(p))) continue;
+    const isOrtskenntnis = key.endsWith(".Ortskenntnis");
+    if (!prefixes.some((p) => key.startsWith(p)) && !isOrtskenntnis) continue;
     let id;
     if (key.endsWith(".Name")) {
       id = key.slice(0, -".Name".length);
     } else if (
-      key.startsWith("Talent.Spezialisierung.") &&
+      (key.startsWith("Talent.Spezialisierung.") || isOrtskenntnis) &&
       !key.includes(".Name") &&
       !key.endsWith(".Kuerzel")
     ) {

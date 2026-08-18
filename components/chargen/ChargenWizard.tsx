@@ -59,6 +59,7 @@ import {
   specializationIndex,
 } from "@/lib/chargen/rules/expandSpecialAbilities";
 import { formatTraitMeta } from "@/lib/chargen/rules/traitLabels";
+import { talentGroupVariantAliases } from "@/lib/chargen/rules/talentGroupVariants";
 import variantLabels from "@/lib/chargen/data/variant_labels.json";
 import {
   generateName,
@@ -91,6 +92,10 @@ import VeteranAttributesPanel from "@/components/chargen/VeteranAttributesPanel"
 import VeteranTraitsPanel from "@/components/chargen/VeteranTraitsPanel";
 import ConfirmDialog from "@/components/ui/ConfirmDialog";
 import FoundationChoiceList from "@/components/chargen/FoundationChoiceList";
+import {
+  StickySectionHeader,
+  chargenNestedListClass,
+} from "@/components/chargen/ChargenScrollList";
 import {
   isCultureAllowedForRace,
   isProfessionAllowedForCulture,
@@ -348,6 +353,9 @@ export default function ChargenWizard() {
       for (const item of list) {
         m[item.id] = (item.name as string) || item.id;
       }
+    }
+    for (const [id, label] of Object.entries(talentGroupVariantAliases())) {
+      if (!m[id]) m[id] = label;
     }
     return m;
   }, [
@@ -901,7 +909,7 @@ export default function ChargenWizard() {
   }
 
   return (
-    <div className="min-h-[calc(100vh-2rem)] flex flex-col">
+    <div className="flex min-h-0 flex-1 flex-col pb-[env(safe-area-inset-bottom)]">
       {!warnDismissed && warnings.length > 0 && (
         <div className="bg-amber-950/80 border-b border-amber-800/60 px-4 py-2 text-sm text-amber-100 flex items-start gap-3">
           <div className="flex-1">
@@ -937,7 +945,7 @@ export default function ChargenWizard() {
         />
       )}
       {step === "sheet" && (
-        <div className="sticky top-0 z-20 flex flex-wrap items-center justify-end gap-2 border-b border-surface-border bg-[#1a1410] px-4 py-2 text-sm shadow-md">
+        <div className="z-20 flex shrink-0 flex-wrap items-center justify-end gap-2 border-b border-surface-border bg-[#1a1410] px-4 py-2 text-sm shadow-md">
           <button
             type="button"
             className="rounded border border-surface-border px-2 py-0.5 text-xs text-ink hover:bg-surface-sidebar/60"
@@ -949,9 +957,44 @@ export default function ChargenWizard() {
         </div>
       )}
 
-      <div className="flex flex-1 min-h-0">
+      {step !== "start" && (
+        <label className="shrink-0 border-b border-surface-border bg-[#1a1410] px-4 py-2 text-sm md:hidden">
+          <span className="sr-only">Step</span>
+          <select
+            className="w-full rounded border border-surface-border bg-[#2c251f] px-2 py-2 text-[#f2e8dc] scheme-dark"
+            value={step}
+            onChange={(e) => {
+              const id = e.target.value as StepId;
+              const s = activeSteps.find((x) => x.id === id);
+              if (!s) return;
+              const foundationGate =
+                !veteran &&
+                !foundationLocked &&
+                FOUNDATION_STEP_IDS.includes(s.id) &&
+                !isFoundationStepAccessible(s.id);
+              if (foundationGate) return;
+              setStep(s.id);
+            }}
+          >
+            {activeSteps.map((s) => {
+              const foundationGate =
+                !veteran &&
+                !foundationLocked &&
+                FOUNDATION_STEP_IDS.includes(s.id) &&
+                !isFoundationStepAccessible(s.id);
+              return (
+                <option key={s.id} value={s.id} disabled={foundationGate}>
+                  {s.label}
+                </option>
+              );
+            })}
+          </select>
+        </label>
+      )}
+
+      <div className="flex min-h-0 flex-1">
         {step !== "start" && (
-        <nav className="w-48 shrink-0 border-r border-surface-border p-3 overflow-y-auto hidden md:block">
+        <nav className="hidden w-48 shrink-0 overflow-y-auto border-r border-surface-border p-3 md:block">
           <ol className="space-y-1 text-sm">
             {activeSteps.map((s) => {
               const foundationGate =
@@ -997,7 +1040,7 @@ export default function ChargenWizard() {
         </nav>
         )}
 
-        <div className="flex-1 overflow-y-auto p-4 md:p-6">
+        <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain p-4 pb-6 md:p-6">
           {step === "start" && (
             <div className="max-w-lg space-y-4">
               <h2 className="text-xl font-bold text-ink">
@@ -2159,15 +2202,21 @@ export default function ChargenWizard() {
                   ? "Learn special abilities with AP. Teacher or Special Experience cost less for specializations."
                   : "Grouped like the Java Chargen. Talent and weapon specializations are listed per skill — pick a variant, then tick the box. Culture Lore, Area Knowledge, and similar abilities also need a variant."}
               </p>
-              <div className="max-h-[32rem] overflow-y-auto space-y-4">
+              <div className={`${chargenNestedListClass} flex flex-col gap-4`}>
                 {specialGroups.map((group) => (
-                  <section key={group.id}>
-                    <h3 className="sticky top-0 z-10 bg-surface-card border-b border-surface-border py-1.5 text-sm font-semibold text-ink">
-                      {group.label}
-                    </h3>
+                  <section key={group.id} className="relative z-0">
+                    <StickySectionHeader>{group.label}</StickySectionHeader>
                     <div className="space-y-1 pt-1">
                       {group.items.map((s) => {
-                        const draftRaw = saVariants[s.instanceKey] ?? "";
+                        const ownedRow = held.specialAbilities.find(
+                          (x) =>
+                            x.id === s.id &&
+                            (x.talent || "") === (s.talent || "")
+                        );
+                        const draftRaw =
+                          saVariants[s.instanceKey] ??
+                          ownedRow?.variant ??
+                          "";
                         const custom =
                           draftRaw === "__custom__"
                             ? (saCustomVariant[s.instanceKey] || "").trim()
@@ -2278,7 +2327,7 @@ export default function ChargenWizard() {
                         return (
                           <div
                             key={s.instanceKey}
-                            className={`flex items-start gap-2 text-sm px-2 py-1.5 rounded ${
+                            className={`flex items-start gap-2 text-sm px-2 py-2 sm:py-1.5 rounded ${
                               blocked
                                 ? "opacity-50"
                                 : "hover:bg-surface-sidebar/50"
@@ -2286,7 +2335,7 @@ export default function ChargenWizard() {
                           >
                             <input
                               type="checkbox"
-                              className="mt-1"
+                              className="mt-1 h-4 w-4 shrink-0"
                               checked={owned && variantReady}
                               disabled={checkboxDisabled}
                               onChange={(e) =>
@@ -2403,7 +2452,7 @@ export default function ChargenWizard() {
                                       type="text"
                                       className="rounded border border-surface-border bg-surface-sidebar px-2 py-0.5 text-xs max-w-xs"
                                       placeholder="Variant / place name"
-                                      value={saVariants[s.instanceKey] || ""}
+                                      value={labelMap[draftRaw] || draftRaw}
                                       onChange={(e) =>
                                         setSaVariants((prev) => ({
                                           ...prev,
@@ -2415,7 +2464,7 @@ export default function ChargenWizard() {
                                     <>
                                       <select
                                         className="rounded border border-surface-border bg-surface-sidebar px-2 py-0.5 text-xs max-w-xs"
-                                        value={saVariants[s.instanceKey] || ""}
+                                        value={draftRaw}
                                         onChange={(e) =>
                                           setSaVariants((prev) => ({
                                             ...prev,
@@ -2523,7 +2572,7 @@ export default function ChargenWizard() {
                 ))}
               </div>
               {held.specialAbilities.length > 0 && (
-                <div className="rounded border border-surface-border bg-surface-sidebar/40 p-2 text-xs text-ink-muted">
+                <div className="max-h-32 overflow-y-auto overscroll-contain rounded border border-surface-border bg-[#1a1410] p-2 text-xs text-ink-muted shadow-md sm:max-h-40">
                   <div className="font-medium text-ink mb-1">Selected</div>
                   <ul className="space-y-0.5">
                     {held.specialAbilities.map((sa, i) => (
@@ -2542,6 +2591,7 @@ export default function ChargenWizard() {
               held={held}
               updateHeld={updateHeld}
               traits={traits}
+              talents={talents}
               learningMethod={traitLearningMethod}
               onLearningMethodChange={setTraitLearningMethod}
               labelMap={labelMap}
@@ -2613,7 +2663,7 @@ export default function ChargenWizard() {
                   </label>
                 </div>
               )}
-              <div className="max-h-[28rem] overflow-y-auto space-y-1">
+              <div className={`${chargenNestedListClass} space-y-1`}>
                 {traits.map((t) => {
                   const owned = held.advantagesDisadvantages.some(
                     (x) => x.id === t.id
@@ -2907,11 +2957,11 @@ export default function ChargenWizard() {
           )}
 
           {step !== "start" && step !== "sheet" && (
-            <div className="mt-8 flex gap-2 border-t border-surface-border pt-4">
+            <div className="mt-6 flex gap-2 border-t border-surface-border pt-4 md:mt-8">
               <button
                 type="button"
                 disabled={backDisabled}
-                className="px-3 py-2 rounded-lg text-sm text-ink-muted hover:bg-surface-sidebar disabled:opacity-40 disabled:pointer-events-none"
+                className="min-h-11 px-3 py-2 rounded-lg text-sm text-ink-muted hover:bg-surface-sidebar disabled:opacity-40 disabled:pointer-events-none"
                 onClick={goBack}
               >
                 Back
@@ -2920,7 +2970,7 @@ export default function ChargenWizard() {
                 <button
                   type="button"
                   disabled={!problems.canFinish}
-                  className="px-3 py-2 rounded-lg text-sm bg-brand text-white font-medium disabled:opacity-40 disabled:pointer-events-none"
+                  className="min-h-11 px-3 py-2 rounded-lg text-sm bg-brand text-white font-medium disabled:opacity-40 disabled:pointer-events-none"
                   onClick={() => {
                     updateHeld((h) =>
                       finishCreation(h, attributeMods, budget.gpRemaining)
@@ -2935,7 +2985,7 @@ export default function ChargenWizard() {
                 <button
                   type="button"
                   disabled={nextDisabled}
-                  className="px-3 py-2 rounded-lg text-sm bg-brand text-white font-medium disabled:opacity-40 disabled:pointer-events-none"
+                  className="min-h-11 px-3 py-2 rounded-lg text-sm bg-brand text-white font-medium disabled:opacity-40 disabled:pointer-events-none"
                   onClick={goNext}
                 >
                   {!veteran && !foundationLocked && step === "profession"

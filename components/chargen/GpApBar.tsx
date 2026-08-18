@@ -17,7 +17,7 @@ export default function GpApBar({
     (budget.magicApBudget ?? 0) > 0 || (budget.magicApSpent ?? 0) > 0;
 
   return (
-    <div className="sticky top-0 z-20 flex flex-wrap items-center gap-3 border-b border-surface-border bg-[#1a1410] px-4 py-2 text-sm shadow-md">
+    <div className="z-20 flex shrink-0 flex-wrap items-center gap-3 border-b border-surface-border bg-[#1a1410] px-4 py-2 text-sm shadow-md">
       <span className="font-semibold text-ink">Budgets</span>
       <span
         className={

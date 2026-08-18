@@ -25,6 +25,10 @@ import {
 } from "@/lib/chargen/rules/talentActivation";
 import { formatTalentProbe } from "@/lib/chargen/rules/talentCaps";
 import LearningMethodSelect from "@/components/chargen/LearningMethodSelect";
+import {
+  StickySectionHeader,
+  chargenNestedListClass,
+} from "@/components/chargen/ChargenScrollList";
 
 function CustomBadge({ source }: { source?: string }) {
   if (!source || source === "builtin") return null;
@@ -106,18 +110,23 @@ export default function TalentsStepTable({
           ? "Spend AP to activate and raise talents. Raises up to your loaded baseline are free until you save and reload."
           : "Basic talents and seeded talents from race, culture, and profession start known (checkbox locked) and can be raised without activation. Other talents must be activated first. Mother tongue / second language show CL creation modifiers (CL−2 / CL−4)."}
       </p>
-      <div className="max-h-[28rem] overflow-y-auto space-y-4">
+      <div className={`${chargenNestedListClass} flex flex-col gap-4`}>
         {talentsByGroup.map(({ id: groupId, items }) => {
           const showCombatCols = groupId === "combat";
           return (
-            <section key={groupId}>
-              <h3 className="sticky top-0 z-10 bg-[#1a1410] py-1.5 text-xs font-semibold uppercase tracking-wide text-ink-muted border-b border-surface-border mb-1">
+            <section key={groupId} className="relative z-0">
+              <StickySectionHeader className="text-xs font-semibold uppercase tracking-wide text-ink-muted">
                 {talentGroupLabel(groupId)}
                 <span className="ml-2 font-normal normal-case tracking-normal text-ink-faint">
                   ({items.length})
                 </span>
-              </h3>
-              <table className="w-full text-sm border-collapse">
+              </StickySectionHeader>
+              <div className="overflow-x-auto">
+              <table
+                className={`w-full text-sm border-collapse ${
+                  showCombatCols ? "min-w-[36rem]" : "min-w-[20rem]"
+                }`}
+              >
                 <thead>
                   <tr className="text-xs text-ink-muted border-b border-surface-border">
                     <th className="py-1 pr-2 text-left font-medium w-8" />
@@ -390,6 +399,7 @@ export default function TalentsStepTable({
                   })}
                 </tbody>
               </table>
+              </div>
             </section>
           );
         })}

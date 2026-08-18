@@ -13,6 +13,7 @@ import {
   usesAtPaDistribution,
 } from "@/lib/chargen/rules/talentActivation";
 import { hasSpellRepresentation } from "@/lib/chargen/rules/sktColumn";
+import { canonicalTalentGroupVariant } from "@/lib/chargen/rules/talentGroupVariants";
 import type { Konflikt } from "@/lib/chargen/rules/voraussetzungen";
 
 const BEGABUNG_TALENT = "VorNachteil.BegabungFuerTalent";
@@ -98,7 +99,9 @@ function hasBegabungForTalent(held: HeldModel, talent: CatalogItem): boolean {
     ) ||
     (group !== "" &&
       held.advantagesDisadvantages.some(
-        (t) => t.id === BEGABUNG_GRUPPE && t.variant === group
+        (t) =>
+          t.id === BEGABUNG_GRUPPE &&
+          canonicalTalentGroupVariant(t.variant) === group
       ))
   );
 }
