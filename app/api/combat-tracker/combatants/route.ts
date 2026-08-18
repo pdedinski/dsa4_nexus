@@ -15,6 +15,8 @@ import {
 import { db } from "@/lib/db/client";
 import { combatCombatants } from "@/lib/db/schema";
 
+const COMMENT_MAX_LEN = 2000;
+
 function parseIntField(v: unknown, fallback = 0): number {
   if (typeof v === "number" && Number.isFinite(v)) return Math.trunc(v);
   if (typeof v === "string" && v.trim() !== "") {
@@ -22,6 +24,16 @@ function parseIntField(v: unknown, fallback = 0): number {
     if (Number.isFinite(n)) return Math.trunc(n);
   }
   return fallback;
+}
+
+function parseComment(v: unknown): string | { error: string } {
+  if (v === undefined || v === null) return "";
+  if (typeof v !== "string") return { error: "Comment must be a string" };
+  const trimmed = v.trim();
+  if (trimmed.length > COMMENT_MAX_LEN) {
+    return { error: `Comment must be at most ${COMMENT_MAX_LEN} characters` };
+  }
+  return trimmed;
 }
 
 /** POST — add combatant */
@@ -36,6 +48,7 @@ export async function POST(req: NextRequest) {
     vp?: unknown;
     asp?: unknown;
     ar?: unknown;
+    comment?: unknown;
   };
   try {
     body = await req.json();
@@ -46,6 +59,11 @@ export async function POST(req: NextRequest) {
   const name = typeof body.name === "string" ? body.name.trim() : "";
   if (!name) {
     return NextResponse.json({ error: "Name is required" }, { status: 400 });
+  }
+
+  const commentResult = parseComment(body.comment);
+  if (typeof commentResult === "object") {
+    return NextResponse.json({ error: commentResult.error }, { status: 400 });
   }
 
   const ini = parseIntField(body.ini, 0);
@@ -69,6 +87,7 @@ export async function POST(req: NextRequest) {
       vp,
       asp,
       ar,
+      comment: commentResult,
       sortOrder: maxSort,
       lastDamageApplied: null,
     })

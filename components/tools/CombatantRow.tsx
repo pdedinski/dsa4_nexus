@@ -32,7 +32,9 @@ export default function CombatantRow({
   busy: boolean;
   onPatch: (
     id: string,
-    patch: Partial<Pick<CombatantDto, "name" | "ini" | "vp" | "asp" | "ar">>
+    patch: Partial<
+      Pick<CombatantDto, "name" | "ini" | "vp" | "asp" | "ar" | "comment">
+    >
   ) => Promise<void>;
   onApplyDamage: (id: string, damageDealt: number) => Promise<void>;
   onMove: (id: string, direction: "up" | "down") => Promise<void>;
@@ -46,6 +48,7 @@ export default function CombatantRow({
   const [vp, setVp] = useState(String(combatant.vp));
   const [asp, setAsp] = useState(String(combatant.asp));
   const [ar, setAr] = useState(String(combatant.ar));
+  const [comment, setComment] = useState(combatant.comment);
   const [damageDealt, setDamageDealt] = useState("");
   const [applying, setApplying] = useState(false);
 
@@ -55,6 +58,7 @@ export default function CombatantRow({
     setVp(String(combatant.vp));
     setAsp(String(combatant.asp));
     setAr(String(combatant.ar));
+    setComment(combatant.comment);
   }, [combatant]);
 
   useEffect(() => {
@@ -72,6 +76,15 @@ export default function CombatantRow({
       return;
     }
     await onPatch(combatant.id, { name: trimmed });
+  }
+
+  async function commitComment() {
+    const trimmed = comment.trim();
+    if (trimmed === combatant.comment) {
+      setComment(combatant.comment);
+      return;
+    }
+    await onPatch(combatant.id, { comment: trimmed });
   }
 
   async function commitNum(
@@ -271,6 +284,20 @@ export default function CombatantRow({
           {applying ? "…" : "Apply"}
         </button>
       </div>
+
+      {/* Row 3: Comment */}
+      <label className="mt-1 flex items-start gap-1.5 pl-8 text-[10px] text-ink-muted">
+        <span className="shrink-0 pt-1">Comment</span>
+        <textarea
+          rows={2}
+          placeholder="Status, tactics, reminders…"
+          className="min-w-0 flex-1 resize-y rounded border border-surface-border bg-surface-sidebar px-2 py-1 text-xs text-ink scheme-dark placeholder:text-ink-muted/60 disabled:opacity-60"
+          value={comment}
+          disabled={busy}
+          onChange={(e) => setComment(e.target.value)}
+          onBlur={() => void commitComment()}
+        />
+      </label>
     </div>
   );
 }

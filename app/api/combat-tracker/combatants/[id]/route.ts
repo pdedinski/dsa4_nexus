@@ -22,6 +22,8 @@ import { combatCombatants } from "@/lib/db/schema";
 const UUID_RE =
   /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
+const COMMENT_MAX_LEN = 2000;
+
 function isUuid(s: string) {
   return UUID_RE.test(s);
 }
@@ -34,6 +36,18 @@ function parseOptionalInt(v: unknown): number | undefined {
     if (Number.isFinite(n)) return Math.trunc(n);
   }
   return undefined;
+}
+
+function parseOptionalComment(
+  v: unknown
+): string | undefined | { error: string } {
+  if (v === undefined) return undefined;
+  if (typeof v !== "string") return { error: "Comment must be a string" };
+  const trimmed = v.trim();
+  if (trimmed.length > COMMENT_MAX_LEN) {
+    return { error: `Comment must be at most ${COMMENT_MAX_LEN} characters` };
+  }
+  return trimmed;
 }
 
 type Ctx = { params: Promise<{ id: string }> };
@@ -58,6 +72,7 @@ export async function PATCH(req: NextRequest, ctx: Ctx) {
     vp?: unknown;
     asp?: unknown;
     ar?: unknown;
+    comment?: unknown;
   };
   try {
     body = await req.json();
@@ -72,6 +87,7 @@ export async function PATCH(req: NextRequest, ctx: Ctx) {
     vp?: number;
     asp?: number;
     ar?: number;
+    comment?: string;
     sortOrder?: number;
     updatedAt: Date;
   } = { updatedAt: new Date() };
@@ -82,6 +98,12 @@ export async function PATCH(req: NextRequest, ctx: Ctx) {
       return NextResponse.json({ error: "Name is required" }, { status: 400 });
     updates.name = name;
   }
+
+  const commentResult = parseOptionalComment(body.comment);
+  if (typeof commentResult === "object") {
+    return NextResponse.json({ error: commentResult.error }, { status: 400 });
+  }
+  if (commentResult !== undefined) updates.comment = commentResult;
 
   const newIni = parseOptionalInt(body.ini);
   const newVp = parseOptionalInt(body.vp);

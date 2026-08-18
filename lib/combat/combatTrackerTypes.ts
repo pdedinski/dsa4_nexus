@@ -7,6 +7,7 @@ export type CombatantDto = {
   vp: number;
   asp: number;
   ar: number;
+  comment: string;
   sortOrder: number;
   lastDamageApplied: number | null;
 };

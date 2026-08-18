@@ -25,6 +25,7 @@ export function toCombatantDto(row: CombatCombatantRow): CombatantDto {
     vp: row.vp,
     asp: row.asp,
     ar: row.ar,
+    comment: row.comment ?? "",
     sortOrder: row.sortOrder,
     lastDamageApplied: row.lastDamageApplied,
   };

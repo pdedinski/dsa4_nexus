@@ -286,6 +286,7 @@ export const combatCombatants = pgTable(
     vp: integer("vp").notNull().default(0),
     asp: integer("asp").notNull().default(0),
     ar: integer("ar").notNull().default(0),
+    comment: text("comment").notNull().default(""),
     sortOrder: integer("sort_order").notNull().default(0),
     lastDamageApplied: integer("last_damage_applied"),
     createdAt: timestamp("created_at", { withTimezone: true })

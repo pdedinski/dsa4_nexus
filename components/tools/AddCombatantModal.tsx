@@ -11,6 +11,7 @@ export type CombatantDraft = {
   vp: number;
   asp: number;
   ar: number;
+  comment: string;
 };
 
 const EMPTY_DRAFT: CombatantDraft = {
@@ -19,6 +20,7 @@ const EMPTY_DRAFT: CombatantDraft = {
   vp: 0,
   asp: 0,
   ar: 0,
+  comment: "",
 };
 
 export default function AddCombatantModal({
@@ -62,7 +64,7 @@ export default function AddCombatantModal({
 
   if (!open) return null;
 
-  function setNum(key: keyof CombatantDraft, raw: string) {
+  function setNum(key: "ini" | "vp" | "asp" | "ar", raw: string) {
     const n = raw === "" ? 0 : Math.trunc(Number(raw));
     setDraft((d) => ({
       ...d,
@@ -131,6 +133,19 @@ export default function AddCombatantModal({
               </label>
             ))}
           </div>
+
+          <label className="mt-3 block text-sm">
+            <span className="text-ink-muted">Comment</span>
+            <textarea
+              rows={2}
+              placeholder="Status, tactics, reminders…"
+              className="mt-1 w-full resize-y rounded border border-surface-border bg-[#2c251f] px-3 py-2 text-ink scheme-dark placeholder:text-ink-muted/60"
+              value={draft.comment}
+              onChange={(e) =>
+                setDraft((d) => ({ ...d, comment: e.target.value }))
+              }
+            />
+          </label>
 
           <div className="mt-6 flex justify-end gap-2">
             <button

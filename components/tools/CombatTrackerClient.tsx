@@ -83,6 +83,7 @@ export default function CombatTrackerClient() {
       vp: c.vp,
       asp: c.asp,
       ar: c.ar,
+      comment: c.comment,
     });
     setModalError(null);
     setModalOpen(true);
@@ -112,7 +113,9 @@ export default function CombatTrackerClient() {
 
   async function patchCombatant(
     id: string,
-    patch: Partial<Pick<CombatantDto, "name" | "ini" | "vp" | "asp" | "ar">>
+    patch: Partial<
+      Pick<CombatantDto, "name" | "ini" | "vp" | "asp" | "ar" | "comment">
+    >
   ) {
     setBusy(true);
     setError(null);
