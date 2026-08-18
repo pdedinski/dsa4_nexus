@@ -1,0 +1,195 @@
+<Held>
+    <Name>Wulfgrimm Manaferson</Name>
+    <Rasse>Rasse.Thorwaler</Rasse>
+    <Kultur>Kultur.MittellaendischeStaedte</Kultur>
+    <Profession>Profession.Magier</Profession>
+    <Geschlecht>MAENNLICH</Geschlecht>
+    <Geburtstag>1. Praios, 1 Hal</Geburtstag>
+    <Alter>21</Alter>
+    <Groesse>199</Groesse>
+    <Gewicht>104</Gewicht>
+    <Haarfarbe>red blond</Haarfarbe>
+    <Augenfarbe>blue</Augenfarbe>
+    <Aussehen/>
+    <Stand/>
+    <Titel/>
+    <Hintergrund/>
+    <GesamtAp>560</GesamtAp>
+    <EingesetzteAp>556</EingesetzteAp>
+    <EigenschaftWerte>
+        <EigenschaftWert Eigenschaft="Eigenschaft.Mut" Basisstufe="14"/>
+        <EigenschaftWert Eigenschaft="Eigenschaft.Klugheit" Basisstufe="14"/>
+        <EigenschaftWert Eigenschaft="Eigenschaft.Intuition" Basisstufe="14"/>
+        <EigenschaftWert Eigenschaft="Eigenschaft.Charisma" Basisstufe="12"/>
+        <EigenschaftWert Eigenschaft="Eigenschaft.Fingerfertigkeit" Basisstufe="10"/>
+        <EigenschaftWert Eigenschaft="Eigenschaft.Gewandtheit" Basisstufe="10"/>
+        <EigenschaftWert Eigenschaft="Eigenschaft.Konstitution" Basisstufe="12"/>
+        <EigenschaftWert Eigenschaft="Eigenschaft.Koerperkraft" Basisstufe="15"/>
+        <EigenschaftWert Eigenschaft="Eigenschaft.Sozialstatus" Basisstufe="7"/>
+    </EigenschaftWerte>
+    <BasiswertWerte>
+        <BasiswertWert Basiswert="Basiswert.Lebensenergie"/>
+        <BasiswertWert Basiswert="Basiswert.Ausdauer"/>
+        <BasiswertWert Basiswert="Basiswert.Magieresistenz"/>
+        <BasiswertWert Basiswert="Basiswert.Astralenergie"/>
+        <BasiswertWert Basiswert="Basiswert.Wundschwelle"/>
+        <BasiswertWert Basiswert="Basiswert.Attacke"/>
+        <BasiswertWert Basiswert="Basiswert.Parade"/>
+        <BasiswertWert Basiswert="Basiswert.Fernkampf"/>
+        <BasiswertWert Basiswert="Basiswert.Initiative"/>
+    </BasiswertWerte>
+    <Muttersprache>Talent.Garethi</Muttersprache>
+    <TalentWerte>
+        <TalentWert Talent="Talent.HeilkundeKrankheiten" UnmodifizierteStufe="1"/>
+        <TalentWert Talent="Talent.Tanzen"/>
+        <TalentWert Talent="Talent.SichVerstecken"/>
+        <TalentWert Talent="Talent.Athletik" UnmodifizierteStufe="1"/>
+        <TalentWert Talent="Talent.Kochen" UnmodifizierteStufe="2"/>
+        <TalentWert Talent="Talent.Gassenwissen" UnmodifizierteStufe="1"/>
+        <TalentWert Talent="Talent.Pflanzenkunde" UnmodifizierteStufe="6"/>
+        <TalentWert Talent="Talent.Tierkunde" UnmodifizierteStufe="2"/>
+        <TalentWert Talent="Talent.UrTulamidyaSchrift" UnmodifizierteStufe="4"/>
+        <TalentWert Talent="Talent.GoetterKulte" UnmodifizierteStufe="4"/>
+        <TalentWert Talent="Talent.HeilkundeGift" UnmodifizierteStufe="1"/>
+        <TalentWert Talent="Talent.ZhayadSchrift" UnmodifizierteStufe="4"/>
+        <TalentWert Talent="Talent.Infanteriewaffen" UnmodifizierteStufe="1"/>
+        <TalentWert Talent="Talent.Raufen" UnmodifizierteStufe="1"/>
+        <TalentWert Talent="Talent.Garethi" UnmodifizierteStufe="14"/>
+        <TalentWert Talent="Talent.Geographie" UnmodifizierteStufe="2"/>
+        <TalentWert Talent="Talent.Isdira" UnmodifizierteStufe="4"/>
+        <TalentWert Talent="Talent.Holzbearbeitung" UnmodifizierteStufe="1"/>
+        <TalentWert Talent="Talent.KuslikerZeichen" UnmodifizierteStufe="7"/>
+        <TalentWert Talent="Talent.Orientierung"/>
+        <TalentWert Talent="Talent.Menschenkenntnis" UnmodifizierteStufe="6"/>
+        <TalentWert Talent="Talent.Schwimmen"/>
+        <TalentWert Talent="Talent.Bosparano" UnmodifizierteStufe="6"/>
+        <TalentWert Talent="Talent.Lederarbeiten"/>
+        <TalentWert Talent="Talent.Schneidern"/>
+        <TalentWert Talent="Talent.TulamidyaSchrift" UnmodifizierteStufe="4"/>
+        <TalentWert Talent="Talent.Wurfmesser"/>
+        <TalentWert Talent="Talent.Rechtskunde" UnmodifizierteStufe="6"/>
+        <TalentWert Talent="Talent.Ueberzeugen" UnmodifizierteStufe="6"/>
+        <TalentWert Talent="Talent.Dolche" UnmodifizierteStufe="1"/>
+        <TalentWert Talent="Talent.Ritualkenntnis" UnmodifizierteStufe="3"/>
+        <TalentWert Talent="Talent.MalenZeichnen" UnmodifizierteStufe="2"/>
+        <TalentWert Talent="Talent.RogolanSchrift" UnmodifizierteStufe="4"/>
+        <TalentWert Talent="Talent.Schleichen"/>
+        <TalentWert Talent="Talent.Rogolan" UnmodifizierteStufe="4"/>
+        <TalentWert Talent="Talent.Wildnisleben"/>
+        <TalentWert Talent="Talent.Sternkunde" UnmodifizierteStufe="4"/>
+        <TalentWert Talent="Talent.Sprachenkunde" UnmodifizierteStufe="1"/>
+        <TalentWert Talent="Talent.IsdiraSchrift" UnmodifizierteStufe="4"/>
+        <TalentWert Talent="Talent.SagenLegenden" UnmodifizierteStufe="6"/>
+        <TalentWert Talent="Talent.Chrmk"/>
+        <TalentWert Talent="Talent.Staebe" UnmodifizierteStufe="2"/>
+        <TalentWert Talent="Talent.Wettervorhersage" UnmodifizierteStufe="1"/>
+        <TalentWert Talent="Talent.Zechen" UnmodifizierteStufe="2"/>
+        <TalentWert Talent="Talent.Etikette" UnmodifizierteStufe="4"/>
+        <TalentWert Talent="Talent.UrTulamidya" UnmodifizierteStufe="4"/>
+        <TalentWert Talent="Talent.Rechnen" UnmodifizierteStufe="7"/>
+        <TalentWert Talent="Talent.Armbrust" UnmodifizierteStufe="1"/>
+        <TalentWert Talent="Talent.Saebel"/>
+        <TalentWert Talent="Talent.Magiekunde" UnmodifizierteStufe="6"/>
+        <TalentWert Talent="Talent.Ueberreden" UnmodifizierteStufe="6"/>
+        <TalentWert Talent="Talent.Alchimie" UnmodifizierteStufe="5"/>
+        <TalentWert Talent="Talent.Sinnenschaerfe" UnmodifizierteStufe="3"/>
+        <TalentWert Talent="Talent.Ringen"/>
+        <TalentWert Talent="Talent.Zhayad" UnmodifizierteStufe="4"/>
+        <TalentWert Talent="Talent.Zweihandschwerter" UnmodifizierteStufe="8" Attacke="7"/>
+        <TalentWert Talent="Talent.Schaetzen" UnmodifizierteStufe="1"/>
+        <TalentWert Talent="Talent.Koerperbeherrschung"/>
+        <TalentWert Talent="Talent.Anatomie" UnmodifizierteStufe="1"/>
+        <TalentWert Talent="Talent.BrettWuerfelspiele" UnmodifizierteStufe="1"/>
+        <TalentWert Talent="Talent.Rssahh" UnmodifizierteStufe="4"/>
+        <TalentWert Talent="Talent.Thorwalsch" UnmodifizierteStufe="6"/>
+        <TalentWert Talent="Talent.HeilkundeWunden" UnmodifizierteStufe="2"/>
+        <TalentWert Talent="Talent.Klettern"/>
+        <TalentWert Talent="Talent.Mechanik" UnmodifizierteStufe="2"/>
+        <TalentWert Talent="Talent.Heraldik" UnmodifizierteStufe="1"/>
+        <TalentWert Talent="Talent.Lehren" UnmodifizierteStufe="2"/>
+        <TalentWert Talent="Talent.Selbstbeherrschung" UnmodifizierteStufe="2"/>
+        <TalentWert Talent="Talent.Ackerbau" UnmodifizierteStufe="1"/>
+        <TalentWert Talent="Talent.Singen"/>
+        <TalentWert Talent="Talent.Hiebwaffen"/>
+        <TalentWert Talent="Talent.Faehrtensuchen"/>
+        <TalentWert Talent="Talent.Tulamidya" UnmodifizierteStufe="4"/>
+        <TalentWert Talent="Talent.Geschichtswissen" UnmodifizierteStufe="6"/>
+    </TalentWerte>
+    <ZauberWerte>
+        <ZauberWert Zauber="Zauber.AnalysArcanstruktur" Stufe="7"/>
+        <ZauberWert Zauber="Zauber.AurisNasusOculus" Stufe="5"/>
+        <ZauberWert Zauber="Zauber.BalsamSalabunde" Stufe="8"/>
+        <ZauberWert Zauber="Zauber.Bannbaladin" Stufe="4"/>
+        <ZauberWert Zauber="Zauber.OdemArcanum" Stufe="6"/>
+        <ZauberWert Zauber="Zauber.ClaudibusClavistibor" Stufe="4"/>
+        <ZauberWert Zauber="Zauber.Armatrutz" Stufe="6"/>
+        <ZauberWert Zauber="Zauber.BlitzDichFind" Stufe="6"/>
+        <ZauberWert Zauber="Zauber.ForamenForaminor" Stufe="4"/>
+        <ZauberWert Zauber="Zauber.GardianumZauberschild" Stufe="6"/>
+        <ZauberWert Zauber="Zauber.ParalysisStarrWieStein" Stufe="7"/>
+        <ZauberWert Zauber="Zauber.SilentiumSchweigekreis" Stufe="5"/>
+        <ZauberWert Zauber="Zauber.SomnigravisTieferSchlaf" Stufe="7"/>
+        <ZauberWert Zauber="Zauber.FulminictusDonnerkeil" Stufe="8"/>
+    </ZauberWerte>
+    <Hauszauber>
+        <Zauber>Zauber.SomnigravisTieferSchlaf</Zauber>
+        <Zauber>Zauber.AnalysArcanstruktur</Zauber>
+        <Zauber>Zauber.ParalysisStarrWieStein</Zauber>
+        <Zauber>Zauber.BalsamSalabunde</Zauber>
+        <Zauber>Zauber.FulminictusDonnerkeil</Zauber>
+        <Zauber>Zauber.Armatrutz</Zauber>
+        <Zauber>Zauber.SilentiumSchweigekreis</Zauber>
+    </Hauszauber>
+    <SonderfertigkeitWerte>
+        <SonderfertigkeitWert Sonderfertigkeit="Sonderfertigkeit.GrosseMeditation"/>
+        <SonderfertigkeitWert Sonderfertigkeit="Sonderfertigkeit.BindungDesStabes"/>
+        <SonderfertigkeitWert Sonderfertigkeit="Sonderfertigkeit.Kulturkunde">
+            <Variante Name="Kulturkunde.Mittelreich"/>
+        </SonderfertigkeitWert>
+        <SonderfertigkeitWert Sonderfertigkeit="Sonderfertigkeit.Repraesentation">
+            <Variante Name="Repraesentation.Magier"/>
+        </SonderfertigkeitWert>
+        <SonderfertigkeitWert Sonderfertigkeit="Sonderfertigkeit.AstraleMeditation"/>
+        <SonderfertigkeitWert Sonderfertigkeit="Sonderfertigkeit.Ortskenntnis">
+            <Variante Name="Auelfen.Ortskenntnis"/>
+        </SonderfertigkeitWert>
+        <SonderfertigkeitWert Sonderfertigkeit="Sonderfertigkeit.Aufmerksamkeit"/>
+        <SonderfertigkeitWert Sonderfertigkeit="Sonderfertigkeit.RuestungsgewoehnungI">
+            <Variante Name="Ruestung.Kroetenhaut"/>
+        </SonderfertigkeitWert>
+        <SonderfertigkeitWert Sonderfertigkeit="Sonderfertigkeit.EwigeFlamme"/>
+        <SonderfertigkeitWert Sonderfertigkeit="Sonderfertigkeit.RegenerationI"/>
+    </SonderfertigkeitWerte>
+    <VerbilligteSonderfertigkeiten>
+        <Sonderfertigkeit Sonderfertigkeit="Sonderfertigkeit.Kraftfokus"/>
+        <Sonderfertigkeit Sonderfertigkeit="Sonderfertigkeit.Aufmerksamkeit"/>
+        <Sonderfertigkeit Sonderfertigkeit="Sonderfertigkeit.SeilDesAdepten"/>
+        <Sonderfertigkeit Sonderfertigkeit="Sonderfertigkeit.RegenerationII"/>
+    </VerbilligteSonderfertigkeiten>
+    <VorNachteilWerte>
+        <VorNachteilWert VorNachteil="VorNachteil.BegabungFuerTalent">
+            <Variante Name="Talent.Zweihandschwerter"/>
+        </VorNachteilWert>
+        <VorNachteilWert VorNachteil="VorNachteil.AstraleRegenerationIII"/>
+        <VorNachteilWert VorNachteil="VorNachteil.HerausragendeKoerperkraft" Stufe="1"/>
+        <VorNachteilWert VorNachteil="VorNachteil.Vollzauberer"/>
+        <VorNachteilWert VorNachteil="VorNachteil.Arroganz" Stufe="5"/>
+        <VorNachteilWert VorNachteil="VorNachteil.Neugier" Stufe="5"/>
+        <VorNachteilWert VorNachteil="VorNachteil.UnfaehigkeitFuerTalentgruppe">
+            <Variante Name="Talentgruppe.Natur"/>
+        </VorNachteilWert>
+        <VorNachteilWert VorNachteil="VorNachteil.Verpflichtungen">
+            <Variante Name="against the taskmaster or magicans guild"/>
+        </VorNachteilWert>
+        <VorNachteilWert VorNachteil="VorNachteil.Blutrausch"/>
+        <VorNachteilWert VorNachteil="VorNachteil.Rachsucht" Stufe="12"/>
+        <VorNachteilWert VorNachteil="VorNachteil.Jaehzorn" Stufe="7"/>
+    </VorNachteilWerte>
+    <NahkampfwaffeWerte>
+        <NahkampfwaffeWert Bf="2" DkN="true" Name="Khunchomer" Schadensschritt="3" Schwellenwert="12" Talent="Talent.Saebel" Tp="1d6+4" Nahkampfwaffe="Waffe.Khunchomer"/>
+    </NahkampfwaffeWerte>
+    <RuestungWerte>
+        <RuestungWert Be="2" Name="Toadshide" Ruestung="Ruestung.Kroetenhaut" Rs="3"/>
+    </RuestungWerte>
+    <Kapital>4900</Kapital>
+</Held>

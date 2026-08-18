@@ -38,7 +38,9 @@ export function stripSessionBaselines(held: HeldModel): HeldModel {
     talents: held.talents.map(({ baselineTp: _b, ...t }) => t),
     spells: held.spells.map(({ baselineSp: _b, ...s }) => s),
     attributes: held.attributes.map(({ purchasedBaseline: _b, ...a }) => a),
-    derived: held.derived.map(({ purchasedBaseline: _b, ...d }) => d),
+    derived: held.derived.map(
+      ({ purchasedBaseline: _b, packageBaseline: _p, ...d }) => d
+    ),
   };
 }
 

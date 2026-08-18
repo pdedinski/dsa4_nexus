@@ -358,5 +358,11 @@ export function importLegacyHeldXml(raw: string): HeldModel {
     };
   });
 
+  // XML Bonus is player-stored only. Mark packageBaseline=0 so the first
+  // recomputeDerived folds race/culture/profession mods on top without wiping Bonus.
+  for (const d of held.derived) {
+    d.packageBaseline = 0;
+  }
+
   return loadAsVeteran(held);
 }

@@ -145,12 +145,21 @@ export interface AttributeWert {
 
 export interface DerivedWert {
   code: DerivedCode;
+  /**
+   * Total modification shown in UI = XML `<Bonus>` + race/culture/profession
+   * package mods. Export subtracts package mods to recover XML Bonus.
+   */
   modification: number;
   base: number;
   purchased: number;
   maxPurchased?: number;
   /** Session-local vorgegeben floor for zukauf (not exported). */
   purchasedBaseline?: number;
+  /**
+   * Session-local: package-mod portion last folded into `modification` by
+   * `recomputeDerived`. Lets refreshes preserve player XML Bonus. Not persisted.
+   */
+  packageBaseline?: number;
   specialExperience?: boolean;
 }
 

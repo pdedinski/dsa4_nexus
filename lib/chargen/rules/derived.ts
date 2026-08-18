@@ -1,23 +1,38 @@
 /**
  * Recompute derived base values from attributes + race/culture/profession mods.
  * Formulas approximate DSA 4.1 / Java `Basiswert` (simplified).
+ *
+ * Java model: Stufe = Basisstufe + getModifikation(Rasse/Kultur/Profession) + Zukauf + Bonus.
+ * Nexus stores package mods + XML Bonus together in `modification`; export subtracts
+ * package mods to write XML `Bonus`. Refresh must preserve the player XML Bonus.
  */
 
 import type { DerivedCode, AttributeMods, HeldModel } from "@/lib/chargen/types";
 import { currentAttrValue } from "@/lib/chargen/types";
 
-function setDerived(
+function setDerivedBasePreservingPlayerBonus(
   held: HeldModel,
   code: DerivedCode,
   base: number,
-  modification = 0
+  packageMod: number
 ) {
   const row = held.derived.find((d) => d.code === code);
   if (row) {
+    // After DCG import, packageBaseline is 0 so modification is treated as XML Bonus.
+    // After DB load (no packageBaseline), assume modification already includes current pkg.
+    const prevPkg = row.packageBaseline ?? packageMod;
+    const playerBonus = row.modification - prevPkg;
     row.base = base;
-    row.modification = modification;
+    row.modification = packageMod + playerBonus;
+    row.packageBaseline = packageMod;
   } else {
-    held.derived.push({ code, base, modification, purchased: 0 });
+    held.derived.push({
+      code,
+      base,
+      modification: packageMod,
+      purchased: 0,
+      packageBaseline: packageMod,
+    });
   }
 }
 
@@ -50,14 +65,59 @@ export function recomputeDerived(
     (mods.profession?.[code] ?? 0);
 
   // VP ≈ (CN + CN + ST) / 2 + race mods (Java uses precise Basiswert formulas)
-  setDerived(held, "VP", Math.round((cn + cn + st) / 2), merge("VP"));
-  setDerived(held, "EP", Math.round((co + cn + ag) / 2), merge("EP"));
-  setDerived(held, "RM", Math.round((co + cl + inn) / 5), merge("RM"));
-  setDerived(held, "ASP", Math.round((co + inn + ch) / 2), merge("ASP"));
-  setDerived(held, "WT", Math.round(cn / 2), merge("WT"));
-  setDerived(held, "baseAT", Math.round((co + ag + st) / 5), merge("baseAT"));
-  setDerived(held, "basePA", Math.round((inn + ag + st) / 5), merge("basePA"));
-  setDerived(held, "baseBRV", Math.round((inn + de + st) / 5), merge("baseBRV"));
-  setDerived(held, "baseINI", Math.round((co + inn + ag) / 5), merge("baseINI"));
-  setDerived(held, "GS", 8, merge("GS"));
+  setDerivedBasePreservingPlayerBonus(
+    held,
+    "VP",
+    Math.round((cn + cn + st) / 2),
+    merge("VP")
+  );
+  setDerivedBasePreservingPlayerBonus(
+    held,
+    "EP",
+    Math.round((co + cn + ag) / 2),
+    merge("EP")
+  );
+  setDerivedBasePreservingPlayerBonus(
+    held,
+    "RM",
+    Math.round((co + cl + inn) / 5),
+    merge("RM")
+  );
+  setDerivedBasePreservingPlayerBonus(
+    held,
+    "ASP",
+    Math.round((co + inn + ch) / 2),
+    merge("ASP")
+  );
+  setDerivedBasePreservingPlayerBonus(
+    held,
+    "WT",
+    Math.round(cn / 2),
+    merge("WT")
+  );
+  setDerivedBasePreservingPlayerBonus(
+    held,
+    "baseAT",
+    Math.round((co + ag + st) / 5),
+    merge("baseAT")
+  );
+  setDerivedBasePreservingPlayerBonus(
+    held,
+    "basePA",
+    Math.round((inn + ag + st) / 5),
+    merge("basePA")
+  );
+  setDerivedBasePreservingPlayerBonus(
+    held,
+    "baseBRV",
+    Math.round((inn + de + st) / 5),
+    merge("baseBRV")
+  );
+  setDerivedBasePreservingPlayerBonus(
+    held,
+    "baseINI",
+    Math.round((co + inn + ag) / 5),
+    merge("baseINI")
+  );
+  setDerivedBasePreservingPlayerBonus(held, "GS", 8, merge("GS"));
 }

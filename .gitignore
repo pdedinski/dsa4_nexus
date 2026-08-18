@@ -14,3 +14,5 @@ WDS_WEAPONS_REPLACEMENT_PLAN.txt
 dist-deploy/
 dsa-nexus-deploy-*.zip
 *.pdf
+tmp/
+
