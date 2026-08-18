@@ -1,0 +1,47 @@
+---
+description: Require DCG Java Chargen compatibility check when changing import/export
+alwaysApply: true
+---
+
+# Chargen DCG import/export compatibility
+
+Any change that **may affect** Player Character Generator `.dcg` / Held XML **import or export** must pass the compatibility smoke before the work is considered done.
+
+## When this applies
+
+Touching any of:
+
+- [`lib/chargen/io/importLegacyXml.ts`](lib/chargen/io/importLegacyXml.ts) / [`exportLegacyXml.ts`](lib/chargen/io/exportLegacyXml.ts)
+- Held persistence / model fields that round-trip through DCG (`kapital`, talents, spells, SF, traits, gear, derived `modification` / Bonus, variants)
+- [`lib/chargen/rules/derived.ts`](lib/chargen/rules/derived.ts) (XML Bonus vs package mods)
+- [`lib/chargen/rules/talentGroupVariants.ts`](lib/chargen/rules/talentGroupVariants.ts), [`equipmentWert.ts`](lib/chargen/rules/equipmentWert.ts)
+- Import/export UI wiring (`ImportChargenDialog`, sheet/admin `.dcg` download)
+- The fixture or script under `lib/chargen/io/fixtures/` / `scripts/chargen-dcg-roundtrip.ts`
+
+Also apply if the change could alter what is written to or read from a `.dcg` even indirectly (e.g. stripping fields on save, renaming catalog IDs used in XML).
+
+## Required check
+
+```bash
+npx tsx scripts/chargen-dcg-roundtrip.ts
+```
+
+Must report **All checks passed** (semantic Nexus round-trip + Java `FactoryHeldXmlIn` loads the Nexus export). Do not skip because “only a small change.”
+
+Optional: `SKIP_JAVA=1` only if the Java Chargen install is unavailable; still require the TypeScript semantic round-trip to pass, and note that Java was skipped.
+
+## Compatibility targets (do not regress)
+
+| Direction | Target |
+|-----------|--------|
+| **Import** | Lenient: old 0.8.7-style files (child `<Variante>`, omitted default attrs, `<Kapital>`) **and** current Java dumps |
+| **Export** | Current Java `FactoryHeldXmlOut` / `FactoryHeldXmlIn` — required ints/bools present, `Variante` as **attribute**, no GS Basiswert |
+
+Ground truth: Java I/O in `Chargen_decompile` … `basis/heldio/`; fixture [`lib/chargen/io/fixtures/wulfgrimm-manaferson.dcg`](lib/chargen/io/fixtures/wulfgrimm-manaferson.dcg).
+
+## Do not
+
+- Omit required int attributes to “look like” old sparse `.dcg` files (Java In NPEs / `NumberFormatException`)
+- Emit child-only `<Variante>` without the attribute (Java In ignores the child)
+- Let `recomputeDerived` wipe imported XML `Bonus` / player `modification`
+- Drop `<Kapital>` on Nexus export when set (Java ignores it; Nexus must keep it)
