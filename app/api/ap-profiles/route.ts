@@ -4,8 +4,8 @@ import { desc, eq } from "drizzle-orm";
 import type { ApSpendingBand } from "@/lib/character/types";
 import {
   coerceApBandsFromPayload,
-  loadBundledDefaultApProfile,
-  DEFAULT_AP_PROFILE_ID,
+  listBundledApProfiles,
+  sortApProfileOptions,
   sortBandsByFrom,
   type ApiApProfileRow,
 } from "@/lib/character/apProfiles";
@@ -34,15 +34,6 @@ export async function GET() {
   if (!session)
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-  const builtin = loadBundledDefaultApProfile();
-  const defaultRow: ApiApProfileRow = {
-    id: builtin.id,
-    name: builtin.name,
-    description: builtin.description ?? null,
-    bands: sortBandsByFrom(builtin.bands),
-    isBuiltin: true,
-  };
-
   const rows =
     session.user.isAdmin || session.user.isSuperuser
       ? await db
@@ -52,7 +43,10 @@ export async function GET() {
       : [];
 
   const custom: ApiApProfileRow[] = rows.map(rowToApi);
-  const profiles = [defaultRow, ...custom];
+  const profiles = sortApProfileOptions([
+    ...listBundledApProfiles(),
+    ...custom,
+  ]);
 
   return NextResponse.json({ profiles });
 }

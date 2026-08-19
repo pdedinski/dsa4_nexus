@@ -9,7 +9,10 @@ import {
   needsSpellSelectionStep,
   satisfiesProfessionRaceRequirement,
 } from "@/lib/character/generator";
-import { DEFAULT_AP_PROFILE_ID } from "@/lib/character/apProfiles";
+import {
+  DEFAULT_AP_PROFILE_ID,
+  defaultApProfileIdForProfession,
+} from "@/lib/character/apProfiles";
 import BodyPortal from "@/components/ui/BodyPortal";
 
 const CATEGORY_LABELS: Record<string, string> = {
@@ -231,6 +234,7 @@ export default function CharacterWizardStep1({
                   setCultureId("random");
                   setProfessionId("random");
                   setProfessionVariantId("base");
+                  setApProfileId(defaultApProfileIdForProfession("random"));
                 }}
               >
                 <option value="random">Random</option>
@@ -250,6 +254,7 @@ export default function CharacterWizardStep1({
                   setCultureId(e.target.value);
                   setProfessionId("random");
                   setProfessionVariantId("base");
+                  setApProfileId(defaultApProfileIdForProfession("random"));
                 }}
               >
                 <option value="random">Random</option>
@@ -266,8 +271,10 @@ export default function CharacterWizardStep1({
                 className="mt-1 w-full rounded border border-surface-border px-2 py-2 scheme-dark bg-[#2c251f] text-[#f2e8dc]"
                 value={professionId}
                 onChange={(e) => {
-                  setProfessionId(e.target.value);
+                  const next = e.target.value;
+                  setProfessionId(next);
                   setProfessionVariantId("base");
+                  setApProfileId(defaultApProfileIdForProfession(next));
                 }}
               >
                 <option value="random">Random</option>

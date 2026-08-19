@@ -1,0 +1,2105 @@
+================================================================================
+DSA Nexus — Veteran AP spending profiles (STAGE 1 WORKING NOTES)
+================================================================================
+
+AGENT NOTES ONLY. Do NOT import this file from app/, lib/, or any TS/TSX.
+Do NOT place a copy under data/, public/, or otherwise ship it in the Next.js
+client/server bundle. Path: .cursor/notes/veteran_ap_profession_profiles.txt
+
+Purpose: reviewable source for stage 2 — default veteran Extra-AP spending
+profile per WdH profession in the random character generator wizard.
+Stage 2 should map professionId → archetypeId (+ rare overrides), still
+user-changeable in CharacterWizardStep1, defaulting to this assignment.
+
+Generator: lib/character/generator.ts
+Band type: ApSpendingBand { from, to, attributes?, special_abilities?, talents?, spells? }
+Profession spirit weights (what is raised inside a bucket): data/core/professions.json
+  talent_group_weights, talent_bias, talent_avoid_bias, attribute_bias, spell_group_weight
+
+--------------------------------------------------------------------------------
+1. HOW TO READ A PROFILE
+--------------------------------------------------------------------------------
+
+A spending profile partitions Extra AP (extraAp) into buckets by 1-based AP
+ordinal within the veteran pool. Percents are of that slice. Omitted remainder
+uses the mixed talent/spell loop (profession weights).
+
+Cascade of unspent bucket leftovers (generator):
+  attributes → special_abilities → talents → spells → mixed carry to next slice
+
+Spell % only works for magical_status === full_caster (isFullCaster).
+Consecrated Blessed Ones / shamans: spell_group_weight is NOT spent as spells;
+any spell % is redirected to talents.
+
+SA % only buys chain upgrades (sa_required already owned) plus wizard-requested
+shield/armor/parry chains. It does NOT buy root maneuvers (Feint, Lunge,
+Combat Reflexes) from discounted_SAs. Amazon/Warrior benefit; Gladiator mostly
+overflows SA → talents.
+
+Decision: ~18 named archetypes (shared 5 ordinal cuts), NOT 112 unique percent
+tables. Distinction inside a bucket is already per-profession via biases.
+Overrides (~15) only when the bucket mix itself differs.
+
+Why five bands (not default 1–1000 / 1001–2500 / 2501+):
+  - Column H attribute 12→13 ≈ 350 AP; 10% of 1000 = 100 AP never buys a raise.
+  - Combat D-column cheap window ~ first 500 AP after package peak.
+  - Generator treats extraAp ≥ 2000 specially (armor/shield first; residual VP/ASP).
+  - Default 2501+ identical to mid band; heroic D-column TP14+ steps are poor value.
+
+Shared ordinal cuts (ALL archetypes):
+  Band 1 Competence     1–500     cheap talent/spell; NO attributes
+  Band 2 First SA       501–1000  SA chains if root owned; NO attributes
+  Band 3 First attrs    1001–2000 ~one H raise possible; aligns with 2000 threshold
+  Band 4 Veteran        2001–3500 second attribute + SA + skills/spells
+  Band 5 Heroic         3501–∞    lean attributes/SA; leftover cascades
+
+--------------------------------------------------------------------------------
+2. ARCHETYPE TEMPLATES
+--------------------------------------------------------------------------------
+
+### combat_chain_fighter
+Armor/Evade/Shield (or similar) chain roots. Melee competence then SA tiers then attributes.
+  1–500: talents 100
+  501–1000: SA 40 / talents 60
+  1001–2000: attributes 40 / SA 35 / talents 25
+  2001–3500: attributes 40 / SA 30 / talents 30
+  3501–∞: attributes 45 / SA 30 / talents 25
+JSON:
+[
+  {
+    "from": 1,
+    "to": 500,
+    "talents": 100
+  },
+  {
+    "from": 501,
+    "to": 1000,
+    "special_abilities": 40,
+    "talents": 60
+  },
+  {
+    "from": 1001,
+    "to": 2000,
+    "attributes": 40,
+    "special_abilities": 35,
+    "talents": 25
+  },
+  {
+    "from": 2001,
+    "to": 3500,
+    "attributes": 40,
+    "special_abilities": 30,
+    "talents": 30
+  },
+  {
+    "from": 3501,
+    "to": null,
+    "attributes": 45,
+    "special_abilities": 30,
+    "talents": 25
+  }
+]
+
+### combat_talent_duelist
+Few/no auto SA chains. Talent + attribute heavy; light SA so leftover cascades.
+  1–500: talents 100
+  501–1000: talents 100
+  1001–2000: attributes 40 / SA 10 / talents 50
+  2001–3500: attributes 40 / SA 20 / talents 40
+  3501–∞: attributes 45 / SA 20 / talents 35
+JSON:
+[
+  {
+    "from": 1,
+    "to": 500,
+    "talents": 100
+  },
+  {
+    "from": 501,
+    "to": 1000,
+    "talents": 100
+  },
+  {
+    "from": 1001,
+    "to": 2000,
+    "attributes": 40,
+    "talents": 50,
+    "special_abilities": 10
+  },
+  {
+    "from": 2001,
+    "to": 3500,
+    "attributes": 40,
+    "talents": 40,
+    "special_abilities": 20
+  },
+  {
+    "from": 3501,
+    "to": null,
+    "attributes": 45,
+    "talents": 35,
+    "special_abilities": 20
+  }
+]
+
+### wilderness_hunter
+Nature/physical talent-first. Light SA (terrain lore often already auto).
+  1–500: talents 100
+  501–1000: SA 10 / talents 90
+  1001–2000: attributes 35 / SA 15 / talents 50
+  2001–3500: attributes 35 / SA 20 / talents 45
+  3501–∞: attributes 40 / SA 20 / talents 40
+JSON:
+[
+  {
+    "from": 1,
+    "to": 500,
+    "talents": 100
+  },
+  {
+    "from": 501,
+    "to": 1000,
+    "talents": 90,
+    "special_abilities": 10
+  },
+  {
+    "from": 1001,
+    "to": 2000,
+    "attributes": 35,
+    "talents": 50,
+    "special_abilities": 15
+  },
+  {
+    "from": 2001,
+    "to": 3500,
+    "attributes": 35,
+    "talents": 45,
+    "special_abilities": 20
+  },
+  {
+    "from": 3501,
+    "to": null,
+    "attributes": 40,
+    "talents": 40,
+    "special_abilities": 20
+  }
+]
+
+### combat_skirmisher
+Combat + stealth/mobility. Some Evade/unarmed chain potential.
+  1–500: talents 100
+  501–1000: SA 25 / talents 75
+  1001–2000: attributes 40 / SA 25 / talents 35
+  2001–3500: attributes 40 / SA 25 / talents 35
+  3501–∞: attributes 45 / SA 25 / talents 30
+JSON:
+[
+  {
+    "from": 1,
+    "to": 500,
+    "talents": 100
+  },
+  {
+    "from": 501,
+    "to": 1000,
+    "special_abilities": 25,
+    "talents": 75
+  },
+  {
+    "from": 1001,
+    "to": 2000,
+    "attributes": 40,
+    "special_abilities": 25,
+    "talents": 35
+  },
+  {
+    "from": 2001,
+    "to": 3500,
+    "attributes": 40,
+    "special_abilities": 25,
+    "talents": 35
+  },
+  {
+    "from": 3501,
+    "to": null,
+    "attributes": 45,
+    "special_abilities": 25,
+    "talents": 30
+  }
+]
+
+### urban_rogue
+Social/physical street skills. Alertness/Evade if present.
+  1–500: talents 100
+  501–1000: SA 10 / talents 90
+  1001–2000: attributes 35 / SA 15 / talents 50
+  2001–3500: attributes 35 / SA 15 / talents 50
+  3501–∞: attributes 40 / SA 20 / talents 40
+JSON:
+[
+  {
+    "from": 1,
+    "to": 500,
+    "talents": 100
+  },
+  {
+    "from": 501,
+    "to": 1000,
+    "talents": 90,
+    "special_abilities": 10
+  },
+  {
+    "from": 1001,
+    "to": 2000,
+    "attributes": 35,
+    "talents": 50,
+    "special_abilities": 15
+  },
+  {
+    "from": 2001,
+    "to": 3500,
+    "attributes": 35,
+    "talents": 50,
+    "special_abilities": 15
+  },
+  {
+    "from": 3501,
+    "to": null,
+    "attributes": 40,
+    "talents": 40,
+    "special_abilities": 20
+  }
+]
+
+### social_courtier
+Almost all talents. SA leftover acceptable.
+  1–500: talents 100
+  501–1000: talents 100
+  1001–2000: attributes 35 / talents 65
+  2001–3500: attributes 35 / SA 10 / talents 55
+  3501–∞: attributes 40 / SA 10 / talents 50
+JSON:
+[
+  {
+    "from": 1,
+    "to": 500,
+    "talents": 100
+  },
+  {
+    "from": 501,
+    "to": 1000,
+    "talents": 100
+  },
+  {
+    "from": 1001,
+    "to": 2000,
+    "attributes": 35,
+    "talents": 65
+  },
+  {
+    "from": 2001,
+    "to": 3500,
+    "attributes": 35,
+    "talents": 55,
+    "special_abilities": 10
+  },
+  {
+    "from": 3501,
+    "to": null,
+    "attributes": 40,
+    "talents": 50,
+    "special_abilities": 10
+  }
+]
+
+### craft_commoner
+Same band percents as social_courtier; artisan/lore/physical via profession weights.
+  1–500: talents 100
+  501–1000: talents 100
+  1001–2000: attributes 35 / talents 65
+  2001–3500: attributes 35 / SA 10 / talents 55
+  3501–∞: attributes 40 / SA 10 / talents 50
+
+### mundane_healer
+Same as craft_commoner. Stunning Blow is not a chain and will not be auto-bought.
+  1–500: talents 100
+  501–1000: talents 100
+  1001–2000: attributes 35 / talents 65
+  2001–3500: attributes 35 / SA 10 / talents 55
+  3501–∞: attributes 40 / SA 10 / talents 50
+
+### full_caster_academic
+Spells from AP 1. SA for Regen II / ritual chains already owned.
+  1–500: talents 20 / spells 80
+  501–1000: SA 10 / talents 20 / spells 70
+  1001–2000: attributes 40 / SA 15 / talents 10 / spells 35
+  2001–3500: attributes 35 / SA 15 / talents 15 / spells 35
+  3501–∞: attributes 40 / SA 15 / talents 15 / spells 30
+JSON:
+[
+  {
+    "from": 1,
+    "to": 500,
+    "spells": 80,
+    "talents": 20
+  },
+  {
+    "from": 501,
+    "to": 1000,
+    "spells": 70,
+    "talents": 20,
+    "special_abilities": 10
+  },
+  {
+    "from": 1001,
+    "to": 2000,
+    "attributes": 40,
+    "spells": 35,
+    "special_abilities": 15,
+    "talents": 10
+  },
+  {
+    "from": 2001,
+    "to": 3500,
+    "attributes": 35,
+    "spells": 35,
+    "special_abilities": 15,
+    "talents": 15
+  },
+  {
+    "from": 3501,
+    "to": null,
+    "attributes": 40,
+    "spells": 30,
+    "special_abilities": 15,
+    "talents": 15
+  }
+]
+
+### full_caster_trickster
+Spells + social/physical performance.
+  1–500: talents 45 / spells 55
+  501–1000: SA 10 / talents 40 / spells 50
+  1001–2000: attributes 35 / SA 10 / talents 25 / spells 30
+  2001–3500: attributes 35 / SA 10 / talents 25 / spells 30
+  3501–∞: attributes 40 / SA 10 / talents 25 / spells 25
+JSON:
+[
+  {
+    "from": 1,
+    "to": 500,
+    "spells": 55,
+    "talents": 45
+  },
+  {
+    "from": 501,
+    "to": 1000,
+    "spells": 50,
+    "talents": 40,
+    "special_abilities": 10
+  },
+  {
+    "from": 1001,
+    "to": 2000,
+    "attributes": 35,
+    "spells": 30,
+    "talents": 25,
+    "special_abilities": 10
+  },
+  {
+    "from": 2001,
+    "to": 3500,
+    "attributes": 35,
+    "spells": 30,
+    "talents": 25,
+    "special_abilities": 10
+  },
+  {
+    "from": 3501,
+    "to": null,
+    "attributes": 40,
+    "spells": 25,
+    "talents": 25,
+    "special_abilities": 10
+  }
+]
+
+### full_caster_mystic
+Spells with nature/craft/healing talents.
+  1–500: talents 40 / spells 60
+  501–1000: SA 10 / talents 35 / spells 55
+  1001–2000: attributes 35 / SA 10 / talents 20 / spells 35
+  2001–3500: attributes 35 / SA 10 / talents 25 / spells 30
+  3501–∞: attributes 40 / SA 10 / talents 20 / spells 30
+JSON:
+[
+  {
+    "from": 1,
+    "to": 500,
+    "spells": 60,
+    "talents": 40
+  },
+  {
+    "from": 501,
+    "to": 1000,
+    "spells": 55,
+    "talents": 35,
+    "special_abilities": 10
+  },
+  {
+    "from": 1001,
+    "to": 2000,
+    "attributes": 35,
+    "spells": 35,
+    "talents": 20,
+    "special_abilities": 10
+  },
+  {
+    "from": 2001,
+    "to": 3500,
+    "attributes": 35,
+    "spells": 30,
+    "talents": 25,
+    "special_abilities": 10
+  },
+  {
+    "from": 3501,
+    "to": null,
+    "attributes": 40,
+    "spells": 30,
+    "talents": 20,
+    "special_abilities": 10
+  }
+]
+
+### combat_caster
+Combat/physical first, spells second. SA when Iron Will / Aura chains exist.
+  1–500: talents 50 / spells 50
+  501–1000: SA 25 / talents 40 / spells 35
+  1001–2000: attributes 35 / SA 15 / talents 25 / spells 25
+  2001–3500: attributes 35 / SA 20 / talents 20 / spells 25
+  3501–∞: attributes 40 / SA 20 / talents 20 / spells 20
+JSON:
+[
+  {
+    "from": 1,
+    "to": 500,
+    "talents": 50,
+    "spells": 50
+  },
+  {
+    "from": 501,
+    "to": 1000,
+    "talents": 40,
+    "spells": 35,
+    "special_abilities": 25
+  },
+  {
+    "from": 1001,
+    "to": 2000,
+    "attributes": 35,
+    "talents": 25,
+    "spells": 25,
+    "special_abilities": 15
+  },
+  {
+    "from": 2001,
+    "to": 3500,
+    "attributes": 35,
+    "talents": 20,
+    "spells": 25,
+    "special_abilities": 20
+  },
+  {
+    "from": 3501,
+    "to": null,
+    "attributes": 40,
+    "talents": 20,
+    "spells": 20,
+    "special_abilities": 20
+  }
+]
+
+### blessed_warrior
+Consecrated warrior-priest. Alias of combat_chain_fighter bands (spells 0 / unused).
+Bands: same as combat_chain_fighter (see that template JSON).
+
+### blessed_scholar
+Consecrated lore/law. Alias of social_courtier.
+Bands: same as social_courtier (see that template JSON).
+
+### blessed_healer_social
+Consecrated healer/community. Alias of social_courtier.
+Bands: same as social_courtier (see that template JSON).
+
+### blessed_wilderness
+Consecrated wilderness. Alias of wilderness_hunter.
+Bands: same as wilderness_hunter (see that template JSON).
+
+### blessed_artisan
+Consecrated craft gods. Alias of craft_commoner.
+Bands: same as craft_commoner (see that template JSON).
+
+### shaman_spirit
+Consecrated/animistic. Ritual SAs often auto; deepen lore/nature. Spell % wasted.
+  1–500: talents 100
+  501–1000: SA 15 / talents 85
+  1001–2000: attributes 35 / SA 15 / talents 50
+  2001–3500: attributes 35 / SA 20 / talents 45
+  3501–∞: attributes 40 / SA 20 / talents 40
+JSON:
+[
+  {
+    "from": 1,
+    "to": 500,
+    "talents": 100
+  },
+  {
+    "from": 501,
+    "to": 1000,
+    "talents": 85,
+    "special_abilities": 15
+  },
+  {
+    "from": 1001,
+    "to": 2000,
+    "attributes": 35,
+    "talents": 50,
+    "special_abilities": 15
+  },
+  {
+    "from": 2001,
+    "to": 3500,
+    "attributes": 35,
+    "talents": 45,
+    "special_abilities": 20
+  },
+  {
+    "from": 3501,
+    "to": null,
+    "attributes": 40,
+    "talents": 40,
+    "special_abilities": 20
+  }
+]
+
+--------------------------------------------------------------------------------
+3. PER-PROFESSION LIST (112)
+--------------------------------------------------------------------------------
+
+Each entry: id, name, category, magical_status, GP, SO, attr mins, spirit,
+assigned archetype, Overrides. Full bands JSON only when OVERRIDDEN.
+
+======== CATEGORY: combat (12) ========
+
+### amazon  (Amazone)
+Name: Amazon | Category: combat | Status: none | GP: 10 | data_complete: true
+Reqs: CO13 AG12 CN13 ST11 | SO 5–10
+Affinity tags: combat_frontliner
+Spirit: An Amazon is a female warrior raised or accepted into an Amazon fortress and trained in disciplined swordplay, riding, formation fighting, and Rondran ideals.
+Spirit: Signature package talents: jousting+5, ride+4, wrestling+3, athletics+3, warcraft+3.
+Spirit: Automatic SAs (5): evade_i, off_hand_fighting, mounted_combat, armor_use_i, shield_fighting_i.
+Spirit: SA-chain roots present → band-2+ SA% can fire: evade_i, armor_use_i, shield_fighting_i.
+Spirit: Mundane / non-caster — spell % unused (redirects to talents if present).
+Template: combat_chain_fighter
+Overrides: none
+
+### cadet_officer  (Fähnrich der Fußkämpfer)
+Name: Cadet Officer | Category: combat | Status: none | GP: — | data_complete: false
+Reqs: CO12 CL11 CH11 AG11 CN11 | SO 7–11
+Affinity tags: combat_frontliner
+Spirit: Cadet officers are academy-trained junior officers.
+Spirit: Signature package talents: warcraft+6, human_nature+5, athletics+4, body_control+4, self_control+4.
+Spirit: Automatic SAs (2): armor_use_i, formation.
+Spirit: SA-chain roots present → band-2+ SA% can fire: armor_use_i.
+Spirit: Mundane / non-caster — spell % unused (redirects to talents if present).
+Template: combat_chain_fighter
+Overrides: none
+
+### gladiator  (Gladiator)
+Name: Gladiator | Category: combat | Status: none | GP: — | data_complete: false
+Reqs: CO12 AG12 CN12 ST12 | SO 1–7
+Affinity tags: combat_frontliner
+Spirit: Gladiators and exhibition fighters are professional arena combatants.
+Spirit: Signature package talents: brawling+4, body_control+4, wrestling+3, carouse+3, athletics+2.
+Spirit: Automatic SAs: none listed (incomplete data or talent-only package).
+Spirit: Mundane / non-caster — spell % unused (redirects to talents if present).
+Template: combat_talent_duelist
+Overrides: none
+
+### city_guard  (Stadtgardist)
+Name: City Guard | Category: combat | Status: none | GP: 11 | data_complete: true
+Reqs: CO11 AG11 ST11 | SO 5–8
+Affinity tags: combat_frontliner
+Spirit: Guards are professional protectors and law-enforcement personnel, ranging from city guards and village bailiffs to road wardens, jailers, academy guards, and Aranian clan warriors.
+Spirit: Signature package talents: human_nature+4, law+4, perception+3, etiquette+3, streetwise+3.
+Spirit: Automatic SAs (2): armor_use_i, knowledge_of_a_place.
+Spirit: SA-chain roots present → band-2+ SA% can fire: armor_use_i.
+Spirit: Mundane / non-caster — spell % unused (redirects to talents if present).
+Template: combat_chain_fighter
+Overrides: none
+
+### fairground_fighter  (Jahrmarktskämpfer)
+Name: Fairground Fighter | Category: combat | Status: none | GP: 6 | data_complete: false
+Reqs: CH12 AG12 CN11 ST13 | SO 3–8
+Affinity tags: combat_frontliner
+Spirit: Fairground fighters earn their living through public bouts, feats of strength, and staged or genuine combat demonstrations, combining weapon or unarmed competence with physical showmanship.
+Spirit: Signature package talents: brawling+7, wrestling+7, acrobatics+4, athletics+4, body_control+4.
+Spirit: Automatic SAs (3): alertness, evade_i, unarmed_combat_style_gladiatorenstil_or_hammerfaust.
+Spirit: SA-chain roots present → band-2+ SA% can fire: evade_i.
+Spirit: Mundane / non-caster — spell % unused (redirects to talents if present).
+Template: combat_talent_duelist
+Overrides: none
+
+### warrior  (Krieger)
+Name: Warrior | Category: combat | Status: none | GP: 18 | data_complete: false
+Reqs: CO12 AG12 CN13 ST12 | SO 7–12
+Affinity tags: combat_frontliner
+Spirit: Warriors are graduates of recognized warrior academies.
+Spirit: Signature package talents: ride+5, self_control+5, warcraft+4, wrestling+3, athletics+3.
+Spirit: Automatic SAs (3): off_hand_fighting, armor_use_i, shield_fighting_i.
+Spirit: SA-chain roots present → band-2+ SA% can fire: armor_use_i, shield_fighting_i.
+Spirit: Mundane / non-caster — spell % unused (redirects to talents if present).
+Template: combat_chain_fighter
+Overrides: none
+
+### knight  (Ritter)
+Name: Knight | Category: combat | Status: none | GP: 21 | data_complete: false
+Reqs: CO12 CN12 ST12 | SO 8–13
+Affinity tags: combat_frontliner
+Spirit: Knights are mounted noble warriors trained in arms, riding, etiquette, heraldry, and feudal obligations.
+Spirit: Signature package talents: jousting+7, ride+7, self_control+5, etiquette+5, heraldry+5.
+Spirit: Automatic SAs (5): off_hand_fighting, mounted_combat, armor_use_i, shield_fighting_i, tournament_riding.
+Spirit: SA-chain roots present → band-2+ SA% can fire: armor_use_i, shield_fighting_i.
+Spirit: Mundane / non-caster — spell % unused (redirects to talents if present).
+Template: combat_chain_fighter
+Overrides: none
+
+### order_warrior  (Orderskrieger)
+Name: ORDER WARRIOR | Category: combat | Status: none | GP: — | data_complete: false
+Reqs: — | SO —
+Affinity tags: combat_frontliner
+Spirit: Order warriors are militant members of religious or secular orders.
+Spirit: Automatic SAs: none listed (incomplete data or talent-only package).
+Spirit: No clear Armor/Evade/Shield/Regen/Iron Will root in automatic_SAs — SA% mostly overflows to talents unless wizard buys armor/shield.
+Spirit: Mundane / non-caster — spell % unused (redirects to talents if present).
+Template: combat_chain_fighter
+Overrides: none
+
+### sword_companion  (Schwertgeselle)
+Name: Sword Companion | Category: combat | Status: none | GP: 22 | data_complete: false
+Reqs: — | SO 8–12
+Affinity tags: combat_frontliner
+Spirit: Sword companions are elite private-school duelists and weapon masters.
+Spirit: Signature package talents: self_control+4, etiquette+4, human_nature+4, brawling+3, wrestling+3.
+Spirit: Automatic SAs: none listed (incomplete data or talent-only package).
+Spirit: Mundane / non-caster — spell % unused (redirects to talents if present).
+Template: combat_talent_duelist
+Overrides: none
+
+### soldier  (Soldat)
+Name: Soldier | Category: combat | Status: none | GP: — | data_complete: false
+Reqs: CO11 AG11 CN11 ST11 | SO 3–8
+Affinity tags: combat_frontliner
+Spirit: Soldiers are trained members of regular military formations.
+Spirit: Signature package talents: athletics+4, brawling+3, carouse+3, warcraft+3, wrestling+2.
+Spirit: Automatic SAs (1): armor_use_i.
+Spirit: SA-chain roots present → band-2+ SA% can fire: armor_use_i.
+Spirit: Mundane / non-caster — spell % unused (redirects to talents if present).
+Template: combat_chain_fighter
+Overrides: none
+
+### mercenary  (Söldner)
+Name: Mercenary | Category: combat | Status: none | GP: — | data_complete: false
+Reqs: CO12 AG12 CN11 ST11 | SO 2–10
+Affinity tags: combat_frontliner, wilderness
+Spirit: Mercenaries are professional soldiers who sell their service.
+Spirit: Signature package talents: daggers+3, brawling+3, wrestling+3, carouse+3, warcraft+3.
+Spirit: Automatic SAs (1): armor_use_i.
+Spirit: SA-chain roots present → band-2+ SA% can fire: armor_use_i.
+Spirit: Mundane / non-caster — spell % unused (redirects to talents if present).
+Template: combat_chain_fighter
+Overrides: none
+
+### tribal_warrior  (Stammeskrieger)
+Name: Tribal Warrior | Category: combat | Status: none | GP: 11 | data_complete: false
+Reqs: CO12 AG13 CN13 ST11 | SO 3–4
+Affinity tags: combat_frontliner, wilderness
+Spirit: Tribal warriors are culturally specific fighters trained according to the warfare, environment, and customs of their people.
+Spirit: Signature package talents: brawling+4, acrobatics+4, athletics+4, body_control+4, hide+4.
+Spirit: Automatic SAs (3): evade_i, combat_reflexes, unarmed_combat_style_hruruzat.
+Spirit: SA-chain roots present → band-2+ SA% can fire: evade_i.
+Spirit: Mundane / non-caster — spell % unused (redirects to talents if present).
+Template: combat_chain_fighter
+Overrides: none
+
+======== CATEGORY: traveling_wilderness (17) ========
+
+### messenger  (Botenreiter)
+Name: Courier | Category: traveling_wilderness | Status: none | GP: 0 | data_complete: true
+Reqs: CO11 AG11 CN12 | SO 5–10
+Affinity tags: wilderness
+Spirit: Couriers carry messages over dangerous routes.
+Spirit: Signature package talents: ride+5, orientation+5, cartography+5, self_control+4, etiquette+4.
+Spirit: Automatic SAs: none listed (incomplete data or talent-only package).
+Spirit: Mundane / non-caster — spell % unused (redirects to talents if present).
+Template: wilderness_hunter
+Overrides: none
+
+### explorer  (Entdecker)
+Name: Explorer | Category: traveling_wilderness | Status: none | GP: 6 | data_complete: true
+Reqs: CO12 CL12 IN12 CN11 | SO 7–13
+Affinity tags: wilderness, wilderness
+Spirit: Explorers seek unknown lands, routes, peoples, and ruins.
+Spirit: Signature package talents: cartography+5, perception+4, history+4, calculate+4, paint_draw+4.
+Spirit: Automatic SAs: none listed (incomplete data or talent-only package).
+Spirit: Mundane / non-caster — spell % unused (redirects to talents if present).
+Template: wilderness_hunter
+Overrides: none
+
+### long_distance_merchant  (Fernhändler)
+Name: Long-Distance Merchant | Category: traveling_wilderness | Status: none | GP: 7 | data_complete: false
+Reqs: CO11 CL12 IN11 CH12 CN11 | SO 7–13
+Affinity tags: wilderness
+Spirit: Long-distance merchants organize and accompany trade journeys, combining commerce, languages, social skills, geography, logistics, and self-protection.
+Spirit: Signature package talents: calculate+5, fast_talk+4, appraise+4, paint_draw+4, ride+3.
+Spirit: Automatic SAs: none listed (incomplete data or talent-only package).
+Spirit: Mundane / non-caster — spell % unused (redirects to talents if present).
+Template: social_courtier
+Overrides: Social merchant on the road; 28 discounted talent specializations are NOT SA-chain buys — do not raise SA %.
+Overrides: note only — use template bands unchanged.
+
+### fisher  (Fischer)
+Name: Fisher | Category: traveling_wilderness | Status: none | GP: 0 | data_complete: false
+Reqs: AG12 CN11 ST12 | SO 3–8
+Affinity tags: wilderness
+Spirit: Fishers make their living from rivers, coasts, and seas.
+Spirit: Signature package talents: fish+7, boats+6, bind_escape+5, swim+4, weather_sense+4.
+Spirit: Automatic SAs (3): steady_stand, aquatic_combat, knowledge_of_a_place.
+Spirit: Mundane / non-caster — spell % unused (redirects to talents if present).
+Template: wilderness_hunter
+Overrides: none
+
+### teamster  (Fuhrmann)
+Name: Teamster | Category: traveling_wilderness | Status: none | GP: 2 | data_complete: false
+Reqs: CO11 CN12 ST11 | SO 3–8
+Affinity tags: wilderness
+Spirit: Teamsters drive carts and wagons, care for draft animals, maintain vehicles, and manage overland transport.
+Spirit: Signature package talents: drive+6, whip+4, calculate+4, woodcraft+4, brawling+3.
+Spirit: Automatic SAs (2): a_knowledge_of_a_place_strecke_or_ort_of_choice, unarmed_combat_style_bornish.
+Spirit: Mundane / non-caster — spell % unused (redirects to talents if present).
+Template: wilderness_hunter
+Overrides: none
+
+### border_ranger  (Grenzjäger)
+Name: Border Ranger | Category: traveling_wilderness | Status: none | GP: 12 | data_complete: false
+Reqs: CO12 IN11 AG12 CL11 CN12 | SO 5–10
+Affinity tags: combat_frontliner, wilderness, stealth, wilderness
+Spirit: Border rangers patrol remote frontiers and combine wilderness competence, tracking, observation, and practical combat ability.
+Spirit: Signature package talents: perception+5, sneak+4, track+4, survival+4, brawling+3.
+Spirit: Automatic SAs (2): one_appropriate_terrain_lore, two_appropriate_ortskenntnisse_of_choice.
+Spirit: No clear Armor/Evade/Shield/Regen/Iron Will root in automatic_SAs — SA% mostly overflows to talents unless wizard buys armor/shield.
+Spirit: Mundane / non-caster — spell % unused (redirects to talents if present).
+Template: combat_skirmisher
+Overrides: none
+
+### big_game_hunter  (Großwildjäger)
+Name: Big-Game Hunter | Category: traveling_wilderness | Status: none | GP: 13 | data_complete: true
+Reqs: CO12 IN11 AG11 CN12 ST11 | SO 5–13
+Affinity tags: wilderness, wilderness
+Spirit: Big-game hunters pursue dangerous quarry.
+Spirit: Signature package talents: trap+5, animal_lore+5, perception+4, track+4, survival+4.
+Spirit: Automatic SAs (4): one_terrain_lore_of_choice, sharpshooter, talent_specialization_sling, alertness.
+Spirit: Mundane / non-caster — spell % unused (redirects to talents if present).
+Template: wilderness_hunter
+Overrides: none
+
+### herdsman  (Herdsman)
+Name: Herdsman | Category: traveling_wilderness | Status: none | GP: 0 | data_complete: false
+Reqs: CH11 AG11 CN11 ST11 | SO 1–7
+Affinity tags: wilderness, wilderness
+Spirit: Herdsmen care for livestock in different regions and social settings.
+Spirit: Signature package talents: perception+4, animal_lore+4, brawling+3, wrestling+3, climb+3.
+Spirit: Automatic SAs (1): one_appropriate_terrain_lore_of_choice.
+Spirit: Mundane / non-caster — spell % unused (redirects to talents if present).
+Template: wilderness_hunter
+Overrides: none
+
+### hunter  (Jäger)
+Name: Hunter | Category: traveling_wilderness | Status: none | GP: 11 | data_complete: true
+Reqs: IN11 AG12 CN11 | SO 3–7
+Affinity tags: wilderness, stealth, wilderness
+Spirit: Hunters live by tracking and taking game.
+Spirit: Signature package talents: track+6, sneak+5, hide+5, perception+5, survival+5.
+Spirit: Automatic SAs (2): one_terrain_lore_of_choice, sharpshooter.
+Spirit: Mundane / non-caster — spell % unused (redirects to talents if present).
+Template: wilderness_hunter
+Overrides: none
+
+### caravan_leader  (Karawanenführer)
+Name: Caravan Leader | Category: traveling_wilderness | Status: none | GP: 5 | data_complete: false
+Reqs: IN13 | SO 3–8
+Affinity tags: wilderness
+Spirit: Caravan leaders guide people, animals, and goods through long and often dangerous routes, combining logistics, languages, trade, leadership, and wilderness knowledge.
+Spirit: Signature package talents: human_nature+4, brawling+3, daggers+2, etiquette+2, fast_talk+2.
+Spirit: Automatic SAs (2): knowledge_of_a_place, one_appropriate_terrain_lore_of_choice.
+Spirit: Mundane / non-caster — spell % unused (redirects to talents if present).
+Template: wilderness_hunter
+Overrides: none
+
+### scout  (Kundschafter)
+Name: Scout | Category: traveling_wilderness | Status: none | GP: 7 | data_complete: false
+Reqs: CO12 IN12 CN12 | SO 2–7
+Affinity tags: wilderness, stealth, wilderness
+Spirit: Scouts reconnoiter terrain and enemy movement, emphasizing stealth, perception, orientation, survival, and rapid reporting.
+Spirit: Signature package talents: perception+6, track+5, orientation+5, sneak+4, hide+4.
+Spirit: Automatic SAs (1): an_appropriate_terrain_lore_of_choice.
+Spirit: Mundane / non-caster — spell % unused (redirects to talents if present).
+Template: wilderness_hunter
+Overrides: none
+
+### prospector  (Prospektorin)
+Name: Prospector | Category: traveling_wilderness | Status: none | GP: — | data_complete: false
+Reqs: IN12 DE11 | SO 3–7
+Affinity tags: wilderness, wilderness
+Spirit: Prospectors search for useful plants, minerals, and other resources.
+Spirit: Signature package talents: stone_lore+5, climb+4, survival+4, appraise+4, perception+3.
+Spirit: Automatic SAs (2): one_appropriate_terrain_lore_of_choice, knowledge_of_a_place_for_the_search_area.
+Spirit: Mundane / non-caster — spell % unused (redirects to talents if present).
+Template: wilderness_hunter
+Overrides: none
+
+### boatman  (Schiffer)
+Name: Boatman | Category: traveling_wilderness | Status: none | GP: — | data_complete: false
+Reqs: CO11 IN11 AG12 CN11 | SO 1–10
+Affinity tags: wilderness
+Spirit: Boatmen work on inland waterways.
+Spirit: Signature package talents: woodcraft+4, bind_escape+3, fish+3, boats+3, seafaring+3.
+Spirit: Automatic SAs (3): steady_stand, knowledge_of_a_place, aquatic_combat.
+Spirit: Mundane / non-caster — spell % unused (redirects to talents if present).
+Template: wilderness_hunter
+Overrides: none
+
+### smuggler  (Schmuggler)
+Name: Smuggler | Category: traveling_wilderness | Status: none | GP: 0 | data_complete: false
+Reqs: CO12 IN12 CN11 | SO 1–7
+Affinity tags: wilderness, stealth
+Spirit: Smugglers move forbidden or untaxed goods through hidden routes, using street knowledge, stealth, transport skills, and social deception; customs officers form a related variant.
+Spirit: Signature package talents: sneak+4, hide+4, calculate+4, appraise+4, fast_talk+3.
+Spirit: Automatic SAs (2): knowledge_of_a_place, appropriate_terrain_lore.
+Spirit: Mundane / non-caster — spell % unused (redirects to talents if present).
+Template: urban_rogue
+Overrides: Wilderness routes but identity is concealment/street trade — urban_rogue over wilderness_hunter.
+Overrides: note only — use template bands unchanged.
+
+### seafarer  (Seafarer)
+Name: Seafarer | Category: traveling_wilderness | Status: none | GP: — | data_complete: false
+Reqs: CO12 AG12 CN11 ST11 | SO 1–10
+Affinity tags: wilderness
+Spirit: Seafarers work aboard ships.
+Spirit: Signature package talents: climb+4, boats+4, seafaring+4, body_control+3, bind_escape+3.
+Spirit: Automatic SAs (2): sea_lore, steady_stand.
+Spirit: Mundane / non-caster — spell % unused (redirects to talents if present).
+Template: wilderness_hunter
+Overrides: none
+
+### highwayman  (Straßenräuber)
+Name: Highwayman | Category: traveling_wilderness | Status: none | GP: — | data_complete: false
+Reqs: CO11 AG11 CN12 ST11 | SO 1–7
+Affinity tags: combat_frontliner, wilderness, wilderness
+Spirit: Highwaymen prey on travelers or fight irregularly along roads and borders.
+Spirit: Signature package talents: axes_and_maces+4, woodcraft+4, brawling+3, wrestling+3, climb+2.
+Spirit: Automatic SAs (1): knowledge_of_a_place.
+Spirit: No clear Armor/Evade/Shield/Regen/Iron Will root in automatic_SAs — SA% mostly overflows to talents unless wizard buys armor/shield.
+Spirit: Mundane / non-caster — spell % unused (redirects to talents if present).
+Template: combat_skirmisher
+Overrides: none
+
+### pirate  (Piratin)
+Name: Pirate | Category: traveling_wilderness | Status: none | GP: 1 | data_complete: false
+Reqs: CO12 AG12 CN11 ST11 | SO 1–10
+Affinity tags: sailor, combat_skirmisher, ranged
+Spirit: Pirates are sea raiders and sailors who live by boarding and plundering.
+Spirit: Signature package talents: climb+4, body_control+4, language_lore+4, boats+4, seafaring+4.
+Spirit: Automatic SAs (2): sea_lore, steady_stand.
+Spirit: No clear Armor/Evade/Shield/Regen/Iron Will root in automatic_SAs — SA% mostly overflows to talents unless wizard buys armor/shield.
+Spirit: Mundane / non-caster — spell % unused (redirects to talents if present).
+Template: combat_skirmisher
+Overrides: none
+
+======== CATEGORY: social (17) ========
+
+### crier  (Crier)
+Name: Crier | Category: social | Status: none | GP: 0 | data_complete: false
+Reqs: CO11 IN13 CH13 | SO 3–8
+Affinity tags: combat_frontliner, social
+Spirit: Criers publicly announce news, laws, prices, and events, relying on voice, memory, street knowledge, and social presence.
+Spirit: Signature package talents: fast_talk+6, brawling+4, wrestling+4, human_nature+4, persuade+4.
+Spirit: Automatic SAs (2): one_additional_culture_lore, unarmed_combat_style_bornish.
+Spirit: Mundane / non-caster — spell % unused (redirects to talents if present).
+Template: social_courtier
+Overrides: Public announcer; data tags combat_frontliner but package is social — social_courtier.
+Overrides: note only — use template bands unchanged.
+
+### bard  (Bard)
+Name: Bard | Category: social | Status: none | GP: — | data_complete: false
+Reqs: CL11 IN12 CH13 | SO 5–10
+Affinity tags: social
+Spirit: Bards are traveling performers and keepers of stories.
+Spirit: Signature package talents: play_instrument+5, history+4, brawling+3, geography+3, religious_lore+3.
+Spirit: Automatic SAs: none listed (incomplete data or talent-only package).
+Spirit: Mundane / non-caster — spell % unused (redirects to talents if present).
+Template: social_courtier
+Overrides: none
+
+### beggar  (Bettler)
+Name: Beggar | Category: social | Status: none | GP: 0 | data_complete: true
+Reqs: CO11 IN11 DE12 | SO 1–4
+Affinity tags: social
+Spirit: Beggars survive through appeals, observation, street knowledge, and adaptation to urban or roadside life.
+Spirit: Signature package talents: streetwise+6, fast_talk+6, human_nature+5, hide+4, masquerade+4.
+Spirit: Automatic SAs (4): knowledge_of_a_place, alertness, talent_specialization_fast_talk, talent_specialization_streetwise.
+Spirit: Mundane / non-caster — spell % unused (redirects to talents if present).
+Template: urban_rogue
+Overrides: none
+
+### thief  (Thief)
+Name: Thief | Category: social | Status: none | GP: 4 | data_complete: true
+Reqs: CO12 IN12 DE13 AG13 | SO 1–7
+Affinity tags: combat_frontliner, social, stealth
+Spirit: Thieves specialize in unnoticed appropriation, pickpocketing, stealth, and street survival.
+Spirit: Signature package talents: pick_pockets+7, streetwise+6, hide+4, perception+4, human_nature+4.
+Spirit: Automatic SAs (3): alertness, knowledge_of_a_place, unarmed_combat_style_bornish.
+Spirit: No clear Armor/Evade/Shield/Regen/Iron Will root in automatic_SAs — SA% mostly overflows to talents unless wizard buys armor/shield.
+Spirit: Mundane / non-caster — spell % unused (redirects to talents if present).
+Template: combat_skirmisher
+Overrides: Street brawler package (combat-heavy) despite social category; Alertness/unarmed roots may feed SA chain lightly.
+Overrides: note only — use template bands unchanged.
+
+### burglar  (Einbrecher)
+Name: Burglar | Category: social | Status: none | GP: 0 | data_complete: true
+Reqs: CO12 DE13 AG12 | SO 2–10
+Affinity tags: social, stealth
+Spirit: Burglars enter secured places to steal valuables.
+Spirit: Signature package talents: pick_locks+7, climb+6, body_control+5, sneak+5, hide+5.
+Spirit: Automatic SAs (3): knowledge_of_a_place_entweder_the_preferred_gebiet_for_the_fishing_grounds_or_a_shady_district, in_the_man_hide_effectively_and_sell_loot_may, talent_specialization_climb.
+Spirit: Mundane / non-caster — spell % unused (redirects to talents if present).
+Template: urban_rogue
+Overrides: none
+
+### mountebank  (Gaukler)
+Name: Entertainer | Category: social | Status: none | GP: 2 | data_complete: false
+Reqs: CO11 CH12 DE13 | SO 3–7
+Affinity tags: social
+Spirit: Entertainers make a living through public performance.
+Spirit: Signature package talents: body_control+5, human_nature+4, streetwise+3, fast_talk+3, brawling+2.
+Spirit: Automatic SAs (2): evade_i, steady_stand.
+Spirit: SA-chain roots present → band-2+ SA% can fire: evade_i.
+Spirit: Mundane / non-caster — spell % unused (redirects to talents if present).
+Template: social_courtier
+Overrides: none
+
+### merchant  (Händler)
+Name: Merchant | Category: social | Status: none | GP: — | data_complete: false
+Reqs: CO11 CL12 CH12 | SO 5–10
+Affinity tags: social
+Spirit: Merchants trade goods, money, or information.
+Spirit: Signature package talents: fast_talk+6, appraise+5, human_nature+4, calculate+4, ride+3.
+Spirit: Automatic SAs (2): knowledge_of_a_place, talent_specialization_fast_talk.
+Spirit: Mundane / non-caster — spell % unused (redirects to talents if present).
+Template: social_courtier
+Overrides: none
+
+### herald  (Herold)
+Name: Herald | Category: social | Status: none | GP: 0 | data_complete: false
+Reqs: CO11 CH12 | SO 7–13
+Affinity tags: social
+Spirit: Heralds are trained in protocol, genealogy, coats of arms, public representation, and formal communication.
+Spirit: Signature package talents: etiquette+7, heraldry+7, paint_draw+6, history+4, law+4.
+Spirit: Automatic SAs: none listed (incomplete data or talent-only package).
+Spirit: Mundane / non-caster — spell % unused (redirects to talents if present).
+Template: social_courtier
+Overrides: none
+
+### court_artist  (Hofkünstler)
+Name: Court Artist | Category: social | Status: none | GP: — | data_complete: false
+Reqs: CL11 IN13 CH12 | SO 7–12
+Affinity tags: social
+Spirit: Court artists serve wealthy patrons through specialized artistic performance or craft, including sculpture, acting, music, calligraphy, and dance instruction.
+Spirit: Signature package talents: etiquette+4, human_nature+4, calculate+4, dance+3, fast_talk+3.
+Spirit: Automatic SAs: none listed (incomplete data or talent-only package).
+Spirit: Mundane / non-caster — spell % unused (redirects to talents if present).
+Template: social_courtier
+Overrides: none
+
+### courtier  (Höfling)
+Name: Courtier | Category: social | Status: none | GP: 2 | data_complete: false
+Reqs: CL11 IN11 CH12 | SO 6–12
+Affinity tags: social
+Spirit: Courtiers and ladies-in-waiting navigate noble households through etiquette, influence, culture, and personal connections.
+Spirit: Signature package talents: etiquette+5, human_nature+4, heraldry+4, calculate+4, daggers+3.
+Spirit: Automatic SAs: none listed (incomplete data or talent-only package).
+Spirit: Mundane / non-caster — spell % unused (redirects to talents if present).
+Template: social_courtier
+Overrides: none
+
+### courtesan  (Kurtisane)
+Name: Courtesan | Category: social | Status: none | GP: 0 | data_complete: false
+Reqs: CO11 IN11 CH13 AG12 | SO 7–12
+Affinity tags: social
+Spirit: Courtesans and companions provide cultivated social company and intimate services; the section therefore contains the less prestigious prostitute or catamite profile.
+Spirit: Signature package talents: seduce+7, human_nature+5, body_control+4, self_control+4, dance+4.
+Spirit: Automatic SAs (2): talent_specialization_seduce_any_spezialgebiet_rahjak_nste, festgestaltung_etc.
+Spirit: Mundane / non-caster — spell % unused (redirects to talents if present).
+Template: social_courtier
+Overrides: none
+
+### private_tutor  (Privatlehrer)
+Name: Private Tutor | Category: social | Status: none | GP: 0 | data_complete: false
+Reqs: CL13 CH12 IN12 | SO 7–10
+Affinity tags: social
+Spirit: Private tutors educate children or adults in languages, lore, manners, and selected practical subjects.
+Spirit: Signature package talents: teach+7, calculate+7, human_nature+5, etiquette+4, persuade+4.
+Spirit: Automatic SAs (1): knowledge_pleasing_to_nandus.
+Spirit: Mundane / non-caster — spell % unused (redirects to talents if present).
+Template: social_courtier
+Overrides: none
+
+### writer  (Writer)
+Name: Writer | Category: social | Status: none | GP: 0 | data_complete: false
+Reqs: CL12 IN12 | SO 7–12
+Affinity tags: social
+Spirit: Writers produce literary, scholarly, or commissioned texts.
+Spirit: Signature package talents: legend_lore+5, perception+4, human_nature+4, paint_draw+4, carouse+3.
+Spirit: Automatic SAs: none listed (incomplete data or talent-only package).
+Spirit: Mundane / non-caster — spell % unused (redirects to talents if present).
+Template: social_courtier
+Overrides: none
+
+### spy  (Spitzel)
+Name: Spy | Category: social | Status: none | GP: — | data_complete: false
+Reqs: CO13 CH12 DE12 | SO 4–10
+Affinity tags: social, stealth
+Spirit: Spies gather and transmit information.
+Spirit: Signature package talents: hide+4, pick_pockets+4, sneak+3, perception+3, etiquette+3.
+Spirit: Automatic SAs (2): alertness_or_knowledge_pleasing_to_nandus, knowledge_of_a_place.
+Spirit: Mundane / non-caster — spell % unused (redirects to talents if present).
+Template: urban_rogue
+Overrides: none
+
+### rogue  (Rogue)
+Name: Rogue | Category: social | Status: none | GP: 3 | data_complete: true
+Reqs: CO11 IN12 CH12 DE12 | SO 2–10
+Affinity tags: social, stealth
+Spirit: Rogues survive through charm, street knowledge, opportunism, and deception.
+Spirit: Signature package talents: pick_pockets+5, streetwise+5, human_nature+5, daggers+3, sneak+3.
+Spirit: Automatic SAs (1): alertness.
+Spirit: Mundane / non-caster — spell % unused (redirects to talents if present).
+Template: urban_rogue
+Overrides: none
+
+### dilettante  (Dilettante)
+Name: Dilettante | Category: social | Status: none | GP: 4 | data_complete: false
+Reqs: CO13 IN11 CH12 AG11 | SO 6–12
+Affinity tags: social
+Spirit: Dilettantes are privileged or rootless individuals without a conventional career, including dandies and broadly educated amateurs.
+Spirit: Signature package talents: etiquette+5, human_nature+5, dance+4, seduce+4, fast_talk+4.
+Spirit: Automatic SAs (1): knowledge_pleasing_to_nandus_or_master_of_improvisation_or_alertness.
+Spirit: Mundane / non-caster — spell % unused (redirects to talents if present).
+Template: social_courtier
+Overrides: none
+
+### innkeeper  (Wirt)
+Name: Innkeeper | Category: social | Status: none | GP: 1 | data_complete: false
+Reqs: IN11 CH11 DE11 CN11 | SO 3–8
+Affinity tags: social
+Spirit: Innkeepers run taverns, inns, or similar establishments, combining household management, trade, social judgment, cooking, and local knowledge.
+Spirit: Signature package talents: human_nature+5, fast_talk+5, calculate+4, cook+4, carouse+3.
+Spirit: Automatic SAs (2): knowledge_of_a_place, unarmed_combat_style_bornish.
+Spirit: Mundane / non-caster — spell % unused (redirects to talents if present).
+Template: social_courtier
+Overrides: none
+
+======== CATEGORY: craft_knowledge (12) ========
+
+### bathhouse_attendant  (Bader)
+Name: Bathhouse Attendant | Category: craft_knowledge | Status: none | GP: 0 | data_complete: true
+Reqs: CL11 DE12 ST11 | SO 3–8
+Affinity tags: combat_frontliner, commoner, healer
+Spirit: Bathhouse attendants and barbers provide grooming, bathing, simple medical, and social services.
+Spirit: Signature package talents: wrestling+4, self_control+4, human_nature+4, treat_wounds+4, daggers+3.
+Spirit: Automatic SAs (2): an_appropriate_knowledge_of_a_place_of_choice, unarmed_combat_style_bornish.
+Spirit: Mundane / non-caster — spell % unused (redirects to talents if present).
+Template: mundane_healer
+Overrides: none
+
+### farmer  (Bauer)
+Name: Farmer | Category: craft_knowledge | Status: none | GP: — | data_complete: false
+Reqs: CN11 ST11 | SO 2–8
+Affinity tags: combat_frontliner, commoner, wilderness
+Spirit: Farmers and agricultural workers cultivate land or manage rural production.
+Spirit: Signature package talents: farming+6, weather_sense+5, brawling+3, wrestling+3, track+3.
+Spirit: Automatic SAs (2): knowledge_of_a_place, one_appropriate_terrain_lore.
+Spirit: Mundane / non-caster — spell % unused (redirects to talents if present).
+Template: craft_commoner
+Overrides: Rural production; combat tags in incomplete data ignored — craft_commoner.
+Overrides: note only — use template bands unchanged.
+
+### miner  (Bergmann)
+Name: Miner | Category: craft_knowledge | Status: none | GP: 1 | data_complete: false
+Reqs: CO12 AG11 CN11 ST13 | SO 3–8
+Affinity tags: commoner
+Spirit: Miners extract ore and stone and are trained in underground work, tools, hazards, and mineral knowledge.
+Spirit: Signature package talents: trap+3, animal_lore+3, crossbows+2, daggers+2, sneak+2.
+Spirit: Automatic SAs (1): cave_lore.
+Spirit: Mundane / non-caster — spell % unused (redirects to talents if present).
+Template: craft_commoner
+Overrides: none
+
+### domestic_servant  (Domestik)
+Name: Domestic Servant | Category: craft_knowledge | Status: none | GP: — | data_complete: false
+Reqs: IN11 DE11 | SO 3–8
+Affinity tags: commoner
+Spirit: Domestic servants work in households or courts.
+Spirit: Signature package talents: calculate+4, human_nature+3, axes_and_maces+2, wrestling+2, sneak+2.
+Spirit: Automatic SAs (1): knowledge_of_a_place.
+Spirit: Mundane / non-caster — spell % unused (redirects to talents if present).
+Template: craft_commoner
+Overrides: none
+
+### fine_artisan  (Edelhandwerker)
+Name: Fine Artisan | Category: craft_knowledge | Status: none | GP: — | data_complete: false
+Reqs: CL11 | SO 7–12
+Affinity tags: commoner
+Spirit: Fine artisans practice learned or precision crafts.
+Spirit: Signature package talents: human_nature+4, calculate+4, paint_draw+4, perception+2, teach+2.
+Spirit: Automatic SAs (1): knowledge_pleasing_to_nandus_or_master_of_improvisation.
+Spirit: Mundane / non-caster — spell % unused (redirects to talents if present).
+Template: craft_commoner
+Overrides: none
+
+### scholar  (Scholar)
+Name: Scholar | Category: craft_knowledge | Status: none | GP: — | data_complete: false
+Reqs: DE11 CN11 | SO 7–12
+Affinity tags: commoner, healer
+Spirit: Scholars pursue systematic learning in a chosen field.
+Spirit: Signature package talents: anatomy+7, treat_wounds+5, human_nature+4, teach+3, treat_disease+3.
+Spirit: Automatic SAs (1): knowledge_pleasing_to_nandus.
+Spirit: Mundane / non-caster — spell % unused (redirects to talents if present).
+Template: craft_commoner
+Overrides: Lore identity; craft_knowledge weights currently artisan-skewed/incomplete — talent_bias still drives lore picks.
+Overrides: note only — use template bands unchanged.
+
+### artisan  (Artisans)
+Name: Artisan | Category: craft_knowledge | Status: none | GP: 1 | data_complete: true
+Reqs: CL12 IN12 | SO 5–10
+Affinity tags: commoner
+Spirit: Artisans earn their living through a trade.
+Spirit: Signature package talents: light_engineering+4, paint_draw+3, axes_and_maces+2, brawling+2, wrestling+2.
+Spirit: Automatic SAs (4): knowledge_of_a_place, master_of_improvisation, talent_specialization_in_the_primary_talent_wo_not_passend, with_highlord_absprechen.
+Spirit: Mundane / non-caster — spell % unused (redirects to talents if present).
+Template: craft_commoner
+Overrides: none
+
+### rat_catcher  (Rattenfänger)
+Name: Rat-Catcher | Category: craft_knowledge | Status: none | GP: 2 | data_complete: false
+Reqs: CO11 AG12 CN12 | SO 1–4
+Affinity tags: commoner
+Spirit: Rat-catchers control vermin in settlements and sewers, combining traps, animal knowledge, disease awareness, and practical survival.
+Spirit: Signature package talents: animal_lore+5, streetwise+3, boats+3, swim+2, fast_talk+1.
+Spirit: Automatic SAs (3): knowledge_of_a_place, aquatic_combat, evade_i.
+Spirit: SA-chain roots present → band-2+ SA% can fire: evade_i.
+Spirit: Mundane / non-caster — spell % unused (redirects to talents if present).
+Template: craft_commoner
+Overrides: none
+
+### scribe  (Schreiber)
+Name: Scribe | Category: craft_knowledge | Status: none | GP: 0 | data_complete: false
+Reqs: CL11 CH11 DE12 | SO 7–10
+Affinity tags: commoner
+Spirit: Scribes copy, compose, calculate, and manage written records; variants represent different administrative and literary specializations.
+Spirit: Signature package talents: calculate+4, paint_draw+4, fast_talk+3, brawling+2, wrestling+2.
+Spirit: Automatic SAs (2): knowledge_of_a_place, knowledge_pleasing_to_nandus.
+Spirit: Mundane / non-caster — spell % unused (redirects to talents if present).
+Template: craft_commoner
+Overrides: none
+
+### day_laborer  (Tagelöhner)
+Name: Day Laborer | Category: craft_knowledge | Status: none | GP: — | data_complete: false
+Reqs: AG11 CN12 ST13 | SO 1–4
+Affinity tags: combat_frontliner, commoner
+Spirit: Day laborers perform changing manual work.
+Spirit: Signature package talents: brawling+4, wrestling+4, athletics+4, carouse+4, daggers+2.
+Spirit: Automatic SAs (2): two_ortskenntnisse_of_choice, unarmed_combat_style_bornish.
+Spirit: Mundane / non-caster — spell % unused (redirects to talents if present).
+Template: craft_commoner
+Overrides: Manual labor; combat tags in incomplete data ignored — craft_commoner.
+Overrides: note only — use template bands unchanged.
+
+### animal_trainer  (Tierbändiger)
+Name: Animal Trainer | Category: craft_knowledge | Status: none | GP: 1 | data_complete: false
+Reqs: CO12 IN13 CH13 AG11 ST12 | SO 5–10
+Affinity tags: combat_frontliner, commoner, wilderness
+Spirit: Animal trainers capture, handle, train, and present animals, combining Animal Lore, Train Animals, observation, and physical control.
+Spirit: Signature package talents: animal_training+7, perception+4, track+4, animal_lore+4, brawling+3.
+Spirit: Automatic SAs (1): specialization_train_animals.
+Spirit: Mundane / non-caster — spell % unused (redirects to talents if present).
+Template: craft_commoner
+Overrides: Craft/wilderness animals; combat weights in incomplete data ignored — craft_commoner.
+Overrides: note only — use template bands unchanged.
+
+### physician  (Wundarzt)
+Name: Chirurgeon | Category: craft_knowledge | Status: none | GP: 0 | data_complete: false
+Reqs: IN12 CH11 DE13 | SO 5–10
+Affinity tags: commoner, healer
+Spirit: Chirurgeons are practical healers trained in wounds, disease, poison, anatomy, and medical craft; specializations former their methods and social position.
+Spirit: Signature package talents: treat_wounds+6, human_nature+5, fast_talk+4, plant_lore+4, cook+4.
+Spirit: Automatic SAs: none listed (incomplete data or talent-only package).
+Spirit: Mundane / non-caster — spell % unused (redirects to talents if present).
+Template: mundane_healer
+Overrides: none
+
+======== CATEGORY: magical (16) ========
+
+### alchemist  (Alchimistin)
+Name: Alchemist | Category: magical | Status: full_caster | GP: 5 | data_complete: false
+Reqs: CO11 CL13 IN11 DE12 | SO 6–10
+Affinity tags: magical_guild
+Spirit: Alchemists are magically or academically trained practitioners of material transformation.
+Spirit: Signature package talents: alchemy+7, calculate+5, plant_lore+4, cook+4, paint_draw+4.
+Spirit: Automatic SAs (1): talent_specialization_alchemy.
+Spirit: Full caster (spell_group_weight=1.2). Spell % applies.
+Template: full_caster_mystic
+Overrides: Craft/alchemy lean mystic: more artisan talents than pure spell focus; ASP not in derived_modifiers but full_caster.
+Bands (OVERRIDE — use these instead of template):
+  1–500: talents 50 / spells 50
+  501–1000: SA 10 / talents 45 / spells 45
+  1001–2000: attributes 35 / SA 10 / talents 25 / spells 30
+  2001–3500: attributes 35 / SA 10 / talents 30 / spells 25
+  3501–∞: attributes 40 / SA 10 / talents 25 / spells 25
+JSON:
+[
+  {
+    "from": 1,
+    "to": 500,
+    "spells": 50,
+    "talents": 50
+  },
+  {
+    "from": 501,
+    "to": 1000,
+    "spells": 45,
+    "talents": 45,
+    "special_abilities": 10
+  },
+  {
+    "from": 1001,
+    "to": 2000,
+    "attributes": 35,
+    "spells": 30,
+    "talents": 25,
+    "special_abilities": 10
+  },
+  {
+    "from": 2001,
+    "to": 3500,
+    "attributes": 35,
+    "spells": 25,
+    "talents": 30,
+    "special_abilities": 10
+  },
+  {
+    "from": 3501,
+    "to": null,
+    "attributes": 40,
+    "spells": 25,
+    "talents": 25,
+    "special_abilities": 10
+  }
+]
+
+### dervish  (Derwisch, Rufer der Macht Rastullahs)
+Name: Dervish | Category: magical | Status: full_caster | GP: 9 | data_complete: false
+Reqs: CO12 DE13 CN13 | SO 6–10
+Affinity tags: magical_guild
+Spirit: Dervishes are Rastullah-believing mystics whose magical tradition uses ecstatic movement, faith, and ritual training.
+Spirit: Signature package talents: play_instrument+7, religious_lore+5, dance+4, wrestling+3, body_control+3.
+Spirit: Automatic SAs (3): talent_specialization_play_instrument, ritual_knowledge, call_of_war.
+Spirit: No clear Armor/Evade/Shield/Regen/Iron Will root in automatic_SAs — SA% mostly overflows to talents unless wizard buys armor/shield.
+Spirit: Full caster (spell_group_weight=1.2); RM+1. Spell % applies.
+Template: combat_caster
+Overrides: none
+
+### druid  (Druide)
+Name: Druid | Category: magical | Status: full_caster | GP: — | data_complete: false
+Reqs: CO12 CL12 IN11 | SO 3–10
+Affinity tags: magical_guild, scholar
+Spirit: Druids are secretive nature-oriented spellcasters.
+Spirit: Signature package talents: plant_lore+5, self_control+4, arcane_lore+4, stone_lore+3, starcraft+3.
+Spirit: Automatic SAs (6): druid_s_vengeance, great_meditation, representation, ritual_knowledge, forbidden_gates, consecration_of_the_dagger_discounted_special_abilities_and_rituals_according_to_variant.
+Spirit: No clear Armor/Evade/Shield/Regen/Iron Will root in automatic_SAs — SA% mostly overflows to talents unless wizard buys armor/shield.
+Spirit: Full caster (spell_group_weight=1.2); ASP+13; RM+2. Spell % applies.
+Template: full_caster_academic
+Overrides: none
+
+### durro_dun  (Durro-Dûn)
+Name: Durro-Dûn | Category: magical | Status: full_caster | GP: — | data_complete: false
+Reqs: — | SO 2–6
+Affinity tags: combat_frontliner, magical_guild, wilderness
+Spirit: Durro-Dûn are Gjalsker animal warriors bound to an Odûn.
+Spirit: Signature package talents: axes_and_maces+4, brawling+4, perception+4, survival+4, athletics+3.
+Spirit: Automatic SAs (7): conceal_aura, aurapanzer, iron_will_i_ii, mind_shield, ley_line_magic_i, dance_of_mada, forbidden_gates.
+Spirit: SA-chain roots present → band-2+ SA% can fire: iron_will_i_ii.
+Spirit: Full caster (spell_group_weight=1.2). Spell % applies.
+Template: combat_caster
+Overrides: none
+
+### elven_keeper  (Bewahrer)
+Name: Elven Keeper | Category: magical | Status: full_caster | GP: 2 | data_complete: false
+Reqs: CH12 IN13 | SO 5–10
+Affinity tags: magical_guild, wilderness, healer
+Spirit: Elven professions represent culturally integrated life paths rather than human occupations.
+Spirit: Signature package talents: treat_wounds+5, human_nature+4, treat_poison+4, treat_disease+4, wrestling+3.
+Spirit: Automatic SAs (1): song_of_solace.
+Spirit: Full caster (spell_group_weight=1.2). Spell % applies.
+Template: full_caster_mystic
+Overrides: none
+
+### ferkina_possessed  (Ferkina-Besessene)
+Name: Ferkina Possessed | Category: magical | Status: full_caster | GP: — | data_complete: false
+Reqs: CO12 CN12 | SO 1–12
+Affinity tags: magical_guild
+Spirit: Ferkina possessed are magically altered or spirit-bound members of Ferkina culture whose profile reflects their specific supernatural possession.
+Spirit: Automatic SAs (1): blood_magic_additional.
+Spirit: No clear Armor/Evade/Shield/Regen/Iron Will root in automatic_SAs — SA% mostly overflows to talents unless wizard buys armor/shield.
+Spirit: Full caster (spell_group_weight=1.2). Spell % applies.
+Template: combat_caster
+Overrides: none
+
+### geode  (Geode)
+Name: Geode | Category: magical | Status: full_caster | GP: — | data_complete: false
+Reqs: CL12 IN12 | SO 6–10
+Affinity tags: magical_guild, wilderness, scholar
+Spirit: Geodes are dwarven elemental spellcasters.
+Spirit: Signature package talents: teach+5, legend_lore+5, religious_lore+4, arcane_lore+4, plant_lore+4.
+Spirit: Automatic SAs (5): representation_geode, ritual_knowledge, one_terrain_lore_of_choice, great_meditation, consecration_the_snake.
+Spirit: No clear Armor/Evade/Shield/Regen/Iron Will root in automatic_SAs — SA% mostly overflows to talents unless wizard buys armor/shield.
+Spirit: Full caster (spell_group_weight=1.2); ASP+12; RM+2. Spell % applies.
+Template: full_caster_academic
+Overrides: none
+
+### witch  (Hexe)
+Name: Witch | Category: magical | Status: full_caster | GP: — | data_complete: false
+Reqs: — | SO 3–10
+Affinity tags: magical_guild
+Spirit: Witches are members of Satuarian sisterhoods.
+Spirit: Signature package talents: dance+3, fast_talk+3, orientation+3, weather_sense+3, survival+3.
+Spirit: Automatic SAs (4): representation, ritual_knowledge, great_meditation, familiar_binding.
+Spirit: Full caster (spell_group_weight=1.2); ASP+13; RM+2. Spell % applies.
+Template: full_caster_mystic
+Overrides: none
+
+### crystallomancer  (Kristallomant)
+Name: Crystallomancer | Category: magical | Status: full_caster | GP: 10 | data_complete: false
+Reqs: CL13 CH12 DE12 | SO 4–5
+Affinity tags: magical_guild, scholar
+Spirit: Crystallomancers are Achaz spellcasters who work through crystal-based ritual magic and their own magical representation.
+Spirit: Signature package talents: stone_lore+5, arcane_lore+5, teach+4, starcraft+4, calculate+3.
+Spirit: Automatic SAs (5): representation_kris_tallomant, ritual_knowledge, great_meditation, matrix_regeneration_i, merkmalskennt.
+Spirit: SA-chain roots present → band-2+ SA% can fire: matrix_regeneration_i.
+Spirit: Full caster (spell_group_weight=1.2); ASP+12; RM+2. Spell % applies.
+Template: full_caster_academic
+Overrides: none
+
+### magician  (Magier)
+Name: Guild Magician | Category: magical | Status: full_caster | GP: 22 | data_complete: false
+Reqs: CO11 CL13 IN11 CH12 | SO 7–13
+Affinity tags: magical_guild
+Spirit: Guild magicians receive extensive academic magical training.
+Spirit: Signature package talents: arcane_lore+6, language_lore+5, read_write_kuslik+5, calculate+4, read_write_sacred_glyphs+4.
+Spirit: Automatic SAs (5): representation_guild_magic, ritual_knowledge, astral_meditation, great_meditation, binding_of_the_staff.
+Spirit: No clear Armor/Evade/Shield/Regen/Iron Will root in automatic_SAs — SA% mostly overflows to talents unless wizard buys armor/shield.
+Spirit: Full caster (spell_group_weight=1.2); ASP+18; RM+2. Spell % applies.
+Template: full_caster_academic
+Overrides: none
+
+### charlatan  (Scharlatanin)
+Name: Charlatan | Category: magical | Status: full_caster | GP: — | data_complete: false
+Reqs: CL13 IN13 CH12 DE12 | SO 3–8
+Affinity tags: magical_guild
+Spirit: Charlatans are illusion-oriented magical performers and deceivers.
+Spirit: Signature package talents: brawling+2, self_control+2, voice_mimicry+2, daggers+1, body_control+1.
+Spirit: Automatic SAs: none listed (incomplete data or talent-only package).
+Spirit: Full caster (spell_group_weight=1.2); ASP+6; RM+1. Spell % applies.
+Template: full_caster_trickster
+Overrides: none
+
+### magical_jester  (Schelmin)
+Name: Magical Jester | Category: magical | Status: full_caster | GP: 13 | data_complete: true
+Reqs: DE13 IN13 AG12 CH12 | SO 2–7
+Affinity tags: magical_guild
+Spirit: Magical jesters are innate or trained trickster spellcasters whose magic, social behavior, and disadvantages are shaped by their peculiar tradition.
+Spirit: Signature package talents: voice_mimicry+7, acrobatics+5, juggling+5, hide+5, fast_talk+5.
+Spirit: Automatic SAs (2): representation, talent_specialization_juggling.
+Spirit: Full caster (spell_group_weight=1.2); ASP+6; RM+3. Spell % applies.
+Template: full_caster_trickster
+Overrides: none
+
+### creator  (Schöpferin)
+Name: Creator | Category: magical | Status: full_caster | GP: 5 | data_complete: false
+Reqs: — | SO 1–12
+Affinity tags: magical_guild
+Spirit: Professional dancers use performance as art and livelihood; magic dancers add a ritual magical tradition whose exact dances and abilities depend on culture and school.
+Spirit: Automatic SAs: none listed (incomplete data or talent-only package).
+Spirit: Full caster (spell_group_weight=1.2). Spell % applies.
+Template: full_caster_trickster
+Overrides: Magical dancer/performer tradition — trickster mix (spells + physical/social), not academic.
+Overrides: note only — use template bands unchanged.
+
+### zibilja  (Zibilja)
+Name: Zibilja | Category: magical | Status: full_caster | GP: 5 | data_complete: false
+Reqs: CL12 IN13 CH12 DE11 | SO 5–10
+Affinity tags: magical_guild
+Spirit: Zibilja are Norbard wise women who preserve family memory and practice a distinct ritual magical tradition.
+Spirit: Signature package talents: human_nature+5, legend_lore+5, sing+4, religious_lore+4, calculate+4.
+Spirit: Automatic SAs: none listed (incomplete data or talent-only package).
+Spirit: Full caster (spell_group_weight=1.2); ASP+6; RM+2. Spell % applies.
+Template: full_caster_mystic
+Overrides: none
+
+### legend_singer  (Legendensänger)
+Name: Legend Singer | Category: magical | Status: full_caster | GP: — | data_complete: false
+Reqs: — | SO —
+Affinity tags: magical_elven, social, entertainer
+Spirit: Legend Singers are elvish bard-mages who preserve and perform elvish lore through song and story.
+Spirit: Signature package talents: sing+6, play_instrument+5, legend_lore+5, bows+4, dance+4.
+Spirit: Automatic SAs: none listed (incomplete data or talent-only package).
+Spirit: Full caster (spell_group_weight=0.45). Spell % applies.
+Template: full_caster_trickster
+Overrides: none
+
+### ranger  (Wildnisläufer)
+Name: Ranger | Category: magical | Status: full_caster | GP: — | data_complete: false
+Reqs: — | SO —
+Affinity tags: magical_elven, wilderness, ranged, stealth
+Spirit: Rangers are elvish wilderness guardians — exceptional archers, trackers, and nature experts who also possess innate elvish magic.
+Spirit: Signature package talents: bows+6, track+6, survival+6, sneak+5, hide+5.
+Spirit: Automatic SAs (2): terrain_familiarity, combat_in_water.
+Spirit: No clear Armor/Evade/Shield/Regen/Iron Will root in automatic_SAs — SA% mostly overflows to talents unless wizard buys armor/shield.
+Spirit: Full caster (spell_group_weight=0.45). Spell % applies.
+Template: combat_caster
+Overrides: Wilderness-lean combat_caster: more nature/physical talents early, still full_caster spells.
+Bands (OVERRIDE — use these instead of template):
+  1–500: talents 60 / spells 40
+  501–1000: SA 15 / talents 50 / spells 35
+  1001–2000: attributes 35 / SA 10 / talents 30 / spells 25
+  2001–3500: attributes 35 / SA 15 / talents 25 / spells 25
+  3501–∞: attributes 40 / SA 15 / talents 25 / spells 20
+JSON:
+[
+  {
+    "from": 1,
+    "to": 500,
+    "talents": 60,
+    "spells": 40
+  },
+  {
+    "from": 501,
+    "to": 1000,
+    "talents": 50,
+    "spells": 35,
+    "special_abilities": 15
+  },
+  {
+    "from": 1001,
+    "to": 2000,
+    "attributes": 35,
+    "talents": 30,
+    "spells": 25,
+    "special_abilities": 10
+  },
+  {
+    "from": 2001,
+    "to": 3500,
+    "attributes": 35,
+    "talents": 25,
+    "spells": 25,
+    "special_abilities": 15
+  },
+  {
+    "from": 3501,
+    "to": null,
+    "attributes": 40,
+    "talents": 25,
+    "spells": 20,
+    "special_abilities": 15
+  }
+]
+
+======== CATEGORY: divine_animistic (38) ========
+
+### blessed_one_of_praios  (Geweihter des Praios)
+Name: Blessed One of Praios | Category: divine_animistic | Status: consecrated | GP: 10 | data_complete: false
+Reqs: CO13 CH13 CL11 | SO 8–13
+Affinity tags: scholar, social, divine
+Spirit: Blessed Ones of Praios serve law, truth, order, and the sun.
+Spirit: Signature package talents: law+7, persuade+6, religious_lore+6, self_control+5, etiquette+5.
+Spirit: Automatic SAs (2): karmal_quest, liturgy_knowledge_praios_3.
+Spirit: Consecrated (spell_group_weight=0.35 is flavor only — liturgy not in veteran spell loop; spell % would redirect to talents). RM+2.
+Template: blessed_scholar
+Overrides: none
+
+### blessed_one_of_rondra  (Geweihte der Rondra)
+Name: Blessed One of Rondra | Category: divine_animistic | Status: consecrated | GP: 26 | data_complete: false
+Reqs: CL13 | SO 7–12
+Affinity tags: combat_frontliner, divine
+Spirit: Blessed Ones of Rondra serve honorable combat, courage, and chivalry.
+Spirit: Signature package talents: orientation+2, heraldry+2, legend_lore+2, ride+1, survival+1.
+Spirit: Automatic SAs (5): liturgykennntnis_rondrakirche_1, mounted_combat, not_alertness, not_feint, additional.
+Spirit: No clear Armor/Evade/Shield/Regen/Iron Will root in automatic_SAs — SA% mostly overflows to talents unless wizard buys armor/shield.
+Spirit: Consecrated (spell_group_weight=0.35 is flavor only — liturgy not in veteran spell loop; spell % would redirect to talents).
+Template: blessed_warrior
+Overrides: none
+
+### blessed_one_of_the_efferd  (Geweihter des Efferd)
+Name: Blessed One of the Efferd | Category: divine_animistic | Status: consecrated | GP: — | data_complete: false
+Reqs: CO11 CL12 IN13 CH12 | SO 7–12
+Affinity tags: sailor, wilderness, divine
+Spirit: Blessed Ones of Efferd serve the sea, water, weather, and maritime communities, with profiles shaped by temple and regional tradition.
+Spirit: Signature package talents: swim+5, weather_sense+5, religious_lore+5, perception+4, human_nature+4.
+Spirit: Automatic SAs (2): karmal_quest, liturgy_knowledge_efferd_1.
+Spirit: Consecrated (spell_group_weight=0.35 is flavor only — liturgy not in veteran spell loop; spell % would redirect to talents). RM+1.
+Template: blessed_wilderness
+Overrides: none
+
+### blessed_one_of_travia  (Geweihte der Travia)
+Name: Blessed One of Travia | Category: divine_animistic | Status: consecrated | GP: 12 | data_complete: false
+Reqs: — | SO 1–12
+Affinity tags: healer, social, divine
+Spirit: Blessed Ones of Travia protect hospitality, family, home, and lawful community.
+Spirit: Signature package talents: persuade+7, cook+6, carouse+5, human_nature+5, religious_lore+5.
+Spirit: Automatic SAs (2): karmal_quest, liturgy_knowledge_travia_2.
+Spirit: Consecrated (spell_group_weight=0.35 is flavor only — liturgy not in veteran spell loop; spell % would redirect to talents).
+Template: blessed_healer_social
+Overrides: none
+
+### blessed_one_of_boron  (Boron-Geweihter)
+Name: Blessed One of Boron | Category: divine_animistic | Status: consecrated | GP: — | data_complete: false
+Reqs: CO13 CL12 CH11 | SO 5–12
+Affinity tags: scholar, healer, divine
+Spirit: Blessed Ones of Boron serve death, sleep, silence, and burial.
+Spirit: Signature package talents: human_nature+6, self_control+5, religious_lore+5, calculate+5, teach+3.
+Spirit: Automatic SAs (2): karmal_quest, liturgy_knowledge_boron_2.
+Spirit: Consecrated (spell_group_weight=0.35 is flavor only — liturgy not in veteran spell loop; spell % would redirect to talents). RM+1.
+Template: blessed_healer_social
+Overrides: none
+
+### blessed_one_of_hesinde  (Geweihte der Hesinde)
+Name: Blessed One of Hesinde | Category: divine_animistic | Status: consecrated | GP: — | data_complete: false
+Reqs: CL13 IN12 CH12 | SO 8–13
+Affinity tags: scholar, divine
+Spirit: Blessed Ones of Hesinde serve knowledge, learning, magic, and culture.
+Spirit: Signature package talents: religious_lore+6, teach+5, human_nature+4, persuade+4, sing+3.
+Spirit: Automatic SAs (3): liturgy_knowledge_hesinde_3, karmal_quest, knowledge_pleasing_to_nandus.
+Spirit: Consecrated (spell_group_weight=0.45 is flavor only — liturgy not in veteran spell loop; spell % would redirect to talents). RM+2.
+Template: blessed_scholar
+Overrides: none
+
+### blessed_one_of_the_firun  (Geweihter des Firun)
+Name: Blessed One of the Firun | Category: divine_animistic | Status: consecrated | GP: — | data_complete: false
+Reqs: — | SO 1–12
+Affinity tags: wilderness, hunter, divine
+Spirit: Blessed Ones of Firun embody the severe virtues of winter, hunting, endurance, and self-reliance.
+Spirit: Signature package talents: bows+6, leathercraft+3, athletics+2, etiquette+2, persuade+2.
+Spirit: Automatic SAs (4): liturgy_knowledge_firun_1, liturgy_ii_preserve_trophy, discounted_liturgy_ii_safe_journey_through_snow, additional_the_extracted_source_line_ends_here.
+Spirit: Consecrated (spell_group_weight=0.35 is flavor only — liturgy not in veteran spell loop; spell % would redirect to talents).
+Template: blessed_wilderness
+Overrides: none
+
+### blessed_one_of_tsa  (Geweihte der Tsa)
+Name: Blessed One of Tsa | Category: divine_animistic | Status: consecrated | GP: 14 | data_complete: false
+Reqs: IN12 CH13 DE11 AG12 | SO 6–11
+Affinity tags: social, artisan, divine
+Spirit: Blessed Ones of Tsa serve renewal, life, change, creativity, and nonviolence, with strong behavioral restrictions and social duties.
+Spirit: Signature package talents: treat_wounds+6, teach+5, human_nature+5, persuade+5, plant_lore+5.
+Spirit: Automatic SAs (3): liturgy_knowledge_tsa_4, karmal_quest, evade_i.
+Spirit: SA-chain roots present → band-2+ SA% can fire: evade_i.
+Spirit: Consecrated (spell_group_weight=0.35 is flavor only — liturgy not in veteran spell loop; spell % would redirect to talents). RM+1.
+Template: blessed_healer_social
+Overrides: none
+
+### blessed_one_of_the_phex  (Geweihter des Phex)
+Name: Blessed One of the Phex | Category: divine_animistic | Status: consecrated | GP: 11 | data_complete: false
+Reqs: DE14 | SO 5–12
+Affinity tags: stealth, social, divine
+Spirit: Blessed Ones of Phex serve trade, luck, cleverness, secrecy, and opportunity.
+Spirit: Signature package talents: pick_pockets+5, bind_escape+3, pick_locks+3, throwing_knives+2, athletics+2.
+Spirit: Automatic SAs (3): karmal_quest, liturgy_knowledge_phex_3, knowledge_of_a_place.
+Spirit: Consecrated (spell_group_weight=0.35 is flavor only — liturgy not in veteran spell loop; spell % would redirect to talents). RM+1.
+Template: urban_rogue
+Overrides: Consecrated but Phex spirit is stealth/trade/luck — use urban_rogue talent mix; spell % would redirect to talents anyway.
+Overrides: note only — use template bands unchanged.
+
+### blessed_one_of_peraine  (Geweihte der Peraine)
+Name: Blessed One of Peraine | Category: divine_animistic | Status: consecrated | GP: — | data_complete: false
+Reqs: CL12 IN11 DE13 CN11 | SO 7–11
+Affinity tags: healer, artisan, divine
+Spirit: Blessed Ones of Peraine serve healing, agriculture, fertility, and practical aid to communities.
+Spirit: Signature package talents: religious_lore+5, plant_lore+5, treat_disease+5, teach+4, human_nature+4.
+Spirit: Automatic SAs (2): karmal_quest, liturgy_knowledge_peraine_4.
+Spirit: Consecrated (spell_group_weight=0.35 is flavor only — liturgy not in veteran spell loop; spell % would redirect to talents). RM+1.
+Template: blessed_healer_social
+Overrides: none
+
+### blessed_one_of_ingerimm  (Ingerimm-Geweihte)
+Name: Blessed One of Ingerimm | Category: divine_animistic | Status: consecrated | GP: 11 | data_complete: false
+Reqs: — | SO 1–12
+Affinity tags: artisan, divine
+Spirit: Blessed Ones of Ingerimm serve craft, fire, creation, and honest workmanship; regional and dwarven contexts affect their Talents and duties.
+Spirit: Signature package talents: woodcraft+2, leathercraft+2.
+Spirit: Automatic SAs (2): talent_specialization, master_of_improvisation.
+Spirit: Consecrated (spell_group_weight=0.35 is flavor only — liturgy not in veteran spell loop; spell % would redirect to talents).
+Template: blessed_artisan
+Overrides: none
+
+### blessed_one_of_rahja  (Geweihte der Rahja)
+Name: Blessed One of Rahja | Category: divine_animistic | Status: consecrated | GP: 16 | data_complete: false
+Reqs: CO11 IN12 CH13 AG12 | SO 7–13
+Affinity tags: social, entertainer, divine
+Spirit: Blessed Ones of Rahja serve beauty, love, pleasure, art, wine, and harmony.
+Spirit: Signature package talents: seduce+7, human_nature+5, religious_lore+5, legend_lore+5, wrestling+4.
+Spirit: Automatic SAs (2): karmal_quest, liturgy_knowledge_rahja_3.
+Spirit: Consecrated (spell_group_weight=0.35 is flavor only — liturgy not in veteran spell loop; spell % would redirect to talents). RM+1.
+Template: blessed_healer_social
+Overrides: none
+
+### league_true_faith_preacher  (Der Bund des True Faith)
+Name: Preacher of the League of the True Faith | Category: divine_animistic | Status: consecrated | GP: 10 | data_complete: false
+Reqs: CO11 CL12 CH12 | SO 7–12
+Affinity tags: healer, scholar
+Spirit: Members of the League of the True Faith represent an ecumenical Twelve-Gods tradition with duties and Liturgys drawn from its collective doctrine.
+Spirit: Signature package talents: history+6, religious_lore+6, teach+5, human_nature+5, calculate+4.
+Spirit: Automatic SAs: none listed (incomplete data or talent-only package).
+Spirit: Consecrated (spell_group_weight=0.4 is flavor only — liturgy not in veteran spell loop; spell % would redirect to talents).
+Template: blessed_scholar
+Overrides: none
+
+### blessed_one_of_aves  (Aves-Geweihte)
+Name: Blessed One of Aves | Category: divine_animistic | Status: consecrated | GP: 10 | data_complete: true
+Reqs: CO11 CL12 CH12 | SO 7–12
+Affinity tags: explorer, social, divine
+Spirit: Blessed Ones of Aves serve travel, freedom, curiosity, and discovery, combining social openness with strong travel and wilderness skills.
+Spirit: Signature package talents: self_control+3, sing+3, perception+3, brawling+2, staves+2.
+Spirit: Automatic SAs: none listed (incomplete data or talent-only package).
+Spirit: Consecrated (spell_group_weight=0.35 is flavor only — liturgy not in veteran spell loop; spell % would redirect to talents).
+Template: blessed_healer_social
+Overrides: none
+
+### kor_late_consecration  (Kor-Geweihte)
+Name: Late Consecration to Kor | Category: divine_animistic | Status: consecrated | GP: — | data_complete: false
+Reqs: — | SO 1–12
+Affinity tags: healer, scholar
+Spirit: Blessed Ones of Kor serve mercenary warfare, discipline, contracts, and bloodshed, with a heavily martial profile.
+Spirit: Automatic SAs: none listed (incomplete data or talent-only package).
+Spirit: No clear Armor/Evade/Shield/Regen/Iron Will root in automatic_SAs — SA% mostly overflows to talents unless wizard buys armor/shield.
+Spirit: Consecrated (spell_group_weight=0.4 is flavor only — liturgy not in veteran spell loop; spell % would redirect to talents).
+Template: blessed_warrior
+Overrides: none
+
+### blessed_one_of_nandus  (Geweihter des Nandus)
+Name: Blessed One of Nandus | Category: divine_animistic | Status: consecrated | GP: 10 | data_complete: false
+Reqs: CO12 CL12 IN12 CH12 DE12 | SO 5–12
+Affinity tags: scholar, social, divine
+Spirit: Blessed Ones of Nandus serve education, insight, reason, and intellectual progress, emphasizing teaching and lore.
+Spirit: Signature package talents: perception+4, staves+2, self_control+2, survival+2, sneak+1.
+Spirit: Automatic SAs (3): liturgy_knowledge_nandus_4, karmal_quest, knowledge_pleasing_to_nandus.
+Spirit: Consecrated (spell_group_weight=0.4 is flavor only — liturgy not in veteran spell loop; spell % would redirect to talents). RM+1.
+Template: blessed_scholar
+Overrides: none
+
+### blessed_one_of_ifirn  (Geweihte der Ifirn)
+Name: Blessed One of Ifirn | Category: divine_animistic | Status: consecrated | GP: 19 | data_complete: false
+Reqs: CO11 IN12 AG11 DE12 CN12 ST10 | SO 6–13
+Affinity tags: wilderness, healer, divine
+Spirit: Blessed Ones of Ifirn represent mercy and hope within the northern wilderness, combining survival, healing, and reconciliation.
+Spirit: Signature package talents: track+6, survival+6, bows+5, perception+5, animal_lore+5.
+Spirit: Automatic SAs (3): liturgy_knowledge_ifirn_4, karmal_quest, appropriate_terrain_lore.
+Spirit: Consecrated (spell_group_weight=0.35 is flavor only — liturgy not in veteran spell loop; spell % would redirect to talents). RM+1.
+Template: blessed_wilderness
+Overrides: none
+
+### horas_knight  (Horas-Ritter)
+Name: HORAS KNIGHT | Category: divine_animistic | Status: none | GP: — | data_complete: false
+Reqs: — | SO —
+Affinity tags: healer, scholar
+Spirit: Horas Knights are consecrated champions of the Horas cult, combining noble or military training with specific divine duties.
+Spirit: Automatic SAs: none listed (incomplete data or talent-only package).
+Spirit: No clear Armor/Evade/Shield/Regen/Iron Will root in automatic_SAs — SA% mostly overflows to talents unless wizard buys armor/shield.
+Spirit: Mundane / non-caster — spell % unused (redirects to talents if present).
+Template: blessed_warrior
+Overrides: Incomplete non-consecrated shell; treat as blessed_warrior talent mix (combat + devotion), no liturgy spend.
+Overrides: note only — use template bands unchanged.
+
+### blessed_one_of_swafnir  (Geweihter des Swafnir)
+Name: Blessed One of Swafnir | Category: divine_animistic | Status: consecrated | GP: 17 | data_complete: true
+Reqs: CO13 CL11 IN11 CH12 AG12 ST12 | SO 7–12
+Affinity tags: combat_frontliner, sailor, divine
+Spirit: Blessed Ones of Swafnir serve Thorwalian community, courage, sea travel, and struggle against monstrous foes.
+Spirit: Signature package talents: swim+5, religious_lore+5, axes_and_maces+4, self_control+4, human_nature+4.
+Spirit: Automatic SAs (4): liturgy_knowledge_swafnir_3, karmal_quest, aquatic_combat, sea_lore.
+Spirit: No clear Armor/Evade/Shield/Regen/Iron Will root in automatic_SAs — SA% mostly overflows to talents unless wizard buys armor/shield.
+Spirit: Consecrated (spell_group_weight=0.35 is flavor only — liturgy not in veteran spell loop; spell % would redirect to talents). RM+1.
+Template: blessed_warrior
+Overrides: none
+
+### blessed_one_of_angrosch  (Angrosch-Geweihte)
+Name: Blessed One of Angrosch | Category: divine_animistic | Status: consecrated | GP: 11 | data_complete: false
+Reqs: — | SO 1–12
+Affinity tags: artisan, scholar, divine
+Spirit: Blessed Ones of Angrosch are dwarven priests of craft, fire, community, and ancestral tradition.
+Spirit: Signature package talents: history+4, heraldry+3, self_control+2, religious_lore+2, light_engineering+1.
+Spirit: Automatic SAs (1): talent_specialization_blacksmith_or_metal_casting.
+Spirit: Consecrated (spell_group_weight=0.35 is flavor only — liturgy not in veteran spell loop; spell % would redirect to talents).
+Template: blessed_artisan
+Overrides: none
+
+### h_ranga_priest_of_the_achaz  (H’Ranga-Priester der Achaz)
+Name: H’RANGA PRIEST OF THE ACHAZ | Category: divine_animistic | Status: none | GP: — | data_complete: false
+Reqs: — | SO —
+Affinity tags: healer, scholar
+Spirit: H’Ranga priests are Achaz religious specialists whose exact profile depends on the worshiped H’Ranga and associated rites.
+Spirit: Automatic SAs: none listed (incomplete data or talent-only package).
+Spirit: No clear Armor/Evade/Shield/Regen/Iron Will root in automatic_SAs — SA% mostly overflows to talents unless wizard buys armor/shield.
+Spirit: Mundane / non-caster — spell % unused (redirects to talents if present).
+Template: shaman_spirit
+Overrides: Incomplete Achaz religious specialist; shaman_spirit without assuming full ritual SA chains.
+Overrides: note only — use template bands unchanged.
+
+### priest_of_hszint  (Priester der H’Szint)
+Name: Priest of H'Szint | Category: divine_animistic | Status: consecrated | GP: 2 | data_complete: false
+Reqs: CO12 CL12 IN12 CH13 | SO 4–5
+Affinity tags: healer, scholar, scholar
+Spirit: Priests of H’Szint preserve Achaz knowledge, transformation, and sacred tradition through a distinct priestly profile.
+Spirit: Signature package talents: religious_lore+5, arcane_lore+5, human_nature+4, paint_draw+4, spears+3.
+Spirit: Automatic SAs (3): liturgy_knowledge_h_szint_3, karmal_quest, knowledge_pleasing_to_nandus.
+Spirit: Consecrated (spell_group_weight=0.4 is flavor only — liturgy not in veteran spell loop; spell % would redirect to talents). RM+1.
+Template: blessed_scholar
+Overrides: none
+
+### priest_the_zsahh  (Priester der Zsahh)
+Name: Priest the Zsahh | Category: divine_animistic | Status: consecrated | GP: 0 | data_complete: false
+Reqs: CO12 IN12 CH13 CN11 | SO 4–5
+Affinity tags: healer, scholar
+Spirit: Priests of Zsahh serve life, renewal, and change within Achaz religion.
+Spirit: Signature package talents: religious_lore+5, animal_lore+5, teach+4, human_nature+4, plant_lore+4.
+Spirit: Automatic SAs (2): liturgy_knowledge_zsahh_5, karmal_quest.
+Spirit: No clear Armor/Evade/Shield/Regen/Iron Will root in automatic_SAs — SA% mostly overflows to talents unless wizard buys armor/shield.
+Spirit: Consecrated (spell_group_weight=0.4 is flavor only — liturgy not in veteran spell loop; spell % would redirect to talents). RM+1.
+Template: shaman_spirit
+Overrides: none
+
+### templepriester_of_rur_and_gror  (templepriester von Rur und Gror)
+Name: templepriester of Rur and Gror | Category: divine_animistic | Status: consecrated | GP: 2 | data_complete: false
+Reqs: CO13 CL12 IN12 | SO 6–12
+Affinity tags: healer, scholar
+Spirit: Priests of Rur and Gror are Maraskan religious teachers and interpreters whose profile emphasizes doctrine, debate, languages, and community guidance.
+Spirit: Signature package talents: persuade+6, religious_lore+6, teach+5, human_nature+5, paint_draw+4.
+Spirit: Automatic SAs (1): knowledge_pleasing_to_nandus.
+Spirit: Consecrated (spell_group_weight=0.4 is flavor only — liturgy not in veteran spell loop; spell % would redirect to talents). RM+1.
+Template: blessed_scholar
+Overrides: none
+
+### followers_of_rastullah  (Rastullah-Gläubige)
+Name: FOLLOWERS OF RASTULLAH | Category: divine_animistic | Status: none | GP: — | data_complete: false
+Reqs: — | SO —
+Affinity tags: healer, scholar
+Spirit: Followers of Rastullah are not automatically consecrated priests; this section presents religiously shaped profession options and requirements within Novadi society.
+Spirit: Automatic SAs: none listed (incomplete data or talent-only package).
+Spirit: No clear Armor/Evade/Shield/Regen/Iron Will root in automatic_SAs — SA% mostly overflows to talents unless wizard buys armor/shield.
+Spirit: Mundane / non-caster — spell % unused (redirects to talents if present).
+Template: shaman_spirit
+Overrides: Not automatically consecrated; shaman_spirit talent mix without assuming liturgy/SA chains.
+Overrides: note only — use template bands unchanged.
+
+### tribal_warrior_beni_dervez  (Stammeskrieger der Beni Dervez)
+Name: Tribal Warrior of the Beni Dervez | Category: divine_animistic | Status: consecrated | GP: 20 | data_complete: false
+Reqs: CO13 AG12 ST13 CN12 | SO 6–10
+Affinity tags: combat_frontliner, healer, scholar, wilderness
+Spirit: Beni Dervez tribal warriors combine Novadi martial training with the specific religious and social obligations of their tribe.
+Spirit: Signature package talents: sabers+6, ride+5, wrestling+4, athletics+4, body_control+4.
+Spirit: Automatic SAs (1): ge.
+Spirit: No clear Armor/Evade/Shield/Regen/Iron Will root in automatic_SAs — SA% mostly overflows to talents unless wizard buys armor/shield.
+Spirit: Consecrated (spell_group_weight=0.4 is flavor only — liturgy not in veteran spell loop; spell % would redirect to talents). RM+1.
+Template: blessed_warrior
+Overrides: none
+
+### hadjinim  (Hadjinim)
+Name: Hadjinim | Category: divine_animistic | Status: consecrated | GP: — | data_complete: false
+Reqs: CO13 AG11 CN13 ST12 | SO 6–10
+Affinity tags: healer, scholar, healer
+Spirit: Hadjinim are dedicated Rastullah-believing warriors or mystics whose school determines combat, faith, and special training.
+Spirit: Signature package talents: wrestling+4, self_control+4, teach+4, calculate+4, treat_wounds+4.
+Spirit: Automatic SAs: none listed (incomplete data or talent-only package).
+Spirit: No clear Armor/Evade/Shield/Regen/Iron Will root in automatic_SAs — SA% mostly overflows to talents unless wizard buys armor/shield.
+Spirit: Consecrated (spell_group_weight=0.4 is flavor only — liturgy not in veteran spell loop; spell % would redirect to talents).
+Template: blessed_warrior
+Overrides: none
+
+### medicine_man  (Medizinmann)
+Name: Medicine Man | Category: divine_animistic | Status: consecrated | GP: — | data_complete: false
+Reqs: CO12 CL11 IN13 CH11 | SO 3–4
+Affinity tags: healer, scholar, healer
+Spirit: Medicine men and women of the Forest Folk combine healing, spirit work, ritual knowledge, and tribal leadership; tribal traditions create variants.
+Spirit: Signature package talents: dance+4, human_nature+4, plant_lore+4, treat_poison+4, treat_wounds+4.
+Spirit: Automatic SAs (6): ritual_knowledge, call_spirits_1, banish_spirits_2, bind_spirits_2, receive_spirits_0, consecration_of_the_club.
+Spirit: No clear Armor/Evade/Shield/Regen/Iron Will root in automatic_SAs — SA% mostly overflows to talents unless wizard buys armor/shield.
+Spirit: Consecrated (spell_group_weight=0.4 is flavor only — liturgy not in veteran spell loop; spell % would redirect to talents). RM+2. ASP+6.
+Template: shaman_spirit
+Overrides: none
+
+### kaskjua  (Kaskjua)
+Name: Kaskjua | Category: divine_animistic | Status: consecrated | GP: 7 | data_complete: true
+Reqs: CO13 IN13 CH12 | SO 5–8
+Affinity tags: healer, scholar
+Spirit: Kaskjuas are Nivese spiritual specialists who mediate between people, ancestors, wolves, and the spirit world.
+Spirit: Automatic SAs: none listed (incomplete data or talent-only package).
+Spirit: No clear Armor/Evade/Shield/Regen/Iron Will root in automatic_SAs — SA% mostly overflows to talents unless wizard buys armor/shield.
+Spirit: Consecrated (spell_group_weight=0.4 is flavor only — liturgy not in veteran spell loop; spell % would redirect to talents). RM+2. ASP+6.
+Template: shaman_spirit
+Overrides: none
+
+### nuransh_r  (Nuranshârim)
+Name: Nuranshâr | Category: divine_animistic | Status: consecrated | GP: 4 | data_complete: true
+Reqs: CO13 IN11 CH12 CN13 | SO 4–5
+Affinity tags: healer, scholar
+Spirit: Nuranshârim are Norbard religious or ritual specialists whose family and spiritual duties shape their Talents and rituals.
+Spirit: Automatic SAs: none listed (incomplete data or talent-only package).
+Spirit: No clear Armor/Evade/Shield/Regen/Iron Will root in automatic_SAs — SA% mostly overflows to talents unless wizard buys armor/shield.
+Spirit: Consecrated (spell_group_weight=0.4 is flavor only — liturgy not in veteran spell loop; spell % would redirect to talents). RM+1. ASP+6.
+Template: shaman_spirit
+Overrides: none
+
+### brenoch_d_n  (Brenchi-Dûn)
+Name: Brenoch-Dûn | Category: divine_animistic | Status: consecrated | GP: 9 | data_complete: false
+Reqs: CO13 IN13 CH12 | SO 5–6
+Affinity tags: healer, scholar, healer
+Spirit: Brenchi-Dûn are Gjalsker shamans who serve their clans through spirit rites, healing, and ritual magic.
+Spirit: Signature package talents: self_control+5, animal_training+5, axes_and_maces+4, teach+4, human_nature+4.
+Spirit: Automatic SAs (13): ritual_knowledge_gjalsker_shaman_call_spirits_1, banish_spirits_0, bind_spirits_1, receive_spirits_2, consecration_of_the_club_rituals, blood_bond, , spirit_healing….
+Spirit: No clear Armor/Evade/Shield/Regen/Iron Will root in automatic_SAs — SA% mostly overflows to talents unless wizard buys armor/shield.
+Spirit: Consecrated (spell_group_weight=0.4 is flavor only — liturgy not in veteran spell loop; spell % would redirect to talents). RM+1. ASP+6.
+Template: shaman_spirit
+Overrides: none
+
+### skuldrun  (Priester Frunus und Angaras)
+Name: Skuldrun | Category: divine_animistic | Status: consecrated | GP: 2 | data_complete: false
+Reqs: CL11 IN13 CH12 CN12 | SO 3–4
+Affinity tags: healer, scholar, wilderness
+Spirit: Priests of Frunu and Angara serve the paired deities of the Fjarninger and combine ritual authority with harsh-environment survival.
+Spirit: Signature package talents: throwing_spears+5, sing+5, legend_lore+5, self_control+4, teach+4.
+Spirit: Automatic SAs: none listed (incomplete data or talent-only package).
+Spirit: No clear Armor/Evade/Shield/Regen/Iron Will root in automatic_SAs — SA% mostly overflows to talents unless wizard buys armor/shield.
+Spirit: Consecrated (spell_group_weight=0.4 is flavor only — liturgy not in veteran spell loop; spell % would redirect to talents). RM+1.
+Template: shaman_spirit
+Overrides: none
+
+### shochzul  (Shochzuli)
+Name: Shochzul | Category: divine_animistic | Status: consecrated | GP: 8 | data_complete: false
+Reqs: CO14 IN12 CH12 CN12 | SO 3–4
+Affinity tags: healer, scholar, wilderness, healer
+Spirit: Shochzuli are Trollzacker spiritual leaders and ritual practitioners.
+Spirit: Signature package talents: self_control+5, teach+5, weather_sense+5, plant_lore+4, treat_wounds+4.
+Spirit: Automatic SAs (18): ritual_knowledge_trollzacker_shaman_call_spirits_2, banish_spirits_1, bind_spirits_0, receive_spirits_2, blood_magic, forbidden_gates, consecration_of_the_club_rituals, blood_bond….
+Spirit: No clear Armor/Evade/Shield/Regen/Iron Will root in automatic_SAs — SA% mostly overflows to talents unless wizard buys armor/shield.
+Spirit: Consecrated (spell_group_weight=0.4 is flavor only — liturgy not in veteran spell loop; spell % would redirect to talents). RM+1. ASP+6.
+Template: shaman_spirit
+Overrides: none
+
+### tairach_priest  (Tairach-Priester)
+Name: Tairach-Priest | Category: divine_animistic | Status: consecrated | GP: 11 | data_complete: false
+Reqs: CL13 IN12 CN12 | SO 4–5
+Affinity tags: healer, scholar, scholar
+Spirit: Priests of Tairach are orcish religious specialists associated with death, blood, magic, and tribal authority.
+Spirit: Signature package talents: teach+5, history+5, calculate+5, dance+4, human_nature+4.
+Spirit: Automatic SAs (15): ritual_knowledge_ork_shaman_call_spirits_0, banish_spirits_0, bind_spirits_0, receive_spirits_0, blood_magic, forbidden_gates, consecration_of_the_club_rituals, counsel_of_the_ancestors….
+Spirit: Consecrated (spell_group_weight=0.4 is flavor only — liturgy not in veteran spell loop; spell % would redirect to talents). RM+2. ASP+6.
+Template: blessed_scholar
+Overrides: none
+
+### gravesh_priest  (Gravesh-Priester)
+Name: Gravesh-Priest | Category: divine_animistic | Status: consecrated | GP: 0 | data_complete: false
+Reqs: CO11 CH11 DE11 ST13 | SO 4–5
+Affinity tags: healer, scholar
+Spirit: Priests of Gravesh are orcish religious specialists of craft, fire, and smithing.
+Spirit: Signature package talents: stone_lore+5, calculate+5, human_nature+4, appraise+4, teach+3.
+Spirit: Automatic SAs (1): master_of_improvisation.
+Spirit: Consecrated (spell_group_weight=0.4 is flavor only — liturgy not in veteran spell loop; spell % would redirect to talents). RM+1.
+Template: blessed_artisan
+Overrides: none
+
+### rikai_priest  (Rikai-Priester)
+Name: Rikai-Priest | Category: divine_animistic | Status: consecrated | GP: 1 | data_complete: false
+Reqs: CL12 IN11 CH11 DE12 | SO 3–4
+Affinity tags: healer, scholar, healer
+Spirit: Priests of Rikai are orcish religious specialists whose rites and social position differ from the Tairach and Gravesh traditions.
+Spirit: Signature package talents: plant_lore+6, human_nature+5, farming+5, treat_wounds+5, carouse+4.
+Spirit: Automatic SAs: none listed (incomplete data or talent-only package).
+Spirit: No clear Armor/Evade/Shield/Regen/Iron Will root in automatic_SAs — SA% mostly overflows to talents unless wizard buys armor/shield.
+Spirit: Consecrated (spell_group_weight=0.4 is flavor only — liturgy not in veteran spell loop; spell % would redirect to talents). RM+1.
+Template: shaman_spirit
+Overrides: none
+
+### goblin_shaman  (Goblin-Schamanin)
+Name: Goblin-Shaman | Category: divine_animistic | Status: consecrated | GP: — | data_complete: false
+Reqs: CO11 CL12 IN13 CH12 | SO 3–5
+Affinity tags: healer, scholar
+Spirit: Goblin shamans are female spiritual leaders whose tribe and life path determine their rituals, Talents, and social duties.
+Spirit: Signature package talents: paint_draw+5, play_instrument+4, brawling+3, self_control+3, perception+3.
+Spirit: Automatic SAs (5): ritual_knowledge_goblin_shaman_call_spirits_0, banish_spirits_0, bind_spirits_3, receive_spirits_0, consecration_of_the_club.
+Spirit: No clear Armor/Evade/Shield/Regen/Iron Will root in automatic_SAs — SA% mostly overflows to talents unless wizard buys armor/shield.
+Spirit: Consecrated (spell_group_weight=0.4 is flavor only — liturgy not in veteran spell loop; spell % would redirect to talents). RM+1. ASP+6.
+Template: shaman_spirit
+Overrides: none
+
+### achaz_shaman  (Schamane der Achaz)
+Name: Achaz Shaman | Category: divine_animistic | Status: consecrated | GP: 4 | data_complete: false
+Reqs: CO12 CL13 CH13 DE11 | SO 3–4
+Affinity tags: healer, scholar
+Spirit: Achaz shamans serve tribal communities through spirit rites, healing, and sacred knowledge distinct from temple priesthood.
+Spirit: Signature package talents: stone_lore+5, self_control+4, perception+4, teach+4, plant_lore+4.
+Spirit: Automatic SAs (11): ritual_knowledge_achaz_shaman_call_spirits_3, banish_spirits_1, bind_spirits_0, receive_spirits_0, consecration_of_the_club_rituals, awakening_call, , spirit_healing….
+Spirit: No clear Armor/Evade/Shield/Regen/Iron Will root in automatic_SAs — SA% mostly overflows to talents unless wizard buys armor/shield.
+Spirit: Consecrated (spell_group_weight=0.4 is flavor only — liturgy not in veteran spell loop; spell % would redirect to talents). RM+2. ASP+6.
+Template: shaman_spirit
+Overrides: none
+
+--------------------------------------------------------------------------------
+4. STAGE-2 IMPORT HINT
+--------------------------------------------------------------------------------
+
+Suggested runtime shape (not implemented in stage 1):
+  { archetypeId: string, bands: ApSpendingBand[] }
+  professionDefault: Record<professionId, { archetypeId, overrideBands?: ApSpendingBand[] }>
+Wizard: default apProfileId from selected profession; keep global Default +
+admin DB profiles as selectable alternatives.
+
+Profession count in this file: 112 (expected 112).
+Override entries with custom bands: 2
+Override note-only: 13
+
+Quick map (professionId → archetypeId):
+  achaz_shaman → shaman_spirit
+  alchemist → full_caster_mystic *
+  amazon → combat_chain_fighter
+  animal_trainer → craft_commoner ~
+  artisan → craft_commoner
+  bard → social_courtier
+  bathhouse_attendant → mundane_healer
+  beggar → urban_rogue
+  big_game_hunter → wilderness_hunter
+  blessed_one_of_angrosch → blessed_artisan
+  blessed_one_of_aves → blessed_healer_social
+  blessed_one_of_boron → blessed_healer_social
+  blessed_one_of_hesinde → blessed_scholar
+  blessed_one_of_ifirn → blessed_wilderness
+  blessed_one_of_ingerimm → blessed_artisan
+  blessed_one_of_nandus → blessed_scholar
+  blessed_one_of_peraine → blessed_healer_social
+  blessed_one_of_praios → blessed_scholar
+  blessed_one_of_rahja → blessed_healer_social
+  blessed_one_of_rondra → blessed_warrior
+  blessed_one_of_swafnir → blessed_warrior
+  blessed_one_of_the_efferd → blessed_wilderness
+  blessed_one_of_the_firun → blessed_wilderness
+  blessed_one_of_the_phex → urban_rogue ~
+  blessed_one_of_travia → blessed_healer_social
+  blessed_one_of_tsa → blessed_healer_social
+  boatman → wilderness_hunter
+  border_ranger → combat_skirmisher
+  brenoch_d_n → shaman_spirit
+  burglar → urban_rogue
+  cadet_officer → combat_chain_fighter
+  caravan_leader → wilderness_hunter
+  charlatan → full_caster_trickster
+  city_guard → combat_chain_fighter
+  court_artist → social_courtier
+  courtesan → social_courtier
+  courtier → social_courtier
+  creator → full_caster_trickster ~
+  crier → social_courtier ~
+  crystallomancer → full_caster_academic
+  day_laborer → craft_commoner ~
+  dervish → combat_caster
+  dilettante → social_courtier
+  domestic_servant → craft_commoner
+  druid → full_caster_academic
+  durro_dun → combat_caster
+  elven_keeper → full_caster_mystic
+  explorer → wilderness_hunter
+  fairground_fighter → combat_talent_duelist
+  farmer → craft_commoner ~
+  ferkina_possessed → combat_caster
+  fine_artisan → craft_commoner
+  fisher → wilderness_hunter
+  followers_of_rastullah → shaman_spirit ~
+  geode → full_caster_academic
+  gladiator → combat_talent_duelist
+  goblin_shaman → shaman_spirit
+  gravesh_priest → blessed_artisan
+  h_ranga_priest_of_the_achaz → shaman_spirit ~
+  hadjinim → blessed_warrior
+  herald → social_courtier
+  herdsman → wilderness_hunter
+  highwayman → combat_skirmisher
+  horas_knight → blessed_warrior ~
+  hunter → wilderness_hunter
+  innkeeper → social_courtier
+  kaskjua → shaman_spirit
+  knight → combat_chain_fighter
+  kor_late_consecration → blessed_warrior
+  league_true_faith_preacher → blessed_scholar
+  legend_singer → full_caster_trickster
+  long_distance_merchant → social_courtier ~
+  magical_jester → full_caster_trickster
+  magician → full_caster_academic
+  medicine_man → shaman_spirit
+  mercenary → combat_chain_fighter
+  merchant → social_courtier
+  messenger → wilderness_hunter
+  miner → craft_commoner
+  mountebank → social_courtier
+  nuransh_r → shaman_spirit
+  order_warrior → combat_chain_fighter
+  physician → mundane_healer
+  pirate → combat_skirmisher
+  priest_of_hszint → blessed_scholar
+  priest_the_zsahh → shaman_spirit
+  private_tutor → social_courtier
+  prospector → wilderness_hunter
+  ranger → combat_caster *
+  rat_catcher → craft_commoner
+  rikai_priest → shaman_spirit
+  rogue → urban_rogue
+  scholar → craft_commoner ~
+  scout → wilderness_hunter
+  scribe → craft_commoner
+  seafarer → wilderness_hunter
+  shochzul → shaman_spirit
+  skuldrun → shaman_spirit
+  smuggler → urban_rogue ~
+  soldier → combat_chain_fighter
+  spy → urban_rogue
+  sword_companion → combat_talent_duelist
+  tairach_priest → blessed_scholar
+  teamster → wilderness_hunter
+  templepriester_of_rur_and_gror → blessed_scholar
+  thief → combat_skirmisher ~
+  tribal_warrior → combat_chain_fighter
+  tribal_warrior_beni_dervez → blessed_warrior
+  warrior → combat_chain_fighter
+  witch → full_caster_mystic
+  writer → social_courtier
+  zibilja → full_caster_mystic
+  (* = custom bands override; ~ = note-only override)
+
+END OF FILE

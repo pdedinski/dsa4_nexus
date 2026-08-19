@@ -4,7 +4,7 @@ import { eq } from "drizzle-orm";
 import type { ApSpendingBand } from "@/lib/character/types";
 import {
   coerceApBandsFromPayload,
-  DEFAULT_AP_PROFILE_ID,
+  loadBundledApProfile,
   sortBandsByFrom,
 } from "@/lib/character/apProfiles";
 import { requireAdmin } from "@/lib/auth/session";
@@ -20,8 +20,11 @@ export async function PUT(
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
 
   const { id } = await ctx.params;
-  if (id === DEFAULT_AP_PROFILE_ID || !id.trim()) {
-    return NextResponse.json({ error: "Cannot edit builtin default" }, { status: 400 });
+  if (!id.trim() || loadBundledApProfile(id)) {
+    return NextResponse.json(
+      { error: "Cannot edit a built-in profile" },
+      { status: 400 },
+    );
   }
 
   let body: { name?: string; description?: string; bands?: unknown };
@@ -84,8 +87,11 @@ export async function DELETE(
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
 
   const { id } = await ctx.params;
-  if (id === DEFAULT_AP_PROFILE_ID || !id.trim()) {
-    return NextResponse.json({ error: "Cannot delete builtin default" }, { status: 400 });
+  if (!id.trim() || loadBundledApProfile(id)) {
+    return NextResponse.json(
+      { error: "Cannot delete a built-in profile" },
+      { status: 400 },
+    );
   }
 
   const rows = await db

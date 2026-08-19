@@ -3,6 +3,8 @@
  */
 
 import rawDefaultProfile from "@/data/meta/default_ap_profile.json";
+import rawBuiltinProfiles from "@/data/meta/builtin_ap_profiles.json";
+import rawProfessionDefaults from "@/data/meta/profession_default_ap_profile.json";
 import type {
   ApSpendingBand,
   ApSpendingProfile,
@@ -15,7 +17,7 @@ export type ApiApProfileRow = {
   name: string;
   description: string | null;
   bands: ApSpendingBand[];
-  /** True only for bundled default JSON profile */
+  /** True for bundled Default + archetype JSON profiles */
   isBuiltin?: boolean;
   createdAt?: string;
 };
@@ -27,6 +29,95 @@ function cloneProfile(p: ApSpendingProfile): ApSpendingProfile {
 export function loadBundledDefaultApProfile(): ApSpendingProfile {
   const p = rawDefaultProfile as ApSpendingProfile;
   return cloneProfile(p);
+}
+
+type BuiltinFile = {
+  profiles: ApSpendingProfile[];
+};
+
+type ProfessionDefaultsFile = {
+  defaults: Record<string, string>;
+};
+
+function archetypeProfiles(): ApSpendingProfile[] {
+  const file = rawBuiltinProfiles as BuiltinFile;
+  return Array.isArray(file.profiles) ? file.profiles : [];
+}
+
+/** Default built-in + all archetype/override built-ins. */
+export function listBundledApProfiles(): ApiApProfileRow[] {
+  const def = loadBundledDefaultApProfile();
+  const rows: ApiApProfileRow[] = [
+    {
+      id: def.id,
+      name: def.name,
+      description: def.description ?? null,
+      bands: sortBandsByFrom(def.bands),
+      isBuiltin: true,
+    },
+  ];
+  for (const p of archetypeProfiles()) {
+    if (!p?.id || p.id === DEFAULT_AP_PROFILE_ID) continue;
+    rows.push({
+      id: p.id,
+      name: p.name,
+      description: p.description ?? null,
+      bands: sortBandsByFrom(p.bands ?? []),
+      isBuiltin: true,
+    });
+  }
+  return rows;
+}
+
+/**
+ * Resolve a bundled profile by id (`default` or archetype/override id).
+ * Returns null when the id is not a known built-in.
+ */
+export function loadBundledApProfile(id: string): ApSpendingProfile | null {
+  const trimmed = id.trim();
+  if (!trimmed) return null;
+  if (trimmed === DEFAULT_AP_PROFILE_ID) return loadBundledDefaultApProfile();
+  const found = archetypeProfiles().find((p) => p.id === trimmed);
+  if (!found) return null;
+  return cloneProfile({
+    id: found.id,
+    name: found.name,
+    description: found.description,
+    bands: sortBandsByFrom(found.bands ?? []),
+  });
+}
+
+/** Profession wizard default profile id; `"random"` / unknown → Default. */
+export function defaultApProfileIdForProfession(
+  professionId: string | "random",
+): string {
+  if (!professionId || professionId === "random") return DEFAULT_AP_PROFILE_ID;
+  const map = (rawProfessionDefaults as ProfessionDefaultsFile).defaults ?? {};
+  const id = map[professionId];
+  if (typeof id === "string" && id.trim() && loadBundledApProfile(id.trim())) {
+    return id.trim();
+  }
+  return DEFAULT_AP_PROFILE_ID;
+}
+
+/**
+ * Default first, then remaining profiles A–Z by name (case-insensitive).
+ * Stable for equal names via id.
+ */
+export function sortApProfileOptions<
+  T extends { id: string; name: string },
+>(rows: T[]): T[] {
+  const def = rows.filter((r) => r.id === DEFAULT_AP_PROFILE_ID);
+  const rest = rows
+    .filter((r) => r.id !== DEFAULT_AP_PROFILE_ID)
+    .sort((a, b) => {
+      const byName = a.name.localeCompare(b.name, undefined, {
+        sensitivity: "base",
+      });
+      if (byName !== 0) return byName;
+      return a.id.localeCompare(b.id);
+    });
+  return [...def, ...rest];
 }
 
 /** Normalize and validate percentages; fixes minor issues. Mutates bands in-place. */

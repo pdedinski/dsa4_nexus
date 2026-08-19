@@ -2,6 +2,7 @@ import { eq } from "drizzle-orm";
 
 import {
   DEFAULT_AP_PROFILE_ID,
+  loadBundledApProfile,
   loadBundledDefaultApProfile,
   sortBandsByFrom,
 } from "@/lib/character/apProfiles";
@@ -14,20 +15,23 @@ const UUID_RE =
 
 /**
  * Loads the veteran AP spending profile for generation (`apProfileId` from wizard).
+ * Built-in ids (`default` + archetype overrides) resolve from bundled JSON; UUIDs from DB.
  */
 export async function resolveApSpendingProfileForGenerate(
   apProfileId: string | undefined | null
 ): Promise<ApSpendingProfile> {
-  if (
-    !apProfileId?.trim() ||
-    apProfileId.trim() === DEFAULT_AP_PROFILE_ID
-  ) {
+  const id = apProfileId?.trim() ?? "";
+  if (!id || id === DEFAULT_AP_PROFILE_ID) {
     return loadBundledDefaultApProfile();
   }
-  const id = apProfileId.trim();
+
+  const bundled = loadBundledApProfile(id);
+  if (bundled) return bundled;
+
   if (!UUID_RE.test(id)) {
     return loadBundledDefaultApProfile();
   }
+
   const [row] = await db
     .select()
     .from(apSpendingProfiles)
