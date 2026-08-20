@@ -125,6 +125,8 @@ export interface SpellValueRow {
   sp: number;
   tradition: string;
   advancementColumn: string;
+  isHouseSpell?: boolean;
+  isLeadSpell?: boolean;
 }
 
 export interface CombatAllocationRow {
@@ -154,10 +156,13 @@ export interface BudgetSummary {
   attributeSumPurchased: number;
   soExtraGp: number;
   extraApApplied: number;
+  /** Creation AP pool: 20 × (CL + IN), plus Educated (+40 per rating). */
   tgpTotal: number;
   tgpSpent: number;
+  /** Magic AP cap (~half of creation AP). Spent on spells and magical SAs. */
   sgpTotal: number;
   sgpSpent: number;
+  /** Always 0 after the single-pool change; kept for older sheets. */
   tgpConvertedToSgp: number;
 }
 
@@ -274,6 +279,11 @@ export interface GenerateCharacterInput {
   halfElfFullCaster?: boolean;
   gender?: "male" | "female" | "random";
   spellPriorities?: Record<string, SpellPriority>;
+  /**
+   * Extra Leitzauber picks at generation (Elven Worldview). Omit or empty = random.
+   * Ignored unless the culture grants extra lead spells.
+   */
+  leadSpellPicks?: string[];
   /** Optional weapon `id`s from `data/equipment/weapons.json` (order preserved, deduped server-side). */
   weaponIds?: string[];
   /** Optional armor `id`s from `data/equipment/armor.json` */

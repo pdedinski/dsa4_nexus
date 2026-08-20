@@ -14097,7 +14097,7 @@
       "name": "Guild Magician",
       "german_name": "Magier",
       "category": "magical",
-      "gp_cost": 22,
+      "gp_cost": 18,
       "time_consuming": true,
       "requirements": [
         {
@@ -14252,7 +14252,21 @@
       ],
       "special_possession": "mage’s staff as personal weapon or a simple magical book worth 100 to 150 ducats",
       "magical_status": "full_caster",
-      "spell_modifiers": {},
+      "spell_modifiers": {
+        "analytica_arcana": { "value": 7, "is_house_spell": true },
+        "fastness_of_body": { "value": 6, "is_house_spell": true },
+        "auris_nasis_oculus": { "value": 5, "is_house_spell": false },
+        "balm_of_healing": { "value": 8, "is_house_spell": true },
+        "move_as_the_lightning": { "value": 6, "is_house_spell": false },
+        "claudibus_clavistibor": { "value": 4, "is_house_spell": false },
+        "foramen_foraminor": { "value": 4, "is_house_spell": false },
+        "thunderbolt": { "value": 8, "is_house_spell": true },
+        "gardianum": { "value": 6, "is_house_spell": false },
+        "breath_of_magic_odem_arcanum": { "value": 6, "is_house_spell": false },
+        "paralyze": { "value": 7, "is_house_spell": true },
+        "silence_reigns_supreme": { "value": 5, "is_house_spell": true },
+        "sleep_of_a_thousand_sheep": { "value": 7, "is_house_spell": true }
+      },
       "affinity_tags": [
         "magical_guild"
       ],
@@ -34808,6 +34822,15 @@
       ],
       "magical_status": "full_caster",
       "spell_tradition": "elven_heritage",
+      "spell_modifiers": {
+        "see_true_and_pure": { "value": 6, "is_house_spell": false },
+        "gedankenbilder": { "value": 6, "is_house_spell": false },
+        "einfluss_bannen": { "value": 7, "is_house_spell": true },
+        "elfenstimme": { "value": 8, "is_house_spell": true },
+        "breath_of_magic_odem_arcanum": { "value": 5, "is_house_spell": false },
+        "gentle_disposition": { "value": 7, "is_house_spell": true },
+        "silver_tongue": { "value": 8, "is_house_spell": true }
+      },
       "affinity_tags": [
         "magical_elven",
         "social",
@@ -34951,6 +34974,15 @@
       ],
       "magical_status": "full_caster",
       "spell_tradition": "elven_heritage",
+      "spell_modifiers": {
+        "eye_of_eagle_ear_of_lynx": { "value": 8, "is_house_spell": true },
+        "adlerschwinge": { "value": 4, "is_house_spell": false },
+        "exposami": { "value": 5, "is_house_spell": false },
+        "movimento": { "value": 7, "is_house_spell": false },
+        "fog_flow_far": { "value": 6, "is_house_spell": true },
+        "unseen": { "value": 7, "is_house_spell": true },
+        "white_mane": { "value": 6, "is_house_spell": true }
+      },
       "affinity_tags": [
         "magical_elven",
         "wilderness",

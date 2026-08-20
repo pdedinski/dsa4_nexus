@@ -9,8 +9,8 @@ const MAX_ATTR = 14;
 
 export function validateGpBalance(sheet: CharacterSheet): string[] {
   const errs: string[] = [];
-  if (sheet.budgets.gpEnd !== 0)
-    errs.push(`GP balance must be 0 at end (got ${sheet.budgets.gpEnd})`);
+  if (sheet.budgets.gpEnd < 0)
+    errs.push(`GP balance is negative (got ${sheet.budgets.gpEnd})`);
   return errs;
 }
 

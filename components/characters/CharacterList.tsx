@@ -59,6 +59,10 @@ export default function CharacterList() {
   const [lastGenPriorities, setLastGenPriorities] = useState<
     Record<string, SpellPriority> | undefined
   >();
+  const [leadSpellPicks, setLeadSpellPicks] = useState<string[] | undefined>();
+  const [lastGenLeadPicks, setLastGenLeadPicks] = useState<
+    string[] | undefined
+  >();
   const [isSuperuser, setIsSuperuser] = useState(false);
   const [debugLocalPreference, setDebugLocalPreference] = useState(false);
   const [debugLogOpen, setDebugLogOpen] = useState(false);
@@ -120,7 +124,8 @@ export default function CharacterList() {
 
   async function runGenerate(
     input: GenerateCharacterInput,
-    priorities?: Record<string, SpellPriority>
+    priorities?: Record<string, SpellPriority>,
+    leads?: string[],
   ) {
     setGenerating(true);
     try {
@@ -128,10 +133,12 @@ export default function CharacterList() {
       const sheet = await postGenerateSheet({
         input,
         spellPriorities: priorities,
+        leadSpellPicks: leads,
         debugMode: debugModePayload,
       });
       setLastGenInput(input);
       setLastGenPriorities(priorities);
+      setLastGenLeadPicks(leads);
       setPreview(sheet);
       setPreviewName(sheet.header.displayName);
       setNameEditMode(false);
@@ -143,6 +150,7 @@ export default function CharacterList() {
       setWizardArmor(false);
       setGenInput(null);
       setSpellPriorities(undefined);
+      setLeadSpellPicks(undefined);
       setWipWeaponIds([]);
       setWipArmorIds([]);
       setWipBuyArmorUseSa(false);
@@ -160,6 +168,7 @@ export default function CharacterList() {
       const sheet = await postGenerateSheet({
         input: lastGenInput,
         spellPriorities: lastGenPriorities,
+        leadSpellPicks: lastGenLeadPicks,
         debugMode: debugModePayload,
       });
       const newName = sheet.header.displayName;
@@ -270,6 +279,7 @@ export default function CharacterList() {
           setGenInput(rest);
           setNeedsSpellsFlag(needsSpells);
           setSpellPriorities(undefined);
+          setLeadSpellPicks(undefined);
           setWipWeaponIds([]);
           setWipArmorIds([]);
           setWipBuyArmorUseSa(false);
@@ -284,10 +294,12 @@ export default function CharacterList() {
 
       {genInput &&
         genInput.raceId !== "random" &&
+        genInput.cultureId !== "random" &&
         genInput.professionId !== "random" && (
           <CharacterWizardStep2
             open={wizard2 && needsSpellsFlag}
             raceId={genInput.raceId}
+            cultureId={genInput.cultureId}
             professionId={genInput.professionId}
             halfElfFullCaster={Boolean(genInput.halfElfFullCaster)}
             onBack={() => {
@@ -298,9 +310,11 @@ export default function CharacterList() {
               setWizard2(false);
               setGenInput(null);
               setSpellPriorities(undefined);
+              setLeadSpellPicks(undefined);
             }}
-            onContinue={(priorities) => {
+            onContinue={(priorities, extras) => {
               setSpellPriorities(priorities);
+              setLeadSpellPicks(extras?.leadSpellPicks);
               setWizard2(false);
               setWizardWeapons(true);
             }}
@@ -370,7 +384,8 @@ export default function CharacterList() {
               buyArmorUseSa: wipBuyArmorUseSa || undefined,
               buyParryingWeaponSa: wipBuyParryingWeaponSa || undefined,
             },
-            spellPriorities
+            spellPriorities,
+            leadSpellPicks,
           );
         }}
       />

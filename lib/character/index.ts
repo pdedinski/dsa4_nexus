@@ -6,3 +6,4 @@ export {
   needsSpellSelectionStep,
   listSpellsForWizard,
 } from "./generator";
+export type { WizardSpellOptions, WizardSpellMode } from "./generator";

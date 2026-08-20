@@ -1030,11 +1030,11 @@ export default function CharacterSheet({ sheet }: { sheet: Sheet }) {
         <dl className="grid grid-cols-2 gap-x-4 gap-y-1 text-xs font-mono">
           <dt className="text-ink-muted">Remaining GP</dt>
           <dd>{sheetM.budgets.gpEnd}</dd>
-          <dt className="text-ink-muted">Talent GP used / total</dt>
+          <dt className="text-ink-muted">Creation AP used / total</dt>
           <dd>
             {sheetM.budgets.tgpSpent} / {sheetM.budgets.tgpTotal}
           </dd>
-          <dt className="text-ink-muted">Spell GP used / total</dt>
+          <dt className="text-ink-muted">Magic AP used / cap</dt>
           <dd>
             {sheetM.budgets.sgpSpent} / {sheetM.budgets.sgpTotal}
           </dd>

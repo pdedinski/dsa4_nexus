@@ -9,6 +9,7 @@ export async function GET(req: NextRequest) {
 
   const raceId = req.nextUrl.searchParams.get("raceId") ?? "";
   const professionId = req.nextUrl.searchParams.get("professionId") ?? "";
+  const cultureId = req.nextUrl.searchParams.get("cultureId") ?? "";
   const halfElfFullCaster =
     req.nextUrl.searchParams.get("halfElfFullCaster") === "true";
 
@@ -18,6 +19,11 @@ export async function GET(req: NextRequest) {
       { status: 400 }
     );
 
-  const spells = listSpellsForWizard(raceId, professionId, halfElfFullCaster);
-  return NextResponse.json({ spells });
+  const options = listSpellsForWizard(
+    raceId,
+    professionId,
+    halfElfFullCaster,
+    cultureId || undefined,
+  );
+  return NextResponse.json(options);
 }

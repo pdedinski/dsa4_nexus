@@ -27,11 +27,13 @@ function networkFriendlyError(cause: unknown): Error {
 export async function postGenerateSheet(payload: {
   input: GenerateCharacterInput;
   spellPriorities?: Record<string, SpellPriority>;
+  leadSpellPicks?: string[];
   debugMode?: boolean;
 }): Promise<CharacterSheet> {
   const body = JSON.stringify({
     ...payload.input,
     spellPriorities: payload.spellPriorities ?? payload.input.spellPriorities,
+    leadSpellPicks: payload.leadSpellPicks ?? payload.input.leadSpellPicks,
     ...(payload.debugMode ? { debugMode: true } : {}),
   });
 

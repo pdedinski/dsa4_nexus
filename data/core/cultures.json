@@ -6291,7 +6291,7 @@
       "leittalente_note": "Talents marked is_leittalent are Lead Talents (Leittalente) under the Elvish World View disadvantage. They advance more cheaply and have additional narrative obligations.",
       "automatic_starting_spells": [
         {
-          "spell": "attributo",
+          "spell": "attributio",
           "sp": 7
         },
         {
@@ -6299,16 +6299,16 @@
           "sp": 9
         },
         {
-          "spell": "bannbaladin",
+          "spell": "be_my_friend",
           "sp": 9,
           "is_house_spell": true
         },
         {
-          "spell": "flim_flam",
+          "spell": "flim_flam_funkel",
           "sp": 7
         },
         {
-          "spell": "fulminictus",
+          "spell": "thunderbolt",
           "sp": 8,
           "is_house_spell": true
         },
@@ -6318,6 +6318,7 @@
           "is_house_spell": true
         }
       ],
+      "lead_spell_count": 3,
       "language_entries": [
         {
           "type": "mother_tongue",

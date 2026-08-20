@@ -165,6 +165,7 @@ const SPOKEN_LANGUAGE_CODES: Record<string, string> = {
   thorwalian: "tongue_thorwalian",
   rogolan: "tongue_rogolan",
   garethi: "tongue_garethi",
+  isdira: "tongue_isdira",
 };
 
 const SKIP_FLAT_KEYS = new Set([
