@@ -316,6 +316,25 @@
       "source": "wiki: https://tde4e.fandom.com/wiki/Special_Abilities"
     },
     {
+      "id": "formation",
+      "name": "Formation",
+      "german_name": "Formation",
+      "category": "melee_combat",
+      "ap_cost": 100,
+      "gp_cost_creation": 2,
+      "requirements": [
+        {"type": "sa_required", "sa": "alertness"}
+      ],
+      "effects": [
+        {"type": "unlocks_maneuver", "maneuver": "formation_parry", "description": "Enables Formation defense: members may parry for adjacent allies"}
+      ],
+      "incompatible_with": [],
+      "auto_for": [],
+      "discounted_for": [],
+      "description": "Enables fighting in Formation with similarly armed allies (typically infantry weapons, spears, two-handed swords/sabers, or shields). Members may parry attacks aimed at themselves or an adjacent formation mate. Requires Alertness. See combat maneuvers: Formation.",
+      "source": "WdS p. 69–70"
+    },
+    {
       "id": "hammer_strike_sa",
       "name": "Hammer Strike",
       "german_name": "Hammerschlag",
@@ -373,6 +392,25 @@
       "discounted_for": [],
       "description": "Adds 1 additional point to the Parry Value when using a shield. Required for all Ambidextrous Combat and Parrying Weapons SAs.",
       "source": "wiki: https://tde4e.fandom.com/wiki/Special_Abilities"
+    },
+    {
+      "id": "master_parry",
+      "name": "Master Parry",
+      "german_name": "Meisterparade",
+      "category": "melee_combat",
+      "ap_cost": 200,
+      "gp_cost_creation": 4,
+      "requirements": [
+        {"type": "derived_min", "stat": "BAV", "value": 8}
+      ],
+      "effects": [
+        {"type": "unlocks_maneuver", "maneuver": "master_parry", "description": "Enables Master Parry: voluntary Call on Parry becomes bonus for the next Attack or compatible follow-up"}
+      ],
+      "incompatible_with": [],
+      "auto_for": [],
+      "discounted_for": [],
+      "description": "Enables Master Parry: the defender accepts a voluntary Call on the Parry; on success those points become a bonus for the next Attack or certain follow-up maneuvers. Requires Base Attack/Parry Value 8+.",
+      "source": "WdS p. 67"
     },
     {
       "id": "parrying_weapons_i",
@@ -630,25 +668,25 @@
     },
     {
       "id": "dodge_i",
-      "name": "Dodge I",
+      "name": "Evade I",
       "german_name": "Ausweichen I",
       "category": "general",
       "ap_cost": 300,
       "gp_cost_creation": 6,
       "requirements": [],
       "effects": [
-        {"type": "dodge_enabled", "description": "Allows using Dodge as a defensive action"},
-        {"type": "dodge_value", "formula": "AG / 2", "description": "Dodge value equals AG/2"}
+        {"type": "dodge_enabled", "description": "Allows using Evade as a defensive action"},
+        {"type": "dodge_value", "formula": "AG / 2", "description": "Evade value equals AG/2"}
       ],
       "incompatible_with": [],
       "auto_for": ["mountebank"],
       "discounted_for": [],
-      "description": "Allows using Dodge as a defensive action against melee attacks. Dodge value equals AG/2.",
+      "description": "Allows using Evade as a defensive action against melee attacks. Evade value equals AG/2.",
       "source": "BRW p. 45"
     },
     {
       "id": "dodge_ii",
-      "name": "Dodge II",
+      "name": "Evade II",
       "german_name": "Ausweichen II",
       "category": "general",
       "ap_cost": 300,
@@ -658,13 +696,34 @@
         {"type": "attr_min", "attr": "AG", "value": 13}
       ],
       "effects": [
-        {"type": "dodge_value_improved", "formula": "AG * 2/3", "description": "Improved Dodge value"}
+        {"type": "dodge_value_improved", "formula": "AG * 2/3", "description": "Improved Evade value"}
       ],
       "incompatible_with": [],
       "auto_for": [],
       "discounted_for": [],
-      "description": "Improves Dodge value and effectiveness against ranged attacks.",
+      "description": "Improves Evade value and effectiveness against ranged attacks.",
       "source": "BRW p. 45"
+    },
+    {
+      "id": "dodge_iii",
+      "name": "Evade III",
+      "german_name": "Ausweichen III",
+      "category": "general",
+      "ap_cost": 200,
+      "gp_cost_creation": 4,
+      "requirements": [
+        {"type": "sa_required", "sa": "dodge_ii"},
+        {"type": "sa_required", "sa": "combat_reflexes"},
+        {"type": "attr_min", "attr": "AG", "value": 15}
+      ],
+      "effects": [
+        {"type": "dodge_value_improved", "formula": "AG", "description": "Further improved Evade value (AG)"}
+      ],
+      "incompatible_with": [],
+      "auto_for": [],
+      "discounted_for": [],
+      "description": "Further improves Evade value and combat mobility. Requires Evade II and Combat Reflexes.",
+      "source": "WdS / Java Chargen Ausweichen III"
     },
     {
       "id": "terrain_familiarity",

@@ -77,7 +77,10 @@ export function loadBundledApProfile(id: string): ApSpendingProfile | null {
   const trimmed = id.trim();
   if (!trimmed) return null;
   if (trimmed === DEFAULT_AP_PROFILE_ID) return loadBundledDefaultApProfile();
-  const found = archetypeProfiles().find((p) => p.id === trimmed);
+  // Legacy wizard / notes id → Frontline Fighter
+  const resolved =
+    trimmed === "combat_chain_fighter" ? "frontline_fighter" : trimmed;
+  const found = archetypeProfiles().find((p) => p.id === resolved);
   if (!found) return null;
   return cloneProfile({
     id: found.id,

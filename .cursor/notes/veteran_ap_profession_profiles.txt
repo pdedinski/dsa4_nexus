@@ -31,10 +31,11 @@ Spell % only works for magical_status === full_caster (isFullCaster).
 Consecrated Blessed Ones / shamans: spell_group_weight is NOT spent as spells;
 any spell % is redirected to talents.
 
-SA % only buys chain upgrades (sa_required already owned) plus wizard-requested
-shield/armor/parry chains. It does NOT buy root maneuvers (Feint, Lunge,
-Combat Reflexes) from discounted_SAs. Amazon/Warrior benefit; Gladiator mostly
-overflows SA → talents.
+SA % buys wizard-requested shield/armor/parry chains, a capped number of
+loadout-legal combat-maneuver roots (Feint, Called Attack, Formation, Master
+Parry), then chain upgrades (sa_required already owned). Band 2 SA% on
+Frontline Fighter / Rogue / Duelist / Skirmisher / Hunter is 40% so a 200 AP
+root can fire. Unused SA cascades to talents.
 
 Decision: ~18 named archetypes (shared 5 ordinal cuts), NOT 112 unique percent
 tables. Distinction inside a bucket is already per-profession via biases.
@@ -57,8 +58,9 @@ Shared ordinal cuts (ALL archetypes):
 2. ARCHETYPE TEMPLATES
 --------------------------------------------------------------------------------
 
-### combat_chain_fighter
-Armor/Evade/Shield (or similar) chain roots. Melee competence then SA tiers then attributes.
+### frontline_fighter
+Melee front-liners who already have Armor Use, Evade, and/or Shield Fighting.
+(Formerly labeled "Combat Chain Fighter" — not Chain Weapons.)
   1–500: talents 100
   501–1000: SA 40 / talents 60
   1001–2000: attributes 40 / SA 35 / talents 25
@@ -101,9 +103,9 @@ JSON:
 ]
 
 ### combat_talent_duelist
-Few/no auto SA chains. Talent + attribute heavy; light SA so leftover cascades.
+Few/no auto SA chains. Talent + attribute heavy; band 2 seeds one maneuver root.
   1–500: talents 100
-  501–1000: talents 100
+  501–1000: SA 40 / talents 60
   1001–2000: attributes 40 / SA 10 / talents 50
   2001–3500: attributes 40 / SA 20 / talents 40
   3501–∞: attributes 45 / SA 20 / talents 35
@@ -117,7 +119,8 @@ JSON:
   {
     "from": 501,
     "to": 1000,
-    "talents": 100
+    "special_abilities": 40,
+    "talents": 60
   },
   {
     "from": 1001,
@@ -143,9 +146,9 @@ JSON:
 ]
 
 ### wilderness_hunter
-Nature/physical talent-first. Light SA (terrain lore often already auto).
+Nature/physical talent-first. Band 2 can fund a loadout-legal Feint.
   1–500: talents 100
-  501–1000: SA 10 / talents 90
+  501–1000: SA 40 / talents 60
   1001–2000: attributes 35 / SA 15 / talents 50
   2001–3500: attributes 35 / SA 20 / talents 45
   3501–∞: attributes 40 / SA 20 / talents 40
@@ -159,8 +162,8 @@ JSON:
   {
     "from": 501,
     "to": 1000,
-    "talents": 90,
-    "special_abilities": 10
+    "talents": 60,
+    "special_abilities": 40
   },
   {
     "from": 1001,
@@ -186,9 +189,9 @@ JSON:
 ]
 
 ### combat_skirmisher
-Combat + stealth/mobility. Some Evade/unarmed chain potential.
+Combat + stealth/mobility. Band 2 seeds loadout-legal maneuver roots.
   1–500: talents 100
-  501–1000: SA 25 / talents 75
+  501–1000: SA 40 / talents 60
   1001–2000: attributes 40 / SA 25 / talents 35
   2001–3500: attributes 40 / SA 25 / talents 35
   3501–∞: attributes 45 / SA 25 / talents 30
@@ -202,8 +205,8 @@ JSON:
   {
     "from": 501,
     "to": 1000,
-    "special_abilities": 25,
-    "talents": 75
+    "special_abilities": 40,
+    "talents": 60
   },
   {
     "from": 1001,
@@ -229,9 +232,9 @@ JSON:
 ]
 
 ### urban_rogue
-Social/physical street skills. Alertness/Evade if present.
+Social/physical street skills. Band 2 can fund one loadout-legal Feint for Rogue/Burglar.
   1–500: talents 100
-  501–1000: SA 10 / talents 90
+  501–1000: SA 40 / talents 60
   1001–2000: attributes 35 / SA 15 / talents 50
   2001–3500: attributes 35 / SA 15 / talents 50
   3501–∞: attributes 40 / SA 20 / talents 40
@@ -245,8 +248,8 @@ JSON:
   {
     "from": 501,
     "to": 1000,
-    "talents": 90,
-    "special_abilities": 10
+    "talents": 60,
+    "special_abilities": 40
   },
   {
     "from": 1001,
@@ -521,8 +524,8 @@ JSON:
 ]
 
 ### blessed_warrior
-Consecrated warrior-priest. Alias of combat_chain_fighter bands (spells 0 / unused).
-Bands: same as combat_chain_fighter (see that template JSON).
+Consecrated warrior-priest. Alias of frontline_fighter bands (spells 0 / unused).
+Bands: same as frontline_fighter (see that template JSON).
 
 ### blessed_scholar
 Consecrated lore/law. Alias of social_courtier.
@@ -601,7 +604,7 @@ Spirit: Signature package talents: jousting+5, ride+4, wrestling+3, athletics+3,
 Spirit: Automatic SAs (5): evade_i, off_hand_fighting, mounted_combat, armor_use_i, shield_fighting_i.
 Spirit: SA-chain roots present → band-2+ SA% can fire: evade_i, armor_use_i, shield_fighting_i.
 Spirit: Mundane / non-caster — spell % unused (redirects to talents if present).
-Template: combat_chain_fighter
+Template: frontline_fighter
 Overrides: none
 
 ### cadet_officer  (Fähnrich der Fußkämpfer)
@@ -613,7 +616,7 @@ Spirit: Signature package talents: warcraft+6, human_nature+5, athletics+4, body
 Spirit: Automatic SAs (2): armor_use_i, formation.
 Spirit: SA-chain roots present → band-2+ SA% can fire: armor_use_i.
 Spirit: Mundane / non-caster — spell % unused (redirects to talents if present).
-Template: combat_chain_fighter
+Template: frontline_fighter
 Overrides: none
 
 ### gladiator  (Gladiator)
@@ -636,7 +639,7 @@ Spirit: Signature package talents: human_nature+4, law+4, perception+3, etiquett
 Spirit: Automatic SAs (2): armor_use_i, knowledge_of_a_place.
 Spirit: SA-chain roots present → band-2+ SA% can fire: armor_use_i.
 Spirit: Mundane / non-caster — spell % unused (redirects to talents if present).
-Template: combat_chain_fighter
+Template: frontline_fighter
 Overrides: none
 
 ### fairground_fighter  (Jahrmarktskämpfer)
@@ -660,7 +663,7 @@ Spirit: Signature package talents: ride+5, self_control+5, warcraft+4, wrestling
 Spirit: Automatic SAs (3): off_hand_fighting, armor_use_i, shield_fighting_i.
 Spirit: SA-chain roots present → band-2+ SA% can fire: armor_use_i, shield_fighting_i.
 Spirit: Mundane / non-caster — spell % unused (redirects to talents if present).
-Template: combat_chain_fighter
+Template: frontline_fighter
 Overrides: none
 
 ### knight  (Ritter)
@@ -672,7 +675,7 @@ Spirit: Signature package talents: jousting+7, ride+7, self_control+5, etiquette
 Spirit: Automatic SAs (5): off_hand_fighting, mounted_combat, armor_use_i, shield_fighting_i, tournament_riding.
 Spirit: SA-chain roots present → band-2+ SA% can fire: armor_use_i, shield_fighting_i.
 Spirit: Mundane / non-caster — spell % unused (redirects to talents if present).
-Template: combat_chain_fighter
+Template: frontline_fighter
 Overrides: none
 
 ### order_warrior  (Orderskrieger)
@@ -683,7 +686,7 @@ Spirit: Order warriors are militant members of religious or secular orders.
 Spirit: Automatic SAs: none listed (incomplete data or talent-only package).
 Spirit: No clear Armor/Evade/Shield/Regen/Iron Will root in automatic_SAs — SA% mostly overflows to talents unless wizard buys armor/shield.
 Spirit: Mundane / non-caster — spell % unused (redirects to talents if present).
-Template: combat_chain_fighter
+Template: frontline_fighter
 Overrides: none
 
 ### sword_companion  (Schwertgeselle)
@@ -706,7 +709,7 @@ Spirit: Signature package talents: athletics+4, brawling+3, carouse+3, warcraft+
 Spirit: Automatic SAs (1): armor_use_i.
 Spirit: SA-chain roots present → band-2+ SA% can fire: armor_use_i.
 Spirit: Mundane / non-caster — spell % unused (redirects to talents if present).
-Template: combat_chain_fighter
+Template: frontline_fighter
 Overrides: none
 
 ### mercenary  (Söldner)
@@ -718,7 +721,7 @@ Spirit: Signature package talents: daggers+3, brawling+3, wrestling+3, carouse+3
 Spirit: Automatic SAs (1): armor_use_i.
 Spirit: SA-chain roots present → band-2+ SA% can fire: armor_use_i.
 Spirit: Mundane / non-caster — spell % unused (redirects to talents if present).
-Template: combat_chain_fighter
+Template: frontline_fighter
 Overrides: none
 
 ### tribal_warrior  (Stammeskrieger)
@@ -730,7 +733,7 @@ Spirit: Signature package talents: brawling+4, acrobatics+4, athletics+4, body_c
 Spirit: Automatic SAs (3): evade_i, combat_reflexes, unarmed_combat_style_hruruzat.
 Spirit: SA-chain roots present → band-2+ SA% can fire: evade_i.
 Spirit: Mundane / non-caster — spell % unused (redirects to talents if present).
-Template: combat_chain_fighter
+Template: frontline_fighter
 Overrides: none
 
 ======== CATEGORY: traveling_wilderness (17) ========
@@ -1990,7 +1993,7 @@ Override note-only: 13
 Quick map (professionId → archetypeId):
   achaz_shaman → shaman_spirit
   alchemist → full_caster_mystic *
-  amazon → combat_chain_fighter
+  amazon → frontline_fighter
   animal_trainer → craft_commoner ~
   artisan → craft_commoner
   bard → social_courtier
@@ -2018,10 +2021,10 @@ Quick map (professionId → archetypeId):
   border_ranger → combat_skirmisher
   brenoch_d_n → shaman_spirit
   burglar → urban_rogue
-  cadet_officer → combat_chain_fighter
+  cadet_officer → frontline_fighter
   caravan_leader → wilderness_hunter
   charlatan → full_caster_trickster
-  city_guard → combat_chain_fighter
+  city_guard → frontline_fighter
   court_artist → social_courtier
   courtesan → social_courtier
   courtier → social_courtier
@@ -2055,7 +2058,7 @@ Quick map (professionId → archetypeId):
   hunter → wilderness_hunter
   innkeeper → social_courtier
   kaskjua → shaman_spirit
-  knight → combat_chain_fighter
+  knight → frontline_fighter
   kor_late_consecration → blessed_warrior
   league_true_faith_preacher → blessed_scholar
   legend_singer → full_caster_trickster
@@ -2063,13 +2066,13 @@ Quick map (professionId → archetypeId):
   magical_jester → full_caster_trickster
   magician → full_caster_academic
   medicine_man → shaman_spirit
-  mercenary → combat_chain_fighter
+  mercenary → frontline_fighter
   merchant → social_courtier
   messenger → wilderness_hunter
   miner → craft_commoner
   mountebank → social_courtier
   nuransh_r → shaman_spirit
-  order_warrior → combat_chain_fighter
+  order_warrior → frontline_fighter
   physician → mundane_healer
   pirate → combat_skirmisher
   priest_of_hszint → blessed_scholar
@@ -2087,16 +2090,16 @@ Quick map (professionId → archetypeId):
   shochzul → shaman_spirit
   skuldrun → shaman_spirit
   smuggler → urban_rogue ~
-  soldier → combat_chain_fighter
+  soldier → frontline_fighter
   spy → urban_rogue
   sword_companion → combat_talent_duelist
   tairach_priest → blessed_scholar
   teamster → wilderness_hunter
   templepriester_of_rur_and_gror → blessed_scholar
   thief → combat_skirmisher ~
-  tribal_warrior → combat_chain_fighter
+  tribal_warrior → frontline_fighter
   tribal_warrior_beni_dervez → blessed_warrior
-  warrior → combat_chain_fighter
+  warrior → frontline_fighter
   witch → full_caster_mystic
   writer → social_courtier
   zibilja → full_caster_mystic

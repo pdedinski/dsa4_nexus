@@ -211,7 +211,8 @@ function pickDistinct(
   rng: () => number,
   pool: readonly string[],
   n: number,
-  forbid: ReadonlySet<string>
+  forbid: ReadonlySet<string>,
+  prefer?: ReadonlySet<string>,
 ): string[] {
   let avail = [...new Set(pool)].filter((x) => !forbid.has(x));
   const out: string[] = [];
@@ -219,7 +220,10 @@ function pickDistinct(
   while (out.length < n && avail.length) {
     const c = avail.filter((x) => !used.has(x));
     if (!c.length) break;
-    const ch = pick(rng, c)!;
+    const preferred = prefer?.size
+      ? c.filter((x) => prefer.has(x))
+      : [];
+    const ch = pick(rng, preferred.length ? preferred : c)!;
     out.push(ch);
     used.add(ch);
     avail = avail.filter((x) => !used.has(x));
@@ -300,7 +304,8 @@ type PoolPick = { pool: readonly string[]; picked: string };
 function applyProfessionChoices(
   rng: () => number,
   blocksRaw: TalentChoiceModifierJson[] | undefined,
-  out: Record<string, number>
+  out: Record<string, number>,
+  preferTalentIds?: ReadonlySet<string>,
 ) {
   const blocks =
     blocksRaw?.filter(
@@ -327,7 +332,8 @@ function applyProfessionChoices(
         rng,
         poolCanon,
         Math.min(choose, poolCanon.length),
-        new Set()
+        new Set(),
+        preferTalentIds,
       );
       for (const p of picks) addTp(out, p, val);
       continue;
@@ -342,7 +348,8 @@ function applyProfessionChoices(
         rng,
         poolCanon,
         Math.min(choose, poolCanon.length),
-        new Set()
+        new Set(),
+        preferTalentIds,
       );
       for (const p of picks) addTp(out, p, val);
       continue;
@@ -352,7 +359,13 @@ function applyProfessionChoices(
 
     if (meleeMacesSabersOnly(poolCanon) && next && sentinelMacesSabers(next.from)) {
       choose = Math.min(choose, 1);
-      const picks = pickDistinct(rng, poolCanon, choose, new Set());
+      const picks = pickDistinct(
+        rng,
+        poolCanon,
+        choose,
+        new Set(),
+        preferTalentIds,
+      );
       for (const p of picks) addTp(out, p, val);
       if (picks.length === 1)
         macesForSentinel = { pool: poolCanon, picked: picks[0]! };
@@ -361,7 +374,13 @@ function applyProfessionChoices(
 
     const picks =
       poolCanon.length > 0
-        ? pickDistinct(rng, poolCanon, Math.min(choose, poolCanon.length), new Set())
+        ? pickDistinct(
+            rng,
+            poolCanon,
+            Math.min(choose, poolCanon.length),
+            new Set(),
+            preferTalentIds,
+          )
         : [];
     for (const p of picks) addTp(out, p, val);
 
@@ -541,7 +560,8 @@ export function mergeTalentModifiersNormalized(
   rng: () => number,
   race: EntityMods & Record<string, unknown>,
   culture: CultureForTalents & Record<string, unknown>,
-  profession: EntityMods & Record<string, unknown>
+  profession: EntityMods & Record<string, unknown>,
+  preferTalentIds?: ReadonlySet<string>,
 ): Record<string, number> {
   const out: Record<string, number> = {};
 
@@ -551,7 +571,12 @@ export function mergeTalentModifiersNormalized(
   applyTalentChoicesRaceCulture(rng, culture.talent_choice_modifiers, out);
   applyFlatTalentModifiers(rng, culture.talent_modifiers, culture, out);
 
-  applyProfessionChoices(rng, profession.talent_choice_modifiers, out);
+  applyProfessionChoices(
+    rng,
+    profession.talent_choice_modifiers,
+    out,
+    preferTalentIds,
+  );
   applyFlatTalentModifiers(rng, profession.talent_modifiers, culture, out);
 
   return out;

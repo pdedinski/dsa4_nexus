@@ -129,7 +129,7 @@
       ],
       "automatic_SAs": [
         {
-          "id": "evade_i"
+          "id": "dodge_i"
         },
         {
           "id": "off_hand_fighting"
@@ -149,13 +149,13 @@
           "id": "lunge"
         },
         {
-          "id": "feint"
+          "id": "feint_sa"
         },
         {
           "id": "combat_reflexes"
         },
         {
-          "id": "blade_storm"
+          "id": "blade_storm_sa"
         },
         {
           "id": "war_riding"
@@ -195,7 +195,7 @@
         "athletics": 1.7,
         "wrestling": 1.8,
         "brawling": 1.75,
-        "swords": 2.0,
+        "swords": 2,
         "infantry_weapons": 1.95,
         "axes_and_maces": 1.85,
         "two_handed_swords": 1.8,
@@ -258,7 +258,7 @@
         "vertigo": 0.35
       },
       "at_pa_bias": "offensive",
-      "spell_group_weight": 0.0,
+      "spell_group_weight": 0,
       "variants": [],
       "description": "An Amazon is a female warrior raised or accepted into an Amazon fortress and trained in disciplined swordplay, riding, formation fighting, and Rondran ideals. The profile emphasizes mobility, body control, mounted combat, and light-to-Medium armor rather than heavy two-handed weapons.",
       "source": "WdH #1 p. 96",
@@ -454,7 +454,7 @@
         "athletics": 1.7,
         "wrestling": 1.8,
         "brawling": 1.75,
-        "swords": 2.0,
+        "swords": 2,
         "infantry_weapons": 1.95,
         "axes_and_maces": 1.85,
         "two_handed_swords": 1.8,
@@ -478,7 +478,7 @@
         "history": 1.33,
         "religious_lore": 1.17,
         "heraldry": 1.5,
-        "warcraft": 2.0,
+        "warcraft": 2,
         "arcane_lore": 1.17,
         "calculate": 1.33,
         "law": 1.5,
@@ -530,7 +530,7 @@
         "vertigo": 0.35
       },
       "at_pa_bias": "offensive",
-      "spell_group_weight": 0.0,
+      "spell_group_weight": 0,
       "variants": [],
       "description": "Cadet officers are academy-trained junior officers. The section contains separate infantry, cavalry, staff, and naval profiles, followed by academy-specific variants that former Talents, Special Abilities, equipment, and GP cost.",
       "source": "WdH #2 p. ?",
@@ -660,7 +660,7 @@
         "athletics": 1.7,
         "wrestling": 1.8,
         "brawling": 1.75,
-        "swords": 2.0,
+        "swords": 2,
         "infantry_weapons": 1.95,
         "axes_and_maces": 1.85,
         "two_handed_swords": 1.8,
@@ -717,7 +717,7 @@
         "vertigo": 0.35
       },
       "at_pa_bias": "offensive",
-      "spell_group_weight": 0.0,
+      "spell_group_weight": 0,
       "variants": [],
       "description": "Gladiators and exhibition fighters are professional arena combatants. Their profiles combine physical resilience, unarmed fighting, selected weapon specializations, and performance-oriented training; regional arena traditions provide distinct variants.",
       "source": "WdH #3 p. 99",
@@ -836,7 +836,7 @@
           "note": "padded jack / Leather Cuirass"
         },
         {
-          "id": "knowledge_of_a_place"
+          "id": "local_knowledge"
         }
       ],
       "discounted_SAs": [
@@ -844,7 +844,7 @@
           "id": "alertness"
         },
         {
-          "id": "evade_i"
+          "id": "dodge_i"
         },
         {
           "id": "formation"
@@ -859,7 +859,7 @@
           "id": "shield_fighting_i"
         },
         {
-          "id": "called_attack"
+          "id": "called_attack_sa"
         }
       ],
       "starting_equipment": [
@@ -890,7 +890,7 @@
         "athletics": 1.7,
         "wrestling": 1.8,
         "brawling": 1.75,
-        "swords": 2.0,
+        "swords": 2,
         "infantry_weapons": 1.95,
         "axes_and_maces": 1.85,
         "two_handed_swords": 1.8,
@@ -960,7 +960,7 @@
         "vertigo": 0.35
       },
       "at_pa_bias": "offensive",
-      "spell_group_weight": 0.0,
+      "spell_group_weight": 0,
       "variants": [],
       "description": "Guards are professional protectors and law-enforcement personnel, ranging from city guards and village bailiffs to road wardens, jailers, academy guards, and Aranian clan warriors.",
       "source": "WdH #4 p. 100",
@@ -1046,7 +1046,7 @@
           "id": "alertness"
         },
         {
-          "id": "evade_i"
+          "id": "dodge_i"
         },
         {
           "id": "unarmed_combat_style_gladiatorenstil_or_hammerfaust"
@@ -1054,13 +1054,13 @@
       ],
       "discounted_SAs": [
         {
-          "id": "evade_ii"
+          "id": "dodge_ii"
         },
         {
-          "id": "evade_iii"
+          "id": "dodge_iii"
         },
         {
-          "id": "combat_instinct"
+          "id": "combat_awareness"
         },
         {
           "id": "combat_reflexes"
@@ -1094,7 +1094,7 @@
         "athletics": 1.7,
         "wrestling": 2.17,
         "brawling": 2.17,
-        "swords": 2.0,
+        "swords": 2,
         "infantry_weapons": 1.95,
         "axes_and_maces": 1.85,
         "two_handed_swords": 1.8,
@@ -1156,7 +1156,7 @@
         "vertigo": 0.35
       },
       "at_pa_bias": "offensive",
-      "spell_group_weight": 0.0,
+      "spell_group_weight": 0,
       "variants": [],
       "description": "Fairground fighters earn their living through public bouts, feats of strength, and staged or genuine combat demonstrations, combining weapon or unarmed competence with physical showmanship.",
       "source": "WdH #5 p. 102",
@@ -1333,7 +1333,7 @@
         "athletics": 1.7,
         "wrestling": 1.8,
         "brawling": 1.75,
-        "swords": 2.0,
+        "swords": 2,
         "infantry_weapons": 1.95,
         "axes_and_maces": 1.85,
         "two_handed_swords": 1.8,
@@ -1402,7 +1402,7 @@
         "vertigo": 0.35
       },
       "at_pa_bias": "offensive",
-      "spell_group_weight": 0.0,
+      "spell_group_weight": 0,
       "variants": [],
       "description": "Warriors are graduates of recognized warrior academies. The standard profile is modified by the curriculum of onecademy, producing many complete regional and institutional variants.",
       "source": "WdH #6 p. 103",
@@ -1585,7 +1585,7 @@
         "athletics": 1.7,
         "wrestling": 1.8,
         "brawling": 1.75,
-        "swords": 2.0,
+        "swords": 2,
         "infantry_weapons": 1.95,
         "axes_and_maces": 1.85,
         "two_handed_swords": 1.8,
@@ -1656,7 +1656,7 @@
         "vertigo": 0.35
       },
       "at_pa_bias": "offensive",
-      "spell_group_weight": 0.0,
+      "spell_group_weight": 0,
       "variants": [],
       "description": "Knights are mounted noble warriors trained in arms, riding, etiquette, heraldry, and feudal obligations. The old-style knight variant modifies the modern profile.",
       "source": "WdH #7 p. 107",
@@ -1709,7 +1709,7 @@
         "athletics": 1.7,
         "wrestling": 1.8,
         "brawling": 1.75,
-        "swords": 2.0,
+        "swords": 2,
         "infantry_weapons": 1.95,
         "axes_and_maces": 1.85,
         "two_handed_swords": 1.8,
@@ -1763,7 +1763,7 @@
         "vertigo": 0.35
       },
       "at_pa_bias": "offensive",
-      "spell_group_weight": 0.0,
+      "spell_group_weight": 0,
       "variants": [],
       "description": "Order warriors are militant members of religious or secular orders. Their exact profile is determined by the particular order and its published variant. This heading does not provide a generic Order Warrior stat block. Wege der Helden states that the exact forms depend chiefly on the cult served and presents the order-specific profession variants in the divine-professions chapter beginning on page 206. Use the appropriate published order profile there; no generic statistics have been invented here. Source page: 108.",
       "source": "WdH (structural heading)",
@@ -1908,7 +1908,7 @@
         "athletics": 1.7,
         "wrestling": 1.8,
         "brawling": 1.75,
-        "swords": 2.0,
+        "swords": 2,
         "infantry_weapons": 1.95,
         "axes_and_maces": 1.85,
         "two_handed_swords": 1.8,
@@ -1981,7 +1981,7 @@
         "vertigo": 0.35
       },
       "at_pa_bias": "offensive",
-      "spell_group_weight": 0.0,
+      "spell_group_weight": 0,
       "variants": [],
       "description": "Sword companions are elite private-school duelists and weapon masters. Each school or master teaches a distinct style, represented by a separate costed profile or variant.",
       "source": "WdH #9 p. 111",
@@ -2102,7 +2102,7 @@
         "athletics": 1.7,
         "wrestling": 1.8,
         "brawling": 1.75,
-        "swords": 2.0,
+        "swords": 2,
         "infantry_weapons": 1.95,
         "axes_and_maces": 1.85,
         "two_handed_swords": 1.8,
@@ -2173,7 +2173,7 @@
         "vertigo": 0.35
       },
       "at_pa_bias": "offensive",
-      "spell_group_weight": 0.0,
+      "spell_group_weight": 0,
       "variants": [],
       "description": "Soldiers are trained members of regular military formations. The section provides profiles for heavy and light infantry, cavalry, archers, artillery, engineers, naval troops, and special regional forces.",
       "source": "WdH #10 p. 113",
@@ -2325,7 +2325,7 @@
         "athletics": 1.7,
         "wrestling": 1.8,
         "brawling": 1.75,
-        "swords": 2.0,
+        "swords": 2,
         "infantry_weapons": 1.95,
         "axes_and_maces": 1.85,
         "two_handed_swords": 1.8,
@@ -2402,7 +2402,7 @@
         "vertigo": 0.35
       },
       "at_pa_bias": "offensive",
-      "spell_group_weight": 0.0,
+      "spell_group_weight": 0,
       "variants": [],
       "description": "Mercenaries are professional soldiers who sell their service. Unit type determines their exact combat focus, equipment, Talents, and cost.",
       "source": "WdH #11 p. ?",
@@ -2532,7 +2532,7 @@
       ],
       "automatic_SAs": [
         {
-          "id": "evade_i"
+          "id": "dodge_i"
         },
         {
           "id": "combat_reflexes"
@@ -2546,10 +2546,10 @@
           "id": "alertness"
         },
         {
-          "id": "evade_ii"
+          "id": "dodge_ii"
         },
         {
-          "id": "evade_iii"
+          "id": "dodge_iii"
         }
       ],
       "starting_equipment": [
@@ -2583,7 +2583,7 @@
         "athletics": 1.7,
         "wrestling": 1.8,
         "brawling": 1.75,
-        "swords": 2.0,
+        "swords": 2,
         "infantry_weapons": 1.95,
         "axes_and_maces": 1.85,
         "two_handed_swords": 1.8,
@@ -2653,7 +2653,7 @@
         "vertigo": 0.35
       },
       "at_pa_bias": "offensive",
-      "spell_group_weight": 0.0,
+      "spell_group_weight": 0,
       "variants": [],
       "description": "Tribal warriors are culturally specific fighters trained according to the warfare, environment, and customs of their people. Each culture has a separate profile and, in some cases, additional variants.",
       "source": "WdH #12 p. 118",
@@ -2790,7 +2790,7 @@
           "id": "one_terrain_lore_of_choice"
         },
         {
-          "id": "knowledge_of_a_place",
+          "id": "local_knowledge",
           "note": "a usually used Strecke"
         }
       ],
@@ -2823,7 +2823,7 @@
         "artisan_talents": 0.03
       },
       "talent_bias": {
-        "survival": 2.0,
+        "survival": 2,
         "track": 1.95,
         "orientation": 1.85,
         "animal_lore": 1.8,
@@ -2883,7 +2883,7 @@
         "agoraphobia": 0.45
       },
       "at_pa_bias": "balanced",
-      "spell_group_weight": 0.0,
+      "spell_group_weight": 0,
       "variants": [],
       "description": "Couriers carry messages over dangerous routes. The base mounted courier and its service, runner, and dwarven relay variants emphasize endurance, orientation, riding or running, and reliable delivery.",
       "source": "WdH #13 p. 123",
@@ -3014,7 +3014,7 @@
       "automatic_SAs": [],
       "discounted_SAs": [
         {
-          "id": "knowledge_pleasing_to_nandus"
+          "id": "nandus_pleasing_knowledge"
         },
         {
           "id": "one_additional_culture_lore_of_choice"
@@ -3050,7 +3050,7 @@
         "artisan_talents": 0.03
       },
       "talent_bias": {
-        "survival": 2.0,
+        "survival": 2,
         "track": 1.95,
         "orientation": 1.85,
         "animal_lore": 1.8,
@@ -3119,7 +3119,7 @@
         "agoraphobia": 0.45
       },
       "at_pa_bias": "balanced",
-      "spell_group_weight": 0.0,
+      "spell_group_weight": 0,
       "variants": [],
       "description": "Explorers seek unknown lands, routes, peoples, and ruins. Their training combines travel, survival, observation, mapping, and scholarly or practical field knowledge.",
       "source": "WdH #14 p. 124",
@@ -3379,7 +3379,7 @@
         "artisan_talents": 0.03
       },
       "talent_bias": {
-        "survival": 2.0,
+        "survival": 2,
         "track": 1.95,
         "orientation": 1.85,
         "animal_lore": 1.8,
@@ -3455,7 +3455,7 @@
         "agoraphobia": 0.45
       },
       "at_pa_bias": "balanced",
-      "spell_group_weight": 0.0,
+      "spell_group_weight": 0,
       "variants": [],
       "description": "Long-distance merchants organize and accompany trade journeys, combining commerce, languages, social skills, geography, logistics, and self-protection.",
       "source": "WdH #15 p. 124",
@@ -3563,10 +3563,10 @@
           "id": "steady_stand"
         },
         {
-          "id": "aquatic_combat"
+          "id": "combat_in_water"
         },
         {
-          "id": "knowledge_of_a_place",
+          "id": "local_knowledge",
           "note": "üblicher Fischgrund"
         }
       ],
@@ -3597,7 +3597,7 @@
         "artisan_talents": 0.03
       },
       "talent_bias": {
-        "survival": 2.0,
+        "survival": 2,
         "track": 1.95,
         "orientation": 1.85,
         "animal_lore": 1.8,
@@ -3620,7 +3620,7 @@
         "geography": 1.17,
         "legend_lore": 1.33,
         "starcraft": 1.17,
-        "boats": 2.0,
+        "boats": 2,
         "treat_wounds": 1.17,
         "woodcraft": 1.33,
         "tailor": 1.33
@@ -3657,7 +3657,7 @@
         "agoraphobia": 0.45
       },
       "at_pa_bias": "balanced",
-      "spell_group_weight": 0.0,
+      "spell_group_weight": 0,
       "variants": [],
       "description": "Fishers make their living from rivers, coasts, and seas. Specialized variants cover diving, harpooning, seagoing fishing, and pearl fishing.",
       "source": "WdH #16 p. 125",
@@ -3803,7 +3803,7 @@
         "artisan_talents": 0.03
       },
       "talent_bias": {
-        "survival": 2.0,
+        "survival": 2,
         "track": 1.95,
         "orientation": 1.85,
         "animal_lore": 1.8,
@@ -3835,7 +3835,7 @@
         "appraise": 1.17,
         "animal_training": 1.33,
         "boats": 1.17,
-        "drive": 2.0,
+        "drive": 2,
         "treat_wounds": 1.33,
         "woodcraft": 1.67,
         "cook": 1.33,
@@ -3873,7 +3873,7 @@
         "agoraphobia": 0.45
       },
       "at_pa_bias": "balanced",
-      "spell_group_weight": 0.0,
+      "spell_group_weight": 0,
       "variants": [],
       "description": "Teamsters drive carts and wagons, care for draft animals, maintain vehicles, and manage overland transport.",
       "source": "WdH #17 p. 126",
@@ -4083,7 +4083,7 @@
         "athletics": 1.7,
         "wrestling": 1.8,
         "brawling": 1.75,
-        "swords": 2.0,
+        "swords": 2,
         "infantry_weapons": 1.95,
         "axes_and_maces": 1.85,
         "two_handed_swords": 1.8,
@@ -4168,7 +4168,7 @@
         "vertigo": 0.35
       },
       "at_pa_bias": "offensive",
-      "spell_group_weight": 0.0,
+      "spell_group_weight": 0,
       "variants": [],
       "description": "Border rangers patrol remote frontiers and combine wilderness competence, tracking, observation, and practical combat ability.",
       "source": "WdH #18 p. 126",
@@ -4369,7 +4369,7 @@
         "artisan_talents": 0.03
       },
       "talent_bias": {
-        "survival": 2.0,
+        "survival": 2,
         "track": 1.95,
         "orientation": 1.85,
         "animal_lore": 1.83,
@@ -4440,7 +4440,7 @@
         "agoraphobia": 0.45
       },
       "at_pa_bias": "balanced",
-      "spell_group_weight": 0.0,
+      "spell_group_weight": 0,
       "variants": [],
       "description": "Big-game hunters pursue dangerous quarry. Related variants redirect the same fieldcraft toward slave hunting or bounty hunting.",
       "source": "WdH #19 p. 127",
@@ -4592,7 +4592,7 @@
         "artisan_talents": 0.03
       },
       "talent_bias": {
-        "survival": 2.0,
+        "survival": 2,
         "track": 1.95,
         "orientation": 1.85,
         "animal_lore": 1.8,
@@ -4653,7 +4653,7 @@
         "agoraphobia": 0.45
       },
       "at_pa_bias": "balanced",
-      "spell_group_weight": 0.0,
+      "spell_group_weight": 0,
       "variants": [],
       "description": "Herdsmen care for livestock in different regions and social settings. Variants cover cattle, sheep, reindeer, water buffalo, small-animal breeding, and cattle theft.",
       "source": "WdH #20 p. 128",
@@ -4806,7 +4806,7 @@
       ],
       "discounted_SAs": [
         {
-          "id": "knowledge_of_a_place",
+          "id": "local_knowledge",
           "note": "primary hunting grounds"
         }
       ],
@@ -4840,8 +4840,8 @@
         "artisan_talents": 0.03
       },
       "talent_bias": {
-        "survival": 2.0,
-        "track": 2.0,
+        "survival": 2,
+        "track": 2,
         "orientation": 1.85,
         "animal_lore": 1.8,
         "plant_lore": 1.75,
@@ -4902,7 +4902,7 @@
         "agoraphobia": 0.45
       },
       "at_pa_bias": "balanced",
-      "spell_group_weight": 0.0,
+      "spell_group_weight": 0,
       "variants": [],
       "description": "Hunters live by tracking and taking game. Tribal hunters, trappers, and gamekeepers modify the base profile for cultural or occupational emphasis.",
       "source": "WdH #21 p. 128",
@@ -5004,7 +5004,7 @@
       ],
       "automatic_SAs": [
         {
-          "id": "knowledge_of_a_place",
+          "id": "local_knowledge",
           "note": "Strecke"
         },
         {
@@ -5038,7 +5038,7 @@
         "artisan_talents": 0.03
       },
       "talent_bias": {
-        "survival": 2.0,
+        "survival": 2,
         "track": 1.95,
         "orientation": 1.85,
         "animal_lore": 1.8,
@@ -5091,7 +5091,7 @@
         "agoraphobia": 0.45
       },
       "at_pa_bias": "balanced",
-      "spell_group_weight": 0.0,
+      "spell_group_weight": 0,
       "variants": [],
       "description": "Caravan leaders guide people, animals, and goods through long and often dangerous routes, combining logistics, languages, trade, leadership, and wilderness knowledge.",
       "source": "WdH #22 p. 129",
@@ -5262,7 +5262,7 @@
         "artisan_talents": 0.03
       },
       "talent_bias": {
-        "survival": 2.0,
+        "survival": 2,
         "track": 1.95,
         "orientation": 1.85,
         "animal_lore": 1.8,
@@ -5274,7 +5274,7 @@
         "climb": 1.6,
         "swim": 1.55,
         "athletics": 1.5,
-        "perception": 2.0,
+        "perception": 2,
         "daggers": 1.33,
         "wrestling": 1.33,
         "body_control": 1.33,
@@ -5325,7 +5325,7 @@
         "agoraphobia": 0.45
       },
       "at_pa_bias": "balanced",
-      "spell_group_weight": 0.0,
+      "spell_group_weight": 0,
       "variants": [],
       "description": "Scouts reconnoiter terrain and enemy movement, emphasizing stealth, perception, orientation, survival, and rapid reporting.",
       "source": "WdH #23 p. 130",
@@ -5453,7 +5453,7 @@
         "artisan_talents": 0.03
       },
       "talent_bias": {
-        "survival": 2.0,
+        "survival": 2,
         "track": 1.95,
         "orientation": 1.85,
         "animal_lore": 1.8,
@@ -5509,7 +5509,7 @@
         "agoraphobia": 0.45
       },
       "at_pa_bias": "balanced",
-      "spell_group_weight": 0.0,
+      "spell_group_weight": 0,
       "variants": [],
       "description": "Prospectors search for useful plants, minerals, and other resources. The section includes herbalist and gatherer orientations.",
       "source": "WdH #24 p. ?",
@@ -5612,11 +5612,11 @@
           "id": "steady_stand"
         },
         {
-          "id": "knowledge_of_a_place",
+          "id": "local_knowledge",
           "note": "a Flussstrecke"
         },
         {
-          "id": "aquatic_combat"
+          "id": "combat_in_water"
         }
       ],
       "discounted_SAs": [],
@@ -5644,7 +5644,7 @@
         "artisan_talents": 0.03
       },
       "talent_bias": {
-        "survival": 2.0,
+        "survival": 2,
         "track": 1.95,
         "orientation": 1.85,
         "animal_lore": 1.8,
@@ -5708,7 +5708,7 @@
         "agoraphobia": 0.45
       },
       "at_pa_bias": "balanced",
-      "spell_group_weight": 0.0,
+      "spell_group_weight": 0,
       "variants": [],
       "description": "Boatmen work on inland waterways. Variants include ferrymen, river sailors, pilots, rafters, and river pirates.",
       "source": "WdH #25 p. 131",
@@ -5834,7 +5834,7 @@
       ],
       "automatic_SAs": [
         {
-          "id": "knowledge_of_a_place",
+          "id": "local_knowledge",
           "note": "Grenzregion or Wegstrecke"
         },
         {
@@ -5871,7 +5871,7 @@
         "artisan_talents": 0.03
       },
       "talent_bias": {
-        "survival": 2.0,
+        "survival": 2,
         "track": 1.95,
         "orientation": 1.85,
         "animal_lore": 1.8,
@@ -5934,7 +5934,7 @@
         "agoraphobia": 0.45
       },
       "at_pa_bias": "balanced",
-      "spell_group_weight": 0.0,
+      "spell_group_weight": 0,
       "variants": [],
       "description": "Smugglers move forbidden or untaxed goods through hidden routes, using street knowledge, stealth, transport skills, and social deception; customs officers form a related variant.",
       "source": "WdH #26 p. 131",
@@ -6062,7 +6062,7 @@
       ],
       "discounted_SAs": [
         {
-          "id": "aquatic_combat"
+          "id": "combat_in_water"
         }
       ],
       "starting_equipment": [
@@ -6089,7 +6089,7 @@
         "artisan_talents": 0.03
       },
       "talent_bias": {
-        "survival": 2.0,
+        "survival": 2,
         "track": 1.95,
         "orientation": 1.85,
         "animal_lore": 1.8,
@@ -6151,7 +6151,7 @@
         "agoraphobia": 0.45
       },
       "at_pa_bias": "balanced",
-      "spell_group_weight": 0.0,
+      "spell_group_weight": 0,
       "variants": [],
       "description": "Seafarers work aboard ships. The section differentiates sailors, pirates, whalers or shark hunters, and seal hunters.",
       "source": "WdH #27 p. 132",
@@ -6280,7 +6280,7 @@
       ],
       "automatic_SAs": [
         {
-          "id": "knowledge_of_a_place",
+          "id": "local_knowledge",
           "note": "primary ‘Revier’"
         }
       ],
@@ -6315,7 +6315,7 @@
         "athletics": 1.7,
         "wrestling": 1.8,
         "brawling": 1.75,
-        "swords": 2.0,
+        "swords": 2,
         "infantry_weapons": 1.95,
         "axes_and_maces": 1.85,
         "two_handed_swords": 1.8,
@@ -6386,7 +6386,7 @@
         "vertigo": 0.35
       },
       "at_pa_bias": "offensive",
-      "spell_group_weight": 0.0,
+      "spell_group_weight": 0,
       "variants": [],
       "description": "Highwaymen prey on travelers or fight irregularly along roads and borders. Variants include bandits, coach robbers, ambushers, regional highwaymen, and irregular fighters.",
       "source": "WdH #28 p. ?",
@@ -6523,7 +6523,7 @@
         "athletics": 1.7,
         "wrestling": 1.8,
         "brawling": 1.75,
-        "swords": 2.0,
+        "swords": 2,
         "infantry_weapons": 1.95,
         "axes_and_maces": 1.85,
         "two_handed_swords": 1.8,
@@ -6541,7 +6541,7 @@
         "teach": 1.17,
         "human_nature": 1.67,
         "masquerade": 1.33,
-        "fast_talk": 2.0,
+        "fast_talk": 2,
         "persuade": 1.67,
         "history": 1.17,
         "religious_lore": 1.5,
@@ -6595,7 +6595,7 @@
         "vertigo": 0.35
       },
       "at_pa_bias": "offensive",
-      "spell_group_weight": 0.0,
+      "spell_group_weight": 0,
       "variants": [],
       "description": "Criers publicly announce news, laws, prices, and events, relying on voice, memory, street knowledge, and social presence.",
       "source": "WdH #29 p. 134",
@@ -6721,7 +6721,7 @@
         "artisan_talents": 0.08
       },
       "talent_bias": {
-        "etiquette": 2.0,
+        "etiquette": 2,
         "persuade": 1.95,
         "human_nature": 1.9,
         "fast_talk": 1.75,
@@ -6781,7 +6781,7 @@
         "agoraphobia": 0.45
       },
       "at_pa_bias": "balanced",
-      "spell_group_weight": 0.0,
+      "spell_group_weight": 0,
       "variants": [],
       "description": "Bards are traveling performers and keepers of stories. The variants distinguish musical bards, storytellers, and skalds.",
       "source": "WdH #30 p. 135",
@@ -6886,7 +6886,7 @@
       ],
       "automatic_SAs": [
         {
-          "id": "knowledge_of_a_place",
+          "id": "local_knowledge",
           "note": "Stadtteil or Kleinstadt"
         },
         {
@@ -6930,11 +6930,11 @@
         "artisan_talents": 0.08
       },
       "talent_bias": {
-        "etiquette": 2.0,
+        "etiquette": 2,
         "persuade": 1.95,
         "human_nature": 1.9,
-        "fast_talk": 2.0,
-        "streetwise": 2.0,
+        "fast_talk": 2,
+        "streetwise": 2,
         "seduce": 1.65,
         "carouse": 1.65,
         "legend_lore": 1.55,
@@ -6990,7 +6990,7 @@
         "agoraphobia": 0.45
       },
       "at_pa_bias": "balanced",
-      "spell_group_weight": 0.0,
+      "spell_group_weight": 0,
       "variants": [],
       "description": "Beggars survive through appeals, observation, street knowledge, and adaptation to urban or roadside life.",
       "source": "WdH #31 p. 135",
@@ -7102,7 +7102,7 @@
           "id": "alertness"
         },
         {
-          "id": "knowledge_of_a_place",
+          "id": "local_knowledge",
           "note": "Stadtteil or Kleinstadt"
         },
         {
@@ -7138,7 +7138,7 @@
         "athletics": 1.7,
         "wrestling": 1.8,
         "brawling": 1.75,
-        "swords": 2.0,
+        "swords": 2,
         "infantry_weapons": 1.95,
         "axes_and_maces": 1.85,
         "two_handed_swords": 1.8,
@@ -7153,7 +7153,7 @@
         "sneak": 1.5,
         "hide": 1.67,
         "pick_pockets": 2.17,
-        "streetwise": 2.0,
+        "streetwise": 2,
         "human_nature": 1.67,
         "masquerade": 1.5,
         "fast_talk": 1.67,
@@ -7210,7 +7210,7 @@
         "vertigo": 0.35
       },
       "at_pa_bias": "offensive",
-      "spell_group_weight": 0.0,
+      "spell_group_weight": 0,
       "variants": [],
       "description": "Thieves specialize in unnoticed appropriation, pickpocketing, stealth, and street survival.",
       "source": "WdH #32 p. 136",
@@ -7350,15 +7350,15 @@
         "stealth"
       ],
       "talent_group_weights": {
-        "social_talents": 0.45,
-        "lore_talents": 0.22,
+        "social_talents": 0.38,
+        "lore_talents": 0.19,
         "physical_talents": 0.1,
-        "combat_talents": 0.08,
+        "combat_talents": 0.18,
         "nature_talents": 0.07,
         "artisan_talents": 0.08
       },
       "talent_bias": {
-        "etiquette": 2.0,
+        "etiquette": 2,
         "persuade": 1.95,
         "human_nature": 1.9,
         "fast_talk": 1.75,
@@ -7375,7 +7375,7 @@
         "throwing_knives": 1.17,
         "acrobatics": 1.33,
         "athletics": 1.33,
-        "climb": 2.0,
+        "climb": 2,
         "body_control": 1.83,
         "sneak": 1.83,
         "self_control": 1.33,
@@ -7391,7 +7391,10 @@
         "law": 1.17,
         "appraise": 1.67,
         "paint_draw": 1.33,
-        "pick_locks": 2.17
+        "pick_locks": 2.17,
+        "fencing_weapons": 1.4,
+        "sabers": 1.4,
+        "swords": 1.4
       },
       "talent_avoid_bias": {
         "two_handed_swords": 0.32,
@@ -7429,7 +7432,7 @@
         "agoraphobia": 0.45
       },
       "at_pa_bias": "balanced",
-      "spell_group_weight": 0.0,
+      "spell_group_weight": 0,
       "variants": [],
       "description": "Burglars enter secured places to steal valuables. Grave robbers form a related variant with different knowledge and hazards.",
       "source": "WdH #33 p. 136",
@@ -7555,7 +7558,7 @@
       ],
       "automatic_SAs": [
         {
-          "id": "evade_i"
+          "id": "dodge_i"
         },
         {
           "id": "steady_stand"
@@ -7591,7 +7594,7 @@
         "artisan_talents": 0.08
       },
       "talent_bias": {
-        "etiquette": 2.0,
+        "etiquette": 2,
         "persuade": 1.95,
         "human_nature": 1.9,
         "fast_talk": 1.75,
@@ -7653,7 +7656,7 @@
         "agoraphobia": 0.45
       },
       "at_pa_bias": "balanced",
-      "spell_group_weight": 0.0,
+      "spell_group_weight": 0,
       "variants": [],
       "description": "Entertainers make a living through public performance. Variants include acrobats, animal performers, musicians, comedians, snake charmers, and wandering scholars.",
       "source": "WdH #34 p. 137",
@@ -7744,7 +7747,7 @@
       "talent_choice_modifiers": [],
       "automatic_SAs": [
         {
-          "id": "knowledge_of_a_place",
+          "id": "local_knowledge",
           "note": "own Stadt/own city district"
         },
         {
@@ -7779,10 +7782,10 @@
         "artisan_talents": 0.08
       },
       "talent_bias": {
-        "etiquette": 2.0,
+        "etiquette": 2,
         "persuade": 1.95,
         "human_nature": 1.9,
-        "fast_talk": 2.0,
+        "fast_talk": 2,
         "streetwise": 1.7,
         "seduce": 1.65,
         "carouse": 1.65,
@@ -7840,7 +7843,7 @@
         "agoraphobia": 0.45
       },
       "at_pa_bias": "balanced",
-      "spell_group_weight": 0.0,
+      "spell_group_weight": 0,
       "variants": [],
       "description": "Merchants trade goods, money, or information. Separate profiles cover traveling traders, money changers, wholesalers, peddlers, fences, shopkeepers, and barter traders.",
       "source": "WdH #35 p. 138",
@@ -7993,7 +7996,7 @@
         "heraldry": 2.17,
         "warcraft": 1.33,
         "law": 1.67,
-        "paint_draw": 2.0
+        "paint_draw": 2
       },
       "talent_avoid_bias": {
         "two_handed_swords": 0.32,
@@ -8031,7 +8034,7 @@
         "agoraphobia": 0.45
       },
       "at_pa_bias": "balanced",
-      "spell_group_weight": 0.0,
+      "spell_group_weight": 0,
       "variants": [],
       "description": "Heralds are trained in protocol, genealogy, coats of arms, public representation, and formal communication.",
       "source": "WdH #36 p. 138",
@@ -8157,7 +8160,7 @@
         "artisan_talents": 0.08
       },
       "talent_bias": {
-        "etiquette": 2.0,
+        "etiquette": 2,
         "persuade": 1.95,
         "human_nature": 1.9,
         "fast_talk": 1.75,
@@ -8217,7 +8220,7 @@
         "agoraphobia": 0.45
       },
       "at_pa_bias": "balanced",
-      "spell_group_weight": 0.0,
+      "spell_group_weight": 0,
       "variants": [],
       "description": "Court artists serve wealthy patrons through specialized artistic performance or craft, including sculpture, acting, music, calligraphy, and dance instruction.",
       "source": "WdH #37 p. ?",
@@ -8351,7 +8354,7 @@
         "artisan_talents": 0.08
       },
       "talent_bias": {
-        "etiquette": 2.0,
+        "etiquette": 2,
         "persuade": 1.95,
         "human_nature": 1.9,
         "fast_talk": 1.75,
@@ -8411,7 +8414,7 @@
         "agoraphobia": 0.45
       },
       "at_pa_bias": "balanced",
-      "spell_group_weight": 0.0,
+      "spell_group_weight": 0,
       "variants": [],
       "description": "Courtiers and ladies-in-waiting navigate noble households through etiquette, influence, culture, and personal connections.",
       "source": "WdH #38 p. 140",
@@ -8563,7 +8566,7 @@
         "artisan_talents": 0.08
       },
       "talent_bias": {
-        "etiquette": 2.0,
+        "etiquette": 2,
         "persuade": 1.95,
         "human_nature": 1.9,
         "fast_talk": 1.75,
@@ -8624,7 +8627,7 @@
         "agoraphobia": 0.45
       },
       "at_pa_bias": "balanced",
-      "spell_group_weight": 0.0,
+      "spell_group_weight": 0,
       "variants": [],
       "description": "Courtesans and companions provide cultivated social company and intimate services; the section therefore contains the less prestigious prostitute or catamite profile.",
       "source": "WdH #39 p. 140",
@@ -8724,7 +8727,7 @@
       ],
       "automatic_SAs": [
         {
-          "id": "knowledge_pleasing_to_nandus"
+          "id": "nandus_pleasing_knowledge"
         }
       ],
       "discounted_SAs": [],
@@ -8752,7 +8755,7 @@
         "artisan_talents": 0.08
       },
       "talent_bias": {
-        "etiquette": 2.0,
+        "etiquette": 2,
         "persuade": 1.95,
         "human_nature": 1.9,
         "fast_talk": 1.75,
@@ -8809,7 +8812,7 @@
         "agoraphobia": 0.45
       },
       "at_pa_bias": "balanced",
-      "spell_group_weight": 0.0,
+      "spell_group_weight": 0,
       "variants": [],
       "description": "Private tutors educate children or adults in languages, lore, manners, and selected practical subjects.",
       "source": "WdH #40 p. 141",
@@ -8919,7 +8922,7 @@
       "automatic_SAs": [],
       "discounted_SAs": [
         {
-          "id": "knowledge_pleasing_to_nandus"
+          "id": "nandus_pleasing_knowledge"
         }
       ],
       "starting_equipment": [
@@ -8944,7 +8947,7 @@
         "artisan_talents": 0.08
       },
       "talent_bias": {
-        "etiquette": 2.0,
+        "etiquette": 2,
         "persuade": 1.95,
         "human_nature": 1.9,
         "fast_talk": 1.75,
@@ -9003,7 +9006,7 @@
         "agoraphobia": 0.45
       },
       "at_pa_bias": "balanced",
-      "spell_group_weight": 0.0,
+      "spell_group_weight": 0,
       "variants": [],
       "description": "Writers produce literary, scholarly, or commissioned texts. The pamphleteer variant focuses on public persuasion and controversy.",
       "source": "WdH #41 p. 141",
@@ -9097,7 +9100,7 @@
           "id": "alertness_or_knowledge_pleasing_to_nandus"
         },
         {
-          "id": "knowledge_of_a_place"
+          "id": "local_knowledge"
         }
       ],
       "discounted_SAs": [],
@@ -9127,7 +9130,7 @@
         "artisan_talents": 0.08
       },
       "talent_bias": {
-        "etiquette": 2.0,
+        "etiquette": 2,
         "persuade": 1.95,
         "human_nature": 1.9,
         "fast_talk": 1.75,
@@ -9183,7 +9186,7 @@
         "agoraphobia": 0.45
       },
       "at_pa_bias": "balanced",
-      "spell_group_weight": 0.0,
+      "spell_group_weight": 0,
       "variants": [],
       "description": "Spies gather and transmit information. Informant and Nanduriat profiles differ in status, education, loyalty, and operational training.",
       "source": "WdH #42 p. 142",
@@ -9322,15 +9325,15 @@
         "stealth"
       ],
       "talent_group_weights": {
-        "social_talents": 0.45,
-        "lore_talents": 0.22,
+        "social_talents": 0.38,
+        "lore_talents": 0.19,
         "physical_talents": 0.1,
-        "combat_talents": 0.08,
+        "combat_talents": 0.18,
         "nature_talents": 0.07,
         "artisan_talents": 0.08
       },
       "talent_bias": {
-        "etiquette": 2.0,
+        "etiquette": 2,
         "persuade": 1.95,
         "human_nature": 1.9,
         "fast_talk": 1.75,
@@ -9357,7 +9360,10 @@
         "calculate": 1.33,
         "appraise": 1.5,
         "cheat": 1.33,
-        "pick_locks": 1.33
+        "pick_locks": 1.33,
+        "fencing_weapons": 1.4,
+        "sabers": 1.4,
+        "swords": 1.4
       },
       "talent_avoid_bias": {
         "two_handed_swords": 0.32,
@@ -9395,7 +9401,7 @@
         "agoraphobia": 0.45
       },
       "at_pa_bias": "balanced",
-      "spell_group_weight": 0.0,
+      "spell_group_weight": 0,
       "variants": [],
       "description": "Rogues survive through charm, street knowledge, opportunism, and deception. Variants include impostors, fixers, gamblers, and procurers.",
       "source": "WdH #43 p. 143",
@@ -9547,7 +9553,7 @@
         "artisan_talents": 0.08
       },
       "talent_bias": {
-        "etiquette": 2.0,
+        "etiquette": 2,
         "persuade": 1.95,
         "human_nature": 1.9,
         "fast_talk": 1.75,
@@ -9614,7 +9620,7 @@
         "agoraphobia": 0.45
       },
       "at_pa_bias": "balanced",
-      "spell_group_weight": 0.0,
+      "spell_group_weight": 0,
       "variants": [],
       "description": "Dilettantes are privileged or rootless individuals without a conventional career, including dandies and broadly educated amateurs.",
       "source": "WdH #44 p. 143",
@@ -9738,7 +9744,7 @@
       ],
       "automatic_SAs": [
         {
-          "id": "knowledge_of_a_place",
+          "id": "local_knowledge",
           "note": "area around the inn"
         },
         {
@@ -9774,7 +9780,7 @@
         "artisan_talents": 0.08
       },
       "talent_bias": {
-        "etiquette": 2.0,
+        "etiquette": 2,
         "persuade": 1.95,
         "human_nature": 1.9,
         "fast_talk": 1.83,
@@ -9837,7 +9843,7 @@
         "agoraphobia": 0.45
       },
       "at_pa_bias": "balanced",
-      "spell_group_weight": 0.0,
+      "spell_group_weight": 0,
       "variants": [],
       "description": "Innkeepers run taverns, inns, or similar establishments, combining household management, trade, social judgment, cooking, and local knowledge.",
       "source": "WdH #45 p. 144",
@@ -9972,7 +9978,7 @@
         "athletics": 1.7,
         "wrestling": 1.8,
         "brawling": 1.75,
-        "swords": 2.0,
+        "swords": 2,
         "infantry_weapons": 1.95,
         "axes_and_maces": 1.85,
         "two_handed_swords": 1.8,
@@ -10045,7 +10051,7 @@
         "vertigo": 0.35
       },
       "at_pa_bias": "offensive",
-      "spell_group_weight": 0.0,
+      "spell_group_weight": 0,
       "variants": [],
       "description": "Bathhouse attendants and barbers provide grooming, bathing, simple medical, and social services.",
       "source": "WdH #46 p. 145",
@@ -10149,7 +10155,7 @@
       ],
       "automatic_SAs": [
         {
-          "id": "knowledge_of_a_place",
+          "id": "local_knowledge",
           "note": "Ackerland / Dorf"
         },
         {
@@ -10188,7 +10194,7 @@
         "athletics": 1.7,
         "wrestling": 1.8,
         "brawling": 1.75,
-        "swords": 2.0,
+        "swords": 2,
         "infantry_weapons": 1.95,
         "axes_and_maces": 1.85,
         "two_handed_swords": 1.8,
@@ -10212,7 +10218,7 @@
         "legend_lore": 1.33,
         "animal_lore": 1.5,
         "animal_training": 1.17,
-        "farming": 2.0,
+        "farming": 2,
         "drive": 1.33,
         "butcher": 1.17,
         "treat_disease": 1.17,
@@ -10267,7 +10273,7 @@
         "vertigo": 0.35
       },
       "at_pa_bias": "offensive",
-      "spell_group_weight": 0.0,
+      "spell_group_weight": 0,
       "variants": [],
       "description": "Farmers and agricultural workers cultivate land or manage rural production. Numerous variants represent laborers, slaves, freeholders, gardeners, estate owners, servants, millers, planters, breeders, and vintners.",
       "source": "WdH #47 p. 145",
@@ -10445,7 +10451,7 @@
         "inaptitude_combat_physical_group": 0.6
       },
       "at_pa_bias": "defensive",
-      "spell_group_weight": 0.0,
+      "spell_group_weight": 0,
       "variants": [],
       "description": "Miners extract ore and stone and are trained in underground work, tools, hazards, and mineral knowledge.",
       "source": "WdH #48 p. 146",
@@ -10552,7 +10558,7 @@
       ],
       "automatic_SAs": [
         {
-          "id": "knowledge_of_a_place",
+          "id": "local_knowledge",
           "note": "city district / Plantage etc."
         }
       ],
@@ -10644,7 +10650,7 @@
         "inaptitude_combat_physical_group": 0.6
       },
       "at_pa_bias": "defensive",
-      "spell_group_weight": 0.0,
+      "spell_group_weight": 0,
       "variants": [],
       "description": "Domestic servants work in households or courts. Profiles include household servants, laborers, slaves, coachmen, personal attendants, and Achaz educators.",
       "source": "WdH #49 p. 147",
@@ -10807,7 +10813,7 @@
         "inaptitude_combat_physical_group": 0.6
       },
       "at_pa_bias": "defensive",
-      "spell_group_weight": 0.0,
+      "spell_group_weight": 0,
       "variants": [],
       "description": "Fine artisans practice learned or precision crafts. Variants include apothecaries, printers, casters, and mechanics, each with additional requirements and specialized Talents.",
       "source": "WdH #50 p. 148",
@@ -10885,7 +10891,7 @@
       ],
       "automatic_SAs": [
         {
-          "id": "knowledge_pleasing_to_nandus",
+          "id": "nandus_pleasing_knowledge",
           "note": "from Advantage Academic Training"
         }
       ],
@@ -10969,7 +10975,7 @@
         "inaptitude_combat_physical_group": 0.6
       },
       "at_pa_bias": "defensive",
-      "spell_group_weight": 0.0,
+      "spell_group_weight": 0,
       "variants": [],
       "description": "Scholars pursue systematic learning in a chosen field. The section provides different academic specializations with corresponding lore, language, and writing profiles.",
       "source": "WdH #51 p. 149",
@@ -11064,7 +11070,7 @@
       ],
       "automatic_SAs": [
         {
-          "id": "knowledge_of_a_place",
+          "id": "local_knowledge",
           "note": "city district or Stadt"
         },
         {
@@ -11159,7 +11165,7 @@
         "inaptitude_combat_physical_group": 0.6
       },
       "at_pa_bias": "defensive",
-      "spell_group_weight": 0.0,
+      "spell_group_weight": 0,
       "variants": [],
       "description": "Artisans earn their living through a trade. Each craft variant supplies its own core Artisan Talent, supporting Talents, tools, and cost.",
       "source": "WdH #52 p. 150",
@@ -11256,14 +11262,14 @@
       ],
       "automatic_SAs": [
         {
-          "id": "knowledge_of_a_place",
+          "id": "local_knowledge",
           "note": "city district / Stadt / Kanalisation"
         },
         {
-          "id": "aquatic_combat"
+          "id": "combat_in_water"
         },
         {
-          "id": "evade_i"
+          "id": "dodge_i"
         }
       ],
       "discounted_SAs": [],
@@ -11343,7 +11349,7 @@
         "inaptitude_combat_physical_group": 0.6
       },
       "at_pa_bias": "defensive",
-      "spell_group_weight": 0.0,
+      "spell_group_weight": 0,
       "variants": [],
       "description": "Rat-catchers control vermin in settlements and sewers, combining traps, animal knowledge, disease awareness, and practical survival.",
       "source": "WdH #53 p. 151",
@@ -11438,11 +11444,11 @@
       ],
       "automatic_SAs": [
         {
-          "id": "knowledge_of_a_place",
+          "id": "local_knowledge",
           "note": "Stadt"
         },
         {
-          "id": "knowledge_pleasing_to_nandus"
+          "id": "nandus_pleasing_knowledge"
         }
       ],
       "discounted_SAs": [],
@@ -11533,7 +11539,7 @@
         "inaptitude_combat_physical_group": 0.6
       },
       "at_pa_bias": "defensive",
-      "spell_group_weight": 0.0,
+      "spell_group_weight": 0,
       "variants": [],
       "description": "Scribes copy, compose, calculate, and manage written records; variants represent different administrative and literary specializations.",
       "source": "WdH #54 p. 152",
@@ -11657,7 +11663,7 @@
         "athletics": 1.7,
         "wrestling": 1.8,
         "brawling": 1.75,
-        "swords": 2.0,
+        "swords": 2,
         "infantry_weapons": 1.95,
         "axes_and_maces": 1.85,
         "two_handed_swords": 1.8,
@@ -11725,7 +11731,7 @@
         "vertigo": 0.35
       },
       "at_pa_bias": "offensive",
-      "spell_group_weight": 0.0,
+      "spell_group_weight": 0,
       "variants": [],
       "description": "Day laborers perform changing manual work. Variants represent common labor contexts with different physical, craft, and social emphases.",
       "source": "WdH #55 p. 153",
@@ -11868,7 +11874,7 @@
         "athletics": 1.7,
         "wrestling": 1.8,
         "brawling": 1.75,
-        "swords": 2.0,
+        "swords": 2,
         "infantry_weapons": 1.95,
         "axes_and_maces": 1.85,
         "two_handed_swords": 1.8,
@@ -11940,7 +11946,7 @@
         "vertigo": 0.35
       },
       "at_pa_bias": "offensive",
-      "spell_group_weight": 0.0,
+      "spell_group_weight": 0,
       "variants": [],
       "description": "Animal trainers capture, handle, train, and present animals, combining Animal Lore, Train Animals, observation, and physical control.",
       "source": "WdH #56 p. 153",
@@ -12040,7 +12046,7 @@
       "automatic_SAs": [],
       "discounted_SAs": [
         {
-          "id": "stunning_blow"
+          "id": "stun_blow_sa"
         }
       ],
       "starting_equipment": [
@@ -12093,7 +12099,7 @@
         "legend_lore": 1.17,
         "treat_poison": 1.5,
         "treat_disease": 1.5,
-        "treat_wounds": 2.0
+        "treat_wounds": 2
       },
       "talent_avoid_bias": {
         "jousting": 0.3,
@@ -12126,7 +12132,7 @@
         "inaptitude_combat_physical_group": 0.6
       },
       "at_pa_bias": "defensive",
-      "spell_group_weight": 0.0,
+      "spell_group_weight": 0,
       "variants": [],
       "description": "Chirurgeons are practical healers trained in wounds, disease, poison, anatomy, and medical craft; specializations former their methods and social position.",
       "source": "WdH #57 p. 154",
@@ -12268,13 +12274,13 @@
       ],
       "discounted_SAs": [
         {
-          "id": "evade_i"
+          "id": "dodge_i"
         },
         {
           "id": "master_of_improvisation"
         },
         {
-          "id": "knowledge_pleasing_to_nandus"
+          "id": "nandus_pleasing_knowledge"
         },
         {
           "id": "talent_specialization_cook",
@@ -12554,7 +12560,7 @@
           "id": "as_a_meditation_dance_in_the_dervish_tradition"
         },
         {
-          "id": "unarmed_combat_style_unau_school"
+          "id": "unarmed_style_unauer"
         }
       ],
       "starting_equipment": [
@@ -13023,7 +13029,7 @@
         "athletics": 1.7,
         "wrestling": 1.8,
         "brawling": 1.75,
-        "swords": 2.0,
+        "swords": 2,
         "infantry_weapons": 1.95,
         "axes_and_maces": 1.85,
         "two_handed_swords": 1.8,
@@ -15456,7 +15462,7 @@
       },
       "talent_bias": {
         "swords": 2.15,
-        "sabers": 2.0,
+        "sabers": 2,
         "infantry_weapons": 1.95,
         "axes_and_maces": 1.85,
         "spears": 1.85,
@@ -15471,7 +15477,7 @@
         "perception": 1.45,
         "persuade": 1.45,
         "law": 1.4,
-        "religious_lore": 2.0,
+        "religious_lore": 2,
         "orientation": 1.24,
         "survival": 1.12,
         "geography": 1.12,
@@ -16785,11 +16791,11 @@
         "fish": 1.85,
         "orientation": 1.8,
         "weather_sense": 1.9,
-        "boats": 2.0,
+        "boats": 2,
         "seafaring": 2.15,
         "carpenter": 1.65,
         "self_control": 1.45,
-        "religious_lore": 2.0,
+        "religious_lore": 2,
         "daggers": 1.24,
         "brawling": 1.24,
         "spears": 1.36,
@@ -17239,7 +17245,7 @@
         "treat_disease": 1.85,
         "treat_wounds": 1.55,
         "animal_training": 1.45,
-        "religious_lore": 2.0,
+        "religious_lore": 2,
         "brawling": 1.24,
         "sing": 1.36,
         "dance": 1.24,
@@ -19097,7 +19103,7 @@
           "id": "karmal_quest"
         },
         {
-          "id": "knowledge_pleasing_to_nandus"
+          "id": "nandus_pleasing_knowledge"
         }
       ],
       "discounted_SAs": [],
@@ -20481,7 +20487,7 @@
         "plant_lore": 1.45,
         "animal_lore": 1.55,
         "animal_training": 1.4,
-        "religious_lore": 2.0,
+        "religious_lore": 2,
         "athletics": 1.24,
         "etiquette": 1.24,
         "persuade": 1.24,
@@ -21228,7 +21234,7 @@
           "id": "karmal_quest"
         },
         {
-          "id": "evade_i"
+          "id": "dodge_i"
         }
       ],
       "discounted_SAs": [],
@@ -21272,7 +21278,7 @@
         "tailor": 1.4,
         "plant_lore": 1.6,
         "animal_training": 1.35,
-        "religious_lore": 2.0,
+        "religious_lore": 2,
         "sneak": 1.24,
         "hide": 1.24,
         "survival": 1.24,
@@ -22725,12 +22731,12 @@
           "id": "liturgy_knowledge_phex_3"
         },
         {
-          "id": "knowledge_of_a_place"
+          "id": "local_knowledge"
         }
       ],
       "discounted_SAs": [
         {
-          "id": "evade_i"
+          "id": "dodge_i"
         },
         {
           "id": "liturgys",
@@ -22784,7 +22790,7 @@
       },
       "talent_bias": {
         "body_control": 1.85,
-        "sneak": 2.0,
+        "sneak": 2,
         "hide": 1.9,
         "streetwise": 1.95,
         "human_nature": 1.75,
@@ -22801,7 +22807,7 @@
         "juggling": 1.35,
         "daggers": 1.45,
         "throwing_knives": 1.4,
-        "religious_lore": 2.0,
+        "religious_lore": 2,
         "athletics": 1.24,
         "perception": 1.12,
         "bind_escape": 1.36,
@@ -23339,7 +23345,7 @@
         "teach": 1.65,
         "human_nature": 1.7,
         "persuade": 1.6,
-        "plant_lore": 2.0,
+        "plant_lore": 2,
         "animal_lore": 1.85,
         "farming": 1.95,
         "treat_disease": 2.1,
@@ -23347,7 +23353,7 @@
         "treat_poison": 1.7,
         "cook": 1.8,
         "animal_training": 1.55,
-        "religious_lore": 2.0,
+        "religious_lore": 2,
         "daggers": 1.12,
         "brawling": 1.24,
         "staves": 1.12,
@@ -24051,7 +24057,7 @@
         "stonecutter_jeweler": 1.55,
         "carpenter": 1.45,
         "alchemy": 1.4,
-        "religious_lore": 2.0,
+        "religious_lore": 2,
         "leathercraft": 1.24
       },
       "talent_avoid_bias": {
@@ -25518,7 +25524,7 @@
         "juggling": 1.4,
         "acrobatics": 1.4,
         "tattoo": 1.35,
-        "religious_lore": 2.0,
+        "religious_lore": 2,
         "daggers": 1.24,
         "wrestling": 1.48,
         "sneak": 1.24,
@@ -26808,7 +26814,7 @@
           "id": "acolyte"
         },
         {
-          "id": "evade_i"
+          "id": "dodge_i"
         }
       ],
       "starting_equipment": [
@@ -26842,7 +26848,7 @@
         "anatomy": 1.95,
         "plant_lore": 1.75,
         "human_nature": 1.83,
-        "religious_lore": 2.0,
+        "religious_lore": 2,
         "calculate": 1.67,
         "alchemy": 1.55,
         "perception": 1.5,
@@ -26860,7 +26866,7 @@
         "orientation": 1.33,
         "weather_sense": 1.33,
         "geography": 1.5,
-        "history": 2.0,
+        "history": 2,
         "heraldry": 1.33,
         "arcane_lore": 1.33,
         "law": 1.67,
@@ -27022,11 +27028,11 @@
         "orientation": 1.9,
         "weather_sense": 1.75,
         "survival": 1.8,
-        "geography": 2.0,
+        "geography": 2,
         "language_lore": 1.85,
         "cartography": 1.8,
         "body_control": 1.5,
-        "religious_lore": 2.0,
+        "religious_lore": 2,
         "daggers": 1.12,
         "brawling": 1.24,
         "staves": 1.24,
@@ -27604,7 +27610,7 @@
           "id": "karmal_quest"
         },
         {
-          "id": "knowledge_pleasing_to_nandus"
+          "id": "nandus_pleasing_knowledge"
         }
       ],
       "discounted_SAs": [],
@@ -27628,7 +27634,7 @@
         "artisan_talents": 0.12
       },
       "talent_bias": {
-        "teach": 2.0,
+        "teach": 2,
         "human_nature": 1.8,
         "fast_talk": 1.75,
         "persuade": 1.75,
@@ -27640,7 +27646,7 @@
         "streetwise": 1.5,
         "alchemy": 1.45,
         "cartography": 1.45,
-        "religious_lore": 2.0,
+        "religious_lore": 2,
         "staves": 1.24,
         "sneak": 1.12,
         "self_control": 1.24,
@@ -28495,7 +28501,7 @@
         "treat_wounds": 1.55,
         "human_nature": 1.5,
         "persuade": 1.45,
-        "religious_lore": 2.0,
+        "religious_lore": 2,
         "bows": 1.6,
         "athletics": 1.12,
         "sing": 1.12,
@@ -29035,7 +29041,7 @@
         "greed": 0.55
       },
       "at_pa_bias": "defensive",
-      "spell_group_weight": 0.0,
+      "spell_group_weight": 0,
       "variants": [],
       "description": "Horas Knights are consecrated champions of the Horas cult, combining noble or military training with specific divine duties. Wege der Helden does not print a self-contained Horas Knight generation package. For lower ranks trained by the order, use one of these parent professions: Academy Guard (p. 102), Courier (p. 123), Crier (p. 134), Domestic Servant (p. 146), or Scribe (p. 152), and use available starting AP to adjust the character toward the Horas cult. Requirements for higher rank: SO 7, CH 12, Etiquette 7, Fast Talk 10, Persuade 8, Religious Lore 8, Read/Write (Kuslik Signs) 7, and Languages (Garethi/Horathi and Bosparano) 10. Until all minimum Talent values are met, the candidate holds the rank of Horas Page; on the next 7 Praios thereafter, the candidate receives the order's “consecration” as a Horas Squire. With SO 10 or higher and payment of substantial bribes, this “consecration” may therefore be obtained without meeting the other minimum requirements. Source page: 229.",
       "source": "WdH (structural heading)",
@@ -29192,7 +29198,7 @@
           "id": "karmal_quest"
         },
         {
-          "id": "aquatic_combat"
+          "id": "combat_in_water"
         },
         {
           "id": "sea_lore"
@@ -29206,7 +29212,7 @@
           "id": "shield_fighting_i"
         },
         {
-          "id": "called_attack"
+          "id": "called_attack_sa"
         }
       ],
       "starting_equipment": [
@@ -29256,7 +29262,7 @@
         "legend_lore": 1.48,
         "animal_lore": 1.35,
         "carpenter": 1.4,
-        "religious_lore": 2.0,
+        "religious_lore": 2,
         "daggers": 1.12,
         "throwing_axes": 1.36,
         "climb": 1.12,
@@ -29744,7 +29750,7 @@
         "stonecutter_jeweler": 1.6,
         "history": 1.55,
         "heraldry": 1.4,
-        "religious_lore": 2.0
+        "religious_lore": 2
       },
       "talent_avoid_bias": {
         "swim": 0.25,
@@ -30519,7 +30525,7 @@
         "greed": 0.55
       },
       "at_pa_bias": "defensive",
-      "spell_group_weight": 0.0,
+      "spell_group_weight": 0,
       "variants": [],
       "description": "H’Ranga priests are Achaz religious specialists whose exact profile depends on the worshiped H’Ranga and associated rites. This is a shared explanatory heading, not a separate costed profession profile. The complete published H'Ranga priest profiles follow as Priest of H'Szint and Priest of Zsahh. H'Ranga priests primarily serve their community by propitiating the H'Ranga; they perform rites as rarely as possible and preferably in temples, may not enter temples or holy places of other H'Ranga, and are not obliged to preach. Source page: 230.",
       "source": "WdH (structural heading)",
@@ -30673,7 +30679,7 @@
           "id": "karmal_quest"
         },
         {
-          "id": "knowledge_pleasing_to_nandus"
+          "id": "nandus_pleasing_knowledge"
         }
       ],
       "discounted_SAs": [],
@@ -31104,7 +31110,7 @@
       ],
       "automatic_SAs": [
         {
-          "id": "knowledge_pleasing_to_nandus"
+          "id": "nandus_pleasing_knowledge"
         }
       ],
       "discounted_SAs": [],
@@ -31139,7 +31145,7 @@
         "anatomy": 1.95,
         "plant_lore": 1.75,
         "human_nature": 1.83,
-        "religious_lore": 2.0,
+        "religious_lore": 2,
         "calculate": 1.45,
         "alchemy": 1.55,
         "perception": 1.5,
@@ -31151,7 +31157,7 @@
         "etiquette": 1.33,
         "teach": 1.83,
         "fast_talk": 1.5,
-        "persuade": 2.0,
+        "persuade": 2,
         "orientation": 1.17,
         "survival": 1.17,
         "woodcraft": 1.17,
@@ -31284,7 +31290,7 @@
         "greed": 0.55
       },
       "at_pa_bias": "defensive",
-      "spell_group_weight": 0.0,
+      "spell_group_weight": 0,
       "variants": [],
       "description": "Followers of Rastullah are not automatically consecrated priests; this section presents religiously shaped profession options and requirements within Novadi society. This heading does not provide a standalone profession stat block. A Rastullah-believing merchant, mercenary, entertainer, or member of another ordinary profession need not make the faith the center of life. A generous interpretation of the 99 Laws should not take the Principles Disadvantage. Rastullah grants no Karma Energy and therefore requires no special Advantage. To give the hero's belief in divine favor mechanical substance, the source suggests Danger Sense, Luck, High Resistance to Magic, or Favored by Fate. The two dedicated profiles that follow are Tribal Warrior of the Beni Dervez and Hadjinim. Source page: 232.",
       "source": "WdH (structural heading)",
@@ -31485,16 +31491,16 @@
           "id": "lunge"
         },
         {
-          "id": "two_weapon_combat_ii"
+          "id": "ambidextrous_combat_ii"
         },
         {
-          "id": "double_attack"
+          "id": "double_attack_sa"
         },
         {
-          "id": "feint"
+          "id": "feint_sa"
         },
         {
-          "id": "blade_storm"
+          "id": "blade_storm_sa"
         },
         {
           "id": "unarmed_combat_style",
@@ -31532,7 +31538,7 @@
         "athletics": 1.7,
         "wrestling": 1.8,
         "brawling": 1.75,
-        "swords": 2.0,
+        "swords": 2,
         "infantry_weapons": 1.95,
         "axes_and_maces": 1.85,
         "two_handed_swords": 1.8,
@@ -31541,7 +31547,7 @@
         "chain_weapons": 1.6,
         "perception": 1.45,
         "daggers": 1.5,
-        "sabers": 2.0,
+        "sabers": 2,
         "staves": 1.5,
         "acrobatics": 1.33,
         "climb": 1.33,
@@ -33912,7 +33918,7 @@
         "treat_poison": 1.95,
         "treat_disease": 1.9,
         "anatomy": 1.95,
-        "plant_lore": 2.0,
+        "plant_lore": 2,
         "human_nature": 1.83,
         "religious_lore": 1.45,
         "calculate": 1.5,
@@ -34750,7 +34756,7 @@
         "inaptitude_swimming": 0.12
       },
       "at_pa_bias": "offensive",
-      "spell_group_weight": 0.0,
+      "spell_group_weight": 0,
       "data_notes": "Legacy BRW entry retained pending WdH variant pass (pirate→Seafarer variant; legend_singer/ranger→Elven Professions variants).; Dropped unknown talent ids (not in catalog yet): choice:maces, choice:remaining_maces_sabers, talent_bias:cooking_or_mechanics_or_tailoring_or_starcraft_or_carpentry, talent_bias:throwing_weapon_primary, talent_bias:throwing_weapon_secondary, talent_modifiers:cooking_or_mechanics_or_tailoring_or_starcraft_or_carpentry, talent_modifiers:throwing_weapon_primary, talent_modifiers:throwing_weapon_secondary"
     },
     {
@@ -34838,7 +34844,7 @@
         "sneak": 1.7,
         "perception": 1.65,
         "body_control": 1.55,
-        "sing": 2.0,
+        "sing": 2,
         "dance": 1.67,
         "arcane_lore": 1.75,
         "legend_lore": 1.83,
@@ -34975,10 +34981,10 @@
         "artisan_talents": 0.07
       },
       "talent_bias": {
-        "bows": 2.0,
+        "bows": 2,
         "plant_lore": 1.85,
         "animal_lore": 1.83,
-        "track": 2.0,
+        "track": 2,
         "sneak": 1.83,
         "perception": 1.83,
         "body_control": 1.55,
@@ -34995,7 +35001,7 @@
         "swim": 1.5,
         "hide": 1.83,
         "trap": 1.5,
-        "survival": 2.0,
+        "survival": 2,
         "treat_wounds": 1.5
       },
       "talent_avoid_bias": {

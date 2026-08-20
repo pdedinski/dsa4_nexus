@@ -380,7 +380,7 @@ Additional common abbreviations
 | Überzahl                         | numerical superiority               |                                               |
 | Attacke                          | Attack                              |                                               |
 | Parade                           | Parry                               |                                               |
-| Ausweichen                       | Dodge                               |                                               |
+| Ausweichen                       | Evade                               |                                               |
 | Fernkampfangriff                 | Ranged Attack                       |                                               |
 | Attackewert                      | Attack Value                        | AT.                                           |
 | Paradewert                       | Parry Value                         | PA.                                           |

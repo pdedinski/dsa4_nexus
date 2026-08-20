@@ -11,6 +11,10 @@ import specialAbilitiesData from "@/data/character/special_abilities.json";
 import weaponsData from "@/data/equipment/weapons.json";
 import { ALL_TALENT_IDS, TALENT_INDEX } from "@/lib/talents/catalog";
 import { mergeTalentModifiersNormalized } from "@/lib/talents/modifierNormalization";
+import {
+  MANEUVER_ROOT_ALLOWLIST,
+  saFitsWeaponLoadout,
+} from "@/lib/character/maneuverLoadoutFit";
 
 import {
   spellActivationCost,
@@ -78,6 +82,31 @@ const TRAIT_ID_ALIASES: Record<string, string> = {
 
 function resolveTraitId(id: string): string {
   return TRAIT_ID_ALIASES[id] ?? id;
+}
+
+/**
+ * Profession/race/culture SA ids that differ from special_abilities.json.
+ * Prefer fixing data at source; this is a safety net for leftovers.
+ */
+const SA_ID_ALIASES: Record<string, string> = {
+  evade_i: "dodge_i",
+  evade_ii: "dodge_ii",
+  evade_iii: "dodge_iii",
+  feint: "feint_sa",
+  blade_storm: "blade_storm_sa",
+  called_attack: "called_attack_sa",
+  double_attack: "double_attack_sa",
+  stunning_blow: "stun_blow_sa",
+  knowledge_of_a_place: "local_knowledge",
+  aquatic_combat: "combat_in_water",
+  knowledge_pleasing_to_nandus: "nandus_pleasing_knowledge",
+  two_weapon_combat_ii: "ambidextrous_combat_ii",
+  unarmed_combat_style_unau_school: "unarmed_style_unauer",
+  combat_instinct: "combat_awareness",
+};
+
+function resolveSaId(id: string): string {
+  return SA_ID_ALIASES[id] ?? id;
 }
 
 function enrichTraitInstance(
@@ -414,6 +443,9 @@ const WEAPON_FOCUS_OFF_TYPE_FACTOR = 0.42;
  */
 const WEAPON_FOCUS_UNSELECTED_TYPE_FACTOR = 0.28;
 
+/** Positive boost for combat talents that match the wizard weapon loadout. */
+const WEAPON_FOCUS_ON_TYPE_FACTOR = 2.2;
+
 /**
  * Weight for one talent +1 TP step (same formula as {@link pickWeightedTalentForStep}).
  */
@@ -442,12 +474,16 @@ function talentStepPickWeight(
         w *= WEAPON_FOCUS_UNSELECTED_TYPE_FACTOR;
       } else if (weaponFocus.melee.size > 0 && !weaponFocus.melee.has(id)) {
         w *= WEAPON_FOCUS_OFF_TYPE_FACTOR;
+      } else if (weaponFocus.melee.has(id)) {
+        w *= WEAPON_FOCUS_ON_TYPE_FACTOR;
       }
     } else if (isRanged) {
       if (weaponFocus.ranged.size === 0 && weaponFocus.melee.size > 0) {
         w *= WEAPON_FOCUS_UNSELECTED_TYPE_FACTOR;
       } else if (weaponFocus.ranged.size > 0 && !weaponFocus.ranged.has(id)) {
         w *= WEAPON_FOCUS_OFF_TYPE_FACTOR;
+      } else if (weaponFocus.ranged.has(id)) {
+        w *= WEAPON_FOCUS_ON_TYPE_FACTOR;
       }
     }
   }
@@ -589,7 +625,7 @@ function computeTalentSpend(
   return { cost, nextTp: tp + 1, usesNewActivation: false };
 }
 
-const WEAPON_LOADOUT_MIN_COMBAT_TALENT_TP = 1;
+const WEAPON_LOADOUT_MIN_COMBAT_TALENT_TP = 3;
 
 /**
  * Chosen weapons imply combat technique talents. Spend creation TGP (and
@@ -1031,14 +1067,19 @@ function dedupeSpecialAbilitiesById(
   const out: SpecialAbilityInstance[] = [];
   const indexById = new Map<string, number>();
   for (const s of list) {
-    const id = s.id;
+    const id = resolveSaId(s.id);
+    const catalog = SA_BY_ID.get(id);
     const existingIdx = indexById.get(id);
     if (existingIdx === undefined) {
       indexById.set(id, out.length);
-      out.push({ id, name: s.name, ...(s.note ? { note: s.note } : {}) });
+      out.push({
+        id,
+        name: s.name ?? catalog?.name,
+        ...(s.note ? { note: s.note } : {}),
+      });
     } else {
       const prev = out[existingIdx]!;
-      const name = prev.name ?? s.name;
+      const name = prev.name ?? s.name ?? catalog?.name;
       const noteParts = [prev.note, s.note].filter(
         (n): n is string => typeof n === "string" && n.trim() !== "",
       );
@@ -1090,7 +1131,8 @@ function purchaseGpSaChain(
   let left = gpStart;
   const trace = opts?.dbg;
 
-  for (const saId of orderedIds) {
+  for (const rawSaId of orderedIds) {
+    const saId = resolveSaId(rawSaId);
     if (mergedIds.has(saId)) {
       trace?.(`[GP:SA] skip ${saId} (already owned)`);
       continue;
@@ -1129,7 +1171,7 @@ function purchaseGpSaChain(
     if (abortChain) break;
     for (const raw of reqs) {
       const r = raw as { type?: string; sa?: string };
-      if (r.type === "sa_required" && r.sa && !mergedIds.has(r.sa)) {
+      if (r.type === "sa_required" && r.sa && !mergedIds.has(resolveSaId(r.sa))) {
         outNotes.push(
           `Could not buy ${def.name ?? saId} with GP: missing prerequisite SA "${r.sa}".`,
         );
@@ -1180,7 +1222,8 @@ function purchaseApSaChain(
   let left = startExtraLeft;
   const trace = opts?.dbg;
 
-  for (const saId of orderedIds) {
+  for (const rawSaId of orderedIds) {
+    const saId = resolveSaId(rawSaId);
     if (mergedIds.has(saId)) {
       trace?.(`[SA] skip ${saId} (already owned)`);
       continue;
@@ -1218,7 +1261,7 @@ function purchaseApSaChain(
     if (abortChain) break;
     for (const raw of reqs) {
       const r = raw as { type?: string; sa?: string };
-      if (r.type === "sa_required" && r.sa && !mergedIds.has(r.sa)) {
+      if (r.type === "sa_required" && r.sa && !mergedIds.has(resolveSaId(r.sa))) {
         outNotes.push(
           `Could not buy ${def.name ?? saId}: missing prerequisite SA "${r.sa}".`,
         );
@@ -1353,7 +1396,7 @@ function isChainUpgradeSa(
     const r = raw as { type?: string; sa?: string };
     if (r.type === "sa_required" && r.sa) {
       hasSaPrereq = true;
-      if (!ownedIds.has(r.sa)) return false;
+      if (!ownedIds.has(resolveSaId(r.sa))) return false;
     }
   }
   return hasSaPrereq;
@@ -1874,9 +1917,15 @@ export function generateCharacter(
   const CL = attrsFinal.CL;
   const IN = attrsFinal.IN;
 
-  const mergedTalents = mergeTalentModifiersNormalized(rng, race, culture, profession);
   const weaponBiasRows = collectWeaponBiasRows(input);
   const weaponLinkedCombatIds = collectWeaponLinkedCombatTalentIds(input);
+  const mergedTalents = mergeTalentModifiersNormalized(
+    rng,
+    race,
+    culture,
+    profession,
+    weaponLinkedCombatIds,
+  );
   const tgpTotal = (CL + IN) * 20;
   let tgpLeft = tgpTotal;
   dbg(`[Creation] TGP pool: (CL+IN)*20 = (${CL}+${IN})*20 = ${tgpTotal}`);
@@ -2423,7 +2472,11 @@ export function generateCharacter(
     return remaining;
   }
 
-  /** Generation-needed shield/armor chains first, then other SA chain upgrades. Returns unused bucket. */
+  /** Across all veteran SA slices — capped combat-maneuver roots. */
+  let maneuverRootsBought = 0;
+  const maxManeuverRoots = extraApBudget >= 2000 ? 2 : 1;
+
+  /** Generation-needed shield/armor chains first, then maneuver roots, then chain upgrades. Returns unused bucket. */
   function veteranSpendSaBucket(bucket: number): number {
     let remaining = bucket;
 
@@ -2505,9 +2558,160 @@ export function generateCharacter(
       return progressed;
     }
 
+    const MANEUVER_ELIGIBLE_PROFILES = new Set([
+      "frontline_fighter",
+      "combat_chain_fighter",
+      "combat_skirmisher",
+      "combat_talent_duelist",
+      "blessed_warrior",
+    ]);
+
+    function professionEligibleForManeuverRoots(): boolean {
+      const combatW =
+        typeof (weights.talent_group_weights as Record<string, number> | undefined)
+          ?.combat_talents === "number"
+          ? (weights.talent_group_weights as Record<string, number>).combat_talents
+          : 0;
+      if (combatW >= 0.15) return true;
+      if ((profession as { category?: string }).category === "combat") return true;
+      const profileId =
+        input.resolvedApSpendingProfile?.id ?? input.apProfileId ?? "";
+      return MANEUVER_ELIGIBLE_PROFILES.has(profileId);
+    }
+
+    function collectManeuverRootCandidates(
+      owned: Set<string>,
+    ): (typeof specialAbilitiesData.special_abilities)[number][] {
+      if (!professionEligibleForManeuverRoots()) return [];
+      if (weaponLinkedCombatIds.size === 0) return [];
+
+      const preferred = new Set<string>();
+      const disc = (profession as { discounted_SAs?: { id?: string }[] })
+        .discounted_SAs;
+      if (Array.isArray(disc)) {
+        for (const item of disc) {
+          const id = typeof item?.id === "string" ? resolveSaId(item.id) : "";
+          if (id) preferred.add(id);
+        }
+      }
+      for (const id of MANEUVER_ROOT_ALLOWLIST) preferred.add(id);
+
+      const combatW =
+        typeof (weights.talent_group_weights as Record<string, number> | undefined)
+          ?.combat_talents === "number"
+          ? (weights.talent_group_weights as Record<string, number>).combat_talents
+          : 0;
+      if (extraApBudget >= 2000 && combatW >= 0.3) {
+        preferred.add("combat_reflexes");
+      }
+      if (extraApBudget >= 2000) {
+        preferred.add("sharpshooter");
+      }
+
+      const out: (typeof specialAbilitiesData.special_abilities)[number][] = [];
+      for (const id of preferred) {
+        if (owned.has(id)) continue;
+        const def = SA_BY_ID.get(id);
+        if (!def || typeof def.ap_cost !== "number") continue;
+        // Allowlisted roots may still list sa_required (e.g. Formation → Alertness).
+        let prereqBlocked = false;
+        for (const raw of def.requirements ?? []) {
+          const r = raw as { type?: string; sa?: string };
+          if (r.type === "sa_required" && r.sa && !owned.has(resolveSaId(r.sa))) {
+            prereqBlocked = true;
+            break;
+          }
+        }
+        if (prereqBlocked) continue;
+        if (!saFitsWeaponLoadout(id, weaponLinkedCombatIds)) continue;
+        const incomp = def.incompatible_with ?? [];
+        if (incomp.some((cid: string) => owned.has(cid))) continue;
+        let attrBlocked = false;
+        for (const raw of def.requirements ?? []) {
+          const rq = raw as { type?: string; attr?: string; value?: number };
+          if (
+            rq.type === "attr_min" &&
+            rq.attr &&
+            typeof rq.value === "number"
+          ) {
+            const ac = rq.attr as AttrCode;
+            if ((attrsFinal[ac] ?? 0) < rq.value) {
+              attrBlocked = true;
+              break;
+            }
+          }
+        }
+        if (attrBlocked) continue;
+        out.push(def);
+      }
+      out.sort((a, b) => {
+        const score = (id: string) => {
+          if (id === "feint_sa") {
+            const light = [...weaponLinkedCombatIds].some((t) =>
+              ["fencing_weapons", "daggers", "sabers"].includes(t),
+            );
+            return light ? 0 : 2;
+          }
+          if (id === "called_attack_sa") {
+            const heavy = [...weaponLinkedCombatIds].some((t) =>
+              [
+                "axes_and_maces",
+                "two_handed_swords",
+                "two_handed_blunt_weapons",
+                "chain_weapons",
+                "infantry_weapons",
+                "bastard_sword",
+              ].includes(t),
+            );
+            return heavy ? 0 : 2;
+          }
+          return 1;
+        };
+        const ds = score(a.id) - score(b.id);
+        if (ds !== 0) return ds;
+        return a.ap_cost - b.ap_cost;
+      });
+      return out;
+    }
+
+    const allowAnyRoot = extraApBudget >= 500;
+
+    function tryBuyOneManeuverRoot(): boolean {
+      if (!allowAnyRoot) return false;
+      if (maneuverRootsBought >= maxManeuverRoots) return false;
+      const owned = new Set(specialAbilitiesOut.map((s) => s.id));
+      const rootCandidates = collectManeuverRootCandidates(owned);
+      if (rootCandidates.length === 0) return false;
+
+      for (const def of rootCandidates) {
+        const room = Math.min(extraLeft, remaining);
+        if (room < def.ap_cost) continue;
+        const rBuy = purchaseApSaChain(
+          [def.id],
+          attrsFinal,
+          specialAbilitiesOut,
+          room,
+          notes,
+          { dbg },
+        );
+        if (rBuy.newSas.length === 0) continue;
+        specialAbilitiesOut.push(...rBuy.newSas);
+        const spent = room - rBuy.extraLeft;
+        extraLeft -= spent;
+        remaining -= spent;
+        maneuverRootsBought += rBuy.newSas.length;
+        dbg(
+          `[VeteranAP:SA:Root] bought ${def.name ?? def.id} (−${spent} AP) roots=${maneuverRootsBought}/${maxManeuverRoots}`,
+        );
+        return true;
+      }
+      return false;
+    }
+
     let guardSa = 0;
     while (remaining > 0 && extraLeft > 0 && guardSa++ < 2000) {
       if (trySpendGenerationNeededInBucket()) continue;
+      if (tryBuyOneManeuverRoot()) continue;
 
       const owned = new Set(specialAbilitiesOut.map((s) => s.id));
 
@@ -2516,6 +2720,13 @@ export function generateCharacter(
       for (const def of specialAbilitiesData.special_abilities) {
         if (!def.ap_cost || typeof def.ap_cost !== "number") continue;
         if (owned.has(def.id)) continue;
+        // Loadout-gated roots are bought only via tryBuyOneManeuverRoot.
+        if (
+          (MANEUVER_ROOT_ALLOWLIST as readonly string[]).includes(def.id) ||
+          def.id === "sharpshooter"
+        ) {
+          continue;
+        }
         if (!isChainUpgradeSa(def, owned)) continue;
         const incomp = def.incompatible_with ?? [];
         if (incomp.some((cid: string) => owned.has(cid))) continue;

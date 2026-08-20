@@ -49,8 +49,9 @@ const FIXED_LABELS: Record<string, string> = {
 
 const SF_FIELD_LABELS: Record<string, string> = {
   AUFMERKSAMKEIT: "Attention",
-  AUSWEICHEN_I: "Dodge I",
-  AUSWEICHEN_II: "Dodge II",
+  AUSWEICHEN_I: "Evade I",
+  AUSWEICHEN_II: "Evade II",
+  AUSWEICHEN_III: "Evade III",
   FINTE: "Feint",
   KAMPFREFLEXE: "Combat Reflexes",
   LINKHAND: "Left-Handed Fighting",

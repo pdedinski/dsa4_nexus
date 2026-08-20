@@ -5,63 +5,198 @@
   },
   "profiles": [
     {
-      "id": "combat_chain_fighter",
-      "name": "Combat Chain Fighter",
-      "description": "Armor/Evade/Shield chain roots. Melee competence then SA tiers then attributes.",
+      "id": "frontline_fighter",
+      "name": "Frontline Fighter",
+      "description": "Melee front-liners who already have Armor Use, Evade, and/or Shield Fighting. Competence, then SA upgrades (and loadout-legal maneuver roots), then attributes.",
       "bands": [
-        { "from": 1, "to": 500, "talents": 100 },
-        { "from": 501, "to": 1000, "special_abilities": 40, "talents": 60 },
-        { "from": 1001, "to": 2000, "attributes": 40, "special_abilities": 35, "talents": 25 },
-        { "from": 2001, "to": 3500, "attributes": 40, "special_abilities": 30, "talents": 30 },
-        { "from": 3501, "to": null, "attributes": 45, "special_abilities": 30, "talents": 25 }
+        {
+          "from": 1,
+          "to": 500,
+          "talents": 100
+        },
+        {
+          "from": 501,
+          "to": 1000,
+          "special_abilities": 40,
+          "talents": 60
+        },
+        {
+          "from": 1001,
+          "to": 2000,
+          "attributes": 40,
+          "special_abilities": 35,
+          "talents": 25
+        },
+        {
+          "from": 2001,
+          "to": 3500,
+          "attributes": 40,
+          "special_abilities": 30,
+          "talents": 30
+        },
+        {
+          "from": 3501,
+          "to": null,
+          "attributes": 45,
+          "special_abilities": 30,
+          "talents": 25
+        }
       ]
     },
     {
       "id": "combat_talent_duelist",
       "name": "Combat Talent Duelist",
-      "description": "Few/no auto SA chains. Talent + attribute heavy; light SA so leftover cascades.",
+      "description": "Few auto SA chains. Band 2 seeds one loadout-legal maneuver root; later bands stay talent-heavy.",
       "bands": [
-        { "from": 1, "to": 500, "talents": 100 },
-        { "from": 501, "to": 1000, "talents": 100 },
-        { "from": 1001, "to": 2000, "attributes": 40, "talents": 50, "special_abilities": 10 },
-        { "from": 2001, "to": 3500, "attributes": 40, "talents": 40, "special_abilities": 20 },
-        { "from": 3501, "to": null, "attributes": 45, "talents": 35, "special_abilities": 20 }
+        {
+          "from": 1,
+          "to": 500,
+          "talents": 100
+        },
+        {
+          "from": 501,
+          "to": 1000,
+          "special_abilities": 40,
+          "talents": 60
+        },
+        {
+          "from": 1001,
+          "to": 2000,
+          "attributes": 40,
+          "talents": 50,
+          "special_abilities": 10
+        },
+        {
+          "from": 2001,
+          "to": 3500,
+          "attributes": 40,
+          "talents": 40,
+          "special_abilities": 20
+        },
+        {
+          "from": 3501,
+          "to": null,
+          "attributes": 45,
+          "talents": 35,
+          "special_abilities": 20
+        }
       ]
     },
     {
       "id": "wilderness_hunter",
       "name": "Wilderness Hunter",
-      "description": "Nature/physical talent-first. Light SA (terrain lore often already auto).",
+      "description": "Nature/physical talent-first. Band 2 can fund a spear/sword Feint when loadout matches; bow-only skips melee roots.",
       "bands": [
-        { "from": 1, "to": 500, "talents": 100 },
-        { "from": 501, "to": 1000, "talents": 90, "special_abilities": 10 },
-        { "from": 1001, "to": 2000, "attributes": 35, "talents": 50, "special_abilities": 15 },
-        { "from": 2001, "to": 3500, "attributes": 35, "talents": 45, "special_abilities": 20 },
-        { "from": 3501, "to": null, "attributes": 40, "talents": 40, "special_abilities": 20 }
+        {
+          "from": 1,
+          "to": 500,
+          "talents": 100
+        },
+        {
+          "from": 501,
+          "to": 1000,
+          "special_abilities": 40,
+          "talents": 60
+        },
+        {
+          "from": 1001,
+          "to": 2000,
+          "attributes": 35,
+          "talents": 50,
+          "special_abilities": 15
+        },
+        {
+          "from": 2001,
+          "to": 3500,
+          "attributes": 35,
+          "talents": 45,
+          "special_abilities": 20
+        },
+        {
+          "from": 3501,
+          "to": null,
+          "attributes": 40,
+          "talents": 40,
+          "special_abilities": 20
+        }
       ]
     },
     {
       "id": "combat_skirmisher",
       "name": "Combat Skirmisher",
-      "description": "Combat + stealth/mobility. Some Evade/unarmed chain potential.",
+      "description": "Combat + stealth/mobility. Band 2 seeds loadout-legal maneuver roots; Evade/unarmed chain potential.",
       "bands": [
-        { "from": 1, "to": 500, "talents": 100 },
-        { "from": 501, "to": 1000, "special_abilities": 25, "talents": 75 },
-        { "from": 1001, "to": 2000, "attributes": 40, "special_abilities": 25, "talents": 35 },
-        { "from": 2001, "to": 3500, "attributes": 40, "special_abilities": 25, "talents": 35 },
-        { "from": 3501, "to": null, "attributes": 45, "special_abilities": 25, "talents": 30 }
+        {
+          "from": 1,
+          "to": 500,
+          "talents": 100
+        },
+        {
+          "from": 501,
+          "to": 1000,
+          "special_abilities": 40,
+          "talents": 60
+        },
+        {
+          "from": 1001,
+          "to": 2000,
+          "attributes": 40,
+          "special_abilities": 25,
+          "talents": 35
+        },
+        {
+          "from": 2001,
+          "to": 3500,
+          "attributes": 40,
+          "special_abilities": 25,
+          "talents": 35
+        },
+        {
+          "from": 3501,
+          "to": null,
+          "attributes": 45,
+          "special_abilities": 25,
+          "talents": 30
+        }
       ]
     },
     {
       "id": "urban_rogue",
       "name": "Urban Rogue",
-      "description": "Social/physical street skills. Alertness/Evade if present.",
+      "description": "Social/physical street skills. Band 2 can fund one loadout-legal maneuver root (Feint) for Rogue/Burglar; unused SA cascades to talents.",
       "bands": [
-        { "from": 1, "to": 500, "talents": 100 },
-        { "from": 501, "to": 1000, "talents": 90, "special_abilities": 10 },
-        { "from": 1001, "to": 2000, "attributes": 35, "talents": 50, "special_abilities": 15 },
-        { "from": 2001, "to": 3500, "attributes": 35, "talents": 50, "special_abilities": 15 },
-        { "from": 3501, "to": null, "attributes": 40, "talents": 40, "special_abilities": 20 }
+        {
+          "from": 1,
+          "to": 500,
+          "talents": 100
+        },
+        {
+          "from": 501,
+          "to": 1000,
+          "special_abilities": 40,
+          "talents": 60
+        },
+        {
+          "from": 1001,
+          "to": 2000,
+          "attributes": 35,
+          "talents": 50,
+          "special_abilities": 15
+        },
+        {
+          "from": 2001,
+          "to": 3500,
+          "attributes": 35,
+          "talents": 50,
+          "special_abilities": 15
+        },
+        {
+          "from": 3501,
+          "to": null,
+          "attributes": 40,
+          "talents": 40,
+          "special_abilities": 20
+        }
       ]
     },
     {
@@ -69,11 +204,36 @@
       "name": "Social Courtier",
       "description": "Almost all talents. SA leftover acceptable.",
       "bands": [
-        { "from": 1, "to": 500, "talents": 100 },
-        { "from": 501, "to": 1000, "talents": 100 },
-        { "from": 1001, "to": 2000, "attributes": 35, "talents": 65 },
-        { "from": 2001, "to": 3500, "attributes": 35, "talents": 55, "special_abilities": 10 },
-        { "from": 3501, "to": null, "attributes": 40, "talents": 50, "special_abilities": 10 }
+        {
+          "from": 1,
+          "to": 500,
+          "talents": 100
+        },
+        {
+          "from": 501,
+          "to": 1000,
+          "talents": 100
+        },
+        {
+          "from": 1001,
+          "to": 2000,
+          "attributes": 35,
+          "talents": 65
+        },
+        {
+          "from": 2001,
+          "to": 3500,
+          "attributes": 35,
+          "talents": 55,
+          "special_abilities": 10
+        },
+        {
+          "from": 3501,
+          "to": null,
+          "attributes": 40,
+          "talents": 50,
+          "special_abilities": 10
+        }
       ]
     },
     {
@@ -81,11 +241,36 @@
       "name": "Craft Commoner",
       "description": "Same band percents as Social Courtier; artisan/lore/physical via profession weights.",
       "bands": [
-        { "from": 1, "to": 500, "talents": 100 },
-        { "from": 501, "to": 1000, "talents": 100 },
-        { "from": 1001, "to": 2000, "attributes": 35, "talents": 65 },
-        { "from": 2001, "to": 3500, "attributes": 35, "talents": 55, "special_abilities": 10 },
-        { "from": 3501, "to": null, "attributes": 40, "talents": 50, "special_abilities": 10 }
+        {
+          "from": 1,
+          "to": 500,
+          "talents": 100
+        },
+        {
+          "from": 501,
+          "to": 1000,
+          "talents": 100
+        },
+        {
+          "from": 1001,
+          "to": 2000,
+          "attributes": 35,
+          "talents": 65
+        },
+        {
+          "from": 2001,
+          "to": 3500,
+          "attributes": 35,
+          "talents": 55,
+          "special_abilities": 10
+        },
+        {
+          "from": 3501,
+          "to": null,
+          "attributes": 40,
+          "talents": 50,
+          "special_abilities": 10
+        }
       ]
     },
     {
@@ -93,11 +278,36 @@
       "name": "Mundane Healer",
       "description": "Same as Craft Commoner. Stunning Blow is not a chain and will not be auto-bought.",
       "bands": [
-        { "from": 1, "to": 500, "talents": 100 },
-        { "from": 501, "to": 1000, "talents": 100 },
-        { "from": 1001, "to": 2000, "attributes": 35, "talents": 65 },
-        { "from": 2001, "to": 3500, "attributes": 35, "talents": 55, "special_abilities": 10 },
-        { "from": 3501, "to": null, "attributes": 40, "talents": 50, "special_abilities": 10 }
+        {
+          "from": 1,
+          "to": 500,
+          "talents": 100
+        },
+        {
+          "from": 501,
+          "to": 1000,
+          "talents": 100
+        },
+        {
+          "from": 1001,
+          "to": 2000,
+          "attributes": 35,
+          "talents": 65
+        },
+        {
+          "from": 2001,
+          "to": 3500,
+          "attributes": 35,
+          "talents": 55,
+          "special_abilities": 10
+        },
+        {
+          "from": 3501,
+          "to": null,
+          "attributes": 40,
+          "talents": 50,
+          "special_abilities": 10
+        }
       ]
     },
     {
@@ -105,11 +315,43 @@
       "name": "Full Caster Academic",
       "description": "Spells from AP 1. SA for Regen II / ritual chains already owned.",
       "bands": [
-        { "from": 1, "to": 500, "spells": 80, "talents": 20 },
-        { "from": 501, "to": 1000, "spells": 70, "talents": 20, "special_abilities": 10 },
-        { "from": 1001, "to": 2000, "attributes": 40, "spells": 35, "special_abilities": 15, "talents": 10 },
-        { "from": 2001, "to": 3500, "attributes": 35, "spells": 35, "special_abilities": 15, "talents": 15 },
-        { "from": 3501, "to": null, "attributes": 40, "spells": 30, "special_abilities": 15, "talents": 15 }
+        {
+          "from": 1,
+          "to": 500,
+          "spells": 80,
+          "talents": 20
+        },
+        {
+          "from": 501,
+          "to": 1000,
+          "spells": 70,
+          "talents": 20,
+          "special_abilities": 10
+        },
+        {
+          "from": 1001,
+          "to": 2000,
+          "attributes": 40,
+          "spells": 35,
+          "special_abilities": 15,
+          "talents": 10
+        },
+        {
+          "from": 2001,
+          "to": 3500,
+          "attributes": 35,
+          "spells": 35,
+          "special_abilities": 15,
+          "talents": 15
+        },
+        {
+          "from": 3501,
+          "to": null,
+          "attributes": 40,
+          "spells": 30,
+          "special_abilities": 15,
+          "talents": 15
+        }
       ]
     },
     {
@@ -117,11 +359,43 @@
       "name": "Full Caster Trickster",
       "description": "Spells + social/physical performance.",
       "bands": [
-        { "from": 1, "to": 500, "spells": 55, "talents": 45 },
-        { "from": 501, "to": 1000, "spells": 50, "talents": 40, "special_abilities": 10 },
-        { "from": 1001, "to": 2000, "attributes": 35, "spells": 30, "talents": 25, "special_abilities": 10 },
-        { "from": 2001, "to": 3500, "attributes": 35, "spells": 30, "talents": 25, "special_abilities": 10 },
-        { "from": 3501, "to": null, "attributes": 40, "spells": 25, "talents": 25, "special_abilities": 10 }
+        {
+          "from": 1,
+          "to": 500,
+          "spells": 55,
+          "talents": 45
+        },
+        {
+          "from": 501,
+          "to": 1000,
+          "spells": 50,
+          "talents": 40,
+          "special_abilities": 10
+        },
+        {
+          "from": 1001,
+          "to": 2000,
+          "attributes": 35,
+          "spells": 30,
+          "talents": 25,
+          "special_abilities": 10
+        },
+        {
+          "from": 2001,
+          "to": 3500,
+          "attributes": 35,
+          "spells": 30,
+          "talents": 25,
+          "special_abilities": 10
+        },
+        {
+          "from": 3501,
+          "to": null,
+          "attributes": 40,
+          "spells": 25,
+          "talents": 25,
+          "special_abilities": 10
+        }
       ]
     },
     {
@@ -129,11 +403,43 @@
       "name": "Full Caster Mystic",
       "description": "Spells with nature/craft/healing talents.",
       "bands": [
-        { "from": 1, "to": 500, "spells": 60, "talents": 40 },
-        { "from": 501, "to": 1000, "spells": 55, "talents": 35, "special_abilities": 10 },
-        { "from": 1001, "to": 2000, "attributes": 35, "spells": 35, "talents": 20, "special_abilities": 10 },
-        { "from": 2001, "to": 3500, "attributes": 35, "spells": 30, "talents": 25, "special_abilities": 10 },
-        { "from": 3501, "to": null, "attributes": 40, "spells": 30, "talents": 20, "special_abilities": 10 }
+        {
+          "from": 1,
+          "to": 500,
+          "spells": 60,
+          "talents": 40
+        },
+        {
+          "from": 501,
+          "to": 1000,
+          "spells": 55,
+          "talents": 35,
+          "special_abilities": 10
+        },
+        {
+          "from": 1001,
+          "to": 2000,
+          "attributes": 35,
+          "spells": 35,
+          "talents": 20,
+          "special_abilities": 10
+        },
+        {
+          "from": 2001,
+          "to": 3500,
+          "attributes": 35,
+          "spells": 30,
+          "talents": 25,
+          "special_abilities": 10
+        },
+        {
+          "from": 3501,
+          "to": null,
+          "attributes": 40,
+          "spells": 30,
+          "talents": 20,
+          "special_abilities": 10
+        }
       ]
     },
     {
@@ -141,23 +447,82 @@
       "name": "Combat Caster",
       "description": "Combat/physical first, spells second. SA when Iron Will / Aura chains exist.",
       "bands": [
-        { "from": 1, "to": 500, "talents": 50, "spells": 50 },
-        { "from": 501, "to": 1000, "talents": 40, "spells": 35, "special_abilities": 25 },
-        { "from": 1001, "to": 2000, "attributes": 35, "talents": 25, "spells": 25, "special_abilities": 15 },
-        { "from": 2001, "to": 3500, "attributes": 35, "talents": 20, "spells": 25, "special_abilities": 20 },
-        { "from": 3501, "to": null, "attributes": 40, "talents": 20, "spells": 20, "special_abilities": 20 }
+        {
+          "from": 1,
+          "to": 500,
+          "talents": 50,
+          "spells": 50
+        },
+        {
+          "from": 501,
+          "to": 1000,
+          "talents": 40,
+          "spells": 35,
+          "special_abilities": 25
+        },
+        {
+          "from": 1001,
+          "to": 2000,
+          "attributes": 35,
+          "talents": 25,
+          "spells": 25,
+          "special_abilities": 15
+        },
+        {
+          "from": 2001,
+          "to": 3500,
+          "attributes": 35,
+          "talents": 20,
+          "spells": 25,
+          "special_abilities": 20
+        },
+        {
+          "from": 3501,
+          "to": null,
+          "attributes": 40,
+          "talents": 20,
+          "spells": 20,
+          "special_abilities": 20
+        }
       ]
     },
     {
       "id": "blessed_warrior",
       "name": "Blessed Warrior",
-      "description": "Consecrated warrior-priest. Same bands as Combat Chain Fighter (spells unused).",
+      "description": "Consecrated warrior-priest. Same bands as Frontline Fighter (spells unused).",
       "bands": [
-        { "from": 1, "to": 500, "talents": 100 },
-        { "from": 501, "to": 1000, "special_abilities": 40, "talents": 60 },
-        { "from": 1001, "to": 2000, "attributes": 40, "special_abilities": 35, "talents": 25 },
-        { "from": 2001, "to": 3500, "attributes": 40, "special_abilities": 30, "talents": 30 },
-        { "from": 3501, "to": null, "attributes": 45, "special_abilities": 30, "talents": 25 }
+        {
+          "from": 1,
+          "to": 500,
+          "talents": 100
+        },
+        {
+          "from": 501,
+          "to": 1000,
+          "special_abilities": 40,
+          "talents": 60
+        },
+        {
+          "from": 1001,
+          "to": 2000,
+          "attributes": 40,
+          "special_abilities": 35,
+          "talents": 25
+        },
+        {
+          "from": 2001,
+          "to": 3500,
+          "attributes": 40,
+          "special_abilities": 30,
+          "talents": 30
+        },
+        {
+          "from": 3501,
+          "to": null,
+          "attributes": 45,
+          "special_abilities": 30,
+          "talents": 25
+        }
       ]
     },
     {
@@ -165,11 +530,36 @@
       "name": "Blessed Scholar",
       "description": "Consecrated lore/law. Same bands as Social Courtier.",
       "bands": [
-        { "from": 1, "to": 500, "talents": 100 },
-        { "from": 501, "to": 1000, "talents": 100 },
-        { "from": 1001, "to": 2000, "attributes": 35, "talents": 65 },
-        { "from": 2001, "to": 3500, "attributes": 35, "talents": 55, "special_abilities": 10 },
-        { "from": 3501, "to": null, "attributes": 40, "talents": 50, "special_abilities": 10 }
+        {
+          "from": 1,
+          "to": 500,
+          "talents": 100
+        },
+        {
+          "from": 501,
+          "to": 1000,
+          "talents": 100
+        },
+        {
+          "from": 1001,
+          "to": 2000,
+          "attributes": 35,
+          "talents": 65
+        },
+        {
+          "from": 2001,
+          "to": 3500,
+          "attributes": 35,
+          "talents": 55,
+          "special_abilities": 10
+        },
+        {
+          "from": 3501,
+          "to": null,
+          "attributes": 40,
+          "talents": 50,
+          "special_abilities": 10
+        }
       ]
     },
     {
@@ -177,11 +567,36 @@
       "name": "Blessed Healer Social",
       "description": "Consecrated healer/community. Same bands as Social Courtier.",
       "bands": [
-        { "from": 1, "to": 500, "talents": 100 },
-        { "from": 501, "to": 1000, "talents": 100 },
-        { "from": 1001, "to": 2000, "attributes": 35, "talents": 65 },
-        { "from": 2001, "to": 3500, "attributes": 35, "talents": 55, "special_abilities": 10 },
-        { "from": 3501, "to": null, "attributes": 40, "talents": 50, "special_abilities": 10 }
+        {
+          "from": 1,
+          "to": 500,
+          "talents": 100
+        },
+        {
+          "from": 501,
+          "to": 1000,
+          "talents": 100
+        },
+        {
+          "from": 1001,
+          "to": 2000,
+          "attributes": 35,
+          "talents": 65
+        },
+        {
+          "from": 2001,
+          "to": 3500,
+          "attributes": 35,
+          "talents": 55,
+          "special_abilities": 10
+        },
+        {
+          "from": 3501,
+          "to": null,
+          "attributes": 40,
+          "talents": 50,
+          "special_abilities": 10
+        }
       ]
     },
     {
@@ -189,11 +604,38 @@
       "name": "Blessed Wilderness",
       "description": "Consecrated wilderness. Same bands as Wilderness Hunter.",
       "bands": [
-        { "from": 1, "to": 500, "talents": 100 },
-        { "from": 501, "to": 1000, "talents": 90, "special_abilities": 10 },
-        { "from": 1001, "to": 2000, "attributes": 35, "talents": 50, "special_abilities": 15 },
-        { "from": 2001, "to": 3500, "attributes": 35, "talents": 45, "special_abilities": 20 },
-        { "from": 3501, "to": null, "attributes": 40, "talents": 40, "special_abilities": 20 }
+        {
+          "from": 1,
+          "to": 500,
+          "talents": 100
+        },
+        {
+          "from": 501,
+          "to": 1000,
+          "special_abilities": 40,
+          "talents": 60
+        },
+        {
+          "from": 1001,
+          "to": 2000,
+          "attributes": 35,
+          "talents": 50,
+          "special_abilities": 15
+        },
+        {
+          "from": 2001,
+          "to": 3500,
+          "attributes": 35,
+          "talents": 45,
+          "special_abilities": 20
+        },
+        {
+          "from": 3501,
+          "to": null,
+          "attributes": 40,
+          "talents": 40,
+          "special_abilities": 20
+        }
       ]
     },
     {
@@ -201,11 +643,36 @@
       "name": "Blessed Artisan",
       "description": "Consecrated craft gods. Same bands as Craft Commoner.",
       "bands": [
-        { "from": 1, "to": 500, "talents": 100 },
-        { "from": 501, "to": 1000, "talents": 100 },
-        { "from": 1001, "to": 2000, "attributes": 35, "talents": 65 },
-        { "from": 2001, "to": 3500, "attributes": 35, "talents": 55, "special_abilities": 10 },
-        { "from": 3501, "to": null, "attributes": 40, "talents": 50, "special_abilities": 10 }
+        {
+          "from": 1,
+          "to": 500,
+          "talents": 100
+        },
+        {
+          "from": 501,
+          "to": 1000,
+          "talents": 100
+        },
+        {
+          "from": 1001,
+          "to": 2000,
+          "attributes": 35,
+          "talents": 65
+        },
+        {
+          "from": 2001,
+          "to": 3500,
+          "attributes": 35,
+          "talents": 55,
+          "special_abilities": 10
+        },
+        {
+          "from": 3501,
+          "to": null,
+          "attributes": 40,
+          "talents": 50,
+          "special_abilities": 10
+        }
       ]
     },
     {
@@ -213,11 +680,38 @@
       "name": "Shaman Spirit",
       "description": "Consecrated/animistic. Ritual SAs often auto; deepen lore/nature. Spell % wasted.",
       "bands": [
-        { "from": 1, "to": 500, "talents": 100 },
-        { "from": 501, "to": 1000, "talents": 85, "special_abilities": 15 },
-        { "from": 1001, "to": 2000, "attributes": 35, "talents": 50, "special_abilities": 15 },
-        { "from": 2001, "to": 3500, "attributes": 35, "talents": 45, "special_abilities": 20 },
-        { "from": 3501, "to": null, "attributes": 40, "talents": 40, "special_abilities": 20 }
+        {
+          "from": 1,
+          "to": 500,
+          "talents": 100
+        },
+        {
+          "from": 501,
+          "to": 1000,
+          "talents": 85,
+          "special_abilities": 15
+        },
+        {
+          "from": 1001,
+          "to": 2000,
+          "attributes": 35,
+          "talents": 50,
+          "special_abilities": 15
+        },
+        {
+          "from": 2001,
+          "to": 3500,
+          "attributes": 35,
+          "talents": 45,
+          "special_abilities": 20
+        },
+        {
+          "from": 3501,
+          "to": null,
+          "attributes": 40,
+          "talents": 40,
+          "special_abilities": 20
+        }
       ]
     },
     {
@@ -225,11 +719,43 @@
       "name": "Ranger Wilderness Caster",
       "description": "Wilderness-lean combat caster: more nature/physical talents early, still full_caster spells.",
       "bands": [
-        { "from": 1, "to": 500, "talents": 60, "spells": 40 },
-        { "from": 501, "to": 1000, "talents": 50, "spells": 35, "special_abilities": 15 },
-        { "from": 1001, "to": 2000, "attributes": 35, "talents": 30, "spells": 25, "special_abilities": 10 },
-        { "from": 2001, "to": 3500, "attributes": 35, "talents": 25, "spells": 25, "special_abilities": 15 },
-        { "from": 3501, "to": null, "attributes": 40, "talents": 25, "spells": 20, "special_abilities": 15 }
+        {
+          "from": 1,
+          "to": 500,
+          "talents": 60,
+          "spells": 40
+        },
+        {
+          "from": 501,
+          "to": 1000,
+          "talents": 50,
+          "spells": 35,
+          "special_abilities": 15
+        },
+        {
+          "from": 1001,
+          "to": 2000,
+          "attributes": 35,
+          "talents": 30,
+          "spells": 25,
+          "special_abilities": 10
+        },
+        {
+          "from": 2001,
+          "to": 3500,
+          "attributes": 35,
+          "talents": 25,
+          "spells": 25,
+          "special_abilities": 15
+        },
+        {
+          "from": 3501,
+          "to": null,
+          "attributes": 40,
+          "talents": 25,
+          "spells": 20,
+          "special_abilities": 15
+        }
       ]
     },
     {
@@ -237,11 +763,43 @@
       "name": "Alchemist Craft Mystic",
       "description": "Craft/alchemy lean mystic: more artisan talents than pure spell focus.",
       "bands": [
-        { "from": 1, "to": 500, "spells": 50, "talents": 50 },
-        { "from": 501, "to": 1000, "spells": 45, "talents": 45, "special_abilities": 10 },
-        { "from": 1001, "to": 2000, "attributes": 35, "spells": 30, "talents": 25, "special_abilities": 10 },
-        { "from": 2001, "to": 3500, "attributes": 35, "spells": 25, "talents": 30, "special_abilities": 10 },
-        { "from": 3501, "to": null, "attributes": 40, "spells": 25, "talents": 25, "special_abilities": 10 }
+        {
+          "from": 1,
+          "to": 500,
+          "spells": 50,
+          "talents": 50
+        },
+        {
+          "from": 501,
+          "to": 1000,
+          "spells": 45,
+          "talents": 45,
+          "special_abilities": 10
+        },
+        {
+          "from": 1001,
+          "to": 2000,
+          "attributes": 35,
+          "spells": 30,
+          "talents": 25,
+          "special_abilities": 10
+        },
+        {
+          "from": 2001,
+          "to": 3500,
+          "attributes": 35,
+          "spells": 25,
+          "talents": 30,
+          "special_abilities": 10
+        },
+        {
+          "from": 3501,
+          "to": null,
+          "attributes": 40,
+          "spells": 25,
+          "talents": 25,
+          "special_abilities": 10
+        }
       ]
     }
   ]
