@@ -160,6 +160,12 @@ export interface DerivedWert {
    * `recomputeDerived`. Lets refreshes preserve player XML Bonus. Not persisted.
    */
   packageBaseline?: number;
+  /**
+   * Session-local: set on DCG import so `modification` is treated as pure XML
+   * Bonus on the next `recomputeDerived` (then cleared). Distinguishes import
+   * from a sticky `packageBaseline: 0` after package mods were already folded.
+   */
+  xmlBonusOnly?: boolean;
   specialExperience?: boolean;
 }
 

@@ -15,10 +15,12 @@ import { fileURLToPath } from "node:url";
 import { importLegacyHeldXml } from "../lib/chargen/io/importLegacyXml";
 import { exportLegacyHeldXml } from "../lib/chargen/io/exportLegacyXml";
 import type { HeldModel } from "../lib/chargen/types";
+import { derivedValue } from "../lib/chargen/types";
 import { stripSessionBaselines } from "../lib/chargen/rules/veteran";
 import { getBuiltinCatalog } from "../lib/chargen/data/builtinCatalog";
 import { isCombatTalent } from "../lib/chargen/rules/talentActivation";
 import { recomputeDerived } from "../lib/chargen/rules/derived";
+import { buildAttributeMods } from "../lib/chargen/rules/attributeMods";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
@@ -407,6 +409,63 @@ function main() {
       m?.[1] === "5",
       m ? `Bonus=${m[1]}` : "no match"
     );
+  }
+
+  // Java Basiswert parity for Wulfgrimm (Thorwaler Magier + Vollzauberer).
+  {
+    const held = importLegacyHeldXml(raw);
+    const race = getBuiltinCatalog("races").find((r) => r.id === held.raceId);
+    const culture = getBuiltinCatalog("cultures").find(
+      (c) => c.id === held.cultureId
+    );
+    const profession = getBuiltinCatalog("professions").find(
+      (p) => p.id === held.professionId
+    );
+    const attributeMods = buildAttributeMods(race, culture, profession);
+    const mods = {
+      attributeMods,
+      race: (race?.derived_modifiers as Record<string, number>) || {},
+      culture: (culture?.derived_modifiers as Record<string, number>) || {},
+      profession: (profession?.derived_modifiers as Record<string, number>) || {},
+    };
+    recomputeDerived(held, mods);
+    const expect: Record<string, number> = {
+      VP: 32,
+      EP: 29,
+      RM: 5,
+      ASP: 33,
+      WT: 7,
+      baseAT: 8,
+      basePA: 8,
+      baseBRV: 8,
+      baseINI: 11,
+    };
+    for (const [code, exp] of Object.entries(expect)) {
+      const got = derivedValue(held, code as keyof typeof expect);
+      check(
+        `Java parity ${code}=${exp}`,
+        got === exp,
+        `got ${got}`
+      );
+    }
+    // Spellcaster trait mods must not leak into XML Bonus.
+    const exportedParity = exportLegacyHeldXml(held);
+    for (const [ger, code] of [
+      ["Basiswert.Magieresistenz", "RM"],
+      ["Basiswert.Astralenergie", "ASP"],
+    ] as const) {
+      const m = exportedParity.match(
+        new RegExp(
+          `${ger.replace(".", "\\.")}[^>]*Bonus="(-?\\d+)"|Bonus="(-?\\d+)"[^>]*${ger.replace(".", "\\.")}`
+        )
+      );
+      const bonus = m?.[1] ?? m?.[2];
+      check(
+        `export ${code} Bonus=0 (trait mods are package, not XML Bonus)`,
+        bonus === "0",
+        bonus != null ? `Bonus=${bonus}` : "no match"
+      );
+    }
   }
 
   fs.mkdirSync(OUT_DIR, { recursive: true });

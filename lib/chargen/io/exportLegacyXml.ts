@@ -22,6 +22,7 @@ import {
   isTalentGroupTrait,
   javaTalentGroupVariant,
 } from "@/lib/chargen/rules/talentGroupVariants";
+import { traitDerivedMod } from "@/lib/chargen/rules/derived";
 
 const INDENT = "    ";
 
@@ -169,7 +170,11 @@ function specializationNeedsTalent(sfId: string): boolean {
   );
 }
 
-/** Race/culture/profession derived mods are applied from the package, not XML Bonus. */
+/**
+ * Live package portion of a derived mod: race/culture/profession + trait mods.
+ * Must match what `recomputeDerived` folds into `packageBaseline` so XML Bonus
+ * stays player-only (Spellcaster +12 ASP must not be written as Bonus).
+ */
 function packageDerivedBonus(held: HeldModel, code: string): number {
   let n = 0;
   for (const cat of ["races", "cultures", "professions"] as const) {
@@ -184,7 +189,7 @@ function packageDerivedBonus(held: HeldModel, code: string): number {
     const mods = item?.derived_modifiers as Record<string, number> | undefined;
     n += mods?.[code] ?? 0;
   }
-  return n;
+  return n + traitDerivedMod(held, code);
 }
 
 function isKampfTalentId(talentId: string): boolean {
@@ -245,13 +250,21 @@ export function exportLegacyHeldXml(held: HeldModel): string {
     if (d.code === "GS") continue;
     const german = DERIVED_TO_GERMAN[d.code as Exclude<typeof d.code, "GS">];
     if (!german) continue;
-    // After DCG import, packageBaseline is 0 and modification is XML Bonus only.
+    // After DCG import (xmlBonusOnly), modification is XML Bonus only.
     // After recomputeDerived, packageBaseline is the folded package portion.
     // When unset (DB load), assume modification already includes live package mods.
-    const pkgInMod =
-      d.packageBaseline !== undefined
-        ? d.packageBaseline
-        : packageDerivedBonus(held, d.code);
+    // Legacy sticky packageBaseline=0 with folded package: fall back to live package.
+    let pkgInMod: number;
+    if (d.xmlBonusOnly) {
+      pkgInMod = 0;
+    } else if (d.packageBaseline !== undefined && d.packageBaseline !== 0) {
+      pkgInMod = d.packageBaseline;
+    } else if (d.packageBaseline === 0) {
+      // Ambiguous: real zero package vs old import sentinel. Use live package.
+      pkgInMod = packageDerivedBonus(held, d.code);
+    } else {
+      pkgInMod = packageDerivedBonus(held, d.code);
+    }
     const xmlBonus = d.modification - pkgInMod;
     push(
       2,

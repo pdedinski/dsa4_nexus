@@ -388,7 +388,13 @@ export default function ChargenWizard() {
   );
 
   const refreshDerived = useCallback((h: HeldModel) => {
-    const next = { ...h, attributes: [...h.attributes], derived: [...h.derived] };
+    // Deep-clone rows so recomputeDerived never mutates React state in place
+    // (shared refs + sticky packageBaseline: 0 caused race mods to double).
+    const next = {
+      ...h,
+      attributes: h.attributes.map((a) => ({ ...a })),
+      derived: h.derived.map((d) => ({ ...d })),
+    };
     recomputeDerived(next, {
       attributeMods,
       race: (race?.derived_modifiers as Record<string, number>) || {},

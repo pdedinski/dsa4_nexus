@@ -39,7 +39,7 @@ export function stripSessionBaselines(held: HeldModel): HeldModel {
     spells: held.spells.map(({ baselineSp: _b, ...s }) => s),
     attributes: held.attributes.map(({ purchasedBaseline: _b, ...a }) => a),
     derived: held.derived.map(
-      ({ purchasedBaseline: _b, packageBaseline: _p, ...d }) => d
+      ({ purchasedBaseline: _b, packageBaseline: _p, xmlBonusOnly: _x, ...d }) => d
     ),
   };
 }
@@ -257,6 +257,49 @@ export function baseValueZukaufCost(
     col = shiftColumn(col, -1);
   }
   return sktCost(col, row.purchased + 1);
+}
+
+/** Java `Sonderfertigkeit.GrosseMeditation` — used by Great Meditation on ASP. */
+export const GREAT_MEDITATION_SF_ID = "Sonderfertigkeit.GrosseMeditation";
+
+/** Java charges a flat 400 AP for Great Meditation regardless of ASP bonus size. */
+export const GREAT_MEDITATION_AP_COST = 400;
+
+/**
+ * Java `ActionGrosseMeditation`: add `bonus` to ASP XML Bonus / player modification
+ * and spend 400 AP. Not reversible in Java; same here.
+ */
+export function applyGreatMeditation(
+  held: HeldModel,
+  bonus: number
+): HeldModel {
+  // Java always charges 400 AP when the dialog parses successfully (incl. 0 / negative).
+  if (!Number.isFinite(bonus)) return held;
+  const hasRow = held.derived.some((d) => d.code === "ASP");
+  const derived =
+    bonus === 0
+      ? held.derived
+      : hasRow
+        ? held.derived.map((d) =>
+            d.code === "ASP"
+              ? { ...d, modification: d.modification + bonus }
+              : d
+          )
+        : [
+            ...held.derived,
+            {
+              code: "ASP" as DerivedCode,
+              base: 0,
+              modification: bonus,
+              purchased: 0,
+              packageBaseline: 0,
+            },
+          ];
+  return {
+    ...held,
+    derived,
+    apSpent: held.apSpent + GREAT_MEDITATION_AP_COST,
+  };
 }
 
 export function raiseBaseValueZukauf(
