@@ -49,6 +49,7 @@ export async function POST(req: NextRequest) {
     asp?: unknown;
     ar?: unknown;
     comment?: unknown;
+    wounds?: unknown;
   };
   try {
     body = await req.json();
@@ -70,6 +71,7 @@ export async function POST(req: NextRequest) {
   const vp = parseIntField(body.vp, 0);
   const asp = parseIntField(body.asp, 0);
   const ar = parseIntField(body.ar, 0);
+  const wounds = Math.max(0, Math.min(6, parseIntField(body.wounds, 0)));
 
   const encounter = await ensureUserEncounter(session.user.id);
   const existing = await loadCombatants(encounter.id);
@@ -88,6 +90,8 @@ export async function POST(req: NextRequest) {
       asp,
       ar,
       comment: commentResult,
+      wounds,
+      actionDone: false,
       sortOrder: maxSort,
       lastDamageApplied: null,
     })

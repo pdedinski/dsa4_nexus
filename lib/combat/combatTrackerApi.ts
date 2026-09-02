@@ -26,6 +26,8 @@ export function toCombatantDto(row: CombatCombatantRow): CombatantDto {
     asp: row.asp,
     ar: row.ar,
     comment: row.comment ?? "",
+    wounds: row.wounds ?? 0,
+    actionDone: row.actionDone ?? false,
     sortOrder: row.sortOrder,
     lastDamageApplied: row.lastDamageApplied,
   };
@@ -147,4 +149,29 @@ export async function clearLastDamageApplied(
       updatedAt: new Date(),
     })
     .where(eq(combatCombatants.encounterId, encounterId));
+}
+
+/** Clear all action-done flags (Start Combat / new round). */
+export async function clearAllActionDone(encounterId: string): Promise<void> {
+  await db
+    .update(combatCombatants)
+    .set({
+      actionDone: false,
+      updatedAt: new Date(),
+    })
+    .where(eq(combatCombatants.encounterId, encounterId));
+}
+
+/** Mark a single combatant as having taken their action this round. */
+export async function setCombatantActionDone(
+  combatantId: string,
+  actionDone: boolean
+): Promise<void> {
+  await db
+    .update(combatCombatants)
+    .set({
+      actionDone,
+      updatedAt: new Date(),
+    })
+    .where(eq(combatCombatants.id, combatantId));
 }

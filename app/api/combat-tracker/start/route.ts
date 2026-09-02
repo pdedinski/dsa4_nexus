@@ -3,6 +3,7 @@ import { requireAllowed } from "@/lib/auth/session";
 import { getActiveCombatants } from "@/lib/combat/combatTrackerSort";
 import {
   buildTrackerDto,
+  clearAllActionDone,
   clearLastDamageApplied,
   findUserEncounter,
   loadCombatants,
@@ -12,7 +13,7 @@ import {
 
 /**
  * Start Combat: turn_number = 1, green tick on first active combatant (top of list).
- * Does not delete combatants.
+ * Clears action-done flags. Does not delete combatants or clear wounds.
  */
 export async function POST() {
   const session = await requireAllowed();
@@ -32,6 +33,7 @@ export async function POST() {
   const active = getActiveCombatants(dtos);
   const firstActiveId = active[0]?.id ?? null;
 
+  await clearAllActionDone(encounter.id);
   await updateEncounterTurnState(encounter.id, 1, firstActiveId);
   await clearLastDamageApplied(encounter.id);
 

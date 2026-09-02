@@ -12,6 +12,7 @@ export type CombatantDraft = {
   asp: number;
   ar: number;
   comment: string;
+  wounds?: number;
 };
 
 const EMPTY_DRAFT: CombatantDraft = {
@@ -21,6 +22,7 @@ const EMPTY_DRAFT: CombatantDraft = {
   asp: 0,
   ar: 0,
   comment: "",
+  wounds: 0,
 };
 
 export default function AddCombatantModal({

@@ -84,6 +84,7 @@ export default function CombatTrackerClient() {
       asp: c.asp,
       ar: c.ar,
       comment: c.comment,
+      wounds: c.wounds,
     });
     setModalError(null);
     setModalOpen(true);
@@ -97,7 +98,10 @@ export default function CombatTrackerClient() {
       const res = await fetch("/api/combat-tracker/combatants", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(draft),
+        body: JSON.stringify({
+          ...draft,
+          wounds: draft.wounds ?? 0,
+        }),
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok) {
@@ -114,7 +118,10 @@ export default function CombatTrackerClient() {
   async function patchCombatant(
     id: string,
     patch: Partial<
-      Pick<CombatantDto, "name" | "ini" | "vp" | "asp" | "ar" | "comment">
+      Pick<
+        CombatantDto,
+        "name" | "ini" | "vp" | "asp" | "ar" | "comment" | "wounds"
+      >
     >
   ) {
     setBusy(true);

@@ -8,6 +8,7 @@ import {
 } from "@/lib/combat/combatTrackerSort";
 import {
   buildTrackerDto,
+  clearAllActionDone,
   findOwnedCombatant,
   findUserEncounter,
   loadCombatants,
@@ -86,15 +87,20 @@ export async function POST(req: NextRequest, ctx: Ctx) {
     encounter.activeCombatantId === id &&
     !isActiveCombatant(updated)
   ) {
-    const activeId = nextActiveAfterRemoval(
+    const handoff = nextActiveAfterRemoval(
       id,
       activeBefore,
       remainingActive
     );
+    let turn = encounter.turnNumber;
+    if (handoff.shouldWrapRound) {
+      turn = encounter.turnNumber + 1;
+      await clearAllActionDone(encounter.id);
+    }
     await updateEncounterTurnState(
       encounter.id,
-      encounter.turnNumber,
-      activeId
+      turn,
+      handoff.activeCombatantId
     );
   }
 

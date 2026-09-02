@@ -3,9 +3,11 @@ import { requireAllowed } from "@/lib/auth/session";
 import { advanceActiveCombatant } from "@/lib/combat/combatTrackerSort";
 import {
   buildTrackerDto,
+  clearAllActionDone,
   clearLastDamageApplied,
   findUserEncounter,
   loadCombatants,
+  setCombatantActionDone,
   toCombatantDto,
   updateEncounterTurnState,
 } from "@/lib/combat/combatTrackerApi";
@@ -30,6 +32,14 @@ export async function POST() {
     dtos,
     encounter.turnNumber
   );
+
+  if (result.markDoneId) {
+    await setCombatantActionDone(result.markDoneId, true);
+  }
+
+  if (result.clearAllActionDone) {
+    await clearAllActionDone(encounter.id);
+  }
 
   await updateEncounterTurnState(
     encounter.id,

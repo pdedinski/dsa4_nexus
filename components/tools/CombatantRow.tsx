@@ -10,7 +10,11 @@ import {
 } from "lucide-react";
 import clsx from "clsx";
 import type { CombatantDto } from "@/lib/combat/combatTrackerTypes";
-import { isActiveCombatant } from "@/lib/combat/combatTrackerSort";
+import { MAX_WOUNDS } from "@/lib/combat/combatTrackerTypes";
+import {
+  effectiveIni,
+  isActiveCombatant,
+} from "@/lib/combat/combatTrackerSort";
 
 export default function CombatantRow({
   combatant,
@@ -33,7 +37,10 @@ export default function CombatantRow({
   onPatch: (
     id: string,
     patch: Partial<
-      Pick<CombatantDto, "name" | "ini" | "vp" | "asp" | "ar" | "comment">
+      Pick<
+        CombatantDto,
+        "name" | "ini" | "vp" | "asp" | "ar" | "comment" | "wounds"
+      >
     >
   ) => Promise<void>;
   onApplyDamage: (id: string, damageDealt: number) => Promise<void>;
@@ -68,6 +75,9 @@ export default function CombatantRow({
   }, [isTurnActive, combatant.id]);
 
   const incapacitated = !isActiveCombatant(combatant);
+  const actionDone = combatant.actionDone && !isTurnActive;
+  const wounds = combatant.wounds ?? 0;
+  const effIni = effectiveIni(combatant);
 
   async function commitName() {
     const trimmed = name.trim();
@@ -103,6 +113,12 @@ export default function CombatantRow({
     await onPatch(combatant.id, { [field]: n });
   }
 
+  async function setWounds(next: number) {
+    const clamped = Math.max(0, Math.min(MAX_WOUNDS, next));
+    if (clamped === wounds) return;
+    await onPatch(combatant.id, { wounds: clamped });
+  }
+
   async function applyDamage() {
     const n = Math.trunc(Number(damageDealt));
     if (!Number.isFinite(n)) return;
@@ -128,7 +144,9 @@ export default function CombatantRow({
         "rounded-lg border px-2 py-1.5 transition-colors",
         isTurnActive
           ? "border-brand/40 bg-brand-muted/40"
-          : "border-surface-border bg-surface-card"
+          : actionDone
+            ? "border-surface-border bg-surface-sidebar/80 opacity-70"
+            : "border-surface-border bg-surface-card"
       )}
     >
       {/* Row 1: tick · name · manage buttons */}
@@ -144,6 +162,14 @@ export default function CombatantRow({
             >
               <Check className="h-3.5 w-3.5" />
             </button>
+          ) : actionDone ? (
+            <span
+              title="Action done this turn"
+              className="inline-flex rounded-full bg-slate-600/80 p-1 text-slate-200"
+              aria-label="Action done"
+            >
+              <Check className="h-3.5 w-3.5" />
+            </span>
           ) : (
             <span className="h-5 w-5" aria-hidden />
           )}
@@ -162,6 +188,12 @@ export default function CombatantRow({
             if (e.key === "Enter") e.currentTarget.blur();
           }}
         />
+
+        {actionDone ? (
+          <span className="shrink-0 rounded border border-slate-600/60 bg-slate-800/60 px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wide text-slate-300">
+            Done
+          </span>
+        ) : null}
 
         <div className="flex shrink-0 items-center gap-0.5">
           <button
@@ -203,7 +235,7 @@ export default function CombatantRow({
         </div>
       </div>
 
-      {/* Row 2: INI · VP · ASP · AR · Damage Dealt */}
+      {/* Row 2: INI · Wounds · VP · ASP · AR · Damage Dealt */}
       <div className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 pl-8">
         <label className="flex shrink-0 items-center gap-0.5 text-[10px] text-ink-muted">
           INI
@@ -215,7 +247,54 @@ export default function CombatantRow({
             onChange={(e) => setIni(e.target.value)}
             onBlur={() => void commitNum("ini", ini, combatant.ini)}
           />
+          {wounds > 0 ? (
+            <span
+              className="shrink-0 font-mono text-[10px] text-amber-400/90"
+              title={`${wounds} wound${wounds === 1 ? "" : "s"} (−${wounds * 2} INI)`}
+            >
+              → {effIni}
+            </span>
+          ) : null}
         </label>
+
+        <div
+          className="flex shrink-0 items-center gap-0.5"
+          title="Wounds (−2 INI each)"
+        >
+          <span className="text-[10px] text-ink-muted">Wounds</span>
+          <div className="flex items-center gap-0.5" role="group" aria-label="Wounds">
+            {Array.from({ length: MAX_WOUNDS }, (_, i) => {
+              const checked = wounds > i;
+              const enabled = i === wounds || i === wounds - 1;
+              return (
+                <input
+                  key={i}
+                  type="checkbox"
+                  checked={checked}
+                  disabled={busy || !enabled}
+                  title={
+                    checked
+                      ? enabled
+                        ? `Clear wound ${i + 1}`
+                        : `Wound ${i + 1}`
+                      : enabled
+                        ? `Mark wound ${i + 1}`
+                        : `Wound ${i + 1} (locked)`
+                  }
+                  className={clsx(
+                    "h-3.5 w-3.5 rounded border-surface-border bg-surface-sidebar text-red-500 accent-red-600",
+                    !enabled && "cursor-not-allowed opacity-35",
+                    enabled && !busy && "cursor-pointer"
+                  )}
+                  onChange={() => {
+                    if (!enabled || busy) return;
+                    void setWounds(checked ? wounds - 1 : wounds + 1);
+                  }}
+                />
+              );
+            })}
+          </div>
+        </div>
 
         <label className="flex shrink-0 items-center gap-0.5 text-[10px] text-ink-muted">
           VP

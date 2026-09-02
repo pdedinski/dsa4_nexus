@@ -287,6 +287,10 @@ export const combatCombatants = pgTable(
     asp: integer("asp").notNull().default(0),
     ar: integer("ar").notNull().default(0),
     comment: text("comment").notNull().default(""),
+    /** Wound markers 0–6; each reduces effective INI by 2. */
+    wounds: integer("wounds").notNull().default(0),
+    /** True after this combatant has taken their action this round. */
+    actionDone: boolean("action_done").notNull().default(false),
     sortOrder: integer("sort_order").notNull().default(0),
     lastDamageApplied: integer("last_damage_applied"),
     createdAt: timestamp("created_at", { withTimezone: true })

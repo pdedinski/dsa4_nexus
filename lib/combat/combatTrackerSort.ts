@@ -7,7 +7,17 @@ export type CombatantSortable = {
   ini: number;
   vp: number;
   sortOrder: number;
+  wounds?: number;
+  actionDone?: boolean;
 };
+
+/** Base INI minus 2 per wound marker. */
+export function effectiveIni(c: {
+  ini: number;
+  wounds?: number;
+}): number {
+  return c.ini - (c.wounds ?? 0) * 2;
+}
 
 export function isActiveCombatant(c: { vp: number }): boolean {
   return c.vp > INCAPACITATED_VP_THRESHOLD;
@@ -15,13 +25,15 @@ export function isActiveCombatant(c: { vp: number }): boolean {
 
 /** Compare two combatants for display order within the same zone (active or incapacitated). */
 function compareByIniThenSort(a: CombatantSortable, b: CombatantSortable): number {
-  if (b.ini !== a.ini) return b.ini - a.ini; // INI descending
+  const aIni = effectiveIni(a);
+  const bIni = effectiveIni(b);
+  if (bIni !== aIni) return bIni - aIni; // effective INI descending
   return a.sortOrder - b.sortOrder;
 }
 
 /**
  * Full display order:
- * 1. Active (vp > 5): INI desc, then sortOrder asc
+ * 1. Active (vp > 5): effective INI desc, then sortOrder asc
  * 2. Incapacitated (vp ≤ 5): same relative sort, pinned at end
  */
 export function sortCombatantsForDisplay<T extends CombatantSortable>(
@@ -38,7 +50,7 @@ export function sortCombatantsForDisplay<T extends CombatantSortable>(
   return [...active, ...incapacitated];
 }
 
-/** Active combatants only, in display (INI) order. */
+/** Active combatants only, in display (effective INI) order. */
 export function getActiveCombatants<T extends CombatantSortable>(
   combatants: T[]
 ): T[] {
@@ -60,17 +72,32 @@ export function resolveActiveCombatant(
 }
 
 /**
- * Advance turn to the next active combatant.
- * When leaving the last active, wrap to first and increment turnNumber.
+ * Advance turn: mark current as actionDone, then pick the first active
+ * combatant whose actionDone is still false (in current effective-INI order).
+ * If none remain, wrap: clear all actionDone, increment turnNumber, point at first.
  */
 export function advanceActiveCombatant(
   activeId: string | null | undefined,
   combatants: CombatantSortable[],
   turnNumber: number
-): { activeCombatantId: string | null; turnNumber: number; wrapped: boolean } {
+): {
+  activeCombatantId: string | null;
+  turnNumber: number;
+  wrapped: boolean;
+  /** Combatant id that should be marked actionDone (current before advance). */
+  markDoneId: string | null;
+  /** When true, clear actionDone on all combatants (new round). */
+  clearAllActionDone: boolean;
+} {
   const active = getActiveCombatants(combatants);
   if (active.length === 0) {
-    return { activeCombatantId: null, turnNumber, wrapped: false };
+    return {
+      activeCombatantId: null,
+      turnNumber,
+      wrapped: false,
+      markDoneId: null,
+      clearAllActionDone: false,
+    };
   }
 
   const resolved =
@@ -78,52 +105,74 @@ export function advanceActiveCombatant(
       ? activeId
       : active[0]!.id;
 
-  const idx = active.findIndex((c) => c.id === resolved);
-  const nextIdx = idx + 1;
+  // After marking current done, who still needs an action?
+  const stillPending = active.filter(
+    (c) => c.id !== resolved && !c.actionDone
+  );
 
-  if (nextIdx >= active.length) {
+  if (stillPending.length === 0) {
     return {
       activeCombatantId: active[0]!.id,
       turnNumber: turnNumber + 1,
       wrapped: true,
+      markDoneId: resolved,
+      clearAllActionDone: true,
     };
   }
 
   return {
-    activeCombatantId: active[nextIdx]!.id,
+    activeCombatantId: stillPending[0]!.id,
     turnNumber,
     wrapped: false,
+    markDoneId: resolved,
+    clearAllActionDone: false,
   };
 }
 
 /**
  * When an active combatant becomes incapacitated or is removed, pick the next
- * active without incrementing turn number. Prefer the combatant that was after
- * the removed one in order; wrap to first without incrementing.
- *
- * @param removedId - combatant that left the active pool
- * @param activeBefore - active list (vp > 5) before the change, in display order
- * @param remainingActive - active list after the change
+ * unsigned active combatant. Prefer someone after the removed one in order;
+ * if none remain unsigned, signal a round wrap.
  */
 export function nextActiveAfterRemoval(
   removedId: string,
   activeBefore: CombatantSortable[],
   remainingActive: CombatantSortable[]
-): string | null {
-  if (remainingActive.length === 0) return null;
-  const idx = activeBefore.findIndex((c) => c.id === removedId);
-  if (idx < 0) return remainingActive[0]!.id;
-  for (let i = idx + 1; i < activeBefore.length; i++) {
-    const cand = activeBefore[i]!;
-    if (remainingActive.some((c) => c.id === cand.id)) return cand.id;
+): {
+  activeCombatantId: string | null;
+  /** True when every remaining active combatant has already acted. */
+  shouldWrapRound: boolean;
+} {
+  if (remainingActive.length === 0) {
+    return { activeCombatantId: null, shouldWrapRound: false };
   }
-  return remainingActive[0]!.id;
+
+  const pending = remainingActive.filter((c) => !c.actionDone);
+  if (pending.length === 0) {
+    return {
+      activeCombatantId: remainingActive[0]!.id,
+      shouldWrapRound: true,
+    };
+  }
+
+  const idx = activeBefore.findIndex((c) => c.id === removedId);
+  if (idx >= 0) {
+    for (let i = idx + 1; i < activeBefore.length; i++) {
+      const cand = activeBefore[i]!;
+      if (pending.some((c) => c.id === cand.id)) {
+        return { activeCombatantId: cand.id, shouldWrapRound: false };
+      }
+    }
+  }
+
+  return { activeCombatantId: pending[0]!.id, shouldWrapRound: false };
 }
 
 /**
- * Compute sort_order for an INI change relative to peers with the same INI.
- * - INI decreased (moved down / lower in turn order): place before same-INI peers (min−1)
- * - INI increased (moved up): place after same-INI peers (max+1)
+ * Compute sort_order for an (effective) INI change relative to peers with the
+ * same effective INI.
+ * - INI decreased: place before same-INI peers (min−1)
+ * - INI increased: place after same-INI peers (max+1)
  * - Unchanged INI: keep existing sortOrder
  */
 export function sortOrderForIniChange(
@@ -136,7 +185,7 @@ export function sortOrderForIniChange(
   if (newIni === oldIni) return oldSortOrder;
 
   const sameIni = peers.filter(
-    (c) => c.id !== combatantId && c.ini === newIni
+    (c) => c.id !== combatantId && effectiveIni(c) === newIni
   );
 
   if (sameIni.length === 0) return oldSortOrder;
@@ -155,8 +204,9 @@ export function sortOrderForIniChange(
 
 /**
  * Move a combatant one slot up or down in the active list.
- * Adjusts INI to match the neighbor and sort_order so display order changes
- * even when neighbors have different INI values.
+ * Adjusts base INI to match the neighbor's *effective* INI (accounting for
+ * self wounds) and sort_order so display order changes even when neighbors
+ * have different effective INI values.
  * Returns updates to apply, or null if move is impossible.
  */
 export function moveAdjacentActive(
@@ -173,13 +223,16 @@ export function moveAdjacentActive(
 
   const self = active[idx]!;
   const neighbor = active[targetIdx]!;
+  const neighborEff = effectiveIni(neighbor);
+  // Set base INI so effectiveIni(self) equals neighbor's effective INI
+  const newBaseIni = neighborEff + (self.wounds ?? 0) * 2;
 
   if (direction === "up") {
     // Appear before neighbor (earlier in turn order)
     return [
       {
         id: self.id,
-        ini: neighbor.ini,
+        ini: newBaseIni,
         sortOrder: neighbor.sortOrder - 1,
       },
     ];
@@ -189,7 +242,7 @@ export function moveAdjacentActive(
   return [
     {
       id: self.id,
-      ini: neighbor.ini,
+      ini: newBaseIni,
       sortOrder: neighbor.sortOrder + 1,
     },
   ];

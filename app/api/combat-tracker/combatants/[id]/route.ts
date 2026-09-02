@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { and, eq } from "drizzle-orm";
 import { requireAllowed } from "@/lib/auth/session";
 import {
+  effectiveIni,
   getActiveCombatants,
   isActiveCombatant,
   nextActiveAfterRemoval,
@@ -10,12 +11,14 @@ import {
 } from "@/lib/combat/combatTrackerSort";
 import {
   buildTrackerDto,
+  clearAllActionDone,
   findOwnedCombatant,
   findUserEncounter,
   loadCombatants,
   toCombatantDto,
   updateEncounterTurnState,
 } from "@/lib/combat/combatTrackerApi";
+import { MAX_WOUNDS } from "@/lib/combat/combatTrackerTypes";
 import { db } from "@/lib/db/client";
 import { combatCombatants } from "@/lib/db/schema";
 
@@ -50,6 +53,35 @@ function parseOptionalComment(
   return trimmed;
 }
 
+async function applyRemovalHandoff(
+  encounterId: string,
+  turnNumber: number,
+  removedId: string,
+  activeBefore: ReturnType<typeof getActiveCombatants>,
+  remainingActive: ReturnType<typeof getActiveCombatants>,
+  currentActiveId: string | null
+): Promise<void> {
+  if (currentActiveId !== removedId) return;
+
+  const handoff = nextActiveAfterRemoval(
+    removedId,
+    activeBefore,
+    remainingActive
+  );
+
+  let turn = turnNumber;
+  if (handoff.shouldWrapRound) {
+    turn = turnNumber + 1;
+    await clearAllActionDone(encounterId);
+  }
+
+  await updateEncounterTurnState(
+    encounterId,
+    turn,
+    handoff.activeCombatantId
+  );
+}
+
 type Ctx = { params: Promise<{ id: string }> };
 
 export async function PATCH(req: NextRequest, ctx: Ctx) {
@@ -73,6 +105,7 @@ export async function PATCH(req: NextRequest, ctx: Ctx) {
     asp?: unknown;
     ar?: unknown;
     comment?: unknown;
+    wounds?: unknown;
   };
   try {
     body = await req.json();
@@ -88,6 +121,7 @@ export async function PATCH(req: NextRequest, ctx: Ctx) {
     asp?: number;
     ar?: number;
     comment?: string;
+    wounds?: number;
     sortOrder?: number;
     updatedAt: Date;
   } = { updatedAt: new Date() };
@@ -109,26 +143,40 @@ export async function PATCH(req: NextRequest, ctx: Ctx) {
   const newVp = parseOptionalInt(body.vp);
   const newAsp = parseOptionalInt(body.asp);
   const newAr = parseOptionalInt(body.ar);
+  const rawWounds = parseOptionalInt(body.wounds);
+  const newWounds =
+    rawWounds !== undefined
+      ? Math.max(0, Math.min(MAX_WOUNDS, rawWounds))
+      : undefined;
 
   if (newAsp !== undefined) updates.asp = newAsp;
   if (newAr !== undefined) updates.ar = newAr;
   if (newVp !== undefined) updates.vp = newVp;
+  if (newWounds !== undefined) updates.wounds = newWounds;
 
-  if (newIni !== undefined && newIni !== combatant.ini) {
-    const peers = (await loadCombatants(encounter.id)).map(toCombatantDto);
-    updates.ini = newIni;
+  const peers = (await loadCombatants(encounter.id)).map(toCombatantDto);
+  const oldEff = effectiveIni({
+    ini: combatant.ini,
+    wounds: combatant.wounds ?? 0,
+  });
+  const nextBaseIni = newIni !== undefined ? newIni : combatant.ini;
+  const nextWounds =
+    newWounds !== undefined ? newWounds : (combatant.wounds ?? 0);
+  const newEff = effectiveIni({ ini: nextBaseIni, wounds: nextWounds });
+
+  if (newIni !== undefined) updates.ini = newIni;
+
+  if (newEff !== oldEff) {
     updates.sortOrder = sortOrderForIniChange(
       combatant.id,
-      combatant.ini,
-      newIni,
+      oldEff,
+      newEff,
       combatant.sortOrder,
       peers
     );
-  } else if (newIni !== undefined) {
-    updates.ini = newIni;
   }
 
-  const beforeDtos = (await loadCombatants(encounter.id)).map(toCombatantDto);
+  const beforeDtos = peers;
   const activeBefore = getActiveCombatants(beforeDtos);
 
   await db
@@ -145,22 +193,30 @@ export async function PATCH(req: NextRequest, ctx: Ctx) {
   const remainingActive = getActiveCombatants(afterDtos);
   const updated = afterDtos.find((c) => c.id === id)!;
 
-  let activeId = encounter.activeCombatantId;
   if (
     encounter.activeCombatantId === id &&
     !isActiveCombatant(updated)
   ) {
-    activeId = nextActiveAfterRemoval(id, activeBefore, remainingActive);
-  } else {
-    activeId = resolveActiveCombatant(encounter.activeCombatantId, afterDtos);
-  }
-
-  if (activeId !== encounter.activeCombatantId) {
-    await updateEncounterTurnState(
+    await applyRemovalHandoff(
       encounter.id,
       encounter.turnNumber,
-      activeId
+      id,
+      activeBefore,
+      remainingActive,
+      encounter.activeCombatantId
     );
+  } else {
+    const activeId = resolveActiveCombatant(
+      encounter.activeCombatantId,
+      afterDtos
+    );
+    if (activeId !== encounter.activeCombatantId) {
+      await updateEncounterTurnState(
+        encounter.id,
+        encounter.turnNumber,
+        activeId
+      );
+    }
   }
 
   const refreshed = await findUserEncounter(session.user.id);
@@ -197,18 +253,23 @@ export async function DELETE(_req: NextRequest, ctx: Ctx) {
   const after = before.filter((c) => c.id !== id);
   const remainingActive = getActiveCombatants(after);
 
-  let activeId = encounter.activeCombatantId;
   if (encounter.activeCombatantId === id) {
-    activeId = nextActiveAfterRemoval(id, activeBefore, remainingActive);
+    await applyRemovalHandoff(
+      encounter.id,
+      encounter.turnNumber,
+      id,
+      activeBefore,
+      remainingActive,
+      encounter.activeCombatantId
+    );
   } else {
-    activeId = resolveActiveCombatant(encounter.activeCombatantId, after);
+    const activeId = resolveActiveCombatant(encounter.activeCombatantId, after);
+    await updateEncounterTurnState(
+      encounter.id,
+      encounter.turnNumber,
+      activeId
+    );
   }
-
-  await updateEncounterTurnState(
-    encounter.id,
-    encounter.turnNumber,
-    activeId
-  );
 
   const refreshed = await findUserEncounter(session.user.id);
   return NextResponse.json(await buildTrackerDto(refreshed));
